@@ -67,9 +67,12 @@ full line for each class. A prefix match is not accepted.
 | earshot missing or not executable                | `sound-set: earshot not found at <path>; run scripts/sound-setup.sh` |    1 |
 | earshot exits non-zero                           | `sound-set: earshot failed for <name> (<design>) with exit <code>`   |    1 |
 | earshot exits 0 and writes no file               | `sound-set: earshot wrote no file for <name> (<design>): <path>`     |    1 |
+| Output path cannot be prepared                   | `sound-set: cannot prepare output for <name> (<design>): <path>`     |    1 |
 
 `<index>` is the zero-based position in the `sounds` array. `<path>` is the absolute path that
-the wrapper resolved. `<code>` is the child exit code.
+the wrapper resolved. `<code>` is the child exit code. The output path cannot be prepared when it is a directory, when
+its name is too long, or when filesystem I/O fails. This check runs before the child call for that
+entry. The wrapper never deletes a directory recursively and preserves its contents.
 
 The check order is: set name, set file existence, JSON parse, set content, binary, then each
 render in array order. A failure stops the run, and no later render starts. The wrapper captures

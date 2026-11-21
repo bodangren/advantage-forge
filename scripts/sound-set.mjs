@@ -6,7 +6,15 @@
 // The set file is sounds/sets/<set>.json. The output folder is sounds/<set>/.
 // SOUNDS_ROOT overrides the repository root. EARSHOT_BIN overrides the binary path.
 import { spawnSync } from 'node:child_process';
-import { accessSync, constants as fsConstants, existsSync, mkdirSync, readFileSync, rmSync } from 'node:fs';
+import {
+  accessSync,
+  constants as fsConstants,
+  existsSync,
+  lstatSync,
+  mkdirSync,
+  readFileSync,
+  rmSync,
+} from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -67,8 +75,20 @@ mkdirSync(outDir, { recursive: true });
 
 for (const { name, design } of sounds) {
   const out = join(outDir, `${name}.ogg`);
-  // Remove any earlier file so a stale target cannot satisfy the post-render check.
-  rmSync(out, { force: true });
+  let blocked = false;
+  try {
+    const target = lstatSync(out, { throwIfNoEntry: false });
+    if (target?.isDirectory()) {
+      blocked = true;
+    } else {
+      // Remove any earlier file so a stale target cannot satisfy the post-render check.
+      // This call never uses recursive mode, so a directory and its contents stay intact.
+      rmSync(out, { force: true });
+    }
+  } catch {
+    blocked = true;
+  }
+  if (blocked) fail(`sound-set: cannot prepare output for ${name} (${design}): ${out}`, 1);
   const child = spawnSync(earshot, ['make', '--sound', design, '-o', out], { encoding: 'utf8' });
   if (child.status !== 0) {
     fail(`sound-set: earshot failed for ${name} (${design}) with exit ${child.status}`, 1);
