@@ -1,0 +1,17 @@
+{
+  "advisories": {
+    "2001": {
+      "findings": [
+        { "bundled": false, "dev": true, "optional": false, "paths": [".>example-c"], "version": "1.0.0" }
+      ],
+      "github_advisory_id": "GHSA-qqqq-yyyy-zzzz",
+      "id": 2001,
+      "module_name": "example-c",
+      "patched_versions": ">=9.9.9",
+      "severity": "moderate",
+      "title": "Example moderate finding",
+      "url": "https://github.com/advisories/GHSA-qqqq-yyyy-zzzz",
+      "vulnerable_versions": "<9.9.9"
+    }
+  }
+}

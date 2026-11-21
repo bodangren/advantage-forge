@@ -1,0 +1,24 @@
+{
+  "advisories": {
+    "3001": {
+      "findings": [
+        { "bundled": false, "dev": true, "optional": false, "paths": [".>example-z"], "version": "1.0.0" }
+      ],
+      "github_advisory_id": "GHSA-zzzz-yyyy-zzzz",
+      "id": 3001,
+      "module_name": "example-z",
+      "patched_versions": ">=9.9.9",
+      "severity": "critical",
+      "title": "Example critical finding",
+      "url": "https://github.com/advisories/GHSA-zzzz-yyyy-zzzz",
+      "vulnerable_versions": "<9.9.9"
+    }
+  },
+  "metadata": {
+    "dependencies": 1,
+    "devDependencies": 1,
+    "optionalDependencies": 0,
+    "totalDependencies": 2,
+    "vulnerabilities": { "critical": 1, "high": 0, "info": 0, "low": 0, "moderate": 0 }
+  }
+}

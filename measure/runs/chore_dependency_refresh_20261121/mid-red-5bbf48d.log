@@ -1,0 +1,38 @@
+MEASURE_AGENT_RESULT
+role: mid-red
+status: red
+track: chore_dependency_refresh_20261121
+phase: Phase 1: Refresh and verify
+task: T1
+phase_base_sha: 7bc4a4e0
+role_base_sha: 5bbf48db
+head_before: 5bbf48db
+files_changed:
+  tests/audit-gate.test.ts (modified: 4 original cases kept, 13 fail-closed regressions added)
+  tests/fixtures/audit-invalid.txt (new: same bytes as the deleted .json; fixes Review A F3)
+  tests/fixtures/audit-invalid.json (deleted: replaced by the .txt path)
+  tests/fixtures/audit-meta-missing.json (new: advisories only, no metadata)
+  tests/fixtures/audit-meta-empty.json (new: vulnerabilities {})
+  tests/fixtures/audit-meta-array.json (new: vulnerabilities [])
+  tests/fixtures/audit-meta-count-missing.json (new: high key absent)
+  tests/fixtures/audit-meta-string-count.json (new: high "4")
+  tests/fixtures/audit-meta-negative.json (new: high -1)
+  tests/fixtures/audit-meta-float.json (new: high 1.5)
+  tests/fixtures/audit-advisory-malformed.json (new: {"bad":{}} with zero metadata)
+  tests/fixtures/audit-advisory-bad-severity.json (new: severity "high " with zero metadata)
+  tests/fixtures/audit-meta-zero-with-critical.json (new: zero metadata plus a valid critical advisory)
+  tests/fixtures/audit-advisories-empty-no-meta.json (new: {"advisories":{}} with no metadata)
+  tests/fixtures/audit-critical.json (new: critical=1 high=0 with a matching critical advisory)
+  measure/tracks/chore_dependency_refresh_20261121/plan.md (T1 kept [~], r2 contract and evidence recorded)
+tests_run:
+  - "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run --maxWorkers=1 tests/audit-gate.test.ts' => 1 file failed, 12 failed | 5 passed (17); every new fail-closed case fails with `expected +0 to be 2` (gate exits 0 instead of 2); the 4 original cases pass"
+  - "node_modules/.bin/tsc --noEmit => no diagnostics in tests/audit-gate.test.ts or the new fixtures (only pre-existing errors elsewhere)"
+  - "node_modules/.bin/prettier --check tests/audit-gate.test.ts measure/tracks/chore_dependency_refresh_20261121/plan.md => clean; new .json fixtures formatted with prettier --write; audit-invalid.txt is not a prettier-known extension"
+plan_updates: T1 [~]; r2 contract (fail-closed exit-2 rule, critical-only exit 1, AUDIT_GATE_PNPM override) and evidence recorded in plan.md
+known_failures:
+  - 11 fail-closed cases exit 0 at HEAD (false pass): metadata missing/{}/array, missing/string/negative/float count, malformed advisory entry, out-of-range severity "high ", zero metadata with a critical advisory, empty advisories with no metadata
+  - pnpm-override live case exits 0 at HEAD: AUDIT_GATE_PNPM is ignored and the live audit runs (exit 0 on the clean tree); Green must read the override as the pnpm binary so a missing binary exits 2 with `audit unavailable`
+  - already satisfied at HEAD (characterization, kept green): critical-only fixture exits 1, invalid-.txt and missing-file fixtures exit 2, high/clean fixtures exit 1/0
+  - unrelated dirty work across the tree (bench outputs, other tracks' run logs, measure/generated/asset-inventory.json) was left untouched; only the paths above are staged
+handoff: T1 Red r2 complete. Green owns the fail-closed rewrite of scripts/audit-gate.mjs per the contract in plan.md T1 (validate all five counts, validate each advisory entry, require metadata/advisory agreement, honor AUDIT_GATE_PNPM). Do not edit package.json, the lockfile, or production source in Red.
+END_MEASURE_AGENT_RESULT

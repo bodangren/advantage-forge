@@ -1,0 +1,18 @@
+{
+  "advisories": {
+    "9001": {
+      "findings": [
+        { "bundled": false, "dev": true, "optional": false, "paths": [".>example-a"], "version": "1.0.0" }
+      ],
+      "github_advisory_id": "GHSA-xxxx-yyyy-zzzz",
+      "id": 9001,
+      "module_name": "example-a",
+      "patched_versions": ">=9.9.9",
+      "severity": "high ",
+      "title": "Example trailing-space severity",
+      "url": "https://github.com/advisories/GHSA-xxxx-yyyy-zzzz",
+      "vulnerable_versions": "<9.9.9"
+    }
+  },
+  "metadata": { "vulnerabilities": { "critical": 0, "high": 0, "info": 0, "low": 0, "moderate": 0 } }
+}
