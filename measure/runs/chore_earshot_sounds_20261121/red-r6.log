@@ -1,0 +1,33 @@
+MEASURE_AGENT_RESULT
+role: mid-red
+status: red-proof (text-only round; the corrected closeout gate command runs green; no code changed)
+track: chore_earshot_sounds_20261121
+short_track_id: chore_earshot_sounds
+phase: Phase 1: Pin, render, and record
+baseline_sha (phase_base_sha): a9aec40d5cf899815852bbbd53b768285b98915b
+role_base_sha: 55ef0204bc88807deb1fb66a5a9efdf8e0f7ddbf
+head: this commit (parent 55ef0204bc88807deb1fb66a5a9efdf8e0f7ddbf); SHA in handoff reply
+commits: [this commit] message `measure(chore_earshot_sounds): fix closeout gate text`; SHA in handoff reply
+tests_run: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'SCRATCH=$(mktemp -d) && mkdir -p $SCRATCH/sounds && ln -s $PWD/sounds/sets $SCRATCH/sounds/sets && SOUNDS_ROOT=$SCRATCH EARSHOT_BIN=$PWD/.venv-earshot/bin/earshot node scripts/sound-set.mjs chibi' => gate_exit=0, 7 sounds, git status --short sounds/ clean (full output below)
+files_changed: measure/tracks/chore_earshot_sounds_20261121/plan.md, measure/tracks/chore_earshot_sounds_20261121/test-strategy.md, measure/runs/chore_earshot_sounds_20261121/red-r6.log
+plan_updates: F7 gate command gains EARSHOT_BIN (plan) and lands verbatim in test-strategy.md step 3; F8 restores case 9 in the strategy and corrects the T8 wording per file numbering; F9 adds T8 to the Status line and corrects the generate-check note with dated commit evidence
+known_failures: none (no code changed; gate command green)
+checks: prettier --check exits 0 on the touched md files; node measure/tools/generate.mjs --check exits 0; measure/generated/ clean so no regeneration needed
+handoff: no production source changed. Closeout-steward owns T5, facts, and archive. Acceptance r2 F7/F8/F9 are addressed as text; the gate command ran green with the recorded exit code.
+--- exact gate command output follows ---
+tap.ogg: tap/soft (0.13 s, peak at 0.01 s, -19 LUFS, clean) [named]
+sound-set: tap.ogg <- tap/soft
+right.ogg: success/rise (1.85 s, peak at 0.20 s, G4, marimba, -14 LUFS, clean) [named]
+sound-set: right.ogg <- success/rise
+wrong.ogg: error/knock (0.58 s, peak at 0.19 s, -15 LUFS, clean) [named]
+sound-set: wrong.ogg <- error/knock
+star.ogg: coin/bright (0.69 s, peak at 0.07 s, B5, glockenspiel, -14 LUFS, clean) [named]
+sound-set: star.ogg <- coin/bright
+pop.ogg: pop/bubble (0.32 s, peak at 0.01 s, -15 LUFS, clean) [named]
+sound-set: pop.ogg <- pop/bubble
+whoosh.ogg: whoosh/soft (0.39 s, peak at 0.24 s, -14 LUFS, clean) [named]
+sound-set: whoosh.ogg <- whoosh/soft
+level-end.ogg: success/triad (1.71 s, peak at 0.25 s, C5, marimba, -14 LUFS, clean) [named]
+sound-set: level-end.ogg <- success/triad
+sound-set: 7 sounds -> sounds/chibi
+END_MEASURE_AGENT_RESULT

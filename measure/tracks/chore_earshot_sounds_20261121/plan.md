@@ -1,6 +1,6 @@
 # Author game sound sets with earshot
 
-Status: in_progress (2026-11-21). T1 through T4 and T6 and T7 are `[x]` with commit evidence. T5 is a
+Status: in_progress (2026-11-21). T1 through T4 and T6 through T8 are `[x]` with commit evidence. T5 is a
 deferred closeout task owned by the closeout role. This plan owns execution status. `spec.md`
 holds the decisions and acceptance criteria.
 
@@ -113,7 +113,7 @@ tests/sound-set.test.ts` passes.
     - `node_modules/.bin/prettier --check scripts/sound-set.mjs sounds/sets/chibi.json sounds/README.md tests/sound-set.test.ts measure/tracks/chore_earshot_sounds_20261121/spec.md measure/tracks/chore_earshot_sounds_20261121/plan.md measure/tracks/chore_earshot_sounds_20261121/spec-review.md measure/tracks/chore_earshot_sounds_20261121/metadata.json measure/tracks/chore_earshot_sounds_20261121/index.md`
       (`prettier` has no shell parser, so `scripts/sound-setup.sh` and `.gitignore` are outside
       this gate.)
-    - `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'SCRATCH=$(mktemp -d) && mkdir -p $SCRATCH/sounds && ln -s $PWD/sounds/sets $SCRATCH/sounds/sets && SOUNDS_ROOT=$SCRATCH node scripts/sound-set.mjs chibi'` with exit 0 and `git status --short sounds/` clean (the closeout wrapper run renders into a scratch root, never the real root, because fresh renders differ from the committed files in the Ogg serial and CRC bytes while the decoded audio is identical)
+    - `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'SCRATCH=$(mktemp -d) && mkdir -p $SCRATCH/sounds && ln -s $PWD/sounds/sets $SCRATCH/sounds/sets && SOUNDS_ROOT=$SCRATCH EARSHOT_BIN=$PWD/.venv-earshot/bin/earshot node scripts/sound-set.mjs chibi'` with exit 0 and `git status --short sounds/` clean (the closeout wrapper run renders into a scratch root, never the real root, because fresh renders differ from the committed files in the Ogg serial and CRC bytes while the decoded audio is identical; `EARSHOT_BIN` names the repo venv because a scratch root holds no venv)
   - Then run `node measure/tools/generate.mjs --check`, run `./measure/generate.sh` when
     `git status --short measure/generated` is clean, and run the doctor through the heavy runner:
     `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './measure/doctor.sh'`.
@@ -230,8 +230,9 @@ tests/sound-set.test.ts` passes.
 - [x] T8 Phase acceptance nits (F1/F2/F3 test and text side): fix the two tsc errors the phase [commit `2cbe1d0d`]
       added in `tests/sound-set.test.ts` with `(bytes[5] ?? 0) & 0x02` and `bytes[26] ?? 0` (no
       `!`, because the adversarial test runs this function body through `new Function`). Fix the
-      text drift: stale "Case 9" references for the committed-files case in `plan.md` and
-      `test-strategy.md` (it is case 10), the plan's touched-files list (add
+      text drift: stale "Case 9" references for the committed-files case in `plan.md` (it is case
+      10 in the plan case map); `test-strategy.md` keeps its own numbering (case 9 in its case
+      map). Also fix the plan's touched-files list (add
       `tests/sound-set.adversarial.test.ts`), and the spec D5 forwarding rule (a successful
       child's stdout and stderr both go to the wrapper stdout; a failed call prints none of its
       output). F2 note: the closeout wrapper gate renders into a scratch `SOUNDS_ROOT`, never the
@@ -243,6 +244,13 @@ tests/sound-set.test.ts` passes.
     `?? 0` reader fix keeps the adversarial dynamic extraction working). `tsc --noEmit` reports
     38 error lines, all in the pre-existing baseline files; `tests/sound-set.test.ts` has 0
     errors. `prettier --check` on the touched files passes. `node
-measure/tools/generate.mjs --check` exits 1 with one stale fact (`status.md`): the new T8
-    marker is not in the generated facts yet. Closeout regenerates the facts in one step (F4
-    workflow), so this stays open for closeout-steward.
+measure/tools/generate.mjs --check` exited 1 at commit `2cbe1d0d` with one stale fact
+    (`status.md`) because the new T8 marker was not in the generated facts yet. Commit
+    `55ef0204` regenerated the facts, so the check exits 0 at HEAD; nothing stays open on this
+    point.
+  - Correction (Red r6, 2026-11-21): the closeout wrapper gate command gains
+    `EARSHOT_BIN=$PWD/.venv-earshot/bin/earshot`, because with `SOUNDS_ROOT` set to a scratch
+    folder the wrapper looks for the binary under that folder and the scratch folder holds no
+    venv. The same command lands in `test-strategy.md` step 3. The exact command runs through
+    the heavy runner before this commit; the log holds its exit code and the clean `sounds/`
+    status.

@@ -119,7 +119,7 @@ byte 26 is segment count `n`; segment table is bytes 27..`26+n` and the first pa
 `audio_channels` at offset 11 is 2; `audio_sample_rate` at offset 12 is 48000; framing flag at
 offset 29 is 1.
 
-AC1 set map for case 10: `tap`->`tap/soft`, `right`->`success/rise`, `wrong`->`error/knock`,
+AC1 set map for case 9: `tap`->`tap/soft`, `right`->`success/rise`, `wrong`->`error/knock`,
 `star`->`coin/bright`, `pop`->`pop/bubble`, `whoosh`->`whoosh/soft`, `level-end`->`success/triad`.
 
 ## Gate commands
@@ -130,7 +130,7 @@ Targeted Red command (name it; the Red role runs it and writes `red.log`):
 HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run --maxWorkers=1 tests/sound-set.test.ts'
 ```
 
-At Red, case 10 and the missing `scripts/sound-set.mjs` make this command fail. That failure is the
+At Red, case 9 and the missing `scripts/sound-set.mjs` make this command fail. That failure is the
 Red proof. Exit 75 from the heavy runner means wait and retry, not a test result.
 
 Green gate. All three must hold:
@@ -146,8 +146,9 @@ Closeout gate. Run after Green and after every remediation commit:
 1. The targeted vitest command passes with exit 0.
 2. `node_modules/.bin/prettier --check scripts/sound-set.mjs sounds/sets/chibi.json sounds/README.md tests/sound-set.test.ts measure/tracks/chore_earshot_sounds_20261121/spec.md measure/tracks/chore_earshot_sounds_20261121/plan.md measure/tracks/chore_earshot_sounds_20261121/spec-review.md measure/tracks/chore_earshot_sounds_20261121/metadata.json measure/tracks/chore_earshot_sounds_20261121/index.md`
    (prettier has no shell parser, so `scripts/sound-setup.sh` and `.gitignore` stay outside.)
-3. The standalone wrapper run exits 0:
-   `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/sound-set.mjs chibi'`
+3. The standalone wrapper run exits 0 into a scratch root (never the real root):
+   `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'SCRATCH=$(mktemp -d) && mkdir -p $SCRATCH/sounds && ln -s $PWD/sounds/sets $SCRATCH/sounds/sets && SOUNDS_ROOT=$SCRATCH EARSHOT_BIN=$PWD/.venv-earshot/bin/earshot node scripts/sound-set.mjs chibi'`
+   with `git status --short sounds/` clean afterwards. `EARSHOT_BIN` names the repo venv because a scratch root holds no venv.
 4. `node measure/tools/generate.mjs --check`; then `./measure/generate.sh` when
    `git status --short measure/generated` is clean.
 5. The doctor passes through the heavy runner:
@@ -162,7 +163,7 @@ Closeout gate. Run after Green and after every remediation commit:
 - Keep `EARSHOT_BIN` and `SOUNDS_ROOT` overrides (D5). The test depends on both.
 - Keep `.venv-earshot/` gitignored. The pinned install must not touch host Python or `node_modules`.
 - Changed-contract risk: any edit to a D5 line, exit code, or check order invalidates cases 1-8.
-  Any edit to AC3 offsets or to the AC1 map invalidates case 10. Re-run the full targeted file.
+  Any edit to AC3 offsets or to the AC1 map invalidates case 9. Re-run the full targeted file.
 
 ## Intentionally-red aggregate suite
 
@@ -193,7 +194,7 @@ Every case above has a falsification condition in its table row. The registry us
 | A3 digit-only count       | Parse the labeled count in the success line and require it to equal 2 in case 1. Use a labeled integer, not `rg '[0-9]+'` or a loose regex. | A count taken from a path, date, or any other digit fails the equality check.      |
 | A4 vacuous pass           | Require exactly two ordered `calls.log` lines and two output files in case 1. Zero calls is a failure.                                      | A run that renders nothing cannot pass the full-render case.                       |
 | A5 false claim            | Run every cited gate command and require exit 0 before the plan records a pass.                                                             | A README or plan claim that contradicts a red gate is caught by the closeout gate. |
-| A6 registry overstatement | The tracks.md row and evidence claim seven committed files only after all gates pass.                                                       | A claim made while case 10 is red is caught by acceptance on the immutable HEAD.   |
+| A6 registry overstatement | The tracks.md row and evidence claim seven committed files only after all gates pass.                                                       | A claim made while case 9 is red is caught by acceptance on the immutable HEAD.    |
 | A7 over-broad filter      | Use exact `stderr.trim()` equality for all 13 D5 lines. No prefix match, no bare-word filter.                                               | Extra text after a correct prefix fails exact equality.                            |
 | A10 generated-facts drift | Run `generate.mjs --check`, regenerate, and run the doctor after staging new files (A10).                                                   | Stale committed facts fail the doctor generated-facts check.                       |
 
