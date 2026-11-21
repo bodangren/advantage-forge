@@ -39,6 +39,7 @@ size the player will see it (often a 128 px sprite).
    - rigging and animation for any category: `references/animation.md`
    - color, value, and material values: `references/materials-and-color.md`
    - review rubric and final report: `references/review.md`
+   - paper pop-up dioramas (parked trial, papercraft skill): `references/papercraft.md`
 2. Open the closest worked example in `assets/` and skim how it is built. They were iterated
    to a good result and show the techniques in context:
    `rogue.ts` (character: face, hair inside a hood, clothing, cape, rig, walk/run),
