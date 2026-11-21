@@ -1,0 +1,35 @@
+MEASURE_AGENT_RESULT
+role: jr-green
+status: green-complete
+track: chore_earshot_sounds_20261121 (short: chore_earshot_sounds)
+phase: Phase 1: Pin, render, and record
+phase_base_sha: a9aec40d5cf899815852bbbd53b768285b98915b
+role_base_sha: 06325093d9f844efd251e2692e818e3257267701 (Red r3)
+commits:
+  - d78f3dedc205773daad2b39b720d30accbeee140: measure(chore_earshot_sounds): contain filesystem errors (implementation)
+  - the commit that adds this log: measure(chore_earshot_sounds): green r4 evidence (a commit cannot contain its own SHA)
+tasks_flipped_to_x:
+  - T6 Adversarial remediation: Red commit 06325093d9f844efd251e2692e818e3257267701 and implementation commit d78f3dedc205773daad2b39b720d30accbeee140
+tasks_flipped_to_b: none
+tasks_still_open:
+  - T5 Closeout (deferred:closeout-steward): human-gated closeout work; the closeout role owns it
+findings_disposition:
+  - ADV-2 FIX: filesystem errors at the output path now produce one controlled stderr line and exit 1
+  - Review B F3 FIX: same fix; no stack trace and no recursive deletion of a directory
+spec_change: D5 gains one row for the new failure class, "Output path cannot be prepared", with the exact line `sound-set: cannot prepare output for <name> (<design>): <path>` and exit 1; the tests only require a one-line `sound-set:` prefix, so this clear line was chosen and the contract row was added
+tests_run:
+  - Red r3 rerun before Green: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run --maxWorkers=1 tests/sound-set.test.ts tests/sound-set.adversarial.test.ts' -> exit 1, 2 failed | 70 passed (72); the two failures were the directory-target and 300-character-name cases
+  - combined targeted command after Green: same heavy command -> exit 0, 72 passed (72)
+  - format: node_modules/.bin/prettier --check scripts/sound-set.mjs measure/tracks/chore_earshot_sounds_20261121/spec.md measure/tracks/chore_earshot_sounds_20261121/plan.md measure/tracks/chore_earshot_sounds_20261121/metadata.json -> exit 0
+  - facts: node measure/tools/generate.mjs --check -> exit 0 after regeneration; ./measure/generate.sh -> Generated 4 Measure facts
+  - doctor: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './measure/doctor.sh' -> exit 0, "Measure doctor found no structural errors"
+files_changed:
+  - scripts/sound-set.mjs (lstatSync guard, blocked flag, controlled single-line failure, no recursive deletion)
+  - measure/tracks/chore_earshot_sounds_20261121/spec.md (one D5 row and its explanation)
+  - measure/tracks/chore_earshot_sounds_20261121/plan.md (T6 [x] with both SHAs, Green r4 evidence)
+  - measure/generated/status.md (regenerated: in_progress, 5/6 tasks)
+  - measure/runs/chore_earshot_sounds_20261121/green-r4.log (new, this file)
+plan_updates: T6 marked [x] with Red and Green SHAs; T5 stays deferred; Status line names T6; no track completion or archive action taken
+known_failures: none on final Green r4 HEAD; no Ogg re-render because the wrapper change does not alter those bytes; no host Python or venv change
+handoff: ADV-2 and Review B F3 are fixed. Reviewers must gate on phase_base_sha a9aec40d5cf899815852bbbd53b768285b98915b and on the final Green r4 HEAD reported by the orchestrator. New file for review scope: measure/runs/chore_earshot_sounds_20261121/green-r4.log. The closeout role owns T5 after phase acceptance. No push.
+END_MEASURE_AGENT_RESULT

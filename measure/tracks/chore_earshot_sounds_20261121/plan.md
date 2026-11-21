@@ -1,8 +1,8 @@
 # Author game sound sets with earshot
 
-Status: in_progress (2026-11-21). T1 through T4 are `[x]` with commit evidence. T5 is a deferred
-closeout task owned by the closeout role. This plan owns execution status. `spec.md` holds the
-decisions and acceptance criteria.
+Status: in_progress (2026-11-21). T1 through T4 and T6 are `[x]` with commit evidence. T5 is a
+deferred closeout task owned by the closeout role. This plan owns execution status. `spec.md`
+holds the decisions and acceptance criteria.
 
 Lane: light. One phase. Source: PM assignment P2 of 2026-11-21. Deadline: none named.
 
@@ -168,13 +168,13 @@ tests/sound-set.test.ts` passes.
       actions. The task stays pending until closeout so the doctor sees an unchecked task while the
       track remains in_progress.
 
-- [~] T6 Adversarial remediation (ADV-1 test side): fix the AC3 reader in `tests/sound-set.test.ts`
-  to compare the Ogg magic bytes exactly. The `toString('ascii')` decoding clears the high bit,
-  so `0xcf` passes for `O` and `0xf6` for `v`. Compare raw bytes with `Buffer.equals` against
-  `Buffer.from('OggS')` and the `0x01` plus `vorbis` sequence. Change no production source and do
-  not edit `tests/sound-set.adversarial.test.ts` (it executes the existing reader body in place,
-  so the fix flows through with no rename). After the fix the two high-bit adversarial tests
-  pass; the two ADV-2 tests (directory at target, 300-char name) stay failing for Green.
+- [x] T6 Adversarial remediation (ADV-1 test side and ADV-2 fix): fix the AC3 reader in `tests/sound-set.test.ts` [commits `06325093`, `d78f3ded`]
+      to compare the Ogg magic bytes exactly. The `toString('ascii')` decoding clears the high bit,
+      so `0xcf` passes for `O` and `0xf6` for `v`. Compare raw bytes with `Buffer.equals` against
+      `Buffer.from('OggS')` and the `0x01` plus `vorbis` sequence. Change no production source and do
+      not edit `tests/sound-set.adversarial.test.ts` (it executes the existing reader body in place,
+      so the fix flows through with no rename). After the fix the two high-bit adversarial tests
+      pass; the two ADV-2 tests (directory at target, 300-char name) stay failing for Green.
   - Red evidence: `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run --maxWorkers=1 tests/sound-set.test.ts tests/sound-set.adversarial.test.ts'`.
     Log: `measure/runs/chore_earshot_sounds_20261121/red-r3.log`
   - Red result (2026-11-21): exit 1 with 2 failed and 70 passed of 72 tests. The only failures are
@@ -182,3 +182,12 @@ tests/sound-set.test.ts` passes.
     Green. All 17 original tests pass and both high-bit adversarial tests
     (`capture pattern high bit`, `vorbis marker high bit`) pass. No syntax or import error.
     `prettier --check` on the touched files passes.
+  - Green r4 result (2026-11-21): implementation commit
+    `d78f3dedc205773daad2b39b720d30accbeee140` changes `scripts/sound-set.mjs` and adds one row to
+    the spec D5 table. The wrapper uses `lstatSync` before each spawn. A directory target or any
+    filesystem exception sets a blocked flag and prints one line,
+    `sound-set: cannot prepare output for <name> (<design>): <path>`, on stderr with exit 1. The
+    check runs before the child call, so `calls.jsonl` stays absent. `rmSync` never uses recursive
+    mode, so a directory and its `keep.txt` stay intact. The combined targeted command exits 0
+    with 72 of 72 tests passing. No Ogg file was re-rendered. Log:
+    `measure/runs/chore_earshot_sounds_20261121/green-r4.log`.
