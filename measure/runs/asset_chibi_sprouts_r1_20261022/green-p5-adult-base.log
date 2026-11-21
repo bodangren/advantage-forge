@@ -601,3 +601,72 @@ measure/generated/status.md and measure/generated/asset-inventory.json. This rol
 did not run generate.sh, per the brief. No file outside the four assets was built
 or committed for this fix.
 END_MEASURE_AGENT_RESULT
+
+## Lily hair r5 (independent look judge F2, 2026-11-21)
+
+Scope: routed finding F2 from measure/runs/asset_chibi_sprouts_r1_20261022/
+ux-browser-review-6860686.json (Lily 7.0 FAIL at bar 7.5). Only
+assets/sprout-lily.ts changed. No Red test, sprout-gestures.ts, or
+humanoid-kind.ts edit. handClearance stays 0.04 in both places. No push.
+No generate.sh. Phase base 98f31f3d, role base adb317ce.
+
+Red command before implementation (through heavy-run.sh, FORGE_GL=software):
+  node_modules/.bin/vitest run --maxWorkers=1 tests/sprout-gestures.test.ts
+  tests/sprout-gesture-offset.test.ts
+Exit 0, 13/13 pass. It no longer fails because the hand-clearance implementation
+of this phase (API e922ce20 and Lily's opt-in) already made it green. It is a
+regression guard for these two visual fixes.
+
+Cause: the face cut used one shallow sine (amplitude 0.0035 m) for the fringe, so
+the bang edge read as a solid visor. The shell inner wall at the cut read as a
+dark rim. The face cut's back surface was flat, so the side hair fell as a slab.
+
+Loops tried:
+- Loop 1: five Gaussian bang locks (amplitude 0.010), a second jaw cut reaching
+  z -0.035, shell 0.93 -> 0.955 and fillet 0.006 -> 0.004. Render: scalloped
+  fringe, narrower rim, small jaw notch.
+- Loop 2: deeper locks (amplitude 0.012, base 0.064), jaw cut to z -0.025 with
+  smoothUnion 0.02, shell 0.965 and fillet 0.003. Render: fringe read as five
+  soft locks; a small dark notch stayed at the jaw.
+- Loop 3: warm lift (0.3 mix toward #8b5535) on the narrow cut-edge band. Render:
+  no new fault. A later zoom comparison with the original committed source showed
+  three tiny dark specks on the back crown, absent in the original.
+- Correctness fix after loop 3: revert the thin-shell and tight-fillet experiment
+  to the original 0.93/0.006 values; the specks came from thin-shell slivers at
+  the inner cap edge y 0.12. A fast render then matched the original clean crown.
+  The fringe locks, jaw cut, and warm paint lift stay.
+
+Gates (all through heavy-run.sh, FORGE_GL=software, HEAVY_MIN_AVAIL_MB=1500,
+foreground, timeout 0), final source:
+1. node scripts/typecheck-asset.mjs assets/sprout-lily.ts: exit 0, 0 errors.
+2. ./forge all sprout-lily: exit 0, no warning: lines. 24,912 textured tris,
+   0.458 x 0.844 x 0.403 m, GLB 3293 KB.
+3. ./forge check sprout-lily: exit 1 only on the six waived clips. point-up
+   closest 3.5 cm to hair. stretch-up closest 0.3 cm to hair. picture-sway and
+   cheer report nothing within 5.0 cm. ground ok.
+4. cutout-gestures-cast.sh lily rebuilt all 25 frames at 1024x1200. The manifest
+   keeps all seven keys. cutout-check exits 1 only on the six known reach tiptoe
+   frames (adventurer 1174, lily 1176, may 1176, mia 1175, sam 1175, tom 1175;
+   foot row 1184).
+5. Three sprout vitest files with --maxWorkers=1: exit 0, 15/15 pass. The Red
+   command above still passes 13/13.
+6. Images read after the final rebuild: out/sprout-lily/render.png (with the
+   reference), views/front.png, views/three-quarter.png, views/side.png,
+   views/back.png, and the fresh point-up.png and sway-picture.png cut-outs.
+   Sightings: the fringe now reads as five soft rounded locks with small length
+   and depth differences, not one straight visor. The dark inner rim is narrower
+   but still visible as a thin line under the bangs and along the cheeks. The
+   side hair recedes at the jaw, so the side cut no longer falls as a flat slab,
+   though a small step remains. The crown matches the original clean back view.
+   No chin wrap, no jaw wedge, no crown speckle, ears visible, hands clear.
+   Note: no cheer.png cut-out exists in this delivery; the named cut-outs are
+   point-up.png and sway-picture.png. cheer appears only in anim/cheer.png.
+
+new_files_added_for_reviewer_scope: none. The cut-out PNGs replace existing Lily
+frames. No Red test edited. Parent P5 cast task stays [~].
+implementation_commit: 4f7a67768aabcd6a81a5c6c9868127da684b1eb3
+handoff: Phase acceptance should audit assets/sprout-lily.ts at 4f7a6776. Check
+  the five fringe locks and the rounded jaw cut in out/sprout-lily/render.png and
+  the fresh Lily point-up and sway-picture cut-outs. Check that the crown is
+  clean and that handClearance 0.04 is unchanged.
+END_MEASURE_AGENT_RESULT
