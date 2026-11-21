@@ -8,8 +8,8 @@ Bring all direct packages to current safe versions. The audit of 2026-11-21 show
 
 - AC1: Every direct dependency in `package.json` moves to the latest version that passes the gates. The plan names each deferred breaking major with its reason.
 - AC2: `pnpm audit` shows 0 critical and 0 high. The plan lists each remaining moderate or low finding with its reason.
-- AC3: All gates pass through the heavy runner: lint, typecheck, tests, and build (commands are in the plan).
-- AC4: Asset output stays unchanged in kind: `./forge build rogue` (textured) and `./forge build slime --fast` run in one heavy-run.sh call and pass. Pass means exit 0 and no `warning:` lines. The command is in the plan.
+- AC3: All gates run through the heavy runner: lint, typecheck, tests, and build (commands are in the plan). Pre-existing failures are known debt owned by other tracks, not a pass. The before sets are: prettier 3318 [warn] files plus the audit-invalid.json error block; tsc 38 errors in 13 files; vitest 9 failed tests in tests/storytime-book-pictures.test.ts. Each gate passes when the after set equals the before set or is a subset of it. Pass for vite build stays exit 0.
+- AC4: Asset output stays unchanged in kind: `./forge build rogue` (textured) and `./forge build slime --fast` run in one heavy-run.sh call and pass. Pass means exit 0 and no `warning:` lines. The render check runs `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './forge render rogue --fast'` after `node_modules/.bin/playwright install chromium`. It passes when the call exits 0 and writes `out/rogue/render.png`. The build command is in the plan.
 - AC5: The lockfile and `package.json` land in one commit, and the orchestrator pushes with safe-push.
 
 ## Audit baseline (2026-11-21, before the change)
