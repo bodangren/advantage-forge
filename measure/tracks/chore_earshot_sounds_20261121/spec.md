@@ -79,7 +79,9 @@ entry and its target path, and no earshot call starts.
 The check order is: set name, set file existence, JSON parse, set content, binary, then each
 render in array order. A failure stops the run, and no later render starts. The wrapper captures
 the output of each earshot call. It forwards the output of a successful call, and it prints none
-of the output of a failed call.
+of the output of a failed call. A successful child's stdout and stderr are both forwarded to the
+wrapper's stdout, in call order, each pair followed by its `sound-set: <name>.ogg <- <design>`
+line. The wrapper's stderr stays empty on success.
 
 On success the wrapper prints `sound-set: <name>.ogg <- <design>` for each file, then
 `sound-set: <n> sounds -> sounds/<set>`, and exits 0. Exit 0 requires that each render exited 0

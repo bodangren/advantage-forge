@@ -9,6 +9,7 @@ Lane: light. One phase. Source: PM assignment P2 of 2026-11-21. Deadline: none n
 Files this track touches:
 
 - `tests/sound-set.test.ts` (new)
+- `tests/sound-set.adversarial.test.ts` (new: adversarial boundary and reader-corruption tests)
 - `scripts/sound-set.mjs` (new)
 - `scripts/sound-setup.sh` (new)
 - `.gitignore` (one added line, `.venv-earshot/`)
@@ -73,13 +74,13 @@ Files this track touches:
       AC3 steps on `sounds/chibi/<name>.ogg` and fail on the first step that does not hold. The
       reader uses `readFileSync` and `readUInt32LE`, with no audio library.
 
-  Run the file through the heavy runner. Case 9 and the missing `scripts/sound-set.mjs` make the
+  Run the file through the heavy runner. Case 10 and the missing `scripts/sound-set.mjs` make the
   suite fail. That failure is the Red proof.
   - Red evidence: `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run --maxWorkers=1 tests/sound-set.test.ts'`.
     Log: `measure/runs/chore_earshot_sounds_20261121/red.log`
   - Red result (2026-11-21): exit 1 with 16 of 16 tests failing. Cases 1-8 fail because
     `scripts/sound-set.mjs` is absent (the child exits MODULE_NOT_FOUND, so no exact D5 line
-    matches). Case 9 fails with ENOENT on `sounds/sets/chibi.json` (set and sound files absent).
+    matches). Case 10 fails with ENOENT on `sounds/sets/chibi.json` (set and sound files absent).
     The test file parses and runs with no syntax or import error. `prettier --check
 tests/sound-set.test.ts` passes.
   - Evidence commit: Red `8a5582cc1f16c1a6091639e80f2cca3cd9c9256a`.
@@ -112,7 +113,7 @@ tests/sound-set.test.ts` passes.
     - `node_modules/.bin/prettier --check scripts/sound-set.mjs sounds/sets/chibi.json sounds/README.md tests/sound-set.test.ts measure/tracks/chore_earshot_sounds_20261121/spec.md measure/tracks/chore_earshot_sounds_20261121/plan.md measure/tracks/chore_earshot_sounds_20261121/spec-review.md measure/tracks/chore_earshot_sounds_20261121/metadata.json measure/tracks/chore_earshot_sounds_20261121/index.md`
       (`prettier` has no shell parser, so `scripts/sound-setup.sh` and `.gitignore` are outside
       this gate.)
-    - `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/sound-set.mjs chibi'` with exit 0
+    - `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'SCRATCH=$(mktemp -d) && mkdir -p $SCRATCH/sounds && ln -s $PWD/sounds/sets $SCRATCH/sounds/sets && SOUNDS_ROOT=$SCRATCH node scripts/sound-set.mjs chibi'` with exit 0 and `git status --short sounds/` clean (the closeout wrapper run renders into a scratch root, never the real root, because fresh renders differ from the committed files in the Ogg serial and CRC bytes while the decoded audio is identical)
   - Then run `node measure/tools/generate.mjs --check`, run `./measure/generate.sh` when
     `git status --short measure/generated` is clean, and run the doctor through the heavy runner:
     `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './measure/doctor.sh'`.
@@ -225,3 +226,23 @@ tests/sound-set.test.ts` passes.
     `sound-set: cannot prepare output for <name> (<design>): <path>`, exits 1, and starts no
     earshot call. The combined targeted command exits 0 with 74 of 74 tests passing. No Ogg file
     was re-rendered. Log: `measure/runs/chore_earshot_sounds_20261121/green-r5.log`.
+
+- [~] T8 Phase acceptance nits (F1/F2/F3 test and text side): fix the two tsc errors the phase
+  added in `tests/sound-set.test.ts` with `(bytes[5] ?? 0) & 0x02` and `bytes[26] ?? 0` (no
+  `!`, because the adversarial test runs this function body through `new Function`). Fix the
+  text drift: stale "Case 9" references for the committed-files case in `plan.md` and
+  `test-strategy.md` (it is case 10), the plan's touched-files list (add
+  `tests/sound-set.adversarial.test.ts`), and the spec D5 forwarding rule (a successful
+  child's stdout and stderr both go to the wrapper stdout; a failed call prints none of its
+  output). F2 note: the closeout wrapper gate renders into a scratch `SOUNDS_ROOT`, never the
+  real root, because fresh renders are audio-identical but not byte-identical. Change no
+  production source.
+  - Red evidence: `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run --maxWorkers=1 tests/sound-set.test.ts tests/sound-set.adversarial.test.ts'` plus `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/tsc --noEmit'`.
+    Log: `measure/runs/chore_earshot_sounds_20261121/red-r5.log`
+  - Red result (2026-11-21): the combined suite exits 0 with 86 of 86 tests passing (the
+    `?? 0` reader fix keeps the adversarial dynamic extraction working). `tsc --noEmit` reports
+    38 error lines, all in the pre-existing baseline files; `tests/sound-set.test.ts` has 0
+    errors. `prettier --check` on the touched files passes. `node
+measure/tools/generate.mjs --check` exits 1 with one stale fact (`status.md`): the new T8
+    marker is not in the generated facts yet. Closeout regenerates the facts in one step (F4
+    workflow), so this stays open for closeout-steward.

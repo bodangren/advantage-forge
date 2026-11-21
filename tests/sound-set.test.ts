@@ -330,8 +330,8 @@ function checkOggHeader(bytes: Buffer, label: string) {
     true,
   );
   expect(bytes[4], `${label} step 2: stream structure version`).toBe(0);
-  expect(bytes[5] & 0x02, `${label} step 3: beginning-of-stream flag`).not.toBe(0);
-  const count = bytes[26];
+  expect((bytes[5] ?? 0) & 0x02, `${label} step 3: beginning-of-stream flag`).not.toBe(0);
+  const count = bytes[26] ?? 0;
   const packetStart = 27 + count;
   expect(bytes.length, `${label} step 4: segment table fits`).toBeGreaterThan(packetStart + 29);
   expect(

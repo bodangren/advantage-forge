@@ -1,0 +1,88 @@
+MEASURE_AGENT_RESULT
+role: mid-red
+status: red-proof (F1 tsc errors fixed, 86/86 pass; F2/F3 text drift fixed; generate check notes one expected stale fact for closeout)
+track: chore_earshot_sounds_20261121
+short_track_id: chore_earshot_sounds
+phase: Phase 1: Pin, render, and record
+baseline_sha (phase_base_sha): a9aec40d5cf899815852bbbd53b768285b98915b
+role_base_sha: d987d079da5470e3a3590c59530fa8d3ba03599f
+head: first commit (parent d987d079da5470e3a3590c59530fa8d3ba03599f); SHAs in handoff reply
+commits: [commit 1] message `measure(chore_earshot_sounds): fix tsc errors and text drift`; [commit 2] T8 [x] with commit-1 SHA; SHAs in handoff reply
+tests_run: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run --maxWorkers=1 tests/sound-set.test.ts tests/sound-set.adversarial.test.ts' => exit 0, 86 passed (86)
+tsc_proof: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/tsc --noEmit' => 38 error lines total, 0 in tests/sound-set.test.ts (baseline 38 errors in 13 other files holds)
+files_changed: tests/sound-set.test.ts, measure/tracks/chore_earshot_sounds_20261121/spec.md, measure/tracks/chore_earshot_sounds_20261121/plan.md, measure/tracks/chore_earshot_sounds_20261121/test-strategy.md, measure/runs/chore_earshot_sounds_20261121/red-r5.log
+plan_updates: added [~] T8 Phase acceptance nits (F1/F2/F3) with Red evidence and Red result (commit 2 flips it to [x] with the commit-1 SHA)
+known_failures: none (combined suite green; tsc clean for the track file)
+open_for_closeout: node measure/tools/generate.mjs --check exits 1 with `measure/generated/status.md: stale generated fact` because the new T8 marker is not in the generated facts yet; closeout regenerates facts in one step per the F4 workflow
+fix_applied (F1): checkOggHeader uses (bytes[5] ?? 0) & 0x02 and bytes[26] ?? 0, no `!` operator, so the adversarial new-Function extraction keeps working and all 20 reader-corruption tests still pass
+text_applied (F2/F3): stale Case 9 refs become case 10 in plan.md (2 sites) and test-strategy.md (4 sites); plan touched-files list gains tests/sound-set.adversarial.test.ts; spec D5 gains the forwarding rule (successful child stdout+stderr to wrapper stdout, wrapper stderr empty on success); plan closeout wrapper gate renders into a scratch SOUNDS_ROOT with `git status --short sounds/` clean
+handoff: no production source changed. Closeout-steward owns T5, the facts regeneration, and the archive step. If the owner declines any nit, record it in measure/tech-debt.md per the acceptance findings.
+--- tsc output (38 baseline lines, none in tests/sound-set.test.ts) ---
+assets/airship.ts(90,31): error TS2345: Argument of type 'Sdf | undefined' is not assignable to parameter of type 'Sdf'.
+  Type 'undefined' is not assignable to type 'Sdf'.
+assets/airship.ts(106,33): error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+assets/airship.ts(106,47): error TS2322: Type 'number | undefined' is not assignable to type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+assets/airship.ts(106,63): error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+assets/airship.ts(110,33): error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+assets/airship.ts(110,47): error TS2322: Type 'number | undefined' is not assignable to type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+assets/airship.ts(110,63): error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+assets/longship.ts(70,22): error TS2345: Argument of type 'Rgb | undefined' is not assignable to parameter of type 'Rgb'.
+  Type 'undefined' is not assignable to type 'readonly [number, number, number]'.
+assets/merchant-cart.ts(205,32): error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+assets/mushroom-cap.ts(31,39): error TS2532: Object is possibly 'undefined'.
+assets/mushroom-cap.ts(31,60): error TS2532: Object is possibly 'undefined'.
+assets/mushroom-cap.ts(31,74): error TS2532: Object is possibly 'undefined'.
+assets/plank.ts(41,14): error TS18048: 'b' is possibly 'undefined'.
+assets/plank.ts(42,9): error TS18048: 'b' is possibly 'undefined'.
+assets/plank.ts(42,30): error TS18048: 'b' is possibly 'undefined'.
+assets/plank.ts(47,18): error TS18048: 'b' is possibly 'undefined'.
+assets/plank.ts(48,18): error TS18048: 'b' is possibly 'undefined'.
+assets/plank.ts(53,26): error TS18048: 'b' is possibly 'undefined'.
+assets/rowboat.ts(69,60): error TS2532: Object is possibly 'undefined'.
+assets/rowboat.ts(69,67): error TS2532: Object is possibly 'undefined'.
+assets/rowboat.ts(69,77): error TS2532: Object is possibly 'undefined'.
+assets/rowboat.ts(69,84): error TS2532: Object is possibly 'undefined'.
+assets/rowboat.ts(69,94): error TS2532: Object is possibly 'undefined'.
+assets/rowboat.ts(69,101): error TS2532: Object is possibly 'undefined'.
+assets/rowboat.ts(71,30): error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+assets/rowboat.ts(72,31): error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+assets/storytime-crayon-box.ts(78,14): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+assets/storytime-nut.ts(83,14): error TS18048: 'deg' is possibly 'undefined'.
+assets/storytime-nut.ts(84,21): error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+assets/storytime-nut.ts(84,49): error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+assets/storytime-picture-book.ts(73,28): error TS2345: Argument of type 'number[][]' is not assignable to parameter of type 'readonly Vec2[]'.
+  Type 'number[]' is not assignable to type 'Vec2'.
+    Target requires 2 element(s) but source may have fewer.
+assets/waterskin.ts(18,33): error TS2532: Object is possibly 'undefined'.
+assets/waterskin.ts(18,54): error TS2532: Object is possibly 'undefined'.
+assets/waterskin.ts(18,75): error TS2532: Object is possibly 'undefined'.
+assets/wool.ts(59,31): error TS18048: 'x' is possibly 'undefined'.
+tests/games/castle-defense/rules.adversarial.test.ts(195,21): error TS2554: Expected 0 arguments, but got 1.
+tests/games/castle-defense/rules.adversarial.test.ts(587,23): error TS2554: Expected 0 arguments, but got 1.
+tests/part.test.ts(19,18): error TS2379: Argument of type '{ name: string; bone: string | undefined; color: unknown; y: number; }' is not assignable to parameter of type '{ name: string; bone?: string; color?: unknown; y: number; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'bone' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+--- vitest output (86 passed) ---
+
+ RUN  v5.1.1 /home/daniebo/Desktop/advantage-forge
+
+
+ Test Files  2 passed (2)
+      Tests  86 passed (86)
+   Start at  22:07:01
+   Duration  2.63s (tests 90%, transform 9%, import 1%)
+
+END_MEASURE_AGENT_RESULT
