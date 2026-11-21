@@ -13,7 +13,10 @@
 // exist; the live path reads stdout JSON regardless of the child exit code.
 import { execFileSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
+const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const SEVERITIES = ['info', 'low', 'moderate', 'high', 'critical'];
 const TIMEOUT_MS = 120000;
 
@@ -70,6 +73,89 @@ function countVulnerabilities(doc) {
   return meta;
 }
 
+// JSON.parse keeps only the last value for a duplicate key, which can hide a
+// nonzero severity count. Scan the raw text and fail closed on any repeated key
+// in any object. Escapes are consumed so braces inside strings cannot end an
+// object early. Callers pass text that already parsed successfully.
+function hasDuplicateKeys(text) {
+  let i = 0;
+  let found = false;
+
+  const skipSpace = () => {
+    while (i < text.length && /\s/.test(text[i])) i += 1;
+  };
+  const readString = () => {
+    i += 1; // opening quote
+    let value = '';
+    while (i < text.length) {
+      const ch = text[i];
+      if (ch === '\\') {
+        value += text.slice(i, i + 2);
+        i += 2;
+      } else if (ch === '"') {
+        i += 1;
+        return value;
+      } else {
+        value += ch;
+        i += 1;
+      }
+    }
+    return value;
+  };
+  const readPrimitive = () => {
+    while (i < text.length && text[i] !== ',' && text[i] !== ']' && text[i] !== '}') {
+      i += 1;
+    }
+  };
+  const readArray = () => {
+    i += 1;
+    skipSpace();
+    while (i < text.length && text[i] !== ']') {
+      readValue();
+      skipSpace();
+      if (text[i] === ',') {
+        i += 1;
+        skipSpace();
+      }
+    }
+    i += 1;
+  };
+  const readObject = () => {
+    i += 1;
+    skipSpace();
+    const seen = new Set();
+    while (i < text.length && text[i] !== '}') {
+      skipSpace();
+      const key = readString();
+      if (seen.has(key)) {
+        found = true;
+        return;
+      }
+      seen.add(key);
+      skipSpace();
+      i += 1; // colon
+      readValue();
+      skipSpace();
+      if (text[i] === ',') {
+        i += 1;
+        skipSpace();
+      }
+    }
+    i += 1;
+  };
+  const readValue = () => {
+    skipSpace();
+    const ch = text[i];
+    if (ch === '{') readObject();
+    else if (ch === '[') readArray();
+    else if (ch === '"') readString();
+    else readPrimitive();
+  };
+
+  readValue();
+  return found;
+}
+
 function main() {
   const args = process.argv.slice(2);
   const flag = args.indexOf('--input');
@@ -86,6 +172,7 @@ function main() {
     const pnpm = process.env.AUDIT_GATE_PNPM || 'pnpm';
     try {
       raw = execFileSync(pnpm, ['audit', '--json'], {
+        cwd: REPO_ROOT,
         encoding: 'utf8',
         stdio: ['ignore', 'pipe', 'pipe'],
         timeout: TIMEOUT_MS,
@@ -101,6 +188,11 @@ function main() {
   let doc;
   try {
     doc = JSON.parse(raw);
+  } catch {
+    unavailable();
+  }
+  try {
+    if (hasDuplicateKeys(raw)) unavailable();
   } catch {
     unavailable();
   }
