@@ -84,23 +84,32 @@ function hasDuplicateKeys(text) {
   const skipSpace = () => {
     while (i < text.length && /\s/.test(text[i])) i += 1;
   };
-  const readString = () => {
+  // Advance past a JSON string token. Escape pairs are skipped as a unit so an
+  // escaped quote cannot end the token early. No string is built or copied.
+  const scanString = () => {
     i += 1; // opening quote
-    let value = '';
     while (i < text.length) {
       const ch = text[i];
-      if (ch === '\\') {
-        value += text.slice(i, i + 2);
-        i += 2;
-      } else if (ch === '"') {
+      if (ch === '\\') i += 2;
+      else if (ch === '"') {
         i += 1;
-        return value;
-      } else {
-        value += ch;
-        i += 1;
-      }
+        return;
+      } else i += 1;
     }
-    return value;
+  };
+  // Raw source of a string token, quotes included. Keys are decoded with
+  // JSON.parse before comparison so escape-spelled duplicates are caught.
+  const readRawString = () => {
+    const start = i;
+    scanString();
+    return text.slice(start, i);
+  };
+  const decodedKey = (raw) => {
+    try {
+      return JSON.parse(raw);
+    } catch {
+      return raw;
+    }
   };
   const readPrimitive = () => {
     while (i < text.length && text[i] !== ',' && text[i] !== ']' && text[i] !== '}') {
@@ -108,47 +117,52 @@ function hasDuplicateKeys(text) {
     }
   };
   const readArray = () => {
-    i += 1;
+    i += 1; // opening bracket
     skipSpace();
     while (i < text.length && text[i] !== ']') {
+      const before = i;
       readValue();
       skipSpace();
       if (text[i] === ',') {
         i += 1;
         skipSpace();
       }
+      if (i === before) i += 1; // guarantee progress
     }
-    i += 1;
+    i += 1; // closing bracket
   };
   const readObject = () => {
-    i += 1;
+    i += 1; // opening brace
     skipSpace();
     const seen = new Set();
     while (i < text.length && text[i] !== '}') {
+      const before = i;
       skipSpace();
-      const key = readString();
+      if (i >= text.length || text[i] === '}') break;
+      const key = decodedKey(readRawString());
       if (seen.has(key)) {
-        found = true;
-        return;
+        found = true; // keep scanning so the cursor stays in step
+      } else {
+        seen.add(key);
       }
-      seen.add(key);
       skipSpace();
-      i += 1; // colon
+      if (text[i] === ':') i += 1;
       readValue();
       skipSpace();
       if (text[i] === ',') {
         i += 1;
         skipSpace();
       }
+      if (i === before) i += 1; // guarantee progress
     }
-    i += 1;
+    i += 1; // closing brace
   };
   const readValue = () => {
     skipSpace();
     const ch = text[i];
     if (ch === '{') readObject();
     else if (ch === '[') readArray();
-    else if (ch === '"') readString();
+    else if (ch === '"') scanString();
     else readPrimitive();
   };
 
