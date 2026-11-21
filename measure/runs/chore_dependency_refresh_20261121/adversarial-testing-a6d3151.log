@@ -3,7 +3,7 @@ role: measure-adversarial-testing
 status: fail
 track: chore_dependency_refresh_20261121
 phase: Phase 1: Refresh and verify
-commits: pending
+commits: a5545102 (test and fixture commit)
 tests_run: node_modules/.bin/vitest run --maxWorkers=1 tests/audit-gate*.test.ts -> 20 passed, 2 failed (cwd audit and duplicate severity keys); node_modules/.bin/prettier --check tests/audit-gate.adversarial.test.ts tests/fixtures/audit-duplicate-count-keys.json -> pass
 files_changed: tests/audit-gate.adversarial.test.ts; tests/fixtures/audit-duplicate-count-keys.json
 plan_updates: none
