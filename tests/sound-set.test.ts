@@ -296,16 +296,20 @@ describe('sound-set wrapper through a fake earshot binary', () => {
 });
 
 function checkOggHeader(bytes: Buffer, label: string) {
-  expect(bytes.subarray(0, 4).toString('ascii'), `${label} step 1: capture pattern`).toBe('OggS');
+  expect(bytes.subarray(0, 4).equals(Buffer.from('OggS', 'ascii')), `${label} step 1: capture pattern`).toBe(
+    true,
+  );
   expect(bytes[4], `${label} step 2: stream structure version`).toBe(0);
   expect(bytes[5] & 0x02, `${label} step 3: beginning-of-stream flag`).not.toBe(0);
   const count = bytes[26];
   const packetStart = 27 + count;
   expect(bytes.length, `${label} step 4: segment table fits`).toBeGreaterThan(packetStart + 29);
-  expect(bytes[packetStart], `${label} step 5: packet type`).toBe(0x01);
-  expect(bytes.subarray(packetStart + 1, packetStart + 7).toString('ascii'), `${label} step 5: vorbis`).toBe(
-    'vorbis',
-  );
+  expect(
+    Buffer.concat([Buffer.from([0x01]), Buffer.from('vorbis', 'ascii')]).equals(
+      bytes.subarray(packetStart, packetStart + 7),
+    ),
+    `${label} step 5: packet type and vorbis marker`,
+  ).toBe(true);
   expect(bytes.readUInt32LE(packetStart + 7), `${label} step 6: vorbis version`).toBe(0);
   expect(bytes[packetStart + 11], `${label} step 7: stereo channels`).toBe(2);
   expect(bytes.readUInt32LE(packetStart + 12), `${label} step 8: sample rate`).toBe(48000);

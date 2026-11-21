@@ -1,0 +1,78 @@
+MEASURE_AGENT_RESULT
+role: mid-red
+status: red-proof (ADV-1 fixed on the test side; only the two ADV-2 Green-scope tests still fail)
+track: chore_earshot_sounds_20261121
+short_track_id: chore_earshot_sounds
+phase: Phase 1: Pin, render, and record
+baseline_sha (phase_base_sha): a9aec40d5cf899815852bbbd53b768285b98915b
+role_base_sha: 0752afc107d6616f03fe3d4e9152884b3c4d7d35
+head: this commit (parent 0752afc107d6616f03fe3d4e9152884b3c4d7d35); SHA in handoff reply
+commits: [this commit] message `measure(chore_earshot_sounds): red r3 exact Ogg magic bytes`; SHA in handoff reply
+tests_run: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run --maxWorkers=1 tests/sound-set.test.ts tests/sound-set.adversarial.test.ts' => exit 1, 2 failed | 70 passed (72)
+files_changed: tests/sound-set.test.ts, measure/tracks/chore_earshot_sounds_20261121/plan.md, measure/runs/chore_earshot_sounds_20261121/red-r3.log
+plan_updates: added [~] T6 Adversarial remediation (ADV-1 test side) with Red evidence and Red result
+known_failures (both expected, Green scope per ADV-2 nit; no syntax or import errors):
+- reports a directory at the target without a stack trace or recursive deletion (ADV-2: rmSync exception escapes, 24 stderr lines)
+- reports an overlong output name without a stack trace (ADV-2: 17 stderr lines)
+fix_applied (ADV-1): checkOggHeader in tests/sound-set.test.ts no longer decodes magic bytes with toString('ascii'). Step 1 compares bytes 0-3 with Buffer.from('OggS','ascii') via Buffer.equals. Step 5 compares the 7 bytes at packetStart with concat(0x01, 'vorbis') via Buffer.equals. The function keeps its name, signature, and final position, so tests/sound-set.adversarial.test.ts executes the fixed body in place with no edit. Both high-bit corruption tests now pass; all 17 original tests pass.
+handoff: Green owns the two ADV-2 failures in scripts/sound-set.mjs only: contain pre-render filesystem exceptions (directory at target, overlong name) into one controlled `sound-set:` stderr line with no stack trace, and preserve directory contents. Do not touch tests, plan, or strategy except to record Green evidence. tests/sound-set.adversarial.test.ts unchanged.
+--- raw command output follows ---
+
+ RUN  v5.1.1 /home/daniebo/Desktop/advantage-forge
+
+ ❯ tests/sound-set.adversarial.test.ts (55 tests | 2 failed) 1229ms
+   ❯ sound-set adversarial process boundaries (34)
+     × reports a directory at the target without a stack trace or recursive deletion 30ms
+     × reports an overlong output name without a stack trace 25ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sound-set.adversarial.test.ts > sound-set adversarial process boundaries > reports a directory at the target without a stack trace or recursive deletion
+AssertionError: expected [ 'node:fs:1282', …(23) ] to have a length of 1 but got 24
+
+- Expected
++ Received
+
+- 1
++ 24
+
+ ❯ tests/sound-set.adversarial.test.ts:212:48
+    210|       expect(readFileSync(join(output(root), 'keep.txt'), 'utf8')).toB…
+    211|       // D5 gives no exact text for a pre-render filesystem failure.
+    212|       expect(result.stderr.trim().split('\n')).toHaveLength(1);
+       |                                                ^
+    213|       expect(result.stderr).toMatch(/^sound-set: [^\r\n]+\n$/);
+    214|     });
+ ❯ fixture tests/sound-set.adversarial.test.ts:39:5
+ ❯ tests/sound-set.adversarial.test.ts:202:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/sound-set.adversarial.test.ts > sound-set adversarial process boundaries > reports an overlong output name without a stack trace
+AssertionError: expected [ 'node:fs:1282', …(16) ] to have a length of 1 but got 17
+
+- Expected
++ Received
+
+- 1
++ 17
+
+ ❯ tests/sound-set.adversarial.test.ts:225:48
+    223|       expect(calls(root)).toEqual([]);
+    224|       // D5 gives no exact text for a pre-render filesystem failure.
+    225|       expect(result.stderr.trim().split('\n')).toHaveLength(1);
+       |                                                ^
+    226|       expect(result.stderr).toMatch(/^sound-set: [^\r\n]+\n$/);
+    227|     });
+ ❯ fixture tests/sound-set.adversarial.test.ts:39:5
+ ❯ tests/sound-set.adversarial.test.ts:218:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  2 failed | 70 passed (72)
+   Start at  20:27:37
+   Duration  2.31s (tests 83%, transform 16%, import 1%)
+
+END_MEASURE_AGENT_RESULT

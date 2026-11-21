@@ -167,3 +167,18 @@ tests/sound-set.test.ts` passes.
       and archives it. This is a human-gated deferred task. Green r3 does not perform these
       actions. The task stays pending until closeout so the doctor sees an unchecked task while the
       track remains in_progress.
+
+- [~] T6 Adversarial remediation (ADV-1 test side): fix the AC3 reader in `tests/sound-set.test.ts`
+  to compare the Ogg magic bytes exactly. The `toString('ascii')` decoding clears the high bit,
+  so `0xcf` passes for `O` and `0xf6` for `v`. Compare raw bytes with `Buffer.equals` against
+  `Buffer.from('OggS')` and the `0x01` plus `vorbis` sequence. Change no production source and do
+  not edit `tests/sound-set.adversarial.test.ts` (it executes the existing reader body in place,
+  so the fix flows through with no rename). After the fix the two high-bit adversarial tests
+  pass; the two ADV-2 tests (directory at target, 300-char name) stay failing for Green.
+  - Red evidence: `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run --maxWorkers=1 tests/sound-set.test.ts tests/sound-set.adversarial.test.ts'`.
+    Log: `measure/runs/chore_earshot_sounds_20261121/red-r3.log`
+  - Red result (2026-11-21): exit 1 with 2 failed and 70 passed of 72 tests. The only failures are
+    the two ADV-2 filesystem tests (directory at target, 300-char name), which stay failing for
+    Green. All 17 original tests pass and both high-bit adversarial tests
+    (`capture pattern high bit`, `vorbis marker high bit`) pass. No syntax or import error.
+    `prettier --check` on the touched files passes.
