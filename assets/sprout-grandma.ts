@@ -54,6 +54,10 @@ const GRANNY: HumanoidProportions = {
   elbow: vY(ADULT.elbow),
   wrist: vY(ADULT.wrist),
   grip: vY(ADULT.grip),
+  // The hand's rest placement must follow the shortened wrist. Left at the adult height, the
+  // hand's own skin cuff sat above the wrist and poked through the green sleeve cuff (a peach
+  // oval in the raised arm and a patch above the lowered cuff). Scale it with every other Y.
+  fist: { ...ADULT.fist, palmAt: vY(ADULT.fist.palmAt) },
   hip: vY(ADULT.hip),
   knee: vY(ADULT.knee),
   ankle: vY(ADULT.ankle),
