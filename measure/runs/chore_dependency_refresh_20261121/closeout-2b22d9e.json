@@ -30,7 +30,8 @@
     "measure/archive/chore_dependency_refresh_20261121/metadata.json validates under python3 -m json.tool and holds status done, completed 2026-11-21, completed_at 2026-11-21, and actual_tasks 3.",
     "measure/archive/chore_dependency_refresh_20261121/automation-supervisor-closeout-manifest.json validates under python3 -m json.tool and records the audits, commands, SHAs, retained evidence, and artifact cleanup.",
     "git status --short measure/generated was empty before ./measure/generate.sh; the generator exited 0 and removed the active row for this track.",
-    "No bulky run artifact was deleted; the orchestrator identified none. All final-acceptance and closeout evidence is retained."
+    "No bulky run artifact was deleted; the orchestrator identified none. All final-acceptance and closeout evidence is retained.",
+    "After the closeout role-gate reported 'completed plan task lacks commit SHA' on T1 and T3, those two task lines now carry f67eeb06, aa7e7aee, 3059e3fa (T1) and 1d00046d, cb167393, a6d3151b (T3). measure_interphase_checks.py closeout passes."
   ],
   "commands": [
     "git rev-parse HEAD => 2b22d9e19c0ecadff325997c250598d072d8fd43",
