@@ -1,0 +1,38 @@
+MEASURE_AGENT_RESULT
+role: jr-green
+status: green-complete
+track: chore_earshot_sounds_20261121 (short: chore_earshot_sounds)
+phase: Phase 1: Pin, render, and record
+phase_base_sha: a9aec40d5cf899815852bbbd53b768285b98915b
+role_base_sha: ebf5ad203242bfb0e3374f55c6b7a27f8468c5b6 (Red r2)
+commits:
+  - f2d2fde40a3a1cb115ef7256a2a586060f714df4: measure(chore_earshot_sounds): fix review A findings (implementation)
+  - the commit that adds this log: measure(chore_earshot_sounds): green r3 evidence (a commit cannot contain its own SHA)
+tasks_flipped_to_x:
+  - T4 Red r2 / Green r3: Red commit ebf5ad203242bfb0e3374f55c6b7a27f8468c5b6 and implementation commit f2d2fde40a3a1cb115ef7256a2a586060f714df4
+tasks_flipped_to_b: none
+tasks_still_open:
+  - T5 Closeout (deferred:closeout-steward): human-gated closeout work; the closeout role owns it
+findings_disposition:
+  - F1 FIX: scripts/sound-set.mjs removes the target before each spawn; a stale target plus a no-write child now gives the exact D5 no-file line and exit 1
+  - F2 FIX: the fake contract and plan now log every call; the failed-render case has three entries and proves gamma is never called
+  - F4 FIX: successful child stdout and stderr are both forwarded to wrapper stdout before the per-file success line; failed-call output stays suppressed
+  - F3 FIX: plan Status line corrected; false doctor-pass claim removed; deferred closeout task T5 added so the in_progress track has an unchecked task
+tests_run:
+  - Red r2 rerun before Green: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run --maxWorkers=1 tests/sound-set.test.ts' -> exit 1, 3 failed | 14 passed (17), same three reasons as red-r2.log
+  - targeted command after Green: same heavy command -> exit 0, 17 passed (17)
+  - format: node_modules/.bin/prettier --check scripts/sound-set.mjs measure/tracks/chore_earshot_sounds_20261121/plan.md measure/tracks/chore_earshot_sounds_20261121/metadata.json measure/runs/chore_earshot_sounds_20261121/green-r3.log -> exit 0
+  - facts: node measure/tools/generate.mjs --check -> exit 0, facts current (4 files); ./measure/generate.sh -> Generated 4 Measure facts; generated row now in_progress 4/5
+  - doctor at audited head c86ccebe6ba5a72b388ca3118f5159875675597e (review A evidence): exit 1 with "in_progress track has no unchecked task"
+  - doctor on the working tree before the plan-evidence commit: exit 1 with "committed generated facts differ from the working tree"; the generated change is part of the plan-evidence commit
+  - doctor on final Green r3 HEAD: exit 0, "Measure doctor found no structural errors"
+files_changed:
+  - scripts/sound-set.mjs (F1 and F4 fix; one file in the implementation commit)
+  - measure/tracks/chore_earshot_sounds_20261121/plan.md (Status line, T4 completion, T5 deferred closeout, doctor record)
+  - measure/tracks/chore_earshot_sounds_20261121/metadata.json (updated_at refreshed; status stays in_progress)
+  - measure/generated/status.md (regenerated: in_progress, 4/5 tasks)
+  - measure/runs/chore_earshot_sounds_20261121/green-r3.log (new, this file)
+plan_updates: T4 marked [x] with Red and Green SHAs; T5 added as a deferred human-gated closeout task; Status line now true; the false doctor-pass claim is removed and the audited exit 1 is recorded; no track completion or archive action taken
+known_failures: none on final Green r3 HEAD; the seven Ogg files were not re-rendered because the wrapper change does not alter their bytes; no host Python or venv change
+handoff: Review A findings F1, F2, F3 and F4 are fixed. Reviewers must gate on phase_base_sha a9aec40d5cf899815852bbbd53b768285b98915b and on the final Green r3 HEAD reported by the orchestrator. New file for review scope: measure/runs/chore_earshot_sounds_20261121/green-r3.log. The closeout role owns T5 after phase acceptance. No push.
+END_MEASURE_AGENT_RESULT

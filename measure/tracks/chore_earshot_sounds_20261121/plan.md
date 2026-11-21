@@ -1,7 +1,8 @@
 # Author game sound sets with earshot
 
-Status: new (2026-11-21). No task has started. This plan owns execution status. `spec.md` holds
-the decisions and acceptance criteria.
+Status: in_progress (2026-11-21). T1 through T4 are `[x]` with commit evidence. T5 is a deferred
+closeout task owned by the closeout role. This plan owns execution status. `spec.md` holds the
+decisions and acceptance criteria.
 
 Lane: light. One phase. Source: PM assignment P2 of 2026-11-21. Deadline: none named.
 
@@ -122,26 +123,28 @@ tests/sound-set.test.ts` passes.
     `sounds/README.md`.
   - Green result (2026-11-21): `sounds/README.md` lands in commit
     `e45704be17d785cd89570ae5637e41e332fe2862`. The prettier gate exits 0. The generated facts
-    were refreshed after the metadata status moved to `in_progress`; the doctor then passes with
-    the generated facts committed.
+    were refreshed after the metadata status moved to `in_progress`. At audit head `c86ccebe` the
+    heavy-run doctor exited 1 with `in_progress track has no unchecked task`. That earlier claim
+    of a passing doctor was false. Green r3 records the real exit codes below and adds the deferred
+    closeout task T5.
   - PM hand-off evidence: set `chibi`; seven files `sounds/chibi/tap.ogg`, `sounds/chibi/right.ogg`,
     `sounds/chibi/wrong.ogg`, `sounds/chibi/star.ogg`, `sounds/chibi/pop.ogg`,
     `sounds/chibi/whoosh.ogg`, `sounds/chibi/level-end.ogg`. All seven land in commit
     `e45704be17d785cd89570ae5637e41e332fe2862`. The same evidence line is in
     `measure/runs/chore_earshot_sounds_20261121/green.log`.
 
-- [~] T4 Red r2 (remediation for review A): own the test side of F1, F2, and F4. Touch only
-  `tests/sound-set.test.ts`, `plan.md`, `test-strategy.md`, and the run log. Change no
-  production source. F1: add a stale-output regression (the target
-  `<root>/sounds/fake/alpha.ogg` already exists and the fake writes nothing for alpha, so the
-  wrapper must exit 1 with the exact D5 no-file line; a write from the current invocation is
-  required). F2: log the failed call in `calls.log` before the fake exits non-zero; use a third
-  entry (`gamma` to `pop/bubble`) so the fail-at-`beta` case proves `gamma` is never called;
-  print a known stdout line and a known stderr line from the fake and assert forwarding for
-  successful calls and suppression for the failed call per D5. F4: assert a successful child's
-  stderr is preserved without breaking the exact-line contract for wrapper failure lines. Align
-  the case-7 expectation text here and in `test-strategy.md` with the new test. Run the targeted
-  Red command; the new assertions fail for the right reasons with no syntax or import error.
+- [x] T4 Red r2 / Green r3 (remediation for review A): own the test side of F1, F2, and F4 and the wrapper fix. Touch only [commits `ebf5ad20`, `f2d2fde4`]
+      `tests/sound-set.test.ts`, `plan.md`, `test-strategy.md`, and the run log. Change no
+      production source. F1: add a stale-output regression (the target
+      `<root>/sounds/fake/alpha.ogg` already exists and the fake writes nothing for alpha, so the
+      wrapper must exit 1 with the exact D5 no-file line; a write from the current invocation is
+      required). F2: log the failed call in `calls.log` before the fake exits non-zero; use a third
+      entry (`gamma` to `pop/bubble`) so the fail-at-`beta` case proves `gamma` is never called;
+      print a known stdout line and a known stderr line from the fake and assert forwarding for
+      successful calls and suppression for the failed call per D5. F4: assert a successful child's
+      stderr is preserved without breaking the exact-line contract for wrapper failure lines. Align
+      the case-7 expectation text here and in `test-strategy.md` with the new test. Run the targeted
+      Red command; the new assertions fail for the right reasons with no syntax or import error.
   - Red evidence: `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run --maxWorkers=1 tests/sound-set.test.ts'`.
     Log: `measure/runs/chore_earshot_sounds_20261121/red-r2.log`
   - Red result (2026-11-21): exit 1 with 3 failed and 14 passed of 17 tests. The full-render case
@@ -150,3 +153,17 @@ tests/sound-set.test.ts` passes.
     (`calls.log` has the `alpha` and `beta` lines, `gamma` never called) and its exact failure line
     holds. The stale-output case fails with exit 0 instead of 1 (F1: pre-existing target accepted).
     No syntax or import error. `prettier --check` on the touched files passes.
+  - Green r3 result (2026-11-21): implementation commit `f2d2fde40a3a1cb115ef7256a2a586060f714df4`
+    changes `scripts/sound-set.mjs` only. F1 fix: the wrapper removes the target with
+    `rmSync(out, { force: true })` before each spawn, so a pre-existing file cannot satisfy the
+    post-render existence check. F2 and F4 fix: a successful child's stdout and stderr are both
+    forwarded to the wrapper stdout in that order, before the `sound-set: <name>.ogg <- <design>`
+    line; a failed call still prints no child output and the wrapper stderr keeps the single exact
+    D5 line. The targeted heavy-run command exits 0 with 17 of 17 tests passing. No Ogg file was
+    re-rendered. Log: `measure/runs/chore_earshot_sounds_20261121/green-r3.log`.
+
+- [ ] T5 Closeout (deferred:closeout-steward): Phase acceptance records the final verdict. The
+      closeout role then moves the track to completed, updates the registry and generated facts,
+      and archives it. This is a human-gated deferred task. Green r3 does not perform these
+      actions. The task stays pending until closeout so the doctor sees an unchecked task while the
+      track remains in_progress.
