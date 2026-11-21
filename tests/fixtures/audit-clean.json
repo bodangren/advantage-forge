@@ -1,0 +1,33 @@
+{
+  "advisories": {
+    "2001": {
+      "id": 2001,
+      "title": "Example moderate finding",
+      "module_name": "example-c",
+      "severity": "moderate",
+      "vulnerable_versions": "<9.9.9",
+      "patched_versions": ">=9.9.9",
+      "github_advisory_id": "GHSA-qqqq-yyyy-zzzz",
+      "url": "https://github.com/advisories/GHSA-qqqq-yyyy-zzzz",
+      "findings": [{ "version": "1.0.0", "paths": [".>example-c"], "dev": true, "optional": false, "bundled": false }]
+    },
+    "2002": {
+      "id": 2002,
+      "title": "Example low finding",
+      "module_name": "example-d",
+      "severity": "low",
+      "vulnerable_versions": "<9.9.9",
+      "patched_versions": ">=9.9.9",
+      "github_advisory_id": "GHSA-eeee-yyyy-zzzz",
+      "url": "https://github.com/advisories/GHSA-eeee-yyyy-zzzz",
+      "findings": [{ "version": "1.0.0", "paths": [".>example-d"], "dev": true, "optional": false, "bundled": false }]
+    }
+  },
+  "metadata": {
+    "vulnerabilities": { "info": 0, "low": 1, "moderate": 1, "high": 0, "critical": 0 },
+    "dependencies": 1,
+    "devDependencies": 2,
+    "optionalDependencies": 0,
+    "totalDependencies": 3
+  }
+}

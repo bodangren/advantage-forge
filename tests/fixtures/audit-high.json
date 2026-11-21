@@ -1,0 +1,44 @@
+{
+  "advisories": {
+    "1001": {
+      "id": 1001,
+      "title": "Example high finding one",
+      "module_name": "example-a",
+      "severity": "high",
+      "vulnerable_versions": "<9.9.9",
+      "patched_versions": ">=9.9.9",
+      "github_advisory_id": "GHSA-xxxx-yyyy-zzzz",
+      "url": "https://github.com/advisories/GHSA-xxxx-yyyy-zzzz",
+      "findings": [{ "version": "1.0.0", "paths": [".>example-a"], "dev": true, "optional": false, "bundled": false }]
+    },
+    "1002": {
+      "id": 1002,
+      "title": "Example high finding two",
+      "module_name": "example-b",
+      "severity": "high",
+      "vulnerable_versions": "<9.9.9",
+      "patched_versions": ">=9.9.9",
+      "github_advisory_id": "GHSA-wwww-yyyy-zzzz",
+      "url": "https://github.com/advisories/GHSA-wwww-yyyy-zzzz",
+      "findings": [{ "version": "1.0.0", "paths": [".>example-b"], "dev": true, "optional": false, "bundled": false }]
+    },
+    "1003": {
+      "id": 1003,
+      "title": "Example moderate finding",
+      "module_name": "example-c",
+      "severity": "moderate",
+      "vulnerable_versions": "<9.9.9",
+      "patched_versions": ">=9.9.9",
+      "github_advisory_id": "GHSA-qqqq-yyyy-zzzz",
+      "url": "https://github.com/advisories/GHSA-qqqq-yyyy-zzzz",
+      "findings": [{ "version": "1.0.0", "paths": [".>example-c"], "dev": true, "optional": false, "bundled": false }]
+    }
+  },
+  "metadata": {
+    "vulnerabilities": { "info": 0, "low": 0, "moderate": 1, "high": 2, "critical": 0 },
+    "dependencies": 1,
+    "devDependencies": 3,
+    "optionalDependencies": 0,
+    "totalDependencies": 4
+  }
+}

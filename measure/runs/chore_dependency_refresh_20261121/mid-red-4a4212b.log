@@ -1,0 +1,26 @@
+MEASURE_AGENT_RESULT
+role: mid-red
+status: red
+track: chore_dependency_refresh_20261121
+phase: Phase 1: Refresh and verify
+task: T1
+phase_base_sha: 7bc4a4e0
+role_base_sha: 7bc4a4e0
+head_before: 4a4212b0
+files_changed:
+  scripts/audit-gate.mjs (new: pnpm-audit gate, exits 0/1/2, --input <file>)
+  tests/audit-gate.test.ts (new: 4 vitest cases over --input fixtures)
+  tests/fixtures/audit-high.json (new: high=2 fixture)
+  tests/fixtures/audit-clean.json (new: 0 critical 0 high fixture)
+  tests/fixtures/audit-invalid.json (new: unparsable fixture)
+  measure/tracks/chore_dependency_refresh_20261121/plan.md (T1 marked [~], Red evidence recorded)
+tests_run:
+  - "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run --maxWorkers=1 tests/audit-gate.test.ts' => 1 file passed, 4 tests passed (4/4)"
+  - "node scripts/audit-gate.mjs => 'critical=0 high=4 moderate=6 low=1 info=0', exit 1 (expected Red failure; matches spec baseline 0 critical, 4 high)"
+  - "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/tsc --noEmit' => exit 2, only pre-existing errors in assets/*, tests/games/castle-defense/rules.adversarial.test.ts, tests/part.test.ts; none in new files"
+plan_updates: T1 [~]; Red evidence recorded in plan.md
+known_failures:
+  - live audit gate exits 1 (critical=0 high=4 moderate=6 low=1 info=0): the intended Red failure for T2 Green to close
+  - tsc --noEmit baseline failures (pre-existing, untouched files): assets/airship.ts, assets/longship.ts, assets/merchant-cart.ts, assets/mushroom-cap.ts, assets/plank.ts, assets/rowboat.ts, assets/storytime-crayon-box.ts, assets/storytime-nut.ts, assets/storytime-picture-book.ts, assets/waterskin.ts, assets/wool.ts, tests/games/castle-defense/rules.adversarial.test.ts, tests/part.test.ts
+handoff: T1 Red complete. Green (T2) owns: dependency updates, lockfile regeneration, breakage fixes, and closing the audit gate to exit 0. Do not edit package.json, the lockfile, or production source in Red. Unrelated dirty work across the tree was left untouched.
+END_MEASURE_AGENT_RESULT
