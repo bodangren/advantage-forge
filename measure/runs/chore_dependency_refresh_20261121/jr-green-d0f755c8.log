@@ -1,0 +1,41 @@
+MEASURE_AGENT_RESULT
+status: PASS (r5 remediation; escaped-key, in-array hang, and large-input defects fixed; all gates pass)
+role: Green (Measure Jr)
+track: chore_dependency_refresh_20261121
+phase: Phase 1: Refresh and verify (P1), tasks T1/T2, remediation round 5
+phase_base_sha: 7bc4a4e066f6094fafe679ab33fff520e8ee56ab
+role_base_sha: 3059e3faf9c677c1d11aabae105426b124d442ff
+implementation_commit: d0f755c8998f84f11f29f155acb437da601ef3ca
+final_green_head: d0f755c8998f84f11f29f155acb437da601ef3ca
+committed_paths_impl: scripts/audit-gate.mjs
+committed_paths_evidence: measure/tracks/chore_dependency_refresh_20261121/plan.md measure/runs/chore_dependency_refresh_20261121/jr-green-d0f755c8.log
+dispositions: F1=FIX; F2=FIX; F9=FIX; F10=FIX; F11=FIX
+
+Adversarial source: measure/runs/chore_dependency_refresh_20261121/review-b-0019518.json (F9, F10, F11) and review-a-0019518.json (F1, F2). Red commit 3059e3fa added the failing r3 cases and is inside phase_base_sha..HEAD. No committed test or fixture was edited.
+
+Work performed:
+1. F1/F10: in hasDuplicateKeys, each key is taken by slice including its quotes and decoded with JSON.parse before the seen check. Escape-spelled duplicates (lower and upper hex, solidus escape) now match their plain forms and exit 2.
+2. F9: on a duplicate the scanner sets found and keeps scanning instead of returning from readObject. Both the array and object loops carry a progress guard, so a duplicate inside an object inside an array exits 2 instead of spinning forever.
+3. F11: string tokens are consumed by an index scan and keys are taken by slice. No per-character string is built, so a 96 MB valid --input file exits 0 in 0.56 s with 250364 KB peak memory.
+4. plan.md: flipped T1 from [~] to [x] with Red SHA evidence, replaced the stale F6 accepted note with a fixed note, and added r5 evidence to T2.
+
+Targeted Red command output:
+- Before (role base 3059e3fa): HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run --maxWorkers=1 tests/audit-gate.test.ts tests/audit-gate.adversarial.test.ts' -> 1 failed file and 1 passed file, 5 failed and 24 passed of 29, exit 1. Failures: the four escape-spelled duplicate cases (each status 0, expected 2) and the duplicate-inside-array case (ETIMEDOUT at 10 s).
+- After (implementation commit d0f755c8): same command -> 2 passed files, 29 passed tests, exit 0.
+
+Gates (all after the change):
+- targeted vitest (heavy runner): 29 passed, exit 0.
+- node scripts/audit-gate.mjs (repo root): critical=0 high=0 moderate=0 low=0 info=0, exit 0.
+- node /home/daniebo/Desktop/advantage-forge/scripts/audit-gate.mjs (cwd /tmp): critical=0 high=0 moderate=0 low=0 info=0, exit 0.
+- node scripts/audit-gate.mjs --input /tmp/audit-100mb.json (96 MB valid file, heavy runner): critical=0 high=0 moderate=0 low=0 info=0, exit 0 in 0.56 s, maxrss 250364 KB. The temp file was deleted after the run.
+- node_modules/.bin/prettier --check scripts/audit-gate.mjs: pass, exit 0.
+- node_modules/.bin/tsc --noEmit (heavy runner): exit 2, 38 errors in 13 files, identical to the recorded before set; comm -13 is empty, so the after set is a subset of the before set.
+
+Handoff to review roles:
+- Tasks flipped to [x] with SHA evidence: T1 (Red commits f67eeb06, aa7e7aee, 3059e3fa). T2 stays [x] with r5 evidence at implementation commit d0f755c8. T3 remains [x].
+- Tasks flipped to [b] with (deferred:<owner>): none. No human-gated or un-implementable contract in this round.
+- New files added: measure/runs/chore_dependency_refresh_20261121/jr-green-d0f755c8.log (this untracked run record). No new source, test, or fixture file.
+- Immutable phase_base_sha: 7bc4a4e066f6094fafe679ab33fff520e8ee56ab. Implementation commit: d0f755c8998f84f11f29f155acb437da601ef3ca. Final Green HEAD after the evidence commit is reported in the chat result block.
+
+Scope notes: no push. measure/generate.sh was not run. metadata.json, tracks.md, generated/status.md, and the track index.md were not changed. Unrelated modified and untracked files were left untouched; only the listed paths were staged with explicit git add.
+END_MEASURE_AGENT_RESULT
