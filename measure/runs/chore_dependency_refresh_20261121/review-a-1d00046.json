@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "role": "review-a",
+  "track": "chore_dependency_refresh_20261121",
+  "phase": "Phase 1: Refresh and verify",
+  "baseline_sha": "7bc4a4e066f6094fafe679ab33fff520e8ee56ab",
+  "phase_base_sha": "7bc4a4e066f6094fafe679ab33fff520e8ee56ab",
+  "role_base_sha": "1d00046da922933bd546047ed01559981c5f9a8e",
+  "audited_head_sha": "1d00046da922933bd546047ed01559981c5f9a8e",
+  "status": "fail",
+  "summary": "The audit gate accepts malformed audit data as clean. The baseline comparisons are credible, but AC3 remains unmet.",
+  "blocking_findings": [
+    "F1 [Blocker] review-a: scripts/audit-gate.mjs:16-54 converts missing or invalid counts into zero and ignores malformed advisory entries. Actual CLI probes with anonymous file fixtures confirmed false passes. Inputs {\"metadata\":{\"vulnerabilities\":{}}}, {\"metadata\":{\"vulnerabilities\":[]}}, and {\"metadata\":{\"vulnerabilities\":{\"critical\":0,\"high\":\"4\"}}} all exit 0. Input {\"advisories\":{\"bad\":{}}} also exits 0. Each prints critical=0 high=0 moderate=0 low=0 info=0. Reject malformed counts and advisory entries with exit 2, or use a separately validated fallback. Add regression tests for these input classes, critical-only findings, advisory fallback, and live child exits. Rationale: AC2 requires measured zero counts; absent or invalid evidence cannot establish a clean audit.",
+    "F2 [Blocker] review-a: measure/tracks/chore_dependency_refresh_20261121/plan.md:11 marks T2 complete although spec.md:11 requires passing typecheck and test gates. The compiler still exits 2, and the affected test file still exits 1. The saved full suite also exits 1. Only Prettier and the build have explicit baseline exceptions in the plan. The log's final claim, 'The plan gates all pass.', contradicts its recorded exits at jr-green-bdacfe54.log:57-64. Preserve the credible no-regression evidence, but keep T2 incomplete and remove the pass claim while AC3 remains unmet. Rationale: measure/workflow.md:56 states that baseline failures do not become successful checks. Green owns the record correction; the orchestrator owns acceptance against AC3."
+  ],
+  "nonblocking_findings": [
+    "F3 [Nit] review-a: tests/fixtures/audit-invalid.json:1 introduces a formatter parse error in the audited phase. Both saved Prettier runs already include this Red fixture, so their equal counts establish dependency-only parity, not a clean phase baseline. Use a text fixture extension or exclude this intentionally invalid fixture from formatting. Rationale: An invalid-data test need not add a permanent formatter error."
+  ],
+  "evidence": [
+    "HEAD remained 1d00046da922933bd546047ed01559981c5f9a8e at the start and end. Audited the exact 7bc4a4e066f6094fafe679ab33fff520e8ee56ab..1d00046da922933bd546047ed01559981c5f9a8e diff.",
+    "Read measure/index.md, tracks.md, workflow.md, tech-debt.md, lessons-learned.md, generated/routes.md, generated/architecture.json, and the track specification, plan, metadata, and spec review. Read every supplied track log. No track test-strategy.md or Measure routing policy exists. The light-lane plan supplies the test strategy. No measure/anti-patterns.md exists.",
+    "AC1: Read registry.npmjs.org/<encoded-package>/latest for all 18 direct packages. Every selected version matches latest except the documented TypeScript deferral. Latest TypeScript is 7.0.2; package.json selects 6.0.3. The install log records 6.0.3 as the selected fallback.",
+    "AC1 deferral: /home/daniebo/.cache/opencode/deprefresh/after-tsc.log:58-70 contains 13 additional TypeScript 7.0.2 diagnostics in tests/song-still-hook.test.ts. after-tsc-2.log removes those diagnostics. The current compiler also reports no diagnostics in that test. Its focused test passes.",
+    "AC2 live: The heavy-run audit command exited 0 and printed critical=0 high=0 moderate=0 low=0 info=0. pnpm-lock.yaml:7-8 applies the sharp override. Its ndarray-pixels snapshot resolves sharp 0.35.5. source-map-js resolves 1.2.4. No moderate or low findings remain in the live result.",
+    "Audit failure reproduction: Python os.memfd_create supplied anonymous JSON fixtures to the actual CLI through inherited /proc/self/fd paths. Empty count objects, array metadata, a string high count, and a malformed advisory each exited 0. A critical=1 control exited 1. A document without either supported field exited 2 with audit unavailable. No fixture file entered the checkout.",
+    "Live-path isolation: Evaluated the unchanged script body with injected child-process I/O. A pnpm exit 1 with valid high=4 JSON produced gate exit 1. A pnpm exit 1 with valid clean JSON produced gate exit 0. Empty stdout and error-only JSON produced exit 2. Valid critical advisory fallback produced exit 1. This confirms that child exit codes do not override valid counts.",
+    "tests/audit-gate.test.ts passed all four tests under Vitest 5.1.1. These tests exercise real child invocations, but they omit malformed schemas, critical-only findings, advisory fallback, and the live child failure path.",
+    "AC3 compiler parity: before-tsc.log and after-tsc-2.log in /home/daniebo/.cache/opencode/deprefresh are byte-identical. Parsed diagnostic headers contain 38 errors across 13 files. The independent current compiler run exited 2 with the same diagnostics.",
+    "AC3 formatter parity: Parsed [warn] file labels in before-prettier.log and after-prettier.log. Both contain 3318 warnings with identical file sets. Both contain the identical audit-invalid.json error block. The recorded formatter exit is 2, not a successful clean check.",
+    "AC3 test parity: Parsed FAIL labels and labeled suite summaries from before-vitest.log and after-vitest.log. Both name the same nine failed tests. Both report 1 failed file, 208 passed files, 9 failed tests, and 3254 passed tests. The independent affected-file run reproduced all nine failures and passed 133 tests.",
+    "AC3 build evidence: before-vite-build.log:120 and after-vite-build.log:126 report successful builds. Both logs contain the large-chunk diagnostic. The Green log records exit 0. The audit did not rebuild outputs because its write scope excludes dist/.",
+    "AC4: after-forge-builds.log records rogue with a 1024x1024 texture atlas and slime with vertex colors. It records both GLB paths and contains no warning: line. The Green log records the required combined heavy-run command and exit 0. The log also contains an unregistered-extension diagnostic; the stated acceptance rule only rejects warning: lines. This evidence establishes build completion, not rendered appearance.",
+    "AC5: git show --stat bdacfe54 confirms package.json and pnpm-lock.yaml landed together, with pnpm-workspace.yaml. The orchestrator's safe-push remains pending. This audit neither pushed nor treated push completion as established.",
+    "Dependency blast radius: build-graph scan . :memory: inspected 21834 nodes and 24586 edges without creating a database file. No application export changed in this phase. Checked callers through source imports and generated entrypoints. Three feeds src/asset.ts, src/gltf.ts, rendering, avatar composition, and game views. Meshoptimizer feeds src/sdf/mesher.ts. Vite feeds vite.config.ts, the CLI server, and storytime. Vitest feeds the test suite; Node types cover the compiler scope.",
+    "Focused caller coverage passed: tests/asset.test.ts, rig.test.ts, motion.test.ts, variants.test.ts, storytime-line-art-pass.test.ts, song-still-hook.test.ts, and apk3d/avatar-compose.test.ts. All seven files passed, with 39 tests. These tests cover GLB structure, baked texture attributes, rig behavior, variants, render state, AST use, and avatar composition. No new compiler diagnostics indicate API breakage in checked TypeScript callers. No browser rendering claim follows from these tests.",
+    "Known Playwright limit: chromium.executablePath() resolves to /home/daniebo/.cache/ms-playwright/chromium-1255/chrome-linux64/chrome, which does not exist. src/cli/forge.ts:195-207 launches that browser for render commands, but not build or check. The plan records the skipped browser download. Rendering remains unavailable on this checkout until its browser prerequisite is supplied.",
+    "Current-phase checks: No bare-digit count assertion appears in the new audit tests. No deliverable-presence checker changed, so a missing-deliverable fixture is not applicable. The malformed-evidence fixture exposes the new gate's false-pass behavior. The current-phase pass claim conflicts with actual exits. No framework-wide orchestration audit ran.",
+    "Scope: The committed diff changes dependency declarations, the lockfile, the new audit gate, its tests, and track evidence. It changes no asset, game, or engine source. Unrelated dirty work remains untouched. The audited implementation paths have no local modifications. No installation or commit ran.",
+    "Worktree report: master is the audited checkout. advantage-forge-release remains at detached e01ac17b. advantage-forge-shelf-sync uses shelf-sync-20261030 at 623e7b5d. Their owning sessions retain cleanup responsibility. origin/gh-pages remains the deployment branch; origin/master remains the primary remote branch. This audit makes no branch changes. Facts changed: none."
+  ],
+  "commands": [
+    "git rev-parse HEAD; git rev-parse 7bc4a4e0 1d00046d",
+    "git diff 7bc4a4e0..1d00046d -- scripts/audit-gate.mjs tests/audit-gate.test.ts tests/fixtures package.json pnpm-workspace.yaml measure/tracks/chore_dependency_refresh_20261121",
+    "git diff 7bc4a4e0..1d00046d -- pnpm-lock.yaml",
+    "git diff --check 7bc4a4e0..1d00046d",
+    "git log --oneline 7bc4a4e0..1d00046d; git show --stat bdacfe54",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run --maxWorkers=1 tests/audit-gate.test.ts' => exit 0; 4 passed",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/audit-gate.mjs' => exit 0; all five counts zero",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/tsc --noEmit' => exit 2; 38 errors across 13 files",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run --maxWorkers=1 tests/storytime-book-pictures.test.ts' => exit 1; 9 failed and 133 passed",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run --maxWorkers=1 tests/asset.test.ts tests/rig.test.ts tests/motion.test.ts tests/variants.test.ts tests/storytime-line-art-pass.test.ts tests/song-still-hook.test.ts tests/apk3d/avatar-compose.test.ts' => exit 0; 7 files and 39 tests passed",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'build-graph scan . :memory:' => exit 0; 21834 nodes and 24586 edges",
+    "Heavy-run Python memfd probe: os.memfd_create('audit-fixture',0); os.write(fd,json.dumps(doc).encode()); subprocess.run(['node','scripts/audit-gate.mjs','--input',f'/proc/self/fd/{fd}'],pass_fds=(fd,),capture_output=True,text=True). Results and exact inputs appear in evidence and F1.",
+    "Heavy-run Node VM probe: read scripts/audit-gate.mjs; remove import declarations; inject execFileSync, readFileSync, process.exit, and console; evaluate unchanged body with runInNewContext. Results appear in evidence.",
+    "Read-only Python comparison: parsed compiler diagnostic headers, Prettier [warn] paths and [error] blocks, Vitest FAIL labels, and labeled suite totals. Compared before and after files under /home/daniebo/.cache/opencode/deprefresh.",
+    "Read-only HTTPS GET https://registry.npmjs.org/<encoded-package>/latest for every direct package in package.json",
+    "git status --short -- scripts/audit-gate.mjs tests/audit-gate.test.ts tests/fixtures package.json pnpm-lock.yaml pnpm-workspace.yaml measure/tracks/chore_dependency_refresh_20261121; git worktree list; git branch -a"
+  ],
+  "changed_files": [
+    "measure/runs/chore_dependency_refresh_20261121/jr-green-bdacfe54.log",
+    "measure/runs/chore_dependency_refresh_20261121/mid-red-4a4212b.log",
+    "measure/runs/chore_dependency_refresh_20261121/spec-review-7bc4a4e.log",
+    "measure/tracks/chore_dependency_refresh_20261121/plan.md",
+    "measure/tracks/chore_dependency_refresh_20261121/spec-review.md",
+    "package.json",
+    "pnpm-lock.yaml",
+    "pnpm-workspace.yaml",
+    "scripts/audit-gate.mjs",
+    "tests/audit-gate.test.ts",
+    "tests/fixtures/audit-clean.json",
+    "tests/fixtures/audit-high.json",
+    "tests/fixtures/audit-invalid.json"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "retry_implementation",
+  "confidence": "high",
+  "route": "openai/gpt-6.1-sol#high (ra-quota pick review-a --not-family muse). Red family: Muse. Green family: Hy4 (opencode-go/hy4-flash-free#high).",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 3,
+      "evidence": "scripts/audit-gate.mjs:16-54 passes malformed audit evidence, although the live audit reports zero findings."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 3,
+      "evidence": "tests/audit-gate.test.ts passes four real CLI cases but omits malformed schemas and the live child failure path."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "git diff 7bc4a4e0..1d00046d contains no asset, game, or engine source change."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 4,
+      "evidence": "Saved before and after logs prove baseline parity, and independent runs reproduce the compiler diagnostics and nine failed tests."
+    }
+  ]
+}

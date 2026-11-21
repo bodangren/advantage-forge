@@ -1,0 +1,18 @@
+MEASURE_AGENT_RESULT
+role: review-c
+status: fail
+track: chore_dependency_refresh_20261121
+phase: Phase 1: Refresh and verify
+tasks: T1 T2 T3
+phase_base_sha: 7bc4a4e0
+role_base_sha: 1d00046d
+audited_head_sha: 1d00046da922933bd546047ed01559981c5f9a8e
+current_head_sha: 1d00046da922933bd546047ed01559981c5f9a8e
+audited_head_is_current: true
+contract_applicability: applicable
+blocking_findings: B-1 (Green, High, CLI/runtime): Playwright 1.65.1 was installed with PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 (jr-green-bdacfe54.log lines 75-76). forge render launches Chromium for every command except build/check (src/cli/forge.ts lines 195-207). The recorded Forge checks run build and check only, so the updated Playwright/browser pairing is not verified. A fresh install without a cached matching browser will make render fail before rendering. Run a render command in the supported install environment and record success, or document and enforce the required browser installation.
+nonblocking_findings: []
+evidence: git rev-parse HEAD returned 1d00046da922933bd546047ed01559981c5f9a8e, equal to audited_head_sha. The phase delta is limited to package.json, pnpm-lock.yaml, pnpm-workspace.yaml, scripts/audit-gate.mjs, and its tests/fixtures, plus plan/evidence records. Forge render requires Chromium; the Green log skips the Playwright browser download and records no render execution. Vite build succeeds, and package scripts/configuration remain unchanged.
+commands: node scripts/audit-gate.mjs --input tests/fixtures/audit-clean.json => exit 0; audit-high.json => exit 1; audit-invalid.json => exit 2 with audit unavailable.
+retry_recommendation: escalate_human
+END_MEASURE_AGENT_RESULT

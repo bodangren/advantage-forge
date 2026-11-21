@@ -1,7 +1,7 @@
 # Measure status
 
 Tracks: 78.
-Tracks by status: new: 29; in_progress: 48; completed: 1.
+Tracks by status: new: 28; in_progress: 48; completed: 2.
 Tracks by workstream: assets: 33; games: 41; foundation: 4.
 
 | Track | Status | Workstream | Plan tasks | Estimate | Actual |
@@ -23,7 +23,7 @@ Tracks by workstream: assets: 33; games: 41; foundation: 4.
 | [audio_game_integration_20261014](../tracks/audio_game_integration_20261014/) | new | games | 0/5 | 5 | — |
 | [audio_sfx_library_20261013](../tracks/audio_sfx_library_20261013/) | in_progress | assets | 18/19 | 12 | — |
 | [audio_sources_expand_20261014](../tracks/audio_sources_expand_20261014/) | in_progress | assets | 7/11 | 10 | — |
-| [chore_dependency_refresh_20261121](../tracks/chore_dependency_refresh_20261121/) | new | foundation | 0/3 | 3 | — |
+| [chore_dependency_refresh_20261121](../tracks/chore_dependency_refresh_20261121/) | completed | foundation | 3/3 | 3 | — |
 | [game_2d_parity_20260928](../tracks/game_2d_parity_20260928/) | new | games | 0/5 | 5 | — |
 | [game_abyssal_well_20260928](../tracks/game_abyssal_well_20260928/) | in_progress | games | 6/8 | 8 | — |
 | [game_alchemists_synthesis_20260928](../tracks/game_alchemists_synthesis_20260928/) | in_progress | games | 6/8 | 8 | — |

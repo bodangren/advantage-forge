@@ -1,0 +1,194 @@
+{
+  "schema_version": 1,
+  "role": "measure-phase-acceptance",
+  "track": "chore_dependency_refresh_20261121",
+  "phase": "Phase 1: Refresh and verify",
+  "phase_base_sha": "7bc4a4e066f6094fafe679ab33fff520e8ee56ab",
+  "role_base_sha": "5d74968c4e9bf0c79fc7a75d88b41817378a0841",
+  "audited_head_sha": "5d74968c4e9bf0c79fc7a75d88b41817378a0841",
+  "current_head_sha": "5d74968c4e9bf0c79fc7a75d88b41817378a0841",
+  "audited_head_is_current": true,
+  "allowed_test_only_commits": [
+    "7b7464a920209e22d6ee22e75464e0382efbd18d",
+    "5d74968c4e9bf0c79fc7a75d88b41817378a0841"
+  ],
+  "status": "pass",
+  "summary": "Phase 1 passes acceptance at HEAD 5d74968c with no blocker. AC1 to AC4 hold with fresh evidence, and the AC5 commit rule holds. The live audit gate exits 0 with five zero counts, and a direct pnpm audit finds no known vulnerability. The tsc, vitest, and tracked prettier after sets add no failure to the before sets. Vite build, the asset builds, and the render check exit 0. Six nonblocking notes remain. The main note: 8 untracked JSON result files add prettier warnings in the working tree.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F1 [Minor] phase-acceptance: `prettier --check .` reports 3325 [warn] files, and the before set holds 3318. The after set drops scripts/audit-gate.mjs and adds 8 files. All 8 are untracked JSON result files under measure/runs/chore_dependency_refresh_20261121/: review-a-1d00046, review-a-cb16739, review-b-1d00046, review-c-0019518, review-c-1d00046, review-c-6f0e87b, review-c-cb16739, and this role's own provisional result (the final result file is prettier-clean). `git ls-files` finds 0 of the 8 at HEAD, so the tracked after set is a subset of the before set and AC3 holds at the audited HEAD. The cause is one-line objects in the ratings lists, which prettier expands (diff of review-c-6f0e87b.json). Owner: orchestrator. Action: run `node_modules/.bin/prettier --write` on the 7 reviewer files before the orchestrator commits them. Otherwise the committed after set exceeds the before set by 7 files at the next AC3 check.",
+    "F2 [Nit] phase-acceptance: plan.md:38 (the F7 note) says scripts/audit-gate.mjs sets TIMEOUT_MS at line 18 and passes it at line 91. At HEAD TIMEOUT_MS sits at line 21 and the execFileSync option that uses it sits at line 192. Line 18 is blank. Review B flagged this drift in review-b-6f0e87b.json (F7). Owner: orchestrator at closeout. Action: write lines 21 and 192, or drop the line numbers.",
+    "F3 [Nit] phase-acceptance: the plan records F4, F6, F7, and F8 as accepted review notes (plan.md:36-38 and the T3 block). It has no line for Review B F12 or F13 (review-b-6f0e87b.json) and no evidence line for adversarial commit 7b7464a9. F12 is closed: the new test `parses a 4 MiB string with a 64 MiB heap limit` (tests/audit-gate.adversarial.test.ts:128-148) fails against the scanner of 0019518e (exit 134, heap out of memory) and passes at HEAD (exit 0). F13 stays open as a Nit: decodedKey (scripts/audit-gate.mjs:107-113) returns the raw token when JSON.parse throws, a branch that no valid input reaches. Owner: orchestrator at closeout. Action: record both dispositions and note that the targeted command now gives 30 of 30, not 29.",
+    "F4 [Nit] phase-acceptance: jr-green-199189d9.log:2 and jr-green-d0f755c8.log:2 say `all gates pass` in the status line. The same logs record `tsc --noEmit` exit 2 with 38 errors that equal the before set, so the status line overstates the result. plan.md does not repeat the claim and defines T2 as complete on the AC3 subset rule (plan.md:15 and :22). The verdict does not change. Owner: orchestrator. Action: none required for acceptance; the orchestrator may add a correction line as was done for jr-green-bdacfe54.log.",
+    "F5 [Nit] phase-acceptance: measure/tech-debt.md:45 (TD-38) says `2 type errors` and names only `TS2554 at line 587`. The fresh tsc output holds two TS2554 errors in tests/games/castle-defense/rules.adversarial.test.ts, at lines 195 and 587. The count is right and the entry names one line. Owner: orchestrator. Action: name both lines.",
+    "F6 [Nit] phase-acceptance: record housekeeping for closeout. (a) plan.md:3 reads `Status: new`, metadata.json holds status new and actual_tasks null, and measure/generated/status.md:26 shows 0/3, although T1 to T3 are [x]. The closeout runs generate.sh. (b) The review-a, review-b, and review-c result files for 0019518e, 1d00046d, cb167393, and 6f0e87b5, and jr-green-a6d3151b.log, are untracked at HEAD. The prerequisite results that this acceptance cites are therefore untracked. Commit them with the closeout. (c) The directory measure/runs/chore_dependency_refresh_20261121/scratch-review-b2/ holds 3 inert Review B files. Remove it with `rm -r measure/runs/chore_dependency_refresh_20261121/scratch-review-b2`. This role cannot remove it. Owner: orchestrator."
+  ],
+  "evidence": [
+    "HEAD provenance: `git rev-parse HEAD` printed 5d74968c4e9bf0c79fc7a75d88b41817378a0841 at the start, before every gate, and after the last gate. It equals audited_head_sha and role_base_sha. phase_base_sha 7bc4a4e0 is an ancestor of HEAD.",
+    "Prerequisites: Review A, Review B, Review C, and adversarial testing all report status pass at 6f0e87b5 (review-a-6f0e87b.json, review-b-6f0e87b.json, review-c-6f0e87b.json, adversarial-testing-6f0e87b.json). `git diff --name-status 6f0e87b5..5d74968c` lists A adversarial-testing-6f0e87b.json, A adversarial-testing-6f0e87b.log, and M tests/audit-gate.adversarial.test.ts. Commit 7b7464a9 touches that test and two measure/runs/ files. Commit 5d74968c touches one measure/runs/ log. Both are test-only or measure/runs/ only, so the implementation content equals 6f0e87b5 and the prerequisite results apply. scripts/audit-gate.mjs last changed in d0f755c8 (`git log -- scripts/audit-gate.mjs`).",
+    "Scope: `git diff --name-status 7bc4a4e0..5d74968c` outside measure/runs lists package.json, pnpm-lock.yaml, pnpm-workspace.yaml, scripts/audit-gate.mjs, 2 test files, 16 fixtures, measure/tech-debt.md, and the track spec, plan, and spec-review. No asset, game, or src file changed. `git diff --check 7bc4a4e0..5d74968c` exited 0. No tracked file in the audited paths differs from HEAD in the working tree, and no untracked file exists under tests, scripts, or src.",
+    "AC2: `node scripts/audit-gate.mjs` printed critical=0 high=0 moderate=0 low=0 info=0 and exited 0 at the repo root, from /tmp, and from /. A direct `pnpm audit` printed `No known vulnerabilities found` and exited 0. The before state was 0 critical, 4 high, 6 moderate, 1 low (spec.md:17). Fixture probes: audit-high.json gave high=2 and exit 1, audit-clean.json exit 0, audit-invalid.txt exit 2, and AUDIT_GATE_PNPM=/no-such-pnpm exit 2 with `audit unavailable`. No moderate or low finding remains, so no finding needs a reason in the plan (plan.md:27).",
+    "AC1: `pnpm outdated` lists one package: typescript (dev), current 6.0.3, latest 7.0.2. The other 17 direct dependencies equal their latest version. The lockfile importer specifiers equal package.json for 18 of 18 direct dependencies (0 mismatches), and `pnpm ls --depth 0` shows the same 18 versions. The plan names the deferral at plan.md:30. I checked the reason: tests/song-still-hook.test.ts:3, :65, :66, :69, and :85 use `import ts from 'typescript'` with ts.createSourceFile, ts.ScriptTarget, and ts.CallExpression. The exports map of typescript@7.0.2 maps the root entry to ./lib/version.cjs and moves the API under unstable/*. typescript@6.0.3 is the latest 6.x. The test belongs to commit 54889801 of another track. I did not reproduce the figure of 13 tsc errors.",
+    "AC3 prettier: `HEAVY_MIN_AVAIL_MB=1500 bash heavy-run.sh -c 'node_modules/.bin/prettier --check .'` exited 1 with `Code style issues found in 3325 files` and 0 [error] lines. The before log (3318 [warn] files plus the audit-invalid.json error block) and the after output were compared with `LC_ALL=C sort -u` and `comm`. After minus before: 8 files, all untracked (finding F1). Before minus after: scripts/audit-gate.mjs. `git ls-files` finds 0 of the 8 new entries at HEAD. The audit-invalid.json error block is gone because the fixture is audit-invalid.txt.",
+    "AC3 tsc: `heavy-run.sh -c 'node_modules/.bin/tsc --noEmit'` exited 2 with 38 error lines in 13 files. `comm -13` and `comm -23` against before-tsc.log are both empty, and the output is byte-identical to the before log. The 38 errors split as 17 (TD-35), 13 (TD-36), 5 (TD-37), 2 (TD-38), and 1 (TD-39).",
+    "AC3 vitest: `heavy-run.sh -c 'node_modules/.bin/vitest run --maxWorkers=1'` exited 1 with `Test Files 1 failed | 209 passed (210)` and `Tests 9 failed | 3280 passed (3289)` in 141.22 s. The 9 failed names equal the before log: T78, T142, T145, T147, T150, T173, T174, T176, and T177 in tests/storytime-book-pictures.test.ts. Both logs hold 23 FAIL blocks, and the only text difference is a random temp directory suffix. The total is consistent: 3263 before, minus 4 early audit tests, plus 30 audit-gate tests, gives 3289. The failure causes are the live picture list (227 rows against 196) and a /tmp path, so the dependency refresh does not cause them.",
+    "Audit-gate tests: `heavy-run.sh -c 'node_modules/.bin/vitest run --maxWorkers=1 tests/audit-gate.test.ts tests/audit-gate.adversarial.test.ts'` exited 0 with 2 files and 30 of 30 tests passed. The two files use fixtures and stand-in pnpm binaries, so the suite makes no network call.",
+    "AC3 vite build: `heavy-run.sh -c 'node_modules/.bin/vite build'` exited 0 with vite v8.3.8, 132 modules transformed, and `built in 451ms`. The large-chunk diagnostic is the same as in before-vite-build.log (GLTFLoader chunk 790.03 kB, from 769.54 kB).",
+    "AC4 builds: `heavy-run.sh -c 'FORGE_GL=software ./forge build rogue && ./forge build slime --fast'` exited 0 with no line that contains `warning:`. Textured rogue: 45,058 triangles, 0.711 x 1.024 x 0.498 m, atlas 1024x1024. This equals docs/character-reviews.json:2698 (`45,058 triangles`) from before the refresh. Slime: 15,431 triangles. The notice `Some extensions were not registered for I/O` comes from the gltf-transform logger (node_modules/@gltf-transform/core/dist/index.js:4690). It also appears in older logs (bench/sonnet/sprouts/cutout-pip.log:1, measure/runs/asset_storytime_l2_unit1_pictures_20261025/green-p3-r54-05-final.log:1), so it is not new.",
+    "AC4 render: `heavy-run.sh -c './forge render rogue --fast'` exited 0 and printed `render out/rogue/render.png`. The mtime of out/rogue/render.png moved from 2026-11-21 11:57:28 to 13:47:25 (924299 bytes both times). I viewed the file: it holds the reference, front, three-quarter, side, and back views of the rogue. `playwright install --dry-run chromium` names ~/.cache/ms-playwright/chromium-1255 (Chrome for Testing 159.0.8154.6). That directory and chromium_headless_shell-1255 hold INSTALLATION_COMPLETE, and the binary reports `Google Chrome for Testing 159.0.8154.6`. The CLI download failed twice and the matching official archives were installed by hand (plan.md:28-29, verified by Review B at cb167393). I accept this documented deviation from the literal install step.",
+    "AC5: `git log` shows package.json, pnpm-lock.yaml, and pnpm-workspace.yaml changed together in bdacfe54 (3 files). Commit 6987ed50 changed only package.json (engines.node). The lockfile holds no engines field, and its specifiers still equal package.json. engines.node equals the engines of vitest@5.1.1 (`pnpm view`). The push step has not run: HEAD is 24 commits ahead of origin/master. The orchestrator does that step with safe-push after this acceptance.",
+    "Plan, SHA, and A5 checks: T1, T2, and T3 are [x] (plan.md:9, :15, :26). The validator counts 3 tasks, 3 complete, 0 incomplete. The SHA evidence sits on the evidence bullets. Every SHA the plan names resolves to a commit inside 7bc4a4e0..HEAD with the described subject: f67eeb06, aa7e7aee, 3059e3fa, bdacfe54, 6987ed50, 199189d9, d0f755c8, a5545102, 6a45a21f, 0019518e, and cb167393. The other hex strings are digests and sizes. Plan claims of counts match their commits, and the plan corrects the earlier all-pass claim (plan.md:22, :27). `ndarray-pixels@5.2.0` resolves sharp 0.35.5 and `source-map-js` resolves 1.2.4, as plan.md:30 states.",
+    "Debt: TD-35 to TD-40 exist in measure/tech-debt.md (17, 13, 5, 2, and 1 type errors, and 9 failed tests). The counts match the fresh tsc and vitest output (finding F5 on TD-38 text). The five owner folders exist. The file has 50 lines, the stated limit. `git diff 7bc4a4e0..HEAD -- measure/tech-debt.md` adds only the six entries and merges two header lines. No existing entry changed.",
+    "Framework checks: the phase diff changes no contract test, no filter, no tracks registry, and no Measure tool. A3, A4, A6, and A7 are therefore not triggered. A5 applies and holds, apart from the records in findings F2 and F4. The audit gate has labeled counts (`critical=0 high=0 moderate=0 low=0 info=0`), and it fails closed: it exits 2 on a missing, malformed, or inconsistent document.",
+    "Test meaning: I wrote a 4 MiB audit document with a node one-liner and ran it with `--max-old-space-size=64`. The committed gate exited 0. The scanner from `git show 0019518e:scripts/audit-gate.mjs` died with `JavaScript heap out of memory` (exit 134). So the new test at tests/audit-gate.adversarial.test.ts:128-148 fails first on the old code. I removed the temp file.",
+    "Heavy-run discipline: prettier, tsc, the full vitest run, the targeted vitest run, vite build, the combined forge build, and the forge render each ran in one foreground heavy-run.sh call with HEAVY_MIN_AVAIL_MB=1500, one at a time. No call returned exit 75, and no lock-wait line appeared. pnpm audit, pnpm outdated, pnpm ls, pnpm view, git, and short node probes ran directly. My runs left the 16 tracked modifications of the session start unchanged and added no tracked change (`git status`).",
+    "Not verified by this role: the figure of 13 tsc errors for TypeScript 7.0.2, the size of the Chrome for Testing archives and their digests (Review B verified both), and the push (a later orchestrator step)."
+  ],
+  "commands": [
+    "git rev-parse HEAD (start, before each gate, end) => 5d74968c4e9bf0c79fc7a75d88b41817378a0841",
+    "git diff --name-status 6f0e87b5..5d74968c; git show --name-status --format= 7b7464a9 5d74968c; git log --oneline -- scripts/audit-gate.mjs",
+    "git diff --name-status 7bc4a4e0..5d74968c -- . ':!measure/runs'; git diff --check 7bc4a4e0..5d74968c => exit 0",
+    "node scripts/audit-gate.mjs => critical=0 high=0 moderate=0 low=0 info=0, exit 0 (repo root; also from /tmp and /)",
+    "pnpm audit => No known vulnerabilities found, exit 0",
+    "node scripts/audit-gate.mjs --input tests/fixtures/audit-high.json | audit-clean.json | audit-invalid.txt; AUDIT_GATE_PNPM=/no-such-pnpm node scripts/audit-gate.mjs => exits 1, 0, 2, 2",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/prettier --check .' => exit 1; 3325 files; 8 new untracked, 1 cleared, 0 error lines",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/tsc --noEmit' => exit 2; 38 errors in 13 files; equal to the before set",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run --maxWorkers=1' => exit 1; 9 failed | 3280 passed (3289); same 9 names",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run --maxWorkers=1 tests/audit-gate.test.ts tests/audit-gate.adversarial.test.ts' => exit 0; 2 files, 30 passed",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vite build' => exit 0",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'FORGE_GL=software ./forge build rogue && ./forge build slime --fast' => exit 0; no warning: line",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './forge render rogue --fast' => exit 0; out/rogue/render.png rewritten",
+    "node_modules/.bin/playwright install --dry-run chromium; chromium.executablePath(); chrome --version => chromium-1255, Chrome for Testing 159.0.8154.6",
+    "pnpm outdated => typescript (dev) 6.0.3, latest 7.0.2 only; pnpm ls --depth 0; node lockfile-versus-package.json specifier compare => 0 mismatches of 18",
+    "pnpm view typescript@7.0.2 exports; pnpm view typescript versions; pnpm view vitest@5.1.1 engines; grep -n over tests/song-still-hook.test.ts",
+    "LC_ALL=C sort -u and comm over before-prettier.log, before-tsc.log, before-vitest.log and the fresh outputs (strip ANSI with sed); git ls-files for each new prettier entry",
+    "git log 7bc4a4e0..HEAD for package.json, pnpm-lock.yaml, pnpm-workspace.yaml; git show --stat bdacfe54; git rev-list --count origin/master..HEAD => 24",
+    "git cat-file -t and git merge-base --is-ancestor for each SHA in plan.md; python3 -I (measure_interphase_checks.phase_counts) => (3, 3, 0, 0, 1)",
+    "node one-liner (4 MiB audit document); node --max-old-space-size=64 scripts/audit-gate.mjs --input <file> => exit 0; git show 0019518e:scripts/audit-gate.mjs piped to node --max-old-space-size=64 => exit 134",
+    "git status --short (audited paths, tracked changes); git diff 7bc4a4e0..5d74968c -- measure/tech-debt.md; read of the render image out/rogue/render.png"
+  ],
+  "changed_files": [
+    "measure/runs/chore_dependency_refresh_20261121/phase-acceptance-5d74968.json",
+    "measure/runs/chore_dependency_refresh_20261121/phase-acceptance-5d74968.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "claude-code/claude-sonnet-5-5#max",
+  "ac_results": [
+    {
+      "ac": "AC1",
+      "result": "pass",
+      "basis": "pnpm outdated lists only typescript 6.0.3 against 7.0.2; the plan names that deferral and its reason (plan.md:30)."
+    },
+    {
+      "ac": "AC2",
+      "result": "pass",
+      "basis": "audit gate exit 0 with five zero counts; pnpm audit reports no known vulnerability."
+    },
+    {
+      "ac": "AC3",
+      "result": "pass",
+      "basis": "tsc and vitest after sets equal the before sets; the tracked prettier after set is a subset; vite build exit 0; see finding F1."
+    },
+    {
+      "ac": "AC4",
+      "result": "pass",
+      "basis": "builds exit 0 with no warning: line; render exit 0 and out/rogue/render.png rewritten."
+    },
+    {
+      "ac": "AC5",
+      "result": "pass_with_pending_push",
+      "basis": "manifest and lockfile changed together in bdacfe54; the orchestrator push with safe-push has not run."
+    }
+  ],
+  "prerequisite_results": [
+    {
+      "role": "review-a",
+      "file": "measure/runs/chore_dependency_refresh_20261121/review-a-6f0e87b.json",
+      "status": "pass",
+      "audited_head_sha": "6f0e87b520f3188dd170caf7efd0b8d72c112993",
+      "targets_audited_head": false,
+      "covered_by": "test-only exemption (7b7464a9, 5d74968c)"
+    },
+    {
+      "role": "review-b",
+      "file": "measure/runs/chore_dependency_refresh_20261121/review-b-6f0e87b.json",
+      "status": "pass",
+      "audited_head_sha": "6f0e87b520f3188dd170caf7efd0b8d72c112993",
+      "targets_audited_head": false,
+      "covered_by": "test-only exemption (7b7464a9, 5d74968c)"
+    },
+    {
+      "role": "review-c",
+      "file": "measure/runs/chore_dependency_refresh_20261121/review-c-6f0e87b.json",
+      "status": "pass",
+      "audited_head_sha": "6f0e87b520f3188dd170caf7efd0b8d72c112993",
+      "targets_audited_head": false,
+      "covered_by": "test-only exemption (7b7464a9, 5d74968c)"
+    },
+    {
+      "role": "adversarial-testing",
+      "file": "measure/runs/chore_dependency_refresh_20261121/adversarial-testing-6f0e87b.json",
+      "status": "pass",
+      "audited_head_sha": "6f0e87b520f3188dd170caf7efd0b8d72c112993",
+      "targets_audited_head": false,
+      "covered_by": "test-only exemption (7b7464a9, 5d74968c)"
+    }
+  ],
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "`node scripts/audit-gate.mjs` exits 0 with five zero counts at HEAD, and the tsc and vitest after sets equal the before sets."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "The 30 audit-gate tests pass and the 4 MiB test (tests/audit-gate.adversarial.test.ts:128-148) fails on the old scanner (exit 134), but no test covers the timeout at scripts/audit-gate.mjs:21 and :192 (accepted note F7)."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "`git diff --name-status 7bc4a4e0..5d74968c` lists only manifests, the audit gate, its tests and fixtures, tech-debt.md, track documents, and run records."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 4,
+      "evidence": "Most claims carry a command, but plan.md:38 quotes audit-gate.mjs lines 18 and 91 (now 21 and 192) and jr-green-d0f755c8.log:2 says all gates pass beside tsc exit 2."
+    }
+  ],
+  "reviewer_ratings": [
+    {
+      "reviewer_role": "review-a",
+      "reviewer_route": "openai/gpt-6-luna#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "Its pass matches my reruns: the targeted suite passes 30 of 30, the live gate exits 0, and `git diff --check 7bc4a4e0..5d74968c` exits 0."
+    },
+    {
+      "reviewer_role": "review-b",
+      "reviewer_route": "claude-code/claude-sonnet-5-5#max",
+      "agreed": true,
+      "score": 5,
+      "evidence": "I confirmed its F7 line drift (TIMEOUT_MS at scripts/audit-gate.mjs:21 and :192) and its F12 gap, which the 4 MiB test now closes (old scanner exit 134, HEAD exit 0)."
+    },
+    {
+      "reviewer_role": "review-c",
+      "reviewer_route": "openai/gpt-6-luna#high",
+      "agreed": true,
+      "score": 4,
+      "evidence": "Its probes match my reruns (fixture exits 0, 1, 2; AUDIT_GATE_PNPM=/no-such-pnpm exit 2; /tmp exit 0), but it ran vitest outside heavy-run.sh."
+    },
+    {
+      "reviewer_role": "adversarial",
+      "reviewer_route": "openai/gpt-6-luna#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "Its new test at tests/audit-gate.adversarial.test.ts:128-148 fails against the 0019518e scanner (exit 134), and the suite passes 30 of 30 at HEAD."
+    }
+  ]
+}

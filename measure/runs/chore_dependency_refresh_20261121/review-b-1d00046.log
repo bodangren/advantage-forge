@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: measure-review-b-security
+status: complete
+track: chore_dependency_refresh_20261121
+phase: Phase 1: Refresh and verify
+commits: none
+tests_run: node scripts/audit-gate.mjs -> exit 0 (critical=0 high=0 moderate=0 low=0 info=0); pnpm audit --json -> 0 findings; pnpm why for sharp, zod, vite, source-map-js, vitest, @vitest/mocker -> one patched version each; audit-gate probes (--input /dev/stdin, hostile --input values, unreachable proxy and registry) -> exit 1 or 2 as expected, and the incomplete inputs in F1 exit 0; registry cross-check of 78 new lockfile entries and 33 snapshots -> all match; secret scan and A2 grep -> no match; prettier, tsc, vitest, vite build, forge build not run by Review B
+files_changed: measure/runs/chore_dependency_refresh_20261121/review-b-1d00046.json, measure/runs/chore_dependency_refresh_20261121/review-b-1d00046.log
+plan_updates: none
+known_failures: none blocking; F1 [Major] the audit gate exits 0 for an incomplete audit document (scripts/audit-gate.mjs:18-21, 38-43, 50-53); Nits F2 test gaps, F3 no execFileSync timeout, F4 pre-release @emnapi 2.0.0-beta.2 in the lockfile, F5 package.json engines wider than vitest 5.1.1
+handoff: Verdict pass, retry_recommendation none. HEAD moved from 1d00046d to 5bbf48db (plan.md and spec.md only) during the review; every audited security path is identical at 5bbf48db, so this result stays valid unless a later commit changes package.json, pnpm-lock.yaml, pnpm-workspace.yaml, or scripts/audit-gate.mjs; run Review B again on such a commit. Route F1 to Green if the owner wants the gate hardened (a Red test first), or accept it as a risk; F2 to F5 are notes. Orchestrator: plan.md keeps T1 and T2 as [~], so the review role-gate counts 2 incomplete tasks, and T3 still says no gate launches a browser although 5bbf48db adds playwright install chromium to the AC4 render check. Review B did not run the role-gate command.
+END_MEASURE_AGENT_RESULT

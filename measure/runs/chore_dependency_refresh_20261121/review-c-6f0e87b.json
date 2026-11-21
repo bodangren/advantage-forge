@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "summary": "Pass. CLI behavior matches the updated contract, including decoded duplicate keys at any depth.",
+  "audited_head": "6f0e87b520f3188dd170caf7efd0b8d72c112993",
+  "audited_head_sha": "6f0e87b520f3188dd170caf7efd0b8d72c112993",
+  "phase_base_sha": "7bc4a4e066f6094fafe679ab33fff520e8ee56ab",
+  "role_base_sha": "6f0e87b520f3188dd170caf7efd0b8d72c112993",
+  "current_head_sha": "6f0e87b520f3188dd170caf7efd0b8d72c112993",
+  "audited_head_is_current": true,
+  "contract_applicability": "applicable",
+  "applicability_evidence": [
+    "git diff --name-only 7bc4a4e0..6f0e87b5 includes scripts/audit-gate.mjs, its tests, and the updated track plan; the CLI contract applies.",
+    "git diff --stat cb167393..6f0e87b5 -- package.json pnpm-lock.yaml pnpm-workspace.yaml returned no output; dependency files did not change since cb167393."
+  ],
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "evidence": [
+    "plan.md:24 requires duplicate detection after JSON string decoding at any depth, including objects inside arrays; scripts/audit-gate.mjs:107-113 decodes keys before comparison and lines 119-170 scan nested arrays and objects.",
+    "Targeted Vitest passed both audit-gate test files and all 29 tests, including escaped duplicate keys, nested array objects, and sibling-key false-positive guards.",
+    "Direct --input probes: clean fixture exited 0; high fixture exited 1; malformed fixture exited 2 and printed 'audit unavailable'.",
+    "AUDIT_GATE_PNPM=/no-such-pnpm node scripts/audit-gate.mjs exited 2 and printed 'audit unavailable'.",
+    "From /tmp, node /home/daniebo/Desktop/advantage-forge/scripts/audit-gate.mjs exited 0 and printed zero counts; scripts/audit-gate.mjs:19 and :188-193 set the live audit cwd to REPO_ROOT.",
+    "scripts/audit-gate.mjs:173-220 handles --input, AUDIT_GATE_PNPM, exit 2 unavailable cases, and exit 0/1 based on critical/high counts.",
+    "git rev-parse HEAD returned 6f0e87b520f3188dd170caf7efd0b8d72c112993, equal to audited_head_sha, role_base_sha, and the requested HEAD."
+  ],
+  "commands": [
+    "git rev-parse HEAD -> 6f0e87b520f3188dd170caf7efd0b8d72c112993; equal to audited_head_sha and current HEAD.",
+    "git diff --stat cb167393..6f0e87b5 -- package.json pnpm-lock.yaml pnpm-workspace.yaml -> no output; dependency files unchanged since cb167393.",
+    "node_modules/.bin/vitest run --maxWorkers=1 tests/audit-gate.test.ts tests/audit-gate.adversarial.test.ts -> 2 files passed, 29 tests passed.",
+    "node scripts/audit-gate.mjs --input tests/fixtures/audit-clean.json -> exit 0; critical=0 high=0.",
+    "node scripts/audit-gate.mjs --input tests/fixtures/audit-high.json -> exit 1; critical=0 high=2.",
+    "node scripts/audit-gate.mjs --input tests/fixtures/audit-invalid.txt -> exit 2; stderr audit unavailable.",
+    "AUDIT_GATE_PNPM=/no-such-pnpm node scripts/audit-gate.mjs -> exit 2; stderr audit unavailable.",
+    "From /tmp: node /home/daniebo/Desktop/advantage-forge/scripts/audit-gate.mjs -> exit 0; critical=0 high=0 moderate=0 low=0 info=0.",
+    "git diff --name-only 7bc4a4e0..6f0e87b5 -> includes audit-gate CLI, tests, dependency files, spec, and plan."
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "deviations": [
+    "No render was rerun because package.json, pnpm-lock.yaml, and pnpm-workspace.yaml have no diff since cb167393, as requested."
+  ],
+  "route": "openai/gpt-6-luna#high",
+  "changed_files": [
+    "measure/runs/chore_dependency_refresh_20261121/review-c-6f0e87b.json",
+    "measure/runs/chore_dependency_refresh_20261121/review-c-6f0e87b.log"
+  ],
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "scripts/audit-gate.mjs:173-220 implements the documented CLI outcomes, and all 29 targeted tests pass."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 5,
+      "evidence": "The adversarial suite tests decoded and nested duplicate keys, and the two-file Vitest command passed all 29 tests."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "git diff --stat cb167393..6f0e87b5 for dependency files returned no output; the review was limited to the requested contract."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "Direct probes verified exits 0, 1, and 2, while the /tmp audit invocation exited 0 with clean counts."
+    }
+  ]
+}

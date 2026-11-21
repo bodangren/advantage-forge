@@ -17,7 +17,7 @@ This registry gives each historical, current, and planned work item one Measure 
 - [~] **Track: Resolve dependency launcher reconciliation**
   *Link: [./tracks/measure_dependency_launcher_20260928/](./tracks/measure_dependency_launcher_20260928/)*
 
-- [ ] **Track: Refresh dependencies after the vulnerability audit**
+- [x] **Track: Refresh dependencies after the vulnerability audit**
   *Link: [./tracks/chore_dependency_refresh_20261121/](./tracks/chore_dependency_refresh_20261121/)*
 
 ## Asset production

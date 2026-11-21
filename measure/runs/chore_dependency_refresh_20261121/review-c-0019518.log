@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: review-c
+status: PASS
+track: chore_dependency_refresh_20261121
+phase: Phase 1: Refresh and verify (P1), round 3
+commits: 199189d9 (cwd and duplicate-key fixes); audited HEAD 0019518ed86e042f456255f97863da7f281d08ba
+tests_run: node_modules/.bin/vitest run --maxWorkers=1 tests/audit-gate.test.ts tests/audit-gate.adversarial.test.ts -> 2 files and 22 tests passed; direct fixture probes verified exit 0, exit 1, and exit 2 with 'audit unavailable'; missing AUDIT_GATE_PNPM binary verified exit 2; invocation from /tmp exited 0 with zero counts
+files_changed: measure/runs/chore_dependency_refresh_20261121/review-c-0019518.json; measure/runs/chore_dependency_refresh_20261121/review-c-0019518.log
+plan_updates: none; plan.md:9-12 defines the contract and plan.md:21 records the cwd and duplicate-key remediation
+known_failures: none found in the reviewed CLI contract; package.json, pnpm-lock.yaml, and pnpm-workspace.yaml have no diff since cb167393
+handoff: PASS. The CLI meets the spec for --input, exit codes 0/1/2, 'audit unavailable', AUDIT_GATE_PNPM, repository-root cwd, and duplicate-key fail-closed behavior. No render rerun was needed because dependency files did not change. phase_base_sha 7bc4a4e066f6094fafe679ab33fff520e8ee56ab; role_base_sha and audited_head_sha 0019518ed86e042f456255f97863da7f281d08ba.
+END_MEASURE_AGENT_RESULT

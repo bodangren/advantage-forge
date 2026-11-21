@@ -1,0 +1,60 @@
+phase-acceptance log, track chore_dependency_refresh_20261121, Phase 1: Refresh and verify
+Role: measure-phase-acceptance. Route: claude-code/claude-sonnet-5-5#max.
+Audited HEAD: 5d74968c4e9bf0c79fc7a75d88b41817378a0841 (current at the start, before every gate, and at the end).
+phase_base_sha: 7bc4a4e066f6094fafe679ab33fff520e8ee56ab. role_base_sha: 5d74968c4e9bf0c79fc7a75d88b41817378a0841.
+Result JSON: measure/runs/chore_dependency_refresh_20261121/phase-acceptance-5d74968.json
+
+VERDICT: PASS. No blocker. Six nonblocking findings (F1 to F6).
+
+PREREQUISITES
+- Review A, Review B, Review C, and adversarial testing report pass at 6f0e87b5.
+- Two commits follow: 7b7464a9 (tests/audit-gate.adversarial.test.ts and two measure/runs files) and 5d74968c (one measure/runs log).
+- Both commits are test-only or measure/runs only, so the results still apply. scripts/audit-gate.mjs last changed in d0f755c8.
+- This record accepts HEAD 5d74968c and names 7b7464a9 and 5d74968c as the allowed test-only commits.
+
+AC RESULTS (fresh evidence at 5d74968c)
+- AC1 pass. `pnpm outdated` lists only typescript 6.0.3 against 7.0.2. The plan names that deferral and its reason (plan.md:30). I checked the reason: the test at tests/song-still-hook.test.ts uses the classic compiler API, and typescript@7.0.2 no longer exports it from the root. The lockfile specifiers equal package.json for 18 of 18 direct dependencies.
+- AC2 pass. `node scripts/audit-gate.mjs` exits 0 with critical=0 high=0 moderate=0 low=0 info=0, from the repo root, /tmp, and /. A direct `pnpm audit` prints `No known vulnerabilities found`. The before state was 0/4/6/1.
+- AC3 pass.
+  - prettier: exit 1, 3325 [warn] files. After minus before: 8 untracked files (finding F1). Before minus after: scripts/audit-gate.mjs. 0 tracked new entries. The audit-invalid.json error block is gone.
+  - tsc: exit 2, 38 errors in 13 files. The after set equals the before set (comm empty both ways).
+  - vitest: exit 1, 9 failed | 3280 passed (3289). The same 9 names as the before log. Audit-gate tests pass 30 of 30.
+  - vite build: exit 0.
+- AC4 pass. The combined forge build exits 0 with no `warning:` line (rogue 45,058 triangles, equal to the pre-refresh record). `./forge render rogue --fast` exits 0 and rewrites out/rogue/render.png (mtime 11:57:28 to 13:47:25). I viewed the image. Chromium 159.0.8154.6 for Playwright build 1255 is installed. The manual install after two failed CLI downloads is documented in the plan (plan.md:28-29).
+- AC5 pass, push pending. package.json, pnpm-lock.yaml, and pnpm-workspace.yaml changed together in bdacfe54. HEAD is 24 commits ahead of origin/master. The orchestrator pushes with safe-push after this acceptance.
+
+OTHER CHECKS
+- Plan: T1, T2, and T3 are [x]. Every SHA the plan names resolves to an in-range commit with the described subject. The plan corrects the earlier all-pass claim. A5 holds.
+- A3, A4, A6, A7: not triggered. The phase diff changes no contract test, filter, tracks registry, or Measure tool.
+- Debt: TD-35 to TD-40 hold the 38 tsc errors (17+13+5+2+1) and the 9 failed tests. The owner folders exist. The registry has 50 lines.
+- Test meaning: a 4 MiB audit document under `--max-old-space-size=64` exits 0 at HEAD and dies with exit 134 on the scanner of 0019518e. The new test at tests/audit-gate.adversarial.test.ts:128-148 fails first on the old code.
+
+NONBLOCKING FINDINGS
+F1 [Minor] The working tree holds 8 untracked JSON result files that prettier flags (7 reviewer files and this role's provisional file, which the final file replaced). None is tracked at HEAD, so AC3 holds at the audited HEAD. Owner: orchestrator. Run `node_modules/.bin/prettier --write` on the 7 reviewer files before committing them.
+F2 [Nit] plan.md:38 quotes scripts/audit-gate.mjs lines 18 and 91. TIMEOUT_MS is at lines 21 and 192. Owner: orchestrator at closeout.
+F3 [Nit] The plan has no line for Review B F12 and F13 and none for adversarial commit 7b7464a9. F12 is closed by the new test. F13 stays an open Nit. The targeted command now gives 30 of 30. Owner: orchestrator at closeout.
+F4 [Nit] jr-green-199189d9.log:2 and jr-green-d0f755c8.log:2 say `all gates pass` next to tsc exit 2. The plan does not repeat the claim. Owner: orchestrator.
+F5 [Nit] measure/tech-debt.md:45 (TD-38) names line 587 only. The two TS2554 errors are at lines 195 and 587. Owner: orchestrator.
+F6 [Nit] Housekeeping: plan.md:3 status, metadata.json, and measure/generated/status.md:26 are stale; review result files and jr-green-a6d3151b.log are untracked; remove scratch-review-b2 with `rm -r measure/runs/chore_dependency_refresh_20261121/scratch-review-b2`. Owner: orchestrator.
+
+NOT VERIFIED BY THIS ROLE
+- The figure of 13 tsc errors for TypeScript 7.0.2 (the cause is verified).
+- The Chrome for Testing archive digests (Review B verified them).
+- The push (a later orchestrator step).
+
+HEAVY RUNNER
+- Seven heavy commands ran through heavy-run.sh, one at a time, in the foreground, with HEAVY_MIN_AVAIL_MB=1500. No exit 75. No lock-wait line.
+- My runs changed no tracked file. The 16 tracked modifications of the session start are unchanged.
+
+MEASURE_AGENT_RESULT
+role: measure-phase-acceptance
+status: pass
+track: chore_dependency_refresh_20261121
+phase: Phase 1: Refresh and verify
+commits: none made by this role; audited HEAD 5d74968c4e9bf0c79fc7a75d88b41817378a0841; allowed test-only commits after the prerequisite HEAD 6f0e87b5: 7b7464a9 and 5d74968c
+tests_run: node scripts/audit-gate.mjs => exit 0, all counts 0; pnpm audit => no known vulnerabilities; heavy-run.sh prettier --check . => exit 1, 3325 files, 8 new untracked, 0 tracked new; heavy-run.sh tsc --noEmit => exit 2, 38 errors equal to the before set; heavy-run.sh vitest run --maxWorkers=1 => exit 1, 9 failed | 3280 passed (3289), same 9 names; heavy-run.sh vitest audit-gate tests => exit 0, 30 of 30; heavy-run.sh vite build => exit 0; heavy-run.sh FORGE_GL=software ./forge build rogue && ./forge build slime --fast => exit 0, no warning: line; heavy-run.sh ./forge render rogue --fast => exit 0, out/rogue/render.png rewritten; pnpm outdated => typescript 6.0.3 against 7.0.2 only
+files_changed: measure/runs/chore_dependency_refresh_20261121/phase-acceptance-5d74968.json, measure/runs/chore_dependency_refresh_20261121/phase-acceptance-5d74968.log
+plan_updates: none (gate-only role); findings F2, F3, and F6 name plan text for the orchestrator to fix at closeout
+known_failures: 9 pre-existing failed tests in tests/storytime-book-pictures.test.ts (TD-40) and 38 pre-existing tsc errors in 13 files (TD-35 to TD-39), both equal to the before sets; 3318 pre-existing prettier warnings; no new failure
+handoff: Verdict PASS, retry_recommendation none, no blocker. Six nonblocking findings go to the orchestrator for closeout: format the 7 untracked reviewer JSON files before committing them (F1), fix the line numbers at plan.md:38 (F2), record Review B F12 and F13 and the 30-test count (F3), note the all-pass status text in two Green logs (F4), name both TD-38 lines (F5), and clean up housekeeping and untracked records (F6). The orchestrator still runs the AC5 push with safe-push.
+END_MEASURE_AGENT_RESULT

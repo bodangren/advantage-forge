@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: review-c
+status: PASS
+track: chore_dependency_refresh_20261121
+phase: Phase 1: Refresh and verify (P1), round 4
+commits: d0f755c8 (decoded duplicate-key scanner); 3059e3fa and 6f0e87b5 (plan contract updates); audited HEAD 6f0e87b520f3188dd170caf7efd0b8d72c112993
+tests_run: node_modules/.bin/vitest run --maxWorkers=1 tests/audit-gate.test.ts tests/audit-gate.adversarial.test.ts -> 2 files and 29 tests passed; direct --input probes verified exit 0, exit 1, and exit 2 with 'audit unavailable'; missing AUDIT_GATE_PNPM verified exit 2; invocation from /tmp exited 0 with zero counts
+files_changed: measure/runs/chore_dependency_refresh_20261121/review-c-6f0e87b.json; measure/runs/chore_dependency_refresh_20261121/review-c-6f0e87b.log
+plan_updates: none; plan.md:24 states duplicate keys are compared after JSON decoding at any depth, including objects inside arrays
+known_failures: none found in the reviewed CLI contract; package.json, pnpm-lock.yaml, and pnpm-workspace.yaml have no diff since cb167393
+handoff: PASS. Verified exit codes 0/1/2, --input, 'audit unavailable', AUDIT_GATE_PNPM, invocation from /tmp, and duplicate-key handling against spec.md and plan.md. Escaped duplicates and nested array objects fail closed without false positives across sibling objects. No render rerun was needed because dependency files did not change. phase_base_sha 7bc4a4e066f6094fafe679ab33fff520e8ee56ab; role_base_sha and audited_head_sha 6f0e87b520f3188dd170caf7efd0b8d72c112993.
+END_MEASURE_AGENT_RESULT

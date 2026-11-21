@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "role": "review-a",
+  "track": "chore_dependency_refresh_20261121",
+  "phase": "Phase 1: Refresh and verify",
+  "baseline_sha": "7bc4a4e066f6094fafe679ab33fff520e8ee56ab",
+  "phase_base_sha": "7bc4a4e066f6094fafe679ab33fff520e8ee56ab",
+  "role_base_sha": "0019518ed86e042f456255f97863da7f281d08ba",
+  "audited_head_sha": "0019518ed86e042f456255f97863da7f281d08ba",
+  "status": "fail",
+  "summary": "The cwd fix works, and the targeted suite passes. The duplicate-key scanner misses keys that use equivalent JSON escape sequences, so the gate accepts ambiguous vulnerability counts as clean.",
+  "blocking_findings": [
+    "F1 [Major]: scripts/audit-gate.mjs:87-103 compares raw escaped key text, not decoded JSON property names. A valid document with keys `\"high\":3` and `\"h\\u0069gh\":0` passes JSON.parse; the scanner treats them as distinct, then JSON.parse keeps the latter value. Reproduction: `node --input-type=module -e '...'` returned exit 0 and all-zero counts for that document. This is a false clean audit. Decode JSON string escapes before checking key equality, or use a parser that rejects duplicate decoded keys, and add an escaped-key regression test."
+  ],
+  "nonblocking_findings": [
+    "F2 [Nit]: measure/tracks/chore_dependency_refresh_20261121/plan.md:34 still says F6's missing-cwd behavior is accepted and that no production change will occur, but the current implementation fixes it at scripts/audit-gate.mjs:19,174-179 and the r4 evidence says so at plan.md:21. Update or remove the stale accepted-note text."
+  ],
+  "evidence": [
+    "Provenance: `git rev-parse HEAD` returned 0019518ed86e042f456255f97863da7f281d08ba, equal to audited_head_sha. Audited the exact 7bc4a4e066f6094fafe679ab33fff520e8ee56ab..0019518ed86e042f456255f97863da7f281d08ba diff. role_base_sha is 0019518ed86e042f456255f97863da7f281d08ba.",
+    "Read measure/index.md, measure/workflow.md, measure/tech-debt.md, track metadata, spec, plan, spec-review, prior review and adversarial artifacts, and Green r4 log. This track has no test-strategy.md; plan.md specifies its gates.",
+    "The requested heavy-run command passed: 2 files and 22 tests passed, exit 0. `node scripts/audit-gate.mjs` passed with zero counts.",
+    "Escaped duplicate key reproduction returned status 0 and `critical=0 high=0 moderate=0 low=0 info=0` for semantic duplicate keys `high` and `h\\u0069gh`. The fixture at tests/fixtures/audit-duplicate-count-keys.json tests only byte-identical keys.",
+    "cwd behavior is fixed: scripts/audit-gate.mjs:19 derives REPO_ROOT from import.meta.url and lines 174-179 pass it to execFileSync. The adversarial cwd test at tests/audit-gate.adversarial.test.ts:67-80 covers invocation from another directory.",
+    "Plan status records T1 as [x] at plan.md:9 and gives implementation/test evidence at plan.md:21. However, plan.md:34 retains the contradicted F6 accepted-note wording.",
+    "`git diff --check 7bc4a4e0..0019518e` exited 0. `build-graph scan . :memory:` completed with 21851 nodes and 24603 edges; changed work adds no exported application symbols or callers.",
+    "A4 does not apply: no deliverable-presence or marker-consistency checker changed. A3 does not apply: added assertions parse labeled counts. A5 checked: current plan makes no false all-checks-pass or PASS=N, FAIL=0 claim. Orchestration scripts, contract tests, and registry did not change.",
+    "F4 withdrawn: checked plan.md:9; T1 is now marked [x] and the earlier stale in-progress marker is resolved."
+  ],
+  "commands": [
+    "git rev-parse HEAD => 0019518ed86e042f456255f97863da7f281d08ba",
+    "git diff --name-only 7bc4a4e0..0019518e => exact phase diff inspected",
+    "git diff --check 7bc4a4e0..0019518e => exit 0",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run --maxWorkers=1 tests/audit-gate.test.ts tests/audit-gate.adversarial.test.ts' => exit 0; 2 files, 22 tests passed",
+    "node scripts/audit-gate.mjs => exit 0; critical=0 high=0 moderate=0 low=0 info=0",
+    "node --input-type=module -e '<escaped duplicate key reproduction>' => exit 0; emitted all-zero vulnerability counts",
+    "build-graph scan . :memory: => 21851 nodes, 24603 edges"
+  ],
+  "changed_files": [
+    "measure/runs/chore_dependency_refresh_20261121/adversarial-testing-a6d3151.json",
+    "measure/runs/chore_dependency_refresh_20261121/adversarial-testing-a6d3151.log",
+    "measure/runs/chore_dependency_refresh_20261121/jr-green-199189d9.log",
+    "measure/runs/chore_dependency_refresh_20261121/jr-green-6987ed50.log",
+    "measure/runs/chore_dependency_refresh_20261121/jr-green-bdacfe54.log",
+    "measure/runs/chore_dependency_refresh_20261121/mid-red-4a4212b.log",
+    "measure/runs/chore_dependency_refresh_20261121/mid-red-5bbf48d.log",
+    "measure/runs/chore_dependency_refresh_20261121/spec-review-7bc4a4e.log",
+    "measure/tech-debt.md",
+    "measure/tracks/chore_dependency_refresh_20261121/plan.md",
+    "measure/tracks/chore_dependency_refresh_20261121/spec-review.md",
+    "measure/tracks/chore_dependency_refresh_20261121/spec.md",
+    "package.json",
+    "pnpm-lock.yaml",
+    "pnpm-workspace.yaml",
+    "scripts/audit-gate.mjs",
+    "tests/audit-gate.adversarial.test.ts",
+    "tests/audit-gate.test.ts",
+    "tests/fixtures/audit-advisories-empty-no-meta.json",
+    "tests/fixtures/audit-advisory-bad-severity.json",
+    "tests/fixtures/audit-advisory-malformed.json",
+    "tests/fixtures/audit-clean.json",
+    "tests/fixtures/audit-critical.json",
+    "tests/fixtures/audit-duplicate-count-keys.json",
+    "tests/fixtures/audit-high.json",
+    "tests/fixtures/audit-invalid.txt",
+    "tests/fixtures/audit-meta-array.json",
+    "tests/fixtures/audit-meta-count-missing.json",
+    "tests/fixtures/audit-meta-empty.json",
+    "tests/fixtures/audit-meta-float.json",
+    "tests/fixtures/audit-meta-missing.json",
+    "tests/fixtures/audit-meta-negative.json",
+    "tests/fixtures/audit-meta-string-count.json",
+    "tests/fixtures/audit-meta-zero-with-critical.json"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "retry_implementation",
+  "confidence": "high",
+  "route": "openai/gpt-6-luna#high (ra-quota pick review-a; gpt-6.1-sol on WAIT)",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 2,
+      "evidence": "The escaped duplicate-key reproduction exits 0 with all-zero counts, despite scripts/audit-gate.mjs:76-103 intending to reject duplicate keys."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 3,
+      "evidence": "The targeted suite passes 22 tests, but tests/fixtures/audit-duplicate-count-keys.json covers only identical raw keys and misses escaped equivalents."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The exact phase diff contains dependency refresh, audit-gate behavior, tests, and associated Measure evidence only."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "The requested heavy-run command and live gate passed, while a direct escaped-key reproduction demonstrated the false-clean defect."
+    }
+  ]
+}

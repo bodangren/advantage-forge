@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "status": "fail",
+  "summary": "Review C fails: Playwright's browser download was skipped, but forge render requires Chromium and no render run verifies the updated browser contract.",
+  "audited_head": "1d00046da922933bd546047ed01559981c5f9a8e",
+  "audited_head_sha": "1d00046d",
+  "phase_base_sha": "7bc4a4e0",
+  "role_base_sha": "1d00046d",
+  "current_head_sha": "1d00046da922933bd546047ed01559981c5f9a8e",
+  "audited_head_is_current": true,
+  "contract_applicability": "applicable",
+  "applicability_evidence": [
+    "The spec covers dependency updates and the added audit-gate CLI contract; phase diff adds scripts/audit-gate.mjs and tests/audit-gate.test.ts and updates package.json, pnpm-lock.yaml, and pnpm-workspace.yaml.",
+    "The user-requested contracts include forge build/render/check, pnpm dev, vite build, package scripts, and the new audit-gate CLI."
+  ],
+  "blocking_findings": [
+    "B-1 (Green, High, CLI/runtime): Playwright 1.65.1 was installed with PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 (jr-green-bdacfe54.log lines 75-76). forge render launches Chromium for every command except build/check (src/cli/forge.ts lines 195-207). The recorded Forge checks run build and check only, so the updated Playwright/browser pairing is not verified. A fresh install without a cached matching browser will make render fail before rendering. Run a render command in the supported install environment and record success, or document and enforce the required browser installation."
+  ],
+  "nonblocking_findings": [],
+  "evidence": [
+    "jr-green-bdacfe54.log lines 75-76 records Playwright 1.65.1 installed with PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 and no gate launches a browser.",
+    "src/cli/forge.ts lines 195-207 sets needsBrowser for every command except build/check and calls chromium.launch when true.",
+    "jr-green-bdacfe54.log lines 68-70 records only ./forge build rogue and ./forge build slime --fast; it provides no render evidence.",
+    "package.json lines 11-17 keeps dev=vite, forge=tsx src/cli/forge.ts, test=vitest run, typecheck=tsc --noEmit, format=prettier --write ., and check=tsc --noEmit && vitest run.",
+    "vite.config.ts lines 79-94 retains the forge-api plugin, dev server settings, and five Vite build inputs; Green log lines 65-67 reports vite build exit 0.",
+    "package.json lines 20-39 records vite 8.3.8, vitest 5.1.1, three 0.187.0, and Playwright 1.65.1; Green log lines 52-70 reports test and Forge build results without new failures."
+  ],
+  "commands": [
+    "git rev-parse HEAD returned 1d00046da922933bd546047ed01559981c5f9a8e, equal to audited_head.",
+    "node scripts/audit-gate.mjs --input tests/fixtures/audit-clean.json: exit 0; counts critical=0 high=0 moderate=1 low=1 info=0.",
+    "node scripts/audit-gate.mjs --input tests/fixtures/audit-high.json: exit 1; counts critical=0 high=2 moderate=1 low=0 info=0.",
+    "node scripts/audit-gate.mjs --input tests/fixtures/audit-invalid.json: exit 2; stderr audit unavailable."
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "escalate_human",
+  "confidence": "medium",
+  "deviations": [
+    "Review did not run heavy builds or durable browser tests. The Green log supplies Vite build and non-render Forge evidence."
+  ],
+  "route": "openai/gpt-6-luna#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 3,
+      "evidence": "src/cli/forge.ts lines 195-207 shows render requires Chromium, while the Green log records skipped browser download."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 3,
+      "evidence": "tests/audit-gate.test.ts lines 17-43 covers high, clean, malformed JSON, and missing input cases."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "git diff 7bc4a4e0..1d00046d shows package, lockfile, workspace override, audit script, and its tests/fixtures."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 3,
+      "evidence": "The Green log records live audit, Vite build, and Forge build results; this review directly ran all three audit fixture cases."
+    }
+  ]
+}

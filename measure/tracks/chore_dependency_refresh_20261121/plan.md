@@ -1,6 +1,6 @@
 # Refresh dependencies after the vulnerability audit
 
-Status: new. This plan owns execution status. Source documents retain design details.
+Status: completed (2026-11-21). All three tasks are `[x]` and carry commit evidence. The track is ready for closeout. It is not archived. This plan owns execution status. Source documents retain design details.
 
 Lane: light. One phase. Deadlines: critical and high by 2026-11-23, the rest by 2026-11-25.
 
@@ -35,4 +35,13 @@ Reviews A, B, and C at `cb167393` all PASS. Review B left four Nits. F8 is recor
 
 - F4 (Nit, accepted): `pnpm-lock.yaml` still holds the pre-release packages `@emnapi/core@2.0.0-beta.2` and `@emnapi/runtime@2.0.0-beta.2` (pnpm-lock.yaml:75 and :81). The lockfile blob is unchanged across this track. The round-1 registry check showed matching integrity and a provenance record for both packages. Only `@rolldown/binding-wasm32-wasi` (cpu wasm32) uses them, and this host does not install that binding. Decision: accept the packages as-is. No override to `^1.11.3`.
 - F6 (Nit, fixed): in an earlier build, `execFileSync` had no `cwd` option, so a caller in another directory could audit the wrong lockfile and get a false exit 0. Commit `199189d9` fixed this. The live path now derives `REPO_ROOT` from `import.meta.url` and passes it as `cwd`. The gate exits 0 from the repo root and from `/tmp`. The cwd test covers this path. No open work remains.
-- F7 (Nit, accepted): No test covers the timeout branch. `scripts/audit-gate.mjs:18` sets `TIMEOUT_MS` to 120000, and line 91 passes it to `execFileSync`. Review B probes showed the branch works: a hanging child, a child with a grandchild on the pipe, and a child that prints without ending each gave exit 2 with `audit unavailable`. Decision: accept the gap. No test or production change in this round. A future fix can make the timeout overridable in a test.
+- F7 (Nit, accepted): No test covers the timeout branch. `scripts/audit-gate.mjs:21` sets `TIMEOUT_MS` to 120000, and line 192 passes it to `execFileSync`. Review B probes showed the branch works: a hanging child, a child with a grandchild on the pipe, and a child that prints without ending each gave exit 2 with `audit unavailable`. Decision: accept the gap. No test or production change in this round. A future fix can make the timeout overridable in a test. Phase acceptance F2 corrected the line numbers at closeout.
+
+### Review notes at closeout
+
+Phase acceptance at `5d74968c` passed with Nits F1 to F6. The bookkeeping round closes F2, F3, F5, and F6. It leaves the committed role logs unchanged for F4.
+
+- F12 (Nit, closed): Review B found no committed test for the string-building fix of F11 (`review-b-6f0e87b.json`). Commit `7b7464a920209e22d6ee22e75464e0382efbd18d` added the case `parses a 4 MiB string with a 64 MiB heap limit` at `tests/audit-gate.adversarial.test.ts:128-148`. The case fails on the scanner of `0019518e` with exit 134 (heap out of memory) and passes at HEAD with exit 0. Phase acceptance proved the failing-first behavior. The commit changes only that test, its two run records, and no production file.
+- F13 (Nit, accepted): `decodedKey` at `scripts/audit-gate.mjs:107-113` returns the raw token when `JSON.parse` throws. A fail-closed scanner would let the error reach the catch in `main`, which gives exit 2. The fallback branch is unreachable for valid input, because every key token comes from a document that already parsed. The differential run, the 46 end-to-end probes, and the depth sweeps found no input that reaches it. Decision: accept the branch as a note. No code change in this round.
+- Targeted command count: the two audit-gate suites pass 30 of 30, exit 0, at `5d74968c` (final-acceptance evidence). The earlier counts of 17, 22, and 29 in the T1 and T2 evidence were correct at their own commits.
+- F4 (Nit, noted): `jr-green-199189d9.log:2` and `jr-green-d0f755c8.log:2` say `all gates pass` beside `tsc --noEmit` exit 2 with the pre-existing 38 errors. The logs stay unchanged because they are committed role records. This plan does not repeat that claim. The gate results above stand: the after sets equal the before sets, and the pre-existing failures are debt under TD-35 to TD-40.

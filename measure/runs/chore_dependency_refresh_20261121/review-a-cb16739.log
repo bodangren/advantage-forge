@@ -1,0 +1,13 @@
+MEASURE_AGENT_RESULT
+role: review-a
+status: complete
+track: chore_dependency_refresh_20261121
+phase: Phase 1: Refresh and verify
+commits: none
+tests_run: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run --maxWorkers=1 tests/audit-gate.test.ts' => PASS, 17/17; node scripts/audit-gate.mjs => PASS, all counts zero; build-graph scan . :memory: => 21838 nodes, 24590 edges
+files_changed: measure/runs/chore_dependency_refresh_20261121/review-a-cb16739.json and this log only
+plan_updates: none; F4 records the stale T1 [~] status as a nonblocking finding
+known_failures: F4 [Nit] plan.md:9 leaves T1 in progress although its implementation and tests are complete
+handoff: F1, F2, and F3 withdrawn after verification. F4 is nonblocking. No implementation retry is requested.
+dispositions: none
+END_MEASURE_AGENT_RESULT

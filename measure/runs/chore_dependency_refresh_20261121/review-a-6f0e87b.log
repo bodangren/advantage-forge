@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: review-a
+status: pass
+track: chore_dependency_refresh_20261121
+phase: Phase 1: Refresh and verify
+commits: phase_base_sha=7bc4a4e066f6094fafe679ab33fff520e8ee56ab; role_base_sha=6f0e87b520f3188dd170caf7efd0b8d72c112993; audited_head_sha=6f0e87b520f3188dd170caf7efd0b8d72c112993
+tests_run: requested heavy-run targeted suite passed 29/29; live pnpm audit gate passed; Prettier passed; build-graph scan completed
+files_changed: measure/runs/chore_dependency_refresh_20261121/review-a-6f0e87b.json; measure/runs/chore_dependency_refresh_20261121/review-a-6f0e87b.log
+plan_updates: F6 note corrected; T1 marked [x]; plan r5 evidence matches the remediation
+known_failures: none found in the audited change
+handoff: F10 withdrawn: escape-decoded key comparison and regression tests close the false-clean case. Earlier stale F6 note withdrawn: plan.md now records the cwd fix and no open work. retry_recommendation: none.
+END_MEASURE_AGENT_RESULT

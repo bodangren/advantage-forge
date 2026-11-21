@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "role": "measure-review-b-security",
+  "track": "chore_dependency_refresh_20261121",
+  "phase": "Phase 1: Refresh and verify",
+  "phase_base_sha": "7bc4a4e066f6094fafe679ab33fff520e8ee56ab",
+  "baseline_sha": "7bc4a4e066f6094fafe679ab33fff520e8ee56ab",
+  "role_base_sha": "1d00046da922933bd546047ed01559981c5f9a8e",
+  "audited_head_sha": "1d00046da922933bd546047ed01559981c5f9a8e",
+  "security_applicability": "applicable",
+  "route": "claude-code/claude-sonnet-5-5#max",
+  "status": "pass",
+  "summary": "Pass. No Blocker. Review B audited 7bc4a4e0..1d00046d; HEAD 1d00046d was current at the start. A later docs-only commit, 5bbf48db, left every audited path unchanged. The review is applicable, because the diff changes the dependency manifests. The live audit shows 0 critical, 0 high, 0 moderate, 0 low, and 0 info findings. The lockfile resolves one patched copy each of sharp, zod, vite, source-map-js, vitest, and @vitest/mocker. No registry, tarball, git, or URL entry entered the lockfile. All 78 new entries match the npm registry integrity, and none has an install script. The audit gate exits 2 on a network failure and on bad input, and no shell injection exists. One Major remains: the gate reports a pass for an incomplete audit document (F1). Four Nits cover test gaps, a missing timeout, a pre-release wasm peer, and the Node engines range. A2 is not applicable. A6 shows no overstatement.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F1 [Major] review-b: The audit gate reports a pass for an incomplete audit document. scripts/audit-gate.mjs:18-21 turns a missing or non-integer count into 0, and scripts/audit-gate.mjs:38-43 turns an empty advisory list into zero counts. Probes through `--input /dev/stdin` gave exit 0 for `{\"advisories\":{}}`, `{\"metadata\":{\"vulnerabilities\":{}}}`, `{\"metadata\":{\"vulnerabilities\":{\"critical\":\"1\",\"high\":\"4\"}}}`, and `{\"advisories\":{\"1\":{\"severity\":\"high \"}}}`. A document with zero metadata and one `critical` advisory also gave exit 0, because scripts/audit-gate.mjs:50-53 trusts the metadata over the advisories. Rationale: the spec review default for F2 says AC2 needs a parsed document with 0 critical and 0 high, so a document without counts must exit 2. The live result at 1d00046d is not affected, because the real `pnpm audit --json` output holds all five counts. Disposition: FIX for Green. Return null unless all five counts are non-negative integers, trim the severity, use the larger count when metadata and advisories differ, and add a test for each case.",
+    "F2 [Nit] review-b: tests/audit-gate.test.ts:17-43 has no test for the `critical` branch and no test for the live failure branch. Both fixtures hold `\"critical\": 0`, so the removal of `counts.critical > 0` at scripts/audit-gate.mjs:98 keeps all 4 tests green (read from the fixtures; not run). Plan case (c), a failed audit run, has only `--input` stand-ins, and scripts/audit-gate.mjs:74-84 has no test. Rationale: a gate that protects AC2 needs one test for each severity that it counts. Disposition: note. Add a critical-only fixture and a test that starts the script with an empty `PATH`, so that `pnpm` is not found (expect exit 2).",
+    "F3 [Nit] review-b: scripts/audit-gate.mjs:75-78 calls `execFileSync` with no `timeout`. A network that drops packets keeps the gate waiting until pnpm gives up. Rationale: a refused proxy and a refused registry both gave exit 2 with `audit unavailable`; I did not simulate dropped packets. A wait is never a false pass. Disposition: note. Add a `timeout` so that a hung audit exits 2.",
+    "F4 [Nit] review-b: pnpm-lock.yaml holds two pre-release packages, `@emnapi/core@2.0.0-beta.2` and `@emnapi/runtime@2.0.0-beta.2`. The peer range of `@napi-rs/wasm-runtime@1.2.6` is `^1.7.1 || 2.0.0-beta.2`, and pnpm chose the beta. Only `@rolldown/binding-wasm32-wasi@1.2.19` (`cpu: [wasm32]`) uses them, so this host does not install them. Rationale: the registry shows a matching integrity and a GitHub Actions publish with provenance for toyobayashi/emnapi, but the registry `latest` tag is 1.11.3. Disposition: note. Accept the entry, or override both packages to `^1.11.3`, which the peer range allows.",
+    "F5 [Nit] review-b: package.json declares `engines.node` as `>=22`, but `vitest@5.1.1` declares `^22.12.0 || ^24.0.0 || >=26.0.0` (pnpm-lock.yaml). The base `vitest@4.1.10` allowed `^20.0.0 || ^22.0.0 || >=24.0.0`. Rationale: the refresh narrowed the supported Node range for the test tool, so Node 22.0 to 22.11, 23.x, and 25.x pass `engines` but fail vitest. pnpm only warns, because no `.npmrc` or workspace setting enables strict engines. No security impact. Disposition: note. Tighten `engines` in a later change."
+  ],
+  "evidence": [
+    "HEAD check: git rev-parse HEAD printed 1d00046da922933bd546047ed01559981c5f9a8e at the start of the review. This equals audited_head_sha and role_base_sha.",
+    "HEAD moved during the review to 5bbf48db51d401ddc8eb66b06f19d613e5d6a2a9. The commit changes only measure/tracks/chore_dependency_refresh_20261121/plan.md and spec.md. The command git diff --stat 1d00046d..5bbf48db -- package.json pnpm-lock.yaml pnpm-workspace.yaml scripts tests src vite.config.ts index.html printed nothing, so every audited path is identical at the new HEAD.",
+    "Applicability: git diff --name-status 7bc4a4e0..1d00046d lists package.json, pnpm-lock.yaml, pnpm-workspace.yaml, scripts/audit-gate.mjs, tests/audit-gate.test.ts, and tests/fixtures/audit-{clean,high,invalid}.json. The dependency manifests make the review applicable. The track has no test-strategy.md.",
+    "Live audit: node scripts/audit-gate.mjs printed critical=0 high=0 moderate=0 low=0 info=0 and exited 0. pnpm audit --json printed advisories {} and zero for all five severities, with totalDependencies 160. git diff HEAD for the audited files was empty, so the audit ran on the audited lockfile. The before counts critical=0 high=4 moderate=6 low=1 come from measure/runs/chore_dependency_refresh_20261121/mid-red-4a4212b.log; I did not re-run them on the base tree.",
+    "pnpm why shows one version each: sharp 0.35.5, zod 4.6.7, vite 8.3.8, source-map-js 1.2.4, vitest 5.1.1, and @vitest/mocker 5.1.1. All meet the patched floor (sharp >=0.35.5, zod >=4.6.6, vite >=8.1.6, source-map-js >=1.2.2, vitest and @vitest/mocker >=4.1.12). Sharp has two consumers, the direct dependency and ndarray-pixels@5.2.0, and both use 0.35.5.",
+    "Advisory GHSA-68fv-2mgg-jv7q (github.com/advisories, read with webfetch): source-map-js is affected from 1.0.0 up to but not including 1.2.2, and 1.2.2 is the patched version. The lockfile resolves 1.2.4.",
+    "No new source: git diff 7bc4a4e0..1d00046d -- pnpm-lock.yaml | grep -E '^\\+' | grep -Ein 'tarball|git\\+|github:|gitlab|bitbucket|https?://|file:|link:|workspace:|directory|type: *(git|directory)|repo:|commit:|registry' printed nothing (exit 1). All 160 resolution lines at 1d00046d have the form {integrity: sha512-...} only. No .npmrc, .pnpmfile.cjs, or pnpmfile.cjs exists.",
+    "Package set: the base lockfile has 169 packages and 1d00046d has 160. 82 name@version keys are unchanged, and their integrity values are identical (0 changes). 78 keys are new. Three package names are new: @jridgewell/resolve-uri, @jridgewell/trace-mapping, and @rolldown/binding-android-arm-eabi. Eleven names are gone: convert-source-map, pathe, siginfo, stackback, @standard-schema/spec, tinyrainbow, @vitest/expect, @vitest/pretty-format, @vitest/runner, @vitest/snapshot, and @vitest/utils.",
+    "Registry cross-check (the execute tool fetched registry.npmjs.org version documents for all 78 new keys): the sha512 integrity (first 16 and last 12 characters) equals the lockfile for every key, the tarball host is registry.npmjs.org, no version is deprecated, and hasInstallScript is false for every key.",
+    "Dependency graph: for 33 new snapshots, each dependency name appears in the registry dependencies, optionalDependencies, or peerDependencies of that version. One apparent extra, sharp@0.35.5 -> @types/node, is the pnpm form of an optional peer that sharp declares only in peerDependenciesMeta; the base lockfile has the same entry for sharp@0.35.4. The 15 unchanged snapshots that have dependencies gained and lost no dependency name.",
+    "Publisher continuity: 35 of 37 old-to-new version pairs keep the same npm publisher. Two pairs changed it and both checked out. why-is-node-running keeps mafintosh as a maintainer, and the 3.2.1 provenance names github.com/mafintosh/why-is-node-running at tag v3.2.1. tinybench keeps aslemammad as a maintainer, and the 6.2.4 provenance names github.com/tinylibs/tinybench at tag v6.2.4. A further 23 attestations (vitest, vite, zod, sharp, rolldown, postcss, and others) name the expected upstream repositories.",
+    "Release age (registry time field; sandbox clock 2026-11-21T03:04Z; 37 versions checked): the youngest are source-map-js@1.2.4 at 39 hours, tinybench@6.2.4 at 54 hours, and vitest, @vitest/mocker, and @vitest/spy 5.1.1 at 67 hours. Every other checked version is older than 7 days. source-map-js@1.2.4 has one maintainer (7rulnik), no dependency, and no install script.",
+    "Install scripts: this lockfile format records no requiresBuild key (0 matches at both revisions), so the check used the registry: hasInstallScript is false for all 78 new keys. pnpm-workspace.yaml keeps allowBuilds {esbuild: true}, and esbuild did not change.",
+    "pnpm-workspace.yaml adds overrides {sharp: ^0.35.5}, and the lockfile top-level overrides entry matches it. ndarray-pixels@5.2.0 declares sharp ^0.35.0, so the override is compatible. Without it, an in-place install keeps the locked sharp 0.35.4 for ndarray-pixels, which is inside that range.",
+    "package.json: the diff changes only dependency lines (no scripts, engines, or packageManager change), and the 18 direct dependency names are unchanged. AC5: commit bdacfe54 holds package.json, pnpm-lock.yaml, and pnpm-workspace.yaml together.",
+    "Gate input probes (printf JSON | node scripts/audit-gate.mjs --input /dev/stdin): exit 2 for {}, [], null, 0, a JSON string, an error object, and metadata without vulnerabilities. Exit 1 for a critical-only metadata document and for the severities high, HIGH, and critical in advisories. Exit 0 for the inputs named in F1.",
+    "Network failure on the live path: pnpm_config_registry=http://127.0.0.1:9/ gave exit 2 with audit unavailable. HTTPS_PROXY=http://127.0.0.1:9 gave exit 2 with audit unavailable. pnpm 11 ignored npm_config_registry, so that run audited the real registry and exited 0 with real counts; this is not a gate defect.",
+    "Injection: the --input values a;id;# and $(id), a missing value, --version as value, and a directory path all gave exit 2 with audit unavailable, and no command ran. scripts/audit-gate.mjs passes --input only to readFileSync, calls execFileSync('pnpm', ['audit', '--json']) without a shell, and prints fixed text only, never file content or pnpm stderr.",
+    "Severity keys __proto__, constructor, and toString in advisories caused no crash and no pollution: exit 0 with zero counts alone, and exit 1 when a real high advisory is present.",
+    "Secret scan: git diff 7bc4a4e0..1d00046d (without pnpm-lock.yaml), and the added lockfile lines (without integrity lines), piped to grep -inE 'api[_-]?key|secret|bearer|sk-[a-z0-9]{8}|password|credential|authorization|_authToken|npm_[A-Za-z0-9]{20}|ghp_[A-Za-z0-9]{20}|BEGIN (RSA|OPENSSH|PRIVATE)' printed nothing (exit 1).",
+    "A2: not applicable. grep -inE 'published|draft|consent|anonymi' over the diff of scripts, tests, and src printed nothing, and no draft-to-published flip exists in this diff.",
+    "A6: measure/tracks.md:21-22 lists the track as open ([ ]) and makes no resolved claim, and measure/generated/status.md:26 shows status new with 0/3 tasks. The plan claim 'No moderate or low findings remain' matches the live audit.",
+    "Record drift for the orchestrator: commit 5bbf48db adds node_modules/.bin/playwright install chromium to the AC4 render check, but plan.md T3 still says 'no gate launches a browser'. The browser download is outside the lockfile. plan.md also keeps T1 and T2 as [~], so the review role-gate counts 2 non-deferred incomplete tasks. The orchestrator owns the marker flips.",
+    "Not run by Review B: prettier, tsc, vitest, vite build, and forge build. jr-green-bdacfe54.log records them, and Review A and phase acceptance own them.",
+    "Route: the orchestrator substituted claude-code/claude-sonnet-5-5#max for the ra-quota pick, because the pick returned the Green author family (opencode-go/hy4-flash-free#high). The Red family is Muse, and Review A runs on OpenAI."
+  ],
+  "commands": [
+    "git rev-parse HEAD -> 1d00046da922933bd546047ed01559981c5f9a8e (start); 5bbf48db51d401ddc8eb66b06f19d613e5d6a2a9 (later)",
+    "git diff --stat 7bc4a4e0..1d00046d; git diff --name-status 7bc4a4e0..1d00046d; git diff --name-status 1d00046d..5bbf48db",
+    "node scripts/audit-gate.mjs -> critical=0 high=0 moderate=0 low=0 info=0, exit 0",
+    "pnpm audit --json -> advisories {}, all five severities 0, totalDependencies 160",
+    "pnpm why sharp | zod | vite | source-map-js | vitest | @vitest/mocker -> one patched version each",
+    "git show 7bc4a4e0:pnpm-lock.yaml and git show 1d00046d:pnpm-lock.yaml piped through awk, sed, grep, and sort (package set, integrity, snapshot dependency names, requiresBuild, resolution forms)",
+    "git diff 7bc4a4e0..1d00046d -- pnpm-lock.yaml | grep -E '^\\+' | grep -Ein 'tarball|git\\+|github:|gitlab|bitbucket|https?://|file:|link:|workspace:|directory|type: *(git|directory)|repo:|commit:|registry' -> no output, exit 1",
+    "execute tool fetch of registry.npmjs.org version documents, packuments, and attestations (78 new keys; 37 old-to-new pairs; 37 publish times; 23 provenance attestations; 33 snapshot dependency lists) -> all consistent",
+    "webfetch https://github.com/advisories/GHSA-68fv-2mgg-jv7q -> patched 1.2.2",
+    "printf '<json>' | node scripts/audit-gate.mjs --input /dev/stdin (22 inputs) -> exit 1 or 2 as expected; the incomplete inputs in F1 exit 0",
+    "pnpm_config_registry=http://127.0.0.1:9/ node scripts/audit-gate.mjs -> audit unavailable, exit 2",
+    "HTTPS_PROXY=http://127.0.0.1:9 HTTP_PROXY=http://127.0.0.1:9 node scripts/audit-gate.mjs -> audit unavailable, exit 2",
+    "node scripts/audit-gate.mjs --input 'a;id;#' | '$(id)' | (no value) | --version | tests/fixtures -> audit unavailable, exit 2 each",
+    "git diff 7bc4a4e0..1d00046d (without pnpm-lock.yaml) | grep -inE '<secret patterns>' -> no output, exit 1",
+    "git diff 7bc4a4e0..1d00046d -- scripts tests src | grep -inE 'published|draft|consent|anonymi' -> no output, exit 1"
+  ],
+  "changed_files": [],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 4,
+      "evidence": "node scripts/audit-gate.mjs at 1d00046d printed critical=0 high=0 moderate=0 low=0 info=0 and exited 0, but scripts/audit-gate.mjs:18-21 turns a missing count into 0 (F1)."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 3,
+      "evidence": "tests/audit-gate.test.ts:17-43 has 4 real cases, yet both fixtures hold critical 0, so the critical branch at scripts/audit-gate.mjs:98 and the live branch at :74-84 have no test (F2)."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "git diff --name-status 7bc4a4e0..1d00046d lists only dependency files, the gate script, its test, 3 fixtures, and track records."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 4,
+      "evidence": "measure/runs/chore_dependency_refresh_20261121/jr-green-bdacfe54.log gives the command, exit code, and counts for each gate, and my live re-run reproduced the audit counts."
+    }
+  ]
+}

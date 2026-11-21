@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: review-a
+status: fail
+track: chore_dependency_refresh_20261121
+phase: Phase 1: Refresh and verify
+commits: phase_base_sha=7bc4a4e066f6094fafe679ab33fff520e8ee56ab; role_base_sha=0019518ed86e042f456255f97863da7f281d08ba; audited_head_sha=0019518ed86e042f456255f97863da7f281d08ba
+tests_run: requested heavy-run targeted suite passed 22/22; live audit gate passed; escaped duplicate-key reproduction exposed false clean
+files_changed: measure/runs/chore_dependency_refresh_20261121/review-a-0019518.json; measure/runs/chore_dependency_refresh_20261121/review-a-0019518.log
+plan_updates: T1 marker is complete; stale accepted F6 note remains at plan.md:34
+known_failures: Escaped equivalent duplicate object keys are not recognized; gate reports clean counts
+handoff: Green: decode escaped JSON keys before duplicate comparison or use a duplicate-rejecting parser; add a regression test for high and h\\u0069gh. Also revise the stale F6 plan note. Retry recommendation: retry_implementation.
+END_MEASURE_AGENT_RESULT

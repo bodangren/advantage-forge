@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "summary": "Pass. B-1 is withdrawn: render rewrote its output, the fast build passed, and Playwright consumers can launch Chromium.",
+  "audited_head": "cb167393632c1c652ffc8ce07a7bc25543960e1a",
+  "audited_head_sha": "cb167393632c1c652ffc8ce07a7bc25543960e1a",
+  "phase_base_sha": "7bc4a4e066f6094fafe679ab33fff520e8ee56ab",
+  "role_base_sha": "cb167393632c1c652ffc8ce07a7bc25543960e1a",
+  "current_head_sha": "cb167393632c1c652ffc8ce07a7bc25543960e1a",
+  "audited_head_is_current": true,
+  "contract_applicability": "applicable",
+  "applicability_evidence": [
+    "git diff --name-only 7bc4a4e0..cb167393 includes package.json, pnpm-lock.yaml, pnpm-workspace.yaml, scripts/audit-gate.mjs, tests/audit-gate.test.ts, fixtures, and the track spec and plan; dependency and CLI contracts apply."
+  ],
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "evidence": [
+    "F1 withdrawn: ran ./forge render rogue --fast through the required heavy runner; it exited 0, reported out/rogue/render.png, and stat changed from 2026-11-21 11:36:02 to 2026-11-21 11:57:28.",
+    "Ran ./forge build slime --fast through the required heavy runner; it exited 0 and wrote out/slime/slime.glb.",
+    "The installed Playwright executable at /home/daniebo/.cache/ms-playwright/chromium-1255/chrome-linux64/chrome exists; chromium.launch() succeeded and reported version 159.0.8154.6.",
+    "grep found Chromium launches in scripts/apk3d-shot.ts, avatar-portraits.ts, avatar-review.ts, battle.ts, showcase.ts, apk2d-bake.ts, rpg-skin.ts, song-record.ts, shoot-*.mjs, and src/storytime/book-pictures.ts; these use the same Playwright Chromium installation verified by the launch smoke test.",
+    "scripts/audit-gate.mjs:73-114 accepts --input, exits 0 when critical and high are zero, exits 1 when either is nonzero, and calls unavailable() for exit 2 cases; unavailable() prints audit unavailable at lines 20-23.",
+    "scripts/audit-gate.mjs:86-99 reads AUDIT_GATE_PNPM or pnpm, captures pnpm audit --json, and treats a missing executable or empty failed result as unavailable; tests/audit-gate.test.ts:115-120 covers the override failure.",
+    "The required heavy-run Vitest command passed tests/audit-gate.test.ts: 1 file and 17 tests passed, including critical-only, invalid input, and unavailable live-run cases.",
+    "Direct CLI probes: audit-clean.json exited 0; audit-high.json exited 1; audit-invalid.txt exited 2 and printed audit unavailable. The live audit gate exited 0 and printed zero counts for all severities.",
+    "git rev-parse HEAD returned cb167393632c1c652ffc8ce07a7bc25543960e1a at the final check, equal to audited_head_sha, role_base_sha, and audited_head."
+  ],
+  "commands": [
+    "git rev-parse HEAD -> cb167393632c1c652ffc8ce07a7bc25543960e1a; equal to audited_head_sha and current HEAD.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './forge render rogue --fast' -> exit 0; render output written.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './forge build slime --fast' -> exit 0.",
+    "node -e import('playwright') and chromium.executablePath() -> path exists; chromium.launch() -> version 159.0.8154.6.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run --maxWorkers=1 tests/audit-gate.test.ts' -> exit 0; 17 tests passed.",
+    "node scripts/audit-gate.mjs --input tests/fixtures/audit-clean.json -> exit 0; critical=0 high=0.",
+    "node scripts/audit-gate.mjs --input tests/fixtures/audit-high.json -> exit 1; critical=0 high=2.",
+    "node scripts/audit-gate.mjs --input tests/fixtures/audit-invalid.txt -> exit 2; stderr audit unavailable.",
+    "AUDIT_GATE_PNPM=/nonexistent-audit-gate-pnpm node scripts/audit-gate.mjs -> exit 2; stderr audit unavailable.",
+    "node scripts/audit-gate.mjs -> exit 0; critical=0 high=0 moderate=0 low=0 info=0.",
+    "git diff --check 7bc4a4e0..cb167393 -> no output; git diff --name-only confirms applicable dependency and audit CLI paths."
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "deviations": [],
+  "route": "openai/gpt-6-luna#high",
+  "changed_files": [
+    "measure/runs/chore_dependency_refresh_20261121/review-c-cb16739.json",
+    "measure/runs/chore_dependency_refresh_20261121/review-c-cb16739.log"
+  ],
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "scripts/audit-gate.mjs:107-114 enforces the documented 0/1 decisions and tests/audit-gate.test.ts passed 17 cases."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "The direct child-process suite passed 17 cases, including malformed input, critical-only findings, and AUDIT_GATE_PNPM failure."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "git diff --name-only 7bc4a4e0..cb167393 contains dependency, audit-gate, test, fixture, and Measure evidence paths only."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "The heavy-run commands exited 0 for render and build, the Chromium launch smoke reported 159.0.8154.6, and git rev-parse confirmed HEAD."
+    }
+  ]
+}

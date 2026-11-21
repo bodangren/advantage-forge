@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: review-a
+status: complete
+track: chore_dependency_refresh_20261121
+phase: Phase 1: Refresh and verify
+commits: none
+tests_run: All test commands used the required foreground heavy runner. Audit tests: 4 passed, exit 0. Caller tests: 39 passed, exit 0. Live audit: zero findings, exit 0. Compiler: 38 errors across 13 files, exit 2. Storytime tests: 9 failed and 133 passed, exit 1. Anonymous fixtures confirmed four false audit passes. Injected live-path checks confirmed child-exit handling. Baseline log comparisons confirmed identical diagnostics, warning sets, and failed test names.
+files_changed: measure/runs/chore_dependency_refresh_20261121/review-a-1d00046.json; measure/runs/chore_dependency_refresh_20261121/review-a-1d00046.log
+plan_updates: none
+known_failures: VERDICT FAIL. F1 [Blocker] review-a: The audit gate accepts missing or malformed counts as zero. F2 [Blocker] review-a: T2 and the final pass claim overstate AC3 despite failed compiler and test gates. F3 [Nit] review-a: The invalid JSON fixture introduces a formatter parse error.
+handoff: retry_recommendation: retry_implementation. Route F1 and the F2 record correction to Green. Preserve the verified dependency versions and credible baseline comparisons. The orchestrator retains AC3 acceptance and AC5 safe-push responsibility. Browser rendering remains unavailable because the selected Chromium executable is absent. No implementation, plan, registry, installation, commit, or branch change occurred. Facts changed: none. Full evidence and worktree ownership appear in review-a-1d00046.json.
+END_MEASURE_AGENT_RESULT
