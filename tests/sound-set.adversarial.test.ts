@@ -1,5 +1,16 @@
 import { spawnSync } from 'node:child_process';
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs';
+import {
+  chmodSync,
+  existsSync,
+  lstatSync,
+  mkdirSync,
+  mkdtempSync,
+  readFileSync,
+  rmSync,
+  statSync,
+  symlinkSync,
+  writeFileSync,
+} from 'node:fs';
 import { homedir } from 'node:os';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
@@ -223,6 +234,195 @@ describe('sound-set adversarial process boundaries', () => {
       expect(result.stderr).toBe(
         `sound-set: cannot prepare output for ${name} (tap/soft): ${output(root, name)}\n`,
       );
+    });
+  });
+
+  it.each(['file', 'directory', 'missing'] as const)(
+    'unlinks a target symlink to a %s without changing its destination',
+    (kind) => {
+      fixture((root, bin) => {
+        writeSet(root, { sounds: [ENTRIES[0]] });
+        mkdirSync(join(root, 'sounds', 'fake'));
+        const destination = join(root, 'protected');
+        if (kind === 'file') writeFileSync(destination, 'preserve');
+        if (kind === 'directory') {
+          mkdirSync(destination);
+          writeFileSync(join(destination, 'keep.txt'), 'preserve');
+        }
+        symlinkSync(destination, output(root));
+        const result = run(root, bin);
+        expect(result.status).toBe(0);
+        expect(result.stderr).toBe('');
+        expect(calls(root)).toEqual([['make', '--sound', 'tap/soft', '-o', output(root)]]);
+        expect(lstatSync(output(root)).isSymbolicLink()).toBe(false);
+        expect(readFileSync(output(root), 'utf8')).toBe('OggS');
+        if (kind === 'file') expect(readFileSync(destination, 'utf8')).toBe('preserve');
+        if (kind === 'directory') {
+          expect(readFileSync(join(destination, 'keep.txt'), 'utf8')).toBe('preserve');
+        }
+        if (kind === 'missing') expect(existsSync(destination)).toBe(false);
+      });
+    },
+  );
+
+  it('rejects a no-write child after unlinking a target symlink', () => {
+    fixture((root, bin) => {
+      writeSet(root, { sounds: ENTRIES });
+      mkdirSync(join(root, 'sounds', 'fake'));
+      const destination = join(root, 'protected');
+      writeFileSync(destination, 'stale');
+      symlinkSync(destination, output(root));
+      const result = run(root, bin);
+      expect(result.status).toBe(1);
+      expect(result.stderr).toBe(`sound-set: earshot wrote no file for alpha (tap/soft): ${output(root)}\n`);
+      expect(result.stdout).toBe('');
+      expect(calls(root)).toEqual([['make', '--sound', 'tap/soft', '-o', output(root)]]);
+      expect(readFileSync(destination, 'utf8')).toBe('stale');
+      expect(existsSync(output(root))).toBe(false);
+    }, 'no-write');
+  });
+
+  it('preserves other files when the output folder is an existing directory symlink', () => {
+    fixture((root, bin) => {
+      const repository = join(root, 'repository');
+      writeSet(repository, { sounds: [ENTRIES[0]] });
+      const destination = join(root, 'linked-output');
+      mkdirSync(destination);
+      writeFileSync(join(destination, 'keep.txt'), 'preserve');
+      symlinkSync(destination, join(repository, 'sounds', 'fake'));
+      const result = run(repository, bin);
+      expect(result.status).toBe(0);
+      expect(result.stderr).toBe('');
+      expect(calls(root)).toEqual([['make', '--sound', 'tap/soft', '-o', output(repository)]]);
+      expect(lstatSync(join(repository, 'sounds', 'fake')).isSymbolicLink()).toBe(true);
+      expect(readFileSync(join(destination, 'alpha.ogg'), 'utf8')).toBe('OggS');
+      expect(readFileSync(join(destination, 'keep.txt'), 'utf8')).toBe('preserve');
+    });
+  });
+
+  it.each(['file', 'missing'] as const)(
+    'reports the first entry when the output-folder symlink points to a %s',
+    (kind) => {
+      fixture((root, bin) => {
+        writeSet(root, { sounds: ENTRIES });
+        const destination = join(root, 'protected');
+        if (kind === 'file') writeFileSync(destination, 'preserve');
+        symlinkSync(destination, join(root, 'sounds', 'fake'));
+        const result = run(root, bin);
+        expect(result.status).toBe(1);
+        expect(result.stderr).toBe(
+          `sound-set: cannot prepare output for alpha (tap/soft): ${output(root)}\n`,
+        );
+        expect(result.stdout).toBe('');
+        expect(calls(root)).toEqual([]);
+        expect(lstatSync(join(root, 'sounds', 'fake')).isSymbolicLink()).toBe(true);
+        if (kind === 'file') expect(readFileSync(destination, 'utf8')).toBe('preserve');
+        if (kind === 'missing') expect(existsSync(destination)).toBe(false);
+      });
+    },
+  );
+
+  it('stops at a later preparation failure and retains only earlier successful output', () => {
+    fixture((root, bin) => {
+      writeSet(root, { sounds: [...ENTRIES, { name: 'gamma', design: 'pop/bubble' }] });
+      mkdirSync(output(root, 'beta'), { recursive: true });
+      writeFileSync(join(output(root, 'beta'), 'keep.txt'), 'preserve');
+      const result = run(root, bin);
+      expect(result.status).toBe(1);
+      expect(result.stderr).toBe(
+        `sound-set: cannot prepare output for beta (error/knock): ${output(root, 'beta')}\n`,
+      );
+      expect(result.stdout).toBe('fake-out\nfake-err\nsound-set: alpha.ogg <- tap/soft\n');
+      expect(calls(root)).toEqual([['make', '--sound', 'tap/soft', '-o', output(root)]]);
+      expect(readFileSync(output(root), 'utf8')).toBe('OggS');
+      expect(readFileSync(join(output(root, 'beta'), 'keep.txt'), 'utf8')).toBe('preserve');
+      expect(existsSync(output(root, 'gamma'))).toBe(false);
+    });
+  });
+
+  describe.skipIf(process.getuid?.() === 0)('permission failures without root privileges', () => {
+    it('contains a stale-target removal failure in an unwritable output folder', () => {
+      fixture((root, bin) => {
+        writeSet(root, { sounds: ENTRIES });
+        const folder = join(root, 'sounds', 'fake');
+        mkdirSync(folder);
+        writeFileSync(output(root), 'stale');
+        chmodSync(folder, 0o555);
+        try {
+          expect(() => writeFileSync(join(folder, 'permission-probe'), '')).toThrow();
+          const result = run(root, bin);
+          expect(result.status).toBe(1);
+          expect(result.stderr).toBe(
+            `sound-set: cannot prepare output for alpha (tap/soft): ${output(root)}\n`,
+          );
+          expect(result.stdout).toBe('');
+          expect(calls(root)).toEqual([]);
+          expect(readFileSync(output(root), 'utf8')).toBe('stale');
+        } finally {
+          chmodSync(folder, 0o755);
+        }
+      });
+    });
+
+    it('contains folder creation failure when the sounds folder is unwritable', () => {
+      fixture((root, bin) => {
+        writeSet(root, { sounds: ENTRIES });
+        const folder = join(root, 'sounds');
+        chmodSync(folder, 0o555);
+        try {
+          expect(() => writeFileSync(join(folder, 'permission-probe'), '')).toThrow();
+          const result = run(root, bin);
+          expect(result.status).toBe(1);
+          expect(result.stderr).toBe(
+            `sound-set: cannot prepare output for alpha (tap/soft): ${output(root)}\n`,
+          );
+          expect(result.stdout).toBe('');
+          expect(calls(root)).toEqual([]);
+          expect(existsSync(join(folder, 'fake'))).toBe(false);
+        } finally {
+          chmodSync(folder, 0o755);
+        }
+      });
+    });
+
+    it('contains the child write failure when an empty output folder is unwritable', () => {
+      fixture((root, bin) => {
+        writeSet(root, { sounds: ENTRIES });
+        const folder = join(root, 'sounds', 'fake');
+        mkdirSync(folder);
+        chmodSync(folder, 0o555);
+        try {
+          expect(() => writeFileSync(join(folder, 'permission-probe'), '')).toThrow();
+          const result = run(root, bin);
+          // Preparation has no stale file to remove. The child reports its write failure.
+          expect(result.status).toBe(1);
+          expect(result.stderr).toBe('sound-set: earshot failed for alpha (tap/soft) with exit 1\n');
+          expect(result.stdout).toBe('');
+          expect(calls(root)).toEqual([['make', '--sound', 'tap/soft', '-o', output(root)]]);
+          expect(existsSync(output(root))).toBe(false);
+          expect(existsSync(output(root, 'beta'))).toBe(false);
+        } finally {
+          chmodSync(folder, 0o755);
+        }
+      });
+    });
+
+    it('contains an unreadable set file before any child call', () => {
+      fixture((root, bin) => {
+        writeSet(root, { sounds: ENTRIES });
+        const file = join(root, 'sounds', 'sets', 'fake.json');
+        chmodSync(file, 0o000);
+        try {
+          expect(() => readFileSync(file)).toThrow();
+          const result = run(root, bin);
+          expect(result.status).toBe(1);
+          expect(result.stderr).toBe(`sound-set: set file is not valid JSON: ${file}\n`);
+          expect(result.stdout).toBe('');
+          expect(calls(root)).toEqual([]);
+        } finally {
+          chmodSync(file, 0o600);
+        }
+      });
     });
   });
 });
