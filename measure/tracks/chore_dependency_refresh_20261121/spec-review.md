@@ -22,3 +22,29 @@ This track refreshes the direct dependencies of advantage-forge to current safe 
 - F3 [Blocker] spec.md AC4 / plan.md T3: AC4 requires two sample assets but names neither, and T3 repeats the unnamed pair, so Green chooses which assets prove the build gate. Default: use `./forge build rogue` (textured) and `./forge build slime --fast` (fast); both sources exist in `assets/`. Rationale: The sample assets are file locations, and a Blocker covers a file location that the plan leaves to the implementer.
 - F4 [Major] plan.md T3 (asset build gates): The two `./forge build` commands in T3 bypass heavy-run.sh, while all four T2 gates use it and the repo convention wraps every forge command in one heavy-run.sh call. Default: run `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './forge build rogue'` and wrap the `--fast` call the same way. Rationale: A textured forge build takes one of two machine-wide build slots, and AC3 routes all gates through the heavy runner; the T3 gate sits in the wrong place.
 - F5 [Major] plan.md T1 (Red test): T1 requires a test but names neither the script path nor the test path, and it names no normal or edge test cases. Default: create `scripts/audit-gate.mjs` and `tests/audit-gate.test.ts`, with cases for a JSON showing 4 high (fails), a JSON showing 0 high and 1 moderate (passes), and an unavailable audit (exits 2). Rationale: The zero-decision check requires each phase to name the files it changes and its normal and edge test cases.
+
+## Round 2
+
+Date: 2026-11-21
+Reviewer: measure spec-review subagent (opencode-go/hy4-flash-free)
+
+### What this track proposes
+
+This track refreshes the direct dependencies of advantage-forge to current safe versions after the audit of 2026-11-21 (0 critical, 4 high, 6 moderate, 1 low). It adds a Red audit gate: `scripts/audit-gate.mjs` with `tests/audit-gate.test.ts`, which runs `pnpm audit --json` and exits 0 for 0 critical and 0 high, 1 otherwise, and 2 when the audit cannot run. It updates `package.json` and the lockfile, then runs lint, typecheck, tests, and build through heavy-run.sh. It requires two named sample asset builds, `./forge build rogue` (textured) and `./forge build slime --fast`, in one heavy-run.sh call with exit 0 and no warning lines. The orchestrator pushes the result with safe-push.
+
+### How the current system works, per this spec
+
+`package.json` pins most dependencies exactly and declares pnpm 11.8.0. The current versions of sharp, zod, vite, and vitest produce 4 high, 6 moderate, and 1 low audit finding with no critical finding. No dependency-audit check or test exists in `scripts/` or `tests/` before this track. Heavy commands run through heavy-run.sh in the advantage-pr repository, and a textured forge build takes one of two machine-wide build slots.
+
+### Findings
+
+- None
+
+### Finding closure (round 1)
+
+- F1 closed: plan.md T2 now names `node_modules/.bin/prettier --check .` with the existing `.prettierignore` and fixes the before-count rule.
+- F2 closed: plan.md T1 defines exit 2 with `audit unavailable`, calls it inconclusive, and rules that it never satisfies AC2.
+- F3 closed: spec.md AC4 and plan.md T3 name `./forge build rogue` (textured) and `./forge build slime --fast`; both sources exist in `assets/`.
+- F4 closed: plan.md T3 routes both builds through one heavy-run.sh call.
+- F5 closed: plan.md T1 names `scripts/audit-gate.mjs`, `tests/audit-gate.test.ts`, and three cases: high>0 gives exit 1, 0 critical and 0 high gives exit 0, and an audit failure gives exit 2.
+- No new open decision: the amendment fixes schema, CLI shape, dependency, edge-case behavior, and file location. No placeholder token remains.
