@@ -349,6 +349,16 @@ Workbooks does not wait for it.
     pass 10/10. Fixed in the round: the untagged waistband fell back to segment-distance
     weights and its verts followed the arms and legs (long blades in point-up, sway, and
     stretch-up); now rigid on the hips bone like the skirt. Log green-p5-adult-base.log.
+  - Grandma cuffs fix 4fa91ee8 (2026-11-21, orchestrator finding at adb317ce: a peach skin oval in
+    the raised cuff and a skin patch on the lowered cuff). GRANNY scales every Y by 0.94 but kept
+    ADULT.fist.palmAt, so the hand's own skin cuff sat above the shortened wrist and poked through
+    the green sleeve. The fix scales fist.palmAt with the body; the ef5be6c4 sleeve fix, wrist bone,
+    grip anchor, and all clips stay. `./forge all sprout-grandma` exits 0 with no warning lines
+    (34,794 triangles, GLB 4337 KB). `./forge check sprout-grandma` fails only the waived
+    touch-nose; point-up, stretch-up, picture-sway and cheer stay clean; ground ok. The Red command
+    still passes 13/13 and the three sprout test files pass 15/15. typecheck-asset reports 0 errors.
+    Grandma's 25 cut-outs were re-rendered at 1760x1856; cutout-check flags only the four known
+    reach tiptoe frames. Log green-p5-adult-base.log.
   - [x] Grandpa (older man, as tall as Mom, due 11-24; feat 95931d6b)
   - [x] Tom (nine-year-old boy, one of the tallest children, due 11-25; feat c402738f, fix 71c48a26)
 - [x] Task: Per-character hand offset in assets/parts/sprout-gestures.ts for bob hair (moves

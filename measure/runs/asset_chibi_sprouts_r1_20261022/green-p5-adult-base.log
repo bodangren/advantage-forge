@@ -670,3 +670,52 @@ handoff: Phase acceptance should audit assets/sprout-lily.ts at 4f7a6776. Check
   the fresh Lily point-up and sway-picture cut-outs. Check that the crown is
   clean and that handClearance 0.04 is unchanged.
 END_MEASURE_AGENT_RESULT
+
+## Grandma cuffs (orchestrator finding at role base adb317ce, 2026-11-21)
+
+Scope: only assets/sprout-grandma.ts changed. The ef5be6c4 sleeve fix stays
+(paintSkin 4 mm stub, forearm-tagged cuffs, shared 0.02 m elbow fillet). No Red
+test, sprout-gestures.ts, or humanoid-kind.ts edit. No push. No generate.sh.
+
+Cause: GRANNY scales every Y by 0.94, including the wrist, but inherited
+ADULT.fist.palmAt unscaled. The hand's own skin cuff therefore sat 1.4 cm ABOVE
+the shortened wrist instead of 2.9 cm below it, as on Mom. In the raised arm the
+skin showed through the open sleeve end as a peach oval; in the lowered arm it
+showed as a peach patch above the green cuff. Mom, Dad and Grandpa keep the
+adult wrist-to-hand relationship and stayed clean.
+
+Loop 1 (final): add `fist: { ...ADULT.fist, palmAt: vY(ADULT.fist.palmAt) }` to
+GRANNY. This scales the hand rest placement with the body and leaves the wrist
+bone, grip anchor, sleeve geometry, and all clips untouched. A point-up probe
+cut-out showed both the raised oval and the lowered patch gone. No further loop
+was needed.
+
+Gates (all through heavy-run.sh, FORGE_GL=software, HEAVY_MIN_AVAIL_MB=1500,
+foreground, timeout 0), final source:
+1. node scripts/typecheck-asset.mjs assets/sprout-grandma.ts: exit 0, 0 errors.
+2. ./forge all sprout-grandma: exit 0, no warning: lines. 34,794 triangles,
+   0.544 x 1.53 x 0.394 m, GLB 4337 KB.
+3. ./forge check sprout-grandma: exit 1 on one clip only, gesture-touch-nose,
+   which is waived. point-up ok, nothing within 5.0 cm. touch-neck closest 0.2 cm.
+   count-fingers closest 3.7 cm. eat closest 1.3 cm. listen closest 1.2 cm.
+   wave ok. stretch-up, picture-sway and cheer ok. ground ok.
+4. cutout-gestures-cast.sh grandma rebuilt all 25 frames at 1760x1856. The adult
+   manifest keeps gestures.dad, .grandma, .grandpa and .mom. cutout-check exits 1
+   only on the four known reach tiptoe frames (dad 1834, grandma 1833,
+   grandpa 1834, mom 1833; foot row 1840).
+5. Three sprout vitest files with --maxWorkers=1: exit 0, 15/15 pass.
+6. Images read after the final rebuild: out/chibi-sprouts/r1/week2-7/
+   gestures-adult/grandma/point-up.png, stretch-up.png and sway-picture.png, plus
+   zoomed crops of both cuffs against the pre-change point-up. Sightings: the
+   raised cuff is a clean green band with no peach oval; the lowered cuff meets
+   the hand with no skin patch above it; both cuffs stay clean in stretch-up and
+   sway-picture; no gap or new skin breakthrough. The probe file point-up-r6.png
+   and its folder were removed.
+
+new_files_added_for_reviewer_scope: none. The cut-out PNGs replace existing Grandma
+frames. No Red test edited. Parent P5 cast task stays [~].
+implementation_commit: 4fa91ee802aec248cff4824880df43d422154a50
+handoff: Phase acceptance should audit assets/sprout-grandma.ts at 4fa91ee8. Check
+  both cuffs in the fresh grandma point-up cut-out, especially the raised wrist
+  and the lowered cuff, and confirm the skin oval and patch are gone.
+END_MEASURE_AGENT_RESULT
