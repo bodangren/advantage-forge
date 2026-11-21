@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: spec-review
+status: complete
+track: chore_earshot_sounds_20261121
+phase: track setup
+commits: none
+tests_run: read-only Node Ogg/Vorbis header inspection passed; no project tests or renders run
+files_changed: measure/runs/chore_earshot_sounds_20261121/spec-review-3f98d5f.json; measure/runs/chore_earshot_sounds_20261121/spec-review-3f98d5f.log
+plan_updates: none
+known_failures: none
+handoff: PASS. F1 and F2 are withdrawn; the D5 diagnostic table and AC3 header checks now close both findings. No new decision gap or spec/plan contradiction found.
+END_MEASURE_AGENT_RESULT

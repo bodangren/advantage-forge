@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: strategy
+status: complete
+track: chore_earshot_sounds_20261121
+phase: Phase 1: Pin, render, and record
+commits: this commit (measure(chore_earshot_sounds): test strategy)
+tests_run: none (strategy authoring only; no heavy-run, vitest, or render command executed)
+files_changed: measure/tracks/chore_earshot_sounds_20261121/test-strategy.md; measure/runs/chore_earshot_sounds_20261121/strategy-3f98d5f.log; measure/runs/chore_earshot_sounds_20261121/spec-review-3f98d5f.json; measure/runs/chore_earshot_sounds_20261121/spec-review-3f98d5f.log
+plan_updates: none
+known_failures: none in strategy scope; the aggregate vitest suite is intentionally red at Red (missing scripts/sound-set.mjs and committed Ogg files) and stays red from pre-existing debt until Green; gate only on the targeted file
+handoff: Strategy written for the single light-chore phase. Risks medium. Red/Green/closeout gates and the targeted vitest command are named. Coverage lists the full D5 exact-line table, all nine AC3 header steps, AC1 map, fake-binary contract, no-real-render rule, intentionally-red aggregate handling, artifact vs live-behavior layers, review applicability (Review A yes, Review B reduced, Review C no, adversarial yes, UX browser no, acceptance yes), A3/A4/A5/A6/A7/A10 defenses with falsification conditions, and the phase_base_sha capture point (git rev-parse HEAD immediately after this strategy commit; do not use the pre-strategy audited HEAD).
+END_MEASURE_AGENT_RESULT

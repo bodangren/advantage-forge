@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "role": "spec-review",
+  "track": "chore_earshot_sounds_20261121",
+  "phase": "track setup",
+  "baseline_sha": "ae757c38e0ab0883e875522599c2f48d8571997f",
+  "role_base_sha": "ae757c38e0ab0883e875522599c2f48d8571997f",
+  "phase_base_sha": "ae757c38e0ab0883e875522599c2f48d8571997f",
+  "audited_head_sha": "3f98d5fec62670161b77d18cb8a8ab6b204ea6d5",
+  "status": "pass",
+  "summary": "Pass. The amendment fixes the diagnostics and Ogg/Vorbis identification-header contract raised in round 1.",
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "evidence": [
+    "HEAD equals audited_head_sha 3f98d5fec62670161b77d18cb8a8ab6b204ea6d5.",
+    "F1 withdrawn: verified spec.md D5's exact stderr line and exit code for all 12 failure classes, plus plan.md T1's explicit diagnostic cases.",
+    "F2 withdrawn: verified spec.md AC3's Ogg capture/version/flags/segment-table offsets and Vorbis identification-header field offsets; read /var/tmp/earshot-trial/out/tap.ogg and confirmed version 0, BOS 0x02, one 30-byte lacing segment, packet start 28, 0x01 vorbis signature, version 0, two channels, 48000 Hz, and framing flag 1.",
+    "Reviewed the spec, plan, r1 amendment, relevant AudioBus and sound-library sources, integration spec, workflow, and trial notes. No new unresolved design choice or contradiction found."
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "git show 3f98d5fe -- measure/tracks/chore_earshot_sounds_20261121/spec.md measure/tracks/chore_earshot_sounds_20261121/plan.md",
+    "node -e read-only Ogg/Vorbis header inspection of /var/tmp/earshot-trial/out/tap.ogg"
+  ],
+  "changed_files": [
+    "measure/runs/chore_earshot_sounds_20261121/spec-review-3f98d5f.json",
+    "measure/runs/chore_earshot_sounds_20261121/spec-review-3f98d5f.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "paraphrase": {
+    "proposes": "The track pins earshot in a repository-local virtual environment and adds a wrapper that renders one named Chibi sound set into Ogg files. It commits seven generated sounds and adds tests for the wrapper's exact failure messages and the files' Ogg/Vorbis headers. Playback integration remains outside this track.",
+    "current_system": "Games currently synthesize effects through AudioBus and do not load sound files. The audio library stores recorded MP3 takes and provides a review tool, but the game effects do not use those files. A separate integration track owns playback wiring, browser formats, and credits."
+  }
+}
