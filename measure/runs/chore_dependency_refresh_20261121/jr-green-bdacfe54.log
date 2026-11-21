@@ -79,5 +79,5 @@ notes:
   - "source-map-js resolves to 1.2.4 through vite > postcss, so no source-map-js override was needed."
   - "A sharp override in pnpm-workspace.yaml forces the transitive sharp from ndarray-pixels to 0.35.5. The direct sharp pin also moved to ^0.35.5."
   - "pnpm install used --no-frozen-lockfile because the environment defaults to a frozen lockfile."
-  - "bash measure/doctor.sh exits 1 on two pre-existing track-structure issues outside this Green scope: a missing measure/tracks/chore_dependency_refresh_20261121/index.md, and a plan with started tasks while metadata status stays 'new'. These issues predate this phase. The plan gates all pass. The orchestrator owns those track-structure fixes."
+  - "bash measure/doctor.sh exits 1 on two pre-existing track-structure issues outside this Green scope: a missing measure/tracks/chore_dependency_refresh_20261121/index.md, and a plan with started tasks while metadata status stays 'new'. These issues predate this phase. Corrected record: no new failures; pre-existing failures are debt, not passes. The orchestrator owns those track-structure fixes."
 END_MEASURE_AGENT_RESULT

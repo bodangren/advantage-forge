@@ -1,0 +1,91 @@
+MEASURE_AGENT_RESULT
+status: PASS (Green gates pass on the AC3 subset rule; no new failures; pre-existing failures are debt)
+role: Green
+track: chore_dependency_refresh_20261121
+phase: Phase 1: Refresh and verify (P1), tasks T2 and T3, remediation round 2
+phase_base_sha: 7bc4a4e066f6094fafe679ab33fff520e8ee56ab
+role_base_sha: aa7e7aeee9df71b1e45dced68db96dba18905530
+red_commit: aa7e7aeee9df71b1e45dced68db96dba18905530 (committed inside phase_base_sha..HEAD; not edited)
+implementation_commit: 6987ed5029e61a395c296f599063312c6812df18
+evidence_commit: pending (this log and plan.md and measure/tech-debt.md)
+final_green_head: 6987ed5029e61a395c296f599063312c6812df18 at implementation commit; evidence commit follows
+dispositions: A-F1=FIX; A-F2=FIX; A-F3=DECLINE(already fixed in Red r2: tests/fixtures/audit-invalid.txt); B-F1=FIX; B-F2=FIX; B-F3=FIX; B-F4=DECLINE(Nit not routed: the wasm beta peer is used only by @rolldown/binding-wasm32-wasi on wasm32, not by this host); B-F5=FIX; C-B1=FIX
+
+Tasks flipped to [x] with SHA evidence:
+  T2 Green -> [x]: targeted Red passes 17/17 after the change; AC3 subset gates hold at 6987ed50. The marker records completion on the subset rule, not on clean tsc or vitest exits.
+  T3 Record -> [x]: render gate exits 0 and rewrites out/rogue/render.png; combined forge build exits 0 with zero warning: lines.
+  No task flipped to [b]. No deferred human action in this round.
+
+Targeted Red command and output:
+  command: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run --maxWorkers=1 tests/audit-gate.test.ts'
+  before: exit 1, Test Files 1 failed (1), Tests 12 failed | 5 passed (17)
+  after: exit 0, Test Files 1 passed (1), Tests 17 passed (17), duration 526ms
+
+Live audit gate:
+  command: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/audit-gate.mjs'
+  exit: 0; stdout: critical=0 high=0 moderate=0 low=0 info=0
+
+Pre-refresh proof (worktree at Red f67eeb06, before the package update bdacfe54):
+  git worktree add --detach /tmp/forge-preref f67eeb06 -> exit 0
+  pnpm install --frozen-lockfile -> exit 0; typescript 6.0.2, vite 8.1.4, vitest 4.1.10
+  node_modules/.bin/tsc --noEmit -> exit 2; 38 errors in 13 files
+    17 errors in 4 P3 vehicle assets, 13 in 4 P2 item assets, 5 in 3 storytime assets,
+    2 in tests/games/castle-defense/rules.adversarial.test.ts, 1 in tests/part.test.ts.
+  node_modules/.bin/vitest run --maxWorkers=1 -> exit 1; 9 failed tests (plus 1 suite collection error
+    from the missing /tmp/Workbooks tree and untracked reference assets in the clean checkout).
+  git worktree remove /tmp/forge-preref && git worktree prune -> exit 0
+  The main-tree baseline logs in /home/daniebo/.cache/opencode/deprefresh/ name the 9 failed tests:
+  T78, T142, T145, T147, T150, T173, T174, T176, T177, all in tests/storytime-book-pictures.test.ts.
+
+AC3 gates on HEAD after the change (all through heavy-run.sh, foreground):
+  prettier --check . -> exit 1 (baseline command exits non-zero). 3318 baseline [warn] files unchanged.
+    The audit-invalid.json error block is gone (Red F3). The only added [warn] files are three
+    untracked review artifacts review-{a,b,c}-1d00046.json, created by the review roles after the
+    baseline. No dependency or implementation file was added to the warning set.
+  node_modules/.bin/tsc --noEmit -> exit 2; 38 errors in the same 13 files. Byte-identical to both
+    the pre-refresh worktree run and the recorded after baseline. No new error.
+  node_modules/.bin/vitest run --maxWorkers=1 -> exit 1; 9 failed tests, identical names and count to
+    the baseline; 3267 passed of 3276 (13 new passing audit-gate cases raise the total from 3263).
+  node_modules/.bin/vite build -> exit 0; large-chunk diagnostic unchanged.
+
+AC4 gate on HEAD:
+  FORGE_GL=software ./forge build rogue && ./forge build slime --fast -> exit 0; zero warning: lines.
+  Textured rogue atlas 1024x1024; slime vertex colors; both GLBs written.
+
+Render check (Review C B-1):
+  node_modules/.bin/playwright install chromium -> exit 1 on two attempts (network timeout then ECONNRESET
+    from the Chrome for Testing mirror). The matching Chrome for Testing 159.0.8154.6 archives for
+    Chromium build 1255 (full browser and headless shell) were downloaded with resume from the official
+    Chrome for Testing URL, integrity checked with unzip -t, and extracted into new cache directories
+    ~/.cache/ms-playwright/chromium-1255 and ~/.cache/ms-playwright/chromium_headless_shell-1255.
+    Older builds (chromium-1228, chromium-1234, and their headless shells) were kept; none deleted.
+  chromium.executablePath() -> /home/daniebo/.cache/ms-playwright/chromium-1255/chrome-linux64/chrome
+  HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './forge render rogue --fast'
+    -> exit 0; out/rogue/render.png rewritten: mtime 2026-10-01 11:55:55 -> 2026-11-21 11:36:02,
+    size 962412 -> 924299 bytes.
+
+Files added in this round (for reviewer scoping):
+  scripts/audit-gate.mjs            (implementation, fail-closed validation, AUDIT_GATE_PNPM, timeout)
+  package.json                      (engines.node aligned to vitest 5.1.1)
+  measure/tracks/chore_dependency_refresh_20261121/plan.md   (r2 evidence, markers, browser correction)
+  measure/tech-debt.md              (TD-35 to TD-40, six entries: five tsc owner groups and one test group)
+  measure/runs/chore_dependency_refresh_20261121/jr-green-6987ed50.log  (this log)
+  measure/runs/chore_dependency_refresh_20261121/jr-green-bdacfe54.log  (one-line pass-claim correction)
+  No committed Red test or fixture was edited. No new test file was added. pnpm-lock.yaml did not change.
+
+Debt entries added (one per owning track):
+  TD-35 P3 vehicles: 17 tsc errors in 4 assets.
+  TD-36 P2 items: 13 tsc errors in 4 assets.
+  TD-37 Storytime unit 1 pictures: 5 tsc errors in 3 assets.
+  TD-38 Castle defense rebuild: 2 tsc errors in the adversarial test.
+  TD-39 Equipment parts: 1 tsc error in tests/part.test.ts.
+  TD-40 Storytime unit 1 pictures: 9 failed tests in tests/storytime-book-pictures.test.ts.
+
+Structural check:
+  bash measure/doctor.sh -> exit 1 on three pre-existing track-structure issues outside this round:
+    missing measure/tracks/chore_dependency_refresh_20261121/index.md; metadata status new with started
+    tasks; stale measure/generated/status.md. No issue introduced by this round. The debt registry is
+    back within its 50-line budget after correcting two archive links.
+
+Scope note: no asset, game, or engine source changed. No push. generate.sh was not run.
+END_MEASURE_AGENT_RESULT
