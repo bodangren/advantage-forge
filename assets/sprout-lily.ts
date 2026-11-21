@@ -83,25 +83,53 @@ export default humanoidAsset({
       .scale([1, 1, 0.9]);
     // A large ellipsoid cuts the face opening. Its back surface is a gentle curve, not a flat
     // wall: z -0.01 at the jaw and ear band, and at most +0.016 at the fringe. The curve stays far
-    // behind the chin front (z +0.14), so the jaw reads clean. The flat top at +0.058 sits 1.1 cm
-    // above the brows and gives one straight fringe edge. The curved cut also rounds the side
-    // hair, so the front edge no longer reads as a slab.
-    const faceWindow = sdf
+    // behind the chin front (z +0.14), so the jaw reads clean.
+    // Five rounded bangs replace the old straight visor edge. Each lock is a soft Gaussian dip in
+    // the cut line: the peak lowers the hair (a lock tip) and the gaps leave it short. The peaks
+    // differ in width and depth so the fringe reads as loose locks, not a comb. All tips stay above
+    // the brows at y +0.047, so the eyes and the raised-hand clips stay clear.
+    const bangLocks = [
+      [-0.152, 0.030, 0.70],
+      [-0.076, 0.026, 1.00],
+      [0.0, 0.032, 0.84],
+      [0.076, 0.026, 0.96],
+      [0.152, 0.030, 0.68],
+    ] as const;
+    const fringeLocks = (x: number): number => {
+      let d = 0;
+      for (const [cx, w, peak] of bangLocks) {
+        const t = (x - cx) / w;
+        d += peak * Math.exp(-t * t);
+      }
+      return Math.min(1, d);
+    };
+    const faceCut = sdf
       .ellipsoid([0.8, 0.5, 0.51])
       .at(0, -0.1, 0.5)
-      .intersect(
-        // A shallow wave gives the bangs a few soft lock tips instead of one smooth visor line.
-        sdf.halfSpace([0, 1, 0], 0.06).displace(0.0035, (x) => Math.sin(x * 62)),
-      );
+      .intersect(sdf.halfSpace([0, 1, 0], 0.064).displace(0.012, fringeLocks));
+    // A second, lower cut reaches further back at the jaw (z -0.025) than at the cheek (z -0.01).
+    // The side edge therefore curves back toward the nape instead of falling as a flat slab, so the
+    // bob reads round in the side view. It stays behind the ear plane at every height.
+    const jawCut = sdf.ellipsoid([0.8, 0.19, 0.525]).at(0, -0.185, 0.5);
+    const faceWindow = sdf.smoothUnion(0.02, faceCut, jawCut);
     // The blunt cut: level at the chin in front and a little longer at the nape behind.
     const hem = sdf.halfSpace([0, -1, 0.065], 0.1846);
     const hairPaint = (x: number, y: number, z: number, base: Rgb): Rgb => {
       const low = Math.max(0, (-0.14 - y) * 6) * 0.12; // a soft darkening at the hem
-      return mixRgb(base, rgb('#3a1e10'), low);
+      // A warm lift on the thin cut edge: the shell wall caught the light badly and read as a dark
+      // inner rim along the cheeks and under the bangs. Lift only the narrow band at the cut.
+      const yTop = 0.064 - 0.012 * fringeLocks(x);
+      const bangEdge = Math.max(0, 1 - Math.abs(y - yTop) / 0.014) * Math.min(1, Math.max(0, (z - 0.04) / 0.08));
+      const cheekEdge = Math.max(0, 1 - Math.abs(z + 0.018) / 0.028)
+        * Math.max(0, 1 - Math.abs(y + 0.09) / 0.13)
+        * Math.min(1, Math.max(0, (Math.abs(x) - 0.09) / 0.06));
+      const edge = Math.max(bangEdge, cheekEdge);
+      return mixRgb(mixRgb(base, rgb('#3a1e10'), low), rgb('#8b5535'), 0.3 * edge);
     };
     // No separate fringe lip. Hollow the bob into a thin shell, so the cut edge is thin too. The
-    // outer surface stays unchanged, so the bob still reads as one smooth mass. A 0.006 m fillet
-    // rounds the bangs into soft locks that lie on the forehead and blend into the cheek hair.
+    // original shell (0.93 scale, 0.006 m fillet) stays: a thinner shell opened tiny slivers at the
+    // cap edge y 0.12, which read as crown speckles. The dark rim is addressed by the warm lift in
+    // `hairPaint` instead. The outer surface stays one smooth mass.
     const inner = bob
       .scale([0.93, 1, 0.93])
       .intersect(sdf.halfSpace([0, 1, 0], 0.12));
