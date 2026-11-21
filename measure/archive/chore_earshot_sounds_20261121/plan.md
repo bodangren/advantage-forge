@@ -164,7 +164,7 @@ tests/sound-set.test.ts` passes.
     D5 line. The targeted heavy-run command exits 0 with 17 of 17 tests passing. No Ogg file was
     re-rendered. Log: `measure/runs/chore_earshot_sounds_20261121/green-r3.log`.
 
-- [x] T5 Closeout (deferred:closeout-steward): Phase acceptance records the final verdict. The
+- [x] T5 Closeout (deferred:closeout-steward): Phase acceptance records the final verdict. The [commit `6049d23e`]
       closeout role then moves the track to completed, updates the registry and generated facts,
       and archives it. This is a human-gated deferred task. Green r3 does not perform these
       actions. The task stayed pending until closeout so the doctor saw an unchecked task while the
