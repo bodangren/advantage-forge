@@ -1,0 +1,48 @@
+MEASURE_AGENT_RESULT
+role: jr-green
+status: green-complete
+track: chore_earshot_sounds_20261121 (short: chore_earshot_sounds)
+phase: Phase 1: Pin, render, and record
+phase_base_sha: a9aec40d5cf899815852bbbd53b768285b98915b
+role_base_sha: 8a5582cc1f16c1a6091639e80f2cca3cd9c9256a (Red commit)
+commits:
+  - e45704be17d785cd89570ae5637e41e332fe2862: measure(chore_earshot_sounds): sound-set wrapper and chibi set (implementation)
+  - the commit that adds this log: plan evidence; a commit cannot contain its own SHA
+tasks_flipped_to_x:
+  - T1 Red: pass on the committed HEAD; Red proof is in red.log and the targeted command now exits 0
+  - T2 Green: implementation commit e45704be17d785cd89570ae5637e41e332fe2862
+tasks_still_open:
+  - T3 Record remains [~]: README, sizes and durations are recorded; phase acceptance closes the PM hand-off line
+tasks_flipped_to_b: none
+tests_run:
+  - Red rerun before Green: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run --maxWorkers=1 tests/sound-set.test.ts' -> exit 1, 16 of 16 fail (MODULE_NOT_FOUND on scripts/sound-set.mjs; ENOENT on sounds/sets/chibi.json)
+  - mid-Green fake-binary check: same command -> exit 1, 15 of 16 pass; only case 9 fails before the Ogg files exist
+  - targeted Red command after Green: same command -> exit 0, 16 of 16 pass
+  - render: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'bash scripts/sound-setup.sh && node scripts/sound-set.mjs chibi' -> exit 0; seven named designs rendered; output ends with "sound-set: 7 sounds -> sounds/chibi"
+  - standalone wrapper: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/sound-set.mjs chibi' -> exit 0
+  - format: node_modules/.bin/prettier --check scripts/sound-set.mjs sounds/sets/chibi.json sounds/README.md tests/sound-set.test.ts measure/tracks/chore_earshot_sounds_20261121/spec.md measure/tracks/chore_earshot_sounds_20261121/plan.md measure/tracks/chore_earshot_sounds_20261121/spec-review.md measure/tracks/chore_earshot_sounds_20261121/metadata.json measure/tracks/chore_earshot_sounds_20261121/index.md -> exit 0
+  - facts: node measure/tools/generate.mjs --check -> exit 0 before the status change; ./measure/generate.sh -> Generated 4 Measure facts
+  - doctor: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './measure/doctor.sh' -> exit 0 after the generated facts are committed with the plan evidence
+files_changed:
+  - scripts/sound-set.mjs (new; D5 exact lines, exit codes, check order, argv-array spawn, child output capture)
+  - scripts/sound-setup.sh (new; pinned venv at .venv-earshot/, Python fallback for hosts without ensurepip)
+  - .gitignore (one line: .venv-earshot/)
+  - sounds/sets/chibi.json (new; seven maps of AC1)
+  - sounds/README.md (new; AC5 designs line, pin, render command, sizes and durations)
+  - sounds/chibi/tap.ogg (5534 bytes, 0.130 s)
+  - sounds/chibi/right.ogg (24579 bytes, 1.846 s)
+  - sounds/chibi/wrong.ogg (10800 bytes, 0.579 s)
+  - sounds/chibi/star.ogg (11149 bytes, 0.691 s)
+  - sounds/chibi/pop.ogg (7639 bytes, 0.319 s)
+  - sounds/chibi/whoosh.ogg (7730 bytes, 0.390 s)
+  - sounds/chibi/level-end.ogg (23037 bytes, 1.712 s)
+  - measure/tracks/chore_earshot_sounds_20261121/plan.md (T1 [x], T2 [x], T3 [~], evidence)
+  - measure/tracks/chore_earshot_sounds_20261121/metadata.json (status new -> in_progress; doctor gate)
+  - measure/tracks.md (registry row [ ] -> [~]; doctor gate)
+  - measure/generated/status.md (regenerated from the status change)
+  - measure/runs/chore_earshot_sounds_20261121/green.log (new, this file)
+plan_updates: T1 and T2 marked [x] with commit evidence; T3 marked [~] with recorded sizes, durations, README and gate results; status bookkeeping updated because the doctor rejects a "new" track with started tasks; generated facts refreshed
+known_failures: none on the committed HEAD; the aggregate vitest suite is intentionally red from unrelated baseline debt and was not gated
+environment_note: host python3 is 3.14 without ensurepip; the setup wrapper falls back to python3.11 (3.11.15). The pin 7a7f7c5c70d4a763a1eca4b3666af7c77e313f97 and the venv path are unchanged. No paid generation. No push. The venv is gitignored and was never staged.
+handoff: T1 and T2 are complete with SHA evidence above. T3 stays human-gated open for the PM hand-off line at phase acceptance. The targeted Red command above prints "Tests 16 passed (16)" and exits 0. New files for review scope: scripts/sound-set.mjs, scripts/sound-setup.sh, sounds/sets/chibi.json, sounds/README.md, the seven sounds/chibi/*.ogg files, and this log. The immutable phase_base_sha is a9aec40d5cf899815852bbbd53b768285b98915b. Reviewers must gate on that base and on the final Green HEAD reported by the orchestrator.
+END_MEASURE_AGENT_RESULT
