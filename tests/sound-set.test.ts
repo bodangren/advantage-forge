@@ -285,6 +285,36 @@ describe('sound-set wrapper through a fake earshot binary', () => {
     });
   });
 
+  it('fails with the exact line when the target is a directory', () => {
+    withTemp((tmp) => {
+      writeSetFile(tmp, 'fake', { sounds: FAKE_ENTRIES });
+      const target = outputPath(tmp, 'fake', 'alpha');
+      mkdirSync(target, { recursive: true });
+      writeFileSync(join(target, 'keep.txt'), 'preserve');
+      const result = run(['fake'], tmp, writeFakeBin(tmp));
+      expect(result.status).toBe(1);
+      expect(result.stderr.trim()).toBe(`sound-set: cannot prepare output for alpha (tap/soft): ${target}`);
+      expect(result.stdout).toBe('');
+      expect(existsSync(join(tmp, 'calls.log'))).toBe(false);
+      expect(readFileSync(join(target, 'keep.txt'), 'utf8')).toBe('preserve');
+    });
+  });
+
+  it('fails with the exact line for the first entry when the output folder cannot be created', () => {
+    withTemp((tmp) => {
+      writeSetFile(tmp, 'fake', { sounds: FAKE_ENTRIES });
+      mkdirSync(join(tmp, 'sounds'), { recursive: true });
+      writeFileSync(join(tmp, 'sounds', 'fake'), 'obstruction');
+      const result = run(['fake'], tmp, writeFakeBin(tmp));
+      expect(result.status).toBe(1);
+      expect(result.stderr.trim()).toBe(
+        `sound-set: cannot prepare output for alpha (tap/soft): ${outputPath(tmp, 'fake', 'alpha')}`,
+      );
+      expect(result.stdout).toBe('');
+      expect(existsSync(join(tmp, 'calls.log'))).toBe(false);
+    });
+  });
+
   it('passes the nine AC3 header steps on every committed chibi file', () => {
     const raw = readFileSync(join(ROOT, 'sounds', 'sets', 'chibi.json'), 'utf8');
     const parsed = JSON.parse(raw) as { sounds: { name: string; design: string }[] };

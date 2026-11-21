@@ -1,0 +1,73 @@
+MEASURE_AGENT_RESULT
+role: mid-red
+status: red-proof (F7 folder test fails for the expected reason; F6 exact-line tests already pass as regression guards)
+track: chore_earshot_sounds_20261121
+short_track_id: chore_earshot_sounds
+phase: Phase 1: Pin, render, and record
+baseline_sha (phase_base_sha): a9aec40d5cf899815852bbbd53b768285b98915b
+role_base_sha: 486e53ce901d2cc579daa1ba6a1bcac316c6a094
+head: this commit (parent 486e53ce901d2cc579daa1ba6a1bcac316c6a094); SHA in handoff reply
+commits: [this commit] message `measure(chore_earshot_sounds): red r4 exact prepare-output lines`; SHA in handoff reply
+tests_run: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run --maxWorkers=1 tests/sound-set.test.ts tests/sound-set.adversarial.test.ts' => exit 1, 1 failed | 73 passed (74)
+files_changed: tests/sound-set.test.ts, tests/sound-set.adversarial.test.ts, measure/tracks/chore_earshot_sounds_20261121/test-strategy.md, measure/tracks/chore_earshot_sounds_20261121/plan.md, measure/runs/chore_earshot_sounds_20261121/red-r4.log
+plan_updates: added [~] T7 Review A r3 remediation (F6/F7 test side) with Red evidence, Red result, and the F7 orchestrator decision
+known_failures (exactly one, expected; no syntax or import errors):
+- fails with the exact line for the first entry when the output folder cannot be created: a regular file at <root>/sounds/fake makes the top-level mkdirSync (scripts/sound-set.mjs:74) throw an uncaught EEXIST stack trace; no controlled D5 line, no child call
+already_passing (regression guards, stated per instructions):
+- F6 exact-line tests pass at HEAD: adversarial directory-target and 300-char-name tests and the new main-file directory-target case all see the exact `sound-set: cannot prepare output for <name> (<design>): <path>` line from the Green r4 wrapper
+F7 orchestrator decision (recorded in plan T7 and test-strategy.md; Green adds the sentence to spec D5): when the output folder <root>/sounds/<set> cannot be created (regular file at that path), the wrapper reports the D5 prepare-output row for the FIRST set entry with that entry's target path, exit 1, and makes no earshot call
+handoff: Green edits scripts/sound-set.mjs only (contain output-folder creation in the same prepare-output contract; spec D5 gets the F7 sentence), then reruns the combined command to 74/74. Do not touch tests, strategy, or plan except to record Green evidence. T5 Closeout stays pending for closeout-steward.
+--- raw command output follows ---
+
+ RUN  v5.1.1 /home/daniebo/Desktop/advantage-forge
+
+ ❯ tests/sound-set.test.ts (19 tests | 1 failed) 667ms
+   ❯ sound-set wrapper through a fake earshot binary (19)
+     × fails with the exact line for the first entry when the output folder cannot be created 32ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sound-set.test.ts > sound-set wrapper through a fake earshot binary > fails with the exact line for the first entry when the output folder cannot be created
+AssertionError: expected 'node:fs:1411\n  const result = bindin…' to be 'sound-set: cannot prepare output for …' // Object.is equality
+
+- Expected
++ Received
+
+- sound-set: cannot prepare output for alpha (tap/soft): /tmp/sound-set-txW6ow/sounds/fake/alpha.ogg
++ node:fs:1411
++   const result = binding.mkdir(
++                          ^
++
++ Error: EEXIST: file already exists, mkdir '/tmp/sound-set-txW6ow/sounds/fake'
++     at mkdirSync (node:fs:1411:26)
++     at file:///home/daniebo/Desktop/advantage-forge/scripts/sound-set.mjs:74:1
++     at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
++     at async node:internal/modules/esm/loader:643:26
++     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
++   errno: -17,
++   code: 'EEXIST',
++   syscall: 'mkdir',
++   path: '/tmp/sound-set-txW6ow/sounds/fake'
++ }
++
++ Node.js v24.19.0
+
+ ❯ tests/sound-set.test.ts:310:36
+    308|       const result = run(['fake'], tmp, writeFakeBin(tmp));
+    309|       expect(result.status).toBe(1);
+    310|       expect(result.stderr.trim()).toBe(
+       |                                    ^
+    311|         `sound-set: cannot prepare output for alpha (tap/soft): ${outp…
+    312|       );
+ ❯ withTemp tests/sound-set.test.ts:34:5
+ ❯ tests/sound-set.test.ts:304:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  1 failed | 73 passed (74)
+   Start at  20:54:34
+   Duration  2.00s (tests 97%, transform 2%, import 1%)
+
+END_MEASURE_AGENT_RESULT

@@ -85,11 +85,16 @@ line after value substitution. A prefix match fails the test.
 | 10  | earshot missing or not executable     | `sound-set: earshot not found at <path>; run scripts/sound-setup.sh` |    1 |
 | 11  | earshot non-zero exit                 | `sound-set: earshot failed for <name> (<design>) with exit <code>`   |    1 |
 | 12  | earshot wrote no file                 | `sound-set: earshot wrote no file for <name> (<design>): <path>`     |    1 |
+| 13  | Output path cannot be prepared        | `sound-set: cannot prepare output for <name> (<design>): <path>`     |    1 |
 
 `<index>` is the zero-based array position. `<path>` is the absolute resolved path. `<code>` is the
 child exit code. Check order: set name, file existence, JSON parse, set content, binary, then each
 render in array order. A failure stops the run. A successful call forwards its child stdout and
-child stderr to the wrapper stdout. A failed call prints none of its child output.
+child stderr to the wrapper stdout. A failed call prints none of its child output. The output path
+cannot be prepared when the target is a directory, its name is too long, or filesystem I/O fails
+(including when the output folder itself cannot be created). This check runs before the child call
+for that entry; the line names that entry and its target path. The wrapper never deletes a
+directory recursively and preserves its contents.
 
 ### Plan T1 case map and falsification conditions
 
@@ -104,6 +109,8 @@ child stderr to the wrapper stdout. A failed call prints none of its child outpu
 | 7 Failed render   | `fake.json` holds `alpha`->`tap/soft`, `beta`->`error/knock`, `gamma`->`pop/bubble`. `fail-at` holds `beta`. Exit 1, line 11 with code 3, `calls.log` holds the `alpha` and `beta` lines only. Stdout forwards the successful `alpha` output and holds none of `beta`'s output and no `gamma` line. Stderr holds only the exact line. | A `gamma` call line, a missing `beta` call line, forwarded `beta` output, or a wrong line fails. |
 | 8 Missing output  | `no-write` holds `alpha`. Exit 1, exact line 12, stdout empty, `calls.log` holds only the `alpha` line.                                                                                                                                                                                                                               | A `beta` call line, any stdout output, or a wrong line fails.                                    |
 | 8b Stale output   | Target `<root>/sounds/fake/alpha.ogg` pre-exists and `no-write` holds `alpha`. Exit 1, exact line 12, stdout empty, `calls.log` holds only the `alpha` line. A write from the current invocation is required.                                                                                                                         | Exit 0 or a wrong line fails.                                                                    |
+| 8c Prepare output | Target `<root>/sounds/fake/alpha.ogg` is a directory holding `keep.txt`, or the entry name has 300 characters. Exit 1, exact line 13 with that entry and its target path, stdout empty, no calls, and `keep.txt` preserved. A wrong message fails.                                                                                    | A prefix-only match, a missing exact line, a child call, or a deleted directory fails.           |
+| 8d Folder blocked | A regular file sits at `<root>/sounds/fake`. Exit 1, exact line 13 for the FIRST entry (`alpha`, `tap/soft`) with path `<root>/sounds/fake/alpha.ogg`, stdout empty, and no calls.                                                                                                                                                    | Any exit other than the exact line, any child call, or a line for a later entry fails.           |
 | 9 Committed files | Read `sounds/sets/chibi.json` from the repo. For each entry run the nine AC3 steps on `sounds/chibi/<name>.ogg` with `readFileSync` and `readUInt32LE`. No audio library.                                                                                                                                                             | The first step that does not hold fails the case.                                                |
 
 AC3 header steps, in order: bytes 0-3 equal `OggS`; byte 4 equals 0; byte 5 has bit `0x02`;
@@ -187,7 +194,7 @@ Every case above has a falsification condition in its table row. The registry us
 | A4 vacuous pass           | Require exactly two ordered `calls.log` lines and two output files in case 1. Zero calls is a failure.                                      | A run that renders nothing cannot pass the full-render case.                       |
 | A5 false claim            | Run every cited gate command and require exit 0 before the plan records a pass.                                                             | A README or plan claim that contradicts a red gate is caught by the closeout gate. |
 | A6 registry overstatement | The tracks.md row and evidence claim seven committed files only after all gates pass.                                                       | A claim made while case 9 is red is caught by acceptance on the immutable HEAD.    |
-| A7 over-broad filter      | Use exact `stderr.trim()` equality for all 12 D5 lines. No prefix match, no bare-word filter.                                               | Extra text after a correct prefix fails exact equality.                            |
+| A7 over-broad filter      | Use exact `stderr.trim()` equality for all 13 D5 lines. No prefix match, no bare-word filter.                                               | Extra text after a correct prefix fails exact equality.                            |
 | A10 generated-facts drift | Run `generate.mjs --check`, regenerate, and run the doctor after staging new files (A10).                                                   | Stale committed facts fail the doctor generated-facts check.                       |
 
 Not applicable in this phase: A1 (supervisor substring heuristic), A2 (consent-blind publish),

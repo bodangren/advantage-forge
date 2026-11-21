@@ -208,22 +208,21 @@ describe('sound-set adversarial process boundaries', () => {
       expect(result.stdout).toBe('');
       expect(calls(root)).toEqual([]);
       expect(readFileSync(join(output(root), 'keep.txt'), 'utf8')).toBe('preserve');
-      // D5 gives no exact text for a pre-render filesystem failure.
-      expect(result.stderr.trim().split('\n')).toHaveLength(1);
-      expect(result.stderr).toMatch(/^sound-set: [^\r\n]+\n$/);
+      expect(result.stderr).toBe(`sound-set: cannot prepare output for alpha (tap/soft): ${output(root)}\n`);
     });
   });
 
   it('reports an overlong output name without a stack trace', () => {
     fixture((root, bin) => {
-      writeSet(root, { sounds: [{ name: 'a'.repeat(300), design: 'tap/soft' }] });
+      const name = 'a'.repeat(300);
+      writeSet(root, { sounds: [{ name, design: 'tap/soft' }] });
       const result = run(root, bin);
       expect(result.status).toBe(1);
       expect(result.stdout).toBe('');
       expect(calls(root)).toEqual([]);
-      // D5 gives no exact text for a pre-render filesystem failure.
-      expect(result.stderr.trim().split('\n')).toHaveLength(1);
-      expect(result.stderr).toMatch(/^sound-set: [^\r\n]+\n$/);
+      expect(result.stderr).toBe(
+        `sound-set: cannot prepare output for ${name} (tap/soft): ${output(root, name)}\n`,
+      );
     });
   });
 });
