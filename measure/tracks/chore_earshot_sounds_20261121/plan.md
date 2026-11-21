@@ -20,7 +20,7 @@ Files this track touches:
 
 ## Phase 1: Pin, render, and record
 
-- [ ] T1 Red: Add `tests/sound-set.test.ts`. Use `spawnSync(process.execPath, [script, ...])` with
+- [~] T1 Red: Add `tests/sound-set.test.ts`. Use `spawnSync(process.execPath, [script, ...])` with
       `env` set to `SOUNDS_ROOT=<temp root>` and `EARSHOT_BIN=<fake>`. The test writes the fake binary
       as a Node script with an executable mode. The fake appends `process.argv.slice(2).join(' ')` to
       `<temp>/calls.log`. It writes `OggS` to the `-o` path unless `<temp>/no-write` holds the sound
@@ -58,7 +58,12 @@ Files this track touches:
   Run the file through the heavy runner. Case 9 and the missing `scripts/sound-set.mjs` make the
   suite fail. That failure is the Red proof.
   - Red evidence: `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run --maxWorkers=1 tests/sound-set.test.ts'`.
-    Log: `measure/runs/chore_earshot_sounds_20261121/red.log`.
+    Log: `measure/runs/chore_earshot_sounds_20261121/red.log`
+  - Red result (2026-11-21): exit 1 with 16 of 16 tests failing. Cases 1-8 fail because
+    `scripts/sound-set.mjs` is absent (the child exits MODULE_NOT_FOUND, so no exact D5 line
+    matches). Case 9 fails with ENOENT on `sounds/sets/chibi.json` (set and sound files absent).
+    The test file parses and runs with no syntax or import error. `prettier --check
+    tests/sound-set.test.ts` passes.
 
 - [ ] T2 Green: Add `scripts/sound-setup.sh`, `scripts/sound-set.mjs`, the `.gitignore` line, and
       `sounds/sets/chibi.json` (the seven maps of AC1). Then render and commit the files.

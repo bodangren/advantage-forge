@@ -1,0 +1,36 @@
+MEASURE_AGENT_RESULT
+role: mid-red
+status: red-proof-captured
+track: chore_earshot_sounds_20261121 (short: chore_earshot_sounds)
+phase: Phase 1: Pin, render, and record
+phase_base_sha: a9aec40d5cf899815852bbbd53b768285b98915b
+role_base_sha: a9aec40d5cf899815852bbbd53b768285b98915b
+head_before_commit: a9aec40d5cf899815852bbbd53b768285b98915b
+task: T1 (marked [~] before work)
+tests_run: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run --maxWorkers=1 tests/sound-set.test.ts' -> exit 1, 16 of 16 tests fail
+format_gate: node_modules/.bin/prettier --check tests/sound-set.test.ts -> pass
+files_changed:
+  - tests/sound-set.test.ts (new, 16 cases per plan T1)
+  - measure/tracks/chore_earshot_sounds_20261121/plan.md (T1 [~], Red evidence)
+  - measure/runs/chore_earshot_sounds_20261121/red.log (new, this file)
+plan_updates: T1 marked [~]; Red evidence recorded under T1 (exit 1, 16/16 fail, right reasons, prettier pass)
+known_failures (all expected at Red; no syntax or import error in the test):
+  - renders the full set in order and prints the success lines: child MODULE_NOT_FOUND (scripts/sound-set.mjs absent), status 1, no exact D5 line
+  - fails with the exact line when the set file is missing: same MODULE_NOT_FOUND, no exact line
+  - fails with the exact line when the set file is not valid JSON: same MODULE_NOT_FOUND, no exact line
+  - rejects a set file without a sounds array: same MODULE_NOT_FOUND, no exact line
+  - rejects a set file with an empty sounds array: same MODULE_NOT_FOUND, no exact line
+  - rejects an entry without a name: same MODULE_NOT_FOUND, no exact line
+  - rejects an entry with an empty design: same MODULE_NOT_FOUND, no exact line
+  - rejects two entries that share a name: same MODULE_NOT_FOUND, no exact line
+  - rejects an entry with a bad name: same MODULE_NOT_FOUND, no exact line
+  - prints the usage line and exits 2 with no argument: same MODULE_NOT_FOUND, no exact line
+  - rejects a set name outside a-z, 0-9, and dash: same MODULE_NOT_FOUND, no exact line
+  - fails with the exact line when the earshot binary is absent: same MODULE_NOT_FOUND, no exact line
+  - fails with the exact line when the earshot binary is not executable: same MODULE_NOT_FOUND, no exact line
+  - stops after a failed render and prints the exact line: same MODULE_NOT_FOUND, no exact line
+  - fails with the exact line when the render writes no file: same MODULE_NOT_FOUND, no exact line
+  - passes the nine AC3 header steps on every committed chibi file: ENOENT opening sounds/sets/chibi.json (set and sound files absent)
+unrelated_work_preserved: dirty paths outside this track (bench cards, tavern/blacksmith trials, AGENTS.md, skill docs) left untouched; only the three explicit paths are staged
+handoff: T1 Red complete. Green (T2) owns scripts/sound-set.mjs, scripts/sound-setup.sh, the .gitignore line, sounds/sets/chibi.json, and the seven rendered Ogg files; the Red command above must exit 0 after Green.
+END_MEASURE_AGENT_RESULT
