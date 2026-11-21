@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: spec-review
+status: fail
+track: chore_earshot_sounds_20261121
+phase: Phase 1
+commits: none
+tests_run: none; reviewed spec.md, plan.md, trial notes and pinned earshot source
+files_changed: measure/runs/chore_earshot_sounds_20261121/spec-review-ae757c3.json, measure/runs/chore_earshot_sounds_20261121/spec-review-ae757c3.log
+plan_updates: none
+known_failures: F1 [Blocker] spec.md Decisions D5 and Acceptance criteria AC2: Specify exact stderr text for every failure class, or state that only the listed required tokens are contractual. Rationale: The spec requires one clear line and later refers to a named message, but it fixes exact required text only for a missing binary and a failed render; tests cannot determine whether other diagnostics meet the contract. F2 [Blocker] plan.md Phase 1 T1 case 6 and spec.md AC3: Define how the test locates and validates the Vorbis identification packet, including Ogg page lacing and field offsets for channel count and sample rate. Rationale: The plan names the packet marker and values but does not say how to find the packet in Ogg pages or decode its fields, so implementers can choose incompatible checks that may accept malformed or unrelated byte sequences.
+handoff: Update the spec to resolve F1 and F2 before Red. No user decision is required.
+END_MEASURE_AGENT_RESULT

@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "status": "fail",
+  "audited_head_sha": "ae757c38e0ab0883e875522599c2f48d8571997f",
+  "role_base_sha": "ae757c38e0ab0883e875522599c2f48d8571997f",
+  "phase_base_sha": "ae757c38e0ab0883e875522599c2f48d8571997f",
+  "summary": "Fail. The spec leaves diagnostic text and the Ogg/Vorbis parsing contract underspecified.",
+  "paraphrase": {
+    "proposes": "This track pins earshot to commit 7a7f7c5c70d4a763a1eca4b3666af7c77e313f97 in a repository-local venv outside node_modules. It adds a wrapper and a seven-sound Chibi set, then commits the generated 48 kHz stereo Ogg files. Playback integration and credit-screen work remain outside this track.",
+    "current_system": "Games currently synthesize effects through AudioBus and do not load sound files. The audio library stores approved MP3 takes and has a review tool, but those files do not feed game playback. The separate integration track owns playback wiring and browser format choices."
+  },
+  "blocking_findings": [
+    "F1 [Blocker] spec.md Decisions D5 and Acceptance criteria AC2: Specify exact stderr text for every failure class, or state that only the listed required tokens are contractual. Rationale: The spec requires one clear line and later refers to a named message, but it fixes exact required text only for a missing binary and a failed render; tests cannot determine whether other diagnostics meet the contract.",
+    "F2 [Blocker] plan.md Phase 1 T1 case 6 and spec.md AC3: Define how the test locates and validates the Vorbis identification packet, including Ogg page lacing and field offsets for channel count and sample rate. Rationale: The plan names the packet marker and values but does not say how to find the packet in Ogg pages or decode its fields, so implementers can choose incompatible checks that may accept malformed or unrelated byte sequences."
+  ],
+  "nonblocking_findings": [],
+  "evidence": [
+    "HEAD at review start is ae757c38e0ab0883e875522599c2f48d8571997f, matching the assigned audited head.",
+    "Reviewed the track spec and plan, AudioBus, sound-library tool and design, integration-track spec, trial README, and earshot source at pinned commit 7a7f7c5c70d4a763a1eca4b3666af7c77e313f97.",
+    "Verified the seven named designs occur in the pinned source registry and/or design modules, and verified the trial source HEAD equals the requested commit.",
+    "No tests or render commands were run; this was a spec and plan review."
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "git status --short",
+    "cat measure/tracks/chore_earshot_sounds_20261121/spec.md",
+    "cat measure/tracks/chore_earshot_sounds_20261121/plan.md",
+    "cat /var/tmp/earshot-trial/out/README.md",
+    "git -C /var/tmp/earshot-trial/src rev-parse HEAD",
+    "rg design references in /var/tmp/earshot-trial/src"
+  ],
+  "changed_files": [
+    "measure/runs/chore_earshot_sounds_20261121/spec-review-ae757c3.json",
+    "measure/runs/chore_earshot_sounds_20261121/spec-review-ae757c3.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "escalate_human",
+  "confidence": "high"
+}

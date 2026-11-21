@@ -47,27 +47,38 @@ D5. Wrapper. `node scripts/sound-set.mjs <set>` is the one command. It reads
 `sounds/sets/<set>.json` and writes `sounds/<set>/<name>.ogg`, and it creates the output folder
 when absent. It calls `<earshot> make --sound <design> -o <output>` once for each entry, in array
 order. The earshot binary is `EARSHOT_BIN` when set, and `.venv-earshot/bin/earshot` otherwise.
-`SOUNDS_ROOT` sets the root folder when set, and the folder above `scripts/` otherwise. Exit
-codes:
+`SOUNDS_ROOT` sets the root folder when set, and the folder above `scripts/` otherwise.
 
-- 0 when every render exits 0.
-- 2 when the set argument is missing or is not a name of `a-z`, `0-9`, and `-`.
-- 1 for every other failure, with one clear line on stderr.
+Every failure prints exactly one line on stderr and exits with the code in this table. The
+wrapper prints nothing else on stderr. The values substitute into the line. The test asserts the
+full line for each class. A prefix match is not accepted.
 
-Failure conditions, each with exit 1 and no render after the failure:
+| Failure class                                    | Line (exact)                                                         | Exit |
+| ------------------------------------------------ | -------------------------------------------------------------------- | ---: |
+| No argument                                      | `sound-set: usage: node scripts/sound-set.mjs <set>`                 |    2 |
+| Set name outside `a-z`, `0-9`, `-`               | `sound-set: bad set name: <set>`                                     |    2 |
+| Set file missing                                 | `sound-set: set file not found: <path>`                              |    1 |
+| Set file not valid JSON                          | `sound-set: set file is not valid JSON: <path>`                      |    1 |
+| `sounds` missing, not an array, or empty         | `sound-set: bad set file: sounds must be a non-empty array`          |    1 |
+| Entry `name` missing or not a non-empty string   | `sound-set: bad set file: entry <index> needs a name`                |    1 |
+| Entry `design` missing or not a non-empty string | `sound-set: bad set file: entry <index> needs a design`              |    1 |
+| Two entries share a `name`                       | `sound-set: bad set file: duplicate name <name>`                     |    1 |
+| `name` outside `a-z`, `0-9`, `-`                 | `sound-set: bad set file: bad name <name>`                           |    1 |
+| earshot missing or not executable                | `sound-set: earshot not found at <path>; run scripts/sound-setup.sh` |    1 |
+| earshot exits non-zero                           | `sound-set: earshot failed for <name> (<design>) with exit <code>`   |    1 |
+| earshot exits 0 and writes no file               | `sound-set: earshot wrote no file for <name> (<design>): <path>`     |    1 |
 
-- The set file is missing or is not valid JSON.
-- `sounds` is missing, is not a non-empty array, or holds an entry without a non-empty string
-  `name` or `design`.
-- Two entries share a `name`.
-- A `name` holds a character outside `a-z`, `0-9`, and `-`.
-- The earshot binary is missing or is not executable. The message names the path and
-  `scripts/sound-setup.sh`.
-- An earshot call exits non-zero. The message names the sound name, the design, and the exit
-  code.
+`<index>` is the zero-based position in the `sounds` array. `<path>` is the absolute path that
+the wrapper resolved. `<code>` is the child exit code.
+
+The check order is: set name, set file existence, JSON parse, set content, binary, then each
+render in array order. A failure stops the run, and no later render starts. The wrapper captures
+the output of each earshot call. It forwards the output of a successful call, and it prints none
+of the output of a failed call.
 
 On success the wrapper prints `sound-set: <name>.ogg <- <design>` for each file, then
-`sound-set: <n> sounds -> sounds/<set>`, and exits 0.
+`sound-set: <n> sounds -> sounds/<set>`, and exits 0. Exit 0 requires that each render exited 0
+and wrote its file.
 
 D6. Test. `tests/sound-set.test.ts` runs with vitest. It uses a fake earshot binary and a
 temporary root. It makes no real render.
@@ -84,12 +95,26 @@ D8. Render route. Every render runs through
   `coin/bright`, `pop` to `pop/bubble`, `whoosh` to `whoosh/soft`, and `level-end` to
   `success/triad`.
 - AC2: `node scripts/sound-set.mjs chibi` renders one Ogg for each entry through the pinned venv
-  and exits 0. Each failure in D5 exits 1 with its named message, and a bad set argument exits 2.
-- AC3: The seven files `sounds/chibi/<name>.ogg` are committed to git. Each file starts with the
-  bytes `OggS`, and its Vorbis identification header gives 48 kHz. Owner rule: audio files are
-  committed to git.
-- AC4: `tests/sound-set.test.ts` passes. It covers a full render through a fake binary, a missing
-  set, a missing binary, a failed render, an invalid set, and the committed files.
+  and exits 0. Each D5 failure prints its exact line and exits with its code.
+  `tests/sound-set.test.ts` asserts the full line for each class, after the value substitution.
+- AC3: The seven files `sounds/chibi/<name>.ogg` are committed to git. Owner rule: audio files are
+  committed to git. A reader checks each file with these steps, and a file that fails any step
+  fails the test:
+
+  1. Bytes 0 to 3 are ASCII `OggS` (the capture pattern).
+  2. Byte 4 is 0 (the stream structure version).
+  3. Byte 5 has bit `0x02` set (the beginning-of-stream flag).
+  4. Byte 26 is the segment count `n`. The segment table is bytes 27 to `26 + n`, and the first
+     packet starts at byte `27 + n`.
+  5. At the packet start, byte 0 is `0x01` and bytes 1 to 6 are ASCII `vorbis`.
+  6. `vorbis_version` at packet offset 7 (uint32 little-endian) is 0.
+  7. `audio_channels` at packet offset 11 (uint8) is 2. The set requires stereo, as the trial
+     wrote it.
+  8. `audio_sample_rate` at packet offset 12 (uint32 little-endian) is 48000.
+  9. The framing flag at packet offset 29 is 1.
+
+- AC4: `tests/sound-set.test.ts` passes. It covers a full render through a fake binary, every D5
+  failure class with its exact line, and the nine AC3 header steps on the committed files.
 - AC5: `sounds/README.md` has one line that names the seven designs and the pin from D4.
 - AC6: These gates pass: the targeted vitest file and the doctor through the heavy runner, the
   `prettier --check` on the touched files, and the wrapper run with exit 0. The plan holds the
