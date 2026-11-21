@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "role": "review-b",
+  "track": "chore_earshot_sounds_20261121",
+  "phase": "Phase 1: Pin, render, and record",
+  "baseline_sha": "a9aec40d5cf899815852bbbd53b768285b98915b",
+  "phase_base_sha": "a9aec40d5cf899815852bbbd53b768285b98915b",
+  "role_base_sha": "a9aec40d5cf899815852bbbd53b768285b98915b",
+  "audited_head_sha": "486e53ce901d2cc579daa1ba6a1bcac316c6a094",
+  "status": "pass",
+  "summary": "Re-review at 486e53ce after the remediation commit d78f3ded, which resolves my r2 finding F3. The wrapper now lstatSyncs the output target (which never follows symlinks) and, when the target is a directory, or when lstat/rmSync throws (overlong name, permission, EISDIR race), fails with one exact line: sound-set: cannot prepare output for <name> (<design>): <path>. rmSync is called without the recursive option, so no directory can be deleted recursively; a symlink target is unlinked itself, never followed out of sounds/<set>/. The message leaks only a local absolute path, consistent with existing D5 rows. Spec D5 gained the matching row and the adversarial test proves a directory target keeps its contents, spawns no child, and prints a single-line sound-set: error with no stack trace. Unchanged points re-verified: exact-commit pip pin, SAFE_NAME ordering before any path is built, argv-array spawn with no shell, X_OK check on EARSHOT_BIN, gitignored venv with no committed secret or large binary. A2 not applicable; A6 holds.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F1 (low, carried): transitive pip dependencies resolve from PyPI unpinned; only the earshot package is commit-pinned. Fix (optional): record pip freeze output after install or install with --no-deps plus an explicit dependency list.",
+    "F2 (low, carried): scripts/sound-setup.sh runs 'rm -rf .venv-earshot' before each interpreter candidate, deleting a prior working venv on a failed re-run; the path is a literal in the repo root and not exploitable. Fix (optional): delete the venv only after a candidate succeeds."
+  ],
+  "evidence": [
+    "F3 withdrawn: checked scripts/sound-set.mjs lines 78-92; lstatSync with throwIfNoEntry:false does not follow symlinks; an isDirectory target or any lstat/rmSync exception sets blocked and fail() prints exactly one line and exits 1; rmSync is called without recursive mode so directory deletion is impossible, and a symlink is unlinked rather than followed, so nothing outside sounds/<set>/ can be deleted.",
+    "The new failure line at scripts/sound-set.mjs:92 reads 'sound-set: cannot prepare output for ${name} (${design}): ${out}', matching the new spec.md D5 row 'Output path cannot be prepared' with exit 1; name and design are validated before this point and out stays inside resolve(ROOT,'sounds',set).",
+    "tests/sound-set.adversarial.test.ts:201-214 proves a directory at the target exits 1, spawns no child, preserves keep.txt inside the directory, and prints a single-line sound-set: error with no stack trace; :217-228 proves a 300-character name fails the same way with no child call.",
+    "green-r4.log records the combined targeted command (tests/sound-set.test.ts plus tests/sound-set.adversarial.test.ts) at exit 0 with 72 of 72 passing, prettier exit 0, generate.mjs --check exit 0, and doctor exit 0.",
+    "Unchanged security points re-verified on the full wrapper: SAFE_NAME validation of set (line 23) and entry names (line 49) precede all path building; spawnSync at line 94 uses an argv array with no shell; EARSHOT_BIN is X_OK-checked at lines 66-71; scripts/sound-setup.sh and .gitignore are untouched by this diff; git ls-files shows no venv, secret, or large binary.",
+    "A2 not applicable: no publish transition exists. A6 holds: the spec D5 row, the implementation, and the tests agree; the registry and metadata stay in_progress with the deferred T5 closeout task; green-r4.log claims match the 72 of 72 result.",
+    "git rev-parse HEAD equals 486e53ce901d2cc579daa1ba6a1bcac316c6a094, the audited_head_sha."
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "git diff --stat 7fbf58b7..486e53ce",
+    "git log --oneline 7fbf58b7..486e53ce",
+    "git diff 7fbf58b7..486e53ce -- scripts/sound-set.mjs",
+    "git diff 7fbf58b7..486e53ce -- measure/tracks/chore_earshot_sounds_20261121/spec.md tests/sound-set.test.ts",
+    "grep -n 'cannot prepare|isDirectory|symlink|recursive' tests/sound-set.adversarial.test.ts",
+    "grep -E 'exit 0|exit 1|passed|failed' measure/runs/chore_earshot_sounds_20261121/green-r4.log",
+    "sed -n '190,249p' tests/sound-set.adversarial.test.ts"
+  ],
+  "changed_files": [
+    "measure/generated/status.md",
+    "measure/runs/chore_earshot_sounds_20261121/adversarial-7fbf58b.json",
+    "measure/runs/chore_earshot_sounds_20261121/adversarial-7fbf58b.log",
+    "measure/runs/chore_earshot_sounds_20261121/green-r4.log",
+    "measure/runs/chore_earshot_sounds_20261121/red-r3.log",
+    "measure/tracks/chore_earshot_sounds_20261121/plan.md",
+    "measure/tracks/chore_earshot_sounds_20261121/spec.md",
+    "scripts/sound-set.mjs",
+    "tests/sound-set.adversarial.test.ts",
+    "tests/sound-set.test.ts"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "kimi-code-plan-cn/kimi-for-coding"
+}

@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: closeout
+status: complete
+track: chore_earshot_sounds_20261121
+phase: track closeout
+commits: 5e6c778 (audited pre-closeout head; the closeout commit SHA is reported in the reply and by git log -1)
+tests_run: verbatim plan.md:116 scratch render exit 0 with sounds/ clean; combined heavy-run vitest 2 files and 86 of 86 tests passed before and after the archive move; generate.mjs --check exit 0 with Measure facts are current (4 files); doctor exit 0 with no structural errors and boundary check 4 of 4; all through heavy-run.sh; prettier exit 0 on the archived docs and sound-set sources; ./measure/generate.sh exit 0 from a clean measure/generated tree
+files_changed: archive move of measure/tracks/chore_earshot_sounds_20261121 to measure/archive/chore_earshot_sounds_20261121 (index.md, metadata.json, plan.md, spec.md, spec-review.md, test-strategy.md, automation-supervisor-closeout-manifest.json); measure/tech-debt.md rows TD-41 and TD-42; measure/tracks.md active row removed and archived entry added; measure/generated/status.md regenerated; measure/runs/chore_earshot_sounds_20261121/ closeout-5e6c778.json and closeout-5e6c778.log plus the uncommitted review, adversarial, phase and final acceptance evidence
+plan_updates: status line set to done at pre-closeout HEAD 5e6c7780; T5 flipped to [x] with closeout evidence and its commit SHA recorded in the task-SHA follow-up; a Closeout record section holds the dispositions of Review B F1 (TD-41), F2 (TD-42), the T5 marker, the gates.json route-around with the per-run track-scoped PROJECT_* and test gate values, and the red-r5 mid-red gate judged not material by phase acceptance r2
+known_failures: none in this track; 9 pre-existing failed tests in tests/storytime-book-pictures.test.ts (TD-40) and 38 pre-existing tsc errors in 13 files (TD-35 to TD-39) stay open at other tracks
+handoff: the track is archived under measure/archive/chore_earshot_sounds_20261121 and all final acceptance, phase, review, adversarial, and closeout evidence stays under measure/runs/chore_earshot_sounds_20261121; A5, A6, and A9 are clean and no test needed a path fix; the gates.json additions and the audio_game_integration_20261014 consumer work stay deferred; the orchestrator pushes
+END_MEASURE_AGENT_RESULT

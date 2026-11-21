@@ -1,0 +1,119 @@
+{
+  "schema_version": 1,
+  "role": "final-acceptance",
+  "track": "chore_earshot_sounds_20261121",
+  "phase": "Phase 1: Pin, render, and record",
+  "baseline_sha": "3f98d5fec62670161b77d18cb8a8ab6b204ea6d5",
+  "phase_base_sha": "a9aec40d5cf899815852bbbd53b768285b98915b",
+  "role_base_sha": "5e6c7780975691414d17f48a23337bfa6065b785",
+  "audited_head_sha": "5e6c7780975691414d17f48a23337bfa6065b785",
+  "status": "pass",
+  "summary": "Final acceptance passes at current HEAD 5e6c7780. AC1-AC6 and the PM done-when hold. Every non-deferred task has commit evidence. The combined suite, doctor, generated-facts check, formatting checks, and verbatim scratch render pass. The render leaves sounds/ clean.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F1 [Nit] review-b: scripts/sound-setup.sh:23 pins earshot, but transitive pip dependencies remain unpinned.",
+    "F2 [Nit] review-b: scripts/sound-setup.sh:11 removes .venv-earshot before each interpreter attempt, so a failed retry can remove a working venv.",
+    "F3 [Nit] phase-acceptance: plan.md:166 uses the legacy [ ] marker with deferred:closeout-steward for T5. The current parser and doctor require this compatibility state until closeout.",
+    "F4 [Nit] phase-acceptance: measure/gates.json defines only GENERATED_CHECK_COMMAND. The orchestrator supplied the track-scoped PROJECT_LINT, PROJECT_CHECKS, and PROJECT_TESTS values for each run."
+  ],
+  "evidence": [
+    "git rev-parse HEAD -> 5e6c7780975691414d17f48a23337bfa6065b785. This equals role_base_sha, audited_head_sha, and the latest phase-acceptance audited HEAD.",
+    "Phase 1 has one operative passing result at current HEAD: phase-acceptance-5e6c778.json. The earlier d987d079 pass is historical; the 55ef0204 result failed and was remedied before the current pass.",
+    "git merge-base checks confirm track base 3f98d5fe and phase base a9aec40d are ancestors of 5e6c7780. Every prior result baseline is an ancestor of its audited HEAD, and every audited HEAD is an ancestor of current HEAD.",
+    "git diff --name-only 5e6c7780975691414d17f48a23337bfa6065b785 HEAD -> no output. No later commit requires coverage.",
+    "git diff --name-only abffa890293179224b191bfb248e3b5710582864 HEAD -> measure/generated/status.md; red-r5.log; red-r6.log; plan.md; spec.md; test-strategy.md; tests/sound-set.adversarial.test.ts; tests/sound-set.test.ts. No production path changed after Reviews A and B.",
+    "git diff --name-only d987d079da5470e3a3590c59530fa8d3ba03599f HEAD -> measure/generated/status.md; red-r5.log; red-r6.log; plan.md; spec.md; test-strategy.md; tests/sound-set.test.ts. The current acceptance covers these later test and text changes.",
+    "The exact track diff from 3f98d5fe to 5e6c7780 contains .gitignore, the two sound scripts, sounds/**, the two sound tests, and planned Measure files. It contains no src, assets, scenes, demo, package, lockfile, game, AudioBus, or asset change.",
+    "T1-T4 and T6-T8 are [x] and cite 8a5582cc, e45704be, ebf5ad20, f2d2fde4, 06325093, d78f3ded, d5742637, e49155a2, and 2cbe1d0d. Each SHA resolves and is an ancestor of HEAD. T5 alone remains deferred to closeout-steward.",
+    "AC1 and PM set scope: sounds/sets/chibi.json:4-10 maps tap, right, wrong, star, pop, whoosh, and level-end to the seven specified designs in order.",
+    "AC2 and PM wrapper scope: scripts/sound-set.mjs implements the exact D5 diagnostics, exit codes, validation order, ordered argv-array calls, stream handling, and stop rule. The verbatim scratch render exited 0 and printed sound-set: 7 sounds -> sounds/chibi.",
+    "AC3: git ls-files lists all seven Ogg files. Each working file's git hash-object equals its HEAD blob. The combined suite passes every nine-step header check for all seven files.",
+    "AC4 and test quality: the combined heavy-run command exited 0 with 2 files and 86 tests passed. Red logs record failing-first evidence for the initial suite and remediation tests. Adversarial tests cover corruption, boundaries, symlinks, permissions, and preparation failures.",
+    "AC5 and PM documentation: sounds/README.md:3-5 names all seven designs and pin 7a7f7c5c70d4a763a1eca4b3666af7c77e313f97.",
+    "Pin and venv: scripts/sound-setup.sh:23 has the exact commit pin. The installed earshot direct_url.json records the same commit_id and requested_revision. .gitignore:11 excludes .venv-earshot/, and git ls-files lists no venv file.",
+    "AC6 PROJECT_TESTS: HEAVY_MIN_AVAIL_MB=1500 heavy-run of the combined vitest command exited 0 with 86 passed and 0 failed.",
+    "Doctor: HEAVY_MIN_AVAIL_MB=1500 heavy-run of ./measure/doctor.sh exited 0, passed its 4 boundary tests, and printed Measure doctor found no structural errors.",
+    "PROJECT_CHECKS: node measure/tools/generate.mjs --check exited 0 and printed Measure facts are current (4 files).",
+    "PROJECT_LINT: the plan's prettier command exited 0. A second prettier check covered tests/sound-set.adversarial.test.ts and test-strategy.md and exited 0. node --check and bash -n also exited 0.",
+    "AC6 live gate: the exact plan.md:116 heavy-run scratch command exited 0. git status --short sounds/ afterward produced no output.",
+    "A5: no PASS=N, FAIL=0 or all-checks-pass claim appears in plan.md. Current pass claims match the rerun gates. Historical Red and Green counts match their cited logs, and the earlier false doctor claim is corrected at plan.md:124-130.",
+    "A6: measure/tracks.md:20-21 keeps the track active with no completion or resolved-quality claim. This matches metadata.json and the passing adversarial state without overstatement.",
+    "A9: the archived-track cross-check over tests/*.sh returned archived_track_references [].",
+    "Changed callers and contracts: git grep found no wrapper or sound caller outside the planned scripts, sounds, tests, and Measure records. No playback wiring or runtime route changed."
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "git merge-base --is-ancestor <baseline> <audited HEAD> for every prior result; git merge-base --is-ancestor <audited HEAD> HEAD for every prior result",
+    "git diff --name-status 3f98d5fec62670161b77d18cb8a8ab6b204ea6d5 5e6c7780975691414d17f48a23337bfa6065b785",
+    "git diff --name-only 5e6c7780975691414d17f48a23337bfa6065b785 HEAD",
+    "git diff --name-only abffa890293179224b191bfb248e3b5710582864 HEAD",
+    "git diff --name-only d987d079da5470e3a3590c59530fa8d3ba03599f HEAD",
+    "git ls-files sounds/chibi sounds/sets/chibi.json sounds/README.md .venv-earshot",
+    "git rev-parse HEAD:sounds/chibi/<name>.ogg and git hash-object sounds/chibi/<name>.ogg for all seven names",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run --maxWorkers=1 tests/sound-set.test.ts tests/sound-set.adversarial.test.ts'",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './measure/doctor.sh'",
+    "node measure/tools/generate.mjs --check",
+    "node_modules/.bin/prettier --check scripts/sound-set.mjs sounds/sets/chibi.json sounds/README.md tests/sound-set.test.ts measure/tracks/chore_earshot_sounds_20261121/spec.md measure/tracks/chore_earshot_sounds_20261121/plan.md measure/tracks/chore_earshot_sounds_20261121/spec-review.md measure/tracks/chore_earshot_sounds_20261121/metadata.json measure/tracks/chore_earshot_sounds_20261121/index.md",
+    "node_modules/.bin/prettier --check tests/sound-set.adversarial.test.ts measure/tracks/chore_earshot_sounds_20261121/test-strategy.md",
+    "node --check scripts/sound-set.mjs && bash -n scripts/sound-setup.sh",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'SCRATCH=$(mktemp -d) && mkdir -p $SCRATCH/sounds && ln -s $PWD/sounds/sets $SCRATCH/sounds/sets && SOUNDS_ROOT=$SCRATCH EARSHOT_BIN=$PWD/.venv-earshot/bin/earshot node scripts/sound-set.mjs chibi'",
+    "git status --short sounds/",
+    "python3 -I -c <cross-check tests/*.sh for paths of archived tracks>"
+  ],
+  "changed_files": [
+    "measure/runs/chore_earshot_sounds_20261121/final-acceptance-5e6c778.json",
+    "measure/runs/chore_earshot_sounds_20261121/final-acceptance-5e6c778.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "kimi-code-plan-cn/k3.1-pro#high (ra-quota pick final-acceptance --not-family openai --not-family claude)",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "AC1-AC6 hold at 5e6c7780, and the verbatim plan.md:116 render exits 0 with sounds/ clean."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "The 86-test suite covers the CLI and headers with failing-first logs, but AC5 and the default live binary path rely on live inspection rather than unit tests."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The exact track diff contains only the planned sound tooling, outputs, tests, and Measure records."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "Every current acceptance claim has a rerun command result, file:line evidence, or verified commit SHA."
+    }
+  ],
+  "reviewer_ratings": [
+    {
+      "reviewer_role": "review-a",
+      "reviewer_route": "openai/gpt-6.1-sol#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "Its pass at abffa890 is accurate; I rechecked the unchanged wrapper, later test and text deltas, the 86-test suite, and the doctor."
+    },
+    {
+      "reviewer_role": "review-b",
+      "reviewer_route": "kimi-code-plan-cn/kimi-for-coding",
+      "agreed": true,
+      "score": 5,
+      "evidence": "Its security pass and carried F1/F2 notes match scripts/sound-setup.sh:11,23 and scripts/sound-set.mjs:21-110."
+    },
+    {
+      "reviewer_role": "adversarial",
+      "reviewer_route": "openai/gpt-6.1-sol#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "Its d987d079 pass is accurate; the same combined suite passes 86 tests at current HEAD after the covered test and text changes."
+    }
+  ]
+}

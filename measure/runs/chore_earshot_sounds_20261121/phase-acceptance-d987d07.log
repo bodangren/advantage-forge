@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: phase-acceptance
+status: complete
+track: chore_earshot_sounds_20261121
+phase: Phase 1: Pin, render, and record
+commits: none
+tests_run: heavy-run vitest combined (tests/sound-set.test.ts and tests/sound-set.adversarial.test.ts) exit 0, 86 passed, 0 skipped; heavy-run vitest tests/sound-set.test.ts exit 0, 19 passed; heavy-run ./measure/doctor.sh exit 0; node measure/tools/generate.mjs --check exit 0; prettier --check exit 0 (plan list, adversarial test, strategy); heavy-run node scripts/sound-set.mjs chibi into two scratch SOUNDS_ROOT folders exit 0 (7 sounds each, decoded audio equals the committed files); heavy-run tsc --noEmit reports 40 error lines (2 in tests/sound-set.test.ts, baseline 38)
+files_changed: measure/runs/chore_earshot_sounds_20261121/phase-acceptance-d987d07.json; measure/runs/chore_earshot_sounds_20261121/phase-acceptance-d987d07.log
+plan_updates: none
+known_failures: none blocking; nonblocking F1 [Major] tsc --noEmit reports two errors in tests/sound-set.test.ts at lines 333 and 335 (TS2532, TS18048); Nit findings F2 to F6 are in the result JSON
+handoff: PASS at the audited HEAD d987d079da5470e3a3590c59530fa8d3ba03599f. The phase base is a9aec40d5cf899815852bbbd53b768285b98915b. Allowed test-only commit: d987d079, so review-a and review-b at abffa890 still apply. T5 stays pending for the closeout role. Closeout must run its wrapper gate with a scratch SOUNDS_ROOT, because renders are audio-identical and not byte-identical (F2). The optional F1 fix is a test-only commit and needs an acceptance rerun on the new HEAD. Facts changed: none.
+END_MEASURE_AGENT_RESULT

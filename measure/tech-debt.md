@@ -1,7 +1,6 @@
 # Tech debt registry
 
-Keep this working memory within 50 lines. Track plans contain detailed repair steps.
-Severity: Critical, High, Medium, Low. Status: Open or Resolved. Baseline evidence comes from September 28, 2026; rerun checks before closing an item.
+Keep this working memory within 50 lines. Track plans contain detailed repair steps. Severity: Critical, High, Medium, Low. Status: Open or Resolved. Baseline evidence comes from September 28, 2026; rerun checks before closing an item.
 
 | ID | Date | Track | Item | Severity | Status | Evidence or exit condition |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -45,6 +44,7 @@ Severity: Critical, High, Medium, Low. Status: Open or Resolved. Baseline eviden
 | TD-38 | 2026-11-21 | [Castle defense rebuild](./tracks/game_castle_defense_rebuild_20261029/) | 2 type errors in `tests/games/castle-defense/rules.adversarial.test.ts`: TS2554 at lines 195 and 587, expected 0 arguments but got 1. | High | Open | `tsc --noEmit` reports 0 errors in the adversarial test. Count unchanged at `f67eeb06` and `6987ed50`. |
 | TD-39 | 2026-11-21 | [Equipment parts](./archive/asset_equipment_parts_20260930/) | 1 type error in `tests/part.test.ts`: TS2379, `bone: string | undefined` is not assignable under `exactOptionalPropertyTypes`. | High | Open | `tsc --noEmit` reports 0 errors in `tests/part.test.ts`. Count unchanged at `f67eeb06` and `6987ed50`. |
 | TD-40 | 2026-11-21 | [Storytime unit 1 pictures](./archive/asset_storytime_l2_unit1_pictures_20261025/) | 9 failed tests in `tests/storytime-book-pictures.test.ts` at the pre-refresh baseline: T78, T142, T145, T147, T150, T173, T174, T176, T177. They fail at both `f67eeb06` and refresh HEAD `6987ed50`; the refresh adds none. | High | Open | A full `vitest run --maxWorkers=1` reports 0 failed tests in this file. The failing names and count are unchanged at both commits. |
+| TD-41 | 2026-11-21 | [Earshot sound sets](./archive/chore_earshot_sounds_20261121/) | `scripts/sound-setup.sh` pins the earshot commit but leaves the transitive pip dependencies unpinned. After install, numpy, numba, scipy, soundfile, soxr, cffi, and llvmlite resolve from PyPI without a version constraint. Found by review-b F1 at 486e53ce. | Low | Open | Either record the pip freeze output after install or install with `--no-deps` and an explicit dependency list. Decoded audio already matches the committed files, so byte-level reproducibility is not required. |
+| TD-42 | 2026-11-21 | [Earshot sound sets](./archive/chore_earshot_sounds_20261121/) | `scripts/sound-setup.sh:11` runs `rm -rf .venv-earshot` before each interpreter candidate, so a failed retry removes a prior working venv. Found by review-b F2 at 486e53ce. The path is a literal in the repo root and is not exploitable. | Low | Open | Delete the venv only after an interpreter candidate succeeds. Keep the pin and the venv path unchanged. |
 
-Planned features remain in tracks. Debt records known deficiencies, shortcuts, and missing verification.
-The game roadmap also records preset parity and content-review requirements before port acceptance.
+Planned features remain in tracks. Debt records known deficiencies, shortcuts, and missing verification. The game roadmap also records preset parity and content-review requirements before port acceptance.

@@ -1,0 +1,119 @@
+{
+  "schema_version": 1,
+  "role": "review-a",
+  "track": "chore_earshot_sounds_20261121",
+  "phase": "Phase 1: Pin, render, and record",
+  "baseline_sha": "a9aec40d5cf899815852bbbd53b768285b98915b",
+  "phase_base_sha": "a9aec40d5cf899815852bbbd53b768285b98915b",
+  "role_base_sha": "c86ccebe6ba5a72b388ca3118f5159875675597e",
+  "audited_head_sha": "c86ccebe6ba5a72b388ca3118f5159875675597e",
+  "status": "fail",
+  "summary": "The targeted tests pass, but the phase fails the doctor gate. The wrapper accepts stale output and drops successful child stderr. The failed-render test does not prove the stop rule.",
+  "blocking_findings": [
+    "F1 [Blocker] review-a: scripts/sound-set.mjs:67-74 accepts an existing target after a successful child writes nothing. An isolated probe returned exit 0 and the success summary for this fixture. D5 requires each render to write its file. Fix: require a write from the current invocation. Add a regression with an existing target and a no-write child.",
+    "F2 [Blocker] review-a: tests/sound-set.test.ts:60-62 exits before logging a failed invocation. The strategy requires calls.log to record every invocation. The failed-render case at lines 219-228 fails on beta, the last entry, so it cannot prove that later renders stop. The fake also emits no child output, so the tests cannot prove forwarding or suppression. Fix: log before failure, add a third entry, and assert captured output for successful and failed calls. Align the conflicting case-7 expectation in the plan and strategy.",
+    "F3 [Blocker] review-a: measure/tracks/chore_earshot_sounds_20261121/plan.md:106-109 claims the doctor passes. The required heavy-run doctor command exits 1: in_progress track has no unchecked task. The status text at lines 3-4 also says no task has started. Fix: reconcile the plan and metadata state, rerun the doctor, and record the actual result. AC6 remains unsatisfied.",
+    "F4 [Blocker] review-a: scripts/sound-set.mjs:76 forwards child.stdout but discards successful child.stderr. D5 requires forwarding successful child output. An isolated probe preserved child stdout but lost child stderr. Fix: preserve successful child stderr while respecting the wrapper stderr contract. Add a successful-child output assertion."
+  ],
+  "nonblocking_findings": [],
+  "evidence": [
+    "git rev-parse HEAD returned c86ccebe6ba5a72b388ca3118f5159875675597e at audit start and end. This captured commit is role_base_sha.",
+    "The audit read the complete a9aec40d5cf899815852bbbd53b768285b98915b..c86ccebe6ba5a72b388ca3118f5159875675597e diff. The audited paths have no working-tree differences from the audited commit.",
+    "The targeted heavy-run command exited 0: one test file passed; 16 tests passed.",
+    "The heavy-run doctor command exited 1 with: error: measure/tracks/chore_earshot_sounds_20261121/plan.md: in_progress track has no unchecked task.",
+    "The full planned prettier command exited 0. node measure/tools/generate.mjs --check exited 0 and reported four current files.",
+    "The dependency-isolated probe executed the current wrapper source in node:vm. It replaced imported filesystem and child-process functions in memory. It created no fixture files.",
+    "A4 missing-deliverable fixture: the set exists, the child exits 0, and the target is absent. The wrapper exited 1 with the exact D5 no-file line.",
+    "F1 stale-output fixture: the same child writes nothing, but existsSync reports the previous target. The wrapper exited 0 and printed sound-set: 1 sounds -> sounds/fake.",
+    "F4 successful-output fixture: the child returned status 0, stdout child stdout, and stderr child stderr. The wrapper forwarded only child stdout.",
+    "The failed-output fixture returned status 3 with both output streams. The wrapper suppressed both streams and emitted only the exact D5 failure line.",
+    "The real targeted tests assert each of the twelve D5 failure classes with exact stderr.trim() equality and the required exit code. The shape cases cover representative variants, not every type variant.",
+    "A3 is absent: tests/sound-set.test.ts:97 parses the labeled integer with /(\\d+) sounds ->/ and compares it with 2. The test also compares the entire success output.",
+    "tests/sound-set.test.ts:242-273 compares the complete AC1 map before reading the files. It computes the packet start from byte 26 and checks every specified AC3 field.",
+    "git ls-files lists all seven Ogg files. A read-only Python check compared each working file with git show HEAD:path; all bytes match.",
+    "ffprobe confirmed Vorbis, stereo, and 48000 Hz for every committed file. Sizes and durations match the README and plan after rounding to three decimals.",
+    "scripts/sound-setup.sh:23 pins exactly 7a7f7c5c70d4a763a1eca4b3666af7c77e313f97. The installed direct_url.json names the same requested revision and commit.",
+    "scripts/sound-setup.sh:19-21 skips venv creation when its Python is executable. The Python fallback stays within D3: it changes neither the pin nor the venv path. The plan documents the host limitation. It is an implementation detail, not a product-scope deviation.",
+    "git check-ignore confirms .venv-earshot/bin/python is ignored. git ls-files lists no venv files.",
+    "sounds/README.md:3-5 contains all seven AC5 designs and the exact pin in one wrapped paragraph.",
+    "The audit read measure/index.md, measure/config.json, generated/routes.md, the selected track documents, the Red and Green logs, the debt registry, and the lessons.",
+    "The phase changes the registry, so the audit checked applicable anti-patterns. A5 is present in the doctor claim. A6 and A10 show no additional defect. A1, A2, A8, and A9 do not apply to the changed implementation.",
+    "build-graph was available. Its in-memory scan reported 21876 nodes and 24628 edges; the include pattern added no test file. The tool supports TypeScript, not the changed .mjs and .sh scripts.",
+    "Direct source review found no changed exported production TypeScript symbols. Searches in src and demo found no earshot or sound-set caller. The new CLI preserves the existing script pattern and adds no playback dependency.",
+    "The audit did not rerender or reinstall because those commands would modify implementation outputs. The audit checked installed pin provenance and committed audio independently.",
+    "The shell tool rejected an additional combined header-mutation and fake-execution probe. No result from that unexecuted probe supports this verdict.",
+    "Existing unrelated dirty paths remain unchanged. The release worktree is detached at e01ac17b; shelf-sync-20261030 remains at 623e7b5d. Their owning sessions retain cleanup responsibility."
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "git diff a9aec40d5cf899815852bbbd53b768285b98915b..c86ccebe6ba5a72b388ca3118f5159875675597e",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run --maxWorkers=1 tests/sound-set.test.ts'",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './measure/doctor.sh'",
+    "node_modules/.bin/prettier --check scripts/sound-set.mjs sounds/sets/chibi.json sounds/README.md tests/sound-set.test.ts measure/tracks/chore_earshot_sounds_20261121/spec.md measure/tracks/chore_earshot_sounds_20261121/plan.md measure/tracks/chore_earshot_sounds_20261121/spec-review.md measure/tracks/chore_earshot_sounds_20261121/metadata.json measure/tracks/chore_earshot_sounds_20261121/index.md",
+    "node measure/tools/generate.mjs --check",
+    "build-graph scan . :memory: --include 'tests/sound-set.test.ts'",
+    "git check-ignore .venv-earshot/bin/python",
+    "git ls-files .venv-earshot sounds/chibi",
+    "ffprobe -v error -show_entries stream=codec_name,sample_rate,channels:format=size,duration -of json sounds/chibi/<name>.ogg (read-only loop over the seven entries)",
+    "Python subprocess invoked heavy-run with node --input-type=module -e and the dependency-isolated wrapper probes described in evidence; exit 0",
+    "git diff --exit-code c86ccebe6ba5a72b388ca3118f5159875675597e -- scripts/sound-set.mjs scripts/sound-setup.sh tests/sound-set.test.ts sounds .gitignore measure/tracks/chore_earshot_sounds_20261121 measure/tracks.md measure/generated",
+    "git worktree list",
+    "git branch -a"
+  ],
+  "changed_files": [
+    ".gitignore",
+    "measure/generated/status.md",
+    "measure/runs/chore_earshot_sounds_20261121/green.log",
+    "measure/runs/chore_earshot_sounds_20261121/red.log",
+    "measure/tracks.md",
+    "measure/tracks/chore_earshot_sounds_20261121/metadata.json",
+    "measure/tracks/chore_earshot_sounds_20261121/plan.md",
+    "scripts/sound-set.mjs",
+    "scripts/sound-setup.sh",
+    "sounds/README.md",
+    "sounds/chibi/level-end.ogg",
+    "sounds/chibi/pop.ogg",
+    "sounds/chibi/right.ogg",
+    "sounds/chibi/star.ogg",
+    "sounds/chibi/tap.ogg",
+    "sounds/chibi/whoosh.ogg",
+    "sounds/chibi/wrong.ogg",
+    "sounds/sets/chibi.json",
+    "tests/sound-set.test.ts"
+  ],
+  "test_strategy_violations": [
+    "F2: The fake does not log every invocation, and the failed-render fixture cannot prove the stop rule.",
+    "F3: The required doctor gate exits 1."
+  ],
+  "live_contract_violations": [
+    "F1: D5 requires a file written by each render; an existing target makes a no-write child pass.",
+    "F4: D5 successful-output forwarding omits child.stderr."
+  ],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "retry_implementation",
+  "confidence": "high",
+  "route": "openai/gpt-6.1-sol#high (ra-quota pick review-a)",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 2,
+      "evidence": "scripts/sound-set.mjs:73 accepts a stale file after a no-write child, contrary to D5."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 3,
+      "evidence": "The targeted command passes 16 real assertions, but tests/sound-set.test.ts:219 cannot prove stopping before a later entry."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The exact phase diff changes only the planned sound tooling, outputs, tests, and Measure records."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 2,
+      "evidence": "plan.md:108 claims the doctor passes, but the required doctor command exits 1 on the audited HEAD."
+    }
+  ]
+}

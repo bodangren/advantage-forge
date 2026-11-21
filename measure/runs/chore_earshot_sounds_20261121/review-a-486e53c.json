@@ -1,0 +1,133 @@
+{
+  "schema_version": 1,
+  "role": "review-a",
+  "track": "chore_earshot_sounds_20261121",
+  "phase": "Phase 1: Pin, render, and record",
+  "baseline_sha": "a9aec40d5cf899815852bbbd53b768285b98915b",
+  "phase_base_sha": "a9aec40d5cf899815852bbbd53b768285b98915b",
+  "role_base_sha": "7fbf58b7f7d78aee01c70fd4ad437a93b8038f98",
+  "audited_head_sha": "486e53ce901d2cc579daa1ba6a1bcac316c6a094",
+  "status": "fail",
+  "summary": "All 72 combined tests and the doctor pass. Exact Ogg comparisons fix ADV-1. The new D5 class lacks exact-line tests and misses output-folder creation failures.",
+  "blocking_findings": [
+    "F6 [Blocker] review-a: spec.md:52-54 and AC2 require exact-line assertions for every D5 class, including the new row at line 70. tests/sound-set.adversarial.test.ts:211-226 still asserts only one line and a sound-set prefix. Its comments incorrectly say D5 defines no exact text. The original test file has no case for this class, and test-strategy.md:74-87 still lists only the previous classes. A wrong message, sound-set: wrong message, passes these stderr assertions. Fix: add exact substituted-line assertions for the new class, preserve the exit and directory-content checks, and update the strategy.",
+    "F7 [Blocker] review-a: the new spec.md:73-75 contract covers filesystem failures during output preparation, but scripts/sound-set.mjs:74 creates the output folder outside the new handler. A file at sounds/<set> causes an uncaught mkdir error before the controlled line. The isolated ENOTDIR fixture produced no wrapper stderr line and no child call. This also contradicts plan.md:187-189, which claims any filesystem exception is contained. Fix: contain output-folder creation and target preparation in the same contract. Add exact-line tests for folder obstruction and preparation I/O failures."
+  ],
+  "nonblocking_findings": [
+    "F5 [Nit] review-a: plan.md:165 retains the legacy deferred marker described in review-a-7fbf58b.json. The project parser does not count [b] tasks. Keep this compatibility issue with closeout or separate tooling work; it does not block the sound implementation."
+  ],
+  "evidence": [
+    "git rev-parse HEAD returned 486e53ce901d2cc579daa1ba6a1bcac316c6a094 at audit start and after verification. The supplied phase and role baselines remain unchanged.",
+    "The audit reviewed the full phase diff from a9aec40d5cf899815852bbbd53b768285b98915b and the remediation diff from 7fbf58b7f7d78aee01c70fd4ad437a93b8038f98.",
+    "The requested combined heavy-run command exited 0: both files passed, with 72 tests passed.",
+    "The requested heavy-run doctor command exited 0 and printed Measure doctor found no structural errors. Its boundary tests also passed.",
+    "Prettier passed on the planned files, the new adversarial file, and the strategy. node measure/tools/generate.mjs --check reported four current files.",
+    "ADV-1 closure verified: tests/sound-set.test.ts:299-312 compares the raw capture and Vorbis packet bytes with Buffer.equals. The high-bit corruption regressions now pass.",
+    "The adversarial reader tests execute the current private reader body, not a copied implementation. They accept the reference and reject truncations and ordinary and high-bit corruptions.",
+    "ADV-2 improves the directory-target and overlong-name cases. scripts/sound-set.mjs:79-91 handles target inspection and removal failures without recursive deletion.",
+    "The directory-target test preserves keep.txt, requires exit 1, and requires no child call. The overlong-name test requires exit 1 and no child call.",
+    "F6 proof: sound-set: wrong message followed by a newline satisfies both new stderr predicates: one line and /^sound-set: [^\\r\\n]+\\n$/. The probe checked these predicates, not a mutated full-suite run.",
+    "The actual new D5 message at scripts/sound-set.mjs:91 matches the new spec row for the tested target cases. The defect is missing exact regression coverage, not a current typo.",
+    "F7 proof used the current wrapper source with dependency-isolated filesystem functions in node:vm. The probe created no fixture files and ran through heavy-run.",
+    "The directory-target fixture returned exit 1, zero child calls, and exactly sound-set: cannot prepare output for alpha (tap/soft): /fixture/sounds/fake/alpha.ogg followed by a newline.",
+    "The lstat-failure fixture returned the same controlled line, exit 1, and zero child calls.",
+    "The output-folder-is-file fixture made mkdirSync throw ENOTDIR. That exception escaped the wrapper. The probe recorded empty wrapper stderr, zero child calls, and uncaught ENOTDIR.",
+    "The optional probe exceeded the shell foreground timeout while waiting. It later completed with exit 0. A later cancellation check found that it had already ended; no process was stopped.",
+    "F7 concerns the new filesystem contract. Its input class includes directory targets, overlong names, and I/O failures while creating the folder, inspecting the target, or removing the old file.",
+    "The Red r3 log records two expected filesystem failures after the byte-reader fix. The Green r4 log and plan correctly report the current combined test pass and doctor pass.",
+    "The plan's numerical test claims match the actual exits. Its broader claim that any preparation filesystem exception is contained does not hold because mkdirSync remains outside the handler.",
+    "F1 remains closed: the passing stale-target regressions require a current write and reject a no-write child. F2 remains closed: ordered call logs include the failed call and exclude later calls.",
+    "F3 remains closed: the status and historical doctor correction remain accurate, and the current doctor passes. F4 remains closed: successful child streams are forwarded and failed child streams are suppressed.",
+    "A3 is absent: the success test parses a labeled integer with /(\\d+) sounds ->/ and compares the complete success output.",
+    "A4 verification reran the missing-deliverable and stale-deliverable fixtures. Both reject a child that exits 0 without writing a file.",
+    "A7 applies to F6: the new class relies on a broad stderr predicate despite D5's exact-line rule. Existing classes still use full equality.",
+    "The registry changes within the full phase justify applicable anti-pattern checks. Generated facts remain current. The existing F5 compatibility note remains nonblocking.",
+    "The audit reread the current spec, phase plan, strategy, wrapper, routing configuration, and generated entrypoints. No runtime route or production TypeScript export changes.",
+    "build-graph inspect locates checkOggHeader in the existing adversarial database. That snapshot predates the four-line reader expansion; direct source review supplies current line evidence.",
+    "build-graph callers returns no caller for the private reader. Direct review identifies its ordinary test call and the adversarial dynamic source extraction. The graph does not scan the .mjs CLI.",
+    "git diff --exit-code 7fbf58b7..486e53ce over sounds, sound-setup.sh, .gitignore, and routing artifacts returned no differences. The committed audio, pin, venv setup, and README remain unchanged.",
+    "The audit did not reinstall or rerender. The combined suite checks the committed audio headers without modifying the audio files.",
+    "git diff --exit-code HEAD over the audited implementation, track, registry, and generated paths returned no working-tree changes.",
+    "The release worktree remains detached at e01ac17b. The shelf-sync worktree and branch remain at 623e7b5d. Their owning sessions retain cleanup responsibility."
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "git diff --stat a9aec40d5cf899815852bbbd53b768285b98915b..486e53ce901d2cc579daa1ba6a1bcac316c6a094",
+    "git diff 7fbf58b7f7d78aee01c70fd4ad437a93b8038f98..486e53ce901d2cc579daa1ba6a1bcac316c6a094",
+    "git diff a9aec40d5cf899815852bbbd53b768285b98915b..486e53ce901d2cc579daa1ba6a1bcac316c6a094 -- .gitignore scripts sounds tests measure/tracks.md measure/tracks/chore_earshot_sounds_20261121/metadata.json measure/generated/status.md",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run --maxWorkers=1 tests/sound-set.test.ts tests/sound-set.adversarial.test.ts'",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './measure/doctor.sh'",
+    "node_modules/.bin/prettier --check scripts/sound-set.mjs sounds/sets/chibi.json sounds/README.md tests/sound-set.test.ts tests/sound-set.adversarial.test.ts measure/tracks/chore_earshot_sounds_20261121/spec.md measure/tracks/chore_earshot_sounds_20261121/plan.md measure/tracks/chore_earshot_sounds_20261121/spec-review.md measure/tracks/chore_earshot_sounds_20261121/metadata.json measure/tracks/chore_earshot_sounds_20261121/index.md measure/tracks/chore_earshot_sounds_20261121/test-strategy.md",
+    "node measure/tools/generate.mjs --check",
+    "Python subprocess invoked heavy-run with node --input-type=module -e for the dependency-isolated preparation fixtures and the wrong-message predicate probe; exit 0",
+    "build-graph inspect /home/daniebo/.cache/opencode/earshot-adversarial-graph.db checkOggHeader",
+    "build-graph callers /home/daniebo/.cache/opencode/earshot-adversarial-graph.db checkOggHeader",
+    "git diff --exit-code 7fbf58b7f7d78aee01c70fd4ad437a93b8038f98..486e53ce901d2cc579daa1ba6a1bcac316c6a094 -- sounds scripts/sound-setup.sh .gitignore measure/config.json measure/generated/routes.md",
+    "git diff --exit-code HEAD -- scripts/sound-set.mjs scripts/sound-setup.sh tests/sound-set.test.ts tests/sound-set.adversarial.test.ts sounds .gitignore measure/tracks/chore_earshot_sounds_20261121 measure/tracks.md measure/generated",
+    "git worktree list",
+    "git branch -a"
+  ],
+  "changed_files": [
+    ".gitignore",
+    "measure/generated/status.md",
+    "measure/runs/chore_earshot_sounds_20261121/adversarial-7fbf58b.json",
+    "measure/runs/chore_earshot_sounds_20261121/adversarial-7fbf58b.log",
+    "measure/runs/chore_earshot_sounds_20261121/green-r3.log",
+    "measure/runs/chore_earshot_sounds_20261121/green-r4.log",
+    "measure/runs/chore_earshot_sounds_20261121/green.log",
+    "measure/runs/chore_earshot_sounds_20261121/red-r2.log",
+    "measure/runs/chore_earshot_sounds_20261121/red-r3.log",
+    "measure/runs/chore_earshot_sounds_20261121/red.log",
+    "measure/tracks.md",
+    "measure/tracks/chore_earshot_sounds_20261121/metadata.json",
+    "measure/tracks/chore_earshot_sounds_20261121/plan.md",
+    "measure/tracks/chore_earshot_sounds_20261121/spec.md",
+    "measure/tracks/chore_earshot_sounds_20261121/test-strategy.md",
+    "scripts/sound-set.mjs",
+    "scripts/sound-setup.sh",
+    "sounds/README.md",
+    "sounds/chibi/level-end.ogg",
+    "sounds/chibi/pop.ogg",
+    "sounds/chibi/right.ogg",
+    "sounds/chibi/star.ogg",
+    "sounds/chibi/tap.ogg",
+    "sounds/chibi/whoosh.ogg",
+    "sounds/chibi/wrong.ogg",
+    "sounds/sets/chibi.json",
+    "tests/sound-set.adversarial.test.ts",
+    "tests/sound-set.test.ts"
+  ],
+  "test_strategy_violations": [
+    "F6: The new D5 class lacks the required exact-line test and an updated strategy entry."
+  ],
+  "live_contract_violations": [
+    "F7: Output-folder creation errors escape the new controlled preparation-failure contract."
+  ],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "retry_implementation",
+  "confidence": "high",
+  "route": "openai/gpt-6.1-sol#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 3,
+      "evidence": "The isolated output-folder fixture exposes an uncaught mkdir failure at scripts/sound-set.mjs:74."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 3,
+      "evidence": "The combined suite passes, but tests/sound-set.adversarial.test.ts:213 accepts a wrong preparation message."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The remediation changes only the planned reader, wrapper contract, tests, and Measure evidence."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 3,
+      "evidence": "The reported 72-test pass is reproducible, but plan.md:187 overstates filesystem exception coverage."
+    }
+  ]
+}

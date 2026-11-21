@@ -17,9 +17,6 @@ This registry gives each historical, current, and planned work item one Measure 
 - [~] **Track: Resolve dependency launcher reconciliation**
   *Link: [./tracks/measure_dependency_launcher_20260928/](./tracks/measure_dependency_launcher_20260928/)*
 
-- [~] **Track: Author game sound sets with earshot**
-  *Link: [./tracks/chore_earshot_sounds_20261121/](./tracks/chore_earshot_sounds_20261121/)*
-
 ## Asset production
 
 - [ ] **Track: Define companion media production**
@@ -254,6 +251,10 @@ Execution order. The overview, the decisions, and the dependencies are in [riven
   *Link: [./tracks/riven_fx_geometry_20261009/](./tracks/riven_fx_geometry_20261009/)*
 
 ## Archived Tracks
+
+- [x] Author game sound sets with earshot, completed 2026-11-21; pinned earshot at commit 7a7f7c5c and delivered seven 48 kHz Ogg files for the chibi set with a wrapper and tests. Final acceptance PASS at 5e6c7780 with audited_head_sha equal to the pre-closeout HEAD. The combined sound-set suite passed 86 of 86 tests at closeout; adversarial-abffa89 PASS and the earlier adversarial-7fbf58b fail was superseded. No full-suite or owner-acceptance claim is made. The venv, scratch render, doctor, and generated-facts checks all pass at closeout. Carried nits TD-41 (unpinned transitive pip dependencies) and TD-42 (venv removed before each interpreter attempt) stay open; the PROJECT_* and test gate commands were supplied per run by the orchestrator because gates.json holds only GENERATED_CHECK_COMMAND.
+  *Link: [./archive/chore_earshot_sounds_20261121/](./archive/chore_earshot_sounds_20261121/)*
+  *Author game sound sets with earshot*
 
 - [x] Refresh dependencies after the vulnerability audit, completed 2026-11-21; direct packages and the lockfile refreshed, a fail-closed audit gate added, and the two audit-gate suites pass 30 of 30 at final acceptance 2b22d9e1; audit findings fell from 0 critical / 4 high / 6 moderate / 1 low to 0/0/0/0; TypeScript 7.0.2 deferred; 38 tsc errors and 9 failed tests stay as pre-existing debt TD-35..TD-40.
   *Link: [./archive/chore_dependency_refresh_20261121/](./archive/chore_dependency_refresh_20261121/)*

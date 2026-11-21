@@ -1,0 +1,98 @@
+{
+  "schema_version": 1,
+  "role": "adversarial-testing",
+  "track": "chore_earshot_sounds_20261121",
+  "phase": "Phase 1: Pin, render, and record",
+  "baseline_sha": "a9aec40d5cf899815852bbbd53b768285b98915b",
+  "phase_base_sha": "a9aec40d5cf899815852bbbd53b768285b98915b",
+  "role_base_sha": "abffa890293179224b191bfb248e3b5710582864",
+  "audited_head_sha": "d987d079da5470e3a3590c59530fa8d3ba03599f",
+  "status": "pass",
+  "summary": "ADV-1 and ADV-2 are closed. All combined tests pass, including new symlink and permission probes. The audit binds to the new test commit.",
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "evidence": [
+    "The starting HEAD was abffa890293179224b191bfb248e3b5710582864. The audited HEAD is d987d079da5470e3a3590c59530fa8d3ba03599f, which adds only adversarial tests.",
+    "The audit read the current spec, plan, strategy, routing artifacts, debt, lessons, anti-pattern registry, both passing reviews, and the exact remediation diff.",
+    "ADV-1 withdrawn: tests/sound-set.test.ts:328-347 compares raw bytes for OggS and the identification packet. The two original high-bit regressions pass.",
+    "ADV-2 withdrawn: scripts/sound-set.mjs:74-98 contains folder and target preparation errors. Directory and overlong-name tests require the exact new D5 line.",
+    "The existing directory regression preserves keep.txt. The existing folder-obstruction regression reports the first entry and starts no child.",
+    "The combined heavy-run command passed before the test commit and after it. Both runs reported 86 passed tests across two files.",
+    "The new commit adds twelve cases. All twelve ran successfully. No permission test was skipped because the process runs as uid 1001.",
+    "tests/sound-set.adversarial.test.ts:240-268 covers output symlinks to a file, a directory, and a missing path. Preparation unlinks each symlink and preserves its destination.",
+    "The no-write symlink case preserves the destination, rejects stale bytes, suppresses child output, and starts no later render.",
+    "The output-folder symlink cases cover an existing directory, a regular file, and a missing destination. Obstructions produce the exact first-entry preparation line.",
+    "An existing output-folder symlink redirects writes outside SOUNDS_ROOT through normal filesystem resolution. D5 specifies lexical paths, not a physical-root sandbox.",
+    "The valid folder-symlink case uses a destination inside the disposable fixture but outside its configured repository. It preserves unrelated destination files.",
+    "The later-entry preparation case preserves alpha's successful file and output. It reports beta's exact failure line and never starts gamma.",
+    "The unwritable stale-target case preserves the stale file, reports the exact preparation line, and starts no child.",
+    "The unwritable sounds-folder case reports the first entry's exact preparation line. No output folder or child call appears.",
+    "An empty unwritable output folder causes the child to fail its write. The wrapper emits the exact child-failure line and suppresses the child's stack trace.",
+    "The unreadable set-file case emits the existing exact JSON-read failure line and starts no child. No new permission-specific message was invented.",
+    "Each permission test first proves that the intended read or write fails under the effective user. Each test restores permissions in finally.",
+    "A4: the isolated all-[~] fixture reports total=2, complete=0, in_progress=2, incomplete=2 through the installed interphase helper.",
+    "A7: the combined suite preserves BANNED never do not in the exact child-failure line. No filter removes the probe.",
+    "A5: the cited combined suite and doctor both exit 0. Historical Red failures remain historical failures. The audit adds no test count to the plan.",
+    "The doctor exits 0 and its boundary suite passes. Generated facts remain current after the temporary task marker is restored.",
+    "build-graph updated both test files in the external cache database. It locates the actual header reader at tests/sound-set.test.ts:328-347.",
+    "The graph does not scan the production .mjs script or model dynamic reader extraction. Direct source review covers those boundaries.",
+    "A1, A2, and A9 have no changed implementation surface. Review A retains the existing A8 marker compatibility note.",
+    "The audit changes no production source, committed audio byte, or playback route. No real earshot command ran.",
+    "The test commit contains tests/sound-set.adversarial.test.ts only. The required audit JSON and log remain separate written artifacts.",
+    "The original plan is restored. Unrelated shared changes remain untouched.",
+    "The release worktree remains detached at e01ac17b. The shelf-sync worktree and branch remain at 623e7b5d. Their owning sessions retain cleanup ownership.",
+    "Facts changed: ADV-1 and ADV-2 are closed, and the adversarial gate passes. No price, public date, product name, or deployment status changed."
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "git diff --stat a9aec40d5cf899815852bbbd53b768285b98915b..abffa890293179224b191bfb248e3b5710582864",
+    "git diff 0752afc1..abffa890 -- scripts/sound-set.mjs tests/sound-set.test.ts tests/sound-set.adversarial.test.ts measure/tracks/chore_earshot_sounds_20261121/spec.md",
+    "id",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run --maxWorkers=1 tests/sound-set.test.ts tests/sound-set.adversarial.test.ts'",
+    "build-graph update /home/daniebo/.cache/opencode/earshot-adversarial-graph.db /home/daniebo/Desktop/advantage-forge/tests/sound-set.test.ts /home/daniebo/Desktop/advantage-forge/tests/sound-set.adversarial.test.ts",
+    "build-graph inspect /home/daniebo/.cache/opencode/earshot-adversarial-graph.db checkOggHeader",
+    "git diff --check -- tests/sound-set.adversarial.test.ts",
+    "node_modules/.bin/prettier --check tests/sound-set.adversarial.test.ts tests/sound-set.test.ts scripts/sound-set.mjs",
+    "python3: import the installed measure_interphase_checks.py and run phase_counts plus discover_phases against an isolated all-[~] fixture",
+    "node measure/tools/generate.mjs --check",
+    "./measure/generate.sh",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './measure/doctor.sh'",
+    "git diff --exit-code abffa890293179224b191bfb248e3b5710582864 -- scripts/sound-set.mjs scripts/sound-setup.sh tests/sound-set.test.ts sounds measure/tracks/chore_earshot_sounds_20261121/plan.md measure/generated",
+    "git worktree list",
+    "git branch -a"
+  ],
+  "changed_files": [
+    "tests/sound-set.adversarial.test.ts",
+    "measure/runs/chore_earshot_sounds_20261121/adversarial-abffa89.json",
+    "measure/runs/chore_earshot_sounds_20261121/adversarial-abffa89.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "openai/gpt-6.1-sol#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 4,
+      "evidence": "The combined heavy-run command passes all 86 tests at audited HEAD d987d079."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "tests/sound-set.adversarial.test.ts:343-428 verifies effective permission failures before checking wrapper behavior."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "Commit d987d079 changes only tests/sound-set.adversarial.test.ts."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "The post-commit suite and doctor exit 0, and the production diff against abffa890 is empty."
+    }
+  ]
+}

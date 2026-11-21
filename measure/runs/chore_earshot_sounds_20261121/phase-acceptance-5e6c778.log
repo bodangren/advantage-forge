@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: phase-acceptance
+status: complete
+track: chore_earshot_sounds_20261121
+phase: Phase 1: Pin, render, and record
+commits: none
+tests_run: heavy-run of the plan.md:116 gate command, extracted and run verbatim, exit 0 (7 sounds, git status --short sounds/ clean, decoded audio equals the committed files); heavy-run ./measure/doctor.sh exit 0; node measure/tools/generate.mjs --check exit 0; heavy-run vitest combined (tests/sound-set.test.ts and tests/sound-set.adversarial.test.ts) exit 0, 86 passed, 0 skipped; heavy-run vitest tests/sound-set.test.ts exit 0, 19 passed; prettier --check exit 0 (plan list, adversarial test, strategy); tsc not rerun because every typecheck input is identical to 55ef0204 (38 baseline error lines, 0 in the sound-set tests)
+files_changed: measure/runs/chore_earshot_sounds_20261121/phase-acceptance-5e6c778.json; measure/runs/chore_earshot_sounds_20261121/phase-acceptance-5e6c778.log
+plan_updates: none
+known_failures: none blocking; carried Nits F4 (T5 marker), F5 (no recorded disposition for the review-b notes), and F6 (gates.json gap) are in the result JSON
+handoff: PASS at the audited HEAD 5e6c7780975691414d17f48a23337bfa6065b785 (phase base a9aec40d5cf899815852bbbd53b768285b98915b). F7, F8, and F9 are closed: the plan.md:116 command exits 0 and test-strategy.md:150 holds the identical string, the case labels agree, and the Status line and generate note are correct. No production file changed since abffa890, and the only later non-measure paths are the two test files. Allowed test-only commit: d987d079. The later commits change tests and Measure text only, and review-a, review-b, and adversarial results still apply under the test-and-text rule of the second-run brief; the strict role rule names test files and measure/runs/ only. T5 stays pending for the closeout role. Closeout should use the scratch gate in test-strategy.md step 3, never the real root, and should settle F4 and F5. Facts changed: none.
+END_MEASURE_AGENT_RESULT

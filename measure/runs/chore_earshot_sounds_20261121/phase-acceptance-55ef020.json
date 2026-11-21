@@ -1,0 +1,130 @@
+{
+  "schema_version": 1,
+  "role": "phase-acceptance",
+  "track": "chore_earshot_sounds_20261121",
+  "phase": "Phase 1: Pin, render, and record",
+  "baseline_sha": "a9aec40d5cf899815852bbbd53b768285b98915b",
+  "phase_base_sha": "a9aec40d5cf899815852bbbd53b768285b98915b",
+  "role_base_sha": "55ef0204bc88807deb1fb66a5a9efdf8e0f7ddbf",
+  "audited_head_sha": "55ef0204bc88807deb1fb66a5a9efdf8e0f7ddbf",
+  "status": "fail",
+  "summary": "Acceptance fails at HEAD 55ef0204 (second run, delta since d987d079). Two blocking text defects remain in lines that the remediation 2cbe1d0d changed. The plan T3 wrapper gate command exits 1 as written. test-strategy.md now calls the committed-files case 10, but its own case map calls it 9. The product stays sound: no production file changed, the suite passes 86 tests, tsc reports 0 errors in the sound-set tests, and the doctor and the facts check exit 0. F1 of the first acceptance is closed.",
+  "blocking_findings": [
+    "F7 [Blocker] phase-acceptance: plan.md:116 (changed by 2cbe1d0d) gives a wrapper gate command that exits 1 as written. I ran it through heavy-run, and it printed 'sound-set: earshot not found at /tmp/tmp.uD7D0PUVx0/.venv-earshot/bin/earshot; run scripts/sound-setup.sh'. With SOUNDS_ROOT set to the scratch folder, the wrapper looks for the binary under that folder, and that folder holds no venv. The plan says 'with exit 0', so the plan text is false and the AC6 command cannot pass (A5). red-r5.log records no run of this command. Fix: add EARSHOT_BIN=$PWD/.venv-earshot/bin/earshot to the command. I ran that variant at 55ef0204: exit 0, 7 sounds, git status --short sounds/ clean, and decoded audio equal to the committed files. Run the exact final command and record its exit code. Also change test-strategy.md:149-150 (closeout gate step 3). It still names the real-root command, and the file never mentions a scratch root, so the F2 hazard stays. Rationale: the closeout role gets two conflicting gate commands, and one of them exits 1.",
+    "F8 [Blocker] phase-acceptance: test-strategy.md:122, :133, :165, and :196 (changed by 2cbe1d0d) call the committed-files case 'case 10'. The case map in the same file labels it '9 Committed files' (test-strategy.md:114) and ends at 9. The number 10 is also D5 failure class 10 (test-strategy.md:85), so the new label is ambiguous. The T8 text at plan.md:233-234 says the case is 10 in test-strategy.md, and that is false for the strategy numbering. The plan.md edits (case 10 at plan.md:77 and :83) are correct for the plan numbering (plan.md:73). Fix: restore 'case 9' at the four test-strategy.md sites, or relabel the case map so one numbering holds, and correct the T8 wording. Rationale: the remediation added an inconsistency in the lines it changed."
+  ],
+  "nonblocking_findings": [
+    "F4 [Nit] phase-acceptance (carried from review-a F5, unchanged): plan.md:166 marks T5 with [ ] and the owner text deferred:closeout-steward. countPlanTasks at measure/tools/common.mjs:113 counts only [ ], [~], and [x], so a [b] marker would not count. The doctor needs one unchecked task while the track is in_progress. The closeout role should flip T5, set the status to completed in metadata.json and measure/tracks.md, regenerate the facts, and archive the track in one step.",
+    "F5 [Nit] phase-acceptance (carried from review-b F1 and F2, unchanged): D4 pins only the earshot commit, and pip freeze lists unpinned transitive packages (numpy 2.4.6, numba 0.68.1, scipy 1.17.1, soundfile 0.14.0, soxr 1.1.0, cffi 2.1.1, llvmlite 0.50.0). scripts/sound-setup.sh:11 runs rm -rf .venv-earshot before each interpreter attempt. Plan T3 asks the builder to record deferred work in the owning track. measure/tech-debt.md and the track audio_game_integration_20261014 still hold no earshot entry. Closeout should record both notes as debt, or state that none is needed.",
+    "F6 [Nit] phase-acceptance (unchanged): measure/gates.json holds only GENERATED_CHECK_COMMAND. The orchestrator supplied the PROJECT_* values, RED_TEST_COMMAND, and GREEN_TEST_COMMAND for each run, with track-scoped values. The repo gate file holds no value for tsc. This is framework state and does not block this phase.",
+    "F9 [Nit] phase-acceptance: plan.md has two stale sentences after T8. The Status line at plan.md:3 lists T1 through T4, T6, and T7 as [x] and omits T8. The T8 Red result at plan.md:245-248 says generate.mjs --check exits 1 and the stale fact stays open for closeout, but commit 55ef0204 regenerated the facts and the check exits 0 at HEAD. Update both sentences, or add a dated note. Rationale: the text records a past state, and no behavior differs."
+  ],
+  "evidence": [
+    "HEAD returned 55ef0204bc88807deb1fb66a5a9efdf8e0f7ddbf at the start, in the middle, and at the end of the audit. It equals the immutable audited HEAD.",
+    "Three commits follow d987d079: 2cbe1d0d (Red r5), cdf01581 (T8 SHA), and 55ef0204 (regenerated status.md). git diff --name-status lists tests/sound-set.test.ts, spec.md, plan.md, test-strategy.md, measure/generated/status.md, and red-r5.log only.",
+    "git diff --quiet d987d079 HEAD over scripts, sounds, .gitignore, src, and package.json exits 0. No production file changed, so AC1, AC2, AC3, and AC5 hold as in the first acceptance (phase-acceptance-d987d07.json).",
+    "The test change is two lines at tests/sound-set.test.ts:333-334: (bytes[5] ?? 0) & 0x02 and bytes[26] ?? 0. The body stays valid JavaScript, so the adversarial new Function extraction still works, and the 20 reader-corruption tests pass.",
+    "F1 closed: tsc --noEmit through heavy-run reports 38 error lines in the 13 baseline files (measure/tech-debt.md TD-35 to TD-39) and none in tests/sound-set.test.ts or tests/sound-set.adversarial.test.ts.",
+    "Combined suite at 55ef0204: heavy-run exit 0, 2 files, 86 tests passed, 0 skipped.",
+    "Doctor through heavy-run: exit 0 and 'Measure doctor found no structural errors'. node measure/tools/generate.mjs --check: exit 0 and 'Measure facts are current (4 files)'.",
+    "prettier --check: exit 0 for the plan T3 file list. Exit 0 also for tests/sound-set.adversarial.test.ts and test-strategy.md.",
+    "Live render at 55ef0204 with EARSHOT_BIN set and a scratch SOUNDS_ROOT: heavy-run exit 0, 7 sounds, git status --short sounds/ clean. The decoded audio (ffmpeg -f md5) and the byte size equal the committed file for all seven.",
+    "The plan.md:116 command, run exactly as written through heavy-run, exits 1 with 'sound-set: earshot not found at /tmp/tmp.uD7D0PUVx0/.venv-earshot/bin/earshot; run scripts/sound-setup.sh' (F7).",
+    "test-strategy.md:149-150 is unchanged and still names node scripts/sound-set.mjs chibi in the real root. The strategy file never mentions a scratch root.",
+    "The new spec.md D5 sentence (spec.md:82-84) matches scripts/sound-set.mjs:106-108 and tests/sound-set.test.ts:101-109: child stdout, then child stderr, then the success line, all on the wrapper stdout, with an empty wrapper stderr.",
+    "F3 closed in part: the plan touched-files list names tests/sound-set.adversarial.test.ts (plan.md:12), the plan Case 9 references now read case 10 (plan.md:77 and :83), and spec D5 holds the forwarding rule. The test-strategy.md edits created F8.",
+    "F2 closed in part: plan.md:116 now names a scratch root, but that command fails, and test-strategy.md:149-150 is unchanged (F7).",
+    "plan.md has 7 [x] tasks, 1 [ ] task (T5), and 0 [~] tasks. This matches the generated status 7/8 in measure/generated/status.md. T8 cites commit 2cbe1d0d, which resolves to 2cbe1d0d355827ff9e6f3150de6bf501e46bae8a ('fix tsc errors and text drift') and is an ancestor of HEAD.",
+    "The T8 Red result claims hold at HEAD: 86 of 86 tests, 38 tsc error lines with 0 in tests/sound-set.test.ts, and prettier exit 0. The generate.mjs claim describes the state at 2cbe1d0d, and 55ef0204 changed that state (F9).",
+    "The failed mid-red gate does not change the verdict. A tsc typing fix and text edits cannot fail vitest, so the gate found no failing test. The failing-first proof for F1 is the tsc output at d987d079 in phase-acceptance-d987d07.json (TS2532 at line 333, TS18048 at line 335), and this audit shows 0 errors at 55ef0204. red-r5.log declares no red_kind: gap_closing, and that mode needs a new test with a breakage proof, so it does not fit this round.",
+    "Prerequisite carry-over: review-a and review-b (abffa890) and adversarial-testing (d987d079) still apply to the product, because no production file changed. The commits after abffa890 are test and text only: d987d079 (test-only), 2cbe1d0d, cdf01581, and 55ef0204. My role rule names test files and measure/runs/ only, and these commits also change spec.md, plan.md, test-strategy.md, and measure/generated/status.md. I applied the wider test-and-text rule of the brief and checked each changed line myself (F7, F8, F9). If the orchestrator wants the strict rule, rerun review-a on the text changes.",
+    "Allowed test-only commit under the strict rule: d987d079. Commits accepted under the brief rule: 2cbe1d0d, cdf01581, and 55ef0204.",
+    "A5 fails at plan.md:116, where the plan gives an exit 0 expectation for a command that exits 1 (F7). The test counts in plan T1 to T7 still match the logs, as in the first acceptance.",
+    "A6 holds: git diff --quiet d987d079 HEAD over measure/tracks.md and the measure tools, tests, doctor, gates.json, and config.json exits 0. The registry row reads [~].",
+    "A3, A4, and A7 are not triggered: the delta touches no measure/tools, measure/tests, measure/doctor.sh, measure/gates.json, or measure/config.json path.",
+    "AC6 does not hold as written: it requires that the plan holds the exact gate commands, and the plan wrapper command exits 1. The wrapper run itself exits 0 when the binary path is correct.",
+    "F4, F5, and F6 of the first acceptance are unchanged and stay open as Nits: plan.md:166 (T5 marker), no earshot entry in measure/tech-debt.md or the consumer track, and the gates.json gap.",
+    "git diff --quiet HEAD over the track code, track docs, registry, generated, and measure tool paths exits 0 after all runs. No untracked file exists in sounds, scripts, or tests. The renders wrote to scratch roots only.",
+    "git worktree list shows advantage-forge-release (detached at e01ac17b) and advantage-forge-shelf-sync (shelf-sync-20261030 at 623e7b5d). Neither belongs to this track.",
+    "Scratch folders remain in /tmp: earshot-accept-55ef020-ypMAeg (render output) and tmp.uD7D0PUVx0 (empty scratch from the plan command run), plus the three folders from the first acceptance. The role shell rules deny deletion, and tmpfs clears at reboot.",
+    "Every vitest, tsc, doctor, and earshot command ran through heavy-run.sh with HEAVY_MIN_AVAIL_MB=1500. None returned exit 75."
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "git log --format='%H %s' d987d079da5470e3a3590c59530fa8d3ba03599f..HEAD",
+    "git diff --name-status d987d079da5470e3a3590c59530fa8d3ba03599f 55ef0204bc88807deb1fb66a5a9efdf8e0f7ddbf",
+    "git diff d987d079da5470e3a3590c59530fa8d3ba03599f 55ef0204bc88807deb1fb66a5a9efdf8e0f7ddbf -- tests/sound-set.test.ts measure/tracks/chore_earshot_sounds_20261121/spec.md measure/tracks/chore_earshot_sounds_20261121/plan.md measure/tracks/chore_earshot_sounds_20261121/test-strategy.md measure/generated/status.md",
+    "git diff --quiet d987d079da5470e3a3590c59530fa8d3ba03599f HEAD -- scripts sounds .gitignore src package.json",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'SCRATCH=$(mktemp -d) && mkdir -p $SCRATCH/sounds && ln -s $PWD/sounds/sets $SCRATCH/sounds/sets && SOUNDS_ROOT=$SCRATCH node scripts/sound-set.mjs chibi'",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run --maxWorkers=1 tests/sound-set.test.ts tests/sound-set.adversarial.test.ts'",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './measure/doctor.sh'",
+    "node measure/tools/generate.mjs --check",
+    "node_modules/.bin/prettier --check scripts/sound-set.mjs sounds/sets/chibi.json sounds/README.md tests/sound-set.test.ts measure/tracks/chore_earshot_sounds_20261121/spec.md measure/tracks/chore_earshot_sounds_20261121/plan.md measure/tracks/chore_earshot_sounds_20261121/spec-review.md measure/tracks/chore_earshot_sounds_20261121/metadata.json measure/tracks/chore_earshot_sounds_20261121/index.md",
+    "node_modules/.bin/prettier --check tests/sound-set.adversarial.test.ts measure/tracks/chore_earshot_sounds_20261121/test-strategy.md",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/tsc --noEmit | grep \"error TS\" | cut -d\"(\" -f1 | sort | uniq -c'",
+    "mktemp -d /tmp/earshot-accept-55ef020-XXXXXX; mkdir -p <scratch>/sounds; ln -s /home/daniebo/Desktop/advantage-forge/sounds/sets <scratch>/sounds/sets",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'EARSHOT_BIN=$PWD/.venv-earshot/bin/earshot SOUNDS_ROOT=/tmp/earshot-accept-55ef020-ypMAeg node scripts/sound-set.mjs chibi'",
+    "ffmpeg -v error -i <file> -f md5 - (committed file compared with each fresh render, seven names)",
+    "git status --short sounds/",
+    "grep -n -E case-label patterns in measure/tracks/chore_earshot_sounds_20261121/test-strategy.md and plan.md",
+    "git diff --quiet HEAD -- <track code, track docs, registry, generated, and measure tool paths>",
+    "git worktree list",
+    "git log -1 --format='%H %s' 2cbe1d0d; git merge-base --is-ancestor 2cbe1d0d HEAD"
+  ],
+  "changed_files": [
+    "measure/runs/chore_earshot_sounds_20261121/phase-acceptance-55ef020.json",
+    "measure/runs/chore_earshot_sounds_20261121/phase-acceptance-55ef020.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "retry_tests",
+  "confidence": "high",
+  "route": "claude-code/claude-sonnet-5-5#max",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 4,
+      "evidence": "The product is unchanged and correct (scripts/sound-set.mjs identical to d987d079, 86 of 86 tests, live render exit 0), but plan.md:116 and test-strategy.md:122 carry wrong gate and case text."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "The tests/sound-set.test.ts:333-334 fix leaves tsc at 0 errors for the file and keeps the 20 reader-corruption tests passing, but red-r5.log shows no pre-fix failing state."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "git diff --name-status d987d079..55ef0204 lists one test file, three track documents, the generated status, and a run log; no production path changed."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 3,
+      "evidence": "red-r5.log holds real vitest and tsc results, but the new closeout gate command at plan.md:116 was never run and exits 1."
+    }
+  ],
+  "reviewer_ratings": [
+    {
+      "reviewer_role": "review-a",
+      "reviewer_route": "openai/gpt-6.1-sol#high",
+      "agreed": true,
+      "score": 4,
+      "evidence": "Its pass at abffa890 still holds for the product: scripts and sounds are identical at 55ef0204 and my combined run exits 0, but it ran no live render and no tsc."
+    },
+    {
+      "reviewer_role": "review-b",
+      "reviewer_route": "kimi-code-plan-cn/kimi-for-coding",
+      "agreed": true,
+      "score": 4,
+      "evidence": "Its security points still hold because scripts/sound-set.mjs and scripts/sound-setup.sh are identical at 55ef0204, but it ran no test."
+    },
+    {
+      "reviewer_role": "adversarial",
+      "reviewer_route": "openai/gpt-6.1-sol#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "Its 86-test claim equals my combined run at 55ef0204, and its reader-corruption tests still pass against the changed checkOggHeader body."
+    }
+  ]
+}

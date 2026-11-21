@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: adversarial-testing
+status: complete
+track: chore_earshot_sounds_20261121
+phase: Phase 1: Pin, render, and record
+commits: d987d079
+tests_run: Combined heavy-run suite: exit 0, 86 passed, none skipped; heavy-run doctor: exit 0; prettier: pass; generated facts: current; all-[~] fixture: INCOMPLETE.
+files_changed: tests/sound-set.adversarial.test.ts; measure/runs/chore_earshot_sounds_20261121/adversarial-abffa89.json; measure/runs/chore_earshot_sounds_20261121/adversarial-abffa89.log
+plan_updates: Restored the temporary T8 marker. No durable plan change.
+known_failures: none
+handoff: ADV-1 and ADV-2 are closed. The audit binds to test commit d987d079. Proceed to phase acceptance. Production files remain unchanged. Existing folder symlinks follow filesystem semantics; D5 provides no physical-root sandbox. Facts changed: the adversarial gate passes.
+END_MEASURE_AGENT_RESULT

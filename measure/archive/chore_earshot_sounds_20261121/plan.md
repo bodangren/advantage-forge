@@ -1,8 +1,9 @@
 # Author game sound sets with earshot
 
-Status: in_progress (2026-11-21). T1 through T4 and T6 through T8 are `[x]` with commit evidence. T5 is a
-deferred closeout task owned by the closeout role. This plan owns execution status. `spec.md`
-holds the decisions and acceptance criteria.
+Status: done (2026-11-21). Closed and archived at pre-closeout HEAD 5e6c7780975691414d17f48a23337bfa6065b785.
+T1 through T8 are `[x]` with commit evidence. T5 was the deferred closeout task and is completed by this
+closeout (see the Closeout record). This plan owns execution status. `spec.md` holds the decisions and
+acceptance criteria.
 
 Lane: light. One phase. Source: PM assignment P2 of 2026-11-21. Deadline: none named.
 
@@ -163,11 +164,13 @@ tests/sound-set.test.ts` passes.
     D5 line. The targeted heavy-run command exits 0 with 17 of 17 tests passing. No Ogg file was
     re-rendered. Log: `measure/runs/chore_earshot_sounds_20261121/green-r3.log`.
 
-- [ ] T5 Closeout (deferred:closeout-steward): Phase acceptance records the final verdict. The
+- [x] T5 Closeout (deferred:closeout-steward): Phase acceptance records the final verdict. The
       closeout role then moves the track to completed, updates the registry and generated facts,
       and archives it. This is a human-gated deferred task. Green r3 does not perform these
-      actions. The task stays pending until closeout so the doctor sees an unchecked task while the
-      track remains in_progress.
+      actions. The task stayed pending until closeout so the doctor saw an unchecked task while the
+      track remained in_progress. Closeout evidence:
+      `measure/runs/chore_earshot_sounds_20261121/closeout-5e6c778.json` and `.log`; archive commit SHA
+      recorded in the task-SHA follow-up commit.
 
 - [x] T6 Adversarial remediation (ADV-1 test side and ADV-2 fix): fix the AC3 reader in `tests/sound-set.test.ts` [commits `06325093`, `d78f3ded`]
       to compare the Ogg magic bytes exactly. The `toString('ascii')` decoding clears the high bit,
@@ -254,3 +257,48 @@ measure/tools/generate.mjs --check` exited 1 at commit `2cbe1d0d` with one stale
     venv. The same command lands in `test-strategy.md` step 3. The exact command runs through
     the heavy runner before this commit; the log holds its exit code and the clean `sounds/`
     status.
+
+## Closeout record (2026-11-21)
+
+Provenance. Final acceptance PASS at 5e6c7780975691414d17f48a23337bfa6065b785
+(`measure/runs/chore_earshot_sounds_20261121/final-acceptance-5e6c778.json/.log`). Its
+`audited_head_sha` equals the current pre-closeout HEAD. Phase acceptance PASS at the same HEAD
+(`phase-acceptance-5e6c778.json/.log`). T1 through T8 are `[x]` with commit evidence.
+
+Carried nit dispositions:
+
+- Review B F1 (unpinned transitive pip dependencies): accepted. Only the earshot commit is pinned;
+  numpy, numba, scipy, soundfile, soxr, cffi, and llvmlite resolve unpinned from PyPI. Recorded as
+  debt TD-41 in `measure/tech-debt.md`. The design does not need byte-reproducible renders; decoded
+  audio matches the committed files. No code change in closeout.
+- Review B F2 (`sound-setup.sh` removes the venv before each interpreter attempt): accepted. A failed
+  retry can remove a working venv. Recorded as debt TD-42 in `measure/tech-debt.md`. The host Python
+  lacks `ensurepip`, so the wrapper tries more than one interpreter; the removal is by design but
+  the retry path is wasteful. No code change in closeout.
+- Phase acceptance F3 / final acceptance F3 (T5 marker): the legacy `[ ]` marker was the doctor
+  compatibility state while the track stayed in_progress, because `countPlanTasks` counts only
+  `[ ]`, `[~]`, and `[x]`. The standard marker form for a deferred human-gated task is
+  `[b] (deferred:<owner>)`; that form is not counted by the current parser and so was not used while
+  the doctor needed one unchecked task. Closeout completes T5 as `[x]` with closeout evidence.
+- Phase acceptance F6 / final acceptance F4 (gates.json gap): recorded. `measure/gates.json` holds
+  only `GENERATED_CHECK_COMMAND`. The orchestrator supplied the track-scoped gate values for each
+  run: PROJECT_LINT is the prettier check on `scripts/sound-set.mjs`, `sounds/sets/chibi.json`,
+  `sounds/README.md`, `tests/sound-set.test.ts`, and `tests/sound-set.adversarial.test.ts`;
+  PROJECT_CHECKS =
+  `node measure/tools/generate.mjs --check`; PROJECT_TESTS, RED_TEST_COMMAND, and GREEN_TEST_COMMAND
+  = the combined heavy-run vitest on `tests/sound-set.test.ts` and
+  `tests/sound-set.adversarial.test.ts`. This is a route-around. A separate task adds these commands
+  to `gates.json`; closeout does not edit the framework gate file.
+- Red r5 mid-red gate: the combined suite exited 0 because Red r5 was a type-and-text-only commit
+  (the `?? 0` reader fix), so vitest could not show a failing state. Phase acceptance r2 judged the
+  gap not material and recorded the failing-first proof in the earlier Red logs. No reopen in
+  closeout.
+
+Closeout gates rerun at HEAD 5e6c7780 through the heavy runner: the verbatim plan scratch render
+exited 0 and left `git status --short sounds/` empty; the combined suite passed 2 files and 86 tests;
+`node measure/tools/generate.mjs --check` printed "Measure facts are current (4 files)"; and
+`./measure/doctor.sh` printed "Measure doctor found no structural errors" with 4 of 4 boundary tests.
+No A5 false claim, no A6 registry overstatement, and no A9 test-path hit was found. The track folder
+moved to `measure/archive/chore_earshot_sounds_20261121`; the registry entry moved to Archived Tracks;
+metadata holds status done with actual_tasks 8. The summary is in
+`measure/archive/chore_earshot_sounds_20261121/automation-supervisor-closeout-manifest.json`.

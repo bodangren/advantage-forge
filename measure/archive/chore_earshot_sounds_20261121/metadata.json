@@ -1,0 +1,17 @@
+{
+  "track_id": "chore_earshot_sounds_20261121",
+  "type": "chore",
+  "status": "done",
+  "created_at": "2026-11-21T00:00:00Z",
+  "updated_at": "2026-11-21T23:00:00Z",
+  "description": "Pin earshot and add a wrapper that renders named game sound sets as 48 kHz Ogg files, with the first set for the Chibi games",
+  "estimated_tasks": 3,
+  "actual_tasks": 8,
+  "deviation_notes": "PM P2 assignment of 2026-11-21. The trial at /var/tmp/earshot-trial renders 8 sounds and names the designs. No game loads a sound file today, so the output path uses the assignment fallback sounds/chibi/<name>.ogg. earshot pins to commit 7a7f7c5c70d4a763a1eca4b3666af7c77e313f97 (tag v1.0.0, MIT). Playback, browser format choice, and the credits screen stay with audio_game_integration_20261014. Closed and archived 2026-11-21 after final acceptance PASS at 5e6c7780 with audited_head_sha equal to the pre-closeout HEAD. Archive notes: T5 was the deferred closeout task; the track grew from 3 planned to 8 actual tasks across the adversarial and review remediation rounds. Review B F1 (unpinned transitive pip dependencies) and F2 (venv removed before each interpreter attempt) are recorded as TD-41 and TD-42. measure/gates.json holds only GENERATED_CHECK_COMMAND, so the orchestrator supplied the track-scoped PROJECT_LINT, PROJECT_CHECKS, PROJECT_TESTS, RED_TEST_COMMAND, and GREEN_TEST_COMMAND values for each run; a separate task adds them to gates.json. The red-r5 mid-red gate failed by design (type and text only commit) and phase acceptance r2 judged it not material.",
+  "workstream": "foundation",
+  "retrospective": false,
+  "evidence": ["src/apk3d/audio/bus.ts", "scripts/sfx-library.mjs", "docs/sound-library.md"],
+  "dependencies": [],
+  "completed": "2026-11-21",
+  "completed_at": "2026-11-21"
+}

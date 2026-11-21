@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "role": "review-b",
+  "track": "chore_earshot_sounds_20261121",
+  "phase": "Phase 1: Pin, render, and record",
+  "baseline_sha": "a9aec40d5cf899815852bbbd53b768285b98915b",
+  "phase_base_sha": "a9aec40d5cf899815852bbbd53b768285b98915b",
+  "role_base_sha": "a9aec40d5cf899815852bbbd53b768285b98915b",
+  "audited_head_sha": "7fbf58b7f7d78aee01c70fd4ad437a93b8038f98",
+  "status": "pass",
+  "summary": "Re-review at 7fbf58b7 after the remediation commit f2d2fde4. The new rmSync freshness check at scripts/sound-set.mjs:71 deletes only join(resolve(ROOT,'sounds',set), name+'.ogg'), where both the set name (line 23) and entry name (line 49) already passed /^[a-z0-9-]+$/; it cannot delete outside sounds/<set>/, unlinks a symlink rather than its target, and the new stale-target test proves a pre-existing file no longer satisfies the post-render check. Child stderr forwarding at line 80 runs only after the success checks, so a failed call still prints none of its output; the test-strategy and plan contracts were updated consistently. Unchanged points re-verified: exact-commit pip pin, SAFE_NAME ordering, argv-array spawn with no shell, X_OK check on EARSHOT_BIN, and the gitignored venv with no committed secret or large binary. A2 not applicable; A6 holds. One new low note: a directory named <name>.ogg at the target makes rmSync throw an uncaught exception instead of a D5 line.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F1 (low, carried): transitive pip dependencies resolve from PyPI unpinned; only the earshot package is commit-pinned. Fix (optional): record pip freeze output after install or install with --no-deps plus an explicit dependency list.",
+    "F2 (low, carried): scripts/sound-setup.sh runs 'rm -rf .venv-earshot' before each interpreter candidate, deleting a prior working venv on a failed re-run; the path is a literal in the repo root and not exploitable. Fix (optional): delete the venv only after a candidate succeeds.",
+    "F3 (low, new): if a directory named <name>.ogg exists at the target, rmSync at scripts/sound-set.mjs:71 throws an uncaught ERR_FS_EISDIR and the wrapper prints a Node stack trace instead of one exact D5 line. Local development tool only; no test covers this edge. Fix (optional): wrap the render loop body in a try/catch that maps unexpected errors to a single sound-set: failure line, or check isDirectory before rmSync."
+  ],
+  "evidence": [
+    "git diff --stat c86ccebe..7fbf58b7 shows 8 files; scripts/sound-set.mjs gains only the rmSync import, the rmSync call, and the child.stderr forward; the spawn call is unchanged.",
+    "scripts/sound-set.mjs:23 validates the set name and :49 validates each entry name with /^[a-z0-9-]+$/ before :71 rmSync(out) and :72 spawnSync; out is always inside resolve(ROOT,'sounds',set), so deletion cannot escape sounds/<set>/.",
+    "rmSync uses force:true, so an absent target does not throw; a symlink target is unlinked, not followed.",
+    "scripts/sound-set.mjs:79-80 forward child stdout and stderr only after the exit-code and file-existence checks pass; tests/sound-set.test.ts case 7 asserts a failed call's output appears nowhere and stderr holds only the exact D5 line.",
+    "tests/sound-set.test.ts adds case 8b: a pre-existing stale target plus a no-write child gives exit 1, the exact no-file line, and empty stdout; green-r3.log records 17 of 17 tests passing and doctor exit 0 on the final HEAD.",
+    "The forwarding and freshness contract is stated consistently in test-strategy.md (Forwarding reading paragraph and case 8b) and plan.md (T1 cases 1, 7, 8, 8b); no changed-contract drift.",
+    "The pip pin at scripts/sound-setup.sh:23, the .gitignore venv line, and the seven committed Ogg files are untouched by this diff; git ls-files shows no venv, secret, or large binary.",
+    "A2 not applicable: no publish transition. A6 holds: plan.md records the removal of the earlier false doctor-pass claim and the audited exit 1; registry and metadata stay in_progress with a deferred T5 closeout task, and green-r3.log claims match 17 of 17 passing tests.",
+    "git rev-parse HEAD equals 7fbf58b7f7d78aee01c70fd4ad437a93b8038f98, the audited_head_sha."
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "git diff --stat c86ccebe..7fbf58b7",
+    "git log --oneline c86ccebe..7fbf58b7",
+    "git diff c86ccebe..7fbf58b7 -- scripts/sound-set.mjs tests/sound-set.test.ts",
+    "git diff c86ccebe..7fbf58b7 -- measure/tracks/chore_earshot_sounds_20261121/test-strategy.md measure/tracks/chore_earshot_sounds_20261121/plan.md",
+    "git ls-files | grep -iE 'venv|earshot'",
+    "grep -E 'exit 0|exit 1|passed|failed' measure/runs/chore_earshot_sounds_20261121/green-r3.log",
+    "sed -n '1,12p' measure/runs/chore_earshot_sounds_20261121/red-r2.log",
+    "grep -n 'rmSync|spawnSync|SAFE_NAME|child.stderr|child.stdout' scripts/sound-set.mjs"
+  ],
+  "changed_files": [
+    "measure/generated/status.md",
+    "measure/runs/chore_earshot_sounds_20261121/green-r3.log",
+    "measure/runs/chore_earshot_sounds_20261121/red-r2.log",
+    "measure/tracks/chore_earshot_sounds_20261121/metadata.json",
+    "measure/tracks/chore_earshot_sounds_20261121/plan.md",
+    "measure/tracks/chore_earshot_sounds_20261121/test-strategy.md",
+    "scripts/sound-set.mjs",
+    "tests/sound-set.test.ts"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "kimi-code-plan-cn/kimi-for-coding"
+}

@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "role": "review-b",
+  "track": "chore_earshot_sounds_20261121",
+  "phase": "Phase 1: Pin, render, and record",
+  "baseline_sha": "a9aec40d5cf899815852bbbd53b768285b98915b",
+  "phase_base_sha": "a9aec40d5cf899815852bbbd53b768285b98915b",
+  "role_base_sha": "a9aec40d5cf899815852bbbd53b768285b98915b",
+  "audited_head_sha": "abffa890293179224b191bfb248e3b5710582864",
+  "status": "pass",
+  "summary": "Re-review at abffa890 after the remediation commit e49155a2. The output-folder mkdirSync is now inside a try/catch at scripts/sound-set.mjs:74-81 that maps any folder-creation failure (for example a file obstructing sounds/<set>) to the same single exact line sound-set: cannot prepare output for <name> (<design>): <path> with exit 1, naming the first entry, with no earshot call. mkdirSync only creates directories and never deletes, so the change adds no deletion scope; the set name passed SAFE_NAME before outDir is built, so the folder path cannot traverse out of sounds/. The lstatSync/rmSync prepare block at lines 86-98 is byte-identical to the r3 version: still no recursive mode, still no symlink following. sounds[0] is fully validated (non-empty array and per-entry checks run at lines 44-63 before line 75). The spec D5 sentence and the two new tests match the implementation exactly. Unchanged points re-verified: exact-commit pip pin, SAFE_NAME ordering, argv-array spawn, X_OK check, gitignored venv. A2 not applicable; A6 holds.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F1 (low, carried): transitive pip dependencies resolve from PyPI unpinned; only the earshot package is commit-pinned. Fix (optional): record pip freeze output after install or install with --no-deps plus an explicit dependency list.",
+    "F2 (low, carried): scripts/sound-setup.sh runs 'rm -rf .venv-earshot' before each interpreter candidate, deleting a prior working venv on a failed re-run; the path is a literal in the repo root and not exploitable. Fix (optional): delete the venv only after a candidate succeeds."
+  ],
+  "evidence": [
+    "Deletion scope: scripts/sound-set.mjs:75 mkdirSync(outDir, { recursive: true }) creates directories only; the diff adds no rm/rmdir call; the lstatSync/rmSync block at lines 86-98 is unchanged from r3 and still calls rmSync without the recursive option, so no recursive directory deletion is possible and a symlink target is unlinked, not followed.",
+    "Traversal: the set name passes /^[a-z0-9-]+$/ at line 31 before outDir = resolve(ROOT, 'sounds', set) at line 73, so the created folder stays inside sounds/ and mkdir cannot be steered outside the root.",
+    "Message: lines 76-80 interpolate first.name and first.design (validated at lines 52-62) and firstOut under outDir; fail() writes one line and exits 1; spec.md states the same line and exit for folder-creation failure and requires that no earshot call starts.",
+    "tests/sound-set.test.ts adds two cases: a directory target gives the exact prepare line with keep.txt preserved and no child call, and an obstructing file at sounds/<set> gives the exact prepare line for the first entry with no child call; the adversarial file now asserts the full exact line instead of a prefix.",
+    "green-r5.log records the combined targeted command at exit 0 with 74 of 74 passing, prettier exit 0, generate.mjs --check exit 0, and doctor exit 0; red-r4.log shows the folder-creation case failed before the fix with an uncaught mkdir stack trace.",
+    "A2 not applicable: no publish transition. A6 holds: spec D5 sentence, implementation line, and tests agree; registry stays in_progress with a deferred closeout task; no security state is claimed resolved.",
+    "git rev-parse HEAD equals abffa890293179224b191bfb248e3b5710582864, the audited_head_sha."
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "git diff --stat 486e53ce..abffa890",
+    "git log --oneline 486e53ce..abffa890",
+    "git diff 486e53ce..abffa890 -- scripts/sound-set.mjs measure/tracks/chore_earshot_sounds_20261121/spec.md",
+    "git diff 486e53ce..abffa890 -- tests/sound-set.test.ts tests/sound-set.adversarial.test.ts",
+    "grep -E 'exit 0|exit 1|passed|failed' measure/runs/chore_earshot_sounds_20261121/green-r5.log",
+    "grep -n 'SAFE_NAME.test|Array.isArray|accessSync|mkdirSync|lstatSync|rmSync|spawnSync|fail(' scripts/sound-set.mjs"
+  ],
+  "changed_files": [
+    "measure/generated/status.md",
+    "measure/runs/chore_earshot_sounds_20261121/green-r5.log",
+    "measure/runs/chore_earshot_sounds_20261121/red-r4.log",
+    "measure/tracks/chore_earshot_sounds_20261121/plan.md",
+    "measure/tracks/chore_earshot_sounds_20261121/spec.md",
+    "measure/tracks/chore_earshot_sounds_20261121/test-strategy.md",
+    "scripts/sound-set.mjs",
+    "tests/sound-set.adversarial.test.ts",
+    "tests/sound-set.test.ts"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "kimi-code-plan-cn/kimi-for-coding"
+}

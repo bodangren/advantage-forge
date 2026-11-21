@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: final-acceptance
+status: complete
+track: chore_earshot_sounds_20261121
+phase: Phase 1: Pin, render, and record
+commits: none
+tests_run: PASS; combined heavy-run vitest 86 passed; heavy-run doctor PASS; generate.mjs --check PASS; prettier PASS; node and bash syntax PASS; verbatim plan.md:116 scratch render PASS with sounds/ clean
+files_changed: measure/runs/chore_earshot_sounds_20261121/final-acceptance-5e6c778.json; measure/runs/chore_earshot_sounds_20261121/final-acceptance-5e6c778.log
+plan_updates: none
+known_failures: none blocking; carried nits cover unpinned transitive pip packages, venv removal timing, the legacy T5 marker, and the gates.json framework gap
+handoff: PASS at 5e6c7780975691414d17f48a23337bfa6065b785; route to measure-closeout for T5, archive state, and final metadata
+END_MEASURE_AGENT_RESULT

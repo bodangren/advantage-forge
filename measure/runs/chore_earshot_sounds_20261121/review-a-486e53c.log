@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: review-a
+status: complete
+track: chore_earshot_sounds_20261121
+phase: Phase 1: Pin, render, and record
+commits: none
+tests_run: heavy-run combined vitest PASS (72 tests); heavy-run doctor PASS; prettier PASS; generated facts PASS; isolated preparation probe reproduced F7; wrong-message predicate probe confirmed F6
+files_changed: review-a-486e53c.json; review-a-486e53c.log
+plan_updates: none
+known_failures: F6 new D5 class lacks exact-line coverage; F7 output-folder creation escapes the controlled handler; F5 remains nonblocking
+handoff: Route F6-F7 to Green with retry_implementation. Cover folder creation, target inspection, and old-file removal under the new D5 class. Keep the directory-preservation and high-bit regressions. Rerun applicable reviews on the remediation HEAD. Facts changed: none.
+END_MEASURE_AGENT_RESULT

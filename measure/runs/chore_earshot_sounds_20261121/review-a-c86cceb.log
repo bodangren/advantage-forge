@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: review-a
+status: complete
+track: chore_earshot_sounds_20261121
+phase: Phase 1: Pin, render, and record
+commits: none
+tests_run: heavy-run targeted vitest PASS (16 tests); heavy-run doctor FAIL (exit 1); planned prettier PASS; generate --check PASS; read-only ffprobe PASS for seven files; isolated wrapper probes confirmed F1 and F4
+files_changed: review-a-c86cceb.json; review-a-c86cceb.log
+plan_updates: none
+known_failures: F1 stale output accepted; F2 fake logging and stop-rule coverage gap; F3 doctor fails despite plan claim; F4 successful child stderr lost
+handoff: Route F1-F4 to Green with retry_implementation. Audit phase base a9aec40d5cf899815852bbbd53b768285b98915b and role base c86ccebe6ba5a72b388ca3118f5159875675597e. HEAD remains c86ccebe6ba5a72b388ca3118f5159875675597e. Rerun applicable reviews after remediation. Facts changed: none.
+END_MEASURE_AGENT_RESULT

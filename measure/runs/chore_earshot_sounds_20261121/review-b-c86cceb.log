@@ -1,0 +1,27 @@
+MEASURE_AGENT_RESULT
+role: review-b
+status: pass
+track: chore_earshot_sounds_20261121 (short: chore_earshot_sounds)
+phase: Phase 1: Pin, render, and record
+phase_base_sha: a9aec40d5cf899815852bbbd53b768285b98915b
+audited_head_sha: c86ccebe6ba5a72b388ca3118f5159875675597e
+head_current: yes; git rev-parse HEAD equals audited_head_sha
+security_applicability: applicable_reduced_scope (per test-strategy.md Review B row; no auth, tenant, or data surface)
+findings:
+  blocking: none
+  nonblocking:
+    - F1 (low): transitive pip dependencies resolve from PyPI unpinned; only the earshot package is commit-pinned. Optional fix: record pip freeze or use --no-deps with an explicit list.
+    - F2 (low): sound-setup.sh runs 'rm -rf .venv-earshot' before each interpreter attempt, deleting a prior venv on a failed re-run. Literal in-repo path; not exploitable. Optional fix: delete only after a candidate succeeds.
+checks_passed:
+  - Pin is an exact 40-char commit, not a branch or tag (scripts/sound-setup.sh:23, sounds/README.md).
+  - Set-name and entry-name validation with /^[a-z0-9-]+$/ runs before any path is built; '../x', absolute paths, and odd names are blocked (scripts/sound-set.mjs:14,23,49; test at tests/sound-set.test.ts:188).
+  - Child spawn uses an argv array with no shell; set JSON name/design cannot inject (scripts/sound-set.mjs:70).
+  - EARSHOT_BIN is X_OK-checked; SOUNDS_ROOT only relocates a root the invoking user controls.
+  - .venv-earshot/ is gitignored; git ls-files shows no venv, secret, or large binary; the seven Ogg files total about 90 KB.
+  - sound-setup.sh quoting and fallback interpreter order (PYTHON, python3, python3.12, python3.11) are safe under set -euo pipefail.
+  - Failed renders print none of the child output; every failure is exactly one stderr line.
+  - A2 not applicable: no publish status transition exists. A6 holds: registry says in_progress, not resolved; my independent check passes the nine AC3 header steps on all seven committed Ogg files.
+evidence: git diff --stat a9aec40d..c86ccebe (19 files, matches changed_files in review-b-c86cceb.json); node one-liner Ogg header check printed 'ok' for tap, right, wrong, star, pop, whoosh, level-end; green.log exit codes reviewed.
+retry_recommendation: none
+handoff: none
+END_MEASURE_AGENT_RESULT

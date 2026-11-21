@@ -1,0 +1,26 @@
+MEASURE_AGENT_RESULT
+role: review-b
+status: pass
+track: chore_earshot_sounds_20261121 (short: chore_earshot_sounds)
+phase: Phase 1: Pin, render, and record
+phase_base_sha: a9aec40d5cf899815852bbbd53b768285b98915b
+role_base_sha: a9aec40d5cf899815852bbbd53b768285b98915b
+audited_head_sha: abffa890293179224b191bfb248e3b5710582864
+head_current: yes; git rev-parse HEAD equals audited_head_sha
+security_applicability: applicable_reduced_scope (per test-strategy.md Review B row; no auth, tenant, or data surface)
+findings:
+  blocking: none
+  nonblocking:
+    - F1 (low, carried): transitive pip dependencies unpinned; only earshot is commit-pinned. Optional fix: record pip freeze or use --no-deps with an explicit list.
+    - F2 (low, carried): sound-setup.sh deletes .venv-earshot before each interpreter attempt; literal in-repo path, not exploitable. Optional fix: delete only after a candidate succeeds.
+delta_review:
+  - Folder creation (scripts/sound-set.mjs:74-81) now maps any mkdirSync failure to the single exact line 'sound-set: cannot prepare output for <first name> (<first design>): <path>' with exit 1 and no earshot call; mkdirSync creates only and never deletes, so no new deletion scope exists.
+  - Traversal still blocked: the set name passes /^[a-z0-9-]+$/ at line 31 before outDir is built at line 73.
+  - Deletion and symlink handling unchanged: the lstatSync/rmSync block at lines 86-98 is identical to r3; rmSync runs without recursive mode and unlinks symlinks without following them.
+  - Message safe: first.name and first.design are validated at lines 52-62 before use at line 80; the line matches the new spec D5 sentence.
+  - Tests assert the exact line for the directory-target and obstructed-folder cases, with no child call and preserved contents.
+  - A2 not applicable; A6 holds (spec, implementation, and tests agree; green-r5.log records 74 of 74 passing, prettier exit 0, doctor exit 0).
+evidence: git diff --stat 486e53ce..abffa890 (9 files); scripts/sound-set.mjs diff; grep line numbers; green-r5.log and red-r4.log exit records.
+retry_recommendation: none
+handoff: none
+END_MEASURE_AGENT_RESULT

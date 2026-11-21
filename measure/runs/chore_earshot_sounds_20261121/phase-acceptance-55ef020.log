@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: phase-acceptance
+status: complete
+track: chore_earshot_sounds_20261121
+phase: Phase 1: Pin, render, and record
+commits: none
+tests_run: heavy-run vitest combined (tests/sound-set.test.ts and tests/sound-set.adversarial.test.ts) exit 0, 86 passed, 0 skipped; heavy-run ./measure/doctor.sh exit 0; node measure/tools/generate.mjs --check exit 0; prettier --check exit 0 (plan list, adversarial test, strategy); heavy-run tsc --noEmit reports 38 error lines in the 13 baseline files and 0 in the sound-set tests; heavy-run live render (EARSHOT_BIN set, scratch SOUNDS_ROOT) exit 0, decoded audio equals the committed files; heavy-run of the plan.md:116 gate command exactly as written exit 1 (earshot not found in the scratch root)
+files_changed: measure/runs/chore_earshot_sounds_20261121/phase-acceptance-55ef020.json; measure/runs/chore_earshot_sounds_20261121/phase-acceptance-55ef020.log
+plan_updates: none
+known_failures: F7 plan.md:116 closeout wrapper gate command exits 1 as written (A5); F8 test-strategy.md lines 122, 133, 165, and 196 say case 10 for the committed-files case that its own map at line 114 labels 9
+handoff: FAIL at the audited HEAD 55ef0204bc88807deb1fb66a5a9efdf8e0f7ddbf (phase base a9aec40d5cf899815852bbbd53b768285b98915b). The product still passes: no production file changed since d987d079, the suite passes 86 tests, tsc reports 0 errors in the sound-set tests, and the doctor and facts check exit 0. Two blocking text defects sit in lines that 2cbe1d0d changed. F7 fix: add EARSHOT_BIN=$PWD/.venv-earshot/bin/earshot to plan.md:116, run the exact command, record the exit code, and align test-strategy.md:149-150. F8 fix: restore case 9 at the four test-strategy.md sites, or relabel the case map, and correct the T8 wording at plan.md:233-234. Both fixes are text only. The failed mid-red gate does not affect the verdict. Review A, Review B, and adversarial results still apply under the brief rule of test and text only commits; the strict role rule names test files and measure/runs/ only, so rerun review-a on the text changes if you want the strict rule. Cause class for the round limit: gate text written without running it, and case-number record drift. Rerun acceptance on the new HEAD. Facts changed: none.
+END_MEASURE_AGENT_RESULT

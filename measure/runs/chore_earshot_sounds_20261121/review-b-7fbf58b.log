@@ -1,0 +1,25 @@
+MEASURE_AGENT_RESULT
+role: review-b
+status: pass
+track: chore_earshot_sounds_20261121 (short: chore_earshot_sounds)
+phase: Phase 1: Pin, render, and record
+phase_base_sha: a9aec40d5cf899815852bbbd53b768285b98915b
+role_base_sha: a9aec40d5cf899815852bbbd53b768285b98915b
+audited_head_sha: 7fbf58b7f7d78aee01c70fd4ad437a93b8038f98
+head_current: yes; git rev-parse HEAD equals audited_head_sha
+security_applicability: applicable_reduced_scope (per test-strategy.md Review B row; no auth, tenant, or data surface)
+findings:
+  blocking: none
+  nonblocking:
+    - F1 (low, carried): transitive pip dependencies unpinned; only earshot is commit-pinned. Optional fix: record pip freeze or use --no-deps with an explicit list.
+    - F2 (low, carried): sound-setup.sh deletes .venv-earshot before each interpreter attempt; literal in-repo path, not exploitable. Optional fix: delete only after a candidate succeeds.
+    - F3 (low, new): a directory named <name>.ogg at the target makes rmSync at scripts/sound-set.mjs:71 throw uncaught, printing a stack trace instead of one exact D5 line. Local tool only. Optional fix: catch unexpected errors in the render loop or check isDirectory before rmSync.
+delta_review:
+  - rmSync freshness check (scripts/sound-set.mjs:71) deletes only inside sounds/<set>/: set name validated at line 23 and entry name at line 49 with /^[a-z0-9-]+$/ before the call; force:true avoids absent-file errors; symlinks are unlinked, not followed; test case 8b proves a stale target no longer satisfies the post-render check.
+  - Child stderr forwarding (line 80) runs only after the exit-code and file-existence checks; a failed call prints none of its output (case 7 asserts this on stdout and stderr); test-strategy.md and plan.md state the forwarding contract consistently.
+  - Unchanged points re-verified: exact-commit pip pin, SAFE_NAME ordering, argv-array spawn with no shell at line 72, X_OK check on EARSHOT_BIN, gitignored venv with no committed secret or large binary.
+  - A2 not applicable (no publish transition); A6 holds (registry in_progress, false doctor-pass claim removed and audited exit 1 recorded in plan.md; green-r3.log records 17 of 17 tests passing and doctor exit 0 on the final HEAD).
+evidence: git diff --stat c86ccebe..7fbf58b7 (8 files); grep line numbers in scripts/sound-set.mjs; green-r3.log and red-r2.log exit records; git ls-files shows no venv or secret.
+retry_recommendation: none
+handoff: none
+END_MEASURE_AGENT_RESULT

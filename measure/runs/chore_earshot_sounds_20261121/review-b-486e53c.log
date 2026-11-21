@@ -1,0 +1,25 @@
+MEASURE_AGENT_RESULT
+role: review-b
+status: pass
+track: chore_earshot_sounds_20261121 (short: chore_earshot_sounds)
+phase: Phase 1: Pin, render, and record
+phase_base_sha: a9aec40d5cf899815852bbbd53b768285b98915b
+role_base_sha: a9aec40d5cf899815852bbbd53b768285b98915b
+audited_head_sha: 486e53ce901d2cc579daa1ba6a1bcac316c6a094
+head_current: yes; git rev-parse HEAD equals audited_head_sha
+security_applicability: applicable_reduced_scope (per test-strategy.md Review B row; no auth, tenant, or data surface)
+findings:
+  blocking: none
+  nonblocking:
+    - F1 (low, carried): transitive pip dependencies unpinned; only earshot is commit-pinned. Optional fix: record pip freeze or use --no-deps with an explicit list.
+    - F2 (low, carried): sound-setup.sh deletes .venv-earshot before each interpreter attempt; literal in-repo path, not exploitable. Optional fix: delete only after a candidate succeeds.
+  withdrawn:
+    - F3 withdrawn: scripts/sound-set.mjs:78-92 lstatSync (no symlink following) blocks directory targets and catches lstat/rmSync errors into one exact line with exit 1; rmSync runs without recursive mode, so no recursive directory deletion is possible and a symlink is unlinked, not followed; message leaks only a local path, consistent with D5 rows; adversarial tests prove contents preserved, no child spawn, single-line error.
+delta_review:
+  - New D5 row 'Output path cannot be prepared' in spec.md matches the implementation line and the adversarial assertions.
+  - Unchanged points re-verified: exact-commit pip pin, SAFE_NAME ordering before path building, argv-array spawn with no shell, X_OK check on EARSHOT_BIN, gitignored venv, no committed secret or large binary.
+  - A2 not applicable; A6 holds (spec, implementation, and tests agree; green-r4.log records 72 of 72 passing, prettier exit 0, doctor exit 0).
+evidence: git diff --stat 7fbf58b7..486e53ce (10 files); scripts/sound-set.mjs diff; tests/sound-set.adversarial.test.ts:201-228; green-r4.log exit records.
+retry_recommendation: none
+handoff: none
+END_MEASURE_AGENT_RESULT
