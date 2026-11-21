@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: measure-adversarial-testing
+status: pass
+track: chore_dependency_refresh_20261121
+phase: Phase 1: Refresh and verify
+commits: pending
+tests_run: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run --maxWorkers=1 tests/audit-gate*.test.ts' -> 2 files, 30 passed, exit 0; node_modules/.bin/prettier --check tests/audit-gate.adversarial.test.ts -> pass
+files_changed: tests/audit-gate.adversarial.test.ts
+plan_updates: none
+known_failures: none
+handoff: The new 4 MiB string regression passes with a 64 MiB heap limit. F1 (cwd) and F2 (duplicate keys) are withdrawn after checking fixes at HEAD 6f0e87b5 and passing regression coverage. No additional scanner defect found. retry_recommendation: none.
+END_MEASURE_AGENT_RESULT

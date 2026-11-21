@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "role": "measure-adversarial-testing",
+  "track": "chore_dependency_refresh_20261121",
+  "phase": "Phase 1: Refresh and verify",
+  "phase_base_sha": "7bc4a4e066f6094fafe679ab33fff520e8ee56ab",
+  "baseline_sha": "7bc4a4e066f6094fafe679ab33fff520e8ee56ab",
+  "role_base_sha": "6f0e87b520f3188dd170caf7efd0b8d72c112993",
+  "audited_head_sha": "6f0e87b520f3188dd170caf7efd0b8d72c112993",
+  "status": "pass",
+  "summary": "The current adversarial suite passes 30 of 30 tests. The new 4 MiB input regression test runs the gate with a 64 MiB heap limit and exits 0. Prior cwd and duplicate-key findings are fixed. I found no additional defect in the scanner during this pass.",
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "evidence": [
+    "F1 withdrawn: checked scripts/audit-gate.mjs at HEAD 6f0e87b5; REPO_ROOT comes from import.meta.url and execFileSync receives cwd: REPO_ROOT. The existing cwd-sensitive test is included in the passing 30-test suite.",
+    "F2 withdrawn: checked scripts/audit-gate.mjs at HEAD 6f0e87b5; duplicate-key scanning decodes keys before comparison, checks nested objects and arrays, and fails closed. The earlier plain duplicate test and Red r3 escape/nesting tests pass.",
+    "HEAD provenance: git rev-parse HEAD printed 6f0e87b520f3188dd170caf7efd0b8d72c112993, matching role_base_sha and audited_head_sha; phase_base_sha is 7bc4a4e066f6094fafe679ab33fff520e8ee56ab.",
+    "Reviews A, B, and C at 6f0e87b5 report PASS. Review B reports 36,000 differential documents with 0 false passes, 0 false positives, and 0 hangs. It recommends a durable low-heap test for F12.",
+    "A new test in tests/audit-gate.adversarial.test.ts writes a valid audit document with a 4 MiB string field and runs the gate with node --max-old-space-size=64. It asserts no timeout or signal, exit 0, and clean counts.",
+    "Required command HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run --maxWorkers=1 tests/audit-gate*.test.ts' passes: 2 files and 30 tests.",
+    "Prettier check and git diff --check pass for tests/audit-gate.adversarial.test.ts. No production code changed.",
+    "No track-specific test-strategy.md or anti-pattern artifact exists. build-graph is available, but graph.db is absent, so graph inspection was skipped."
+  ],
+  "commands": [
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run --maxWorkers=1 tests/audit-gate*.test.ts' -> 2 files, 30 passed, exit 0",
+    "node_modules/.bin/prettier --check tests/audit-gate.adversarial.test.ts -> pass",
+    "git diff --check -- tests/audit-gate.adversarial.test.ts -> pass",
+    "build-graph stats graph.db -> skipped: graph.db absent"
+  ],
+  "changed_files": [
+    "tests/audit-gate.adversarial.test.ts",
+    "measure/runs/chore_dependency_refresh_20261121/adversarial-testing-6f0e87b.json",
+    "measure/runs/chore_dependency_refresh_20261121/adversarial-testing-6f0e87b.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "openai/gpt-6-luna#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "The full targeted suite passes and the 4 MiB input exits 0 under a 64 MiB heap cap."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 5,
+      "evidence": "The durable memory regression asserts exit status, signal absence, timeout absence, and clean audit counts."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The only code change is one adversarial test; scripts/audit-gate.mjs and the dependency manifests are unchanged."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "The heavy-run command reports 30 passing tests, and the provenance hashes match the requested phase and role bases."
+    }
+  ]
+}

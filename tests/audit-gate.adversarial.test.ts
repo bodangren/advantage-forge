@@ -125,6 +125,28 @@ describe('audit gate adversarial boundaries', () => {
     }
   });
 
+  it('parses a 4 MiB string with a 64 MiB heap limit', () => {
+    const dir = mkdtempSync(join(tmpdir(), 'audit-gate-heap-'));
+    const path = join(dir, 'audit.json');
+    const document = {
+      ...auditDocument(),
+      note: 'x'.repeat(4 * 1024 * 1024),
+    };
+    writeFileSync(path, JSON.stringify(document));
+    try {
+      const result = spawnSync(process.execPath, ['--max-old-space-size=64', GATE, '--input', path], {
+        encoding: 'utf8',
+        timeout: 10_000,
+      });
+      expect(result.error).toBeUndefined();
+      expect(result.signal).toBeFalsy();
+      expect(result.status).toBe(0);
+      expect(result.stdout).toContain('critical=0 high=0');
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
+
   it('rejects duplicate severity keys instead of accepting the last value', () => {
     const result = run(['--input', join(FIXTURES, 'audit-duplicate-count-keys.json')]);
     expect(result.status).toBe(2);
