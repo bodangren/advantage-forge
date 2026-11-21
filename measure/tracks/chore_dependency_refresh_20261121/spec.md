@@ -9,7 +9,7 @@ Bring all direct packages to current safe versions. The audit of 2026-11-21 show
 - AC1: Every direct dependency in `package.json` moves to the latest version that passes the gates. The plan names each deferred breaking major with its reason.
 - AC2: `pnpm audit` shows 0 critical and 0 high. The plan lists each remaining moderate or low finding with its reason.
 - AC3: All gates pass through the heavy runner: lint, typecheck, tests, and build (commands are in the plan).
-- AC4: Asset output stays unchanged in kind: `./forge build` of two sample assets (one textured, one `--fast`) exits 0 with no warning lines.
+- AC4: Asset output stays unchanged in kind: `./forge build rogue` (textured) and `./forge build slime --fast` run in one heavy-run.sh call and pass. Pass means exit 0 and no `warning:` lines. The command is in the plan.
 - AC5: The lockfile and `package.json` land in one commit, and the orchestrator pushes with safe-push.
 
 ## Audit baseline (2026-11-21, before the change)
