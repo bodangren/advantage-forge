@@ -1,0 +1,83 @@
+MEASURE_AGENT_RESULT
+role: jr-green
+status: green
+track: chore_dependency_refresh_20261121
+phase: Phase 1: Refresh and verify
+tasks: T2 T3
+phase_base_sha: 7bc4a4e0
+role_base_sha: f67eeb06
+head_before: f67eeb06
+implementation_commit: bdacfe5415b6eb702e0f93e31ea5a067aa642f25
+final_green_head: the plan-evidence commit that adds this log and the plan updates
+
+targeted_red_command:
+  command: "node scripts/audit-gate.mjs"
+  before: "critical=0 high=4 moderate=6 low=1 info=0", exit 1 (the expected Red failure)
+  after: "critical=0 high=0 moderate=0 low=0 info=0", exit 0
+
+tasks_flipped_to_x:
+  - T2: dependency update and lockfile regeneration, evidence bdacfe54 and the gate results below
+  - T3: asset builds and audit record, evidence bdacfe54 and the after counts below
+tasks_flipped_to_b: none
+
+new_files_added:
+  - measure/runs/chore_dependency_refresh_20261121/jr-green-bdacfe54.log (this log)
+  - no new implementation source files; pnpm-workspace.yaml gained a sharp override
+
+version_changes_old_to_new:
+  "@gltf-transform/core": "4.5.0 -> 4.5.1"
+  "@gltf-transform/extensions": "4.5.0 -> 4.5.1"
+  "@gltf-transform/functions": "4.5.0 -> 4.5.1"
+  "gifenc": "1.0.3 -> 1.0.3 (already latest)"
+  "meshoptimizer": "1.2.0 -> 1.3.0"
+  "three": "0.185.1 -> 0.187.0"
+  "xatlasjs": "0.2.0 -> 0.2.0 (already latest)"
+  "@types/node": "24.13.6 -> 26.6.6"
+  "@types/three": "0.185.1 -> 0.187.0 (matches three)"
+  "phaser": "4.2.1 -> 4.2.1 (already latest)"
+  "playwright": "1.62.0 -> 1.65.1"
+  "prettier": "3.9.5 -> 3.10.1"
+  "sharp": "^0.35.4 -> ^0.35.5 (caret style kept)"
+  "tsx": "4.23.13 -> 4.23.15"
+  "typescript": "6.0.2 -> 6.0.3 (7.0.2 deferred, see deferred_items)"
+  "vite": "8.1.4 -> 8.3.8"
+  "vitest": "4.1.10 -> 5.1.1"
+  "zod": "^4.6.5 -> ^4.6.7 (caret style kept)"
+
+audit_counts:
+  before: "critical=0 high=4 moderate=6 low=1 info=0"
+  after: "critical=0 high=0 moderate=0 low=0 info=0"
+  remaining_moderate_or_low: none
+
+gates:
+  - command: "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/audit-gate.mjs'"
+    exit: 0
+    detail: "critical=0 high=0 moderate=0 low=0 info=0"
+  - command: "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/prettier --check .'"
+    exit: 2
+    detail: "No new failures. Before: 3318 [warn] files and one [error] block (tests/fixtures/audit-invalid.json). After: the same 3318 files and the same one error block. The failing file sets are identical."
+  - command: "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/tsc --noEmit'"
+    exit: 2
+    detail: "No new errors. Before: 38 errors in 13 pre-existing files. After: the same 38 errors in the same files."
+  - command: "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run --maxWorkers=1'"
+    exit: 1
+    detail: "No new failures. Before and after: 1 failed file (tests/storytime-book-pictures.test.ts), 9 failed tests, 3254 passed of 3263. The failed test names are identical."
+  - command: "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vite build'"
+    exit: 0
+    detail: "Passes, as before. Chunk-size warning only."
+  - command: "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'FORGE_GL=software ./forge build rogue && ./forge build slime --fast'"
+    exit: 0
+    detail: "Passes with zero 'warning:' lines."
+
+deferred_items:
+  - item: "TypeScript 7.0.2 breaking major deferred; used 6.0.3 (latest 6.x) instead."
+    reason: "TypeScript 7 added 13 tsc errors in tests/song-still-hook.test.ts. The errors name missing exports such as ts.createSourceFile, ts.ScriptTarget, ts.CallExpression, ts.Node, ts.FunctionDeclaration, and ts.isFunctionDeclaration on the 'typescript' module. The fix needs edits to a test file that belongs to another track. That fix is not small."
+  - item: "Playwright 1.65.1 browser download skipped."
+    reason: "Install used PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1. No gate in this track launches a browser. The new browser revision for 1.65.1 was not downloaded."
+
+notes:
+  - "source-map-js resolves to 1.2.4 through vite > postcss, so no source-map-js override was needed."
+  - "A sharp override in pnpm-workspace.yaml forces the transitive sharp from ndarray-pixels to 0.35.5. The direct sharp pin also moved to ^0.35.5."
+  - "pnpm install used --no-frozen-lockfile because the environment defaults to a frozen lockfile."
+  - "bash measure/doctor.sh exits 1 on two pre-existing track-structure issues outside this Green scope: a missing measure/tracks/chore_dependency_refresh_20261121/index.md, and a plan with started tasks while metadata status stays 'new'. These issues predate this phase. The plan gates all pass. The orchestrator owns those track-structure fixes."
+END_MEASURE_AGENT_RESULT
