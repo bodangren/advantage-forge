@@ -1,0 +1,12 @@
+{
+  "description": "Chibi games: the first shared sound set.",
+  "sounds": [
+    { "name": "tap", "design": "tap/soft" },
+    { "name": "right", "design": "success/rise" },
+    { "name": "wrong", "design": "error/knock" },
+    { "name": "star", "design": "coin/bright" },
+    { "name": "pop", "design": "pop/bubble" },
+    { "name": "whoosh", "design": "whoosh/soft" },
+    { "name": "level-end", "design": "success/triad" }
+  ]
+}
