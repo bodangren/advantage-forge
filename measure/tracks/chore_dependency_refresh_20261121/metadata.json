@@ -1,0 +1,20 @@
+{
+  "track_id": "chore_dependency_refresh_20261121",
+  "type": "chore",
+  "status": "new",
+  "created_at": "2026-11-21T00:00:00Z",
+  "updated_at": "2026-11-21T00:00:00Z",
+  "description": "Refresh dependencies after the vulnerability audit",
+  "estimated_tasks": 3,
+  "actual_tasks": null,
+  "deviation_notes": "PM P2 assignment of 2026-11-21. No provider migration.",
+  "workstream": "foundation",
+  "retrospective": false,
+  "evidence": [
+    "package.json",
+    "pnpm-lock.yaml",
+    "vite.config.ts",
+    "index.html"
+  ],
+  "dependencies": []
+}

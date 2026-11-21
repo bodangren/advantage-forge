@@ -1,12 +1,12 @@
 # Measure status
 
-Tracks: 77.
-Tracks by status: new: 28; in_progress: 48; completed: 1.
-Tracks by workstream: assets: 33; games: 41; foundation: 3.
+Tracks: 78.
+Tracks by status: new: 29; in_progress: 48; completed: 1.
+Tracks by workstream: assets: 33; games: 41; foundation: 4.
 
 | Track | Status | Workstream | Plan tasks | Estimate | Actual |
 | --- | --- | --- | ---: | ---: | ---: |
-| [asset_chibi_sprouts_r1_20261022](../tracks/asset_chibi_sprouts_r1_20261022/) | in_progress | assets | 22/33 | 22 | 12 |
+| [asset_chibi_sprouts_r1_20261022](../tracks/asset_chibi_sprouts_r1_20261022/) | in_progress | assets | 28/39 | 22 | 12 |
 | [asset_companion_backlog_20260928](../tracks/asset_companion_backlog_20260928/) | new | assets | 0/5 | 5 | — |
 | [asset_delivery_20260928](../tracks/asset_delivery_20260928/) | new | assets | 0/7 | 7 | — |
 | [asset_engine_backlog_20260928](../tracks/asset_engine_backlog_20260928/) | new | assets | 0/5 | 5 | — |
@@ -23,6 +23,7 @@ Tracks by workstream: assets: 33; games: 41; foundation: 3.
 | [audio_game_integration_20261014](../tracks/audio_game_integration_20261014/) | new | games | 0/5 | 5 | — |
 | [audio_sfx_library_20261013](../tracks/audio_sfx_library_20261013/) | in_progress | assets | 18/19 | 12 | — |
 | [audio_sources_expand_20261014](../tracks/audio_sources_expand_20261014/) | in_progress | assets | 7/11 | 10 | — |
+| [chore_dependency_refresh_20261121](../tracks/chore_dependency_refresh_20261121/) | new | foundation | 0/3 | 3 | — |
 | [game_2d_parity_20260928](../tracks/game_2d_parity_20260928/) | new | games | 0/5 | 5 | — |
 | [game_abyssal_well_20260928](../tracks/game_abyssal_well_20260928/) | in_progress | games | 6/8 | 8 | — |
 | [game_alchemists_synthesis_20260928](../tracks/game_alchemists_synthesis_20260928/) | in_progress | games | 6/8 | 8 | — |
