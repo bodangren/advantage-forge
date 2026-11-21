@@ -17,6 +17,9 @@ This registry gives each historical, current, and planned work item one Measure 
 - [~] **Track: Resolve dependency launcher reconciliation**
   *Link: [./tracks/measure_dependency_launcher_20260928/](./tracks/measure_dependency_launcher_20260928/)*
 
+- [ ] **Track: Author game sound sets with earshot**
+  *Link: [./tracks/chore_earshot_sounds_20261121/](./tracks/chore_earshot_sounds_20261121/)*
+
 ## Asset production
 
 - [ ] **Track: Define companion media production**
