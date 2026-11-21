@@ -1,0 +1,30 @@
+MEASURE_AGENT_RESULT
+role: mid-red
+status: red
+track: chore_dependency_refresh_20261121
+phase: Phase 1: Refresh and verify
+task: T1
+phase_base_sha: 7bc4a4e0
+role_base_sha: 0019518e
+head_before: 0019518ed86e042f456255f97863da7f281d08ba
+files_changed:
+  tests/audit-gate.adversarial.test.ts (modified: 22 existing cases kept byte-identical; 7 r3 cases appended in `audit gate duplicate-key regressions (r3)`)
+  measure/tracks/chore_dependency_refresh_20261121/plan.md (T1 flipped [x] to [~]; line-21 contract corrected to decoded-key duplicates at any depth including arrays; r3 evidence recorded)
+tests_run:
+  - "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run --maxWorkers=1 tests/audit-gate.test.ts tests/audit-gate.adversarial.test.ts' => 1 file failed | 1 passed (2); 5 failed | 24 passed (29); each F10 case fails with `expected +0 to be 2` (gate exits 0 instead of 2); the F9 case fails with ETIMEDOUT after the 10 s spawn timeout (gate hangs instead of exiting 2)"
+  - "node_modules/.bin/prettier --check tests/audit-gate.adversarial.test.ts measure/tracks/chore_dependency_refresh_20261121/plan.md => clean"
+plan_updates: T1 [~]; r3 contract (decoded duplicate keys at any depth including arrays exit 2; same key name in sibling objects stays valid) and evidence recorded in plan.md
+known_failures:
+  - F10 escape-spelled duplicates exit 0 at HEAD (false pass): `high:3` plus `h\u0069gh:0`, `critical:5` plus `critica\u006c:0`, solidus-escape `a\/b` against `a/b`, uppercase-hex `critica\u006C` against `critical:5`
+  - F9 duplicate key inside an object inside an array hangs at HEAD: `"x":[{"k":1,"k":2}]` never exits, so the 10 s spawn timeout kills it with ETIMEDOUT instead of the expected exit 2 with `audit unavailable`
+  - already satisfied at HEAD (characterization, kept green): both false-positive guards (sibling advisory objects exit 0 when clean and 1 with counts) and all 22 pre-existing cases pass
+  - unrelated dirty work across the tree (bench outputs, other tracks' run logs, measure/generated/asset-inventory.json) was left untouched; only the paths above are staged
+handoff: T1 Red r3 complete. Green owns the scanner fix in scripts/audit-gate.mjs per the contract in plan.md T1 (decode each key with JSON.parse before the seen check; set found and keep scanning with no early return; slice keys instead of building strings). Do not edit package.json, the lockfile, or any production file in Red.
+red_kind: standard
+baseline_sha: 7bc4a4e0
+role: mid-red
+resulting_head: 0019518ed86e042f456255f97863da7f281d08ba (pre-commit; commit follows)
+commits: (pending) test(chore_dependency_refresh): escaped and nested duplicate keys Red r3
+tests: tests/audit-gate.test.ts tests/audit-gate.adversarial.test.ts => 5 failed | 24 passed (29)
+remaining_failures: rejects an escape-spelled duplicate high key; rejects an escape-spelled duplicate critical key; rejects a solidus-escape duplicate key; rejects an uppercase-hex-escape duplicate key; rejects a duplicate key inside an object inside an array without hanging
+END_MEASURE_AGENT_RESULT

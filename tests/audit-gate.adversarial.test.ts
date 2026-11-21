@@ -132,3 +132,96 @@ describe('audit gate adversarial boundaries', () => {
     expect(result.stdout).not.toContain('critical=0');
   });
 });
+
+describe('audit gate duplicate-key regressions (r3)', () => {
+  function withDocument(raw: string, callback: (path: string) => void) {
+    const dir = mkdtempSync(join(tmpdir(), 'audit-gate-r3-'));
+    const path = join(dir, 'audit.json');
+    writeFileSync(path, raw);
+    try {
+      callback(path);
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  }
+
+  function expectUnavailable(path: string) {
+    const result = run(['--input', path]);
+    expect(result.status).toBe(2);
+    expect(result.stderr).toContain('audit unavailable');
+  }
+
+  it('rejects an escape-spelled duplicate high key', () => {
+    withDocument(
+      '{"metadata":{"vulnerabilities":{"info":0,"low":0,"moderate":0,"high":3,"h\\u0069gh":0,"critical":0}},"advisories":{}}',
+      (path) => {
+        expectUnavailable(path);
+      },
+    );
+  });
+
+  it('rejects an escape-spelled duplicate critical key', () => {
+    withDocument(
+      '{"metadata":{"vulnerabilities":{"info":0,"low":0,"moderate":0,"high":0,"critical":5,"critica\\u006c":0}},"advisories":{}}',
+      (path) => {
+        expectUnavailable(path);
+      },
+    );
+  });
+
+  it('rejects a solidus-escape duplicate key', () => {
+    withDocument(
+      '{"metadata":{"vulnerabilities":{"info":0,"low":0,"moderate":0,"high":0,"critical":0}},"advisories":{},"x":{"a/b":1,"a\\/b":2}}',
+      (path) => {
+        expectUnavailable(path);
+      },
+    );
+  });
+
+  it('rejects an uppercase-hex-escape duplicate key', () => {
+    withDocument(
+      '{"metadata":{"vulnerabilities":{"info":0,"low":0,"moderate":0,"high":0,"critical":5,"critica\\u006C":0}},"advisories":{}}',
+      (path) => {
+        expectUnavailable(path);
+      },
+    );
+  });
+
+  it('rejects a duplicate key inside an object inside an array without hanging', () => {
+    withDocument(
+      '{"metadata":{"vulnerabilities":{"info":0,"low":0,"moderate":0,"high":0,"critical":0}},"advisories":{},"x":[{"k":1,"k":2}]}',
+      (path) => {
+        const result = spawnSync(process.execPath, [GATE, '--input', path], {
+          encoding: 'utf8',
+          timeout: 10000,
+        });
+        expect(result.error).toBeUndefined();
+        expect(result.signal).toBeFalsy();
+        expect(result.status).toBe(2);
+        expect(result.stderr).toContain('audit unavailable');
+      },
+    );
+  });
+
+  it('accepts the same key name in two sibling advisory objects (clean)', () => {
+    withDocument(
+      '{"metadata":{"vulnerabilities":{"info":0,"low":1,"moderate":1,"high":0,"critical":0}},"advisories":{"A-1":{"severity":"moderate"},"A-2":{"severity":"low"}}}',
+      (path) => {
+        const result = run(['--input', path]);
+        expect(result.status).toBe(0);
+        expect(result.stdout).toContain('critical=0 high=0');
+      },
+    );
+  });
+
+  it('accepts the same key name in two sibling advisory objects (high)', () => {
+    withDocument(
+      '{"metadata":{"vulnerabilities":{"info":0,"low":0,"moderate":1,"high":1,"critical":0}},"advisories":{"A-1":{"severity":"high"},"A-2":{"severity":"moderate"}}}',
+      (path) => {
+        const result = run(['--input', path]);
+        expect(result.status).toBe(1);
+        expect(result.stdout).toContain('critical=0 high=1');
+      },
+    );
+  });
+});
