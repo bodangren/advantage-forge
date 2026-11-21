@@ -9,10 +9,10 @@ commits:
   - e45704be17d785cd89570ae5637e41e332fe2862: measure(chore_earshot_sounds): sound-set wrapper and chibi set (implementation)
   - the commit that adds this log: plan evidence; a commit cannot contain its own SHA
 tasks_flipped_to_x:
-  - T1 Red: pass on the committed HEAD; Red proof is in red.log and the targeted command now exits 0
+  - T1 Red: Red commit 8a5582cc1f16c1a6091639e80f2cca3cd9c9256a; red.log holds the proof; the targeted command now exits 0
   - T2 Green: implementation commit e45704be17d785cd89570ae5637e41e332fe2862
-tasks_still_open:
-  - T3 Record remains [~]: README, sizes and durations are recorded; phase acceptance closes the PM hand-off line
+  - T3 Record: implementation commit e45704be17d785cd89570ae5637e41e332fe2862; README, sizes, durations and the PM hand-off line are in plan.md
+tasks_still_open: none
 tasks_flipped_to_b: none
 tests_run:
   - Red rerun before Green: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run --maxWorkers=1 tests/sound-set.test.ts' -> exit 1, 16 of 16 fail (MODULE_NOT_FOUND on scripts/sound-set.mjs; ENOENT on sounds/sets/chibi.json)
@@ -41,8 +41,8 @@ files_changed:
   - measure/tracks.md (registry row [ ] -> [~]; doctor gate)
   - measure/generated/status.md (regenerated from the status change)
   - measure/runs/chore_earshot_sounds_20261121/green.log (new, this file)
-plan_updates: T1 and T2 marked [x] with commit evidence; T3 marked [~] with recorded sizes, durations, README and gate results; status bookkeeping updated because the doctor rejects a "new" track with started tasks; generated facts refreshed
-known_failures: none on the committed HEAD; the aggregate vitest suite is intentionally red from unrelated baseline debt and was not gated
+plan_updates: T1, T2 and T3 marked [x] with commit SHA on each task line; T3 holds the PM hand-off evidence line with set chibi and the seven sounds/chibi/*.ogg paths; status bookkeeping updated because the doctor rejects a "new" track with started tasks; generated facts refreshed to 3/3 tasks; a later role-gate retry asked for SHA evidence on T1 and for T3 completion, and this log records that fix
+known_failures: the doctor now reports "in_progress track has no unchecked task" because all three tasks are [x] while metadata and the registry row stay in_progress; the closeout role owns that status change and this Green fix did not touch those files; the aggregate vitest suite is intentionally red from unrelated baseline debt and was not gated
 environment_note: host python3 is 3.14 without ensurepip; the setup wrapper falls back to python3.11 (3.11.15). The pin 7a7f7c5c70d4a763a1eca4b3666af7c77e313f97 and the venv path are unchanged. No paid generation. No push. The venv is gitignored and was never staged.
-handoff: T1 and T2 are complete with SHA evidence above. T3 stays human-gated open for the PM hand-off line at phase acceptance. The targeted Red command above prints "Tests 16 passed (16)" and exits 0. New files for review scope: scripts/sound-set.mjs, scripts/sound-setup.sh, sounds/sets/chibi.json, sounds/README.md, the seven sounds/chibi/*.ogg files, and this log. The immutable phase_base_sha is a9aec40d5cf899815852bbbd53b768285b98915b. Reviewers must gate on that base and on the final Green HEAD reported by the orchestrator.
+handoff: T1, T2 and T3 are complete with SHA evidence above. No task stays open and no task is human-gated in this phase. The targeted Red command above prints "Tests 16 passed (16)" and exits 0. New files for review scope: scripts/sound-set.mjs, scripts/sound-setup.sh, sounds/sets/chibi.json, sounds/README.md, the seven sounds/chibi/*.ogg files, and this log. The immutable phase_base_sha is a9aec40d5cf899815852bbbd53b768285b98915b. Reviewers must gate on that base and on the final Green HEAD reported by the orchestrator. The closeout role must move metadata and the registry row to completed so the doctor passes again.
 END_MEASURE_AGENT_RESULT

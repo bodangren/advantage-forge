@@ -20,7 +20,7 @@ Files this track touches:
 
 ## Phase 1: Pin, render, and record
 
-- [x] T1 Red: Add `tests/sound-set.test.ts`. Use `spawnSync(process.execPath, [script, ...])` with
+- [x] T1 Red: Add `tests/sound-set.test.ts`. Use `spawnSync(process.execPath, [script, ...])` with [commit `8a5582cc`]
       `env` set to `SOUNDS_ROOT=<temp root>` and `EARSHOT_BIN=<fake>`. The test writes the fake binary
       as a Node script with an executable mode. The fake appends `process.argv.slice(2).join(' ')` to
       `<temp>/calls.log`. It writes `OggS` to the `-o` path unless `<temp>/no-write` holds the sound
@@ -64,9 +64,10 @@ Files this track touches:
     matches). Case 9 fails with ENOENT on `sounds/sets/chibi.json` (set and sound files absent).
     The test file parses and runs with no syntax or import error. `prettier --check
 tests/sound-set.test.ts` passes.
+  - Evidence commit: Red `8a5582cc1f16c1a6091639e80f2cca3cd9c9256a`.
   - Green recheck (2026-11-21): the same targeted command exits 0 with 16 of 16 tests passing.
 
-- [x] T2 Green: Add `scripts/sound-setup.sh`, `scripts/sound-set.mjs`, the `.gitignore` line, and
+- [x] T2 Green: Add `scripts/sound-setup.sh`, `scripts/sound-set.mjs`, the `.gitignore` line, and [commit `e45704be`]
       `sounds/sets/chibi.json` (the seven maps of AC1). Then render and commit the files.
   - `scripts/sound-setup.sh` runs `python3 -m venv .venv-earshot` when the venv is absent, then
     `.venv-earshot/bin/pip install "earshot @ git+https://github.com/Leonxlnx/earshot@7a7f7c5c70d4a763a1eca4b3666af7c77e313f97"`,
@@ -85,9 +86,9 @@ tests/sound-set.test.ts` passes.
     all seven files. The standalone wrapper run exits 0. The venv is gitignored and never staged.
     Host `python3` is 3.14 without `ensurepip`, so the setup wrapper falls back to `python3.11`
     (3.11.15); the pin and the venv path are unchanged.
-- [~] T3 Record: Add `sounds/README.md` with the designs line of AC5 and the render command. Record
-  the file sizes and the durations. Write the evidence line for the PM hand-off (the set name and
-  its seven files). Record any deferred work in the owning track.
+- [x] T3 Record: Add `sounds/README.md` with the designs line of AC5 and the render command. Record [commit `e45704be`]
+      the file sizes and the durations. Write the evidence line for the PM hand-off (the set name and
+      its seven files). Record any deferred work in the owning track.
   - Gate commands:
     - `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run --maxWorkers=1 tests/sound-set.test.ts'`
     - `node_modules/.bin/prettier --check scripts/sound-set.mjs sounds/sets/chibi.json sounds/README.md tests/sound-set.test.ts measure/tracks/chore_earshot_sounds_20261121/spec.md measure/tracks/chore_earshot_sounds_20261121/plan.md measure/tracks/chore_earshot_sounds_20261121/spec-review.md measure/tracks/chore_earshot_sounds_20261121/metadata.json measure/tracks/chore_earshot_sounds_20261121/index.md`
@@ -105,6 +106,9 @@ tests/sound-set.test.ts` passes.
   - Green result (2026-11-21): `sounds/README.md` lands in commit
     `e45704be17d785cd89570ae5637e41e332fe2862`. The prettier gate exits 0. The generated facts
     were refreshed after the metadata status moved to `in_progress`; the doctor then passes with
-    the generated facts committed. The PM hand-off evidence line is in
-    `measure/runs/chore_earshot_sounds_20261121/green.log`. T3 stays active until phase acceptance
-    records that hand-off in the track record.
+    the generated facts committed.
+  - PM hand-off evidence: set `chibi`; seven files `sounds/chibi/tap.ogg`, `sounds/chibi/right.ogg`,
+    `sounds/chibi/wrong.ogg`, `sounds/chibi/star.ogg`, `sounds/chibi/pop.ogg`,
+    `sounds/chibi/whoosh.ogg`, `sounds/chibi/level-end.ogg`. All seven land in commit
+    `e45704be17d785cd89570ae5637e41e332fe2862`. The same evidence line is in
+    `measure/runs/chore_earshot_sounds_20261121/green.log`.
