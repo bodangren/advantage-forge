@@ -1,0 +1,98 @@
+{
+  "schema_version": 1,
+  "role": "adversarial-testing",
+  "track": "chore_earshot_sounds_20261121",
+  "phase": "Phase 1: Pin, render, and record",
+  "baseline_sha": "a9aec40d5cf899815852bbbd53b768285b98915b",
+  "phase_base_sha": "a9aec40d5cf899815852bbbd53b768285b98915b",
+  "role_base_sha": "7fbf58b7f7d78aee01c70fd4ad437a93b8038f98",
+  "audited_head_sha": "7fbf58b7f7d78aee01c70fd4ad437a93b8038f98",
+  "status": "fail",
+  "summary": "The adversarial gate fails. The existing header reader accepts corrupted magic bytes. Filesystem failures print stack traces. The original suite passes.",
+  "blocking_findings": [
+    "ADV-1 [Blocker] adversarial-testing: tests/sound-set.test.ts:299,306 decodes magic bytes with toString('ascii'), which clears each high bit. The reader accepts 0xcf instead of ASCII O and 0xf6 instead of ASCII v. Rationale: AC3 steps 1 and 5 require exact ASCII bytes. The two high-bit corruption tests at tests/sound-set.adversarial.test.ts:269-274 fail because the existing reader throws no error. Route to Green: compare the byte sequences without lossy decoding. Preserve these failing regressions."
+  ],
+  "nonblocking_findings": [
+    "ADV-2 [Nit] adversarial-testing: scripts/sound-set.mjs:71 lets rmSync exceptions escape. A directory at alpha.ogg prints 24 stderr lines. A 300-character name prints 17 stderr lines. Rationale: D5 requires one controlled failure line, but defines no exact text for these filesystem failures. This confirms review-b F3 and extends its input class. Tests at tests/sound-set.adversarial.test.ts:201-227 fail on the line count. Route to Green: contain these exceptions and preserve directory contents."
+  ],
+  "evidence": [
+    "The starting HEAD and final pre-commit HEAD both equal 7fbf58b7f7d78aee01c70fd4ad437a93b8038f98.",
+    "The audit read the spec, plan, strategy, review-a-7fbf58b.json, review-b-7fbf58b.json, routing artifacts, debt, lessons, and the exact phase diff.",
+    "The phase diff changes no game source, AudioBus, runtime route, or playback wiring. The CLI remains scripts/sound-set.mjs.",
+    "The first adversarial command exited 1: 4 failed and 50 passed. The final combined command exited 1: 4 failed and 68 passed.",
+    "The final combined run includes 55 adversarial tests and all 17 original tests. The original suite also passed alone with exit 0.",
+    "The directory regression preserves keep.txt, records no child call, and receives 24 stderr lines instead of one.",
+    "The overlong-name regression records no child call and receives 17 stderr lines instead of one.",
+    "The corruption regressions execute the existing private reader body from tests/sound-set.test.ts without copying its logic or changing that file.",
+    "The reader accepts the committed reference bytes. It rejects eight truncations and ten ordinary header corruptions. It accepts both high-bit corruptions.",
+    "The capture mutation changes offset 0 from 0x4f to 0xcf. The Vorbis mutation changes offset 29 from 0x76 to 0xf6. ASCII decoding returns O and v.",
+    "All unicode, whitespace, traversal, non-string-design, validation-order, extra-key, and argv-boundary cases pass.",
+    "The fake binary records JSON argv arrays. Spaces, leading dashes, shell syntax, and paths with spaces remain intact as separate arguments.",
+    "A SIGTERM child produces status null. The wrapper exits 1, suppresses both child streams, and starts no later render.",
+    "A zero-byte fake file satisfies D5's existence check. AC3 applies separately to committed real files. This probe adds no stronger output-validation requirement.",
+    "A4: an isolated all-[~] plan gives total=2, complete=0, in_progress=2, incomplete=2 through the installed interphase helper. The phase remains discoverable as incomplete.",
+    "A7: the live fake-child probe preserves BANNED never do not in the exact stderr line. No exclusion filter or prefix assertion removes that hit.",
+    "A5: the cited original suite exits 0. The doctor exits 0. No new plan claim says that the adversarial gate passes.",
+    "The heavy-run doctor exits 0 and its boundary suite passes. Generated facts are current after restoring the temporary task marker.",
+    "build-graph scanned tests into an external cache database. Its search and inspect commands locate checkOggHeader at tests/sound-set.test.ts:298-313. The tool does not scan the production .mjs CLI.",
+    "A1, A2, and A9 have no changed implementation surface. A8 remains the compatibility note already recorded in review-a F5.",
+    "A temporary T6 [~] marker authorized test edits. The audit restores the original plan and leaves acceptance status to the orchestrator.",
+    "No production file or committed audio byte changed. No real earshot command ran. The audit preserves unrelated shared edits.",
+    "The release worktree remains detached at e01ac17b. The shelf-sync worktree and branch remain at 623e7b5d. Their owning sessions retain cleanup ownership.",
+    "Facts changed: the adversarial gate now fails. No price, public date, product name, or deployment status changed."
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "git diff a9aec40d5cf899815852bbbd53b768285b98915b..7fbf58b7f7d78aee01c70fd4ad437a93b8038f98 -- scripts/sound-set.mjs scripts/sound-setup.sh tests/sound-set.test.ts .gitignore sounds/README.md sounds/sets/chibi.json",
+    "git diff a9aec40d5cf899815852bbbd53b768285b98915b..7fbf58b7f7d78aee01c70fd4ad437a93b8038f98 -- measure/tracks.md measure/tracks/chore_earshot_sounds_20261121 measure/generated/status.md",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run --maxWorkers=1 tests/sound-set.adversarial.test.ts'",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run --maxWorkers=1 tests/sound-set.test.ts'",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run --maxWorkers=1 tests/sound-set.adversarial.test.ts tests/sound-set.test.ts'",
+    "python3: import the installed measure_interphase_checks.py and run phase_counts plus discover_phases against an isolated all-[~] fixture",
+    "build-graph scan tests /home/daniebo/.cache/opencode/earshot-adversarial-graph.db",
+    "build-graph search /home/daniebo/.cache/opencode/earshot-adversarial-graph.db checkOggHeader",
+    "build-graph callers /home/daniebo/.cache/opencode/earshot-adversarial-graph.db checkOggHeader",
+    "build-graph inspect /home/daniebo/.cache/opencode/earshot-adversarial-graph.db checkOggHeader",
+    "node_modules/.bin/prettier --check tests/sound-set.adversarial.test.ts",
+    "git diff --exit-code -- measure/tracks/chore_earshot_sounds_20261121/plan.md scripts/sound-set.mjs scripts/sound-setup.sh sounds",
+    "node measure/tools/generate.mjs --check",
+    "./measure/generate.sh",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './measure/doctor.sh'",
+    "git worktree list",
+    "git branch -a"
+  ],
+  "changed_files": [
+    "tests/sound-set.adversarial.test.ts",
+    "measure/runs/chore_earshot_sounds_20261121/adversarial-7fbf58b.json",
+    "measure/runs/chore_earshot_sounds_20261121/adversarial-7fbf58b.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "retry_implementation",
+  "confidence": "high",
+  "route": "openai/gpt-6.1-sol#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 3,
+      "evidence": "The combined run passes the normal cases but fails four adversarial checks."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 3,
+      "evidence": "tests/sound-set.test.ts:299,306 accepts corrupted magic bytes through lossy ASCII decoding."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "git diff confirms no production file or committed sound changed during this audit."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "The combined heavy-run command reproduces all four failures against audited HEAD 7fbf58b7."
+    }
+  ]
+}

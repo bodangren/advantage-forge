@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: adversarial-testing
+status: partial
+track: chore_earshot_sounds_20261121
+phase: Phase 1: Pin, render, and record
+commits: none
+tests_run: Heavy-run adversarial suite: exit 1, four failures; heavy-run original suite: exit 0; combined heavy-run suite: exit 1, four failed and 68 passed; heavy-run doctor: exit 0; prettier: pass; generated facts: current; all-[~] fixture: INCOMPLETE.
+files_changed: tests/sound-set.adversarial.test.ts; measure/runs/chore_earshot_sounds_20261121/adversarial-7fbf58b.json; measure/runs/chore_earshot_sounds_20261121/adversarial-7fbf58b.log
+plan_updates: Temporary T6 [~] marker only; restore the original plan after the test commit.
+known_failures: ADV-1: high-bit capture and Vorbis corruptions produce no reader error; ADV-2: directory and overlong-name failures print 24 and 17 stderr lines.
+handoff: Route ADV-1 and ADV-2 to Green with retry_implementation. Preserve the failing tests. Re-run applicable reviews and adversarial testing after implementation changes. No real render ran. Facts changed: the adversarial gate fails.
+END_MEASURE_AGENT_RESULT
