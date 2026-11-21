@@ -1,0 +1,35 @@
+MEASURE_AGENT_RESULT
+role: jr-green
+status: green-complete
+track: chore_earshot_sounds_20261121 (short: chore_earshot_sounds)
+phase: Phase 1: Pin, render, and record
+phase_base_sha: a9aec40d5cf899815852bbbd53b768285b98915b
+role_base_sha: d574263704c87f2b155ab5def8a120100f4bf79e (Red r4)
+commits:
+  - e49155a24b54379d1f7d39f4579b7741d3c037da: measure(chore_earshot_sounds): contain output folder errors (implementation)
+  - the commit that adds this log: measure(chore_earshot_sounds): green r5 evidence (a commit cannot contain its own SHA)
+tasks_flipped_to_x:
+  - T7 Review A r3 remediation: Red commit d574263704c87f2b155ab5def8a120100f4bf79e and implementation commit e49155a24b54379d1f7d39f4579b7741d3c037da
+tasks_flipped_to_b: none
+tasks_still_open:
+  - T5 Closeout (deferred:closeout-steward): human-gated closeout work; the closeout role owns it
+findings_disposition:
+  - Review A r3 F7 FIX: output-folder creation and target preparation now share the prepare-output failure contract
+spec_change: spec.md D5 gains one sentence under the existing row; when the output folder cannot be created, the line names the first set entry and its target path and no earshot call starts
+plan_correction: the Green r4 claim that any filesystem exception is contained was narrowed; at that commit it covered target preparation only, and T7 records the folder-creation fix
+tests_run:
+  - Red r4 rerun before Green: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run --maxWorkers=1 tests/sound-set.test.ts tests/sound-set.adversarial.test.ts' -> exit 1, 1 failed | 73 passed (74); the F7 folder test got an uncaught mkdir stack trace
+  - combined targeted command after Green: same heavy command -> exit 0, 74 passed (74)
+  - prettier --check on touched files and the planned set: exit 0
+  - node measure/tools/generate.mjs --check: exit 0 after regeneration; generated row in_progress 6/7
+  - doctor: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './measure/doctor.sh' -> exit 0, "Measure doctor found no structural errors"
+files_changed:
+  - scripts/sound-set.mjs (mkdirSync inside the controlled prepare-output handler; first-entry line on failure)
+  - measure/tracks/chore_earshot_sounds_20261121/spec.md (D5 sentence for folder-creation failure)
+  - measure/tracks/chore_earshot_sounds_20261121/plan.md (T7 [x] with both SHAs, Green r5 evidence, corrected r4 claim)
+  - measure/generated/status.md (regenerated: in_progress, 6/7 tasks)
+  - measure/runs/chore_earshot_sounds_20261121/green-r5.log (new, this file)
+plan_updates: T7 marked [x] with Red and Green SHAs; T5 stays deferred; Status line names T7; the overstated r4 claim is corrected; no track completion or archive action taken
+known_failures: none on final Green r5 HEAD; no Ogg re-render because the wrapper change does not alter those bytes
+handoff: Review A r3 F7 is fixed. Reviewers must gate on phase_base_sha a9aec40d5cf899815852bbbd53b768285b98915b and on the final Green r5 HEAD reported by the orchestrator. New file for review scope: measure/runs/chore_earshot_sounds_20261121/green-r5.log. The closeout role owns T5 after phase acceptance. No push.
+END_MEASURE_AGENT_RESULT

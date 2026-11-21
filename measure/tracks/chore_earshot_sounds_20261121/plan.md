@@ -1,6 +1,6 @@
 # Author game sound sets with earshot
 
-Status: in_progress (2026-11-21). T1 through T4 and T6 are `[x]` with commit evidence. T5 is a
+Status: in_progress (2026-11-21). T1 through T4 and T6 and T7 are `[x]` with commit evidence. T5 is a
 deferred closeout task owned by the closeout role. This plan owns execution status. `spec.md`
 holds the decisions and acceptance criteria.
 
@@ -191,20 +191,23 @@ tests/sound-set.test.ts` passes.
     mode, so a directory and its `keep.txt` stay intact. The combined targeted command exits 0
     with 72 of 72 tests passing. No Ogg file was re-rendered. Log:
     `measure/runs/chore_earshot_sounds_20261121/green-r4.log`.
+  - Correction (Green r5): the earlier claim that "any filesystem exception" is contained covered
+    target preparation only. Output-folder creation stayed outside the handler at that commit.
+    Review A r3 F7 found the gap. T7 below records the fix and the new test result.
 
-- [~] T7 Review A r3 remediation (F6/F7 test side): add exact substituted-line assertions
-  (`stderr.trim()` equality) for the D5 class
-  `sound-set: cannot prepare output for <name> (<design>): <path>`, exit 1. F6: change the two
-  adversarial tests (`tests/sound-set.adversarial.test.ts:201-228`, directory at target and
-  300-char name) to assert the exact D5 line, keeping the exit-code, no-call, and `keep.txt`
-  checks; remove the comments that say D5 has no exact text. Add one case of this class
-  (directory at target) to `tests/sound-set.test.ts`. F7 (orchestrator decision, recorded here
-  and in `test-strategy.md`; Green adds the sentence to spec D5): when the output folder
-  `<root>/sounds/<set>` cannot be created (a regular file sits at that path), the wrapper
-  reports this same row for the FIRST set entry, with that entry's target path
-  `<root>/sounds/<set>/<first>.ogg`, exit 1, and makes no earshot call. Add an F7 folder test
-  to `tests/sound-set.test.ts`. Change no production source and, except for the F6 assertion
-  upgrade, do not change other adversarial tests.
+- [x] T7 Review A r3 remediation (F6/F7 test side and F7 fix): add exact substituted-line assertions [commits `d5742637`, `e49155a2`]
+      (`stderr.trim()` equality) for the D5 class
+      `sound-set: cannot prepare output for <name> (<design>): <path>`, exit 1. F6: change the two
+      adversarial tests (`tests/sound-set.adversarial.test.ts:201-228`, directory at target and
+      300-char name) to assert the exact D5 line, keeping the exit-code, no-call, and `keep.txt`
+      checks; remove the comments that say D5 has no exact text. Add one case of this class
+      (directory at target) to `tests/sound-set.test.ts`. F7 (orchestrator decision, recorded here
+      and in `test-strategy.md`; Green adds the sentence to spec D5): when the output folder
+      `<root>/sounds/<set>` cannot be created (a regular file sits at that path), the wrapper
+      reports this same row for the FIRST set entry, with that entry's target path
+      `<root>/sounds/<set>/<first>.ogg`, exit 1, and makes no earshot call. Add an F7 folder test
+      to `tests/sound-set.test.ts`. Change no production source and, except for the F6 assertion
+      upgrade, do not change other adversarial tests.
   - Red evidence: `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run --maxWorkers=1 tests/sound-set.test.ts tests/sound-set.adversarial.test.ts'`.
     Log: `measure/runs/chore_earshot_sounds_20261121/red-r4.log`
   - Red result (2026-11-21): exit 1 with 1 failed and 73 passed of 74 tests. The only failure is
@@ -214,3 +217,11 @@ tests/sound-set.test.ts` passes.
     `cannot prepare output` line for the directory target in both test files and for the 300-char
     name), so they stand as regression guards. No syntax or import error. `prettier --check` on
     the touched files passes.
+  - Green r5 result (2026-11-21): implementation commit
+    `e49155a24b54379d1f7d39f4579b7741d3c037da` changes `scripts/sound-set.mjs` and adds one
+    sentence to the spec D5 row added in r4. Output-folder creation moved inside the same failure
+    handler as target preparation. When `mkdirSync` throws, the wrapper names the first set entry
+    and its target path in the exact line
+    `sound-set: cannot prepare output for <name> (<design>): <path>`, exits 1, and starts no
+    earshot call. The combined targeted command exits 0 with 74 of 74 tests passing. No Ogg file
+    was re-rendered. Log: `measure/runs/chore_earshot_sounds_20261121/green-r5.log`.
