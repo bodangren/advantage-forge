@@ -86,3 +86,4 @@ tests/part.test.ts(19,18): error TS2379: Argument of type '{ name: string; bone:
    Duration  2.63s (tests 90%, transform 9%, import 1%)
 
 END_MEASURE_AGENT_RESULT
+facts-regenerated: ./measure/generate.sh exit 0; generate.mjs --check exit 0; committed measure/generated/status.md
