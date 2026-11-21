@@ -45,8 +45,8 @@ known failure mode: the mockup omits catalog assets and the kit ships incomplete
 1. Scaffold `bench/trials/<env>-env/`: `queue.tsv` (asset, model, prompt path), one
    `prompts/<asset>.prompt.md` per asset, `mockups/` (the evaluated anchor plus
    `docs/hamlet-mockups/chibi-quest.png` for cross-environment consistency).
-2. Assign builders from the current ranking in `bench/trials/chibi-env/ranking.json`. Match each
-   builder to the asset role the ranking names. Never assign a model that refuses to serve.
+2. Pick each builder route with `/home/daniebo/Desktop/advantage-pr/scripts/jobs/ra-quota pick <role> --why`
+   (`ra-quota roles` lists the role names). Use the route it prints. Never name a route by hand.
 3. Run `bench/trials/<env>-env/scheduler.sh bench/runs/<env>-env-r1 6` detached.
 4. When the queue drains, review every render yourself. Then run an independent review with a
    second reviewer, split by asset count, verdicts to `reviews-<reviewer>-<part>.json`.
