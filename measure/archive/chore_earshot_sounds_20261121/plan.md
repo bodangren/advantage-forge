@@ -169,8 +169,8 @@ tests/sound-set.test.ts` passes.
       and archives it. This is a human-gated deferred task. Green r3 does not perform these
       actions. The task stayed pending until closeout so the doctor saw an unchecked task while the
       track remained in_progress. Closeout evidence:
-      `measure/runs/chore_earshot_sounds_20261121/closeout-5e6c778.json` and `.log`; archive commit SHA
-      recorded in the task-SHA follow-up commit.
+      `measure/runs/chore_earshot_sounds_20261121/closeout-5e6c778.json` and `.log`; archive commit
+      `6049d23e1c91ce3f7594e1a21f96773b4baca2b2`.
 
 - [x] T6 Adversarial remediation (ADV-1 test side and ADV-2 fix): fix the AC3 reader in `tests/sound-set.test.ts` [commits `06325093`, `d78f3ded`]
       to compare the Ogg magic bytes exactly. The `toString('ascii')` decoding clears the high bit,
