@@ -1,0 +1,110 @@
+MEASURE_AGENT_RESULT
+role: mid-red
+status: red-proof (new tests fail for the expected reasons; implementation unchanged by design)
+track: chore_earshot_sounds_20261121
+short_track_id: chore_earshot_sounds
+phase: Phase 1: Pin, render, and record
+baseline_sha (phase_base_sha): a9aec40d5cf899815852bbbd53b768285b98915b
+role_base_sha: c86ccebe6ba5a72b388ca3118f5159875675597e
+head: this commit (parent c86ccebe6ba5a72b388ca3118f5159875675597e); SHA in handoff reply
+commits: [this commit] message `measure(chore_earshot_sounds): red r2 tests for review A`; SHA in handoff reply
+tests_run: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run --maxWorkers=1 tests/sound-set.test.ts' => heavy_exit=1, 3 failed | 14 passed (17)
+files_changed: tests/sound-set.test.ts, measure/tracks/chore_earshot_sounds_20261121/plan.md, measure/tracks/chore_earshot_sounds_20261121/test-strategy.md, measure/runs/chore_earshot_sounds_20261121/red-r2.log
+plan_updates: added [~] T4 Red r2 (remediation for review A); aligned T1 fake contract and cases 1, 7, 8 with the new test; added stale-output case 9 and renumbered committed-files to case 10
+known_failures (all expected Red failures, no syntax or import errors):
+- renders the full set in order and prints the success lines: wrapper stdout lacks `fake-err` lines (F4: successful child stderr dropped, not forwarded)
+- stops after a failed render, never calls later entries, and prints the exact line: wrapper stdout lacks `fake-err alpha` (F4); stop rule holds (calls.log has alpha+beta, gamma never called) and the exact failure line holds
+- fails with the exact line when a stale target exists and the render writes nothing: exit 0, expected 1 (F1: pre-existing target accepted after a no-write child)
+D5 reading (F4 ambiguity): D5 says the wrapper forwards the output of a successful call and prints nothing else on stderr. To keep the exact-line failure contract (stderr.trim() equality) intact, a successful child's stdout and stderr are both forwarded to the wrapper's stdout in call order, each pair followed by its `sound-set: <name>.ogg <- <design>` line. The wrapper's stderr stays empty on success and carries only the single exact failure line on failure. A failed call's output is suppressed entirely.
+handoff: Green implements in scripts/sound-set.mjs only: (1) F1: require a write from the current invocation (e.g. record mtime/size or remove-then-check the target before each spawn; a pre-existing file must not satisfy the exists check). (2) F2/F4: forward each successful child's stdout and stderr to the wrapper stdout in the tested order (fake-out, fake-err, success line per entry) and keep suppressing failed-call output. Do not touch tests, plan, or strategy except to record Green evidence. F3 (plan/doctor state) and the wrapper fix itself are outside this Red role.
+--- raw command output follows ---
+
+ RUN  v5.1.1 /home/daniebo/Desktop/advantage-forge
+
+ ❯ tests/sound-set.test.ts (17 tests | 3 failed) 603ms
+   ❯ sound-set wrapper through a fake earshot binary (17)
+     × renders the full set in order and prints the success lines 85ms
+     × stops after a failed render, never calls later entries, and prints the exact line 81ms
+     × fails with the exact line when a stale target exists and the render writes nothing 83ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sound-set.test.ts > sound-set wrapper through a fake earshot binary > renders the full set in order and prints the success lines
+AssertionError: expected [ 'fake-out alpha', …(4) ] to deeply equal [ 'fake-out alpha', …(6) ]
+
+- Expected
++ Received
+
+  [
+    "fake-out alpha",
+-   "fake-err alpha",
+    "sound-set: alpha.ogg <- tap/soft",
+    "fake-out beta",
+-   "fake-err beta",
+    "sound-set: beta.ogg <- error/knock",
+    "sound-set: 2 sounds -> sounds/fake",
+  ]
+
+ ❯ tests/sound-set.test.ts:101:48
+     99|       expect(result.status).toBe(0);
+    100|       expect(result.stderr).toBe('');
+    101|       expect(result.stdout.trim().split('\n')).toEqual([
+       |                                                ^
+    102|         'fake-out alpha',
+    103|         'fake-err alpha',
+ ❯ withTemp tests/sound-set.test.ts:34:5
+ ❯ tests/sound-set.test.ts:96:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  tests/sound-set.test.ts > sound-set wrapper through a fake earshot binary > stops after a failed render, never calls later entries, and prints the exact line
+AssertionError: expected 'fake-out alpha\nsound-set: alpha.ogg …' to contain 'fake-err alpha'
+
+- Expected
++ Received
+
+- fake-err alpha
++ fake-out alpha
++ sound-set: alpha.ogg <- tap/soft
++
+
+ ❯ tests/sound-set.test.ts:248:29
+    246|       ]);
+    247|       expect(result.stdout).toContain('fake-out alpha');
+    248|       expect(result.stdout).toContain('fake-err alpha');
+       |                             ^
+    249|       expect(result.stdout).toContain('sound-set: alpha.ogg <- tap/sof…
+    250|       expect(result.stdout).not.toContain('fake-out beta');
+ ❯ withTemp tests/sound-set.test.ts:34:5
+ ❯ tests/sound-set.test.ts:237:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  tests/sound-set.test.ts > sound-set wrapper through a fake earshot binary > fails with the exact line when a stale target exists and the render writes nothing
+AssertionError: expected +0 to be 1 // Object.is equality
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ tests/sound-set.test.ts:281:29
+    279|       writeFileSync(join(tmp, 'no-write'), 'alpha');
+    280|       const result = run(['fake'], tmp, writeFakeBin(tmp));
+    281|       expect(result.status).toBe(1);
+       |                             ^
+    282|       expect(result.stderr.trim()).toBe(`sound-set: earshot wrote no f…
+    283|       expect(result.stdout).toBe('');
+ ❯ withTemp tests/sound-set.test.ts:34:5
+ ❯ tests/sound-set.test.ts:274:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  3 failed | 14 passed (17)
+   Start at  19:47:58
+   Duration  709ms (tests 97%, import 2%, transform 1%)
+
+END_MEASURE_AGENT_RESULT

@@ -12,6 +12,12 @@ const FAKE_ENTRIES = [
   { name: 'beta', design: 'error/knock' },
 ];
 
+const FAKE_THREE_ENTRIES = [
+  { name: 'alpha', design: 'tap/soft' },
+  { name: 'beta', design: 'error/knock' },
+  { name: 'gamma', design: 'pop/bubble' },
+];
+
 const EXPECTED_CHIBI_ENTRIES = [
   { name: 'tap', design: 'tap/soft' },
   { name: 'right', design: 'success/rise' },
@@ -55,14 +61,16 @@ function writeFakeBin(tmp: string) {
     'const args = process.argv.slice(2);',
     "const flag = args.indexOf('-o');",
     "const out = flag >= 0 ? args[flag + 1] : '';",
+    "const base = out.split('/').pop() ?? '';",
+    "const name = base.endsWith('.ogg') ? base.slice(0, -4) : base;",
+    "appendFileSync(join(tmp, 'calls.log'), `${args.join(' ')}\\n`);",
+    'process.stdout.write(`fake-out ${name}\\n`);',
+    'process.stderr.write(`fake-err ${name}\\n`);',
     'const readOptional = (path) => {',
     "  try { return readFileSync(path, 'utf8').trim(); } catch { return ''; }",
     '};',
     "const failAt = readOptional(join(tmp, 'fail-at'));",
     "if (failAt !== '' && out.endsWith(`/${failAt}.ogg`)) process.exit(3);",
-    "appendFileSync(join(tmp, 'calls.log'), `${args.join(' ')}\\n`);",
-    "const base = out.split('/').pop() ?? '';",
-    "const name = base.endsWith('.ogg') ? base.slice(0, -4) : base;",
     "if (readOptional(join(tmp, 'no-write')) !== name) {",
     '  mkdirSync(dirname(out), { recursive: true });',
     "  writeFileSync(out, 'OggS');",
@@ -91,7 +99,11 @@ describe('sound-set wrapper through a fake earshot binary', () => {
       expect(result.status).toBe(0);
       expect(result.stderr).toBe('');
       expect(result.stdout.trim().split('\n')).toEqual([
+        'fake-out alpha',
+        'fake-err alpha',
         'sound-set: alpha.ogg <- tap/soft',
+        'fake-out beta',
+        'fake-err beta',
         'sound-set: beta.ogg <- error/knock',
         'sound-set: 2 sounds -> sounds/fake',
       ]);
@@ -221,14 +233,26 @@ describe('sound-set wrapper through a fake earshot binary', () => {
     });
   });
 
-  it('stops after a failed render and prints the exact line', () => {
+  it('stops after a failed render, never calls later entries, and prints the exact line', () => {
     withTemp((tmp) => {
-      writeSetFile(tmp, 'fake', { sounds: FAKE_ENTRIES });
+      writeSetFile(tmp, 'fake', { sounds: FAKE_THREE_ENTRIES });
       writeFileSync(join(tmp, 'fail-at'), 'beta');
       const result = run(['fake'], tmp, writeFakeBin(tmp));
       expect(result.status).toBe(1);
       expect(result.stderr.trim()).toBe('sound-set: earshot failed for beta (error/knock) with exit 3');
-      expect(readCallsLog(tmp)).toEqual([`make --sound tap/soft -o ${outputPath(tmp, 'fake', 'alpha')}`]);
+      expect(readCallsLog(tmp)).toEqual([
+        `make --sound tap/soft -o ${outputPath(tmp, 'fake', 'alpha')}`,
+        `make --sound error/knock -o ${outputPath(tmp, 'fake', 'beta')}`,
+      ]);
+      expect(result.stdout).toContain('fake-out alpha');
+      expect(result.stdout).toContain('fake-err alpha');
+      expect(result.stdout).toContain('sound-set: alpha.ogg <- tap/soft');
+      expect(result.stdout).not.toContain('fake-out beta');
+      expect(result.stdout).not.toContain('fake-err beta');
+      expect(result.stdout).not.toContain('beta.ogg');
+      expect(result.stdout).not.toContain('gamma');
+      expect(result.stderr).not.toContain('fake-out beta');
+      expect(result.stderr).not.toContain('fake-err beta');
     });
   });
 
@@ -241,7 +265,23 @@ describe('sound-set wrapper through a fake earshot binary', () => {
       expect(result.stderr.trim()).toBe(
         `sound-set: earshot wrote no file for alpha (tap/soft): ${outputPath(tmp, 'fake', 'alpha')}`,
       );
+      expect(result.stdout).toBe('');
       expect(readCallsLog(tmp)).toEqual([`make --sound tap/soft -o ${outputPath(tmp, 'fake', 'alpha')}`]);
+    });
+  });
+
+  it('fails with the exact line when a stale target exists and the render writes nothing', () => {
+    withTemp((tmp) => {
+      writeSetFile(tmp, 'fake', { sounds: FAKE_ENTRIES });
+      const stale = outputPath(tmp, 'fake', 'alpha');
+      mkdirSync(join(tmp, 'sounds', 'fake'), { recursive: true });
+      writeFileSync(stale, 'stale-bytes');
+      writeFileSync(join(tmp, 'no-write'), 'alpha');
+      const result = run(['fake'], tmp, writeFakeBin(tmp));
+      expect(result.status).toBe(1);
+      expect(result.stderr.trim()).toBe(`sound-set: earshot wrote no file for alpha (tap/soft): ${stale}`);
+      expect(result.stdout).toBe('');
+      expect(readCallsLog(tmp)).toEqual([`make --sound tap/soft -o ${stale}`]);
     });
   });
 

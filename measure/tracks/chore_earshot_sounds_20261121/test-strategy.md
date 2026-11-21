@@ -31,10 +31,20 @@ is one script, one test, one set file, one README, and seven audio files.
 `SOUNDS_ROOT=<temp root>` and `EARSHOT_BIN=<fake>` in `env`. The fake earshot is a Node script
 written into the temp root with an executable mode. Fake contract:
 
-- Append `process.argv.slice(2).join(' ')` to `<temp>/calls.log` on every call.
+- Derive the sound name from the `-o` path argument.
+- Append `process.argv.slice(2).join(' ')` to `<temp>/calls.log` on every call, before the
+  `fail-at` check, so a failed invocation is still logged.
+- Print `fake-out <name>` to stdout and `fake-err <name>` to stderr on every call.
 - Write the ASCII bytes `OggS` to the `-o` path, unless `<temp>/no-write` holds the sound name.
 - Exit 3 when the `-o` path ends with `/<name>.ogg` for the name in `<temp>/fail-at`.
 - Exit 0 otherwise.
+
+Forwarding reading (D5: the wrapper forwards the output of a successful call, prints none of a
+failed call's output, and prints nothing else on stderr): a successful child's stdout and stderr
+are both forwarded to the wrapper's stdout in call order, each pair followed by its
+`sound-set: <name>.ogg <- <design>` line. The wrapper's stderr stays empty on success and carries
+only the single exact failure line on failure. This keeps the exact-line contract intact: failure
+cases assert `stderr.trim()` equality, and only the failed call's output is suppressed.
 
 The fake proves wrapper process behavior only. Its four-byte `OggS` output is not a valid Ogg
 file. No test triggers a real earshot render. AC3 header checks read the committed Ogg files,
@@ -61,38 +71,40 @@ line after value substitution. A prefix match fails the test.
 
 ### D5 exact-line failure table (all classes)
 
-| # | Failure class | Exact stderr line | Exit |
-| - | --- | --- | ---: |
-| 1 | No argument | `sound-set: usage: node scripts/sound-set.mjs <set>` | 2 |
-| 2 | Bad set name | `sound-set: bad set name: <set>` | 2 |
-| 3 | Set file missing | `sound-set: set file not found: <path>` | 1 |
-| 4 | Invalid JSON | `sound-set: set file is not valid JSON: <path>` | 1 |
-| 5 | `sounds` missing, not array, or empty | `sound-set: bad set file: sounds must be a non-empty array` | 1 |
-| 6 | Entry `name` missing or empty | `sound-set: bad set file: entry <index> needs a name` | 1 |
-| 7 | Entry `design` missing or empty | `sound-set: bad set file: entry <index> needs a design` | 1 |
-| 8 | Duplicate `name` | `sound-set: bad set file: duplicate name <name>` | 1 |
-| 9 | Bad `name` characters | `sound-set: bad set file: bad name <name>` | 1 |
-| 10 | earshot missing or not executable | `sound-set: earshot not found at <path>; run scripts/sound-setup.sh` | 1 |
-| 11 | earshot non-zero exit | `sound-set: earshot failed for <name> (<design>) with exit <code>` | 1 |
-| 12 | earshot wrote no file | `sound-set: earshot wrote no file for <name> (<design>): <path>` | 1 |
+| #   | Failure class                         | Exact stderr line                                                    | Exit |
+| --- | ------------------------------------- | -------------------------------------------------------------------- | ---: |
+| 1   | No argument                           | `sound-set: usage: node scripts/sound-set.mjs <set>`                 |    2 |
+| 2   | Bad set name                          | `sound-set: bad set name: <set>`                                     |    2 |
+| 3   | Set file missing                      | `sound-set: set file not found: <path>`                              |    1 |
+| 4   | Invalid JSON                          | `sound-set: set file is not valid JSON: <path>`                      |    1 |
+| 5   | `sounds` missing, not array, or empty | `sound-set: bad set file: sounds must be a non-empty array`          |    1 |
+| 6   | Entry `name` missing or empty         | `sound-set: bad set file: entry <index> needs a name`                |    1 |
+| 7   | Entry `design` missing or empty       | `sound-set: bad set file: entry <index> needs a design`              |    1 |
+| 8   | Duplicate `name`                      | `sound-set: bad set file: duplicate name <name>`                     |    1 |
+| 9   | Bad `name` characters                 | `sound-set: bad set file: bad name <name>`                           |    1 |
+| 10  | earshot missing or not executable     | `sound-set: earshot not found at <path>; run scripts/sound-setup.sh` |    1 |
+| 11  | earshot non-zero exit                 | `sound-set: earshot failed for <name> (<design>) with exit <code>`   |    1 |
+| 12  | earshot wrote no file                 | `sound-set: earshot wrote no file for <name> (<design>): <path>`     |    1 |
 
 `<index>` is the zero-based array position. `<path>` is the absolute resolved path. `<code>` is the
 child exit code. Check order: set name, file existence, JSON parse, set content, binary, then each
-render in array order. A failure stops the run. A failed call prints none of its child output.
+render in array order. A failure stops the run. A successful call forwards its child stdout and
+child stderr to the wrapper stdout. A failed call prints none of its child output.
 
 ### Plan T1 case map and falsification conditions
 
-| Case | Fixture and assertion | Falsification condition |
-| --- | --- | --- |
-| 1 Full render | `fake.json` holds `alpha`->`tap/soft`, `beta`->`error/knock`. Exit 0. `calls.log` holds exactly two ordered lines. Both output files exist. Success lines use each name and design; final line is `sound-set: 2 sounds -> sounds/fake`. | Any wrong order, wrong count, missing file, or wrong success line fails. |
-| 2 Missing file | `none.json` absent. Exit 1, exact line 3, no `calls.log`. | A created log or a different line fails. |
-| 3 Bad JSON | `bad.json` holds `not json`. Exit 1, exact line 4. | A different line fails. |
-| 4 Set shape | Six variants: `sounds` absent, empty array, entry without `name`, `design` as empty string, duplicate name, name `Bad_Name`. Each exit 1, exact line 5/6/7/8/9, and no calls. | Any variant that renders or prints a wrong line fails. |
-| 5 Usage | No argument gives exit 2 and line 1. Set `../x` gives exit 2 and line 2. | Wrong exit code or line fails. |
-| 6 Binary | `EARSHOT_BIN` absent path, then a file without execute bit. Each exit 1, exact line 10, no calls. | Any call logged or wrong line fails. |
-| 7 Failed render | `fail-at` holds `beta`. Exit 1, line 11 with code 3, `calls.log` holds only the `alpha` line. | A `beta` call line or wrong line fails. |
-| 8 Missing output | `no-write` holds `alpha`. Exit 1, exact line 12, `calls.log` holds only the `alpha` line. | A `beta` call line or wrong line fails. |
-| 9 Committed files | Read `sounds/sets/chibi.json` from the repo. For each entry run the nine AC3 steps on `sounds/chibi/<name>.ogg` with `readFileSync` and `readUInt32LE`. No audio library. | The first step that does not hold fails the case. |
+| Case              | Fixture and assertion                                                                                                                                                                                                                                                                                                                 | Falsification condition                                                                          |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| 1 Full render     | `fake.json` holds `alpha`->`tap/soft`, `beta`->`error/knock`. Exit 0. `calls.log` holds exactly two ordered lines. Both output files exist. Stdout holds seven ordered lines: `fake-out alpha`, `fake-err alpha`, each success line, and the final line `sound-set: 2 sounds -> sounds/fake`. Stderr is empty.                        | Any wrong order, wrong count, missing file, missing forwarded line, or non-empty stderr fails.   |
+| 2 Missing file    | `none.json` absent. Exit 1, exact line 3, no `calls.log`.                                                                                                                                                                                                                                                                             | A created log or a different line fails.                                                         |
+| 3 Bad JSON        | `bad.json` holds `not json`. Exit 1, exact line 4.                                                                                                                                                                                                                                                                                    | A different line fails.                                                                          |
+| 4 Set shape       | Six variants: `sounds` absent, empty array, entry without `name`, `design` as empty string, duplicate name, name `Bad_Name`. Each exit 1, exact line 5/6/7/8/9, and no calls.                                                                                                                                                         | Any variant that renders or prints a wrong line fails.                                           |
+| 5 Usage           | No argument gives exit 2 and line 1. Set `../x` gives exit 2 and line 2.                                                                                                                                                                                                                                                              | Wrong exit code or line fails.                                                                   |
+| 6 Binary          | `EARSHOT_BIN` absent path, then a file without execute bit. Each exit 1, exact line 10, no calls.                                                                                                                                                                                                                                     | Any call logged or wrong line fails.                                                             |
+| 7 Failed render   | `fake.json` holds `alpha`->`tap/soft`, `beta`->`error/knock`, `gamma`->`pop/bubble`. `fail-at` holds `beta`. Exit 1, line 11 with code 3, `calls.log` holds the `alpha` and `beta` lines only. Stdout forwards the successful `alpha` output and holds none of `beta`'s output and no `gamma` line. Stderr holds only the exact line. | A `gamma` call line, a missing `beta` call line, forwarded `beta` output, or a wrong line fails. |
+| 8 Missing output  | `no-write` holds `alpha`. Exit 1, exact line 12, stdout empty, `calls.log` holds only the `alpha` line.                                                                                                                                                                                                                               | A `beta` call line, any stdout output, or a wrong line fails.                                    |
+| 8b Stale output   | Target `<root>/sounds/fake/alpha.ogg` pre-exists and `no-write` holds `alpha`. Exit 1, exact line 12, stdout empty, `calls.log` holds only the `alpha` line. A write from the current invocation is required.                                                                                                                         | Exit 0 or a wrong line fails.                                                                    |
+| 9 Committed files | Read `sounds/sets/chibi.json` from the repo. For each entry run the nine AC3 steps on `sounds/chibi/<name>.ogg` with `readFileSync` and `readUInt32LE`. No audio library.                                                                                                                                                             | The first step that does not hold fails the case.                                                |
 
 AC3 header steps, in order: bytes 0-3 equal `OggS`; byte 4 equals 0; byte 5 has bit `0x02`;
 byte 26 is segment count `n`; segment table is bytes 27..`26+n` and the first packet starts at
@@ -155,28 +167,28 @@ tests to make the aggregate suite green in this track.
 
 ## Review gate applicability
 
-| Gate | Applicability | Reason |
-| --- | --- | --- |
-| Review A (correctness) | Applicable | New script, new test, and exact-line contract need independent correctness audit. |
-| Review B (security) | Applicable, reduced scope | The wrapper spawns a child binary and parses a set file. Audit the `a-z0-9-` set-name check, argv-array spawn with no shell, and the `EARSHOT_BIN` path. No auth or data surface. |
-| Review C (UX/API) | Not applicable | No API, route, or user flow. The CLI stderr and exit-code contract is already covered by Review A and the targeted test. |
-| Adversarial testing | Applicable | Mutate exact lines, check order, stop rule, child-output suppression, and AC3 bytes. Probe that a prefix match cannot pass. |
-| UX browser review | Not applicable | No UI. The orchestrator states no UI is in scope. No `PROJECT_DEV_URL` is needed. |
-| Phase acceptance | Applicable | Runs last on the immutable `phase_base_sha` captured after this strategy commit. |
+| Gate                   | Applicability             | Reason                                                                                                                                                                            |
+| ---------------------- | ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Review A (correctness) | Applicable                | New script, new test, and exact-line contract need independent correctness audit.                                                                                                 |
+| Review B (security)    | Applicable, reduced scope | The wrapper spawns a child binary and parses a set file. Audit the `a-z0-9-` set-name check, argv-array spawn with no shell, and the `EARSHOT_BIN` path. No auth or data surface. |
+| Review C (UX/API)      | Not applicable            | No API, route, or user flow. The CLI stderr and exit-code contract is already covered by Review A and the targeted test.                                                          |
+| Adversarial testing    | Applicable                | Mutate exact lines, check order, stop rule, child-output suppression, and AC3 bytes. Probe that a prefix match cannot pass.                                                       |
+| UX browser review      | Not applicable            | No UI. The orchestrator states no UI is in scope. No `PROJECT_DEV_URL` is needed.                                                                                                 |
+| Phase acceptance       | Applicable                | Runs last on the immutable `phase_base_sha` captured after this strategy commit.                                                                                                  |
 
 ## Anti-pattern coverage and falsification
 
 Every case above has a falsification condition in its table row. The registry used here is
 `advantage-pr/measure/anti-patterns.md` (A1-A10). Applicable entries for Phase 1:
 
-| ID | Defense in this phase | Falsification |
-| --- | --- | --- |
-| A3 digit-only count | Parse the labeled count in the success line and require it to equal 2 in case 1. Use a labeled integer, not `rg '[0-9]+'` or a loose regex. | A count taken from a path, date, or any other digit fails the equality check. |
-| A4 vacuous pass | Require exactly two ordered `calls.log` lines and two output files in case 1. Zero calls is a failure. | A run that renders nothing cannot pass the full-render case. |
-| A5 false claim | Run every cited gate command and require exit 0 before the plan records a pass. | A README or plan claim that contradicts a red gate is caught by the closeout gate. |
-| A6 registry overstatement | The tracks.md row and evidence claim seven committed files only after all gates pass. | A claim made while case 9 is red is caught by acceptance on the immutable HEAD. |
-| A7 over-broad filter | Use exact `stderr.trim()` equality for all 12 D5 lines. No prefix match, no bare-word filter. | Extra text after a correct prefix fails exact equality. |
-| A10 generated-facts drift | Run `generate.mjs --check`, regenerate, and run the doctor after staging new files (A10). | Stale committed facts fail the doctor generated-facts check. |
+| ID                        | Defense in this phase                                                                                                                       | Falsification                                                                      |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| A3 digit-only count       | Parse the labeled count in the success line and require it to equal 2 in case 1. Use a labeled integer, not `rg '[0-9]+'` or a loose regex. | A count taken from a path, date, or any other digit fails the equality check.      |
+| A4 vacuous pass           | Require exactly two ordered `calls.log` lines and two output files in case 1. Zero calls is a failure.                                      | A run that renders nothing cannot pass the full-render case.                       |
+| A5 false claim            | Run every cited gate command and require exit 0 before the plan records a pass.                                                             | A README or plan claim that contradicts a red gate is caught by the closeout gate. |
+| A6 registry overstatement | The tracks.md row and evidence claim seven committed files only after all gates pass.                                                       | A claim made while case 9 is red is caught by acceptance on the immutable HEAD.    |
+| A7 over-broad filter      | Use exact `stderr.trim()` equality for all 12 D5 lines. No prefix match, no bare-word filter.                                               | Extra text after a correct prefix fails exact equality.                            |
+| A10 generated-facts drift | Run `generate.mjs --check`, regenerate, and run the doctor after staging new files (A10).                                                   | Stale committed facts fail the doctor generated-facts check.                       |
 
 Not applicable in this phase: A1 (supervisor substring heuristic), A2 (consent-blind publish),
 A8 (supervisor marker regex), A9 (archived-track path in a test). State this in the audit so the

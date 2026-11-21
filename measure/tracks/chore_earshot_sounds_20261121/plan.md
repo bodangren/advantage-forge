@@ -22,16 +22,25 @@ Files this track touches:
 
 - [x] T1 Red: Add `tests/sound-set.test.ts`. Use `spawnSync(process.execPath, [script, ...])` with [commit `8a5582cc`]
       `env` set to `SOUNDS_ROOT=<temp root>` and `EARSHOT_BIN=<fake>`. The test writes the fake binary
-      as a Node script with an executable mode. The fake appends `process.argv.slice(2).join(' ')` to
-      `<temp>/calls.log`. It writes `OggS` to the `-o` path unless `<temp>/no-write` holds the sound
-      name. It exits 3 when the `-o` path ends with `/<name>.ogg` for the name in `<temp>/fail-at`,
-      and it exits 0 otherwise. The test compares `stderr.trim()` with the exact line of the spec D5
-      table, after the value substitution. The nine cases:
+      as a Node script with an executable mode. The fake derives the sound name from the `-o` path,
+      then appends `process.argv.slice(2).join(' ')` to `<temp>/calls.log` on every call, before the
+      `fail-at` check. It prints `fake-out <name>` to stdout and `fake-err <name>` to stderr on every
+      call. It writes `OggS` to the `-o` path unless `<temp>/no-write` holds the sound name. It exits
+      3 when the `-o` path ends with `/<name>.ogg` for the name in `<temp>/fail-at`, and it exits 0
+      otherwise. Forwarding reading (D5: the wrapper forwards the output of a successful call, prints
+      none of a failed call's output, and prints nothing else on stderr): a successful child's stdout
+      and stderr are both forwarded to the wrapper's stdout in call order, each followed by its
+      `sound-set: <name>.ogg <- <design>` line; the wrapper's stderr stays empty on success and
+      carries only the single exact failure line on failure. The test compares `stderr.trim()` with
+      the exact line of the spec D5 table, after the value substitution. The ten cases:
 
   1. Full render: `sounds/sets/fake.json` holds two entries, `alpha` to `tap/soft` and `beta` to
      `error/knock`. The wrapper exits 0. `calls.log` holds exactly two lines, in set order:
      `make --sound tap/soft -o <root>/sounds/fake/alpha.ogg` and
-     `make --sound error/knock -o <root>/sounds/fake/beta.ogg`. The two output files exist.
+     `make --sound error/knock -o <root>/sounds/fake/beta.ogg`. The two output files exist. Stdout
+     holds seven lines in order: `fake-out alpha`, `fake-err alpha`,
+     `sound-set: alpha.ogg <- tap/soft`, `fake-out beta`, `fake-err beta`,
+     `sound-set: beta.ogg <- error/knock`, and `sound-set: 2 sounds -> sounds/fake`. Stderr is empty.
   2. Missing set file: `sounds/sets/none.json` is absent. Exit 1, the line is
      `sound-set: set file not found: <root>/sounds/sets/none.json`, and `calls.log` is absent.
   3. Set JSON error: `sounds/sets/bad.json` holds `not json`. Exit 1, the line is
@@ -45,15 +54,23 @@ Files this track touches:
   6. Binary errors, with the valid `sounds/sets/fake.json`: `EARSHOT_BIN` names an absent path,
      then a file without the execute bit. Each gives exit 1, the line
      `sound-set: earshot not found at <path>; run scripts/sound-setup.sh`, and no calls.
-  7. Failed render: `fail-at` holds `beta`. Exit 1, the line is
-     `sound-set: earshot failed for beta (error/knock) with exit 3`, and `calls.log` holds only the
-     `alpha` line.
+  7. Failed render: `sounds/sets/fake.json` holds three entries, `alpha` to `tap/soft`, `beta` to
+     `error/knock`, and `gamma` to `pop/bubble`; `fail-at` holds `beta`. Exit 1, the line is
+     `sound-set: earshot failed for beta (error/knock) with exit 3`, and `calls.log` holds the
+     `alpha` and `beta` lines only: `gamma` is never called. Stdout forwards the successful `alpha`
+     output (`fake-out alpha`, `fake-err alpha`, `sound-set: alpha.ogg <- tap/soft`) and holds none
+     of `beta`'s output and no `gamma` line. Stderr holds only the exact failure line.
   8. Missing output: `no-write` holds `alpha`. Exit 1, the line is
-     `sound-set: earshot wrote no file for alpha (tap/soft): <root>/sounds/fake/alpha.ogg`, and
-     `calls.log` holds only the `alpha` line.
-  9. Committed files: read `sounds/sets/chibi.json` in the repository. For each entry, run the nine
-     AC3 steps on `sounds/chibi/<name>.ogg` and fail on the first step that does not hold. The
-     reader uses `readFileSync` and `readUInt32LE`, with no audio library.
+     `sound-set: earshot wrote no file for alpha (tap/soft): <root>/sounds/fake/alpha.ogg`, stdout is
+     empty, and `calls.log` holds only the `alpha` line.
+  9. Stale output (F1 regression): the target `<root>/sounds/fake/alpha.ogg` already exists before
+     the run and the fake writes nothing for `alpha`. Exit 1, the line is
+     `sound-set: earshot wrote no file for alpha (tap/soft): <root>/sounds/fake/alpha.ogg`, stdout is
+     empty, and `calls.log` holds only the `alpha` line. A write from the current invocation is
+     required; a pre-existing file does not satisfy the check.
+  10. Committed files: read `sounds/sets/chibi.json` in the repository. For each entry, run the nine
+      AC3 steps on `sounds/chibi/<name>.ogg` and fail on the first step that does not hold. The
+      reader uses `readFileSync` and `readUInt32LE`, with no audio library.
 
   Run the file through the heavy runner. Case 9 and the missing `scripts/sound-set.mjs` make the
   suite fail. That failure is the Red proof.
@@ -112,3 +129,24 @@ tests/sound-set.test.ts` passes.
     `sounds/chibi/whoosh.ogg`, `sounds/chibi/level-end.ogg`. All seven land in commit
     `e45704be17d785cd89570ae5637e41e332fe2862`. The same evidence line is in
     `measure/runs/chore_earshot_sounds_20261121/green.log`.
+
+- [~] T4 Red r2 (remediation for review A): own the test side of F1, F2, and F4. Touch only
+  `tests/sound-set.test.ts`, `plan.md`, `test-strategy.md`, and the run log. Change no
+  production source. F1: add a stale-output regression (the target
+  `<root>/sounds/fake/alpha.ogg` already exists and the fake writes nothing for alpha, so the
+  wrapper must exit 1 with the exact D5 no-file line; a write from the current invocation is
+  required). F2: log the failed call in `calls.log` before the fake exits non-zero; use a third
+  entry (`gamma` to `pop/bubble`) so the fail-at-`beta` case proves `gamma` is never called;
+  print a known stdout line and a known stderr line from the fake and assert forwarding for
+  successful calls and suppression for the failed call per D5. F4: assert a successful child's
+  stderr is preserved without breaking the exact-line contract for wrapper failure lines. Align
+  the case-7 expectation text here and in `test-strategy.md` with the new test. Run the targeted
+  Red command; the new assertions fail for the right reasons with no syntax or import error.
+  - Red evidence: `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run --maxWorkers=1 tests/sound-set.test.ts'`.
+    Log: `measure/runs/chore_earshot_sounds_20261121/red-r2.log`
+  - Red result (2026-11-21): exit 1 with 3 failed and 14 passed of 17 tests. The full-render case
+    fails because stdout lacks the `fake-err` lines (F4: successful child stderr dropped). The
+    fail-at-`beta` case fails on the missing forwarded `fake-err alpha` (F4); its stop rule holds
+    (`calls.log` has the `alpha` and `beta` lines, `gamma` never called) and its exact failure line
+    holds. The stale-output case fails with exit 0 instead of 1 (F1: pre-existing target accepted).
+    No syntax or import error. `prettier --check` on the touched files passes.
