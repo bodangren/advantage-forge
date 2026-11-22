@@ -250,6 +250,23 @@ tests/apk3d/no-unpolyfilled-builtins.test.ts` returns nothing.
     catches: the URL row, the template row, and the argument row. The same rows passed in the T3
     default run, so the controls hold with and without the flag.
 
+- [ ] T5r Green remediation (review r1 A-F1, C-F1, C-F4 JSDoc)
+
+- [x] T3r Red (64ddb5e9): review r1 test findings A-F2, A-F3, A-F4, C-F2, C-F3 and F1 regression cases
+  - Red evidence (commit `64ddb5e9`): the three-file gate exits 1 with only the two F1 regression
+    cases failing (`tests/old-browser/deep-copy.test.ts` sparse-array length and own `__proto__`
+    key against the current `src/apk3d/sim/copy.ts`); the other 11 tests pass (log
+    `measure/runs/old_browser_builtins_20261122/red-p2-r1-final.log`). The fail-first run before the
+    scanner fix exited 1 with 4 failures: the same 2 F1 cases plus the 7 new scanner control rows
+    and the exclusion-binding control (log `red-p2-r1-failfirst.log`). The scanner now distinguishes
+    division from regex literals, matches nested `.at(` arguments and comments before `(`, keeps
+    exact `this.`/`z.` receiver boundaries, binds each `src/render/page.ts` exclusion to its call
+    text, and covers all 19 labels as code. The index-math site check requires the exact helper call
+    at each of the nine distinct sites with a breakage proof per site. The TS2769 at
+    `tests/old-browser/deep-copy.test.ts:101` is fixed without changing the state-type check:
+    `tsc --noEmit` reports no error in `tests/old-browser/`. `prettier --check` exits 0 on the three
+    test files.
+
 ## Phase 3: Browser check
 
 - [ ] T7 Measure: Add `scripts/old-browser-check.mjs` per AC5. Prerequisite, met: task T6k
