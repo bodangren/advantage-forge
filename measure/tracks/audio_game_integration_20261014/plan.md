@@ -786,6 +786,23 @@ Files this track touches:
     and no docs edit was needed.
   - The target stays proposed. No dated PM answer has landed in this plan. `out/` stays ignored and
     untracked.
+  - [x] T8r Red (91ad6b8a): review r1 A-F1, A-F3/C-F1, C-F2, C-F3 cases (A-F2 name check pinned by
+    098decd4, not duplicated here). The monorepo status check runs in the explicit hand-off gate
+    and skips in the default suite when the sibling checkout is absent; a default-suite case proves
+    the skip against a missing probe path. The README case asserts the real load rule (`keep the
+    choice`, `prefers Ogg`, `preload`, `reuse`), the verify step (`sha256sum -c MANIFEST.sha256`),
+    and the copy step (`copy the 14 sound files`, `from inside the folder`). The `--help` case
+    runs the script in a temp working copy, requires exit 0 with one usage line on stdout, and
+    compares the real hand-off file list and mtimes before and after.
+    Red evidence: the default command
+    `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run tests/audio-handoff.test.ts --maxWorkers=1'`
+    exits 1 with 1 failed, 4 passed, and 5 skipped (10): only the `--help` case fails (exit 0 with
+    the normal build line, no usage line). The flagged command with `AUDIO_HANDOFF_ARTIFACTS=1`
+    against the current-script artifact exits 1 with 2 failed and 8 passed (10): the `--help` case
+    and the README case (`README states the one-time format choice: expected false to be true`).
+    `node_modules/.bin/prettier --check tests/audio-handoff.test.ts` exits 0. `tsc --noEmit`
+    through the heavy runner reports 51 baseline errors with none in the test file.
+  - [~] T8g Green remediation (name check, README load rule and recipient steps, --help, plan checksum command, symlink rejection)
 
 ## Phase 6: Deferred work
 
