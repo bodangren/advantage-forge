@@ -635,8 +635,12 @@ Files this track touches:
     exits 0 with 4 of 4 tests in each of two runs.
     - Run 1: `{"bytes":79319,"files":6,"seconds":0.7048000000715255}`.
     - Run 2 (closeout repeat): `{"bytes":79319,"files":6,"seconds":0.7216000000238418}`. These
-      later values are the recorded result. `out/audio-budget/rune-match.json` holds only these
-      three fields and stays untracked.
+      later values are the recorded result. At T7 the artifact held these three fields and stayed
+      untracked; T7g adds the two evidence fields.
+    - Seconds correction (review C F2, 2026-11-23): the artifact observed at review held
+      `seconds: 0.7038000000715255`, not the logged repeat value. Each measurement overwrites the
+      ignored artifact, so both logged run values stay as run evidence and the review observation
+      is recorded here. The new T7g measurement is the current artifact.
   - Server note: the script starts `node node_modules/vite/bin/vite.js --config
     vite.demo.config.ts --base /demo/ --port 5199 --strictPort --host 127.0.0.1` from the repo
     root. The literal command without the config serves no `demo/public` files, so the page cannot
@@ -667,7 +671,26 @@ Files this track touches:
     run) exits 1 with 2 failed and 3 passed (5): the JSON case fails on
     `rune-match decoded is a labeled number: expected 'undefined' to be 'number'` and the CLI
     case fails as above. `node_modules/.bin/prettier --check tests/audio-budget.test.ts` exits 0.
-  - [ ] T7g Green remediation (decode and file-effect evidence, usage text, JSON gate flag)
+  - [x] T7g Green remediation (31d5adae): decode and file-effect evidence, usage text, JSON gate flag
+  - Implementation commit `31d5adaeca1f20912d7d66dfd6c0af198fd3a7f5` changes only
+    `scripts/audio-budget.mjs`; no test or `src/` file changed. An init script wraps
+    `AudioContext.prototype.decodeAudioData`, `AudioBufferSourceNode.prototype.start`, and
+    `OscillatorNode.prototype.start` to count successful decodes and the first effect after the
+    unlock. No bus call or fetch is stubbed. The JSON now holds `bytes`, `files`, `seconds`,
+    `decoded`, and `fileEffect`. The script exits 1 and writes no JSON when decodes differ from
+    files or the first effect is not a decoded file.
+  - CLI: `--help` prints one usage line on stdout and exits 0. A missing or unknown `--game`
+    prints one usage line on stderr and exits 1, with no stack trace. SIGINT and SIGTERM call the
+    same browser and Vite cleanup as normal completion. `waitForServer` now requires the Vite
+    child to stay alive and to log `ready in`, so a foreign listener on 5199 fails fast.
+  - Gate 1 2026-11-23: `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run tests/audio-budget.test.ts --maxWorkers=1'`
+    exits 0 with 4 passed and 1 skipped (5). The skip is the JSON case, which needs a measurement.
+  - Gate 2 2026-11-23: `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/audio-budget.mjs --game rune-match && AUDIO_BUDGET_JSON=1 node node_modules/vitest/vitest.mjs run tests/audio-budget.test.ts --maxWorkers=1'`
+    exits 0 with 5 passed (5). The printed JSON is
+    `{"bytes":79319,"files":6,"seconds":0.7066000000238418,"decoded":6,"fileEffect":true}`.
+    `out/audio-budget/rune-match.json` stays ignored. `ss -ltnp` finds no listener on 5199 after
+    the run. `node_modules/.bin/prettier --check scripts/audio-budget.mjs` exits 0.
+  - dispositions: A-F1=FIX; A-F2=FIX; C-F1=FIX; C-F4=FIX; A-F3=FIX; B-N1=FIX
 
 ## Phase 5: Hand-off to the PM
 
