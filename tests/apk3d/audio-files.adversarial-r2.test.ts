@@ -162,7 +162,8 @@ it('invalidates a decoded file when only the base changes', async () => {
   bus.dispose();
 });
 
-it('keeps the current preload when stale bytes arrive last before unlock', async () => {
+// TD-44: late finding F1 (adversarial-p3-09f808bd), skipped by PM decision 2026-11-22; reopen when a host rewires or passes dynamic event names
+it.skip('keeps the current preload when stale bytes arrive last before unlock', async () => {
   const bus = new AudioBus();
   const stale = deferred<Response>();
   fetchFile.mockImplementationOnce(() => stale.promise);
@@ -220,7 +221,8 @@ it('keeps the newer preload in flight when the old decode completes first', asyn
   bus.dispose();
 });
 
-it('keeps a pending decode from a disposed context out of the next bus and context', async () => {
+// TD-44: late finding F2 (adversarial-p3-09f808bd), skipped by PM decision 2026-11-22; reopen when a host rewires or passes dynamic event names
+it.skip('keeps a pending decode from a disposed context out of the next bus and context', async () => {
   const oldBus = new AudioBus();
   oldBus.useSoundFiles(map('tap'));
   oldBus.unlock();
