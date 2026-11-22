@@ -87,7 +87,7 @@ Files this track touches:
 
 ## Phase 2: MP3 copies in the wrapper
 
-- [~] T3 Red (efdb0314): Add `tests/sound-set-mp3.test.ts`, and change the stdout assertion of case 1 in
+- [x] T3 Red (efdb0314): Add `tests/sound-set-mp3.test.ts`, and change the stdout assertion of case 1 in
       `tests/sound-set.test.ts` to the new line order. The test uses `spawnSync` with
       `SOUNDS_ROOT=<temp root>`, a fake earshot binary, and a fake ffmpeg binary. Each fake appends
       `process.argv.slice(2).join(' ')` to its own log, as `tests/sound-set.test.ts` does. The five
@@ -117,8 +117,14 @@ Files this track touches:
   - Note for Green: the plan text says case 1 gives "14 files" for two entries. Two entries give
     four files (two `.ogg`, two `.mp3`); 14 is the seven-entry real-set count. The committed test
     asserts the four fake files and names this correction here.
+  - Fixture repair 2026-11-22: test commit efdb0314ec42561ec162d46e2d92f61623341c94. The three
+    committed fixtures follow AC2's exact argv and per-entry order. See the second block of
+    `measure/runs/audio_game_integration_20261014/red-p2.log`.
+  - Green result 2026-11-22: after script commit 3e3ed5a5 and file commit debbf930, the command
+    `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sound-set.test.ts tests/sound-set-mp3.test.ts tests/sound-set.adversarial.test.ts'`
+    exited 0 with 3 files and 91 of 91 tests passing.
 
-- [~] T4 Green: Add the MP3 step to `scripts/sound-set.mjs` per spec AC2. Add the `FFMPEG_BIN`
+- [x] T4 Green (debbf930): Add the MP3 step to `scripts/sound-set.mjs` per spec AC2. Add the `FFMPEG_BIN`
       lookup, the target preparation for the `.mp3`, and the three failure lines with their exits.
       Then render the real set once, and stage the seven `.mp3` files with explicit paths.
   - Green done-when: the T3 command exits 0 with every test passing. The render command exits 0 and
@@ -129,6 +135,20 @@ Files this track touches:
     (`measure/archive/chore_earshot_sounds_20261121/spec.md`, D8). Record the ffmpeg version line.
     A first render can take about 69 s for the numba compile.
   - The earshot and ffmpeg versions go in `sounds/README.md`, next to the design line.
+  - Green result 2026-11-22: script commit 3e3ed5a5f847c6fe64709c3d4c675b8ea0ae9cf2 and file commit
+    debbf930001ae186a72ec3e860d6a5eba09806b9. The Green command exited 0 with 3 files and 91 of 91
+    tests. The render command exited 0 and wrote 14 files. The pre-render run failed only on MP3
+    case 5 with ENOENT for `sounds/chibi/tap.mp3`, before the real render.
+  - Ogg byte report: all seven `.ogg` files changed 24 bytes each on render. The changed bytes are
+    the Ogg stream serial and page CRCs. File sizes and decoded audio are unchanged. The seven
+    `.ogg` files were restored to HEAD, and the seven `.mp3` files were re-encoded from those
+    committed Oggs with the pinned argv. Re-encoded MP3 bytes equal the render MP3 bytes.
+  - `sounds/README.md` now holds byte size and duration for all 14 files, in two tables. It records
+    earshot 1.0.0 and `ffmpeg version 8.0.1-3ubuntu2`. The Ogg total is 90,468 bytes and the MP3
+    total is 71,136 bytes.
+  - Project gate 2026-11-22: `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts'`
+    exited 0 with 214 files and 3267 of 3267 tests. `node measure/tools/generate.mjs --check` exited
+    0. `./measure/doctor.sh --structural-only` exited 0.
 
 ## Phase 3: File playback in the AudioBus
 
