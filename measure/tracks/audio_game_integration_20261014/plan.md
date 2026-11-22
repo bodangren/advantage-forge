@@ -489,6 +489,9 @@ Files this track touches:
 - Late finding F1: tech-debt (TD-44; no current host rewires before unlock, so no wrong current result; PM decision 2026-11-22)
 - Late finding F2: tech-debt (TD-44; no host reuses a disposed bus, so no wrong current result; PM decision 2026-11-22)
 - Late finding F3: tech-debt (TD-44; guard added in 1b7312f4; no host passes inherited names; PM decision 2026-11-22)
+- Late finding A6-F2: tech-debt (scanner gap; fixed by track old_browser_builtins_20261122 AC3 controls; no user reaches it)
+- Late finding ADV5-S1: tech-debt (scanner gap; fixed by track old_browser_builtins_20261122 AC3 controls; no user reaches it)
+- Late finding ADV5-R1: tech-debt (TD-44; no current host remaps or uses non-enumerable keys)
 - [x] T6j Red (b913e55d): old-browser and inherited-remap pins, unpolyfilled built-in scan
   - Old-browser pin: already in 0750febc. `withoutNativeHasOwn` deletes `Object.hasOwn`
     for the case and restores it in `finally` via the saved descriptor
