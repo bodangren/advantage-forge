@@ -328,7 +328,43 @@ Workbooks does not wait for it.
     script change, no frame changes for the other cast). cutout-check flags only the known
     reach tiptoe (lowest opaque row 1833, foot row 1840). typecheck 0 errors in sprout-mom;
     the 3 sprout vitest files pass 10/10. Log green-p5-adult-base.log.
+  - Mom listen waist/hem fix a73bc9a7 (2026-11-22, orchestrator look check:
+    a blue jeans oval through the sweater's right side at the waist in listen, and
+    a skin patch under the hem centre). Same cause as Grandpa 10632c67: the rigid
+    jean-leg cone ran to the HIP joint (sharp cap rim at chest height) and the
+    listen spine roll swung the sweater side off the static rim. Leg cones start
+    tucked inside the hip mass (hipsY - 0.03, top radius 0.058); hip mass on the
+    torso weight bands, 0.90/0.92 slimmer; hem 12 mm lower (0.688, still flat).
+    Separate sleeve body and ef5be6c4 sleeve fix unchanged. `./forge all
+    sprout-mom` exits 0 with no warning lines (34,468 tris, 0.544 x 1.552 x 0.37
+    m). `./forge check sprout-mom` fails only the two earlier waived clips
+    (touch-nose, listen); ground ok. Mom's 25 cut-outs were re-rendered at
+    1760x1856; cutout-check flags only the four known reach tiptoe frames. The
+    three sprout vitest files pass 15/15. typecheck-asset reports 0 errors. In the
+    fresh listen.png the waist side is clean cream with no blue, and the pixel map
+    under the hem shows only sweater, jeans, and background, no skin; turn-side,
+    reach, hug-self, and point-up are clean. Log green-p5-adult-base.log.
   - [x] Dad (young father, tallest of the family, due 11-22; feat 633a40c5)
+  - Dad listen waist/hem fix c3307a6b (2026-11-22, orchestrator look check:
+    a blue jeans oval through the shirt/tee's right side at the waist in listen,
+    and a small skin patch under the tee hem centre). Same cause as Grandpa
+    10632c67: the rigid jean-leg cone ran to the HIP joint (sharp cap rim at
+    chest height) and the listen spine roll swung the shirt side off the static
+    rim. Leg cones start tucked inside the hip mass (hipsY - 0.03, top radius
+    0.058); hip mass on the torso weight bands, 0.90/0.92 slimmer; tee and
+    open-shirt hems 12 mm lower (hemY - 0.062). Open plaid shirt design and
+    ef5be6c4 sleeve fix unchanged. `./forge all sprout-dad` exits 0 with no
+    warning lines (35,570 tris, 0.544 x 1.61 x 0.357 m, dims unchanged).
+    `./forge check sprout-dad` fails only the three earlier waived clips
+    (touch-nose, touch-neck, listen); ground ok. Dad's 25 cut-outs were
+    re-rendered at 1760x1856; cutout-check flags only the four known reach tiptoe
+    frames. The three sprout vitest files pass 15/15. typecheck-asset reports 0
+    errors. In the fresh listen.png the waist side is clean plaid/tee with no
+    blue (the few grey pixels are edge anti-aliasing), and the white tee dips
+    between the legs with no skin showing; turn-side, reach, hug-self, and
+    point-up are clean. Grandma's listen.png shows no fault of this class (long
+    skirt, clean cardigan sides), so she is untouched. Log
+    green-p5-adult-base.log.
   - [x] Grandma (older woman, a little shorter than Mom, due 11-23; feat 588f82c4)
     `assets/sprout-grandma.ts` on a GRANNY set (ADULT shrunk 6 % in height only, in this
     file only; widths stay the adult's, roundness from the cardigan and skirt bodies;
