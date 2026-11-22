@@ -461,7 +461,7 @@ Files this track touches:
   - Full log: `measure/runs/audio_game_integration_20261014/red-p3-t6g.log`.
   - Green verified at 2fb45ba: 5 files, 46 of 46 tests. The fixture repair commit 1bc1cd21
     resolves the new file fetch, so both cases reach their final assertions and pass.
-- [x] T6h Green: bind each load to its mapping; reject stale completions
+- [x] T6h Green (2fb45ba3): bind each load to its mapping; reject stale completions
   Commit `2fb45ba3534df6c78b3639cf87803d7d3c5a69ba` changes only `src/apk3d/audio/bus.ts`; no test
   file changed. Each load carries the URL that started it. `isCurrent(name, url)` resolves the
   event under the current map and base and compares the URL. A fetch or decode that finishes after
