@@ -237,18 +237,17 @@ export const U2_LOOK_TRY = {
       kind: 'color',
       allowedTries: 3,
       source:
-        'PM ORDER (Daniel look, Task 2.8 of Workbooks unit 2; Daniel\'s words, Tasks 2026-11-11 06:27 ICT: "Hat-pip image passes, but the w10 put on your t shirt image doesn\'t pass."). One small light task, 1 role (slot wait first), paid stop 0.10 USD inside the unit 2 budget (Daniel\'s Go, hard stop 25.21 USD; unit 2 spend about 17.5 USD): (1) HAT-PIP, 0 USD: make a delivery job for l2-w10-story-page-put-on-your-hat-pip from color m3 + line try 3 (the files in storytime-l2u2-book-pictures-repair1/not-delivered/), with Daniel\'s words above as the recorded acceptance (the judges\' wrong-character fail is waived by the owner). (2) REDO l2-w10-story-page-put-on-your-t-shirt (v1 in storytime-l2u2-book-pictures/, color 9e207c3c…, line 71e2ba05…). PM diagnosis: the action does not read as "Put on your T-shirt": in the color print the boy already wears a yellow T-shirt and pulls a second yellow cloth over his head like a hood; the line print shows a cap and waving hands, so color and line do not match. Target: the same boy and room, mid-action: his head and both arms are through a yellow T-shirt, and he pulls it down over his body (a white vest under it, so no bare skin); the T-shirt is the clear focus. Color first (up to 3 tries), then the line art from the passing color (up to 3 tries), with your calibrated judge; the line print must show the same action. Deliver both jobs in a NEW folder ~/Desktop/handoff/storytime-l2u2-book-pictures-look1/ with MANIFEST.txt and a contact sheet; old folders unchanged. Report the path, the MANIFEST sha256, the spend lines, and the judge results. Facts changed list at the end.',
+        "PM ORDER (Daniel look, Task 2.8 of Workbooks unit 2; Daniel's words, Tasks 2026-11-11 06:27 ICT: \"Hat-pip image passes, but the w10 put on your t shirt image doesn't pass.\"). One small light task, 1 role (slot wait first), paid stop 0.10 USD inside the unit 2 budget (Daniel's Go, hard stop 25.21 USD; unit 2 spend about 17.5 USD): (1) HAT-PIP, 0 USD: make a delivery job for l2-w10-story-page-put-on-your-hat-pip from color m3 + line try 3 (the files in storytime-l2u2-book-pictures-repair1/not-delivered/), with Daniel's words above as the recorded acceptance (the judges' wrong-character fail is waived by the owner). (2) REDO l2-w10-story-page-put-on-your-t-shirt (v1 in storytime-l2u2-book-pictures/, color 9e207c3c…, line 71e2ba05…). PM diagnosis: the action does not read as \"Put on your T-shirt\": in the color print the boy already wears a yellow T-shirt and pulls a second yellow cloth over his head like a hood; the line print shows a cap and waving hands, so color and line do not match. Target: the same boy and room, mid-action: his head and both arms are through a yellow T-shirt, and he pulls it down over his body (a white vest under it, so no bare skin); the T-shirt is the clear focus. Color first (up to 3 tries), then the line art from the passing color (up to 3 tries), with your calibrated judge; the line print must show the same action. Deliver both jobs in a NEW folder ~/Desktop/handoff/storytime-l2u2-book-pictures-look1/ with MANIFEST.txt and a contact sheet; old folders unchanged. Report the path, the MANIFEST sha256, the spend lines, and the judge results. Facts changed list at the end.",
     },
     {
       id: 'l2-w10-story-page-put-on-your-t-shirt',
       kind: 'line',
       allowedTries: 3,
       source:
-        'PM ORDER (Daniel look, Task 2.8 of Workbooks unit 2; Daniel\'s words, Tasks 2026-11-11 06:27 ICT: "Hat-pip image passes, but the w10 put on your t shirt image doesn\'t pass."). One small light task, 1 role (slot wait first), paid stop 0.10 USD inside the unit 2 budget (Daniel\'s Go, hard stop 25.21 USD; unit 2 spend about 17.5 USD): (1) HAT-PIP, 0 USD: make a delivery job for l2-w10-story-page-put-on-your-hat-pip from color m3 + line try 3 (the files in storytime-l2u2-book-pictures-repair1/not-delivered/), with Daniel\'s words above as the recorded acceptance (the judges\' wrong-character fail is waived by the owner). (2) REDO l2-w10-story-page-put-on-your-t-shirt (v1 in storytime-l2u2-book-pictures/, color 9e207c3c…, line 71e2ba05…). PM diagnosis: the action does not read as "Put on your T-shirt": in the color print the boy already wears a yellow T-shirt and pulls a second yellow cloth over his head like a hood; the line print shows a cap and waving hands, so color and line do not match. Target: the same boy and room, mid-action: his head and both arms are through a yellow T-shirt, and he pulls it down over his body (a white vest under it, so no bare skin); the T-shirt is the clear focus. Color first (up to 3 tries), then the line art from the passing color (up to 3 tries), with your calibrated judge; the line print must show the same action. Deliver both jobs in a NEW folder ~/Desktop/handoff/storytime-l2u2-book-pictures-look1/ with MANIFEST.txt and a contact sheet; old folders unchanged. Report the path, the MANIFEST sha256, the spend lines, and the judge results. Facts changed list at the end.',
+        "PM ORDER (Daniel look, Task 2.8 of Workbooks unit 2; Daniel's words, Tasks 2026-11-11 06:27 ICT: \"Hat-pip image passes, but the w10 put on your t shirt image doesn't pass.\"). One small light task, 1 role (slot wait first), paid stop 0.10 USD inside the unit 2 budget (Daniel's Go, hard stop 25.21 USD; unit 2 spend about 17.5 USD): (1) HAT-PIP, 0 USD: make a delivery job for l2-w10-story-page-put-on-your-hat-pip from color m3 + line try 3 (the files in storytime-l2u2-book-pictures-repair1/not-delivered/), with Daniel's words above as the recorded acceptance (the judges' wrong-character fail is waived by the owner). (2) REDO l2-w10-story-page-put-on-your-t-shirt (v1 in storytime-l2u2-book-pictures/, color 9e207c3c…, line 71e2ba05…). PM diagnosis: the action does not read as \"Put on your T-shirt\": in the color print the boy already wears a yellow T-shirt and pulls a second yellow cloth over his head like a hood; the line print shows a cap and waving hands, so color and line do not match. Target: the same boy and room, mid-action: his head and both arms are through a yellow T-shirt, and he pulls it down over his body (a white vest under it, so no bare skin); the T-shirt is the clear focus. Color first (up to 3 tries), then the line art from the passing color (up to 3 tries), with your calibrated judge; the line print must show the same action. Deliver both jobs in a NEW folder ~/Desktop/handoff/storytime-l2u2-book-pictures-look1/ with MANIFEST.txt and a contact sheet; old folders unchanged. Report the path, the MANIFEST sha256, the spend lines, and the judge results. Facts changed list at the end.",
     },
   ],
 };
-
 
 /**
  * Cover run (2026-11-10, D7). The Teacher Book front art of Storytime Level 2 unit 1 is one paid
@@ -267,14 +266,34 @@ export const COVER_RUN = {
   outDir: 'out/storytime/covers/teacher-front/muse',
 };
 
+/**
+ * Faces r2 run (2026-11-22, Step 2b). The six Muse likeness calls are one paid run with its own
+ * start time, stop, report point, margin, try cap, and output folder. This constant is the only
+ * owner of these values. A faces call reads only the cost file of its own folder, so the book,
+ * app, and cover caps never count faces spend and the faces cap never counts their spend. The
+ * elements folder is a copy destination and takes no call, so the guard allows only the exact
+ * `muse` folder. The value of `startTime` is the real UTC time of this guard task, cut to the
+ * minute.
+ */
+export const FACES_R2_RUN = {
+  startTime: '2026-11-22T09:43:00Z',
+  capUsd: 0.08,
+  reportAtUsd: 0.06,
+  marginUsd: 0.01,
+  maxTries: 1,
+  outDir: 'out/chibi-sprouts/faces-r2/muse',
+};
+
 /** The 8 unit 2 week folders. Only these folders hold unit 2 cost files. */
 export const U2_WEEKS = ['w09', 'w10', 'w11', 'w12', 'w13', 'w14', 'w15', 'w16'];
 
 /** The refusal message of a unit 2 call while the cap is empty. */
-export const U2_CAP_MESSAGE = 'refused: the unit 2 cap is empty; the PM writes the approved limit in U2_RUN.capUsd';
+export const U2_CAP_MESSAGE =
+  'refused: the unit 2 cap is empty; the PM writes the approved limit in U2_RUN.capUsd';
 
 /** The refusal message of a unit 2 family-word call while the app cap is empty. */
-export const U2_FW_CAP_MESSAGE = 'refused: the unit 2 family-word cap is empty; the PM writes the approved limit in U2_FW_RUN.capUsd';
+export const U2_FW_CAP_MESSAGE =
+  'refused: the unit 2 family-word cap is empty; the PM writes the approved limit in U2_FW_RUN.capUsd';
 
 /** The refusal message of a listed unit 2 call while the exception cap is empty. */
 export const U2_EXTRA_CAP_MESSAGE =
@@ -285,7 +304,12 @@ export const U2_LOOK_CAP_MESSAGE =
   'refused: the unit 2 look cap is empty; the PM writes the approved limit in U2_LOOK_TRY.capUsd';
 
 /** The refusal message of a cover call while the cover cap is empty. */
-export const COVER_CAP_MESSAGE = 'refused: the cover cap is empty; the PM writes the approved limit in COVER_RUN.capUsd';
+export const COVER_CAP_MESSAGE =
+  'refused: the cover cap is empty; the PM writes the approved limit in COVER_RUN.capUsd';
+
+/** The refusal message of a faces r2 call while the faces cap is empty. */
+export const FACES_R2_CAP_MESSAGE =
+  'refused: the faces r2 cap is empty; the PM writes the approved limit in FACES_R2_RUN.capUsd';
 
 /** The refusal message of a cover line call. The cover art is color only. */
 export const COVER_LINE_MESSAGE = 'refused: the cover class is color only; it has no line call';
@@ -319,6 +343,9 @@ const U2_WEEK_SET = new Set(U2_WEEKS);
 
 /** The exact cover folder of the cover run. No other folder carries the kind `cover`. */
 const COVER_OUT_DIR = resolve(ROOT, COVER_RUN.outDir);
+
+/** The exact faces r2 folder. No other folder carries the kind `facesR2`. */
+const FACES_R2_OUT_DIR = resolve(ROOT, FACES_R2_RUN.outDir);
 
 /** The cover root: the folder that holds every cover folder. */
 const COVER_ROOT = resolve(ROOT, 'out/storytime/covers');
@@ -364,8 +391,9 @@ export const isUnit2FwOutDir = (specOrPath) => {
 
 /**
  * The guard options of a CLI call. The test-only cap keys `u2CapUsd`, `u2FwCapUsd`,
- * `u2ExtraCapUsd`, `u2LookCapUsd`, and `coverCapUsd` never reach `runGuards` from the CLI, so a
- * future option-parser change cannot raise a cap. A JS caller keeps its own options object.
+ * `u2ExtraCapUsd`, `u2LookCapUsd`, `coverCapUsd`, and `facesR2CapUsd` never reach `runGuards` from
+ * the CLI, so a future option-parser change cannot raise a cap. A JS caller keeps its own options
+ * object.
  */
 export const cliGuardOptions = (opts = {}) => {
   const next = { ...opts };
@@ -374,6 +402,7 @@ export const cliGuardOptions = (opts = {}) => {
   delete next.u2ExtraCapUsd;
   delete next.u2LookCapUsd;
   delete next.coverCapUsd;
+  delete next.facesR2CapUsd;
   return next;
 };
 
@@ -388,11 +417,22 @@ export const isCoverOutDir = (specOrPath) => {
 };
 
 /**
+ * True when a spec (or a folder path) points at the exact faces r2 folder. The muse tool uses it
+ * to send a faces call to the faces guard.
+ */
+export const isFacesR2OutDir = (specOrPath) => {
+  const raw = typeof specOrPath === 'string' ? specOrPath : specOrPath?.outDir;
+  if (!raw) return false;
+  return resolve(ROOT, raw) === FACES_R2_OUT_DIR;
+};
+
+/**
  * Classify the output folder of one spec:
  *   - `card` for the exact card folder of `CARD_RUN.outDir`;
  *   - `u2` for the unit 2 folder `w09` to `w16` and then `muse` or `muse/elements`;
  *   - `u2fw` for exactly the family-word folder of `U2_FW_RUN.outDir`;
  *   - `cover` for exactly the cover folder of `COVER_RUN.outDir`;
+ *   - `facesR2` for exactly the faces r2 folder of `FACES_R2_RUN.outDir`;
  *   - `restart` for a week folder `<unit root>/<child>/muse` or its `elements` folder;
  *   - `invalid` for every other folder, including `..` escapes and mutated names.
  * Below the child folder `cards` only the exact card folder is valid. A card subfolder such as
@@ -414,6 +454,7 @@ export const classifyOutDir = (spec, unitRoot) => {
   if (resolved === U2_FW_ROOT) return { kind: 'u2fw', raw, resolved };
   if (isU2Folder(resolved)) return { kind: 'u2', raw, resolved };
   if (resolved === COVER_OUT_DIR) return { kind: 'cover', raw, resolved };
+  if (resolved === FACES_R2_OUT_DIR) return { kind: 'facesR2', raw, resolved };
   if (isInside(relative(COVER_ROOT, resolved))) return { kind: 'invalid', raw, resolved };
   for (const anchor of [resolve(ROOT, ...UNIT_PARTS), resolve(unitRoot)]) {
     const rel = relative(anchor, resolved);
@@ -421,7 +462,8 @@ export const classifyOutDir = (spec, unitRoot) => {
     const parts = rel.split(sep);
     if (parts[0] === CARD_CHILD) return { kind: 'invalid', raw, resolved };
     if (parts.length === 2 && parts[1] === 'muse') return { kind: 'restart', raw, resolved };
-    if (parts.length === 3 && parts[1] === 'muse' && parts[2] === 'elements') return { kind: 'restart', raw, resolved };
+    if (parts.length === 3 && parts[1] === 'muse' && parts[2] === 'elements')
+      return { kind: 'restart', raw, resolved };
   }
   return { kind: 'invalid', raw, resolved };
 };
@@ -438,27 +480,32 @@ export const TRY_EXCEPTIONS = [
     id: 'l2-w01-story-page-a-nut',
     kind: 'line',
     extraTries: 1,
-    source: 'PM, 2026-11-05 09:17 ICT: "Yes to ONE extra line-art try (the 4th) for the nut, as you described: a Muse line call from the passing color m4, one single shell outline, the lengthwise seam as a short inner line, the same Sonnet judge with the "one nut only" check. This is my decision, not Daniel\'s ... The 3-try stop rule stays for every other picture."',
+    source:
+      'PM, 2026-11-05 09:17 ICT: "Yes to ONE extra line-art try (the 4th) for the nut, as you described: a Muse line call from the passing color m4, one single shell outline, the lengthwise seam as a short inner line, the same Sonnet judge with the "one nut only" check. This is my decision, not Daniel\'s ... The 3-try stop rule stays for every other picture."',
   },
   {
     id: 'l2-w01-story-page-a-nut',
     kind: 'color',
     extraTries: 1,
-    source: 'PM, 2026-11-05 ~10:23 ICT: "Yes: one more color try (ONE peanut lying on its side, plain one-pod profile, alone and large on Nan\'s palm) and one line try from it, 0.02 USD, same judge with the one-nut check. ... No further tries after this without my word."',
+    source:
+      'PM, 2026-11-05 ~10:23 ICT: "Yes: one more color try (ONE peanut lying on its side, plain one-pod profile, alone and large on Nan\'s palm) and one line try from it, 0.02 USD, same judge with the one-nut check. ... No further tries after this without my word."',
   },
   {
     id: 'l2-w01-story-page-a-nut',
     kind: 'line',
     extraTries: 1,
-    source: 'PM, 2026-11-05 ~10:23 ICT: "Yes: one more color try (ONE peanut lying on its side, plain one-pod profile, alone and large on Nan\'s palm) and one line try from it, 0.02 USD, same judge with the one-nut check. ... No further tries after this without my word."',
+    source:
+      'PM, 2026-11-05 ~10:23 ICT: "Yes: one more color try (ONE peanut lying on its side, plain one-pod profile, alone and large on Nan\'s palm) and one line try from it, 0.02 USD, same judge with the one-nut check. ... No further tries after this without my word."',
   },
 ];
 
 /** The try cap of one id and kind: MAX_TRIES plus the extra tries of its exceptions, if any. */
 export const maxTriesFor = (id, kind, maxTries = MAX_TRIES) => {
   const key = pictureKey(id);
-  const extra = TRY_EXCEPTIONS.filter((e) => pictureKey(e.id) === key && e.kind === kind)
-    .reduce((s, e) => s + e.extraTries, 0);
+  const extra = TRY_EXCEPTIONS.filter((e) => pictureKey(e.id) === key && e.kind === kind).reduce(
+    (s, e) => s + e.extraTries,
+    0,
+  );
   return maxTries + extra;
 };
 
@@ -483,7 +530,14 @@ export const parseCostsTsv = (text) => {
   const head = lines[0].split('\t').map((h) => h.trim());
   const idx = (name) => head.indexOf(name);
   const costCol = head.includes('usage_cost') ? 'usage_cost' : head.includes('cost_usd') ? 'cost_usd' : null;
-  const cIdx = { time: idx('time'), row: idx('row'), kind: idx('kind'), output: idx('output'), note: idx('note'), cost: costCol ? idx(costCol) : -1 };
+  const cIdx = {
+    time: idx('time'),
+    row: idx('row'),
+    kind: idx('kind'),
+    output: idx('output'),
+    note: idx('note'),
+    cost: costCol ? idx(costCol) : -1,
+  };
   const rows = [];
   for (let i = 1; i < lines.length; i++) {
     const c = lines[i].split('\t');
@@ -510,11 +564,19 @@ export const isFailedZeroCost = (r) => r.cost === 0 && !(r.note === 'ok' || /^re
 /** Count the tries of one picture id and kind since the restart start. */
 export const countTries = (rows, id, kind, startTime = RESTART_START) => {
   const key = pictureKey(id);
-  return rows.filter((r) => sinceStart(r.time, startTime) && r.kind === kind && r.row && pictureKey(r.row) === key && !isFailedZeroCost(r)).length;
+  return rows.filter(
+    (r) =>
+      sinceStart(r.time, startTime) &&
+      r.kind === kind &&
+      r.row &&
+      pictureKey(r.row) === key &&
+      !isFailedZeroCost(r),
+  ).length;
 };
 
 /** Spend: the usage_cost of every row since the restart start, in all cost files. */
-export const spendTotal = (rows, startTime = RESTART_START) => rows.filter((r) => sinceStart(r.time, startTime)).reduce((s, r) => s + r.cost, 0);
+export const spendTotal = (rows, startTime = RESTART_START) =>
+  rows.filter((r) => sinceStart(r.time, startTime)).reduce((s, r) => s + r.cost, 0);
 
 /**
  * The exception row of one id and kind, or null when the pair is not listed. The list of
@@ -570,16 +632,20 @@ export const countLookRows = (rows, id, kind, startTime = U2_LOOK_TRY.startTime)
  * the look start time. The rows come from the unit 2 week cost files.
  */
 export const lookSpendOf = (rows, startTime = U2_LOOK_TRY.startTime) =>
-  rows
-    .filter((r) => sinceStart(r.time, startTime) && U2_LOOK_IDS.has(r.row))
-    .reduce((s, r) => s + r.cost, 0);
+  rows.filter((r) => sinceStart(r.time, startTime) && U2_LOOK_IDS.has(r.row)).reduce((s, r) => s + r.cost, 0);
 
 /** Try guard: refuses when the next call would pass the try cap of the picture and kind. */
 export const tryGuard = (rows, id, kind, requested = 1, startTime = RESTART_START, maxTries = MAX_TRIES) => {
   const limit = maxTriesFor(id, kind, maxTries);
   const count = countTries(rows, id, kind, startTime);
   if (count >= limit) return { ok: false, count, max: limit, reason: `count ${count} at max ${limit}` };
-  if (count + requested > limit) return { ok: false, count, max: limit, reason: `count ${count} plus requested ${requested} over max ${limit}` };
+  if (count + requested > limit)
+    return {
+      ok: false,
+      count,
+      max: limit,
+      reason: `count ${count} plus requested ${requested} over max ${limit}`,
+    };
   return { ok: true, count, max: limit };
 };
 
@@ -599,7 +665,13 @@ export const lineRetryGuard = (rows, id, requested = 1) => {
 };
 
 /** Spend guard: refuses when the sum plus the margin is over the cap. Gives the notice state. */
-export const spendGuard = (rows, startTime = RESTART_START, cap = SPEND_CAP_USD, margin = SPEND_MARGIN_USD, reportAt = REPORT_AT_USD) => {
+export const spendGuard = (
+  rows,
+  startTime = RESTART_START,
+  cap = SPEND_CAP_USD,
+  margin = SPEND_MARGIN_USD,
+  reportAt = REPORT_AT_USD,
+) => {
   const spend = spendTotal(rows, startTime);
   if (spend + margin > cap) return { ok: false, spend };
   return { ok: true, spend, notice: spend >= reportAt };
@@ -680,7 +752,9 @@ export const scanU2FwCostFiles = (unitRoot) => {
   const allRows = [];
   const top = join(unitRoot, ...U2_FW_PARTS, 'costs.tsv');
   if (existsSync(top)) {
-    const rows = parseCostsTsv(readFileSync(top, 'utf8')).filter((r) => sinceStart(r.time, U2_FW_RUN.startTime));
+    const rows = parseCostsTsv(readFileSync(top, 'utf8')).filter((r) =>
+      sinceStart(r.time, U2_FW_RUN.startTime),
+    );
     pictureRows.push(...rows);
     allRows.push(...rows);
   }
@@ -701,7 +775,34 @@ export const scanCoverCostFiles = (unitRoot) => {
   const allRows = [];
   const top = join(base, 'costs.tsv');
   if (existsSync(top)) {
-    const rows = parseCostsTsv(readFileSync(top, 'utf8')).filter((r) => sinceStart(r.time, COVER_RUN.startTime));
+    const rows = parseCostsTsv(readFileSync(top, 'utf8')).filter((r) =>
+      sinceStart(r.time, COVER_RUN.startTime),
+    );
+    pictureRows.push(...rows);
+    allRows.push(...rows);
+  }
+  return { pictureRows, allRows };
+};
+
+/**
+ * Scan the faces r2 cost file. A faces call reads only the `costs.tsv` of the exact folder
+ * `FACES_R2_RUN.outDir`, and only the rows at or after `FACES_R2_RUN.startTime`. The elements
+ * folder is a copy destination, so it has no cost file and is never read. The production path
+ * reads the fixed folder. A unit root outside the repository root is a test fixture root, and the
+ * scan reads its `muse` folder instead. No other folder is read, so the book, app, and cover spend
+ * never counts against the faces stop.
+ */
+export const scanFacesR2CostFiles = (unitRoot) => {
+  const rel = unitRoot ? relative(ROOT, resolve(unitRoot)) : '';
+  const outside = rel !== '' && !isInside(rel);
+  const base = outside ? join(resolve(unitRoot), 'muse') : FACES_R2_OUT_DIR;
+  const pictureRows = [];
+  const allRows = [];
+  const top = join(base, 'costs.tsv');
+  if (existsSync(top)) {
+    const rows = parseCostsTsv(readFileSync(top, 'utf8')).filter((r) =>
+      sinceStart(r.time, FACES_R2_RUN.startTime),
+    );
     pictureRows.push(...rows);
     allRows.push(...rows);
   }
@@ -720,8 +821,10 @@ export const scanCoverCostFiles = (unitRoot) => {
  *   - a family-word call reads only the family-word cost file and uses `U2_FW_RUN`;
  *   - a card call uses `CARD_RUN` and the card cost files;
  *   - a cover call uses `COVER_RUN` and the cover cost file, and it has no line call;
+ *   - a faces r2 call uses `FACES_R2_RUN` and its own cost file;
  *   - every other call uses the restart values and the restart scan.
- * An empty or invalid cap of either unit 2 kind is refused.
+ * An empty or invalid cap of either unit 2 kind, of the cover run, or of the faces r2 run is
+ * refused.
  * A unit 2 call of a row of the extra try exception also passes the exception cap and the once
  * rule of `U2_EXTRA_TRY`. A row with `pastLimit` true passes the normal try limit once.
  * A unit 2 call of a row of the look exception also passes the look cap and the try rule of
@@ -756,6 +859,18 @@ export const runGuards = (unitRoot, ctxs, cmd, opts = {}) => {
       message: 'refused: the call mixes cover specs with other specs; run each group in its own call',
     };
   }
+  const facesFlags = classes.map((c) => c.kind === 'facesR2');
+  if (facesFlags.some(Boolean) && !facesFlags.every(Boolean)) {
+    return {
+      refused: true,
+      code: 3,
+      spend: 0,
+      notice: false,
+      run: 'mixed',
+      reportAt: FACES_R2_RUN.reportAtUsd,
+      message: 'refused: the call mixes faces r2 specs with other specs; run each group in its own call',
+    };
+  }
   const u2Flags = classes.map((c) => c.kind === 'u2');
   if (u2Flags.some(Boolean) && !u2Flags.every(Boolean)) {
     return {
@@ -777,14 +892,15 @@ export const runGuards = (unitRoot, ctxs, cmd, opts = {}) => {
       notice: false,
       run: 'mixed',
       reportAt: CARD_RUN.reportAtUsd,
-      message: 'refused: the call mixes unit 2 family-word specs with other specs; run each group in its own call',
+      message:
+        'refused: the call mixes unit 2 family-word specs with other specs; run each group in its own call',
     };
   }
   const u2 = ctxs.length > 0 && u2Flags.every(Boolean);
   const u2fw = ctxs.length > 0 && u2fwFlags.every(Boolean);
-  // The test-only `opts.u2CapUsd`, `opts.u2FwCapUsd`, `opts.u2ExtraCapUsd`, and
-  // `opts.coverCapUsd` stand in for a cap in a test. The CLI never sets them; `cliGuardOptions`
-  // removes them.
+  // The test-only `opts.u2CapUsd`, `opts.u2FwCapUsd`, `opts.u2ExtraCapUsd`,
+  // `opts.coverCapUsd`, and `opts.facesR2CapUsd` stand in for a cap in a test. The CLI never sets
+  // them; `cliGuardOptions` removes them.
   const u2Cap = u2 ? (Object.hasOwn(opts, 'u2CapUsd') ? opts.u2CapUsd : U2_RUN.capUsd) : null;
   const u2FwCap = u2fw ? (Object.hasOwn(opts, 'u2FwCapUsd') ? opts.u2FwCapUsd : U2_FW_RUN.capUsd) : null;
   const capOk = (cap) => typeof cap === 'number' && Number.isFinite(cap) && cap > 0;
@@ -824,6 +940,12 @@ export const runGuards = (unitRoot, ctxs, cmd, opts = {}) => {
   }
   const card = ctxs.length > 0 && cardFlags.every(Boolean);
   const cover = ctxs.length > 0 && coverFlags.every(Boolean);
+  const faces = ctxs.length > 0 && facesFlags.every(Boolean);
+  const facesCap = faces
+    ? Object.hasOwn(opts, 'facesR2CapUsd')
+      ? opts.facesR2CapUsd
+      : FACES_R2_RUN.capUsd
+    : null;
   const coverCap = cover ? (Object.hasOwn(opts, 'coverCapUsd') ? opts.coverCapUsd : COVER_RUN.capUsd) : null;
   if (cover && !capOk(coverCap)) {
     return {
@@ -834,6 +956,17 @@ export const runGuards = (unitRoot, ctxs, cmd, opts = {}) => {
       run: 'cover',
       reportAt: COVER_RUN.reportAtUsd,
       message: COVER_CAP_MESSAGE,
+    };
+  }
+  if (faces && !capOk(facesCap)) {
+    return {
+      refused: true,
+      code: 3,
+      spend: 0,
+      notice: false,
+      run: 'facesR2',
+      reportAt: FACES_R2_RUN.reportAtUsd,
+      message: FACES_R2_CAP_MESSAGE,
     };
   }
   if (cover && cmd === 'line') {
@@ -847,17 +980,88 @@ export const runGuards = (unitRoot, ctxs, cmd, opts = {}) => {
       message: COVER_LINE_MESSAGE,
     };
   }
-  const run = u2 ? 'u2' : u2fw ? 'u2fw' : card ? 'card' : cover ? 'cover' : 'restart';
-  const cap = u2 ? u2Cap : u2fw ? u2FwCap : card ? CARD_RUN.capUsd : cover ? coverCap : SPEND_CAP_USD;
-  const margin = u2 ? U2_RUN.marginUsd : u2fw ? U2_FW_RUN.marginUsd : card ? CARD_RUN.marginUsd : cover ? COVER_RUN.marginUsd : SPEND_MARGIN_USD;
-  const reportAt = u2 ? (U2_RUN.reportAtUsd ?? Number.POSITIVE_INFINITY) : u2fw ? (U2_FW_RUN.reportAtUsd ?? Number.POSITIVE_INFINITY) : card ? CARD_RUN.reportAtUsd : cover ? COVER_RUN.reportAtUsd : REPORT_AT_USD;
-  const startTime = u2 ? U2_RUN.startTime : u2fw ? U2_FW_RUN.startTime : card ? CARD_RUN.startTime : cover ? COVER_RUN.startTime : RESTART_START;
-  const maxTries = u2 ? U2_RUN.maxTries : u2fw ? U2_FW_RUN.maxTries : card ? CARD_RUN.maxTries : cover ? COVER_RUN.maxTries : MAX_TRIES;
-  const { pictureRows, allRows } = u2 ? scanU2CostFiles(unitRoot) : u2fw ? scanU2FwCostFiles(unitRoot) : card ? scanCardCostFiles(unitRoot) : cover ? scanCoverCostFiles(unitRoot) : scanCostFiles(unitRoot);
-  const s = u2 || u2fw || card || cover ? spendGuard(allRows, startTime, cap, margin, reportAt) : spendGuard(allRows);
+  const run = u2 ? 'u2' : u2fw ? 'u2fw' : faces ? 'facesR2' : card ? 'card' : cover ? 'cover' : 'restart';
+  const cap = u2
+    ? u2Cap
+    : u2fw
+      ? u2FwCap
+      : faces
+        ? facesCap
+        : card
+          ? CARD_RUN.capUsd
+          : cover
+            ? coverCap
+            : SPEND_CAP_USD;
+  const margin = u2
+    ? U2_RUN.marginUsd
+    : u2fw
+      ? U2_FW_RUN.marginUsd
+      : faces
+        ? FACES_R2_RUN.marginUsd
+        : card
+          ? CARD_RUN.marginUsd
+          : cover
+            ? COVER_RUN.marginUsd
+            : SPEND_MARGIN_USD;
+  const reportAt = u2
+    ? (U2_RUN.reportAtUsd ?? Number.POSITIVE_INFINITY)
+    : u2fw
+      ? (U2_FW_RUN.reportAtUsd ?? Number.POSITIVE_INFINITY)
+      : faces
+        ? FACES_R2_RUN.reportAtUsd
+        : card
+          ? CARD_RUN.reportAtUsd
+          : cover
+            ? COVER_RUN.reportAtUsd
+            : REPORT_AT_USD;
+  const startTime = u2
+    ? U2_RUN.startTime
+    : u2fw
+      ? U2_FW_RUN.startTime
+      : faces
+        ? FACES_R2_RUN.startTime
+        : card
+          ? CARD_RUN.startTime
+          : cover
+            ? COVER_RUN.startTime
+            : RESTART_START;
+  const maxTries = u2
+    ? U2_RUN.maxTries
+    : u2fw
+      ? U2_FW_RUN.maxTries
+      : faces
+        ? FACES_R2_RUN.maxTries
+        : card
+          ? CARD_RUN.maxTries
+          : cover
+            ? COVER_RUN.maxTries
+            : MAX_TRIES;
+  const { pictureRows, allRows } = u2
+    ? scanU2CostFiles(unitRoot)
+    : u2fw
+      ? scanU2FwCostFiles(unitRoot)
+      : faces
+        ? scanFacesR2CostFiles(unitRoot)
+        : card
+          ? scanCardCostFiles(unitRoot)
+          : cover
+            ? scanCoverCostFiles(unitRoot)
+            : scanCostFiles(unitRoot);
+  const s =
+    u2 || u2fw || faces || card || cover
+      ? spendGuard(allRows, startTime, cap, margin, reportAt)
+      : spendGuard(allRows);
   const spend = s.spend;
   if (!s.ok) {
-    return { refused: true, code: 3, spend, notice: false, run, reportAt: u2 ? U2_RUN.reportAtUsd : reportAt, message: `refused: spend ${spend.toFixed(4)} USD plus ${margin} over cap ${cap}` };
+    return {
+      refused: true,
+      code: 3,
+      spend,
+      notice: false,
+      run,
+      reportAt: u2 ? U2_RUN.reportAtUsd : reportAt,
+      message: `refused: spend ${spend.toFixed(4)} USD plus ${margin} over cap ${cap}`,
+    };
   }
   const kind = cmd;
   const requested = cmd === 'line' ? Number(opts.tries ?? 1) : 1;
@@ -1008,7 +1212,15 @@ export const runGuards = (unitRoot, ctxs, cmd, opts = {}) => {
   const cushion = cmd === 'line' || cover ? 0 : 1;
   const projected = spend + (calls + cushion) * margin;
   if (projected > cap) {
-    return { refused: true, code: 3, spend, notice: s.notice, run, reportAt: u2 ? U2_RUN.reportAtUsd : reportAt, message: `refused: projected spend ${projected.toFixed(4)} USD over cap ${cap}` };
+    return {
+      refused: true,
+      code: 3,
+      spend,
+      notice: s.notice,
+      run,
+      reportAt: u2 ? U2_RUN.reportAtUsd : reportAt,
+      message: `refused: projected spend ${projected.toFixed(4)} USD over cap ${cap}`,
+    };
   }
   for (const ctx of ctxs) {
     // A listed row with `pastLimit` true passes the normal try limit once. The once rule above
@@ -1022,9 +1234,16 @@ export const runGuards = (unitRoot, ctxs, cmd, opts = {}) => {
     const retry = card && kind === 'line' ? lineRetryGuard(pictureRows, ctx.spec.id, requested) : null;
     const g = retry ?? tryGuard(pictureRows, ctx.spec.id, kind, requested, startTime, maxTries);
     if (!g.ok) {
-      return { refused: true, code: 3, spend, notice: s.notice, run, reportAt: u2 ? U2_RUN.reportAtUsd : reportAt, message: `refused: ${ctx.spec.id} ${kind} count ${g.count} (max ${g.max})` };
+      return {
+        refused: true,
+        code: 3,
+        spend,
+        notice: s.notice,
+        run,
+        reportAt: u2 ? U2_RUN.reportAtUsd : reportAt,
+        message: `refused: ${ctx.spec.id} ${kind} count ${g.count} (max ${g.max})`,
+      };
     }
   }
   return { refused: false, code: 0, spend: spendOut, notice, run, reportAt: reportAtOut, message: '' };
 };
-
