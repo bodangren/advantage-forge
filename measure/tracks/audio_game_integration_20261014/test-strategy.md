@@ -7,14 +7,15 @@ Sources: `spec.md` (amendment 2026-11-22), `plan.md`, `metadata.json`, spec-revi
 ## Base SHA and capture point
 
 HEAD at the start of this strategy revision is
-`3f6a19214994e7ac05a79a8fa7faeded684267b7`. Record it as `role_base_sha` for this revision only.
-Phase 3 was accepted at `aaf678693732984a6adbc78af1157610e8225fd9`. Neither SHA is
-`phase_base_sha`. Both predate this committed strategy.
+`229323c5d822f1dcb480b8e5ccf767c98a6f0c75`. Record it as `role_base_sha` for this revision only.
+Phase 4 was accepted at the same SHA (`phase-acceptance-p4-229323c.json`); the earlier Phase 4
+phase base was `53ae856842ae14a63fb1b65a96edd1c8d6ce22e4`. None of these SHAs is
+`phase_base_sha` for Phase 5. All predate this committed strategy.
 
 The orchestrator must capture the immutable `phase_base_sha` with `git rev-parse HEAD` at this
 exact point: as the first command after the commit that adds this `test-strategy.md` lands on the
 branch, before any Red command runs. The captured value is the new HEAD of that commit. It cannot
-equal `3f6a1921...` unless the strategy commit itself is HEAD. Write the captured value into the
+equal `229323c5...` unless the strategy commit itself is HEAD. Write the captured value into the
 run artifacts, never into a file that predates the commit. Run Red, Green, adversarial, and every
 review against that captured SHA. A remediation commit invalidates the review artifacts and needs
 a fresh capture and fresh reviews. Do not embed a SHA that predates the committed strategy in a
@@ -22,14 +23,14 @@ a fresh capture and fresh reviews. Do not embed a SHA that predates the committe
 
 ## Risk classification
 
-| Phase | Risk   | Reason                                                                                                                                             |
-| ----- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 1     | medium | A data file and a cross-reference scan of `src/`. A loose pattern can pass on a partial map (A7), and the map is silent input.                     |
-| 2     | medium | A pinned external binary writes binary files. The contract is an exact argv and three exact failure lines.                                         |
-| 3     | high   | The change sits in shared game runtime. Thirty files construct the bus, and the six driver views call `.sfx`. Browser-only globals need a harness. |
-| 4     | high   | A headless browser with network emulation and a timing budget. A run with zero audio rows can pass as "measured" (A4).                             |
-| 5     | medium | Delivery to the PM. Files, checksums, and a proposed path. The monorepo must stay untouched.                                                       |
-| 6     | low    | Deferred work. No code, no file, no command. The risk is a false "done" mark (A6, A8).                                                             |
+| Phase | Risk   | Reason                                                                                                                                               |
+| ----- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1     | medium | A data file and a cross-reference scan of `src/`. A loose pattern can pass on a partial map (A7), and the map is silent input.                       |
+| 2     | medium | A pinned external binary writes binary files. The contract is an exact argv and three exact failure lines.                                           |
+| 3     | high   | The change sits in shared game runtime. Thirty files construct the bus, and the six driver views call `.sfx`. Browser-only globals need a harness.   |
+| 4     | high   | A headless browser with network emulation and a timing budget. A run with zero audio rows can pass as "measured" (A4).                               |
+| 5     | medium | Files, checksums, and a proposed path. The monorepo must stay untouched. The untracked folder needs an opt-in gate so the default suite stays green. |
+| 6     | low    | Deferred work. No code, no file, no command. The risk is a false "done" mark (A6, A8).                                                               |
 
 ## Test layers and global rules
 
@@ -268,52 +269,52 @@ sets the map and preloads the game's own events (spec AC9).
 Risk: `high`. The gate uses a headless browser, network emulation, and a 1.5 s limit. A zero-row
 measurement can look like a number. A noisy second run can cross the limit.
 
-**Red command (targeted, exact).**
+This phase is accepted at `229323c5`. The gates below record the accepted shape, which supersedes
+the earlier three-field text.
+
+**Default gate (exact).**
 
 ```
-HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'rm -f out/audio-budget/rune-match.json && node node_modules/vitest/vitest.mjs run tests/audio-budget.test.ts --maxWorkers=1'
+HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run tests/audio-budget.test.ts --maxWorkers=1'
 ```
 
-The `rm -f` removes only an untracked generated artifact. It makes the Red result independent of
-an earlier measurement. Exit 75 from the runner means wait and retry; it is not a test result.
+It exits 0 with 4 passed and 1 skipped. The skip is the JSON case. Exit 75 from the runner means
+wait and retry; it is not a test result.
 
-**Red done-when.** Exit 1 with 4 tests collected and exactly 1 failed. Cases 1 to 3 pass, because
-`sounds/README.md` already holds both format tables and the 14 byte values match `statSync`. Case 4
-fails with `ENOENT: no such file or directory, open 'out/audio-budget/rune-match.json'`. No syntax
-or import error occurs. `node_modules/.bin/prettier --check tests/audio-budget.test.ts` exits 0.
-A Red run with 4 passing tests is a broken Red and fails review.
-
-**Green command (exact, one heavy call).**
+**Live gate (exact, one heavy call).**
 
 ```
-HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/audio-budget.mjs --game rune-match && node node_modules/vitest/vitest.mjs run tests/audio-budget.test.ts --maxWorkers=1'
+HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/audio-budget.mjs --game rune-match && AUDIO_BUDGET_JSON=1 node node_modules/vitest/vitest.mjs run tests/audio-budget.test.ts --maxWorkers=1'
 ```
 
-The measurement runs first. It writes the JSON. The test then reads that JSON. Both halves use one
-runner call. The plan's standalone measurement command is
-`HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/audio-budget.mjs --game rune-match'`.
+The measurement runs first and writes the JSON. The flagged test then reads that JSON. **Red
+done-when at the phase:** the flagged case failed on a missing or old-shape artifact; see plan T7r
+and T7r2. Cases 1 to 3 passed, because `sounds/README.md` already holds both format tables and the
+14 byte values match `statSync`.
 
-**Green gate.** The command exits 0. The test reports 4 of 4 passing. The measurement exits 0 and
-writes `out/audio-budget/rune-match.json` with exactly three numeric fields: `bytes`, `files`, and
-`seconds`. `files` is 6: the six mapped entries in the Rune Match wire list (`tap`, `correct` to
-`right`, `wrong`, `victory` to `level-end`, `whoosh`, `spawn` to `pop`). `bytes` is a labeled
-integer, greater than 0 and at most 100,000. It equals 79,319 for Ogg or 62,496 for MP3, the sums
-of the six matching README rows. `seconds` is a labeled number, greater than 0 and at most 1.5.
-The plan records the observed `bytes`, `files`, and `seconds` without rounding that hides a breach.
-`out/` stays untracked.
+**Green gate.** The live gate exits 0 with 5 passed. The JSON holds eight keyed fields: `bytes`,
+`files`, `seconds`, `decoded`, `fileEffect`, `decodeSeconds`, `effectMarker`, and `firstEffect`.
+`files` is 6: the six mapped entries in the Rune Match wire list (`tap`, `correct` to `right`,
+`wrong`, `victory` to `level-end`, `whoosh`, `spawn` to `pop`). `bytes` is a labeled integer,
+greater than 0 and at most 100,000. It equals 79,319 for Ogg or 62,496 for MP3, the sums of the six
+matching README rows. `seconds` and `decodeSeconds` are labeled numbers, each at most 1.5.
+`decoded` is the labeled integer 6, `effectMarker` is `before-launch`, and `firstEffect` is one of
+the 12 six-entry file names. The accepted run recorded 79,319 bytes, 0.7056 s transfer, and
+0.7101 s through decode. `out/` stays untracked.
 
-**Test file contract (four cases).**
+**Test file contract (five cases).**
 
-| Case | Assertion                                                                                                                                                                                            | Falsification                                                                                     |
-| ---- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| 1    | Parse `sounds/README.md` into the Ogg table and the MP3 table. Each table holds 7 rows. The 14 names equal the seven `sounds/sets/chibi.json` names with each extension.                             | A missing row, a swapped table, or a wrong name fails with the name printed.                      |
-| 2    | For all 14 files, the byte column equals `statSync('sounds/chibi/<name>').size`. Print name, README integer, and stat integer on a mismatch.                                                         | A one-byte drift in any file or in the README fails with both labeled integers.                   |
-| 3    | Sum each format's seven byte integers. Both sums are greater than 0 and at most 100,000. Today they are 90,468 and 71,136.                                                                           | A total parsed from a duration column, or a total above the limit, fails.                         |
-| 4    | Read `out/audio-budget/rune-match.json`. `bytes`, `files`, and `seconds` are labeled numbers. `files` is 6. `bytes` equals one of the six-file README sums. `bytes` <= 100,000 and `seconds` <= 1.5. | The absent JSON fails at Red. A zero count, an unmapped byte total, or a slow run fails at Green. |
+| Case | Assertion                                                                                                                                                                                                                                                                                                                                         | Falsification                                                                                                           |
+| ---- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| 1    | Parse `sounds/README.md` into the Ogg table and the MP3 table. Each table holds 7 rows. The 14 names equal the seven `sounds/sets/chibi.json` names with each extension.                                                                                                                                                                          | A missing row, a swapped table, or a wrong name fails with the name printed.                                            |
+| 2    | For all 14 files, the byte column equals `statSync('sounds/chibi/<name>').size`. Print name, README integer, and stat integer on a mismatch.                                                                                                                                                                                                      | A one-byte drift in any file or in the README fails with both labeled integers.                                         |
+| 3    | Sum each format's seven byte integers. Both sums are greater than 0 and at most 100,000. Today they are 90,468 and 71,136.                                                                                                                                                                                                                        | A total parsed from a duration column, or a total above the limit, fails.                                               |
+| 4    | Under `AUDIO_BUDGET_JSON=1`, read `out/audio-budget/rune-match.json`. Assert the eight keyed fields above. `files` is 6. `bytes` equals one of the six-file README sums and is <= 100,000. Both `seconds` and `decodeSeconds` are <= 1.5. `decoded` is 6. `effectMarker` is `before-launch`. `firstEffect` is one of the 12 six-entry file names. | The absent or old-shape JSON fails. A zero count, an unmapped byte total, a slow run, or a music effect fails at Green. |
 
 Parse each byte column with a row-anchored pattern on the `Bytes` column. Never take a digit from a
 file name, a duration, or a date. Parse the JSON fields by key and validate the numeric type before
-any comparison. Do not use `includes` on a README line.
+any comparison. Do not use `includes` on a README line. Case 4 skips without `AUDIO_BUDGET_JSON=1`;
+the default gate above records that skip.
 
 **Measurement script contract.** `scripts/audio-budget.mjs --game rune-match` does the following,
 in order. No step is optional.
@@ -341,9 +342,11 @@ in order. No step is optional.
    `bytes` to equal the sum of `statSync` sizes of the same files under
    `demo/public/audio/chibi/`. On any failed gate, print the row details, write no JSON, and exit
    non-zero.
-7. Write `out/audio-budget/rune-match.json` with only `bytes`, `files`, and `seconds`. Then stop
-   the Chromium browser and kill the vite child with SIGTERM in a `finally` block. Escalate to
-   SIGKILL after 5 s. Print the JSON to stdout.
+7. Write `out/audio-budget/rune-match.json` with the eight accepted fields: `bytes`, `files`,
+   `seconds`, `decoded`, `fileEffect`, `decodeSeconds`, `effectMarker`, and `firstEffect`. Gate on
+   six successful decodes and a file-backed first effect. Then stop the Chromium browser and kill
+   the vite child with SIGTERM in a `finally` block. Escalate to SIGKILL after 5 s. Print the JSON
+   to stdout.
 
 **Transfer-byte settlement (Green has no choice).** The Vite dev server sends these files without
 content encoding. Use `encodedBodySize` from each resource-timing row as the transfer byte count.
@@ -382,7 +385,7 @@ the measured numbers; a claim in the plan must match the JSON byte for byte.
 
 | ID  | Defense                                                                                                                                                                     | Falsification                                                                        |
 | --- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
-| A3  | Parse `files`, `bytes`, and `seconds` as labeled numbers by key. Assert `files` is 6 and `bytes` is one of the two six-file README sums.                                    | A digit from a file name, a date, or a duration cannot satisfy the keyed assertions. |
+| A3  | Parse the eight JSON fields by key and validate their types. Assert `files` is 6 and `bytes` is one of the two six-file README sums.                                        | A digit from a file name, a date, or a duration cannot satisfy the keyed assertions. |
 | A4  | The script exits non-zero on zero audio rows or zero `encodedBodySize`. The test fails at Red on an absent JSON.                                                            | A "measured" JSON of zeros, or a green Red, fails the gate.                          |
 | A5  | The plan records the JSON values. Review runs the Green command and compares the printed JSON to the plan.                                                                  | A plan number that differs from the JSON fails review.                               |
 | A6  | Do not write "budget verified" or "monorepo path confirmed" in any record. The JSON and the Phase 5 PM answer decide those claims.                                          | A budget claim with a red adversarial gate fails acceptance.                         |
@@ -394,53 +397,122 @@ the measured numbers; a claim in the plan must match the JSON byte for byte.
 
 ## Phase 5: Hand-off to the PM
 
-Risk: `medium`. Delivery artifact. No runtime behavior.
+Risk: `medium`. The gate reads files and checksums. No runtime behavior. The monorepo must stay
+untouched. The hand-off folder is untracked, so the default suite must stay green without it.
 
-**Red command (targeted).** Run from the repo root. Red fails because the folder is absent.
+**Red command (exact).**
 
 ```
-d=out/apk-audio-handoff/chibi; test -d "$d" \
-  && test "$(ls "$d"/*.ogg "$d"/*.mp3 2>/dev/null | wc -l)" -eq 14 \
-  && test "$(wc -l < "$d/MANIFEST.tsv")" -eq 15 \
-  && test "$(cut -f6 "$d/MANIFEST.tsv" | tail -n +2 | grep -c '^proposed: apps/advantage-games/public/audio/chibi/')" -eq 14 \
-  && test -s "$d/README.md" \
-  && (cd "$d" && sha256sum -c MANIFEST.sha256) \
-  && test -z "$(git -C ../reading-advantage-monorepo status --short)"
+HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'rm -rf out/apk-audio-handoff/chibi && AUDIO_HANDOFF_ARTIFACTS=1 node node_modules/vitest/vitest.mjs run tests/audio-handoff.test.ts --maxWorkers=1'
 ```
 
-**Red done-when.** Exit non-zero. The first failing clause names the absent folder.
+The `rm -rf` removes only the untracked generated folder. It makes the Red result independent of an
+earlier Green run. Exit 75 from the runner means wait and retry; it is not a test result.
 
-**Green gate.** The command exits 0, and `demo/public/audio/chibi/` holds the same 14 files. One
-row is added to `docs/apk-port.md` with the model-pack pattern. The hand-off `README.md` names
-the proposed target, the AC4 load rule, and `docs/apk-port.md` line 238.
+**Red done-when.** Exit 1 with 8 tests collected. Cases 1 to 3 pass. Cases 4 to 8 fail because
+`out/apk-audio-handoff/chibi/` is absent. The first failure names the missing folder or
+`MANIFEST.sha256` with ENOENT. No syntax or import error occurs.
+`node_modules/.bin/prettier --check tests/audio-handoff.test.ts` exits 0. A green flagged Red is a
+broken Red and fails review.
 
-**The MANIFEST.sha256 settlement (spec-review r2 F6).** No phase creates `MANIFEST.sha256`, yet the
-plan done-when checks it. Green must create it in `sha256sum` format: one line per file, 64
-lowercase hex characters, two spaces, then the file name. Derive the hashes from the committed
-bytes, and make the text manifest's `sha256` column agree. The folder then holds 17 files: 14
-sound files, `MANIFEST.tsv`, `MANIFEST.sha256`, and `README.md`. Record that one-file addition in
-the plan, and let Review A confirm it. The checksum file makes the done-when executable as
-written. A checksum file with 14 rows but one wrong byte fails the gate.
+**Default-suite settlement (Green has no choice).** The variable `AUDIO_HANDOFF_ARTIFACTS=1`
+enables the five cases that read `out/`. Without it, those five cases skip and the default suite
+stays green in a checkout with no `out/` folder. This follows the Phase 4 `AUDIO_BUDGET_JSON=1`
+pattern. The default command is:
 
-**Closeout addition.** `git status --short ../reading-advantage-monorepo` stays empty. No file is
-written outside this repository. The PM answer lands in the plan with a date before any claim
-that the path is confirmed.
+```
+HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run tests/audio-handoff.test.ts --maxWorkers=1'
+```
 
-**Fixtures.** Filesystem only. `sha256sum -c` is the reader. `MANIFEST.tsv` has the six columns
-`file`, `bytes`, `sha256`, `format`, `source`, and `target`. `bytes` equals `statSync` for each
-file. No audio device, no network.
+It exits 0 with 3 passed and 5 skipped. Report a skipped artifact case as a skip, never as a pass
+claim. The flagged Red command, not the default command, is the Red gate for this phase.
+
+**Green command (exact, one heavy call).**
+
+```
+HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'echo MONOREPO-BEFORE && git -C ../reading-advantage-monorepo status --short && node scripts/audio-handoff.mjs && AUDIO_HANDOFF_ARTIFACTS=1 node node_modules/vitest/vitest.mjs run tests/audio-handoff.test.ts --maxWorkers=1 && (cd out/apk-audio-handoff/chibi && sha256sum -c MANIFEST.sha256) && echo MONOREPO-AFTER && git -C ../reading-advantage-monorepo status --short'
+```
+
+The two `git status --short` runs give the before and after record. Other sessions edit the
+monorepo, so either list may hold other paths. Case 3 rejects only paths this track names.
+
+**Green gate.** The command exits 0. The test reports 8 passed. `sha256sum -c` prints 14 OK lines.
+The folder holds exactly 17 files. No Forge command writes in the monorepo. `out/` stays ignored.
+`node_modules/.bin/prettier --check` exits 0 on `scripts/audio-handoff.mjs` and on the test file.
+The PM answer is not a gate. Record the target as proposed until the PM answer lands in the plan
+with a date.
+
+**Test file contract (eight cases).**
+
+| Case | Assertion                                                                                                                                                                                                                                                                                                   | Falsification                                                                         |
+| ---- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| 1    | The 14 names of `demo/public/audio/chibi/` equal the 14 names of `sounds/chibi/`. Each pair is byte-identical through `readFileSync` and `Buffer.equals`.                                                                                                                                                   | A missing, extra, or changed file fails with its name.                                |
+| 2    | `docs/apk-port.md` holds exactly one row with from-cell `demo/public/audio/chibi/` and to-cell `proposed: apps/advantage-games/public/audio/chibi/`. The model pack row names `apps/advantage-games/public/packs/`.                                                                                         | A second row, a missing row, or an unprefixed target fails.                           |
+| 3    | `git -C ../reading-advantage-monorepo status --short` lists no line that names `apps/advantage-games/public/audio/chibi/` or any of the 14 file names.                                                                                                                                                      | A track-named monorepo path fails. An unrelated path does not.                        |
+| 4    | With the flag set, `out/apk-audio-handoff/chibi/` holds exactly 17 names: the 14 sounds, `MANIFEST.tsv`, `MANIFEST.sha256`, and `README.md`.                                                                                                                                                                | An absent folder, an extra file, or a missing file fails with the set difference.     |
+| 5    | Each of the 14 shipped files is byte-identical to its `sounds/chibi/` source.                                                                                                                                                                                                                               | A one-byte drift in one shipped file fails with its name.                             |
+| 6    | Each `MANIFEST.sha256` line matches `^[0-9a-f]{64}  <name>$` with `<name>` in the 14. `sha256sum -c MANIFEST.sha256` in that folder exits 0.                                                                                                                                                                | A wrong hash, one space, an upper-case hex digit, or an extra name fails.             |
+| 7    | `MANIFEST.tsv` has the header `file`, `bytes`, `sha256`, `format`, `source`, `target` and 14 rows. `bytes` equals `statSync`. `sha256` equals the checksum line. `format` matches the extension. `source` is `sounds/chibi/<file>`. `target` is `proposed: apps/advantage-games/public/audio/chibi/<file>`. | A wrong column, a stale byte count, or an unprefixed target fails with the file name. |
+| 8    | The hand-off `README.md` names `apps/advantage-games/public/audio/chibi/`, `synth`, `canPlayType`, `<entry>.<ext>`, `docs/apk-port.md`, and `apps/advantage-games/public/packs/`.                                                                                                                           | A missing load rule or a missing model-pack citation fails with the expected string.  |
+
+Cases 1 to 3 run in the default suite. Cases 4 to 8 run only under `AUDIO_HANDOFF_ARTIFACTS=1`.
+Compare names as exact strings. Never use a digit from a file name as a count.
+
+**Green work contract.** `scripts/audio-handoff.mjs` takes no arguments and does the following, in
+order. No step is optional.
+
+1. Compare the 14 demo files with the 14 `sounds/chibi/` files byte for byte. Exit 1 with the file
+   name on any difference. Do not repair a difference by copying over a source file.
+2. Remove a stale `out/apk-audio-handoff/chibi/`. Create the folder. Copy the 14 files from
+   `demo/public/audio/chibi/`, the folder named in the docs row. Write no file outside `out/`.
+   Use no network call and no shell call to another repository.
+3. Write `MANIFEST.sha256` with 14 lines sorted by file name. Each line holds 64 lowercase hex
+   characters, two spaces, and the file name. Derive each hash from the bytes written.
+4. Write `MANIFEST.tsv` with the six columns of case 7 and 14 rows sorted by file name. Use the
+   values case 7 states. Never derive `target` from a user argument.
+5. Write `README.md` with the six strings of case 8 and the AC4 load rule. Name the target as
+   proposed.
+6. Do not edit `docs/apk-port.md`. The row is already committed at line 240 by `19ecca62`. A second
+   row fails case 2.
+
+**Monorepo rule.** Run `git -C ../reading-advantage-monorepo status --short` before and after the
+script. The commands in the Green command do this. Read only. Forge writes nothing in that
+repository. The PM routes the folder to the Monorepo session. The PM or Monorepo session confirms or
+replaces the proposed path. No acceptance criterion depends on that path.
+
+**Fixtures, mocks, and live-behavior proof.** This phase uses filesystem checks and checksums.
+There is no browser, no audio device, and no network. `sha256sum -c` is the independent reader of
+the checksum file. The byte comparison of the 14 demo files against the 14 sources is a real file
+check, not a fixture. No mock stands in for a shipped file or a checksum. Passing cases 1 to 8
+proves file integrity and manifest correctness; it proves no audible quality and no monorepo
+acceptance.
+
+**Closeout addition.** The plan records the folder path and the 14-file checksum result. It keeps
+the target marked proposed until the PM answer arrives with a date. It does not commit `out/`. The
+full suite stays intentionally red on TD-40; never edit `tests/storytime-book-pictures.test.ts` to
+make it pass. The skipped opt-in cases are an accepted part of the default suite, like the TD-44
+skips and the `AUDIO_BUDGET_JSON` skip.
+
+**Changed-contract risks.** This task adds one dev script and one test file. It changes no
+production source, no game host, and no audio file. It adds no dependency: Node crypto and
+`sha256sum` are already available. The PM answer changes no gate. The flag name
+`AUDIO_HANDOFF_ARTIFACTS=1` is fixed; do not rename it. A claim in the plan must match the executed
+command and the printed output.
 
 **Anti-pattern coverage.**
 
-| ID  | Defense                                                                             | Falsification                                                |
-| --- | ----------------------------------------------------------------------------------- | ------------------------------------------------------------ |
-| A3  | Row count 14, file count 14, and per-row `bytes` from `statSync`.                   | A count from a directory listing name fails.                 |
-| A4  | An empty folder, a README-only folder, or a manifest without files fails.           | A pass on an empty hand-off fails.                           |
-| A5  | The done-when is the executed command and its exit code, not "files exist".         | A pass claim before the checksum runs fails review.          |
-| A6  | Never write "monorepo path confirmed" before the PM answer. Record "proposed" only. | A confirmed-path claim with no PM note fails acceptance.     |
-| A7  | Exact 64-hex plus two-space format. `grep -c` is anchored to the proposed prefix.   | A substring match on a name, or an unanchored prefix, fails. |
-| A9  | The README cites `docs/apk-port.md` line 238, a live path. No archived path.        | An archived citation fails review.                           |
-| A10 | A new `docs/apk-port.md` row is documentation. Run `generate.mjs --check`.          | Generated-fact drift fails closeout.                         |
+| ID     | Defense                                                                                                                                                                            | Falsification                                                                        |
+| ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| A3     | Count 14 files, 17 folder names, and 14 checksum lines as labeled integers. Parse `bytes` from `statSync` and the hex string with an anchored pattern.                             | A digit from a file name or a date cannot satisfy the anchored count and hex checks. |
+| A4     | Case 4 requires the exact 17-name set. Cases 6 and 8 require a checksum verification and a non-empty README. An opt-in skip is reported as a skip.                                 | An empty folder, a README-only folder, or a skip recorded as a pass fails review.    |
+| A5     | The plan records the executed command exits and the printed checksum result. Review reruns the flagged command.                                                                    | A pass claim that differs from the command output fails review.                      |
+| A6     | Keep the target marked proposed. Do not write "path confirmed" before the PM note with a date.                                                                                     | A confirmed-path claim with no PM note fails acceptance.                             |
+| A7     | Match the docs row by exact cell values and the target by an anchored prefix. Use the anchored 64-hex pattern.                                                                     | A substring match on a name or an unanchored target fails.                           |
+| A9     | Read only live paths: `sounds/chibi/`, `demo/public/audio/chibi/`, `out/apk-audio-handoff/chibi/`, `docs/apk-port.md`, and the live monorepo status. No `measure/archive/**` path. | A test path into an archived track fails review.                                     |
+| A10    | Run `generate.mjs --check` after the plan edit. Keep `out/` ignored and untracked.                                                                                                 | Stale generated facts, or a committed `out/` file, fail closeout.                    |
+| A11    | Record the real status of each Phase 5 review. Do not leave executed review tasks as `[b] deferred:review-execution` once the artifacts exist.                                     | A review artifact with every task still blocked fails acceptance.                    |
+| A1, A8 | Not applicable in this phase. No deferred marker or supervisor signal changes here. Phase 6 owns both entries.                                                                     | A Phase 5 edit that changes a phase marker fails review.                             |
+| A2     | Not applicable: this phase has no publish gate and no personal data.                                                                                                               | A publish claim would be out of scope and fails review.                              |
 
 ## Phase 6: Deferred work (credits)
 
@@ -456,38 +528,43 @@ marker, an edited `CREDITS.md`, or a "done" registry note fails acceptance.
 
 After the last phase, run and record each exit code:
 
-1. `node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/audio-event-map.test.ts tests/sound-set.test.ts tests/sound-set-mp3.test.ts tests/apk3d/audio-files.test.ts tests/audio-budget.test.ts`
+1. `node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/audio-event-map.test.ts tests/sound-set.test.ts tests/sound-set-mp3.test.ts tests/apk3d/audio-files.test.ts tests/audio-budget.test.ts tests/audio-handoff.test.ts`
 2. `node measure/tools/generate.mjs --check`
 3. `./measure/doctor.sh --structural-only`
-4. `node_modules/.bin/prettier --check` on each touched text file with a parser: the five test
-   files, `scripts/sound-set.mjs`, `scripts/audio-budget.mjs`, `src/apk3d/audio/bus.ts`,
-   `src/apk3d/audio/index.ts`, `sounds/README.md`, `docs/apk-port.md`, and the track files.
-   Exclude `docs/sound-event-map.tsv`, `MANIFEST.tsv`, and `MANIFEST.sha256`; prettier has no
-   parser for them.
-5. The Phase 5 command.
-6. `git status --short` shows only assigned paths.
+4. `node_modules/.bin/prettier --check` on each touched text file with a parser: the six test
+   files, `scripts/sound-set.mjs`, `scripts/audio-budget.mjs`, `scripts/audio-handoff.mjs`,
+   `src/apk3d/audio/bus.ts`, `src/apk3d/audio/index.ts`, `sounds/README.md`, `docs/apk-port.md`,
+   and the track files. Exclude `docs/sound-event-map.tsv`, `MANIFEST.tsv`, and
+   `MANIFEST.sha256`; prettier has no parser for them.
+5. The flagged Phase 5 Green command in the Phase 5 section.
+6. `git status --short` shows only assigned paths. `out/` stays ignored.
 
-Run the five-file test command through the heavy runner when the machine is busy. Run the Phase 5
-command directly; it is light.
+Run the six-file test command through the heavy runner when the machine is busy. The flagged Phase
+5 command uses the same runner by contract, because it builds an artifact folder. In the default
+six-file command, the audio budget JSON case and the five Phase 5 artifact cases skip without their
+flags. Record those skips.
 
 ## Intentionally-red aggregate suite
 
 The full suite is intentionally red. `tests/storytime-book-pictures.test.ts` fails on 9 tests
-(TD-40), so `PROJECT_TESTS` excludes it. At each Red, the new files also fail. Gate only on the
-targeted files above. Report aggregate failures as baseline debt. Never edit unrelated tests to
-make the aggregate suite green in this track. The sibling archive reported 211 files and 3,233
-tests with exit 0 on 2026-11-21; use that as the baseline shape, not as a current result.
+(TD-40), so `PROJECT_TESTS` excludes it. At each Red, the new files also fail under their flags.
+Gate only on the targeted files above. Report aggregate failures as baseline debt. Never edit
+unrelated tests to make the aggregate suite green in this track. The aggregate suite runs without
+`AUDIO_BUDGET_JSON` and `AUDIO_HANDOFF_ARTIFACTS`. One budget case and five hand-off cases skip in
+that mode. Those skips keep the suite green in a checkout without `out/`. The flagged commands
+above are the only gates for the generated artifacts. The sibling archive reported 211 files and
+3,233 tests with exit 0 on 2026-11-21; use that as the baseline shape, not as a current result.
 
 ## Review gate applicability
 
-| Phase | Review A correctness                                     | Review B security                                                             | Review C UX/API                                                  | Adversarial                                                                   | UX browser review                                                                              |
-| ----- | -------------------------------------------------------- | ----------------------------------------------------------------------------- | ---------------------------------------------------------------- | ----------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| 1     | Applicable                                               | Not applicable: data file, no I/O                                             | Not applicable: internal data map                                | Applicable                                                                    | Not applicable: no UI                                                                          |
-| 2     | Applicable                                               | Applicable, reduced: argv, no shell                                           | Not applicable: CLI covered by A                                 | Applicable                                                                    | Not applicable: no UI                                                                          |
-| 3     | Applicable                                               | Applicable: URL build, fetch scope                                            | Applicable: public API and audible fallback                      | Applicable                                                                    | Applicable: game runtime and audible output                                                    |
-| 4     | Applicable: four cases, script gates, JSON-to-plan match | Applicable, reduced: local server, fixed base, seven-name allowlist, no shell | Not applicable: no API change; the page flow is the existing one | Applicable: zero rows, zero bytes, stale JSON, wrong URL, second-run variance | Applicable, limited: the script is the browser measurement; review its JSON, not sound quality |
-| 5     | Applicable                                               | Applicable, reduced: paths, no writes in monorepo                             | Not applicable: delivery artifact                                | Applicable                                                                    | Not applicable: no UI                                                                          |
-| 6     | Not applicable                                           | Not applicable                                                                | Not applicable                                                   | Not applicable                                                                | Not applicable                                                                                 |
+| Phase | Review A correctness                                              | Review B security                                                                                 | Review C UX/API                                                  | Adversarial                                                                       | UX browser review                                                                              |
+| ----- | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- | --------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| 1     | Applicable                                                        | Not applicable: data file, no I/O                                                                 | Not applicable: internal data map                                | Applicable                                                                        | Not applicable: no UI                                                                          |
+| 2     | Applicable                                                        | Applicable, reduced: argv, no shell                                                               | Not applicable: CLI covered by A                                 | Applicable                                                                        | Not applicable: no UI                                                                          |
+| 3     | Applicable                                                        | Applicable: URL build, fetch scope                                                                | Applicable: public API and audible fallback                      | Applicable                                                                        | Applicable: game runtime and audible output                                                    |
+| 4     | Applicable: five cases, script gates, JSON-to-plan match          | Applicable, reduced: local server, fixed base, seven-name allowlist, no shell                     | Not applicable: no API change; the page flow is the existing one | Applicable: zero rows, zero bytes, stale JSON, wrong URL, second-run variance     | Applicable, limited: the script is the browser measurement; review its JSON, not sound quality |
+| 5     | Applicable: byte equality, 17-name set, manifest values, docs row | Applicable, reduced: read-only monorepo status, fixed proposed target, no shell into another repo | Not applicable: no API change, delivery artifact only            | Applicable: missing file, extra file, wrong hash, unanchored target, stale folder | Not applicable: no UI or audio in this phase                                                   |
+| 6     | Not applicable                                                    | Not applicable                                                                                    | Not applicable                                                   | Not applicable                                                                    | Not applicable                                                                                 |
 
 Why Phase 3 and Phase 4 get browser review. Phase 3 changes code every game runs. The browser
 check must load the game page, click once, and assert one audio request with no console error. Phase
