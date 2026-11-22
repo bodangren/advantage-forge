@@ -479,61 +479,62 @@ Workbooks does not wait for it.
       adults too, so their four cut-out sets are re-rendered in the same run.
     - Bar: an independent judge rates the face 7.5 or more, as the cast rule says. The maker never rates
       its own work.
-  - Step 2, one scene render per character, made the production way. The recipe found in the archive:
-    production copies the Forge sheet `out/sprout-<name>/render.png` (2060x1028; front, three-quarter,
-    side, back) into the Muse element folder as `<name>-ref-render.png`, and passes it with an empty set
-    picture at 1600x1200 (4:3). Page specs use `aspect` "4:3" and `print` "crop". The archive has no
-    per-character scene render, so the default applies: the character cut-out on the classroom set at
-    the production canvas.
-    - Set: one clean classroom shot at 1600x1200, from the week 2 stage recipe
+  - Step 2, the element sheet and the classroom set, made the production way. The archive recipe has no
+    per-character scene render. Production passes the Forge render sheet and the empty set picture to
+    Muse, so this step builds those two inputs and no composite.
+    - Set: shoot the clean classroom set once at 1600x1200, from the week 2 stage recipe
       `scene=classroom&clean&az=0&el=14&dist=10&tx=0&tz=0` with `FORGE_SHOT_SIZE=1600x1200 node
-      scripts/shoot-map.mjs`, saved as `out/chibi-sprouts/faces-r2/scene/classroom.png`.
-    - Character: a neutral front cut-out at 1080 px/m, `./forge cutout sprout-<name> --out
-      out/chibi-sprouts/faces-r2/cutout --views front --ppm 1080 --canvas <canvas> --hide-sing`. Canvas
-      1024x1200 for Lily and Tom, 1760x1856 for the four adults.
-    - Composite: the cut-out at its own scale with the foot point on the classroom floor line, saved as
-      `out/chibi-sprouts/faces-r2/scene/<character>-scene.png` (1600x1200), with the floor row recorded in
-      `bench/sonnet/sprouts/faces-r2.sh`.
-    - A scene render that breaks these rules is not the production way. Record the deviation in this plan.
-  - Step 3, one Muse call per character with that scene render as the reference, through
+      scripts/shoot-map.mjs`, saved as `out/chibi-sprouts/faces-r2/scene/classroom.png`. One shot serves
+      every call.
+    - Element sheet: after the face pass of a character, copy its Forge sheet
+      `out/sprout-<name>/render.png` (2060x1028; front, three-quarter, side, back) to
+      `out/chibi-sprouts/faces-r2/muse/elements/<name>-ref-render.png`. The copy is a file operation and
+      is not a Muse call.
+    - No cut-out, no composite, and no scene picture per character. These two files are the whole input
+      of a call.
+  - Step 2b, the guard change, Red test then Green change, as its own sub-step before any Muse call.
+    - Red: write `tests/storytime-faces-r2-guards.test.ts`. It takes `tests/storytime-cover-guards.test.ts`
+      as its model. It requires the exact folder, the cap, the report point, the margin, the try cap, and
+      the scan of that folder's own `costs.tsv` only, and it fails before the Green change.
+    - Green: add one run constant `FACES_R2_RUN` to `scripts/storytime-muse-guards.mjs`, with a start
+      time, `capUsd` 0.08, `reportAtUsd` 0.06, `marginUsd` 0.01, `maxTries` 1, and `outDir`
+      `out/chibi-sprouts/faces-r2/muse`. Class it like `COVER_RUN`: one exact folder, and a scan of that
+      folder's own `costs.tsv` only. The element folder is a copy destination and takes no call, so the
+      guard allows only the exact `muse` folder.
+    - The guard keeps the stop for 7 calls at 1 try each and about 0.07 USD. The cap of 0.08 holds that
+      headroom, because the guard projects one margin per call plus one cushion for a color pool. Step 3
+      makes 6 calls at about 0.06 USD, so the stop stays above the plan.
+    - PM approved 2026-11-22. The guard change and its test belong to this track.
+  - Step 3, one Muse call per character, with both references of the production recipe, through
     `node scripts/storytime-muse.mjs color <spec>`. One spec file per character at
     `docs/chibi-sprouts/faces-r2/<character>.json`, with `references:
-    ["out/chibi-sprouts/faces-r2/scene/<character>-scene.png"]`, `aspect` "4:3", `print` "crop", and
-    `outDir` `out/chibi-sprouts/faces-r2/muse`. The colorPrompt follows the production shape: name the
-    character in the picture, keep the soft round bright 3D render look, keep the room, and copy the face
-    and the clothes.
-    - Spend: 7 calls, 1 try each, about 0.07 USD in total, approved by Daniel through the PM on
+    ["out/chibi-sprouts/faces-r2/muse/elements/<name>-ref-render.png",
+    "out/chibi-sprouts/faces-r2/scene/classroom.png"]`, `aspect` "4:3", `print` "crop", and `outDir`
+    `out/chibi-sprouts/faces-r2/muse`. The colorPrompt follows the production shape: name the character
+    in the picture, keep the soft round bright 3D render look, keep the room, and copy the face and the
+    clothes.
+    - Call count: 6 calls, for Lily, Tom, Mom, Dad, Grandma, and Grandpa. The adult base has no portrait;
+      its reference is the cast line-up, so it takes the face pass of Step 1 and no Muse call.
+    - Spend: 6 calls, 1 try each, about 0.06 USD in total, approved by Daniel through the PM on
       2026-11-22. No retry. A failed call at 0 USD still uses its try.
     - Record each cost in this plan, one line per character, from the `usage_cost` column of
       `out/chibi-sprouts/faces-r2/muse/costs.tsv`.
-    - Guard result: the guards refuse this outDir today. `classifyOutDir` returns `invalid` for
-      `out/chibi-sprouts/faces-r2/muse`, so `runGuards` exits 3 with "refused: outDir ... is outside the
-      scanned cost folders" before it reads the key. A pass needs a change at the guard, not a new try.
-    - Smallest guard change: add one run constant `FACES_R2_RUN` to `scripts/storytime-muse-guards.mjs`,
-      with a start time, `capUsd` 0.08, `reportAtUsd` 0.06, `marginUsd` 0.01, `maxTries` 1, and outDir
-      `out/chibi-sprouts/faces-r2/muse`. Class it like `COVER_RUN`: one exact folder, and a scan of that
-      folder's own `costs.tsv` only. Add one test file `tests/storytime-faces-r2-guards.test.ts`.
-    - Why a cap of 0.08 and a stop of 0.07: the guard projects one margin per call plus one cushion for a
-      color pool, so a 7-call pool needs 0.08 USD of headroom at the start. A cap of 0.07 refuses call 7
-      at a spend of 0.06 USD.
-    - Who approves: the PM approves the guard change and assigns it to one role, because a scan folder
-      and a cap belong to the paid stop. The paid stop itself stays Daniel's 0.07 USD of 2026-11-22.
-      Step 3 waits for that approval.
-  - Step 4, one compare sheet per character: the original reference, the 3D scene render, and the Muse
-    output, side by side, with the character name. `bench/sonnet/sprouts/faces-r2.sh` builds the sheets
-    with sharp into `out/chibi-sprouts/faces-r2/sheets/<character>-compare.png`.
+  - Step 4, one compare sheet per character: the original reference picture, the 3D
+    `out/sprout-<name>/render.png` sheet (the four views), and the Muse output, side by side, with the
+    character name. `bench/sonnet/sprouts/faces-r2.sh` builds the six sheets with sharp into
+    `out/chibi-sprouts/faces-r2/sheets/<character>-compare.png`.
     - An independent look judge, not the maker family, writes one line on the face likeness and one line
       on the clothes for each sheet. The judge sees the sheet only. Both lines go into this plan.
     - A likeness line names the largest difference, or says "match" for the face and for the clothes.
-  - Step 5, upload the seven sheets to Drive folder `1W6iwGCe0qQ3EXqPASvzat5fLqNnEIbaA`, sub-folder
+  - Step 5, upload the six sheets to Drive folder `1W6iwGCe0qQ3EXqPASvzat5fLqNnEIbaA`, sub-folder
     `faces-r2`, one file per character named `<character>-compare.png`, with the `gws` CLI.
     - Create the sub-folder once: `gws drive files create --json '{"name":"faces-r2","mimeType":"application/vnd.google-apps.folder","parents":["1W6iwGCe0qQ3EXqPASvzat5fLqNnEIbaA"]}'`.
     - Upload each file with `gws drive files create --upload <path> --upload-content-type image/png`.
     - Check each file with `gws drive files get`; its `md5Checksum` must equal the local MD5.
-  - Done-when: the seven sheets sit in the `faces-r2` Drive sub-folder with seven equal MD5 values;
-    `costs.tsv` sums to 0.07 USD or less, plus rounding; this plan holds one line per character with the
-    face judgment, the clothes judgment, and the cost; and `node measure/tools/generate.mjs --check`
-    exits 0.
+  - Done-when: the six sheets sit in the `faces-r2` Drive sub-folder with six equal MD5 values;
+    `costs.tsv` sums to 0.06 USD or less, plus rounding; this plan holds one line per Muse character
+    with the face judgment, the clothes judgment, and the cost; and `node measure/tools/generate.mjs
+    --check` exits 0.
 - [x] Task: Per-character hand offset in assets/parts/sprout-gestures.ts for bob hair (moves
   the hands of point-up, cheer, picture-sway out for a character that opts in). Red tests
   first: the gesture poses of every other character (Pat, Sam, Mia, May, Nan, adult base)
