@@ -1,6 +1,6 @@
 # Sound in the games: library takes for the game events
 
-Status: new. The plan records execution state. `docs/sound-library.md` retains the library design.
+Status: in_progress. The plan records execution state. `docs/sound-library.md` retains the library design.
 
 Decisions (a) to (d) and the acceptance criteria: `spec.md`, amendment 2026-11-22. The earshot set
 `sounds/chibi/*.ogg` is the first source. The synthesized recipes stay the fallback.
@@ -35,7 +35,7 @@ Files this track touches:
 
 ## Phase 1: Event map
 
-- [x] T1 Red: Add `tests/audio-event-map.test.ts`. It reads `docs/sound-event-map.tsv` with
+- [x] T1 Red (7ecd5832): Add `tests/audio-event-map.test.ts`. It reads `docs/sound-event-map.tsv` with
       `readFileSync` and splits each line on the tab. The eight cases:
 
   1. The file exists. Line 1 is exactly `event\tsource\tnote`, and the file holds 58 data rows and
@@ -60,7 +60,7 @@ Files this track touches:
     and no syntax or import error. `node_modules/.bin/prettier --check tests/audio-event-map.test.ts`
     exited 0.
 
-- [x] T2 Green: Write `docs/sound-event-map.tsv` as AC1 states: one header line
+- [x] T2 Green (75e56e8d): Write `docs/sound-event-map.tsv` as AC1 states: one header line
       `event<TAB>source<TAB>note`, then exactly one row for each of the 58 events, and nothing else.
       Write no comment line, no blank line, and no closing text. The `note` field names the event's
       meaning in three words or less. The seven `chibi/<entry>` values come from

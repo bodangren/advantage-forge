@@ -46,3 +46,30 @@ project_gate_failures_outside_task: none
 dirty_scope_check: git status --short before editing showed no tracked modification to the map file or the track plan; unrelated untracked files under bench/, assets/, docs mockups, other tracks' run folders, and two spec-review artifacts in this run folder were left untouched; commits stage explicit paths only
 notes: Red test tests/audio-event-map.test.ts was not edited. No production source changed. No monorepo write. No push. The project test gate ran through the shared heavy runner after its heavy.lock wait and passed with exit 0.
 END_MEASURE_AGENT_RESULT
+MEASURE_AGENT_RESULT
+role: jr-green
+track: audio_game_integration_20261014
+phase: "Phase 1: Event map"
+task: Phase 1 gate fixes, SHA evidence and track status
+phase_base_sha: 1bbdbecbc2368868859722cf5eee0be0c302f82c
+role_base_sha: 09d7e21d463ecfa564db53c91000fc0e2fdf6f71
+final_green_head: 498c587cbe5779c79346432c8e51d4cfba381c07
+note_on_head: this block is committed in the follow-up bookkeeping commit; a commit cannot embed its own SHA, so final_green_head names the Green head immediately before that commit
+implementation_commit: 75e56e8d00b97854c2993bb6ce17699740a11f53
+sha_evidence_fix:
+  - "T1 Red (7ecd5832): commit SHA now on the task line in plan.md"
+  - "T2 Green (75e56e8d): commit SHA now on the task line in plan.md"
+status_fix:
+  - "metadata.json status new -> in_progress; updated_at 2026-11-22T09:15:00Z"
+  - "plan.md Status: line new -> in_progress"
+  - "measure/tracks.md registry marker [ ] -> [~] for this track"
+  - "measure/generated/status.md regenerated: this track new 0/11 -> in_progress 2/11; totals new 28 -> 27 and in_progress 48 -> 49"
+gate_exit_codes:
+  - "node_modules/.bin/prettier --check measure/tracks/audio_game_integration_20261014/plan.md measure/tracks/audio_game_integration_20261014/metadata.json -> 0"
+  - "node measure/tools/generate.mjs --check -> 0 (Measure facts are current (4 files).)"
+  - "./measure/doctor.sh --structural-only -> 0 (Measure doctor found no structural errors.)"
+tasks_flipped_to_x: T1 Red and T2 Green, unchanged marks; SHA evidence now on the task lines
+tasks_flipped_to_b: none
+new_files_added: none in this block; the map file and the first result block were added earlier
+notes: No code change. Red test untouched. No monorepo write. No push. Explicit paths staged only.
+END_MEASURE_AGENT_RESULT
