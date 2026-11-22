@@ -18,17 +18,21 @@ approved library take replaces a set file later. The synthesized recipe stays th
 - The set holds seven sounds: `tap`, `right`, `wrong`, `star`, `pop`, `whoosh`, and `level-end`.
   `sounds/sets/chibi.json` names them. `scripts/sound-set.mjs` renders them from pinned earshot.
 - The seven `.ogg` files total 90,468 bytes. `sounds/README.md` holds each size and duration.
-- No file in `src/` or `demo/` loads an `.ogg` or an `.mp3` today.
-- The games name 22 moods (`calm`, `battle`, `vault`, ...). The bus synthesizes every mood.
+- No game sound effect loads from a file today. `src/apk3d/audio/` and `src/games/` name no audio
+  URL. The bus builds each effect from tones and noise and each tune from chords.
+- `demo/public/stories/*/story.json` names `article.mp3` and `words.mp3` for the story player. That
+  story audio is not a game sound effect, and the track keeps it out of scope (Exclusions).
+- The games name 26 moods: 3 built-in in `BUILT_IN_MOODS` (`calm`, `battle`, `boss`) and 23
+  `defineMood` names (`vault`, `forge`, ...). The bus synthesizes every mood.
 
 ## Decisions
 
-| #   | PM decision 2026-11-22 | Rule                                                                                                                                                                                                                                                                                                                                                                                          |
-| --- | ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| a   | Source order           | The earshot set `sounds/chibi/*.ogg` is the first source for the Chibi game events. `sounds/sets/chibi.json` names the seven sounds, and `scripts/sound-set.mjs` renders them. A library take from `audio/` replaces a set file later. The synthesized recipe in `src/apk3d/audio/bus.ts` stays the fallback when a file does not load or an event has no file.                               |
-| b   | Format                 | The wrapper `scripts/sound-set.mjs` writes an MP3 copy next to each `.ogg`, with pinned ffmpeg settings. The game picks Ogg Vorbis or MP3 per browser with `canPlayType`. It plays the synthesized recipe when neither format plays. No part of this track treats MP3 as the only format.                                                                                                     |
-| c   | Credits                | The earshot set gets no credits screen. The set holds our own renders and no CC-BY line. The credits task stays in the plan as deferred, for library takes.                                                                                                                                                                                                                                   |
-| d   | Hosting                | The files ship inside the game package with the APK release, like the model packs: `demo/public/audio/chibi/` in this repository and `apps/advantage-games/public/audio/chibi/` in the monorepo. Forge writes the hand-off folder `out/apk-audio-handoff/chibi/` with a `MANIFEST.tsv`, and gives it to the PM. The PM routes it to the Monorepo session. Forge never writes in the monorepo. |
+| #   | PM decision 2026-11-22 | Rule                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| --- | ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| a   | Source order           | The earshot set `sounds/chibi/*.ogg` is the first source for the Chibi game events. `sounds/sets/chibi.json` names the seven sounds, and `scripts/sound-set.mjs` renders them. A library take from `audio/` replaces a set file later. The synthesized recipe in `src/apk3d/audio/bus.ts` stays the fallback when a file does not load or an event has no file.                                                                                                                                                                                                                                                                                    |
+| b   | Format                 | The wrapper `scripts/sound-set.mjs` writes an MP3 copy next to each `.ogg`, with pinned ffmpeg settings. The game picks Ogg Vorbis or MP3 per browser with `canPlayType`. It plays the synthesized recipe when neither format plays. No part of this track treats MP3 as the only format.                                                                                                                                                                                                                                                                                                                                                          |
+| c   | Credits                | The earshot set gets no credits screen. The set holds our own renders and no CC-BY line. The credits task stays in the plan as deferred, for library takes.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| d   | Hosting                | The files ship inside the game package with the APK release, like the model packs: `demo/public/audio/chibi/` in this repository and `apps/advantage-games/public/audio/chibi/` in the monorepo. The monorepo path is a proposed target. The MANIFEST names it as proposed, and the PM or Monorepo session confirms or replaces it at hand-off. The model is the model pack row `apps/advantage-games/public/packs/` in `docs/apk-port.md`, line 238. Forge writes the hand-off folder `out/apk-audio-handoff/chibi/` with a `MANIFEST.tsv`, and gives it to the PM. The PM routes it to the Monorepo session. Forge never writes in the monorepo. |
 
 ## Scope
 
@@ -43,7 +47,9 @@ approved library take replaces a set file later. The synthesized recipe stays th
 ## Exclusions
 
 - New takes and review rounds. The library tracks own them.
-- Music files. This track keeps the 22 synthesized moods.
+- Music files. This track keeps the 26 synthesized moods.
+- Story audio. `demo/public/stories/*/story.json` names `article.mp3` and `words.mp3`. This track
+  does not change those files or the story player.
 - A credits screen for the earshot set. The plan keeps it as deferred work.
 - Monorepo changes during the feature freeze. The freeze runs from 2026-10-07 until the Primary
   deployment (owner rule 2026-10-07). Forge work continues here. The release waits.
@@ -52,9 +58,15 @@ approved library take replaces a set file later. The synthesized recipe stays th
 
 ### AC1: Event map
 
-`docs/sound-event-map.tsv` holds the header line `event<TAB>source<TAB>note`. It holds one row for
-each of the 58 names in the table below, and no other row. The `source` value is one of the seven
-`chibi/<name>` values or `synth`. Each of the seven set entries appears at least once.
+`docs/sound-event-map.tsv` holds one header line and exactly 58 data rows, and nothing else. There
+is no comment line, no blank line, and no other text. Line 1 is `event<TAB>source<TAB>note`. Each
+data row is one event with three tab-separated fields. The `note` field names the event's meaning
+in three words or less. The `source` field is one of the seven `chibi/<name>` values or `synth`.
+The 58 `event` values are the names in the table below, and each of the seven set entries appears
+at least once as a `source` value.
+
+This acceptance criterion is the one document of the map's meaning: the header line, the three
+fields, the `source` values, and the `note` rule. The map file itself holds data only.
 
 | Source            | Events                                                                                                                                                                                                                                 |
 | ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -157,10 +169,14 @@ and asserts a total of at most 100,000 bytes for each format.
 ### AC6: Hand-off to the PM
 
 `out/apk-audio-handoff/chibi/` holds the seven `.ogg` files, the seven `.mp3` files, `MANIFEST.tsv`,
-and `README.md`. `MANIFEST.tsv` holds the columns `file`, `bytes`, `sha256`, `format`, and `source`.
-`README.md` names the target `apps/advantage-games/public/audio/chibi/` and the load rule of AC4.
-The folder goes to the PM, and the PM routes it to the Monorepo session. Forge writes nothing in
-the monorepo.
+and `README.md`. `MANIFEST.tsv` holds the columns `file`, `bytes`, `sha256`, `format`, `source`, and
+`target`. Each `target` value is `proposed: apps/advantage-games/public/audio/chibi/<file>`, so the
+prefix names the path as proposed. `README.md` names the same proposed target and the load rule of
+AC4. It also cites the model pack row in `docs/apk-port.md`, line 238:
+`apps/advantage-games/public/packs/`. The folder goes to the PM, and the PM routes it to the
+Monorepo session. The PM or Monorepo session confirms or replaces the proposed path at hand-off. No
+acceptance criterion depends on that path: the folder contents, the checksums, and the empty
+monorepo status decide AC6. Forge writes nothing in the monorepo.
 
 ### AC7: Credits
 

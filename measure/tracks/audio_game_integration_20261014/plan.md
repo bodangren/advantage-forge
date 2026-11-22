@@ -31,7 +31,8 @@ Files this track touches:
 - [ ] T1 Red: Add `tests/audio-event-map.test.ts`. It reads `docs/sound-event-map.tsv` with
       `readFileSync` and splits each line on the tab. The eight cases:
 
-  1. The file exists, and line 1 is exactly `event\tsource\tnote`.
+  1. The file exists. Line 1 is exactly `event\tsource\tnote`, and the file holds 58 data rows and
+     no other line.
   2. Each line holds three fields. Each `event` value is unique. Each `source` value is one of the
      seven `chibi/<name>` values or `synth`.
   3. The rows are exactly the 58 names of spec AC1, in both directions.
@@ -47,10 +48,11 @@ Files this track touches:
     holds no syntax or import error. `node_modules/.bin/prettier --check tests/audio-event-map.test.ts`
     exits 0.
 
-- [ ] T2 Green: Write `docs/sound-event-map.tsv` with the AC1 table. Use one line for each event.
-      The `note` column names the event's meaning in three words or less. Name the seven
-      `chibi/<entry>` values in the file header comment, with the set entry design from
-      `sounds/README.md`.
+- [ ] T2 Green: Write `docs/sound-event-map.tsv` as AC1 states: one header line
+      `event<TAB>source<TAB>note`, then exactly one row for each of the 58 events, and nothing else.
+      Write no comment line, no blank line, and no closing text. The `note` field names the event's
+      meaning in three words or less. The seven `chibi/<entry>` values come from
+      `sounds/sets/chibi.json`. The map's meaning lives in spec AC1, and the file holds data only.
   - Green done-when: the T1 command exits 0 with 8 of 8 tests passing.
   - Record: the plan notes the 31 mapped names and the 27 `synth` names, and the count of `.ogg`
     bytes that a game with every mapped event would load.
@@ -81,8 +83,10 @@ Files this track touches:
   - Green done-when: the T3 command exits 0 with every test passing. The render command exits 0 and
     writes 14 files. `sounds/README.md` holds the byte size and the duration of each file, in both
     formats, and the ffmpeg version of the render host.
-  - Render command: `bash scripts/sound-setup.sh && node scripts/sound-set.mjs chibi`. Record the
-    ffmpeg version line. A first render can take about 69 s for the numba compile.
+  - Render command: `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'bash scripts/sound-setup.sh && node scripts/sound-set.mjs chibi'`.
+    Every render in this task uses this wrapper, as the sibling track pins it
+    (`measure/archive/chore_earshot_sounds_20261121/spec.md`, D8). Record the ffmpeg version line.
+    A first render can take about 69 s for the numba compile.
   - The earshot and ffmpeg versions go in `sounds/README.md`, next to the design line.
 
 ## Phase 3: File playback in the AudioBus
@@ -123,7 +127,8 @@ Files this track touches:
       `out/audio-budget/<game>.json`. Add `tests/audio-budget.test.ts`: the byte column of
       `sounds/README.md` equals `statSync` for all 14 files, and each format total is at most
       100,000 bytes.
-  - Command: `node scripts/audio-budget.mjs --game rune-match`.
+  - Command: `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/audio-budget.mjs --game rune-match'`.
+    The browser run uses the same wrapper as T4 (sibling track D8).
   - Done-when: the JSON holds `bytes`, `files`, and `seconds` for Rune Match. `bytes` is at most
     100,000. `seconds` is at most 1.5. The plan records both numbers and the file count. The test
     command exits 0.
@@ -132,13 +137,18 @@ Files this track touches:
 ## Phase 5: Hand-off to the PM
 
 - [ ] T8 Hand-off: Copy the 14 files to `demo/public/audio/chibi/`. Add one row to
-      `docs/apk-port.md` with the pattern of the model pack row: `demo/public/audio/chibi/` to
+      `docs/apk-port.md` with the pattern of the model pack row (`docs/apk-port.md`, line 238:
+      `apps/advantage-games/public/packs/`): `demo/public/audio/chibi/` to
       `apps/advantage-games/public/audio/chibi/`. Build `out/apk-audio-handoff/chibi/` with the 14
       files, `MANIFEST.tsv`, and `README.md` per spec AC6. Give the folder path to the PM.
+  - The monorepo path `apps/advantage-games/public/audio/chibi/` is a proposed target. The MANIFEST
+    names it as proposed, and the PM or Monorepo session confirms or replaces it at hand-off. This
+    repository holds no copy of that folder, so the plan cannot verify it here.
   - Done-when: `sha256sum -c out/apk-audio-handoff/chibi/MANIFEST.sha256` exits 0. The folder holds
     14 sound files. `git status --short ../reading-advantage-monorepo` stays empty. The PM answer
-    lands in this plan with its date.
-  - The MANIFEST rows hold the target path `apps/advantage-games/public/audio/chibi/<file>`.
+    lands in this plan with its date, and that answer confirms or replaces the proposed path. The
+    done-when does not depend on the monorepo path: the folder contents and the checksums decide it.
+  - The MANIFEST `target` rows hold the value `proposed: apps/advantage-games/public/audio/chibi/<file>`.
 
 ## Phase 6: Deferred work
 
