@@ -49,3 +49,27 @@ Author model: opencode-go/deepseek-v4.1-flash
   `src/apk3d/audio/`; audio T6k `0cc7b5c4` is in HEAD; a `grep` of `Object.hasOwn` in `src/`
   returns 0; and the five named files hold 8 array `.at(` calls. The line 1 author line is
   unchanged.
+
+## Amendment after r2 (2026-11-23)
+
+- F1 to F4 were withdrawn by the r2 review (baseline `e6027f50`). The count of 8 array `.at(` calls
+  stands, and the one-scanner decision stands.
+- F5 closed: `spec.md` AC3 rule 3 fixes the strip as one left-to-right pass, and rule 7 adds the
+  control table as fixture strings inside the test. The table has six rows, and three of them demand
+  a fixed hit and a witness miss: a URL string before a call on the same line, a call inside a
+  `${...}` template interpolation, and a call with its argument on the next lines. The witness stays
+  in the test as `stripCommentsFirst`, and the two multi-line rows that both scanners catch are
+  labelled regression pins. `plan.md` T3 builds the controls, and T6 records the three
+  discriminating rows as they pass. Source: audio review A round 6 F2
+  (`review-a-a414b40.json`) and audio adversarial round 5 F1 (`adversarial-p3-a414b40.json`).
+- F6 closed: the copy under `measure/runs/` is gone. AC3 rule 1 sets
+  `ROOT = path.resolve(dirname(fileURLToPath(import.meta.url)), '..', '..')` and
+  `SCAN_ROOT = join(ROOT, 'src')`, so the file resolves the repository `src/` only while it stays at
+  `tests/apk3d/`. `plan.md` T3 edits the file in place and runs it with
+  `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/no-unpolyfilled-builtins.test.ts'`,
+  writes only `measure/runs/old_browser_builtins_20261122/red-scan.log`, leaves the file modified and
+  unstaged through T4, and T5 commits it with the replacements. The r1 F2 sentence about the
+  `measure/runs/` copy is superseded.
+- Chosen approach: the file is edited and run in place, so no copy exists and no root decision
+  remains. The cost is one modified, uncommitted failing test file from T3 to T5. T3 records that
+  window, and the orchestrator runs T3 and T5 back to back.

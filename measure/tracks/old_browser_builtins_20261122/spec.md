@@ -146,29 +146,65 @@ at the track creation.
 
 ### AC3: The scan
 
-1. `tests/apk3d/no-unpolyfilled-builtins.test.ts` is the one scan. The audio track committed it at
-   `1f45fcfe` with `SCAN_ROOT` on `src/apk3d/audio/`. This track sets `SCAN_ROOT` to `src/` and
-   changes no other root. The scan walks every `.ts` file under `src/` and skips `*.gen.ts`.
-2. The strip keeps the line numbers. The removal of a block comment, a line comment, a string, or a
-   template literal keeps each newline in place, so a hit line names the true source line.
-3. The pattern list stays the 19 labels of the committed file: `Object.hasOwn`, `structuredClone`, an
-   array `.at(` with one argument, `.findLast(`, `.findLastIndex(`, `.toSorted(`, `.toReversed(`,
-   `.toSpliced(`, `Object.groupBy`, `Map.groupBy`, `Promise.withResolvers`, `Array.fromAsync`,
-   `.union(`, `.intersection(`, `.difference(`, `.symmetricDifference(`, `.isSubsetOf(`,
-   `.isSupersetOf(`, and `.isDisjointFrom(`. No label is missing today. A new unpolyfilled built-in
-   joins this list with its own label and its own probe.
-4. The named false positives stay out by pattern or by exclusion row: `this.at(` (the board tile
+1. `tests/apk3d/no-unpolyfilled-builtins.test.ts` is the one scan, and it stays at that path. It
+   resolves its root from its own URL, with these two lines:
+
+   ```ts
+   const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..');
+   const SCAN_ROOT = join(ROOT, 'src');
+   ```
+
+   The two steps go up from `tests/apk3d/` to the repository root, so the scanned folder is the
+   repository `src/`. A copy of the file elsewhere would resolve another root, so the file never
+   moves.
+
+2. The scan walks every `.ts` file under `src/` and skips `*.gen.ts`.
+3. The strip is one left-to-right pass with a state for code, a line comment, a block comment, a
+   single-quoted string, a double-quoted string, template text, and a template `${...}` expression.
+   A string or a comment ends at its own terminator and never at a `//` inside a string. Template
+   text is dropped, and each `${...}` content is scanned as code, with nested braces counted. Dropped
+   characters become spaces, and each newline stays. One pass is the rule: the scan does not strip
+   comments first, because a URL string would then cut the rest of its line.
+4. The patterns run over the whole stripped text, not line by line, so a call that spans lines is
+   found. The pattern list stays the 19 labels of the committed file: `Object.hasOwn`,
+   `structuredClone`, an array `.at(` with one argument, `.findLast(`, `.findLastIndex(`,
+   `.toSorted(`, `.toReversed(`, `.toSpliced(`, `Object.groupBy`, `Map.groupBy`,
+   `Promise.withResolvers`, `Array.fromAsync`, `.union(`, `.intersection(`, `.difference(`,
+   `.symmetricDifference(`, `.isSubsetOf(`, `.isSupersetOf(`, and `.isDisjointFrom(`. The `.at(`
+   pattern allows whitespace and newlines inside its one argument, and it excludes a `this.` receiver.
+   No label is missing today. A new unpolyfilled built-in joins this list with its own label and its
+   own probe.
+5. The named false positives stay out by pattern or by exclusion row: `this.at(` (the board tile
    lookup), `.at(` with two or more arguments, `z.union(`, and the three `Box3.union` calls of
    `src/render/page.ts` at lines 263, 440, and 447. An exclusion row names the file, the line, and
    the reason, and it must still match a hit today. An exclusion that matches nothing fails the
    test, so the list cannot rot.
-5. Two controls guard the scan. A fixture string with every pattern gives one hit per pattern, and a
-   fixture with every pattern inside a comment or a string gives no hit.
-6. A hit fails the test with the line `<path>:<line>: <label>`. The path starts at the repo root.
-7. The scan reports 44 hits at Red: 35 `structuredClone`, 8 array `.at(`, and 1 `findLastIndex`. It
+6. A hit fails the test with the line `<path>:<line>: <label>`. The path starts at the repository
+   root, and the line comes from the match index: one plus the newlines before it.
+7. The controls are fixture strings inside the test file, not files under `src/`. A `\n` in a
+   fixture marks a line break. Each row names a fixture, the hits of the fixed scanner, and the hits
+   of a witness that strips comments before strings. The witness stays in the test as
+   `stripCommentsFirst`, and only the control test uses it. The rows:
+
+   | Control                                | Fixture                                             | Fixed | Witness |
+   | -------------------------------------- | --------------------------------------------------- | ----- | ------- |
+   | URL before a call on one line          | `const u = "https://e.test/x"; structuredClone(s);` | 1     | 0       |
+   | Call in a template interpolation       | ``const t = `copy ${structuredClone(s).phase}`;``   | 1     | 0       |
+   | Receiver on the next line              | `const l = [...m.values()]\n  .at(-1);`             | 1     | 1       |
+   | Argument on the next lines             | `const l = [...m.values()].at(\n  -1,\n);`          | 1     | 0       |
+   | `structuredClone(` over two lines      | `const s = structuredClone(\n  state\n);`           | 1     | 1       |
+   | Every label inside comments or strings | the 19 labels inside one comment and one string     | 0     | 0       |
+
+   Three rows demand a fixed hit and a witness miss: the URL row, the template row, and the argument
+   row. A scanner that still misses any of the three fails the test. The two multi-line rows that
+   both scanners catch are regression pins: the fixed scanner must keep them. The last row proves
+   that a comment and a string never hide a call, and that the strip does not invent a hit. The
+   source of the first two rows is audio review A round 6 F2 and audio adversarial round 5 F1.
+
+8. The scan reports 44 hits at Red: 35 `structuredClone`, 8 array `.at(`, and 1 `findLastIndex`. It
    reports zero at Green. `Object.hasOwn` reports no hit at either point, because task T6k
    (`0cc7b5c4`) fixed the two audio calls in the baseline.
-8. The scan reads `src/` only. `tests/`, `scripts/`, and `demo/` stay out of scope.
+9. The scan reads `src/` only. `tests/`, `scripts/`, and `demo/` stay out of scope.
 
 ### AC4: Existing tests
 
@@ -221,6 +257,8 @@ These commands pass, and the plan records each exit code:
 - [The book picture `.at(` calls](../../../src/storytime/book-pictures.ts)
 - [The reader `findLastIndex`](../../../src/host/reader.ts)
 - [The committed built-in scan](../../../tests/apk3d/no-unpolyfilled-builtins.test.ts)
+- [Audio review A round 6](../../runs/audio_game_integration_20261014/review-a-a414b40.json)
+- [Audio adversarial round 5](../../runs/audio_game_integration_20261014/adversarial-p3-a414b40.json)
 - [Browser check pattern](../../../scripts/apk3d-shot.ts)
 - [Audio track plan](../audio_game_integration_20261014/plan.md)
 
