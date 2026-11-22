@@ -133,17 +133,18 @@ const dadFace = (skin: sdf.Shape, h: HumanoidShape): sdf.Shape => {
   // opening with an exact hard skin stencil (a box over the whole shared eye
   // minus the almond solid), lay fresh white in the hole, then a smaller dark
   // iris, the pupil, one catchlight, and a thin upper lid line. Paint only: no
-  // geometry moves, so the head clearances cannot change.
+  // geometry moves, so the head clearances cannot change. r4 shrinks the
+  // opening and the iris a touch so the eye reads medium, not large.
   const almond = profile.polygon(
     [
-      [EX - 0.046, EY + 0.004],
-      [EX - 0.02, EY + 0.022],
-      [EX + 0.005, EY + 0.027],
-      [EX + 0.03, EY + 0.02],
-      [EX + 0.048, EY + 0.002],
-      [EX + 0.025, EY - 0.014],
-      [EX, EY - 0.02],
-      [EX - 0.022, EY - 0.012],
+      [EX - 0.042, EY + 0.004],
+      [EX - 0.018, EY + 0.02],
+      [EX + 0.005, EY + 0.024],
+      [EX + 0.028, EY + 0.018],
+      [EX + 0.044, EY + 0.002],
+      [EX + 0.023, EY - 0.012],
+      [EX, EY - 0.018],
+      [EX - 0.02, EY - 0.011],
     ] as [number, number][],
     { smooth: true },
   );
@@ -151,17 +152,18 @@ const dadFace = (skin: sdf.Shape, h: HumanoidShape): sdf.Shape => {
   const eyeBox = sdf.box([0.14, 0.125, 0.3], 0.01).at(EX + 0.0075, EY + 0.0025, 0.1);
   const almondCut = pair(eyeBox.subtract(almondSolid));
   const white = pair(almondSolid);
-  const dark = pair(h.onFace(sdf.ellipsoid([0.036, 0.038, 0.07]), EX, EY - 0.001));
+  const dark = pair(h.onFace(sdf.ellipsoid([0.031, 0.033, 0.07]), EX, EY - 0.001));
   const low = dark.intersect(sdf.halfSpace([0, 1, 0], EY - 0.006));
-  const pupil = pair(h.onFace(sdf.ellipsoid([0.018, 0.02, 0.07]), EX, EY + 0.003));
-  const big = pair(h.onFace(sdf.sphere(0.01), EX + 0.013, EY + 0.009));
-  const lidLine = pair(sdf.extrude(profile.arc(0.05, 0.007, 35, 145), 0.3).at(EX, EY - 0.023, 0.1));
+  const pupil = pair(h.onFace(sdf.ellipsoid([0.016, 0.018, 0.07]), EX, EY + 0.003));
+  const big = pair(h.onFace(sdf.sphere(0.009), EX + 0.012, EY + 0.008));
+  const lidLine = pair(sdf.extrude(profile.arc(0.046, 0.006, 35, 145), 0.3).at(EX, EY - 0.019, 0.1));
   // The eye box trims the top of the shared cheek blush; lay it back below the
-  // eye so the cheek keeps its soft color with no seam.
+  // eye so the cheek keeps its soft color with no seam. Clipped well clear of
+  // the outer eye corner (r4: the softer r3 clip reached the corner).
   const blushBack = pair(
     h
       .onFace(sdf.sphere(0.032), 0.135, DAD.face.blushY)
-      .intersect(sdf.halfSpace([0, 1, 0], EY - 0.02)),
+      .intersect(sdf.halfSpace([0, 1, 0], EY - 0.04)),
   );
 
   // The shared brow band is heavy; cover it with an exact-footprint hard skin
@@ -209,7 +211,7 @@ const dadFace = (skin: sdf.Shape, h: HumanoidShape): sdf.Shape => {
     .paintWhere(pupil, DAD_FACE.pupil)
     .paintWhere(big, '#ffffff')
     .paintWhere(lidLine, DAD_FACE.lid)
-    .paintWhere(blushBack, h.tint.blush!, 0.03)
+    .paintWhere(blushBack, h.tint.blush!, 0.01)
     .paintWhere(cover, h.tint.skin!)
     .paintWhere(brow, DAD_FACE.brow!)
     .paintWhere(mouth, DAD_FACE.mouth, 0.001)
@@ -220,7 +222,7 @@ const dadFace = (skin: sdf.Shape, h: HumanoidShape): sdf.Shape => {
 
 export default humanoidAsset({
   name: 'sprout-dad',
-  description: 'Dad, a young father: large dark-brown eyes, short black side-part hair, a red-and-black plaid shirt open over a white T-shirt, dark-blue jeans, and brown shoes.',
+  description: 'Dad, a young father: medium almond brown eyes, short black side-part hair swept to his left, a red-and-black plaid shirt open over a white T-shirt, dark-blue jeans, and brown shoes.',
   reference: 'docs/sprout-mockups/dad.jpg',
   proportions: DAD,
   sing: true,
@@ -277,14 +279,15 @@ export default humanoidAsset({
       .intersect(sdf.halfSpace([0, 0, -1], -0.02));
     // The side part: a narrow groove high on the crown only, so it never cuts
     // through the cap. It stays behind the forehead: both ends above y 0.13.
-    // Deepened a touch in r3 (the judge asked for a stronger part line).
+    // r4: the part sits on his right (-X), as in the reference (r3 had it
+    // mirrored); the fringe sweeps from the part to his left.
     const outerHug = sdf.ellipsoid([H[0] + 0.018, H[1] + 0.018, H[2] + 0.018]).at(0, 0.01, -0.008);
     const part = sdf
       .chain(
         [
-          [0.05, 0.175, 0.02, 0.014],
-          [0.035, 0.15, 0.06, 0.012],
-          [0.025, 0.13, 0.09, 0.011],
+          [-0.05, 0.175, 0.02, 0.014],
+          [-0.035, 0.15, 0.06, 0.012],
+          [-0.025, 0.13, 0.09, 0.011],
         ],
         0.008,
       )
@@ -323,45 +326,37 @@ export default humanoidAsset({
         ),
       )
       .smoothIntersect(0.02, outerHug);
-    // Five separated swept spikes cross the forehead from the side part to the
-    // right temple (judge r3: the r2 fringe read as a smooth cap). Each lock is
-    // a tapering chain whose tip lands well sideways of its root, so the
-    // hairline reads as swept spikes with skin showing between the staggered
-    // tips, not vertical drips and not a helmet edge. A small union fillet
-    // (0.006) keeps deep grooves between the strands; the roots merge into the
-    // swept mass. Tips stop just above the face cut with staggered depths.
-    const spike = (rx: number, ry: number, rz: number, mx: number, my: number, mz: number, tx: number, ty: number, tz: number, r: number) =>
+    // Separated front edge (r4): the spike fringe sat inside the fat swept mass
+    // and melted into a smooth edge, so the fringe works the other way now.
+    // Three shallow notches scallop the hairline edge upward between the locks,
+    // leaving skin wedges between four lock fronts; two short flicks hug the
+    // temples in front of the sideburns. Nothing hangs vertical.
+    const notch = (nx: number, ny: number, tilt: number) =>
+      sdf.ellipsoid([0.016, 0.022, 0.05]).rotateZ(tilt).at(nx, ny, 0.15);
+    const notches = sdf.smoothUnion(0.006, notch(-0.06, 0.058, 14), notch(-0.005, 0.066, 16), notch(0.05, 0.06, 18));
+    const flick = (sx: number) =>
       sdf.chain(
         [
-          [rx, ry, rz, r],
-          [mx, my, mz, r * 0.55],
-          [tx, ty, tz, 0.004],
+          [sx, 0.08, 0.088, 0.014],
+          [sx * 0.97, 0.06, 0.1, 0.008],
+          [sx * 0.94, 0.042, 0.11, 0.003],
         ],
-        0.012,
+        0.008,
       );
-    const fringe = sdf
-      .smoothUnion(
-        0.006,
-        spike(0.155, 0.15, 0.1, 0.125, 0.1, 0.157, 0.095, 0.064, 0.18, 0.024),
-        spike(0.09, 0.162, 0.105, 0.062, 0.108, 0.167, 0.045, 0.07, 0.188, 0.026),
-        spike(0.02, 0.168, 0.11, 0.0, 0.112, 0.17, -0.01, 0.074, 0.19, 0.025),
-        spike(-0.05, 0.158, 0.105, -0.06, 0.102, 0.162, -0.055, 0.066, 0.182, 0.023),
-        spike(-0.11, 0.142, 0.095, -0.1, 0.092, 0.147, -0.095, 0.062, 0.168, 0.021),
-      )
-      .smoothIntersect(0.02, outerHug);
-    const mass = sdf.smoothUnion(0.03, cap, pair(sweep), pair(sides), fringe).smoothSubtract(0.018, part);
+    const fringe = sdf.smoothUnion(0.006, flick(0.13), flick(-0.13));
+    const mass = sdf.smoothUnion(0.03, sdf.smoothUnion(0.006, cap, fringe), pair(sweep), pair(sides)).smoothSubtract(0.018, part);
     // Fine strand lines combed along the sweep (judge r3): subtle dark streaks
     // parallel to the swept locks, in the upper sweep zone only.
     const hairPaint = (x: number, y: number, z: number, base: Rgb): Rgb => {
       let groove = 0;
-      for (const c of [0.055, 0.073, 0.091, 0.109, 0.127]) {
-        const t = (y - 0.36 * x - c) / 0.005;
+      for (const c of [0.075, 0.089, 0.103, 0.117, 0.131]) {
+        const t = (y + 0.28 * x - c) / 0.004;
         groove += Math.exp(-t * t);
       }
       const band = Math.min(1, Math.max(0, (y - 0.03) / 0.02)) * (z > -0.05 ? 1 : 0.3);
       return mixRgb(base, rgb('#0d0c0b'), Math.min(1, groove) * band * 0.3);
     };
-    const hair = mass.smoothSubtract(0.014, faceOpen).paintFn(hairPaint).bone('head');
+    const hair = mass.smoothSubtract(0.014, faceOpen).smoothSubtract(0.008, notches).paintFn(hairPaint).bone('head');
     k.body('hair', hair.at(0, HEAD_Y, 0), {
       color: k.tint('hair'),
       roughness: 0.55,
