@@ -1,0 +1,66 @@
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+track: audio_game_integration_20261014
+phase_heading: Phase 3: File playback in the AudioBus
+task: T6d Green (plan.md, right after T6c Red)
+phase_base_sha: af4e57aff730b1cf8ee9c716802920699f1eaaac
+role_base_sha: fceb67c8f291f17a9c82868ef841eb8a471e5e1a
+immutable_red_commit: e481628da5b2effcc9353f53d79b7e342c23a20c
+red_commit_in_phase_range: e481628d is inside phase_base_sha..HEAD; phase_base_sha is its ancestor
+red_evidence_commit: fceb67c8f291f17a9c82868ef841eb8a471e5e1a
+implementation_commit: 19ecca6201b167e57fba3137dc8e724d7bea1663
+implementation_commit_message: fix(audio_game_integration): T6d Review A F1/F2, Review C F1
+green_head: 19ecca6201b167e57fba3137dc8e724d7bea1663
+note_on_head: this block is committed in the follow-up plan-evidence commit; a commit cannot embed its own SHA, so green_head names the Green head before that commit.
+tasks_flipped_to_x:
+  - T6c Red (e481628d): Red re-run at Green start exits 1 with 2 failed and 15 passed (17). Fix commit 19ecca62 makes the two new cases pass; plan line flipped [~] -> [x].
+  - T6d Green (19ecca62): all named Phase 3 gates pass; plan line flipped [ ] -> [x].
+tasks_flipped_to_b: none
+targeted_red_command: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-files.test.ts tests/apk3d/audio-wiring.test.ts'
+targeted_red_exit: 1
+targeted_red_output: |
+  RUN  v5.1.1 /home/daniebo/Desktop/advantage-forge
+  tests/apk3d/audio-files.test.ts (11 tests | 1 failed)
+    x starts one silent buffer source and resumes the context on unlock
+    AssertionError: unlock starts one silent pulse source: expected +0 to be 1
+  tests/apk3d/audio-wiring.test.ts (6 tests | 1 failed)
+    x passes every event the host plays in its wireChibiSounds list
+  src/games/dragon-flight/view2d/game.ts misses [correct, wrong]
+  src/games/dragon-rider/view2d/game.ts misses [correct, wrong]
+  src/games/griffin-riders-escape/view2d/game.ts misses [correct]
+  src/games/gryphon-patrol/view2d/game.ts misses [correct]
+  src/games/monster-encounters/view2d/game.ts misses [roar, spawn]
+  src/games/rpg-battle/view2d/game.ts misses [roar, spawn]
+  src/games/rune-match/view2d/game.ts misses [roar, spawn]
+  Test Files  2 failed (2)
+       Tests  2 failed | 15 passed (17)
+green_commands_and_exits:
+  - "targeted three-file command via heavy runner: exit 0; 3 passed files, 21 passed tests (audio-files 11/11, audio-wiring 6/6, imports 4/4)"
+  - "node scripts/audio-event-map.mjs --check: exit 0; audio-event-map: 31 events current"
+  - "node node_modules/typescript/bin/tsc --noEmit via heavy runner: 51 'error TS' lines, none in a changed file; the 38 TD-35 to TD-39 errors and 13 concurrent storytime faces guard errors stay open"
+  - "prettier --check src/apk3d/audio/bus.ts docs/apk-port.md: exit 0"
+  - "prettier check on 7 hosts: files already dirty at the role base; the changed wireChibiSounds lines are clean, and the remaining diffs are pre-existing lines"
+  - "git diff --check on the 9 assigned paths: exit 0"
+gate_notes: The targeted Red command is a subset of the three-file Green command. Both were run after the fix; the Green command exits 0. No heavy build ran, so build-graph artifacts were not updated.
+new_files_added:
+  - measure/runs/audio_game_integration_20261014/green-p3-t6d.log (this evidence file; lands in the plan-evidence commit)
+changed_files_in_implementation_commit:
+  - src/apk3d/audio/bus.ts (silent unlock pulse restored)
+  - src/games/dragon-flight/view2d/game.ts
+  - src/games/dragon-rider/view2d/game.ts
+  - src/games/griffin-riders-escape/view2d/game.ts
+  - src/games/gryphon-patrol/view2d/game.ts
+  - src/games/monster-encounters/view2d/game.ts
+  - src/games/rpg-battle/view2d/game.ts
+  - src/games/rune-match/view2d/game.ts
+  - docs/apk-port.md
+scope_notes:
+  - Dirty paths at start were unrelated parallel work (sprout faces, wizard-argon trial, bench outputs, other tracks' run folders). None was staged.
+  - The implementation commit stages exactly 9 explicit paths. The committed Red tests were not edited. No monorepo write. No push.
+  - No implementation-owned test was added; the committed Red test file supplies the contract.
+handoff:
+  - phase_base_sha af4e57aff730b1cf8ee9c716802920699f1eaaac; final Green HEAD 19ecca6201b167e57fba3137dc8e724d7bea1663 before this plan-evidence commit.
+  - The committed Red tests stay immutable and pass at the implementation commit.
+  - New files are limited to this log; reviewers should scope the audit to the 9 implementation paths.
+dispositions: F1=FIX; F2=FIX; C-F1=FIX
+END_MEASURE_AGENT_RESULT

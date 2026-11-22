@@ -325,7 +325,7 @@ Files this track touches:
     says no formatting track owns that work, so this task adds no unrelated reformatting. The
     committed Red tests were not edited.
 
-- [~] T6c Red: Review A F1/F2 test fixes (e481628d)
+- [x] T6c Red (e481628d): Review A F1/F2 test fixes
   - F1: `tests/apk3d/audio-files.test.ts` counts game sounds as buffer sources whose buffer is
     a decoded file (`gameSourceStarts`); the harness records every `decodeAudioData` buffer, so
     the unlock pulse and the synth recipes never count. Cases 5, 8, and 10 keep their meaning
@@ -345,8 +345,32 @@ Files this track touches:
     dragon-rider miss `correct, wrong`; griffin-riders-escape and gryphon-patrol miss `correct`;
     monster-encounters, rpg-battle, and rune-match miss `roar, spawn`. `prettier --check` on both
     test files exits 0.
-- [ ] T6d Green: restore the unlock pulse, complete the host event lists, record the audio path
-      and soundBase contract in `docs/apk-port.md` (Review C F1)
+  - Red re-run at Green start 2026-11-22: the Red command above exited 1 with 2 failed and 15 passed
+    (17). Case 11 failed on `expected 0 to be 1` for the missing pulse source. Case 6 failed on the
+    same 7 hosts. No other case failed. The committed Red tests were not edited.
+  - Green evidence 2026-11-22: fix commit 19ecca6201b167e57fba3137dc8e724d7bea1663 makes both new
+    cases pass. The three-file command in the Green result below is the gate and exits 0 with 21
+    of 21 tests.
+- [x] T6d Green (19ecca62): restore the unlock pulse, complete the host event lists, record the
+      audio path and soundBase contract in `docs/apk-port.md` (Review C F1)
+  - F1: `src/apk3d/audio/bus.ts` restores the original silent buffer-source pulse in `unlock()`.
+    The pulse starts one source with a newly created silent buffer. `resume()` still runs. The
+    buffer is not a decoded file, so the test's `gameSourceStarts` counter does not count it.
+  - F2: the 7 hosts add the events they play to their lists: dragon-flight and dragon-rider add
+    `correct, wrong`; griffin-riders-escape and gryphon-patrol add `correct`; monster-encounters,
+    rpg-battle and rune-match add `roar, spawn`. The three longer lists use the Prettier shape.
+  - Review C F1: `docs/apk-port.md` records `demo/public/audio/chibi/` to the proposed target
+    `apps/advantage-games/public/audio/chibi/` and the `soundBase` contract.
+  - Green result 2026-11-22: implementation commit
+    `19ecca6201b167e57fba3137dc8e724d7bea1663`. Targeted command through the heavy runner exits 0
+    with 3 files and 21 of 21 tests (audio-files 11/11, audio-wiring 6/6, imports 4/4).
+    `node scripts/audio-event-map.mjs --check` exits 0 with 31 events current.
+    `node node_modules/typescript/bin/tsc --noEmit` through the heavy runner prints 51 `error TS`
+    lines, none in a changed file. The 38 errors of TD-35 to TD-39 and 13 concurrent storytime
+    faces guard errors stay open. `prettier --check` exits 0 on `src/apk3d/audio/bus.ts` and
+    `docs/apk-port.md`. The 7 hosts were Prettier-dirty at the role base; only the changed lines
+    are clean. `git diff --check` exits 0. No new file entered the implementation commit.
+  - dispositions: F1=FIX; F2=FIX; C-F1=FIX
 
 ## Phase 4: Preload budget
 
