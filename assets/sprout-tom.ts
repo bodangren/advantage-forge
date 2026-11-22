@@ -71,8 +71,9 @@ const tomFace = (skin: sdf.Shape, h: HumanoidShape): sdf.Shape => {
   const cover = pair(sdf.extrude(profile.arc(0.1, 0.024, 58, 122), 0.3).at(0.1, browY - 0.1, 0.1));
   const brow = pair(sdf.extrude(profile.arc(0.07, 0.014, 62, 118), 0.3).at(0.1, browY - 0.1, 0.1));
 
-  // An open laughing mouth: dark inside, one rounded white teeth band (no fang
-  // corners), a tongue. The band is a rounded box clipped to the mouth.
+  // An open laughing mouth: dark inside, one thin white teeth band at the top
+  // (no fang corners), a wide tongue. The band is thin and the tongue wide so
+  // the open smile still reads at 128 px instead of a white dash.
   const outline = (s: number) =>
     profile.polygon(
       (
@@ -92,10 +93,10 @@ const tomFace = (skin: sdf.Shape, h: HumanoidShape): sdf.Shape => {
     );
   const mouth = sdf.extrude(outline(1), 0.3).at(0, smileY, 0.1);
   const teeth = sdf
-    .box([0.06, 0.014, 0.3], 0.006)
-    .at(0, smileY - 0.007, 0.1)
+    .box([0.062, 0.009, 0.3], 0.004)
+    .at(0, smileY - 0.0035, 0.1)
     .intersect(mouth);
-  const tongue = mouth.intersect(sdf.ellipsoid([0.024, 0.012, 0.5]).at(0, smileY - 0.026, 0.1));
+  const tongue = mouth.intersect(sdf.ellipsoid([0.03, 0.015, 0.5]).at(0, smileY - 0.026, 0.1));
 
   // A soft shade under the small nose and a scatter of freckles over the nose bridge.
   const shade = sdf.ellipsoid([0.02, 0.008, 0.05]).at(0, AGE5.face.noseY - 0.018, h.faceZ(0, AGE5.face.noseY - 0.018));
@@ -158,34 +159,49 @@ export default scaleAsset(
       const faceMask = sdf.ellipsoid([0.24, 0.15, 0.25]).rotateZ(12).at(0.02, -0.06, 0.14);
       const outer = sdf.ellipsoid([H[0] + 0.03, H[1] + 0.03, H[2] + 0.03]).at(0, 0.008, -0.01);
       const cap = sdf.ellipsoid([H[0] + 0.013, H[1] + 0.015, H[2] + 0.013]).at(0, 0.008, -0.01).smoothSubtract(0.02, faceMask);
-      // The sweep: five tapered locks run from the part (his right) across to his left
-      // temple. The roots merge but the tips stay distinct: a small fillet (0.008) with
-      // wide tip spacing and varied tip depths, so the hairline reads as separated
-      // pointed locks with skin showing between them, not one smooth helmet edge.
-      const lock = (rx: number, tx: number, ty: number) =>
-        sdf.cone([rx, 0.155, 0.14], [tx, ty, 0.2], 0.046, 0.013);
+      // The sweep: five pointed spikes run diagonally from the part (his right)
+      // across to his left temple. Each lock is a tapering chain whose tip lands
+      // well sideways of its root, so the hairline reads as swept spikes with
+      // skin showing between the staggered tips, not vertical drips. Tips point
+      // sideways-down at roughly 45 degrees, as in the reference.
+      const spike = (rx: number, tx: number, ty: number, tz: number, r: number) =>
+        sdf.chain(
+          [
+            [rx, 0.165, 0.115, r],
+            [(rx + tx) / 2, (0.165 + ty) / 2 + 0.012, (0.115 + tz) / 2 + 0.02, r * 0.55],
+            [tx, ty, tz, 0.004],
+          ],
+          0.012,
+        );
       const fringe = sdf.smoothUnion(
-        0.008,
-        lock(-0.14, -0.1, 0.055),
-        lock(-0.07, -0.045, 0.03),
-        lock(0.0, 0.02, 0.052),
-        lock(0.06, 0.085, 0.028),
-        lock(0.11, 0.15, 0.058),
+        0.006,
+        spike(-0.15, -0.095, 0.045, 0.185, 0.04),
+        spike(-0.08, -0.02, 0.026, 0.195, 0.042),
+        spike(-0.01, 0.05, 0.048, 0.18, 0.04),
+        spike(0.06, 0.115, 0.028, 0.19, 0.038),
+        spike(0.12, 0.165, 0.052, 0.175, 0.036),
       );
       // Thin sideburn strands drop in front of the ears to mid-ear, as in the reference.
       const burn = (sx: number) => sdf.cone([sx, 0.06, 0.06], [sx + 0.005, -0.05, 0.085], 0.02, 0.011);
       const fringeAll = sdf.smoothUnion(0.008, fringe, burn(-0.2), burn(0.2)).smoothIntersect(0.015, outer);
-      // The crown tuft: tousled spikes that lean toward his left and lie almost flat on
-      // the crown, standing only just proud of the cap surface.
-      const spike = (dx: number, dz: number, lean: number, r: number) =>
-        sdf.capsule([0.05 + dx, 0.13, -0.03 + dz], [0.05 + dx + lean, 0.185, -0.03 + dz], r);
+      // The crown cowlick: forward-swept pointed spikes off the front crown, as
+      // in the reference (the old tuft sat at the top back and read as a nub).
+      // The main spike leans toward his right and forward; sharp tips (0.003).
+      const quiff = (dx: number, lean: number, up: number, fwd: number, r: number) =>
+        sdf.chain(
+          [
+            [0.03 + dx, 0.14, 0.05, r],
+            [0.03 + dx + lean * 0.5, 0.14 + up * 0.6, 0.05 + fwd * 0.6, r * 0.55],
+            [0.03 + dx + lean, 0.14 + up, 0.05 + fwd, 0.003],
+          ],
+          0.01,
+        );
       const tuft = sdf.smoothUnion(
-        0.01,
-        spike(0, 0, 0.06, 0.015),
-        spike(-0.045, 0.01, 0.03, 0.013),
-        spike(0.03, -0.04, 0.075, 0.013),
-        spike(-0.01, 0.045, 0.045, 0.012),
-        spike(-0.075, -0.02, 0.02, 0.011),
+        0.008,
+        quiff(0, -0.09, 0.09, 0.075, 0.02),
+        quiff(0.05, -0.03, 0.07, 0.06, 0.016),
+        quiff(-0.05, -0.11, 0.06, 0.05, 0.015),
+        quiff(0.0, 0.03, 0.075, 0.055, 0.014),
       );
       const hair = sdf.smoothUnion(0.012, cap, fringeAll, tuft).bone('head');
       k.body('hair', hair.at(0, HEAD_Y, 0), { color: k.tint('hair'), roughness: 0.6, detail: 0.004 });
