@@ -1,0 +1,30 @@
+MEASURE_AGENT_RESULT
+track: audio_game_integration_20261014
+phase: "Phase 3: File playback in the AudioBus"
+task: T6a Red
+role: mid-red
+role_base_sha: a293e443d75643033673f0619231c6e73d6d6934
+phase_base_sha: af4e57aff730b1cf8ee9c716802920699f1eaaac
+head: c02dde0fcb0c0016a75248dbae58d6a12c07b657
+commits:
+  - c02dde0fcb0c0016a75248dbae58d6a12c07b657 test(audio_game_integration): T6a wiring cases
+tests:
+  - tests/apk3d/audio-wiring.test.ts (new, exactly the five plan cases)
+files:
+  - tests/apk3d/audio-wiring.test.ts
+  - measure/tracks/audio_game_integration_20261014/plan.md ([~] mark and Red evidence)
+production_untouched: src/apk3d/audio/chibi.ts and src/apk3d/audio/chibi-events.gen.ts still absent; no production or game file changed
+red_command: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-wiring.test.ts'
+red_exit: 1
+red_summary: 5 failed of 5 collected; no syntax, import, or collection error
+failures:
+  - case 1 (generated map): ENOENT, no such file or directory, open 'src/apk3d/audio/chibi-events.gen.ts'
+  - case 2 (29 hosts): 29 host paths read, first path fails with 0 wireChibiSounds( calls, expected 1
+  - cases 3-5 (helper shape, empty base, real fetch): Cannot find module '/src/apk3d/audio/chibi.js', raised by the dynamic import inside each case
+other_checks:
+  - tests/apk3d/audio-files.test.ts exits 0 with 10 of 10 passing; no existing test breaks
+  - prettier --check on the new test file exits 0
+  - plan.md stays Prettier-dirty only because the [~] marker is outside Prettier's task-list shape; Green restores [x]
+task_state: T6a stays [~]; T6b Green marks [x]
+handoff: T6b Green adds scripts/audio-event-map.mjs, src/apk3d/audio/chibi-events.gen.ts, src/apk3d/audio/chibi.ts, the index exports, the soundBase field, the host value, the 29 host calls, and the demo file copy per plan; the T6a Red command must then exit 0 with 5 of 5 passing. Green model: opencode-go/hy4-flash-free#high
+END_MEASURE_AGENT_RESULT

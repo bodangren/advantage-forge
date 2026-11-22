@@ -244,7 +244,7 @@ Files this track touches:
     recipe in `BUILT_IN_SFX`, the `Ctx` assignment, the `synth` arrow, and the `tone` signature)
     because the baseline file was not Prettier-clean at printWidth 110; the recipes are unchanged.
 
-- [ ] T6a Red: Add `tests/apk3d/audio-wiring.test.ts`. It proves that a 2D game host sets the sound
+- [~] T6a Red: Add `tests/apk3d/audio-wiring.test.ts`. It proves that a 2D game host sets the sound
       map and preloads at start. The five cases:
 
   1. `src/apk3d/audio/chibi-events.gen.ts` holds 31 entries. The keys equal the 31 mapped events of
@@ -274,6 +274,16 @@ Files this track touches:
   - Red done-when: the command exits 1. Case 1 fails with `ENOENT` for the generated map. Case 2
     fails with 0 of 29 hosts. Cases 3 to 5 fail on the absent helper module. The test file holds no
     syntax error.
+  - Red result 2026-11-22: test commit c02dde0fcb0c0016a75248dbae58d6a12c07b657.
+    Red command `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-wiring.test.ts'`
+    exited 1 with 5 failed of 5 collected. Case 1 fails with
+    `ENOENT: no such file or directory, open 'src/apk3d/audio/chibi-events.gen.ts'`. Case 2 reads
+    29 hosts and fails on the first path with 0 `wireChibiSounds(` calls. Cases 3 to 5 fail with
+    `Cannot find module '/src/apk3d/audio/chibi.js'`, raised inside the case, with no collection
+    error. `tests/apk3d/audio-files.test.ts` still exits 0 with 10 of 10 passing.
+    `node_modules/.bin/prettier --check tests/apk3d/audio-wiring.test.ts` exits 0. The `[~]`
+    marker keeps `plan.md` outside Prettier's task-list shape, so the plan file stays
+    Prettier-dirty until Green marks it `[x]`; the Red done-when names the test file only.
 
 - [ ] T6b Green: Add `scripts/audio-event-map.mjs`. It reads `docs/sound-event-map.tsv` and writes
       `src/apk3d/audio/chibi-events.gen.ts`: a header line that names the generator and the source
