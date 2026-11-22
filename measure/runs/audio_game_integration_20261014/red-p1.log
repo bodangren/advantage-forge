@@ -1,0 +1,38 @@
+MEASURE_AGENT_RESULT
+role: mid-red
+track: audio_game_integration_20261014
+phase: "Phase 1: Event map"
+task: T1 Red
+phase_base_sha: 1bbdbecbc2368868859722cf5eee0be0c302f82c
+role_base_sha: 1bbdbecbc2368868859722cf5eee0be0c302f82c
+baseline_sha: 1bbdbecbc2368868859722cf5eee0be0c302f82c
+red_command: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/audio-event-map.test.ts'
+red_exit: 1
+red_failure: ENOENT: no such file or directory, open '/home/daniebo/Desktop/advantage-forge/docs/sound-event-map.tsv'
+red_tests_collected: 8
+red_tests_failed: 8
+red_syntax_or_import_error: none
+prettier_check: node_modules/.bin/prettier --check tests/audio-event-map.test.ts measure/tracks/audio_game_integration_20261014/plan.md -> exit 0
+test_file: tests/audio-event-map.test.ts
+test_commit: 7ecd5832985b61624c34bfcf2d0cb29215e487d2
+test_commit_message: test(audio_game_integration): T1 event map cases
+plan_file: measure/tracks/audio_game_integration_20261014/plan.md
+plan_change: T1 [ ] -> [~] -> [x]; added Red result note with test commit SHA, Red command, exit 1, and ENOENT failure line
+resulting_head_at_log_write: 7ecd5832985b61624c34bfcf2d0cb29215e487d2
+files_changed_this_role:
+  - tests/audio-event-map.test.ts (new, 8 cases)
+  - measure/tracks/audio_game_integration_20261014/plan.md (T1 mark and Red result)
+  - measure/runs/audio_game_integration_20261014/red-p1.log (this log)
+dirty_scope_check: git status --short before editing showed no tracked modifications; 373 untracked entries (bench/, assets/wizard-argon-trial.ts) left untouched; only the three role paths are staged/committed
+remaining_failures:
+  - case 1 fails: ENOENT for docs/sound-event-map.tsv (expected Red)
+  - case 2 fails: ENOENT for docs/sound-event-map.tsv (expected Red)
+  - case 3 fails: ENOENT for docs/sound-event-map.tsv (expected Red)
+  - case 4 fails: ENOENT for docs/sound-event-map.tsv (expected Red)
+  - case 5 fails: ENOENT for docs/sound-event-map.tsv (expected Red)
+  - case 6 fails: ENOENT for docs/sound-event-map.tsv (expected Red)
+  - case 7 fails: ENOENT for docs/sound-event-map.tsv (expected Red)
+  - case 8 fails: ENOENT for docs/sound-event-map.tsv (expected Red)
+red_kind: failing-first (not gap-closing)
+notes: T2 Green (docs/sound-event-map.tsv) not started. No production source edited. No monorepo writes. Background duplicate Red run (sh_200eb4b0c001ZqyBFVntNJNNU7) was left running; Red evidence above comes from the completed foreground run with exit 1.
+END_MEASURE_AGENT_RESULT

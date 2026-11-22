@@ -35,7 +35,7 @@ Files this track touches:
 
 ## Phase 1: Event map
 
-- [ ] T1 Red: Add `tests/audio-event-map.test.ts`. It reads `docs/sound-event-map.tsv` with
+- [x] T1 Red: Add `tests/audio-event-map.test.ts`. It reads `docs/sound-event-map.tsv` with
       `readFileSync` and splits each line on the tab. The eight cases:
 
   1. The file exists. Line 1 is exactly `event\tsource\tnote`, and the file holds 58 data rows and
@@ -54,6 +54,11 @@ Files this track touches:
   - Red done-when: the command exits 1. The failure is the absent map file (ENOENT). The test file
     holds no syntax or import error. `node_modules/.bin/prettier --check tests/audio-event-map.test.ts`
     exits 0.
+  - Red result 2026-11-22: test commit 7ecd5832985b61624c34bfcf2d0cb29215e487d2.
+    Red command `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/audio-event-map.test.ts'`
+    exited 1 with 8 failed on `ENOENT: no such file or directory, open 'docs/sound-event-map.tsv'`
+    and no syntax or import error. `node_modules/.bin/prettier --check tests/audio-event-map.test.ts`
+    exited 0.
 
 - [ ] T2 Green: Write `docs/sound-event-map.tsv` as AC1 states: one header line
       `event<TAB>source<TAB>note`, then exactly one row for each of the 58 events, and nothing else.
