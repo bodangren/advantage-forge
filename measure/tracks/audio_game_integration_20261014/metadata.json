@@ -3,17 +3,24 @@
   "type": "feature",
   "status": "new",
   "created_at": "2026-10-14T00:00:00Z",
-  "updated_at": "2026-10-14T00:00:00Z",
-  "description": "Sound in the games: play approved library takes for the game events, with the synthesized sounds as the fallback",
-  "estimated_tasks": 5,
+  "updated_at": "2026-11-22T00:00:00Z",
+  "description": "Sound in the games: play the earshot Chibi sound set first for the game events, with an MP3 copy and a per-browser format choice, and the synthesized sounds as the fallback; approved library takes replace set files later",
+  "estimated_tasks": 9,
   "actual_tasks": null,
-  "deviation_notes": "Recorded 2026-10-14 as the follow-up of audio_sfx_library_20261013 (its plan task: event mapping, format, preload budget).",
+  "deviation_notes": "Recorded 2026-10-14 as the follow-up of audio_sfx_library_20261013 (its plan task: event mapping, format, preload budget). Amended 2026-11-22 to the PM decisions: the earshot set sounds/chibi/*.ogg is the first source, the wrapper writes an MP3 copy for each sound, the set needs no credits screen, and the files ship with the APK release through a PM hand-off folder.",
   "workstream": "games",
   "retrospective": false,
   "evidence": [
     "src/apk3d/audio/bus.ts",
     "docs/sound-effects-list.tsv",
+    "sounds/sets/chibi.json",
+    "sounds/README.md",
+    "scripts/sound-set.mjs",
     "audio/CREDITS.md"
   ],
-  "dependencies": ["audio_sfx_library_20261013", "audio_sources_expand_20261014"]
+  "dependencies": [
+    "audio_sfx_library_20261013",
+    "audio_sources_expand_20261014",
+    "chore_earshot_sounds_20261121"
+  ]
 }
