@@ -1,0 +1,37 @@
+MEASURE_AGENT_RESULT
+role: measure-mid-red
+track: asset_chibi_sprouts_r1_20261022
+phase: Phase 5: The rest of the inventory (after the look check)
+task: Faces r2 and the Muse likeness test (Daniel 2026-11-22), Step 2b Red sub-step
+status: complete
+baseline_sha: 3300a495e13539ecefba4c01ca84f4b8cb723f28
+role_base_sha: 3300a495e13539ecefba4c01ca84f4b8cb723f28
+resulting_head: 33655cece30448f98daf8fd6a87b35fa9e4b948f
+commits:
+  - 33655cece30448f98daf8fd6a87b35fa9e4b948f test(chibi_sprouts_r1): faces r2 guard cases
+tests:
+  command: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/storytime-faces-r2-guards.test.ts'
+  exit: 1
+  summary: Test Files 1 failed (1); Tests 8 failed (8), 0 passed
+  failure_kind: assertion and TypeError on use, no syntax or import error (FACES_R2_RUN is undefined: TypeError reading capUsd/startTime; classifyOutDir gives 'invalid' for out/chibi-sprouts/faces-r2/muse, expected 'facesR2'; mixed call refuses as 'invalid' instead of a 'mixes' refusal)
+  regression_check: tests/storytime-cover-guards.test.ts still passes 10/10
+  format_check: prettier --check passes on tests/storytime-faces-r2-guards.test.ts
+files:
+  - tests/storytime-faces-r2-guards.test.ts (owned, committed in 33655cec, blob 20be93f0)
+  - measure/tracks/asset_chibi_sprouts_r1_20261022/plan.md (owned, Red evidence under Step 2b)
+  - measure/runs/asset_chibi_sprouts_r1_20261022/red-faces-r2-guard.log (this file)
+remaining_failures:
+  - FRG1 to FRG8: all 8 fail at HEAD 33655cec because scripts/storytime-muse-guards.mjs has no FACES_R2_RUN constant, no facesR2 classification, and no faces scan. Owner: Green (add FACES_R2_RUN with capUsd 0.08, reportAtUsd 0.06, marginUsd 0.01, maxTries 1, outDir out/chibi-sprouts/faces-r2/muse; classify it like COVER_RUN; scan that folder's own costs.tsv only).
+passing: none of the 8 new checks pass before the Green change, so this is a failing-first Red round, not a gap-closing round.
+rows_not_tested: none in this sub-step's scope.
+decisions:
+  - The facesR2 kind string, the isFacesR2OutDir helper name, the facesR2CapUsd test-only cap key, and the FACES_R2_CAP_MESSAGE name are the Red contract; Green implements them to satisfy FRG1 to FRG6.
+  - Cover-vs-faces temp-root fixtures are not mixed in one root: both runs use a muse/costs.tsv fixture path outside the repository, while their production folders differ. FRG7/FRG8 prove the single-folder scan pattern against the book (w09) and app (family-words) paths.
+  - No provider call was made; temp folders and fixture cost files only; nothing written under the real out/.
+  - scripts/ and production sources untouched; only the test file, the plan, and this log were written.
+deviations:
+  - The orchestrator supplied role_base_sha (current HEAD at start, 3300a49) but no phase_base_sha. baseline_sha falls back to role_base_sha for this sub-step; scope is Step 2b (plan.md lines 544-556) and dirty paths from parallel sessions (assets/sprout-dad.ts, src/apk3d/audio/*, measure/tracks/audio_game_integration_20261014/plan.md) were preserved and never staged.
+notes:
+  - The task stays [~]; no red_kind line (failing-first Red round).
+  - The Green model for this sub-step is opencode-go/hy4-flash-free#high.
+END_MEASURE_AGENT_RESULT

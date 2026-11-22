@@ -566,6 +566,20 @@ Workbooks does not wait for it.
       headroom, because the guard projects one margin per call plus one cushion for a color pool. Step 3
       makes 6 calls at about 0.06 USD, so the stop stays above the plan.
     - PM approved 2026-11-22. The guard change and its test belong to this track.
+    - Red (2026-11-22): `tests/storytime-faces-r2-guards.test.ts` (FRG1 to FRG8, blob
+      20be93f0, commit 33655cec) requires `FACES_R2_RUN` (cap 0.08, report 0.06, margin
+      0.01, maxTries 1, outDir `out/chibi-sprouts/faces-r2/muse`), the `facesR2` kind for
+      exactly that folder (`invalid` for `muse2`, the bare folder, `muse/extra`,
+      `muse/elements`, `scene`, `faces-r1/muse`), the cap stop, the 2nd-try stop, the
+      `facesR2CapUsd` test-only cap, and single-folder scans (book/app spend out of the
+      faces cap; faces spend out of the book/app caps). Command: `HEAVY_MIN_AVAIL_MB=1500
+      bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node
+      node_modules/vitest/vitest.mjs run --maxWorkers=1
+      tests/storytime-faces-r2-guards.test.ts'`. Exit 1 with 8 failed, 0 passed:
+      `FACES_R2_RUN` is undefined (TypeError on use) and the exact folder classifies as
+      `invalid` (assertion, no syntax or import error). `tests/storytime-cover-guards.test.ts`
+      still passes 10/10. `prettier --check` passes on the new file. Log
+      red-faces-r2-guard.log.
   - Step 3, one Muse call per character, with both references of the production recipe, through
     `node scripts/storytime-muse.mjs color <spec>`. One spec file per character at
     `docs/chibi-sprouts/faces-r2/<character>.json`, with `references:
