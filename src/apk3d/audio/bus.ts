@@ -97,7 +97,9 @@ export class AudioBus {
   private format: 'ogg' | 'mp3' | null = null;
   private formatChecked = false;
   private readonly buffers = new Map<string, AudioBuffer>();
-  private readonly pendingDecode = new Map<string, ArrayBuffer>();
+  // Bytes fetched before a context exists wait here. The URL binds them to the mapping and
+  // base that started the load, so a remap can invalidate them before they decode.
+  private readonly pendingDecode = new Map<string, { data: ArrayBuffer; url: string }>();
   private readonly loading = new Set<string>();
   private readonly failed = new Set<string>();
   private readonly sources = new Set<AudioBufferSourceNode>();
@@ -165,9 +167,9 @@ export class AudioBus {
     this.musicGain.gain.value = 0.22;
     this.musicGain.connect(this.master);
     // A preload before the first unlock fetched bytes that now have a context to decode on.
-    for (const [name, data] of this.pendingDecode) {
+    for (const [name, { data, url }] of this.pendingDecode) {
       this.pendingDecode.delete(name);
-      void this.decodeData(name, data);
+      void this.decodeData(name, data, url);
     }
     // Older iPhones start the context only when a sound starts inside the gesture.
     // A strict engine may refuse the pulse; the context still resumes without it.
@@ -266,35 +268,54 @@ export class AudioBus {
     void this.fetchFile(name, url);
   }
 
+  /**
+   * True when the event still resolves to the exact file this load started for. The current map
+   * decides the file (spec AC4): after a remap, a completion from the old mapping stores nothing.
+   */
+  private isCurrent(name: string, url: string): boolean {
+    if (!this.files || !this.format) return false;
+    const entry = this.files.events[name];
+    if (!entry) return false;
+    return `${this.files.base}${entry}.${this.format}` === url;
+  }
+
   private async fetchFile(name: string, url: string): Promise<void> {
     try {
       const response = await fetch(url);
       if (!response.ok) throw new Error(`audio fetch status ${response.status}`);
       const data = await response.arrayBuffer();
-      await this.decodeData(name, data);
+      await this.decodeData(name, data, url);
     } catch {
-      // A network error, a non-OK status, or a bad array all mark the event as synth-only.
-      this.failed.add(name);
-      this.loading.delete(name);
+      // A network error, a non-OK status, or a bad array marks the event as synth-only, but only
+      // when the load still belongs to the current mapping. A stale failure marks nothing.
+      if (this.isCurrent(name, url)) {
+        this.failed.add(name);
+        this.loading.delete(name);
+      }
     }
   }
 
-  private async decodeData(name: string, data: ArrayBuffer): Promise<void> {
+  private async decodeData(name: string, data: ArrayBuffer, url: string): Promise<void> {
     const ctx = this.ctx;
     if (!ctx) {
       // A preload can run before the first unlock; resume decoding when the context exists.
-      this.pendingDecode.set(name, data);
+      this.pendingDecode.set(name, { data, url });
       return;
     }
     try {
       const buffer = await ctx.decodeAudioData(data);
-      // The map may have changed while the bytes were in flight. An event no longer mapped
-      // falls back to the synth recipe (rule 6), so do not keep a buffer for the old map.
-      if (this.files?.events[name]) this.buffers.set(name, buffer);
-      this.loading.delete(name);
+      // The map or base may have changed while the bytes were in flight. Only the mapping that
+      // started this load may install its buffer; a stale completion leaves the event free to
+      // load its new file on the next play or preload.
+      if (this.isCurrent(name, url)) {
+        this.buffers.set(name, buffer);
+        this.loading.delete(name);
+      }
     } catch {
-      this.failed.add(name);
-      this.loading.delete(name);
+      if (this.isCurrent(name, url)) {
+        this.failed.add(name);
+        this.loading.delete(name);
+      }
     }
   }
 
