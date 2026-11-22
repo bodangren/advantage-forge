@@ -399,6 +399,26 @@ Workbooks does not wait for it.
     (3b6c6796, ec71c3d8); the preset pin is unchanged. The sleeve fix ef5be6c4
     and the listen fix c3307a6b stand (fresh listen.png waist clean). Log
     green-faces-dad.log.
+  - Dad face r3 dbb55822 (2026-11-22, judge fix): `assets/sprout-dad.ts` only. The
+    judge rated r2 7.0: smooth-cap hairline, oversized round eyes, thin-dash
+    smile at 128 px. Almond eyes now, paint only: an exact hard skin box cuts
+    an almond opening over the shared round eye, fresh white in the hole, a
+    smaller dark iris, the pupil, one catchlight, a thin upper lid line, blush
+    re-laid below the eye; brows flatter and gentler (r2 read stern in bow).
+    The smile is taller and wider with a thin teeth band and a wide tongue, so
+    it reads open at 128 px (Tom r3). The fringe is five separated tapered
+    spikes with staggered depths and skin between the tips, a deeper side part,
+    and fine strand lines combed along the sweep in paint. In-round note: brown
+    streaks at the outer eye corners show only in 5x-zoomed --fast renders and
+    bisects isolated them to the iris stack; the textured bake shows clean
+    almond eyes, so no code change for them. `./forge all sprout-dad` exits 0
+    with no warning lines (35,634 textured tris, 0.544 x 1.61 x 0.357 m, GLB
+    4365888). `./forge check sprout-dad` output byte-identical to the pre-pass
+    baseline (sha b1fcc16f, exit 1 on the three known waived clips). Dad's 25
+    cut-outs were re-rendered at 1760x1856; cutout-check flags only the four
+    known reach tiptoes. The three sprout vitest files pass 15/15.
+    typecheck-asset reports 0 errors. sprout-sam and teacher GLBs keep
+    byte-identical hashes (3b6c6796, ec71c3d8). Log green-faces-dad-r3.log.
   - Grandma face r2 d470ef24 (2026-11-22, Faces r2 Step 1): `assets/sprout-grandma.ts`
     only, matched to `docs/sprout-mockups/grandma.jpg`. Paint-only face through the
     existing `paintSkin` hook (arm cut kept, then face): dark round iris with one big
