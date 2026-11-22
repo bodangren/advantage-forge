@@ -79,8 +79,8 @@ function writeFakeFfmpeg(tmp: string) {
     `const tmp = ${JSON.stringify(tmp)};`,
     'const args = process.argv.slice(2);',
     "appendFileSync(join(tmp, 'ffmpeg-calls.log'), `${args.join(' ')}\\n`);",
-    "const flag = args.indexOf('-o');",
-    "const out = flag >= 0 ? args[flag + 1] : '';",
+    '// AC2 pins the MP3 output as the last positional argument of the ffmpeg argv; there is no -o flag.',
+    "const out = args.length > 0 ? args[args.length - 1] : '';",
     "const base = out.split('/').pop() ?? '';",
     "const name = base.endsWith('.mp3') ? base.slice(0, -4) : base;",
     'const readOptional = (path) => {',
@@ -104,9 +104,11 @@ function run(args: string[], root: string, earshotBin: string, ffmpegBin: string
   });
 }
 
-function expectedFfmpegCall(ffmpegBin: string, inPath: string, outPath: string) {
+// The fake logs process.argv.slice(2), so the expected line holds the pinned AC2 flags only.
+// The binary wiring is proven separately: the log file exists only when the FFMPEG_BIN fake ran,
+// and case 2 asserts the exact lookup-failure line with the binary path.
+function expectedFfmpegCall(inPath: string, outPath: string) {
   return [
-    ffmpegBin,
     '-nostdin',
     '-hide_banner',
     '-loglevel',
@@ -171,8 +173,8 @@ describe('sound-set MP3 copies in the wrapper', () => {
       ]);
       // The seven-entry real set gives 14 files. Two fake entries give 4 files.
       expect(readLog(tmp, 'ffmpeg-calls.log')).toEqual([
-        expectedFfmpegCall(ffmpegBin, join(root, 'alpha.ogg'), join(root, 'alpha.mp3')),
-        expectedFfmpegCall(ffmpegBin, join(root, 'beta.ogg'), join(root, 'beta.mp3')),
+        expectedFfmpegCall(join(root, 'alpha.ogg'), join(root, 'alpha.mp3')),
+        expectedFfmpegCall(join(root, 'beta.ogg'), join(root, 'beta.mp3')),
       ]);
       expect(existsSync(oggPath(tmp, 'fake', 'alpha'))).toBe(true);
       expect(existsSync(mp3Path(tmp, 'fake', 'alpha'))).toBe(true);
@@ -205,8 +207,8 @@ describe('sound-set MP3 copies in the wrapper', () => {
       expect(result.stderr.trim()).toBe('sound-set: ffmpeg failed for beta (error/knock) with exit 3');
       const root = join(tmp, 'sounds', 'fake');
       expect(readLog(tmp, 'ffmpeg-calls.log')).toEqual([
-        expectedFfmpegCall(ffmpegBin, join(root, 'alpha.ogg'), join(root, 'alpha.mp3')),
-        expectedFfmpegCall(ffmpegBin, join(root, 'beta.ogg'), join(root, 'beta.mp3')),
+        expectedFfmpegCall(join(root, 'alpha.ogg'), join(root, 'alpha.mp3')),
+        expectedFfmpegCall(join(root, 'beta.ogg'), join(root, 'beta.mp3')),
       ]);
       expect(result.stdout).toContain('sound-set: alpha.mp3 <- tap/soft');
       expect(result.stdout).not.toContain('gamma');
@@ -223,7 +225,8 @@ describe('sound-set MP3 copies in the wrapper', () => {
       const result = run(['fake'], tmp, writeFakeEarshot(tmp), writeFakeFfmpeg(tmp));
       expect(result.status).toBe(1);
       expect(result.stderr.trim()).toBe(`sound-set: ffmpeg wrote no file for alpha (tap/soft): ${stale}`);
-      expect(result.stdout).toBe('');
+      // AC2 renders the Ogg before the MP3 per entry, so alpha's Ogg lines stay on stdout.
+      expect(result.stdout).toBe('fake-out alpha\nfake-err alpha\nsound-set: alpha.ogg <- tap/soft\n');
       expect(readLog(tmp, 'calls.log')).toEqual([
         `make --sound tap/soft -o ${oggPath(tmp, 'fake', 'alpha')}`,
       ]);

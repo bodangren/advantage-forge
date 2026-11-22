@@ -12,7 +12,7 @@ import {
   writeFileSync,
 } from 'node:fs';
 import { homedir } from 'node:os';
-import { join } from 'node:path';
+import { dirname, join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 
 const ROOT = process.cwd();
@@ -46,6 +46,20 @@ else if (${JSON.stringify(mode)} !== 'no-write') {
 `,
     { mode: 0o755 },
   );
+  // AC2 pins the MP3 output as the last positional argument of the ffmpeg argv; there is no
+  // -o flag. Every fixture gets this fake so the MP3 step can succeed; failure-mode tests stop
+  // at the earshot step and never reach it.
+  writeFileSync(
+    join(root, 'fake ffmpeg.mjs'),
+    `#!/usr/bin/env node
+import { mkdirSync, writeFileSync } from 'node:fs';
+import { dirname } from 'node:path';
+const out = process.argv[process.argv.length - 1] ?? '';
+mkdirSync(dirname(out), { recursive: true });
+writeFileSync(out, 'MP3');
+`,
+    { mode: 0o755 },
+  );
   try {
     callback(root, bin);
   } finally {
@@ -63,7 +77,14 @@ function run(root: string, bin: string, set = 'fake') {
     cwd: root,
     encoding: 'utf8',
     timeout: 10_000,
-    env: { ...process.env, SOUNDS_ROOT: root, EARSHOT_BIN: bin },
+    env: {
+      ...process.env,
+      SOUNDS_ROOT: root,
+      EARSHOT_BIN: bin,
+      // The earshot fake and the ffmpeg fake sit side by side. run() may receive a
+      // different root (a repository folder), so derive the ffmpeg path from bin.
+      FFMPEG_BIN: join(dirname(bin), 'fake ffmpeg.mjs'),
+    },
   });
   expect(result.error).toBeUndefined();
   expect(result.signal).toBeNull();
@@ -72,6 +93,10 @@ function run(root: string, bin: string, set = 'fake') {
 
 function output(root: string, name = 'alpha') {
   return join(root, 'sounds', 'fake', `${name}.ogg`);
+}
+
+function mp3output(root: string, name = 'alpha') {
+  return join(root, 'sounds', 'fake', `${name}.mp3`);
 }
 
 function calls(root: string): string[][] {
@@ -147,9 +172,10 @@ describe('sound-set adversarial process boundaries', () => {
         expect(result.stderr).toBe('');
         expect(calls(root)).toEqual([['make', '--sound', design, '-o', output(root)]]);
         expect(result.stdout).toBe(
-          `fake-out\nfake-err\nsound-set: alpha.ogg <- ${design}\nsound-set: 1 sounds -> sounds/fake\n`,
+          `fake-out\nfake-err\nsound-set: alpha.ogg <- ${design}\nsound-set: alpha.mp3 <- ${design}\nsound-set: 1 sounds -> sounds/fake\n`,
         );
         expect(readFileSync(output(root), 'utf8')).toBe('OggS');
+        expect(readFileSync(mp3output(root), 'utf8')).toBe('MP3');
         expect(existsSync(join(root, 'injected'))).toBe(false);
         expect(existsSync(join(ROOT, 'injected'))).toBe(false);
       });
@@ -206,6 +232,7 @@ describe('sound-set adversarial process boundaries', () => {
       expect(result.stderr).toBe('');
       expect(calls(root)).toEqual([['make', '--sound', 'tap/soft', '-o', output(root)]]);
       expect(statSync(output(root)).size).toBe(0);
+      expect(existsSync(mp3output(root))).toBe(true);
     }, 'empty');
   });
 
@@ -256,6 +283,7 @@ describe('sound-set adversarial process boundaries', () => {
         expect(calls(root)).toEqual([['make', '--sound', 'tap/soft', '-o', output(root)]]);
         expect(lstatSync(output(root)).isSymbolicLink()).toBe(false);
         expect(readFileSync(output(root), 'utf8')).toBe('OggS');
+        expect(readFileSync(mp3output(root), 'utf8')).toBe('MP3');
         if (kind === 'file') expect(readFileSync(destination, 'utf8')).toBe('preserve');
         if (kind === 'directory') {
           expect(readFileSync(join(destination, 'keep.txt'), 'utf8')).toBe('preserve');
@@ -296,6 +324,7 @@ describe('sound-set adversarial process boundaries', () => {
       expect(calls(root)).toEqual([['make', '--sound', 'tap/soft', '-o', output(repository)]]);
       expect(lstatSync(join(repository, 'sounds', 'fake')).isSymbolicLink()).toBe(true);
       expect(readFileSync(join(destination, 'alpha.ogg'), 'utf8')).toBe('OggS');
+      expect(readFileSync(join(destination, 'alpha.mp3'), 'utf8')).toBe('MP3');
       expect(readFileSync(join(destination, 'keep.txt'), 'utf8')).toBe('preserve');
     });
   });
@@ -332,11 +361,17 @@ describe('sound-set adversarial process boundaries', () => {
       expect(result.stderr).toBe(
         `sound-set: cannot prepare output for beta (error/knock): ${output(root, 'beta')}\n`,
       );
-      expect(result.stdout).toBe('fake-out\nfake-err\nsound-set: alpha.ogg <- tap/soft\n');
+      // AC2: "The check order per entry is: prepare the two targets, render the Ogg, render
+      // the MP3." Alpha therefore completes both renders before beta's preparation fails.
+      expect(result.stdout).toBe(
+        'fake-out\nfake-err\nsound-set: alpha.ogg <- tap/soft\nsound-set: alpha.mp3 <- tap/soft\n',
+      );
       expect(calls(root)).toEqual([['make', '--sound', 'tap/soft', '-o', output(root)]]);
       expect(readFileSync(output(root), 'utf8')).toBe('OggS');
+      expect(readFileSync(mp3output(root), 'utf8')).toBe('MP3');
       expect(readFileSync(join(output(root, 'beta'), 'keep.txt'), 'utf8')).toBe('preserve');
       expect(existsSync(output(root, 'gamma'))).toBe(false);
+      expect(existsSync(mp3output(root, 'gamma'))).toBe(false);
     });
   });
 

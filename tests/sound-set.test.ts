@@ -83,8 +83,29 @@ function writeFakeBin(tmp: string) {
 function run(args: string[], root: string, earshotBin: string) {
   return spawnSync(process.execPath, [SCRIPT, ...args], {
     encoding: 'utf8',
-    env: { ...process.env, SOUNDS_ROOT: root, EARSHOT_BIN: earshotBin },
+    env: {
+      ...process.env,
+      SOUNDS_ROOT: root,
+      EARSHOT_BIN: earshotBin,
+      FFMPEG_BIN: writeFakeFfmpeg(root),
+    },
   });
+}
+
+// AC2 pins the MP3 output as the last positional argument of the ffmpeg argv; there is no -o
+// flag. The fake writes that path so the wrapper's post-render existence check can succeed.
+function writeFakeFfmpeg(tmp: string) {
+  const fake = join(tmp, 'ffmpeg-fake.mjs');
+  const lines = [
+    '#!/usr/bin/env node',
+    "import { mkdirSync, writeFileSync } from 'node:fs';",
+    "import { dirname } from 'node:path';",
+    "const out = process.argv[process.argv.length - 1] ?? '';",
+    'mkdirSync(dirname(out), { recursive: true });',
+    "writeFileSync(out, 'MP3');",
+  ];
+  writeFileSync(fake, `${lines.join('\n')}\n`, { mode: 0o755 });
+  return fake;
 }
 
 function readCallsLog(tmp: string) {
@@ -118,6 +139,8 @@ describe('sound-set wrapper through a fake earshot binary', () => {
       ]);
       expect(existsSync(outputPath(tmp, 'fake', 'alpha'))).toBe(true);
       expect(existsSync(outputPath(tmp, 'fake', 'beta'))).toBe(true);
+      expect(existsSync(join(tmp, 'sounds', 'fake', 'alpha.mp3'))).toBe(true);
+      expect(existsSync(join(tmp, 'sounds', 'fake', 'beta.mp3'))).toBe(true);
     });
   });
 
