@@ -441,7 +441,7 @@ Files this track touches:
     `node measure/tools/generate.mjs --check` exited 0 before this plan edit.
   - dispositions: F1=FIX; F2=FIX; F3=FIX(Red)
 
-- [~] T6g Red (d2d70bcf): Review A/C r3 stale-decode race. Rework
+- [x] T6g Red (d2d70bcf): Review A/C r3 stale-decode race. Rework
   `tests/apk3d/audio-files.adversarial.test.ts`: the mid-flight swap case is now
   `rejects the stale decode when the map is swapped mid-flight` (fetch pending at the swap,
   resolves after), and the new case is `rejects the stale fetch that resolves after the map
@@ -459,7 +459,23 @@ Files this track touches:
     installs its buffer at HEAD). No syntax or import error.
     `node_modules/.bin/prettier --check tests/apk3d/audio-files.adversarial.test.ts` exits 0.
   - Full log: `measure/runs/audio_game_integration_20261014/red-p3-t6g.log`.
-- [ ] T6h Green: bind each load to its mapping; reject stale completions
+  - Green verified at 2fb45ba: 5 files, 46 of 46 tests. The fixture repair commit 1bc1cd21
+    resolves the new file fetch, so both cases reach their final assertions and pass.
+- [x] T6h Green: bind each load to its mapping; reject stale completions
+  Commit `2fb45ba3534df6c78b3639cf87803d7d3c5a69ba` changes only `src/apk3d/audio/bus.ts`; no test
+  file changed. Each load carries the URL that started it. `isCurrent(name, url)` resolves the
+  event under the current map and base and compares the URL. A fetch or decode that finishes after
+  a remap stores no buffer, marks no failure, and does not clear a newer load's marker. The same
+  identity check guards the preload bytes held in `pendingDecode` until the first unlock. Public
+  method shapes, equal-map rewiring, the failed set (AC4 rule 5), and the unlock pulse try/catch
+  are unchanged.
+  - Green evidence 2026-11-22: the five-file command through the heavy runner
+    `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-files.test.ts tests/apk3d/audio-files.adversarial.test.ts tests/apk3d/audio-wiring.test.ts tests/apk3d/audio-wiring.adversarial.test.ts tests/apk3d/imports.test.ts'`
+    exits 0 with 5 files and 46 of 46 tests. `tsc --noEmit` through the heavy runner exits 2 with
+    baseline errors in `tests/` only and no error in `src/apk3d/audio/bus.ts`.
+    `prettier --check src/apk3d/audio/bus.ts` and `git diff --check` both exit 0.
+  - Dispositions: F1=FIX; F4=FIX. Result:
+    `measure/runs/audio_game_integration_20261014/green-p3-t6h.log`.
 
 ## Phase 4: Preload budget
 
