@@ -609,7 +609,7 @@ Files this track touches:
 
 ## Phase 4: Preload budget
 
-- [ ] T7 Measure: Add `scripts/audio-budget.mjs`. It serves the demo with vite, opens one game in
+- [~] T7 Measure: Add `scripts/audio-budget.mjs`. It serves the demo with vite, opens one game in
       headless Chromium with Playwright, and sets the slow-3G profile through CDP
       `Network.emulateNetworkConditions` (1.6 Mbit/s down, 300 ms latency). It plays to the first
       effect, reads the audio rows of `performance.getEntriesByType('resource')`, and writes
@@ -622,6 +622,12 @@ Files this track touches:
     100,000. `seconds` is at most 1.5. The plan records both numbers and the file count. The test
     command exits 0.
   - The test file runs under `node node_modules/vitest/vitest.mjs run tests/audio-budget.test.ts --maxWorkers=1`.
+  - Red result 2026-11-22: test commit c6ccaf463ce477aef526f96ea91ab201d98462dc.
+    Red command `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'rm -f out/audio-budget/rune-match.json && node node_modules/vitest/vitest.mjs run tests/audio-budget.test.ts --maxWorkers=1'`
+    exited 1 with 1 failed and 3 passed (4). Case 4 fails with
+    `ENOENT: no such file or directory, open 'out/audio-budget/rune-match.json'`
+    with no syntax or import error. `node_modules/.bin/prettier --check tests/audio-budget.test.ts`
+    exits 0.
 
 ## Phase 5: Hand-off to the PM
 
