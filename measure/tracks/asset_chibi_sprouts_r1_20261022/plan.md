@@ -443,6 +443,35 @@ Workbooks does not wait for it.
     untouched: sprout-sam and teacher GLBs keep byte-identical hashes (3b6c6796,
     ec71c3d8); the preset pin is unchanged. The cuffs fix 4fa91ee8 stands (fresh
     listen.png cuffs and waist clean). Log green-faces-grandma.log.
+  - Grandpa face r2 8c7f2891 (2026-11-22, Faces r2 Step 1): `assets/sprout-grandpa.ts`
+    only, matched to `docs/sprout-mockups/grandpa.jpg`. Paint-only face through the
+    existing `paintSkin` hook (arm cut kept, then face): dark round iris with one big
+    catchlight, shorter thinner brow over an exact-footprint hard skin cover in fixed
+    light warm grey #c9c4ba (the shared tint.brow follows the white hair and would wash
+    out; the old brown paint showed, Grandma fixed hers pale grey for the same reason),
+    an open smile below the mustache with one thin rounded white teeth band (Tom r3:
+    0.009) and a wide tongue (0.03), both clipped inside the mouth, soft nose shade,
+    plus age marks the reference shows (nasolabial smile lines, crow's feet, two
+    forehead lines across the bald crown, all as soft crease chains sunk 1 mm); no
+    freckles (the reference cheeks are smooth). One in-round fix: the first mouth at
+    the parents' height hid the whole teeth band behind the mustache silk, so the
+    mouth sits one teeth-band lower and the white band clears the mustache bottom
+    edge. The hairline is geometry: three thin tapered strands per side sweep back
+    from the temples (staggered tips and depths, grooves between strands, skin
+    between the tips, inside the old puff envelope), the mustache is three stranded
+    cords per wing with flicked tips, and the brow tufts are two short tapered locks
+    per side above the frames (inside the old tuft envelope). One finding: the red
+    chin dot persists (the same shared-smile vertex artifact Mom, Dad, and Grandma
+    documented, invisible at sheet scale); the open smile is kept. `./forge all
+    sprout-grandpa` exits 0 with no warning lines (38,116 textured tris,
+    0.544 x 1.548 x 0.355 m, GLB 4503 KB). `./forge check sprout-grandpa` output
+    byte-identical to the role_base_sha baseline (exit 1 on the three known waived
+    clips). Grandpa's 25 cut-outs were re-rendered at 1760x1856; cutout-check flags
+    only the four known reach tiptoes (grandpa row 1834, foot 1840). The three sprout
+    vitest files pass 15/15. typecheck-asset reports 0 errors. The shared kind is
+    untouched: sprout-sam and teacher GLBs keep byte-identical hashes (3b6c6796,
+    ec71c3d8); the preset pin is unchanged. The listen fix 10632c67 stands (fresh
+    listen.png waist clean). Log green-faces-grandpa.log.
   - [x] Mom (young mother, medium height, due 11-21). `assets/sprout-mom.ts` ac97d422
     (ADULT proportions; long wavy medium-brown hair past the shoulders, cream cable-knit
     sweater with collar/cuffs/ribbed hem, blue jeans, brown flats, pearl studs; look target

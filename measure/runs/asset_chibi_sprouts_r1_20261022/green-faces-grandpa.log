@@ -1,0 +1,67 @@
+MEASURE_AGENT_RESULT
+track: asset_chibi_sprouts_r1_20261022
+phase: Faces r2 Step 1 (Green)
+character: grandpa
+role_base_sha: 56a46c4d27f66b7654cf4c3483b8b022f9e3e0119
+implementation_commit: 8c7f28916751425dcf821c759a48e21b25ce8da0
+files_changed: assets/sprout-grandpa.ts only (211 insertions, 26 deletions).
+  assets/parts/humanoid-kind.ts untouched. Committed Red tests untouched (no Red
+  tests exist for this art step; the step's gates are the plan lines 578-586).
+
+what_changed:
+  - Face paint through the existing paintSkin hook (arm cut kept): dark round
+    iris + warm low arc + pupil + one big catchlight + one small catchlight;
+    brown shared-brow covered with an exact-footprint hard skin stencil and a
+    shorter thinner brow in fixed light warm grey #c9c4ba; open smile below the
+    mustache (parents' 0.9 outline) with Tom-r3 thin teeth band (0.009) and wide
+    tongue (0.03), both clipped inside the mouth; nose shade; nasolabial lines,
+    crow's feet, and two forehead lines as soft crease chains sunk 1 mm.
+  - Mouth sits one teeth-band lower than the parents' (mY = smileY - 0.012):
+    at the parents' height the mustache silk occludes the whole teeth band.
+  - Geometry, all inside the old envelopes: three thin tapered side-hair strands
+    per side (grooves, staggered tips, skin between tips); mustache rebuilt as
+    three stranded cords per wing with flicked tips; brow tufts rebuilt as two
+    short tapered locks per side above the frames. Glasses, clothes, and the
+    listen waist/hem fix unchanged.
+
+gates (all pass):
+  - ./forge all sprout-grandpa exits 0, no warning lines: 38,116 textured tris,
+    0.544 x 1.548 x 0.355 m (silhouette unchanged), GLB 4503 KB.
+  - ./forge check sprout-grandpa output byte-identical to the role_base_sha
+    baseline (diff empty; exit 1 on the three known waived clips touch-nose,
+    count-fingers, eat; listen closest 0.5 cm; ground ok).
+  - 25 grandpa cut-outs re-rendered at 1760x1856 via
+    bench/sonnet/sprouts/cutout-gestures-cast.sh grandpa; node
+    scripts/cutout-check.mjs on gestures-adult/ flags only the four known reach
+    tiptoes (dad 1834, grandma 1833, grandpa 1834, mom 1833; foot row 1840).
+  - Sprout vitest files pass 15/15 (sprout-base, sprout-gesture-offset,
+    sprout-gestures).
+  - node scripts/typecheck-asset.mjs sprout-grandpa reports 0 errors.
+  - sprout-sam and teacher GLBs byte-identical: 3b6c6796 / ec71c3d8 (full
+    sha256 verified before and after).
+  - Sprite check: out/sprout-grandpa/sprites/preview.png shows the open smile
+    below the mustache at 128 px.
+  - Freshness (orchestrator note): textured ./forge render ran after the last
+    source edit; render.png (19:07:04) and the GLB (19:07:03) are newer than
+    assets/sprout-grandpa.ts (18:41:47); all 25 cut-out PNGs are newer than
+    the source. Fresh render.png shows: white side hair in separated thin
+    swept strands with staggered tips; large dark-brown round eyes with one
+    catchlight each behind the round brown glasses; white brow tufts just above
+    the frames; bushy white mustache with stranded flicked wing tips; open
+    smile below the mustache with a thin white teeth band and pink tongue;
+    forehead wrinkles and rosy cheeks; bald crown and nape band unchanged.
+
+tasks_flipped: none ([~] Task: Faces r2 and the Muse likeness test stays open;
+  this step adds the "Grandpa face r2 8c7f2891" evidence line after the
+  Grandma r2 line; no [b]/deferred items).
+new_files_for_reviewers: none (no new files; out/ artifacts regenerated in
+  place: out/sprout-grandpa/render.png, sprout-grandpa.glb, sprites/,
+  out/chibi-sprouts/r1/week2-7/gestures-adult/grandpa/*.png).
+handoff: ready for the independent look judge (Step 4 sheet) and the Step 2
+  element-sheet copy of out/sprout-grandpa/render.png. A Dad face r3 round
+  (dbb55822) and uncommitted edits in assets/sprout-dad.ts plus another
+  session's uncommitted edit in assets/sprout-grandma.ts exist in the tree;
+  this round staged and committed only assets/sprout-grandpa.ts and the plan.
+phase_base_sha: not supplied in handoff; role_base_sha 56a46c4d is the fallback
+  baseline. Final HEAD after plan-evidence commit follows in the report.
+END_MEASURE_AGENT_RESULT
