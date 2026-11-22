@@ -133,7 +133,7 @@ Files this track touches:
     default-lookup and basename cases pass as lock-in. See the third block of
     `measure/runs/audio_game_integration_20261014/red-p2.log`.
 
-- [x] T4 Green (dcfad290): Add the MP3 step to `scripts/sound-set.mjs` per spec AC2. Add the `FFMPEG_BIN`
+- [x] T4 Green (dcfad290, 2b29c067): Add the MP3 step to `scripts/sound-set.mjs` per spec AC2. Add the `FFMPEG_BIN`
       lookup, the target preparation for the `.mp3`, and the three failure lines with their exits.
       Then render the real set once, and stage the seven `.mp3` files with explicit paths.
   - Green done-when: the T3 command exits 0 with every test passing. The render command exits 0 and
@@ -168,6 +168,13 @@ Files this track touches:
   - Remediation gate 2026-11-22: `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sound-set.test.ts tests/sound-set-mp3.test.ts tests/sound-set.adversarial.test.ts tests/sound-set-lookup.test.ts'`
     exited 0 with 4 files and 98 of 98 tests. The project gate exited 0 with 215 files and 3274 of
     3274 tests. Review A F1 and F2 and Review B F1 and F2 are fixed; the F3 note is corrected above.
+  - Remediation r2 2026-11-22: fix commit 2b29c067756a8c4ba8b644edcea3ebf33b2698f2. Test commit
+    81511930 adds `tests/sound-set.adversarial-p2.test.ts`. The earshot guard now applies the same
+    regular-executable-file rule as ffmpeg, so an empty `EARSHOT_BIN` or a directory fails with the
+    exact earshot diagnostic before preparation and both old files stay. The ffmpeg lookup skips
+    every non-absolute PATH entry, so `.` and `bin` cannot supply a binary. The five-file gate exited
+    0 with 5 files and 117 of 117 tests. The project gate exited 0 with 216 files and 3293 of 3293
+    tests. Adversarial F5 and F6 are fixed.
 
 ## Phase 3: File playback in the AudioBus
 

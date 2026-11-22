@@ -111,7 +111,7 @@ tasks_flipped_to_x:
 tasks_flipped_to_b: none.
 fix_commit: dcfad29055561f890e6d2117871d24e233268288 fix(audio_game_integration): T4 ffmpeg lookup and target checks before render
 commands_and_exits:
-  Pre-fix targeted command (four files): exit 1; 1 failed, 93 passed (98). The five failures were the
+  Pre-fix targeted command (four files): exit 1; 5 failed, 93 passed (98). The five failures were the
     directory FFMPEG_BIN, the empty FFMPEG_BIN, the working-directory default, the PATH directory
     shadow, and the blocked MP3 target keeping the stale Ogg.
   Post-fix targeted command:
@@ -139,4 +139,41 @@ scope:
   into sounds/. The committed .ogg and .mp3 files are unchanged.
 new_files_added: none.
 handoff: Phase 2 remediation is complete. T4 is [x] with the fix SHA on the task line. The next task is T5 Red in Phase 3. No other routed findings remain. No product decision was needed.
+END_MEASURE_AGENT_RESULT
+MEASURE_AGENT_RESULT
+role: Green, Phase 2, remediation r2 of adversarial findings F5 and F6
+track: audio_game_integration_20261014
+phase_heading: ## Phase 2: MP3 copies in the wrapper
+phase_base_sha: 16b398b595354f5da275268f1b32c8e864b9312a
+role_base_sha: 3caf71e5a2e3bb7d74b589b44476b849fb1193ed
+adversarial_base_sha: 81511930c3c72148733234e8c3614e50e38bc294
+status: pass
+dispositions: F5=FIX; F6=FIX
+fix_commit: 2b29c067756a8c4ba8b644edcea3ebf33b2698f2 fix(audio_game_integration): T4 earshot guard and absolute PATH entries
+tasks_flipped_to_x: none; T4 stays [x] and the new fix SHA was added to its task line.
+tasks_flipped_to_b: none.
+commands_and_exits:
+  Targeted five-file command:
+    HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sound-set.test.ts tests/sound-set-mp3.test.ts tests/sound-set.adversarial.test.ts tests/sound-set-lookup.test.ts tests/sound-set.adversarial-p2.test.ts'
+    exit 0; 5 files; 117 passed (117); 0 failed.
+  Project gate (once):
+    HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts'
+    exit 0; 216 files; 3293 passed (3293); 0 failed. No failure outside this task.
+  node measure/tools/generate.mjs --check: exit 0.
+  ./measure/doctor.sh --structural-only: exit 0.
+  node_modules/.bin/prettier --check scripts/sound-set.mjs plan.md: exit 0.
+fix_details:
+  F6: the earshot guard now uses the same regular-executable-file rule as ffmpeg. An empty
+    EARSHOT_BIN or a directory fails with the existing exact earshot diagnostic before any target
+    preparation. Both old files stay and no child call runs.
+  F5: findFfmpeg skips every PATH entry that is not absolute. The entries '.' and 'bin' cannot
+    supply a binary. An absolute candidate later on PATH still runs. The AC2 failure line and the
+    pinned ffmpeg argv are unchanged.
+log_correction:
+  The earlier block's pre-fix count now reads 5 failed, 93 passed (98), matching the committed
+  adversarial result. No other historical line was changed.
+scope:
+  No test was edited. No render ran into sounds/. The committed .ogg and .mp3 files are unchanged.
+new_files_added: none.
+handoff: Phase 2 remediation r2 is complete. T4 is [x] with both fix SHAs on the task line. The next task is T5 Red in Phase 3. No product decision was needed.
 END_MEASURE_AGENT_RESULT
