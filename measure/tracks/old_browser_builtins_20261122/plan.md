@@ -312,6 +312,11 @@ tests/apk3d/no-unpolyfilled-builtins.test.ts'` exits 0: 1 file passed, 2 tests p
     already records 36 source files plus one scan test (lines 226, 273); test-strategy.md stays as
     is per the round brief, so no count was changed there.
 
+- [x] T5r2 Green (7d5c7129): deepCopy contract limits in the doc comment (PM 2026-11-23, Review B r2 escalate_human items)
+  - The PM accepts findings B-F2, B-F3, B-F4 and B-F5 as written contract limits. The change touches only the `src/apk3d/sim/copy.ts` doc comment. No code and no test changes. The comment states that the helper copies plain game state. It lists four limits. It does not copy own Symbol-keyed properties. It does not copy non-enumerable own properties. A RegExp or another class instance copies as a plain object with no class behavior, and a copied RegExp throws on `exec`. A Map, a Set, a Date or a typed array from another realm copies as a plain object. The TypeError list stays unchanged.
+  - Probe result 2026-11-23: a temporary visitor copied from the state-types case ran on states that hold one new kind each. The probe path is `measure/runs/old_browser_builtins_20261122/probe-state-types-r2.mjs`, and the probe is not committed. The test catches a RegExp value through `other:[object RegExp]`. The test catches a class instance through `other:[object Object]`. The test does not catch a Symbol-keyed own property: the visitor walks `Object.keys`, so its kinds are `plain-object, string` and no extra kind appears. A plain-data control also shows no extra kind, as expected. The probe exits 0. No test changed.
+  - Gates 2026-11-23: `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts tests/apk3d/imports.test.ts'` exits 0 with 4 files and 19 tests passed. `node_modules/.bin/prettier --check src/apk3d/sim/copy.ts` exits 0.
+
 ## Phase 3: Browser check
 
 - [ ] T7 Measure: Add `scripts/old-browser-check.mjs` per AC5. Prerequisite, met: task T6k
