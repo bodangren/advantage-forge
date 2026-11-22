@@ -399,6 +399,30 @@ Workbooks does not wait for it.
     (3b6c6796, ec71c3d8); the preset pin is unchanged. The sleeve fix ef5be6c4
     and the listen fix c3307a6b stand (fresh listen.png waist clean). Log
     green-faces-dad.log.
+  - Grandma face r2 d470ef24 (2026-11-22, Faces r2 Step 1): `assets/sprout-grandma.ts`
+    only, matched to `docs/sprout-mockups/grandma.jpg`. Paint-only face through the
+    existing `paintSkin` hook (arm cut kept, then face): dark round iris with one big
+    catchlight, shorter thinner brow over an exact-footprint hard skin cover in fixed
+    pale grey #a8a39c (the shared tint.brow follows the white hair and would wash out;
+    Dad fixed his dark for the mirror reason), a gentle open smile with one rounded
+    white teeth band clipped inside the mouth and tongue, soft nose shade, freckles,
+    plus age marks the reference shows (nasolabial smile lines, crow's feet, both as
+    soft crease chains sunk 1 mm). One in-round fix: the first mouth at scale 0.85 left
+    dark shared-smile corners, so the outline is the parents' 0.9 and the corners read
+    clean. The hairline is geometry: three overlapping swept cords per side run from
+    the center part over the crown to the temples (staggered tips, grooves between
+    strands, sideways tips, inside outerHug above the face opening, nothing hanging
+    vertical). One finding: the red chin dot persists (the same shared-smile vertex
+    artifact Mom and Dad documented, invisible at sheet scale); the open smile is kept.
+    `./forge all sprout-grandma` exits 0 with no warning lines (34,828 textured tris,
+    0.544 x 1.53 x 0.394 m, GLB 4348 KB). `./forge check sprout-grandma` output
+    byte-identical to the role_base_sha baseline (sha dc8a1833, exit 1 on the waived
+    touch-nose). Grandma's 25 cut-outs were re-rendered at 1760x1856; cutout-check flags
+    only the four known reach tiptoes (grandma row 1833, foot 1840). The three sprout
+    vitest files pass 15/15. typecheck-asset reports 0 errors. The shared kind is
+    untouched: sprout-sam and teacher GLBs keep byte-identical hashes (3b6c6796,
+    ec71c3d8); the preset pin is unchanged. The cuffs fix 4fa91ee8 stands (fresh
+    listen.png cuffs and waist clean). Log green-faces-grandma.log.
   - [x] Mom (young mother, medium height, due 11-21). `assets/sprout-mom.ts` ac97d422
     (ADULT proportions; long wavy medium-brown hair past the shoulders, cream cable-knit
     sweater with collar/cuffs/ribbed hem, blue jeans, brown flats, pearl studs; look target
