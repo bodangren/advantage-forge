@@ -326,6 +326,22 @@ Workbooks does not wait for it.
     1024x1200; cutout-check flags only the known reach tiptoe (lily row 1176, foot 1184).
     The three sprout vitest files pass 15/15. typecheck-asset reports 0 errors. The preset
     pin is unchanged. Log green-p5-adult-base.log.
+  - Tom face r2 e8625666 (2026-11-22, Faces r2 Step 1): `assets/sprout-tom.ts` only,
+    matched to `docs/sprout-mockups/tom.jpg`. The hairline is geometry, not paint:
+    five separate tapered locks swept from his-right part to his-left temple (0.008
+    fillet, wide tip spacing, varied tip depths, skin between the tips), thin sideburn
+    strands to mid-ear, a flatter tousled crown tuft. Paint-only face via `paintSkin`:
+    near-black round iris with one big catchlight, shorter thinner brow over an
+    exact-footprint hard skin cover, one rounded white teeth band with tongue, soft
+    nose shade, freckles. One in-round fix: the first teeth band split into buck teeth
+    (its top poked above the mouth middle); the band now sits fully inside the mouth.
+    `./forge all sprout-tom` exits 0 with no warning lines (28,428 textured tris,
+    0.483 x 0.915 x 0.446 m, GLB 3518008). `./forge check sprout-tom` output
+    byte-identical to the pre-pass baseline. Tom's 25 cut-outs were re-rendered at
+    1024x1200; cutout-check flags only the known reach tiptoe (tom row 1175, foot 1184).
+    The three sprout vitest files pass 15/15. typecheck-asset reports 0 errors. The
+    shared kind is untouched: sprout-sam and teacher GLBs keep byte-identical hashes
+    (3b6c6796, ec71c3d8); the preset pin is unchanged. Log green-p5-adult-base.log.
   - [x] Mom (young mother, medium height, due 11-21). `assets/sprout-mom.ts` ac97d422
     (ADULT proportions; long wavy medium-brown hair past the shoulders, cream cable-knit
     sweater with collar/cuffs/ribbed hem, blue jeans, brown flats, pearl studs; look target

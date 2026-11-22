@@ -848,3 +848,54 @@ maker does not rate its own work: an independent judge still owes the 7.5-bar fa
 rating. Next runs repeat Step 1 for Tom, Mom, Dad, Grandma, Grandpa, and the adult
 base (no Muse calls in Step 1).
 END_MEASURE_AGENT_RESULT
+
+MEASURE_AGENT_RESULT
+phase: Phase 5: The rest of the inventory (after the look check)
+task: Faces r2 and the Muse likeness test (Daniel 2026-11-22), Step 1, character Tom
+role: Green (maker)
+role_base_sha: cb7e911ba12bb93cf934815e584ab645fae45517
+phase_base_sha: cb7e911ba12bb93cf934815e584ab645fae45517
+green_head: e862566608c83b008b4b82253a51bca4e1f9727b
+
+summary: Tom face detail r2, matched to docs/sprout-mockups/tom.jpg. Hairline is
+geometry per the orchestrator's Lily note (painted grooves did not show at render
+size): five separate tapered locks swept from his-right part to his-left temple
+(0.008 fillet, wide tip spacing, varied tip depths, skin showing between the tips),
+thin sideburn strands to mid-ear, flatter tousled crown tuft. Paint-only face via
+`paintSkin`: near-black round iris with one big catchlight, shorter thinner brow
+over an exact-footprint hard skin cover, one rounded white teeth band with tongue,
+soft nose shade, freckles. One in-round fix: the first teeth band split into two
+buck teeth (box top above the mouth middle); the band now sits fully inside. Three
+fixed differences vs tom.jpg: (1) smooth helmet fringe to separated pointed locks
+with sideburns; (2) amber iris to near-black iris with big catchlight; (3) old open
+smile with pointed teeth ends to one rounded white band. Brows thinned, nose shaded
+with freckles.
+
+gates:
+1. ./forge all sprout-tom (heavy-run.sh): exit 0, 0 warning lines, 28,428 textured
+   tris, 0.483 x 0.915 x 0.446 m, GLB 3518008 bytes.
+2. ./forge check sprout-tom (heavy-run.sh): output byte-identical to the pre-pass
+   baseline (empty diff); the new hair geometry moves no clearance number.
+3. bench/sonnet/sprouts/cutout-gestures-cast.sh tom (heavy-run.sh): all 25 frames
+   re-rendered at 1024x1200; cutout-check on out/chibi-sprouts/r1/week2-7/gestures/
+   flags only the known reach tiptoe set (tom row 1175, foot 1184), same set as
+   baseline.
+4. Vitest tests/sprout-base.test.ts tests/sprout-gestures.test.ts
+   tests/sprout-gesture-offset.test.ts: 3 files pass, 15/15 tests.
+5. node scripts/typecheck-asset.mjs sprout-tom: 0 errors.
+6. Untouched-asset proof: only assets/sprout-tom.ts changed, so no other rebuilds;
+   sprout-sam GLB sha256 3b6c6796...0324c and teacher GLB sha256 ec71c3d8...b354
+   match the pre-pass hashes; the preset pin is unchanged.
+
+new_files_for_reviewer_scope: none (tracked change is assets/sprout-tom.ts only; the
+25 re-rendered tom cut-out PNGs and out/sprout-tom/* are delivery files). No Red
+test edited. Faces r2 task stays [~]; Tom is the second of seven, one per run.
+implementation_commit: e862566608c83b008b4b82253a51bca4e1f9727b
+handoff: Review roles should audit assets/sprout-tom.ts at e8625666 (the five-lock
+fringe, sideburns, tuft, and tomFace paint) against docs/sprout-mockups/tom.jpg and
+the textured out/sprout-tom/render.png sheet: separated pointed locks with skin
+between tips, sideburn strands, near-black iris with big catchlight, short thin brow
+with no slab or halo, one white teeth band with no fang corners. The maker does not
+rate its own work: an independent judge still owes the 7.5-bar face rating. Next
+runs repeat Step 1 for Mom, Dad, Grandma, Grandpa, and the adult base.
+END_MEASURE_AGENT_RESULT
