@@ -1,4 +1,6 @@
 /** Simulation layer of the APK 3D kit: seeded rng, the fixed-step loop, the recorder, easing. */
+export { deepCopy } from './copy.js';
+export { atIndex, lastIndexWhere } from './index-math.js';
 export { createRng, hashString, type Rng } from './rng.js';
 export {
   STEP_MS,
