@@ -6,7 +6,7 @@ Tracks by workstream: assets: 33; games: 42; foundation: 3.
 
 | Track | Status | Workstream | Plan tasks | Estimate | Actual |
 | --- | --- | --- | ---: | ---: | ---: |
-| [asset_chibi_sprouts_r1_20261022](../tracks/asset_chibi_sprouts_r1_20261022/) | in_progress | assets | 28/40 | 22 | 12 |
+| [asset_chibi_sprouts_r1_20261022](../tracks/asset_chibi_sprouts_r1_20261022/) | in_progress | assets | 28/39 | 22 | 12 |
 | [asset_companion_backlog_20260928](../tracks/asset_companion_backlog_20260928/) | new | assets | 0/5 | 5 | — |
 | [asset_delivery_20260928](../tracks/asset_delivery_20260928/) | new | assets | 0/7 | 7 | — |
 | [asset_engine_backlog_20260928](../tracks/asset_engine_backlog_20260928/) | new | assets | 0/5 | 5 | — |
