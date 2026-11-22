@@ -416,6 +416,30 @@ Files this track touches:
       without the fix. `prettier --check` exits 0 on all three test files. No production file
       changed.
 
+- [x] T6f Green: adversarial F1/F2 (9d03b6bd). Commit
+      `9d03b6bdeeaf5f7ac353bc8754d206b39a586c86` changes only `src/apk3d/audio/bus.ts`; no test
+      file changed.
+  - F1: `useSoundFiles` invalidates the per-event file state whose mapping changed or vanished. A
+    null map, a different base, or a map without the event clears its decoded buffer, its pending
+    bytes, and its in-flight load. An event that keeps its mapping keeps its file, so two calls with
+    one equal map still fetch once. Failed events stay marked (AC4 rule 5). A decode that lands
+    after its mapping vanished stores no buffer.
+  - F2: the silent unlock pulse sits in a try/catch. `resume()` and the mood restart still run when
+    `createBufferSource`, `createBuffer`, or `start` throws.
+  - Red re-run at Green start: the two adversarial files exited 1 with F1 and F2 failing and 22
+    passing (24). F3 was fixed by the parallel Red session (T6e). The first F1 attempt cleared
+    `loading` on every call and broke the committed double-wiring case, which passes one equal map
+    twice; invalidation is now per changed or vanished event.
+  - Green evidence 2026-11-22: the five-file command through the heavy runner
+    `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-files.test.ts tests/apk3d/audio-files.adversarial.test.ts tests/apk3d/audio-wiring.test.ts tests/apk3d/audio-wiring.adversarial.test.ts tests/apk3d/imports.test.ts'`
+    exited 0 with 5 files and 45 of 45 tests. The two adversarial files alone exited 0 with 24 of
+    24. `node node_modules/typescript/bin/tsc --noEmit` through the heavy runner exited 2 with the
+    baseline errors in `assets/` and `tests/` only; no error in `src/apk3d/audio/bus.ts`.
+    `prettier --check` on `src/apk3d/audio/bus.ts` and `git diff --check` both exited 0.
+    `bash measure/doctor.sh` exited 0 with no structural errors and
+    `node measure/tools/generate.mjs --check` exited 0 before this plan edit.
+  - dispositions: F1=FIX; F2=FIX; F3=FIX(Red)
+
 ## Phase 4: Preload budget
 
 - [ ] T7 Measure: Add `scripts/audio-budget.mjs`. It serves the demo with vite, opens one game in
