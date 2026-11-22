@@ -27,17 +27,19 @@ function walk(dir: string): string[] {
  * URL row of the control table keeps its call. Template text is dropped and each `${...}`
  * content is scanned as code, with nested braces counted, so the template row keeps its call.
  * Dropped characters become spaces and each newline stays, so a hit line matches the source.
- * A `/` opens a regex literal unless the previous significant character closes a value (a word
- * character, `)`, or `]`), because the `/"` literal of `src/storytime/book-pictures.ts` would
- * otherwise open a string that swallows the `.at(` call further down the file. The keyword test
- * uses a word boundary, so `origin / x / 2` stays a division while `return /re/` stays a regex.
- * A `/` after `)` or `]` is tried as a regex first (as in `if (ok) /"/.test(s)`); when no
- * closing `/` sits on the same line it falls back to division.
+ * A `/` after a value is division: after an identifier, a number, a closing bracket, a string
+ * end, or a close paren that is not a control header (tracked with a paren stack, so
+ * `getOrigin() / structuredClone(v) / 2` and `a[0] / structuredClone(v)` stay visible while
+ * `if (ok) /re/` stays a regex). A `/` after a keyword such as `return` also opens a regex,
+ * because the word boundary keeps `origin` and `coin` divisions. Anything else opens a regex;
+ * when no closing slash sits on the same line the slash falls back to division.
  */
 function strip(code: string): string {
   const out: string[] = new Array(code.length);
   let i = 0;
   const n = code.length;
+  const parenControl: boolean[] = [];
+  let afterControlParen = false;
   const blank = (index: number): void => {
     out[index] = code[index] === '\n' ? '\n' : ' ';
   };
@@ -104,11 +106,22 @@ function strip(code: string): string {
         let j = i - 1;
         while (j >= 0 && (code[j] === ' ' || code[j] === '\t' || code[j] === '\n' || code[j] === '\r')) j--;
         const prev = j >= 0 ? code[j]! : ';';
+        const isWord = /[\w$]/.test(prev);
         const keyword =
+          isWord &&
           /(?:^|[^\w$])(?:return|typeof|instanceof|delete|void|throw|case|do|else|in|of|new)$/.test(
             code.slice(Math.max(0, j - 10), j + 1),
           );
-        if (!/[\w$)\]]/.test(prev) || keyword || prev === ')' || prev === ']') {
+        // A slash after a value is division: after an identifier, a number, a closing bracket,
+        // a string end, or a close paren that is not a control header. A slash after a
+        // control-header close paren (as in `if (ok) /re/`) stays a regex. Any other slash opens
+        // a regex; when no closing slash sits on the same line it falls back to division.
+        const isRegexPos = isWord
+          ? keyword
+          : prev === ')'
+            ? afterControlParen
+            : prev !== ']' && prev !== '"' && prev !== "'" && prev !== '`';
+        if (isRegexPos) {
           let k = i + 1;
           let inClass = false;
           let closed = false;
@@ -136,12 +149,31 @@ function strip(code: string): string {
             }
             continue;
           }
-          if (prev === ')' || prev === ']') {
-            out[i] = c;
-            i++;
-            continue;
-          }
         }
+        out[i] = c;
+        i++;
+        continue;
+      }
+      if (c === '(') {
+        let m = i - 1;
+        while (m >= 0 && (code[m] === ' ' || code[m] === '\t' || code[m] === '\n' || code[m] === '\r')) m--;
+        let w = m;
+        while (w >= 0 && /[\w$]/.test(code[w]!)) w--;
+        const word = code.slice(w + 1, m + 1);
+        parenControl.push(
+          word === 'if' ||
+            word === 'while' ||
+            word === 'for' ||
+            word === 'with' ||
+            word === 'switch' ||
+            word === 'catch',
+        );
+        out[i] = c;
+        i++;
+        continue;
+      }
+      if (c === ')') {
+        afterControlParen = parenControl.pop() ?? false;
         out[i] = c;
         i++;
         continue;
@@ -216,15 +248,20 @@ function stripCommentsFirst(code: string): string {
 
 // The 19 labels. A call name may be followed by a comment before its parentheses, so every
 // pattern allows whitespace between the name and `(`. Array/String.prototype.at takes exactly
-// one argument, which itself may hold a nested call such as `getLastIndex()`; a multi-argument
-// custom call such as arena.at(x, y, z) never matches, and a trailing comma is still one
-// argument. this.at( is the Board/Board2d tile lookup, not Array.prototype.at: the boundary
-// keeps `notthis.at(` a hit while `this.at(` stays out. z.union( is a zod schema combinator,
-// not Set.prototype.union: the boundary keeps `itemsz.union(` a hit while `z.union(` stays out.
+// one argument, which may nest balanced parentheses, brackets, and braces to several levels
+// (such as `[0, 1][0]` or `one(two(three()))`); a top-level comma still ends the match, so a
+// multi-argument custom call such as arena.at(x, y, z) never matches, and a trailing comma is
+// still one argument. this.at( is the Board/Board2d tile lookup, not Array.prototype.at: the
+// boundary keeps `notthis.at(` a hit while `this.at(` stays out. z.union( is a zod schema
+// combinator, not Set.prototype.union: the boundary keeps `itemsz.union(` a hit while `z.union(`
+// stays out.
 const PATTERNS: Array<[string, RegExp]> = [
   ['Object.hasOwn', /Object\.hasOwn\s*\(/g],
   ['structuredClone', /structuredClone\s*\(/g],
-  ['.at(', /(?<!\bthis)\.at\s*\(\s*(?:[^(),]|\((?:[^()]|\([^()]*\))*\))*(,\s*)?\)/g],
+  [
+    '.at(',
+    /(?<!\bthis)\.at\s*\(\s*(?:[^(),\[\]{}]|\((?:[^()]|\((?:[^()]|\([^()]*\))*\))*\)|\[(?:[^\[\]]|\[[^\[\]]*\])*\]|\{(?:[^{}]|\{[^{}]*\})*\})*(,\s*)?\)/g,
+  ],
   ['.findLast(', /\.findLast\s*\(/g],
   ['.findLastIndex(', /\.findLastIndex\s*\(/g],
   ['.toSorted(', /\.toSorted\s*\(/g],
@@ -269,9 +306,10 @@ function render(hit: Hit): string {
 
 // Named false positives: the three Box3.union calls of src/render/page.ts are three.js geometry,
 // not Set.prototype.union. this.at(, multi-argument .at(, and z.union( stay out by pattern.
-// Each exclusion binds the file, the line, the label, and the exact excluded call text: a
-// different built-in on the same line is still reported. An exclusion that matches nothing fails
-// the test, so the list cannot rot.
+// Each exclusion binds the file, the line, the label, and the exact excluded call text, and it
+// filters exactly one hit instance: a different built-in — or a second same-label call such as
+// `items.union(other)` beside `box.union(b)` — on the same line is still reported. An exclusion
+// that matches nothing fails the test, so the list cannot rot.
 type Exclusion = { file: string; line: number; label: string; call: string; reason: string };
 
 const EXCLUSIONS: Exclusion[] = [
@@ -298,28 +336,33 @@ const EXCLUSIONS: Exclusion[] = [
   },
 ];
 
-/** Applies applicable exclusions to raw hits; other hits on an excluded line stay reported. */
+/** Applies applicable exclusions to raw hits; each exclusion filters exactly one hit instance,
+ * so a second same-label call on the same line stays reported. */
 function applyExclusions(
   raw: Hit[],
   exclusions: Exclusion[],
   strippedLine: (path: string, line: number) => string | null,
 ): string[] {
   const problems: string[] = [];
-  const excluded = new Set<string>();
+  const excluded = new Set<number>();
   for (const exclusion of exclusions) {
     const lineText = strippedLine(exclusion.file, exclusion.line);
-    const matched = raw.some(
-      (hit) => hit.path === exclusion.file && hit.line === exclusion.line && hit.label === exclusion.label,
+    const index = raw.findIndex(
+      (hit, k) =>
+        !excluded.has(k) &&
+        hit.path === exclusion.file &&
+        hit.line === exclusion.line &&
+        hit.label === exclusion.label,
     );
-    if (!matched || lineText === null || !lineText.includes(exclusion.call)) {
+    if (index === -1 || lineText === null || !lineText.includes(exclusion.call)) {
       problems.push(`stale exclusion ${exclusion.file}:${exclusion.line}: ${exclusion.reason}`);
     } else {
-      excluded.add(`${exclusion.file}:${exclusion.line}:${exclusion.label}`);
+      excluded.add(index);
     }
   }
-  for (const hit of raw) {
-    if (!excluded.has(`${hit.path}:${hit.line}:${hit.label}`)) problems.push(render(hit));
-  }
+  raw.forEach((hit, k) => {
+    if (!excluded.has(k)) problems.push(render(hit));
+  });
   return problems;
 }
 
@@ -345,21 +388,43 @@ it('uses no unpolyfilled ES2022+ built-ins under SCAN_ROOT', () => {
 });
 
 it('exclusions bind to their exact call text, not just the line (review r1 C-F3)', () => {
+  const problemsFor = (fixture: string, exclusions: Exclusion[]): string[] => {
+    const stripped = strip(fixture);
+    const raw = scanText(stripped, '<fixture>');
+    return applyExclusions(raw, exclusions, (path, line) =>
+      path === '<fixture>' && line === 1 ? stripped : null,
+    );
+  };
   const fixture = 'if (!b.isEmpty()) box.union(b); structuredClone(s);';
-  const stripped = strip(fixture);
-  const raw = scanText(stripped, '<fixture>');
-  const lineOf = (path: string, line: number): string | null =>
-    path === '<fixture>' && line === 1 ? stripped : null;
   const bound: Exclusion[] = [
     { file: '<fixture>', line: 1, label: 'Set .union(', call: 'box.union(b)', reason: 'test bind' },
   ];
-  expect(applyExclusions(raw, bound, lineOf)).toEqual(['<fixture>:1: structuredClone']);
+  expect(problemsFor(fixture, bound)).toEqual(['<fixture>:1: structuredClone']);
   const rotted: Exclusion[] = [
     { file: '<fixture>', line: 1, label: 'Set .union(', call: 'box.merge(b)', reason: 'test bind' },
   ];
-  expect(applyExclusions(raw, rotted, lineOf)).toEqual([
+  expect(problemsFor(fixture, rotted)).toEqual([
     'stale exclusion <fixture>:1: test bind',
     '<fixture>:1: structuredClone',
+    '<fixture>:1: Set .union(',
+  ]);
+});
+
+it('an exclusion filters one call instance; a second same-label call stays (review r2 C-F3)', () => {
+  const problemsFor = (fixture: string, exclusions: Exclusion[]): string[] => {
+    const stripped = strip(fixture);
+    const raw = scanText(stripped, '<fixture>');
+    return applyExclusions(raw, exclusions, (path, line) =>
+      path === '<fixture>' && line === 1 ? stripped : null,
+    );
+  };
+  const bound: Exclusion[] = [
+    { file: '<fixture>', line: 1, label: 'Set .union(', call: 'box.union(b)', reason: 'test bind' },
+  ];
+  expect(problemsFor('if (!b.isEmpty()) box.union(b); items.union(other);', bound)).toEqual([
+    '<fixture>:1: Set .union(',
+  ]);
+  expect(problemsFor('if (!b.isEmpty()) box.union(b); set.union(other);', bound)).toEqual([
     '<fixture>:1: Set .union(',
   ]);
 });
@@ -491,6 +556,36 @@ it('controls prove the strip and the whole-text patterns', () => {
       fixture: LABELS_CODE_FIXTURE,
       fixed: 19,
       witness: 19,
+    },
+    {
+      name: 'division after a call',
+      fixture: 'const q = getOrigin() / structuredClone(v) / 2;',
+      fixed: 1,
+      witness: 1,
+    },
+    {
+      name: 'division after an index',
+      fixture: 'const r = a[0] / structuredClone(v) / 2;',
+      fixed: 1,
+      witness: 1,
+    },
+    {
+      name: 'control header regex before a division',
+      fixture: 'if (ok) /re/.test(s); getOrigin() / structuredClone(v) / 2;',
+      fixed: 1,
+      witness: 1,
+    },
+    {
+      name: 'array literal in the index argument',
+      fixture: 'const l = rows.at([0, 1][0]);',
+      fixed: 1,
+      witness: 1,
+    },
+    {
+      name: 'deeply nested call in the index argument',
+      fixture: 'const v = rows.at(one(two(three())));',
+      fixed: 1,
+      witness: 1,
     },
   ];
   const failures: string[] = [];
