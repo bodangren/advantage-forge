@@ -87,7 +87,7 @@ Files this track touches:
 
 ## Phase 2: MP3 copies in the wrapper
 
-- [x] T3 Red (efdb0314): Add `tests/sound-set-mp3.test.ts`, and change the stdout assertion of case 1 in
+- [x] T3 Red (efdb0314, bb9a1fd7): Add `tests/sound-set-mp3.test.ts`, and change the stdout assertion of case 1 in
       `tests/sound-set.test.ts` to the new line order. The test uses `spawnSync` with
       `SOUNDS_ROOT=<temp root>`, a fake earshot binary, and a fake ffmpeg binary. Each fake appends
       `process.argv.slice(2).join(' ')` to its own log, as `tests/sound-set.test.ts` does. The five
@@ -123,8 +123,17 @@ Files this track touches:
   - Green result 2026-11-22: after script commit 3e3ed5a5 and file commit debbf930, the command
     `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sound-set.test.ts tests/sound-set-mp3.test.ts tests/sound-set.adversarial.test.ts'`
     exited 0 with 3 files and 91 of 91 tests passing.
+  - Gap-closing lookup fixtures 2026-11-22: test commit bb9a1fd79f8166670f65d303c54c9d67bb769556.
+    New `tests/sound-set-lookup.test.ts` covers Review A F1 and F2 and Review B F1 to F3: a
+    directory `FFMPEG_BIN`, an empty `FFMPEG_BIN` (read as unset, falling back to PATH), no
+    `PATH` ffmpeg with an executable `./ffmpeg` in the working directory, a directory named
+    `ffmpeg` shadowing a valid `PATH` executable, the default `PATH` lookup, a basename
+    `FFMPEG_BIN` resolved through `PATH`, and a blocked `.mp3` target that must keep the stale
+    `.ogg`. Five cases fail against the committed wrapper for the documented reasons; the
+    default-lookup and basename cases pass as lock-in. See the third block of
+    `measure/runs/audio_game_integration_20261014/red-p2.log`.
 
-- [x] T4 Green (debbf930): Add the MP3 step to `scripts/sound-set.mjs` per spec AC2. Add the `FFMPEG_BIN`
+- [~] T4 Green (debbf930): Add the MP3 step to `scripts/sound-set.mjs` per spec AC2. Add the `FFMPEG_BIN`
       lookup, the target preparation for the `.mp3`, and the three failure lines with their exits.
       Then render the real set once, and stage the seven `.mp3` files with explicit paths.
   - Green done-when: the T3 command exits 0 with every test passing. The render command exits 0 and

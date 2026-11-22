@@ -3,8 +3,8 @@ track: audio_game_integration_20261014
 phase: "Phase 2: MP3 copies in the wrapper"
 task: T3 Red
 role: mid-red
-role_base_sha: 16b398b595354f5da754268f1b32c8e864b9312a
-phase_base_sha: 16b398b595354f5da754268f1b32c8e864b9312a
+role_base_sha: 16b398b595354f5da275268f1b32c8e864b9312a
+phase_base_sha: 16b398b595354f5da275268f1b32c8e864b9312a
 head: 8023667ad65be9323864646bf08c63ef31404a54
 commits:
   - 6fbb39bdfb6920ee6e5895a29f0f9547d9fa9a1e test(audio_game_integration): T3 MP3 wrapper cases
@@ -38,7 +38,7 @@ phase: "Phase 2: MP3 copies in the wrapper"
 task: T3 Red (fixture repair, AC2 unchanged)
 role: mid-red
 role_base_sha: 3caf71e5a2e3bb7d74b589b44476b849fb1193ed
-phase_base_sha: 16b398b595354f5da754268f1b32c8e864b9312a
+phase_base_sha: 16b398b595354f5da275268f1b32c8e864b9312a
 head: efdb0314ec42561ec162d46e2d92f61623341c94
 commits:
   - efdb0314ec42561ec162d46e2d92f61623341c94 test(audio_game_integration): T3 fixtures follow the AC2 argv and order
@@ -67,4 +67,39 @@ green_throwaway_check_with_patch_applied:
   note: the first throwaway run caught a real fixture bug (FFMPEG_BIN derived from run()'s root instead of beside the earshot fake, so the dir-symlink case missed the fake); fixed by deriving it from dirname(bin); the rerun gives 90 passed
 task_state: T3 stays [~]; Green marks [x]
 handoff: Green reuses /home/daniebo/.cache/opencode/green-p2-sound-set.patch, runs the real render for case 5, and commits
+END_MEASURE_AGENT_RESULT
+MEASURE_AGENT_RESULT
+track: audio_game_integration_20261014
+phase: "Phase 2: MP3 copies in the wrapper"
+task: T3 Red (gap-closing lookup and preparation fixtures; AC2 unchanged)
+role: mid-red
+role_base_sha: 6804d082dae31b1532b9251dddc974d089fd4895
+phase_base_sha: 16b398b595354f5da275268f1b32c8e864b9312a
+head: bb9a1fd79f8166670f65d303c54c9d67bb769556
+commits:
+  - bb9a1fd79f8166670f65d303c54c9d67bb769556 test(audio_game_integration): T3 gap-closing lookup and preparation cases
+red_kind_note: no red_kind line is declared. The brief asks for red_kind: gap_closing, but the
+  framework reserves that label for a round in which each new test already passes, and the Red
+  command must then pass. Five of the seven new tests fail against the committed wrapper, so this
+  round keeps the failing-first rule: the Red command exits 1 with the failures below.
+tests:
+  - tests/sound-set-lookup.test.ts (new, seven cases for Review A F1/F2 and Review B F1-F3)
+production_untouched: scripts/sound-set.mjs unchanged
+empty_ffmpegbin_reading: AC2 is silent on an empty FFMPEG_BIN. The new test reads empty as unset
+  and falls back to the PATH default, matching Review B candidate fix M7. Flagged here for Green.
+red_command: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sound-set.test.ts tests/sound-set-mp3.test.ts tests/sound-set.adversarial.test.ts tests/sound-set-lookup.test.ts'
+red_exit: 1
+red_summary: 5 failed, 93 passed (98); no syntax or import error; the existing 91 tests still pass
+failures:
+  - lookup directory FFMPEG_BIN: wrapper renders alpha.ogg then reports `sound-set: ffmpeg failed for alpha (tap/soft) with exit null` instead of the missing-binary line (Review A F1)
+  - lookup empty FFMPEG_BIN: exit 1 instead of 0; the wrapper treats the empty value as a path and spawns a directory (Review B F1)
+  - lookup cwd ./ffmpeg: wrapper renders alpha.ogg then reports exit null instead of `sound-set: ffmpeg not found at ffmpeg; install ffmpeg` (Review A F1)
+  - lookup PATH shadow directory: exit 1 instead of 0; the wrapper selects the directory named ffmpeg and fails (Review A F1)
+  - lookup blocked mp3 target: ENOENT reading the stale alpha.ogg; the wrapper deletes it before reporting the preparation line (Review B F2)
+passes_lock_in:
+  - lookup default PATH ffmpeg: exit 0 with .mp3 files (Review B F3; guards the lookup Green must keep)
+  - lookup basename FFMPEG_BIN via PATH: exit 0 with .mp3 files (AC2 allows the override)
+f4_fix: corrected the transposed phase_base_sha (754268 to 275268) on red-p2.log lines 6, 7, 41; those were the only occurrences in the track records
+task_state: T3 keeps its SHA list (efdb0314, bb9a1fd7); T4 reopened to [~]
+handoff: Green hardens the ffmpeg guard (regular file only, empty as unset, PATH-only resolution) and checks both targets before removing either, then reruns the four-file Red command to exit 0
 END_MEASURE_AGENT_RESULT
