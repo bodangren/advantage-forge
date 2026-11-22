@@ -294,6 +294,24 @@ tests/apk3d/no-unpolyfilled-builtins.test.ts'` exits 0: 1 file passed, 2 tests p
     `tsc --noEmit` reports no error in `tests/old-browser/`. `prettier --check` exits 0 on the three
     test files.
 
+- [x] T3r2 Red (6b4f8367): review r2 A-F2, A-F3, C-F2, C-F3 scanner and site-check cases
+  - Red evidence (commit `6b4f8367`, gap-closing round): the final three-file gate exits 0 with 3
+    files and 15 tests passed (log `measure/runs/old_browser_builtins_20261122/red-p2-r2-final.log`;
+    no new control finds a real hit in `src/`). The fail-first run before the scanner and site-check
+    fixes exited 1 with 4 failures: the 5 new scanner control rows (division after a call, division
+    after an index, control-header regex, array-literal and deeply-nested `.at(` arguments), the
+    same-label exclusion control, the per-occurrence breakage proof, and the Storytime comment
+    control (log `measure/runs/old_browser_builtins_20261122/red-p2-r2-failfirst.log`). The scanner
+    now treats a slash after `)`, `]`, an identifier, or a number as division while a slash after a
+    control-header close paren stays a regex, matches balanced `.at(` argument lists, and filters
+    exactly one exclusion hit instance per exclusion. The site check strips comments and strings,
+    requires the exact helper call on each named file:line, mutates each distinct occurrence
+    independently, and proves a commented-out Storytime call does not satisfy it.
+    `node node_modules/typescript/bin/tsc --noEmit` reports no error in the test files.
+    `node_modules/.bin/prettier --check` exits 0 on the three test files. C-F5 note: plan.md
+    already records 36 source files plus one scan test (lines 226, 273); test-strategy.md stays as
+    is per the round brief, so no count was changed there.
+
 ## Phase 3: Browser check
 
 - [ ] T7 Measure: Add `scripts/old-browser-check.mjs` per AC5. Prerequisite, met: task T6k
