@@ -374,6 +374,31 @@ Workbooks does not wait for it.
     (tom row 1175, foot 1184). The three sprout vitest files pass 15/15.
     typecheck-asset reports 0 errors. sprout-sam and teacher GLBs keep byte-identical
     hashes (3b6c6796, ec71c3d8). Log green-faces-tom-r3.log.
+  - Dad face r2 15f5863c (2026-11-22, Faces r2 Step 1): `assets/sprout-dad.ts` only,
+    matched to `docs/sprout-mockups/dad.jpg`. Paint-only face through the existing
+    `paintSkin` hook (arm cut kept, then face): dark round iris with one big
+    catchlight, shorter stronger brow over an exact-footprint hard skin cover
+    (fixed dark brown #2e2013: the shared tint.brow resolves to mid-brown #5a3422,
+    which read auburn against Dad's black hair), a gentle open smile with one
+    rounded white teeth band clipped inside the mouth and tongue, soft nose shade;
+    no freckles (the reference cheeks are smooth) and no facial hair
+    (clean-shaven). The hairline is geometry, not paint: three overlapping swept
+    strands cross the forehead from the side part (a mirror of Mom's fringe),
+    staggered ends, grooves between strands, sideways tips, nothing hanging
+    vertical. One finding: a red chin dot seen at 5x zoom persists with mouth,
+    tongue and teeth paint all off, so it predates this pass (the same
+    shared-smile vertex artifact Mom documented, invisible at sheet scale); the
+    open smile is kept. `./forge all sprout-dad` exits 0 with no warning lines
+    (35,538 textured tris, 0.544 x 1.61 x 0.357 m, GLB 4351196). `./forge check
+    sprout-dad` output byte-identical to the pre-pass baseline (sha b1fcc16f,
+    exit 1 on the three known waived clips). Dad's 25 cut-outs were re-rendered
+    at 1760x1856; cutout-check flags only the four known reach tiptoes (dad row
+    1834, grandma 1833, grandpa 1834, mom row 1833; foot row 1840). The three
+    sprout vitest files pass 15/15. typecheck-asset reports 0 errors. The shared
+    kind is untouched: sprout-sam and teacher GLBs keep byte-identical hashes
+    (3b6c6796, ec71c3d8); the preset pin is unchanged. The sleeve fix ef5be6c4
+    and the listen fix c3307a6b stand (fresh listen.png waist clean). Log
+    green-faces-dad.log.
   - [x] Mom (young mother, medium height, due 11-21). `assets/sprout-mom.ts` ac97d422
     (ADULT proportions; long wavy medium-brown hair past the shoulders, cream cable-knit
     sweater with collar/cuffs/ribbed hem, blue jeans, brown flats, pearl studs; look target
