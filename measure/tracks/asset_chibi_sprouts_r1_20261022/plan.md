@@ -360,6 +360,30 @@ Workbooks does not wait for it.
     Grandma's 25 cut-outs were re-rendered at 1760x1856; cutout-check flags only the four known
     reach tiptoe frames. Log green-p5-adult-base.log.
   - [x] Grandpa (older man, as tall as Mom, due 11-24; feat 95931d6b)
+  - Grandpa listen waist/hem fix 10632c67 (2026-11-22, orchestrator look check:
+    a brown oval through the sweater's right side at the waist in listen, and a
+    skin patch below the hem centre between the legs). A magenta/cyan probe
+    cut-out identified the oval as the trousers: the rigid leg cone ran up to the
+    HIP joint (a sharp cap rim at y 0.945, chest height), and the listen spine
+    roll swung the sweater side off that static rim. The leg cones now start
+    tucked inside the hip mass (hipsY - 0.03, top radius 0.058); the visible leg
+    below the hem is unchanged. The hip mass takes the torso weight bands like
+    the sweater (Ben's jeans recipe) and runs 0.90/0.92 slimmer than the sweater
+    waist for roll clearance. The hem sits 12 mm lower (0.688*TALL), covering the
+    crotch skin wedge. The ef5be6c4 sleeve fix and all other gestures are
+    unchanged. `./forge all sprout-grandpa` exits 0 with no warning lines
+    (38,562 tris, 0.544 x 1.548 x 0.355 m, silhouette unchanged). `./forge check
+    sprout-grandpa` fails only the three
+    waived clips (touch-nose, count-fingers, eat); listen closest 0.5 cm, ground
+    ok. Grandpa's 25 cut-outs were re-rendered at 1760x1856; cutout-check flags
+    only the four known reach tiptoe frames (dad 1834, grandma 1833, grandpa
+    1834, mom 1833; foot row 1840). The three sprout vitest files pass 15/15.
+    typecheck-asset reports 0 errors. In the fresh listen.png the waist side is
+    clean green and the hem dips green between the legs with no skin showing;
+    turn-side, reach, hug-self, and point-up are clean. Note for the
+    orchestrator: Mom's and Dad's listen frames show the same class of fault
+    (blue/jeans oval at the side edge in the roll); their files keep the old
+    rigid construction and are out of scope here. Log green-p5-adult-base.log.
   - [x] Tom (nine-year-old boy, one of the tallest children, due 11-25; feat c402738f, fix 71c48a26)
 - [x] Task: Per-character hand offset in assets/parts/sprout-gestures.ts for bob hair (moves
   the hands of point-up, cheer, picture-sway out for a character that opts in). Red tests
