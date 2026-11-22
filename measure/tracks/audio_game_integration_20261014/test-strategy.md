@@ -6,15 +6,19 @@ Sources: `spec.md` (amendment 2026-11-22), `plan.md`, `metadata.json`, spec-revi
 
 ## Base SHA and capture point
 
-The spec-review r2 audit passed at `6dc8114fb4deb092dec421a487019afd779eacfc`. That is the
-`role_base_sha` for this strategy only. It predates this committed strategy and must not be used as
-`phase_base_sha`.
+HEAD at the start of this strategy revision is
+`3f6a19214994e7ac05a79a8fa7faeded684267b7`. Record it as `role_base_sha` for this revision only.
+Phase 3 was accepted at `aaf678693732984a6adbc78af1157610e8225fd9`. Neither SHA is
+`phase_base_sha`. Both predate this committed strategy.
 
 The orchestrator must capture the immutable `phase_base_sha` with `git rev-parse HEAD` at this
-exact point: immediately after the commit that adds this `test-strategy.md` lands on the branch.
-Run Red, Green, adversarial, and all reviews against that captured SHA. A remediation commit
-invalidates the review artifacts and needs a fresh capture and fresh reviews. Never embed a SHA in
-this file before that commit exists.
+exact point: as the first command after the commit that adds this `test-strategy.md` lands on the
+branch, before any Red command runs. The captured value is the new HEAD of that commit. It cannot
+equal `3f6a1921...` unless the strategy commit itself is HEAD. Write the captured value into the
+run artifacts, never into a file that predates the commit. Run Red, Green, adversarial, and every
+review against that captured SHA. A remediation commit invalidates the review artifacts and needs
+a fresh capture and fresh reviews. Do not embed a SHA that predates the committed strategy in a
+`phase_base_sha` field.
 
 ## Risk classification
 
@@ -261,55 +265,132 @@ sets the map and preloads the game's own events (spec AC9).
 
 ## Phase 4: Preload budget
 
-Risk: `high`. Timing under emulation is noisy, and a zero-row measurement looks like a number.
+Risk: `high`. The gate uses a headless browser, network emulation, and a 1.5 s limit. A zero-row
+measurement can look like a number. A noisy second run can cross the limit.
 
-**Red command (targeted).**
-
-```
-node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/audio-budget.test.ts
-```
-
-**Red done-when.** Exit 1. The README holds only `.ogg` rows, so the 14-file comparison fails,
-and the MP3 total is absent.
-
-**Green gate.** The test command exits 0. The measurement exits 0 and writes
-`out/audio-budget/rune-match.json`:
+**Red command (targeted, exact).**
 
 ```
-HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/audio-budget.mjs --game rune-match'
+HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'rm -f out/audio-budget/rune-match.json && node node_modules/vitest/vitest.mjs run tests/audio-budget.test.ts --maxWorkers=1'
 ```
 
-The JSON holds `bytes`, `files`, and `seconds`. `files` equals the number of mapped events the
-game preloads and is at least 1. `bytes` is at most 100,000. `seconds` is at most 1.5. The plan
-records both numbers and the file count. `out/` stays untracked.
+The `rm -f` removes only an untracked generated artifact. It makes the Red result independent of
+an earlier measurement. Exit 75 from the runner means wait and retry; it is not a test result.
 
-**Closeout addition.** Re-run the measurement once. Report both numbers. A second run may differ;
-record the later number and keep the earlier in the plan note. Do not commit `out/`.
+**Red done-when.** Exit 1 with 4 tests collected and exactly 1 failed. Cases 1 to 3 pass, because
+`sounds/README.md` already holds both format tables and the 14 byte values match `statSync`. Case 4
+fails with `ENOENT: no such file or directory, open 'out/audio-budget/rune-match.json'`. No syntax
+or import error occurs. `node_modules/.bin/prettier --check tests/audio-budget.test.ts` exits 0.
+A Red run with 4 passing tests is a broken Red and fails review.
 
-**The measurement must not be vacuous.** The script must name how the page receives the map. After
-T6b, the game's own `wireChibiSounds` call with the host `soundBase` is one such source. Allowed
-shapes, in order of preference: the game page itself, with the host `soundBase`; a demo page
-under `demo/` that calls `useSoundFiles({ base: '/audio/chibi/', events })` and the game mount; a
-launch-context field; an in-page hook the script sets before the first click. The script then
-asserts before it writes JSON: the audio resource entries are at least 1, each entry URL ends
-`.ogg` or `.mp3`, and the sum of transfer sizes is > 0. A run with zero audio rows must exit
-non-zero. Never write a JSON of zeros.
+**Green command (exact, one heavy call).**
 
-**Fixtures.** Playwright headless Chromium with `--autoplay-policy=no-user-gesture-required` and
-`--mute-audio`. A Playwright click counts as the unlock gesture. CDP
-`Network.emulateNetworkConditions` sets 1.6 Mbit/s down and 300 ms latency before navigation.
-`performance.getEntriesByType('resource')` supplies the audio rows. The unit test reads only
-`sounds/README.md` and `statSync` of the 14 committed files.
+```
+HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/audio-budget.mjs --game rune-match && node node_modules/vitest/vitest.mjs run tests/audio-budget.test.ts --maxWorkers=1'
+```
+
+The measurement runs first. It writes the JSON. The test then reads that JSON. Both halves use one
+runner call. The plan's standalone measurement command is
+`HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/audio-budget.mjs --game rune-match'`.
+
+**Green gate.** The command exits 0. The test reports 4 of 4 passing. The measurement exits 0 and
+writes `out/audio-budget/rune-match.json` with exactly three numeric fields: `bytes`, `files`, and
+`seconds`. `files` is 6: the six mapped entries in the Rune Match wire list (`tap`, `correct` to
+`right`, `wrong`, `victory` to `level-end`, `whoosh`, `spawn` to `pop`). `bytes` is a labeled
+integer, greater than 0 and at most 100,000. It equals 79,319 for Ogg or 62,496 for MP3, the sums
+of the six matching README rows. `seconds` is a labeled number, greater than 0 and at most 1.5.
+The plan records the observed `bytes`, `files`, and `seconds` without rounding that hides a breach.
+`out/` stays untracked.
+
+**Test file contract (four cases).**
+
+| Case | Assertion                                                                                                                                                                                            | Falsification                                                                                     |
+| ---- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| 1    | Parse `sounds/README.md` into the Ogg table and the MP3 table. Each table holds 7 rows. The 14 names equal the seven `sounds/sets/chibi.json` names with each extension.                             | A missing row, a swapped table, or a wrong name fails with the name printed.                      |
+| 2    | For all 14 files, the byte column equals `statSync('sounds/chibi/<name>').size`. Print name, README integer, and stat integer on a mismatch.                                                         | A one-byte drift in any file or in the README fails with both labeled integers.                   |
+| 3    | Sum each format's seven byte integers. Both sums are greater than 0 and at most 100,000. Today they are 90,468 and 71,136.                                                                           | A total parsed from a duration column, or a total above the limit, fails.                         |
+| 4    | Read `out/audio-budget/rune-match.json`. `bytes`, `files`, and `seconds` are labeled numbers. `files` is 6. `bytes` equals one of the six-file README sums. `bytes` <= 100,000 and `seconds` <= 1.5. | The absent JSON fails at Red. A zero count, an unmapped byte total, or a slow run fails at Green. |
+
+Parse each byte column with a row-anchored pattern on the `Bytes` column. Never take a digit from a
+file name, a duration, or a date. Parse the JSON fields by key and validate the numeric type before
+any comparison. Do not use `includes` on a README line.
+
+**Measurement script contract.** `scripts/audio-budget.mjs --game rune-match` does the following,
+in order. No step is optional.
+
+1. Spawn the dev server as a child: `node node_modules/vite/bin/vite.js --port 5199 --strictPort
+--host 127.0.0.1`, with the repo root as cwd. `--strictPort` fails the run if another session
+   holds port 5199. Do not kill a server this script did not start.
+2. Poll `http://127.0.0.1:5199/demo/index.html` until it answers, with a 60 s cap. Fail on a
+   timeout.
+3. Launch Playwright Chromium headless with `--autoplay-policy=no-user-gesture-required` and
+   `--mute-audio`. Open CDP with `Network.enable`, then apply `Network.emulateNetworkConditions`
+   with `offline: false`, `latency: 300`, and `downloadThroughput: Math.round(1.6 * 1024 * 1024 /
+8)` bytes per second (209,715). Set `uploadThroughput: -1` so uploads stay unthrottled. Apply
+   the profile before navigation.
+4. Navigate to `http://127.0.0.1:5199/demo/index.html?renderer=phaser`. Follow the Phase 3 probe
+   exactly: wait for `window.__apk3dReady`, click `[data-game="rune-match"]:not(.soon)`, click
+   `[data-read]`, click `[data-next]`, click `[data-start]`, wait for the Phaser canvas, click the
+   canvas center as the unlock gesture, and press Space to reach the first effect.
+5. Read `performance.getEntriesByType('resource')` in the page. Keep rows whose URL path starts
+   `/demo/audio/chibi/` and ends `.ogg` or `.mp3`, with the file name in the seven set entries.
+   Poll every 200 ms until the row count is unchanged for 5 polls, with a 60 s cap. Read the rows
+   once at the end. Never stub `fetch`, patch the bus, or set a map from the script.
+6. Gate before writing JSON: at least 1 audio row, every row's `encodedBodySize` above 0, every
+   URL an allowed set file, `bytes` at most 100,000, and `seconds` at most 1.5. Also require
+   `bytes` to equal the sum of `statSync` sizes of the same files under
+   `demo/public/audio/chibi/`. On any failed gate, print the row details, write no JSON, and exit
+   non-zero.
+7. Write `out/audio-budget/rune-match.json` with only `bytes`, `files`, and `seconds`. Then stop
+   the Chromium browser and kill the vite child with SIGTERM in a `finally` block. Escalate to
+   SIGKILL after 5 s. Print the JSON to stdout.
+
+**Transfer-byte settlement (Green has no choice).** The Vite dev server sends these files without
+content encoding. Use `encodedBodySize` from each resource-timing row as the transfer byte count.
+With no compression, `encodedBodySize` equals `decodedBodySize` and the on-disk `statSync` size.
+Do not use `transferSize`: Chromium adds response-header bytes to it, so it does not measure the
+audio payload. Do not infer bytes from the README; use the README only as the independent
+cross-check in step 6. A row with `encodedBodySize` 0 fails the run.
+
+**Seconds settlement (Green has no choice).** Set `seconds` to `(max(responseEnd) -
+min(startTime)) / 1000` over the kept audio rows. This is the load window of the preload burst.
+Decode begins after each response ends; the script reaches the first effect before reading rows, so
+a failed decode produces no play and fails the run through the page and console checks. Record the
+limitation: resource timing does not expose a separate decode duration. Do not add navigation time
+or the click-to-canvas delay to `seconds`.
+
+**Fixtures, mocks, and live-behavior proof.** The artifact layer is `sounds/README.md`, the 14
+committed files, and the generated JSON. It proves record and file integrity, not a fetch. The
+browser layer is the real dev server, real headless Chromium, real file requests under the CDP
+profile, and real resource timing. There is no mock in the browser layer. Playwright clicks are
+real input events. Muted headless playback proves requests and timing; it proves no audible
+quality on a device. A human listen stays an owner check.
+
+**Closeout addition.** Re-run the Green command once. Report both runs in the plan and keep both
+numbers. A second run that breaches a threshold fails the phase. Do not commit `out/`. Do not
+change `sounds/README.md` or the 14 files in this task. Run `node measure/tools/generate.mjs
+--check` and `./measure/doctor.sh --structural-only`. The full suite stays intentionally red on
+TD-40; never edit `tests/storytime-book-pictures.test.ts` to make it pass.
+
+**Changed-contract risks.** This task adds one dev script and one test file. It changes no
+production source, no game host, and no audio file. It adds no dependency: Playwright and Vite are
+already installed and the Phase 3 probe used both. It must not change the page flow that T6b
+wired or add a second preload path. The script writes only `out/audio-budget/`. The plan records
+the measured numbers; a claim in the plan must match the JSON byte for byte.
 
 **Anti-pattern coverage.**
 
-| ID  | Defense                                                                                            | Falsification                                               |
-| --- | -------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
-| A3  | `files`, `bytes`, `seconds` are labeled numbers in JSON. `files` >= 1 and equals the mapped count. | A zero `files` or a `bytes` copied from a filename fails.   |
-| A4  | The measure exits non-zero on zero audio rows or zero transfer bytes.                              | A "measured" JSON with no audio rows fails the gate.        |
-| A5  | The plan's numbers must equal the committed JSON values.                                           | A plan claim that differs from the JSON fails review.       |
-| A7  | Resource rows match by exact URL suffix and by the file name. No `\d+` scan of the README.         | A README parse that takes a duration as a byte count fails. |
-| A10 | `out/` is not a generated Measure fact. Still run `generate.mjs --check`.                          | A committed `out/` file fails closeout.                     |
+| ID  | Defense                                                                                                                                                                     | Falsification                                                                        |
+| --- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| A3  | Parse `files`, `bytes`, and `seconds` as labeled numbers by key. Assert `files` is 6 and `bytes` is one of the two six-file README sums.                                    | A digit from a file name, a date, or a duration cannot satisfy the keyed assertions. |
+| A4  | The script exits non-zero on zero audio rows or zero `encodedBodySize`. The test fails at Red on an absent JSON.                                                            | A "measured" JSON of zeros, or a green Red, fails the gate.                          |
+| A5  | The plan records the JSON values. Review runs the Green command and compares the printed JSON to the plan.                                                                  | A plan number that differs from the JSON fails review.                               |
+| A6  | Do not write "budget verified" or "monorepo path confirmed" in any record. The JSON and the Phase 5 PM answer decide those claims.                                          | A budget claim with a red adversarial gate fails acceptance.                         |
+| A7  | Match resource rows by exact path prefix and exact extension. Parse README byte cells with a row-anchored pattern. No bare `\d+` over a whole line.                         | A duration cell or a foreign URL cannot enter the byte sum.                          |
+| A9  | Read only live paths: `sounds/README.md`, `sounds/chibi/`, `demo/public/audio/chibi/`, and `measure/tracks/audio_game_integration_20261014/`. No `measure/archive/**` path. | A test or script path into an archived track fails review.                           |
+| A10 | Run `generate.mjs --check` after the docs edit. Keep `out/` untracked.                                                                                                      | Stale generated facts, or a committed `out/` file, fail closeout.                    |
+| A11 | Record the real status of each Phase 4 review. Do not leave executed review tasks as `[b] deferred:review-execution` once the artifacts exist.                              | A review artifact with every task still blocked fails acceptance.                    |
+| A2  | Not applicable: this phase has no publish gate and no personal data.                                                                                                        | A publish claim would be out of scope and fails review.                              |
 
 ## Phase 5: Hand-off to the PM
 
@@ -399,20 +480,22 @@ tests with exit 0 on 2026-11-21; use that as the baseline shape, not as a curren
 
 ## Review gate applicability
 
-| Phase | Review A correctness | Review B security                                 | Review C UX/API                             | Adversarial    | UX browser review                           |
-| ----- | -------------------- | ------------------------------------------------- | ------------------------------------------- | -------------- | ------------------------------------------- |
-| 1     | Applicable           | Not applicable: data file, no I/O                 | Not applicable: internal data map           | Applicable     | Not applicable: no UI                       |
-| 2     | Applicable           | Applicable, reduced: argv, no shell               | Not applicable: CLI covered by A            | Applicable     | Not applicable: no UI                       |
-| 3     | Applicable           | Applicable: URL build, fetch scope                | Applicable: public API and audible fallback | Applicable     | Applicable: game runtime and audible output |
-| 4     | Applicable           | Applicable, reduced: local server                 | Not applicable: dev tool                    | Applicable     | Applicable, limited: it is the measurement  |
-| 5     | Applicable           | Applicable, reduced: paths, no writes in monorepo | Not applicable: delivery artifact           | Applicable     | Not applicable: no UI                       |
-| 6     | Not applicable       | Not applicable                                    | Not applicable                              | Not applicable | Not applicable                              |
+| Phase | Review A correctness                                     | Review B security                                                             | Review C UX/API                                                  | Adversarial                                                                   | UX browser review                                                                              |
+| ----- | -------------------------------------------------------- | ----------------------------------------------------------------------------- | ---------------------------------------------------------------- | ----------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| 1     | Applicable                                               | Not applicable: data file, no I/O                                             | Not applicable: internal data map                                | Applicable                                                                    | Not applicable: no UI                                                                          |
+| 2     | Applicable                                               | Applicable, reduced: argv, no shell                                           | Not applicable: CLI covered by A                                 | Applicable                                                                    | Not applicable: no UI                                                                          |
+| 3     | Applicable                                               | Applicable: URL build, fetch scope                                            | Applicable: public API and audible fallback                      | Applicable                                                                    | Applicable: game runtime and audible output                                                    |
+| 4     | Applicable: four cases, script gates, JSON-to-plan match | Applicable, reduced: local server, fixed base, seven-name allowlist, no shell | Not applicable: no API change; the page flow is the existing one | Applicable: zero rows, zero bytes, stale JSON, wrong URL, second-run variance | Applicable, limited: the script is the browser measurement; review its JSON, not sound quality |
+| 5     | Applicable                                               | Applicable, reduced: paths, no writes in monorepo                             | Not applicable: delivery artifact                                | Applicable                                                                    | Not applicable: no UI                                                                          |
+| 6     | Not applicable                                           | Not applicable                                                                | Not applicable                                                   | Not applicable                                                                | Not applicable                                                                                 |
 
-Why Phase 3 and Phase 4 get browser review. Phase 3 changes code every game runs, but no game
-sets the map yet. The browser check must load the Phase 4 harness page, click once, and assert one
-audio request with no console error. Phase 4 is a browser measurement; review its recording, not
-its sound quality. Neither review proves audible quality on a real device. State that limit. A
-human listen is an owner check, not a gate for this track.
+Why Phase 3 and Phase 4 get browser review. Phase 3 changes code every game runs. The browser
+check must load the game page, click once, and assert one audio request with no console error. Phase
+4 is a browser measurement. Its script starts its own Vite server on port 5199 and stops it before
+exit. Review the recording: the JSON values, the audio rows, and the gate output. Do not change the
+page flow or add a second preload path to make the measurement pass. Neither review proves audible
+quality on a real device. State that limit. A human listen is an owner check, not a gate for this
+track.
 
 ## Architecture guardrails
 
@@ -430,9 +513,10 @@ human listen is an owner check, not a gate for this track.
 ## Anti-pattern index for this track
 
 A2 (consent-blind publish) is not applicable: this track has no publish gate and no personal
-data. A11 (executed review track left fully blocked) applies at closeout: every review artifact
-must state its real status, and a pass must not be recorded as blocked. A1 and A8 apply only to
-the deferred marker in Phase 6. All other entries appear in the phase tables above with a
-falsification condition. The catalog at `measure/anti-patterns.md` is absent in this repository;
-the entries used here are A1-A11 from the canonical catalog. Record that absence as a
+data. A11 (executed review track left fully blocked) applies at every phase closeout: every
+review artifact must state its real status, and a pass must not be recorded as blocked. A1 and A8
+apply to the deferred marker in Phase 6. All other entries appear in the phase tables above with a
+falsification condition. The local `measure/anti-patterns.md` is absent. The canonical entries were
+read from `../advantage-pr/measure/anti-patterns.md` (A1 to A10) and
+`../reading-advantage-monorepo/measure/anti-patterns.md` (A11). Record the local absence as a
 documentation gap; it does not weaken the per-phase defenses.
