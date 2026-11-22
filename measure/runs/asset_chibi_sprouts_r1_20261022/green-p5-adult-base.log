@@ -797,3 +797,54 @@ implementation_commit: 99fe921ae2ec8a0c0f41bedfe5ac609cf18baacc
 handoff: Phase acceptance should audit assets/sprout-mom.ts at 99fe921a. Check the fresh mom listen, point-up, stretch-up, hug-self, and reach cut-outs under the hem: blue jeans directly below a straight ribbed edge, no pale lobe, no skin. Note the construction lesson for any future long-shirt character: a torso-revolve hem cut below the profile closure leaves a skin-toned lobe; cut above it and back the window with a same-weighted blue liner.
 dispositions: F-mom-hem fixed
 END_MEASURE_AGENT_RESULT
+
+MEASURE_AGENT_RESULT
+phase: Phase 5: The rest of the inventory (after the look check)
+task: Faces r2 and the Muse likeness test (Daniel 2026-11-22), Step 1, character Lily
+role: Green (maker)
+role_base_sha: a1b67c77ad77650bab5fafe6abeb1b141d60
+phase_base_sha: a1b67c77ad77650bab5fafe6abeb1b141d60
+green_head: 7cb58934a5f2dd667a786341f2ad13d9ae92ceea
+
+summary: Lily face detail r2, paint-only, matched to docs/sprout-mockups/lily.jpg.
+New `lilyFace` in assets/sprout-lily.ts runs through `paintSkin` (a Lily-only hook;
+the shared kind paint program in assets/parts/humanoid-kind.ts is untouched, so the
+hero, the NPCs and every other sprout keep byte-identical faces). Changes: dark round
+iris with one big catchlight over the shared amber eye; shorter thinner brow over an
+exact-footprint skin cover; open toothy smile with tongue; soft nose shade; freckles;
+strand grooves combed into the fringe paint. Two revert lessons: a wider skin cover
+left a pale slab above the brows, and a soft cover edge left a pale halo; the shipped
+cover matches the shared brow stencil exactly with a hard edge. Three fixed
+differences vs lily.jpg: (1) closed thin smile to open toothy smile; (2) amber iris
+with small highlights to deep-brown iris with one big catchlight; (3) plain nose to
+shaded nose with freckles. Brows thinned to match the short soft reference brow.
+
+gates:
+1. ./forge all sprout-lily (heavy-run.sh): exit 0, 0 warning lines, 24,912 textured
+   tris, 0.458 x 0.844 x 0.403 m, GLB 3382852 bytes.
+2. ./forge check sprout-lily (heavy-run.sh): output byte-identical to the pre-pass
+   baseline (diff empty); paint touches no geometry so no clearance number moves.
+3. bench/sonnet/sprouts/cutout-gestures-cast.sh lily (heavy-run.sh): all 25 frames
+   re-rendered at 1024x1200; cutout-check on out/chibi-sprouts/r1/week2-7/gestures/
+   flags only the known reach tiptoe set (adventurer, lily row 1176, may, mia, sam,
+   tom; foot row 1184), same set as baseline.
+4. Vitest tests/sprout-base.test.ts tests/sprout-gestures.test.ts
+   tests/sprout-gesture-offset.test.ts: 3 files pass, 15/15 tests.
+5. node scripts/typecheck-asset.mjs sprout-lily: 0 errors (one fix in-round:
+   h.tint.skin!/h.tint.brow! non-null assertions, the sprout-tom.ts convention).
+6. Untouched-asset proof: sprout-sam GLB sha256 3b6c6796...0324c and teacher GLB
+   sha256 ec71c3d8...b354 match the pre-pass hashes; only assets/sprout-lily.ts
+   changed, so no other asset rebuilds and the preset pin is unchanged.
+
+new_files_added_for_reviewer_scope: none (tracked change is assets/sprout-lily.ts
+only; the 25 re-rendered lily cut-out PNGs and out/sprout-lily/* are delivery files).
+No Red test edited. Faces r2 task stays [~]; Lily is the first of seven, one per run.
+implementation_commit: 7cb58934a5f2dd667a786341f2ad13d9ae92ceea
+handoff: Review roles should audit assets/sprout-lily.ts at 7cb58934 (the lilyFace
+function and fringe strand grooves) against docs/sprout-mockups/lily.jpg and the
+textured out/sprout-lily/render.png sheet: dark round iris with big catchlight, short
+thin brow with no pale slab or halo, open toothy smile, nose shade with freckles. The
+maker does not rate its own work: an independent judge still owes the 7.5-bar face
+rating. Next runs repeat Step 1 for Tom, Mom, Dad, Grandma, Grandpa, and the adult
+base (no Muse calls in Step 1).
+END_MEASURE_AGENT_RESULT

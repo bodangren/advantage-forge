@@ -313,6 +313,19 @@ Workbooks does not wait for it.
     exits 0 with 13/13 tests and the three sprout test files pass 15/15. typecheck-asset reports
     0 errors. Lily's 25 cut-outs were re-rendered at 1024x1200; cutout-check flags only the known
     reach tiptoe. Log green-p5-adult-base.log.
+  - Lily face r2 7cb58934 (2026-11-22, Faces r2 Step 1): paint-only `lilyFace` in
+    `assets/sprout-lily.ts` via `paintSkin`, matched to `docs/sprout-mockups/lily.jpg`:
+    dark round iris with one big catchlight over the shared amber eye, shorter thinner
+    brow over an exact-footprint skin cover (a wider cover left a pale slab; a soft edge
+    left a halo; both reverted to an exact hard cover), open toothy smile with tongue,
+    soft nose shade, freckles, strand grooves in the fringe paint. The shared kind is
+    untouched: sprout-sam and teacher GLBs keep byte-identical hashes (3b6c6796, ec71c3d8).
+    `./forge all sprout-lily` exits 0 with no warning lines (24,912 textured tris,
+    0.458 x 0.844 x 0.403 m, GLB 3382852). `./forge check sprout-lily` output
+    byte-identical to the pre-pass baseline. Lily's 25 cut-outs were re-rendered at
+    1024x1200; cutout-check flags only the known reach tiptoe (lily row 1176, foot 1184).
+    The three sprout vitest files pass 15/15. typecheck-asset reports 0 errors. The preset
+    pin is unchanged. Log green-p5-adult-base.log.
   - [x] Mom (young mother, medium height, due 11-21). `assets/sprout-mom.ts` ac97d422
     (ADULT proportions; long wavy medium-brown hair past the shoulders, cream cable-knit
     sweater with collar/cuffs/ribbed hem, blue jeans, brown flats, pearl studs; look target
@@ -443,7 +456,7 @@ Workbooks does not wait for it.
     (blue/jeans oval at the side edge in the roll); their files keep the old
     rigid construction and are out of scope here. Log green-p5-adult-base.log.
   - [x] Tom (nine-year-old boy, one of the tallest children, due 11-25; feat c402738f, fix 71c48a26)
-- [ ] Task: Faces r2 and the Muse likeness test (Daniel 2026-11-22)
+- [~] Task: Faces r2 and the Muse likeness test (Daniel 2026-11-22)
   - Source: Daniel's look reply of 2026-11-22, relayed by the PM: "Can we meet more details, especially
     in the faces? Then check passing the 3D model to Muse as a reference in a scene (the way we will in
     production, right?), then comparing *that* output to the original reference?"
