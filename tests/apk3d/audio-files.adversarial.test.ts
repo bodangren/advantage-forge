@@ -343,7 +343,9 @@ describe('AudioBus file playback, adversarial', () => {
     expect(oscStarts(), 'the replaced event falls back to the synth recipe').toBeGreaterThan(0);
   });
 
-  it('keeps the in-flight fetch URL when the map is swapped mid-flight', async () => {
+  it('rejects the stale decode when the map is swapped mid-flight', async () => {
+    // Spec AC4: the current map decides the file — a fetch or decode that started under the
+    // old mapping must not install its buffer after useSoundFiles() remapped the event.
     oggAnswer = 'probably';
     let resolveFetch: ((value: unknown) => void) | null = null;
     fetchImpl = () =>
@@ -357,11 +359,54 @@ describe('AudioBus file playback, adversarial', () => {
     asFilesBus(bus).useSoundFiles(filesMap({ correct: 'wrong' }));
     resolveFetch!(okResponse());
     await flush();
-    expect(fetchUrls()).toEqual([OGG_URL]);
+    const stale = decodedBuffers[0]!;
+    expect(gameSourceStarts(), 'the stale decode stores nothing to play').toBe(0);
     await bus.play('correct');
     await flush();
-    expect(gameSourceStarts()).toBe(1);
-    expect(fetchMock).toHaveBeenCalledTimes(1);
+    expect(fetchUrls(), 'the next play fetches the new file').toEqual([OGG_URL, `${BASE}wrong.ogg`]);
+    await bus.play('correct');
+    await flush();
+    expect(gameSourceStarts(), 'the next play plays the new file').toBe(1);
+    const stalePlays = FakeAudioContext.instances.reduce(
+      (sum, ctx) => sum + ctx.sources.filter((s) => s.starts > 0 && s.buffer === stale).length,
+      0,
+    );
+    expect(stalePlays, 'no source ever starts the buffer decoded from the old file').toBe(0);
+  });
+
+  it('rejects the stale fetch that resolves after the map changed', async () => {
+    // Spec AC4: the current map decides the file — a fetch that resolves after useSoundFiles()
+    // changed the mapping stores nothing, and exactly one fetch for the new file follows.
+    oggAnswer = 'probably';
+    const bus = new AudioBus();
+    asFilesBus(bus).useSoundFiles(filesMap());
+    bus.unlock();
+    const ctx = FakeAudioContext.instances[0]!;
+    let resolveDecode: ((buffer: FakeBuffer) => void) | null = null;
+    ctx.decodeImpl = () =>
+      new Promise<FakeBuffer>((resolve) => {
+        resolveDecode = resolve;
+      });
+    await bus.play('correct');
+    await flush();
+    expect(decodeCalls(), 'the old fetch reached the pending decode').toBe(1);
+    asFilesBus(bus).useSoundFiles(filesMap({ correct: 'wrong' }));
+    const stale = new FakeBuffer();
+    resolveDecode!(stale);
+    ctx.decodeImpl = async () => new FakeBuffer();
+    await flush();
+    expect(gameSourceStarts(), 'the stale fetch stores nothing to play').toBe(0);
+    await bus.play('correct');
+    await flush();
+    expect(fetchUrls(), 'exactly one fetch for the new file follows').toEqual([OGG_URL, `${BASE}wrong.ogg`]);
+    await bus.play('correct');
+    await flush();
+    expect(gameSourceStarts(), 'the next play plays the new file').toBe(1);
+    const stalePlays = FakeAudioContext.instances.reduce(
+      (sum, c) => sum + c.sources.filter((s) => s.starts > 0 && s.buffer === stale).length,
+      0,
+    );
+    expect(stalePlays, 'no source ever starts the buffer decoded from the old file').toBe(0);
   });
 
   it('clears every event to the synth recipe when the map is cleared after a decode', async () => {
