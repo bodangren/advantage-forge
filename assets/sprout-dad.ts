@@ -1,5 +1,5 @@
-import { mixRgb, rgb, sdf } from '../src/index.js';
-import type { HumanoidProportions } from './parts/humanoid-kind.js';
+import { mixRgb, profile, rgb, sdf } from '../src/index.js';
+import type { HumanoidProportions, HumanoidShape } from './parts/humanoid-kind.js';
 import { ADULT, humanoidAsset } from './parts/humanoid-kind.js';
 import { sproutGestures } from './parts/sprout-gestures.js';
 
@@ -104,6 +104,85 @@ const C = {
 };
 const CHECK = 0.085;
 
+// Dad's face detail (Daniel 2026-11-22: more detail in the faces), matched to
+// docs/sprout-mockups/dad.jpg. Paint only: the shared stencils and every other
+// kind user keep today's look, so their GLBs stay byte-identical.
+const DAD_FACE = {
+  irisDark: '#3a2412',
+  irisLow: '#6e4520',
+  pupil: '#101314',
+  mouth: '#7e2a2e',
+  teeth: '#fbf8f0',
+  tongue: '#e88a9a',
+  noseShade: '#d89a78',
+  brow: '#2e2013',
+};
+
+/** Dad's face over the shared paint: dark round iris, open toothy smile, soft nose shade. */
+const dadFace = (skin: sdf.Shape, h: HumanoidShape): sdf.Shape => {
+  const pair = (s: sdf.Shape) => s.mirror('x', 0);
+  const [EX, EY] = h.joints.EYE;
+  const smileY = DAD.face.smileY;
+  const browY = DAD.face.browY;
+
+  // Dark round iris with a warm low arc, the pupil, and one big catchlight: the
+  // reference eye is deep brown with a single bright spark.
+  const dark = pair(h.onFace(sdf.ellipsoid([0.037, 0.044, 0.07]), EX, EY - 0.006));
+  const low = dark.intersect(sdf.halfSpace([0, 1, 0], EY - 0.008));
+  const pupil = pair(h.onFace(sdf.ellipsoid([0.026, 0.029, 0.07]), EX, EY + 0.004));
+  const big = pair(h.onFace(sdf.sphere(0.012), EX + 0.015, EY + 0.018));
+  const small = pair(h.onFace(sdf.sphere(0.005), EX - 0.013, EY - 0.02));
+
+  // The shared brow band is heavy; cover it with an exact-footprint hard skin
+  // stencil (a wider cover left a pale slab in Lily's rounds, a soft edge a halo)
+  // and paint a shorter, straighter, stronger brow in the same place: the
+  // reference brow is bold and dark, bolder than Mom's.
+  const cover = pair(sdf.extrude(profile.arc(0.1, 0.024, 58, 122), 0.3).at(0.1, browY - 0.1, 0.1));
+  const brow = pair(sdf.extrude(profile.arc(0.075, 0.017, 60, 120), 0.3).at(0.1, browY - 0.1, 0.1));
+
+  // A warm open smile with one rounded white teeth band (no fang corners), as in
+  // the reference: the band is a rounded box clipped to the mouth interior, so
+  // the teeth sit fully inside the mouth.
+  const outline = profile.polygon(
+    (
+      [
+        [-0.052, 0.014],
+        [-0.026, 0.006],
+        [0, 0.004],
+        [0.026, 0.006],
+        [0.052, 0.014],
+        [0.044, -0.012],
+        [0.018, -0.03],
+        [-0.018, -0.03],
+        [-0.044, -0.012],
+      ] as [number, number][]
+    ).map(([x, y]): [number, number] => [x * 0.9, y * 0.9]),
+    { smooth: true },
+  );
+  const mouth = sdf.extrude(outline, 0.3).at(0, smileY, 0.1);
+  const teeth = sdf
+    .box([0.058, 0.013, 0.3], 0.006)
+    .at(0, smileY - 0.006, 0.1)
+    .intersect(mouth);
+  const tongue = mouth.intersect(sdf.ellipsoid([0.022, 0.011, 0.5]).at(0, smileY - 0.024, 0.1));
+
+  // A soft shade under the small nose. The reference cheeks are smooth, so no freckles.
+  const shade = sdf.ellipsoid([0.02, 0.008, 0.05]).at(0, DAD.face.noseY - 0.018, h.faceZ(0, DAD.face.noseY - 0.018));
+
+  return skin
+    .paintWhere(dark, DAD_FACE.irisDark, 0.006)
+    .paintWhere(low, DAD_FACE.irisLow, 0.008)
+    .paintWhere(pupil, DAD_FACE.pupil)
+    .paintWhere(big, '#ffffff')
+    .paintWhere(small, '#ffffff')
+    .paintWhere(cover, h.tint.skin!)
+    .paintWhere(brow, DAD_FACE.brow!)
+    .paintWhere(mouth, DAD_FACE.mouth, 0.001)
+    .paintWhere(tongue, DAD_FACE.tongue, 0.002)
+    .paintWhere(teeth, DAD_FACE.teeth, 0.001)
+    .paintWhere(shade, DAD_FACE.noseShade, 0.01);
+};
+
 export default humanoidAsset({
   name: 'sprout-dad',
   description: 'Dad, a young father: large dark-brown eyes, short black side-part hair, a red-and-black plaid shirt open over a white T-shirt, dark-blue jeans, and brown shoes.',
@@ -130,7 +209,8 @@ export default humanoidAsset({
   // Cut the arm skin inside the long sleeves. The skin upper arm blends into the chest
   // band near the shoulder while the sleeve takes only arm weights, so a raised arm left
   // a skin strip under the sleeve. Keep a short wrist stub inside the cuff; the hand is
-  // its own body below it.
+  // its own body below it. Then Dad's face detail (Daniel 2026-11-22), matched to
+  // docs/sprout-mockups/dad.jpg. Paint only: the shared kind keeps today's look.
   paintSkin(skin, h) {
     const { SHOULDER, ELBOW, WRIST } = h.joints;
     const d: V3 = [WRIST[0] - ELBOW[0], WRIST[1] - ELBOW[1], WRIST[2] - ELBOW[2]];
@@ -141,7 +221,7 @@ export default humanoidAsset({
       sdf.cone(SHOULDER, ELBOW, DAD.limb.upper[0] + 0.022, DAD.limb.upper[1] + 0.022),
       sdf.cone(ELBOW, cutEnd, DAD.limb.fore[0] + 0.022, DAD.limb.fore[1] + 0.022),
     );
-    return skin.subtract(sdf.union(armCut, armCut.mirror('x', 0)));
+    return dadFace(skin.subtract(sdf.union(armCut, armCut.mirror('x', 0))), h);
   },
 
   extra(k, h) {
@@ -207,7 +287,42 @@ export default humanoidAsset({
         ),
       )
       .smoothIntersect(0.02, outerHug);
-    const mass = sdf.smoothUnion(0.03, cap, pair(sweep), pair(sides)).smoothSubtract(0.018, part);
+    // Three overlapping swept strands cross the forehead from the side part to the
+    // right temple (a mirror of Mom's fringe: Dad's part sits on his left). The
+    // roots merge but the tips stay distinct: a small fillet with wide tip spacing
+    // and staggered tip depths, so the hairline reads as separated swept locks
+    // with skin showing between them, not one smooth helmet edge. Nothing hangs
+    // vertical: every tip lands sideways of its root.
+    const fringe = sdf
+      .smoothUnion(
+        0.012,
+        sdf.chain(
+          [
+            [0.06, 0.115, 0.12, 0.023],
+            [-0.02, 0.095, 0.13, 0.024],
+            [-0.1, 0.07, 0.125, 0.022],
+          ],
+          0.02,
+        ),
+        sdf.chain(
+          [
+            [0.1, 0.095, 0.095, 0.024],
+            [0.0, 0.07, 0.115, 0.025],
+            [-0.12, 0.045, 0.105, 0.022],
+          ],
+          0.02,
+        ),
+        sdf.chain(
+          [
+            [0.08, 0.06, 0.095, 0.022],
+            [-0.03, 0.045, 0.11, 0.023],
+            [-0.14, 0.02, 0.09, 0.019],
+          ],
+          0.02,
+        ),
+      )
+      .smoothIntersect(0.02, outerHug);
+    const mass = sdf.smoothUnion(0.03, cap, pair(sweep), pair(sides), fringe).smoothSubtract(0.018, part);
     const hair = mass.smoothSubtract(0.014, faceOpen).bone('head');
     k.body('hair', hair.at(0, HEAD_Y, 0), {
       color: k.tint('hair'),
