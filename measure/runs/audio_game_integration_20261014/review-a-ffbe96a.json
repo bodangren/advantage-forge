@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "role": "review-a",
+  "track": "audio_game_integration_20261014",
+  "phase": "## Phase 1: Event map",
+  "baseline_sha": "1bbdbecbc2368868859722cf5eee0be0c302f82c",
+  "phase_base_sha": "1bbdbecbc2368868859722cf5eee0be0c302f82c",
+  "role_base_sha": "ffbe96a8676f34784017af9c5ee7d8a92e4a2ca1",
+  "audited_head_sha": "ffbe96a8676f34784017af9c5ee7d8a92e4a2ca1",
+  "status": "pass",
+  "summary": "Phase 1 passes. All 58 map rows match AC1, and the eight targeted tests pass. Note validation has one nonblocking gap.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F1 [Nit] review-a: tests/audio-event-map.test.ts:151-169 checks field counts but never validates note contents. Empty notes and four-word notes pass all eight case bodies. Rationale: spec.md:65-66 requires a meaning in three words or less. The committed notes comply. Add nonempty-note and word-count assertions."
+  ],
+  "evidence": [
+    "Provenance: HEAD at role start equals audited_head_sha, ffbe96a8676f34784017af9c5ee7d8a92e4a2ca1. The final provenance check returned the same SHA.",
+    "Reviewed the exact phase_base_sha..audited_head_sha range: 1bbdbecbc2368868859722cf5eee0be0c302f82c..ffbe96a8676f34784017af9c5ee7d8a92e4a2ca1. All six commits concern this track.",
+    "Read measure/index.md, config.json, gates.json, the track spec, the Phase 1 plan, test-strategy.md, and the Red and Green logs.",
+    "Read the routing evidence in strategy-6dc8114.json, spec-review-1bbdbec.json, and spec-review.md. OpenAI differs from both implementation families.",
+    "measure_status reported another track as globally active. The brief explicitly selects audio_game_integration_20261014. The audit changed no task or implementation file.",
+    "Compared docs/sound-event-map.tsv:2-59 against spec.md:75-82 row by row. All 31 mapped sources and all 27 synth sources match.",
+    "The supplementary wrapped validator completed with exit 0. It independently parsed AC1 and checked every row: 58 events, 31 mapped, 27 synth, seven sources, maximum two note words, and 90,468 Ogg bytes.",
+    "docs/sound-event-map.tsv holds the exact header and 58 unique data rows. All seven chibi sources appear. Every committed note is nonempty and has two words.",
+    "Native Vitest gate: one file passed, eight tests passed, exit 0. Duration: 117 ms. This is the required wrapper command.",
+    "Cases 1-7 implement the Phase 1 strategy assertions. Case 3 checks both name directions. Cases 4-5 check every source, not only the expected-list lengths.",
+    "Case 8, tests/audio-event-map.test.ts:240-253, prints src event count: 58, asserts the integer 58, and checks both name directions.",
+    "Independent TypeScript AST inspection scanned all 575 code files under src. Every code file has the .ts extension, so the test's extension filter omits no current code file.",
+    "AST and regex occurrence counts agree: audio.play=368, audio.defineSfx=140, .sfx=29. Their unique-name sets both equal the map's 58 names.",
+    "The scanner reads every src subdirectory and resets each regex per file. Its closing quote prevents prefix-only name matches.",
+    "In-memory case-body replay used TypeScript transpilation, mocked readFileSync, and node:assert equivalents for the used matchers. It wrote no fixture file.",
+    "Replay control: 8 passed. Missing-deliverable fixture: all 8 failed with ENOENT. The map check cannot pass when the deliverable is missing.",
+    "Mutation: changing tap from chibi/tap to chibi/right failed case 4 with wrong source for event: tap. Seven other cases passed.",
+    "Mutation: changing event tap to tap2 failed cases 3, 4, and 8. The source count remained labeled as 58.",
+    "Mutation: replacing tap sound with this note has four passed all eight case bodies. An empty-note mutation also passed. These results support F1.",
+    "The replay is supplementary evidence, not a native Vitest mutation run. The native Vitest command ran against the unchanged checkout.",
+    "A3: assertions use numeric array lengths and set sizes with labeled messages. No bare-digit regex supplies any count.",
+    "A5: plan.md:57-76 agrees with the Red and Green logs and the current Green exit. The plan makes no unsupported all-checks-pass claim.",
+    "The plan cites Red commit 7ecd5832985b61624c34bfcf2d0cb29215e487d2 and Green commit 75e56e8d00b97854c2993bb6ce17699740a11f53. Both commits belong to the audited range.",
+    "git diff --exit-code confirmed that the current map matches the Green commit and the current test matches the Red commit.",
+    "Filesystem metadata confirms seven Ogg files total 90,468 bytes. Their sizes match sounds/README.md:18-24 and the Phase 1 plan claim.",
+    "Prettier passed for the test, plan, and metadata. generate.mjs --check reported four current files. The structural doctor reported no errors.",
+    "Registry review: only this track's marker changed to in_progress. The generated status records 2/11 closed tasks, matching T1 and T2.",
+    "Architecture: the range changes no production TypeScript file, exported symbol, public API, or dependency. Only the new test currently reads the TSV.",
+    "Loaded build-graph guidance and checked tool availability. No graph database exists, and config.json sets graph_mode to not_enabled. No changed exported symbol requires caller analysis. The audit used a read-only AST scan and reference search instead of writing a database.",
+    "The repository lacks measure/anti-patterns.md. This pre-existing documentation gap appears in the strategy. The audit read the canonical catalog.",
+    "The supplied brief limits this phase to Review A. Later runtime, browser, and wiring gates remain outside this Phase 1 verdict.",
+    "Unrelated dirty assets and untracked files were present at role start. The audit left them unchanged.",
+    "Existing worktrees and branches belong to other work. This audit created no worktree or branch and made no commit."
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "git status --short",
+    "git diff --stat 1bbdbecbc2368868859722cf5eee0be0c302f82c..ffbe96a8676f34784017af9c5ee7d8a92e4a2ca1",
+    "git log --format='%h %s' --name-only 1bbdbecb..ffbe96a8",
+    "git diff 1bbdbecbc2368868859722cf5eee0be0c302f82c..ffbe96a8676f34784017af9c5ee7d8a92e4a2ca1 -- docs/sound-event-map.tsv tests/audio-event-map.test.ts measure/tracks/audio_game_integration_20261014/plan.md measure/tracks/audio_game_integration_20261014/metadata.json",
+    "git diff 1bbdbecb..ffbe96a8 -- measure/tracks.md measure/generated/status.md",
+    "git diff --exit-code ffbe96a8 -- docs/sound-event-map.tsv tests/audio-event-map.test.ts measure/tracks/audio_game_integration_20261014",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/audio-event-map.test.ts' => exit 0; 8 passed",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/prettier --check tests/audio-event-map.test.ts measure/tracks/audio_game_integration_20261014/plan.md measure/tracks/audio_game_integration_20261014/metadata.json && node measure/tools/generate.mjs --check && ./measure/doctor.sh --structural-only' => exit 0",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node -e <in-memory test-body replay>' => exit 0; control and five fixtures behaved as recorded in evidence",
+    "node -e <read-only TypeScript AST and regex inspection of all src files> => exit 0; 575 .ts files, 58 unique names, occurrence counts 368/140/29",
+    "python3 -c <read-only stat inspection of seven sounds/chibi/*.ogg files> => exit 0; total 90468 bytes",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node -e <independent AC1 table parser, row validator, and Ogg stat inspection>' => exit 0; spec_rows=58, map_rows=58, mapped=31, synth=27, note_max_words=2, set_entries=7, ogg_bytes=90468",
+    "git diff --exit-code 75e56e8d ffbe96a8 -- docs/sound-event-map.tsv => exit 0",
+    "git diff --exit-code 7ecd5832 ffbe96a8 -- tests/audio-event-map.test.ts => exit 0",
+    "command -v build-graph; build-graph --help; build-graph help scan; build-graph help query",
+    "git worktree list; git branch -a"
+  ],
+  "changed_files": [
+    "measure/runs/audio_game_integration_20261014/review-a-ffbe96a.json",
+    "measure/runs/audio_game_integration_20261014/review-a-ffbe96a.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "openai/gpt-6.1-sol#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "docs/sound-event-map.tsv:2-59 matches every event and source in spec.md:75-82."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "The missing-file, wrong-source, and unknown-name fixtures fail, but the note mutations pass all eight case bodies."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "git diff --stat 1bbdbecb..ffbe96a8 lists only the map, test, track records, logs, and generated status."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "The wrapped native Vitest command exits 0 with eight passed tests, and the independent AST scan confirms all 58 source names."
+    }
+  ]
+}

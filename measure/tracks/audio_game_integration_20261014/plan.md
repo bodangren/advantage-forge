@@ -11,6 +11,7 @@ Files this track touches:
 
 - `docs/sound-event-map.tsv` (new)
 - `tests/audio-event-map.test.ts` (new)
+- `tests/audio-event-map.adversarial.test.ts` (new, the Phase 1 adversarial file, commit 79ae99b5)
 - `scripts/sound-set.mjs` (the MP3 step)
 - `tests/sound-set-mp3.test.ts` (new)
 - `tests/sound-set.test.ts` (the stdout line list)
@@ -73,6 +74,16 @@ Files this track touches:
     exited 0 with 8 passed (8). The file holds one header line and 58 data rows: 31 mapped names
     and 27 `synth` names. A game with every mapped event loads 90,468 `.ogg` bytes across the seven
     set entries.
+  - Adversarial evidence (79ae99b5): `tests/audio-event-map.adversarial.test.ts` adds 21 cases. The
+    Red file checks no note length, so the new file adds that rule. It runs the unchanged Red file
+    with native Vitest against temporary map copies outside the repository. The malformed copies
+    hold an empty map, CRLF bytes, an extra trailing blank line, a duplicate event, and an allowed
+    but wrong source. Note probes reject an empty, a whitespace-only, and a four-word note, and
+    accept one, two, and three words. A syntax-aware scan covers double quotes, whitespace,
+    newlines, comments, receiver prefixes, and filter words. Targeted command:
+    `node node_modules/vitest/vitest.mjs run tests/audio-event-map.test.ts tests/audio-event-map.adversarial.test.ts --maxWorkers=1`
+    exits 0 with 2 files and 29 of 29 tests. Result: `adversarial-p1-ffbe96a.json` reports pass
+    with zero findings.
 
 ## Phase 2: MP3 copies in the wrapper
 
@@ -217,9 +228,11 @@ Files this track touches:
     names it as proposed, and the PM or Monorepo session confirms or replaces it at hand-off. This
     repository holds no copy of that folder, so the plan cannot verify it here.
   - Done-when: `sha256sum -c out/apk-audio-handoff/chibi/MANIFEST.sha256` exits 0. The folder holds
-    14 sound files. `git status --short ../reading-advantage-monorepo` stays empty. The PM answer
-    lands in this plan with its date, and that answer confirms or replaces the proposed path. The
-    done-when does not depend on the monorepo path: the folder contents and the checksums decide it.
+    14 sound files. `git -C ../reading-advantage-monorepo status --short` lists no path that this
+    track names, both before and after the hand-off. Other sessions edit the monorepo, so the
+    status need not be empty. No Forge command writes in the monorepo. The PM answer lands in this
+    plan with its date, and that answer confirms or replaces the proposed path. The done-when does
+    not depend on the monorepo path: the folder contents and the checksums decide it.
   - The MANIFEST `target` rows hold the value `proposed: apps/advantage-games/public/audio/chibi/<file>`.
 
 ## Phase 6: Deferred work

@@ -1,0 +1,203 @@
+{
+  "schema_version": 1,
+  "role": "measure-phase-acceptance",
+  "track": "audio_game_integration_20261014",
+  "phase": "## Phase 1: Event map",
+  "baseline_sha": "1bbdbecbc2368868859722cf5eee0be0c302f82c",
+  "phase_base_sha": "1bbdbecbc2368868859722cf5eee0be0c302f82c",
+  "role_base_sha": "99fe921ae2ec8a0c0f41bedfe5ac609cf18baacc",
+  "audited_head_sha": "79ae99b562acb4050ce710b2a86c81ab23e650c1",
+  "current_head_sha": "5b353043f34a77d26e6bc1bd539c35cec5991e9a",
+  "audited_head_is_current": false,
+  "audited_head_is_ancestor_of_current_head": true,
+  "commits_after_audited_head_touch_audited_paths": false,
+  "commits_after_audited_head": [
+    "99fe921ae2ec8a0c0f41bedfe5ac609cf18baacc fix(chibi_sprouts_r1): Mom hem closes on the jeans (assets/sprout-mom.ts)",
+    "a1f3ffd46a6f694d225b975d4113c71d95ee4045 measure(chibi_sprouts_r1): plan for Mom hem fix (another track's plan.md)",
+    "5b353043f34a77d26e6bc1bd539c35cec5991e9a measure(chibi_sprouts_r1): result block for Mom hem fix (another track's run log)"
+  ],
+  "allowed_test_only_commits": ["79ae99b562acb4050ce710b2a86c81ab23e650c1"],
+  "status": "pass",
+  "summary": "Phase 1 passes acceptance r2 at audited HEAD 79ae99b5, and no blocker remains. The map is unchanged, so AC1 still holds. Both test files pass through the heavy runner: 2 files, 29 of 29 tests. Doctor, the generator check, and prettier exit 0. Review A F1 is closed, because the adversarial file covers the note rule, and r1 F2 is closed, because adversarial testing ran and passed. Five Nits stay nonblocking (F3 to F7).",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F3 [Nit] phase-acceptance: Carried from r1, unchanged. Eight of the 58 map names are sim kinds (`burst`, `freed`, `pick`, `reject`, `shield`, `storm`, `swap`, `tower`) that the hosts translate through `SFX` tables before `audio.play`. Their map rows are dead entries. AC1 counts `.sfx` names, so AC1 holds. The adversarial result reaches the same conclusion. Owner: user or build session. Action: none for Phase 1.",
+    "F4 [Nit] phase-acceptance: Carried from r1 and grown. These records are untracked: adversarial-p1-ffbe96a.json and .log, review-a-ffbe96a.json and .log, spec-review-1bbdbec.json and .log, phase-acceptance-p1-ffbe96a.json and .log, and the two files of this role. All JSON files pass prettier. Owner: orchestrator. Action: commit them with explicit paths.",
+    "F5 [Nit] phase-acceptance: Carried from r1, unchanged. The command at plan.md:220, `git status --short ../reading-advantage-monorepo`, exits 128 in this repository. The `git -C ../reading-advantage-monorepo status --short` form lists 23 entries today from other sessions. So `stays empty` (plan.md:220, spec.md:182-183) cannot hold as worded in Phase 5. Owner: orchestrator. Action: use the `git -C` form and compare the status before and after the hand-off.",
+    "F6 [Nit] phase-acceptance: plan.md:10-34 (Files this track touches), plan.md:237, and spec.md:194 do not name tests/audio-event-map.adversarial.test.ts. The AC8 command therefore omits it, while the project suite runs it. Rationale: the adversarial role adds this file by workflow, so it is a planned kind of extra, not a defect. Owner: orchestrator. Action: add the path to the file list and the gate command at closeout, or leave it.",
+    "F7 [Nit] phase-acceptance: Two design notes on tests/audio-event-map.adversarial.test.ts. (a) It writes its fixtures to ~/.cache/opencode (line 57), as tests/sound-set.adversarial.test.ts does, while 26 other test files use os.tmpdir(). (b) It imports the classic TypeScript API (line 14). The TypeScript 7 deferral (measure/archive/chore_dependency_refresh_20261121/plan.md:30,54) names only tests/song-still-hook.test.ts, so a second file now needs the update. Owner: orchestrator. Action: none for Phase 1. Name the second consumer when the TypeScript 7 upgrade starts."
+  ],
+  "evidence": [
+    "Provenance: `git rev-parse HEAD` printed 99fe921ae2ec8a0c0f41bedfe5ac609cf18baacc at role start, so role_base_sha is that SHA. The audited phase HEAD 79ae99b5 is an ancestor of it. HEAD moved to 5b353043 during the run, through two more commits of the chibi_sprouts track (a1f3ffd4 and 5b353043), and it was still 5b353043 at the end.",
+    "Binding: `git diff --name-status ffbe96a8 79ae99b5` lists only `A tests/audio-event-map.adversarial.test.ts`, a test file, so the test-only exemption covers Review A (result at ffbe96a8). The named test-only commit is 79ae99b562acb4050ce710b2a86c81ab23e650c1. `git diff --exit-code ffbe96a8 79ae99b5 -- measure` exits 0, and plan.md holds no T2a text.",
+    "Out-of-scope commits: 99fe921a (assets/sprout-mom.ts), a1f3ffd4, and 5b353043 belong to asset_chibi_sprouts_r1. `git diff --exit-code 79ae99b5 HEAD -- src tests docs sounds scripts demo` exits 0, and so does the same command for this track's folders, measure/tracks.md, and measure/generated.",
+    "Phase range 1bbdbecb..79ae99b5 holds 7 commits, all of this track. They touch 9 paths: the map, the original test, the adversarial test, the Red and Green logs, plan.md, metadata.json, measure/tracks.md (one marker), and measure/generated/status.md.",
+    "F2 closed: adversarial-p1-ffbe96a.json reports status pass with zero findings. Its audited_head_sha is 99fe921a and its pre_adversarial_head_sha is ffbe96a8. The result differs from my audited HEAD only by the other track's commit 99fe921a, which touches no audited path. The framework check `measure_interphase_checks.py audit-result --role adversarial-testing` prints `PASS: audit result is valid`. The log holds the full block with all 10 fields. The result for review-a passes the same check.",
+    "Adversarial commit: 79ae99b5 adds only tests/audio-event-map.adversarial.test.ts. At 79ae99b5 the map equals the Green commit 75e56e8d, and tests/audio-event-map.test.ts equals the Red commit 7ecd5832, byte for byte.",
+    "Targeted tests: `HEAVY_MIN_AVAIL_MB=1500 bash heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/audio-event-map.test.ts tests/audio-event-map.adversarial.test.ts --reporter=verbose'` exits 0 with `Test Files 2 passed (2)` and `Tests 29 passed (29)` in 3.30 s. The 8 original and 21 adversarial cases all pass. The command waited more than 10 minutes on the shared heavy lock behind a Workbooks vitest job. That wait is an infrastructure delay, not a test result.",
+    "Run output: the adversarial scan printed `adversarial src event count: 58; play: 368; defineSfx: 140; sfx: 29; double-quoted: 0; spaced: 0`, and the original case printed `src event count: 58`. Each native fixture case took 351 to 398 ms, against a 20 s child timeout.",
+    "F1 closed (Review A F1): assertNotes (tests/audio-event-map.adversarial.test.ts:27-38) requires a nonempty note of at most three words. Line 156 applies it to the committed map. Lines 160-174 prove that it rejects the empty, whitespace-only, and four-word notes and accepts one to three words, including extra inner spaces.",
+    "Independent note check: my own regex form of the rule agrees with the test rule on 17 inputs, with 0 disagreements. All 58 committed notes pass, and each of the three mutations rejects exactly the `tap` row.",
+    "Test meaning: lines 176-220 run the unchanged Red file with native Vitest against map copies. The unchanged copy passes (a positive control). A header-only map fails all 8 cases, CRLF fails 8 cases with `CRLF check:`, a trailing blank line fails with `line count: 60`, a duplicate name fails with `duplicate event: pick`, and an allowed but wrong source fails only the source case. A harness that always passes or always fails cannot satisfy these cases.",
+    "Syntax-aware scan: lines 111-153 and 222-278 find the three call forms by syntax. They cover single and double quotes, spacing, line breaks, and the receivers `audio`, `this.audio`, and any `.sfx`. They ignore comments, strings, other receivers, and nonliteral arguments. The live-source case asserts 58 names and equality with the map in both directions. A line with a filter word keeps its name (A7).",
+    "Case count and A3: the adversarial file holds 21 cases (1 + 3 + 4 + 1 + 1 + 1 + 1 + 1 + 1 + 4 + 1 + 1 + 1), so the two files hold 8 + 21 = 29 tests, as the run shows. Every count is a labeled integer (58, 8), and no bare-digit regex counts anything.",
+    "Gates at HEAD 5b353043: `./measure/doctor.sh --structural-only` exits 0. `node measure/tools/generate.mjs --check` exits 0 (4 files current). `node_modules/.bin/prettier --check` exits 0 on both test files, plan.md, and metadata.json, and on the four untracked JSON records. `git diff --check 1bbdbecb 79ae99b5` exits 0.",
+    "A5 and A6: plan.md, metadata.json, measure/tracks.md, and measure/generated are unchanged since r1 (`git diff --exit-code ffbe96a8 79ae99b5 -- measure` exits 0), so the r1 checks stand. The plan SHAs 7ecd5832 and 75e56e8d resolve in range, its exit-code claims held, and the 90468-byte claim equals the file sizes. This delta changes no contract test, Measure filter, or registry line, so A3, A4, A6, and A7 are not triggered by it.",
+    "Aggregate suite not re-run in r2. The adversarial result reports exit 0 with 213 files and 3262 tests, and 3241 tests at ffbe96a8 (my r1 run) plus the 21 new cases equals 3262. My targeted run covers both Phase 1 files.",
+    "Post-run integrity: `~/.cache/opencode` holds 0 audio-map-adversarial directories after the run. `src/` still holds 621 files, and node_modules/vitest is present, so removing the symlinked fixtures deleted nothing in the repository. The tracked tree has no modification, and nothing is staged. The untracked docs mockup images pre-date this phase.",
+    "Independent review of the adversarial test: Review A ran before the test existed. This acceptance read the whole file (279 lines) and is its first review by another family. Its author is OpenAI, and this role is Anthropic.",
+    "Route parity: Red ran on Muse, Green on Hunyuan (a recorded substitution), Review A and adversarial testing on OpenAI, and this acceptance on Anthropic. Each auditor differs from the family it audits, Red and Green differ, and the acceptance family differs from Red.",
+    "Working tree: existing worktrees (advantage-forge-release, advantage-forge-shelf-sync) and branches (shelf-sync-20261030, wip/oct-skill-docs-20261023) belong to other work. I created none. The monorepo status lists 23 entries from other sessions, and I wrote nothing there.",
+    "Not verified by this role: audible quality (not applicable to a data file), an aggregate re-run (see above), and a live Red replay. The Red state rests on commit content and test structure, as in r1. measure/anti-patterns.md is absent, a gap that test-strategy.md:435-437 already records."
+  ],
+  "commands": [
+    "git rev-parse HEAD (start) => 99fe921ae2ec8a0c0f41bedfe5ac609cf18baacc; (end) => 5b353043f34a77d26e6bc1bd539c35cec5991e9a",
+    "git log --format='%H %s' --name-status 79ae99b5..HEAD; git diff --name-status ffbe96a8 79ae99b5; git diff --name-status 1bbdbecb 79ae99b5; git rev-list --count 1bbdbecb..79ae99b5 => 7",
+    "git diff --exit-code 79ae99b5 HEAD -- src tests docs sounds scripts demo measure/tracks/audio_game_integration_20261014 measure/runs/audio_game_integration_20261014 measure/tracks.md measure/generated => exit 0",
+    "git diff --exit-code 75e56e8d 79ae99b5 -- docs/sound-event-map.tsv; git diff --exit-code 7ecd5832 79ae99b5 -- tests/audio-event-map.test.ts; git diff --exit-code ffbe96a8 79ae99b5 -- measure => exit 0, 0, 0",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/audio-event-map.test.ts tests/audio-event-map.adversarial.test.ts --reporter=verbose' => exit 0; 2 files, 29 tests passed in 3.30 s",
+    "./measure/doctor.sh --structural-only => exit 0; node measure/tools/generate.mjs --check => exit 0",
+    "node_modules/.bin/prettier --check tests/audio-event-map.test.ts tests/audio-event-map.adversarial.test.ts measure/tracks/audio_game_integration_20261014/plan.md measure/tracks/audio_game_integration_20261014/metadata.json => exit 0",
+    "node_modules/.bin/prettier --check on review-a-ffbe96a.json, spec-review-1bbdbec.json, adversarial-p1-ffbe96a.json, phase-acceptance-p1-ffbe96a.json => exit 0; git diff --check 1bbdbecb 79ae99b5 => exit 0",
+    "python3 measure_interphase_checks.py audit-result --role adversarial-testing --file adversarial-p1-ffbe96a.json => PASS; same for review-a-ffbe96a.json => PASS",
+    "python3 -I (compare the test note rule with my regex rule on 17 inputs, the real map, and three mutations) => 0 disagreements",
+    "grep -rln \"from 'typescript'\" tests; grep -rn mkdtempSync tests; grep -n song-still-hook measure/archive/chore_dependency_refresh_20261121/plan.md => 2 files import the classic API; 26 files use os.tmpdir(); plan.md:30,54 name one consumer",
+    "ls ~/.cache/opencode | grep -c audio-map-adversarial (before and after the run) => 0, 0; find src -type f | wc -l => 621; git status --short src tests docs sounds scripts demo => only pre-existing untracked mockups",
+    "git -C ../reading-advantage-monorepo status --short | wc -l => 23; git worktree list; git branch -a",
+    "python3 measure_interphase_checks.py role-gate --repo . --role phase-acceptance --track audio_game_integration_20261014 --phase 'Phase 1: Event map' --baseline 1bbdbecbc2368868859722cf5eee0be0c302f82c --result-file phase-acceptance-p1-79ae99b.json --log-file phase-acceptance-p1-79ae99b.log => PASS"
+  ],
+  "changed_files": [
+    "measure/runs/audio_game_integration_20261014/phase-acceptance-p1-79ae99b.json",
+    "measure/runs/audio_game_integration_20261014/phase-acceptance-p1-79ae99b.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "claude-code/claude-sonnet-5-5#max",
+  "ac_results": [
+    {
+      "ac": "AC1",
+      "result": "pass",
+      "basis": "The map is unchanged since 75e56e8d (byte equal at 79ae99b5), and the original eight cases pass with it."
+    },
+    {
+      "ac": "AC1 note rule (Review A F1)",
+      "result": "pass",
+      "basis": "tests/audio-event-map.adversarial.test.ts:27-38 and 156-174 enforce a nonempty note of at most three words, and they reject three mutations."
+    },
+    {
+      "ac": "AC8 (Phase 1 part)",
+      "result": "pass",
+      "basis": "The targeted run of both files, the generator check, the structural doctor, and prettier on the touched text files all exit 0."
+    },
+    {
+      "ac": "T1 Red",
+      "result": "pass",
+      "basis": "Commit 7ecd5832 still equals tests/audio-event-map.test.ts at 79ae99b5, and the adversarial run proves the file fails on malformed maps."
+    },
+    {
+      "ac": "T2 Green",
+      "result": "pass",
+      "basis": "Commit 75e56e8d still equals docs/sound-event-map.tsv at 79ae99b5, and the T1 command passes 8 of 8."
+    },
+    {
+      "ac": "Adversarial gate",
+      "result": "pass",
+      "basis": "adversarial-p1-ffbe96a.json reports pass with zero findings, and the framework audit-result check accepts it."
+    }
+  ],
+  "prerequisite_results": [
+    {
+      "role": "review-a",
+      "file": "measure/runs/audio_game_integration_20261014/review-a-ffbe96a.json",
+      "status": "pass",
+      "audited_head_sha": "ffbe96a8676f34784017af9c5ee7d8a92e4a2ca1",
+      "targets_audited_head": false,
+      "covered_by": "test-only exemption (79ae99b5)"
+    },
+    {
+      "role": "adversarial-testing",
+      "file": "measure/runs/audio_game_integration_20261014/adversarial-p1-ffbe96a.json",
+      "status": "pass",
+      "audited_head_sha": "99fe921ae2ec8a0c0f41bedfe5ac609cf18baacc",
+      "targets_audited_head": false,
+      "covered_by": "later HEAD whose only extra commit (99fe921a) belongs to another track; the audited paths equal 79ae99b5"
+    },
+    {
+      "role": "spec-review",
+      "file": "measure/runs/audio_game_integration_20261014/spec-review-1bbdbec.json",
+      "status": "pass",
+      "audited_head_sha": "1bbdbecbc2368868859722cf5eee0be0c302f82c",
+      "targets_audited_head": false,
+      "covered_by": "the phase base commit; track setup only"
+    }
+  ],
+  "dispositions_of_prior_findings": [
+    {
+      "finding": "r1 F1 (review-a F1, note rule untested)",
+      "disposition": "closed",
+      "reason": "The adversarial file covers the note rule and rejects three mutations."
+    },
+    {
+      "finding": "r1 F2 (adversarial testing missing)",
+      "disposition": "closed",
+      "reason": "Adversarial testing ran and passed, and its result is bound as a prerequisite."
+    },
+    {
+      "finding": "r1 F3",
+      "disposition": "carried",
+      "reason": "Unchanged. See F3."
+    },
+    {
+      "finding": "r1 F4",
+      "disposition": "carried",
+      "reason": "Grown by the adversarial and r1 acceptance records. See F4."
+    },
+    {
+      "finding": "r1 F5",
+      "disposition": "carried",
+      "reason": "Unchanged. See F5."
+    }
+  ],
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "docs/sound-event-map.tsv equals the Green commit 75e56e8d, and both test files pass 29 of 29 (heavy-run exit 0)."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 5,
+      "evidence": "tests/audio-event-map.adversarial.test.ts:160-220 prove the note rule and the original cases with native mutation runs and an unchanged-map positive control."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 4,
+      "evidence": "Commit 79ae99b5 adds only the adversarial test, which plan.md:10-34 does not list (F6)."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "The 29-test run, four gate exits, and the commit-scope diffs each carry a command result."
+    }
+  ],
+  "reviewer_ratings": [
+    {
+      "reviewer_role": "review-a",
+      "reviewer_route": "openai/gpt-6.1-sol#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "Its F1 note gap is now closed by the adversarial file, and its counts of 368, 140, and 29 match the live scan output in my run."
+    },
+    {
+      "reviewer_role": "adversarial",
+      "reviewer_route": "openai/gpt-6.1-sol#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "Its commit adds only the test, its 21 cases and the 29-test total match my run, and its sim-kind conclusion matches my F3."
+    }
+  ]
+}

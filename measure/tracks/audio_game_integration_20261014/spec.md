@@ -179,8 +179,10 @@ prefix names the path as proposed. `README.md` names the same proposed target an
 AC4. It also cites the model pack row in `docs/apk-port.md`, line 238:
 `apps/advantage-games/public/packs/`. The folder goes to the PM, and the PM routes it to the
 Monorepo session. The PM or Monorepo session confirms or replaces the proposed path at hand-off. No
-acceptance criterion depends on that path: the folder contents, the checksums, and the empty
-monorepo status decide AC6. Forge writes nothing in the monorepo.
+acceptance criterion depends on that path: the folder contents and the checksums decide AC6. A
+`git -C ../reading-advantage-monorepo status --short` run lists no path that this track names, both
+before and after the hand-off. Other sessions edit the monorepo, so that status need not be empty.
+Forge writes nothing in the monorepo.
 
 ### AC7: Credits
 
@@ -195,6 +197,11 @@ These commands pass:
 - `node measure/tools/generate.mjs --check`
 - `./measure/doctor.sh --structural-only`
 - `node_modules/.bin/prettier --check` on each touched text file
+
+`tests/audio-event-map.adversarial.test.ts` is the Phase 1 adversarial test file, added by commit
+79ae99b562acb4050ce710b2a86c81ab23e650c1. It runs with the Phase 1 command
+`node node_modules/vitest/vitest.mjs run tests/audio-event-map.test.ts tests/audio-event-map.adversarial.test.ts --maxWorkers=1`,
+which exits 0 with 2 files and 29 of 29 tests. The gate command above does not list it.
 
 ### AC9: Game wiring
 

@@ -1,0 +1,160 @@
+{
+  "schema_version": 1,
+  "role": "measure-phase-acceptance",
+  "track": "audio_game_integration_20261014",
+  "phase": "## Phase 1: Event map",
+  "baseline_sha": "1bbdbecbc2368868859722cf5eee0be0c302f82c",
+  "phase_base_sha": "1bbdbecbc2368868859722cf5eee0be0c302f82c",
+  "role_base_sha": "ffbe96a8676f34784017af9c5ee7d8a92e4a2ca1",
+  "audited_head_sha": "ffbe96a8676f34784017af9c5ee7d8a92e4a2ca1",
+  "current_head_sha": "ffbe96a8676f34784017af9c5ee7d8a92e4a2ca1",
+  "audited_head_is_current": true,
+  "allowed_test_only_commits": [],
+  "status": "pass",
+  "summary": "Phase 1 passes acceptance at HEAD ffbe96a8. AC1 holds: docs/sound-event-map.tsv matches all 58 events and sources of the spec table. The targeted test exits 0 with 8 of 8 passing, and doctor, the generator check, and prettier exit 0. The plan claims, the commit SHAs, and the byte count match reality. Review A note F1 is carried, not fixed. One Major finding needs an orchestrator decision: test-strategy.md marks adversarial testing applicable for Phase 1, and no adversarial result exists.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F1 [Nit] phase-acceptance: Carries review-a F1 (tests/audio-event-map.test.ts:151-169): no case reads the `note` field. Disposition: carried, not fixed in Phase 1. Rationale: AC1 (spec.md:65-66) sets the note rule, but plan.md:41-52 and test-strategy.md:87-96 list no note case. The committed notes comply: 58 of 58 hold two words, and none is empty. No code reads `note`, because T6a case 1 and T6b use only the `event` and `source` fields. A fix needs a gap-closing Red round and a new HEAD. Owner: orchestrator. Action: record the carry in the plan, or add a nonempty-note check and a three-word limit in a later test-only commit.",
+    "F2 [Major] phase-acceptance: The prerequisite set conflicts with test-strategy.md. Line 404 marks adversarial testing Applicable for Phase 1, and measure/runs/audio_game_integration_20261014/ holds no adversarial-testing result. The brief says adversarial testing starts at Phase 3. Rationale: test-strategy.md:3 and plan.md:8 say Lane: light, and the PM light-lane rule runs no adversarial role (measure/archive/asset_storytime_l2_family_words_20261107/plan.md:34). But metadata.json holds no `lane` key, and no committed record waives the gate. This acceptance rests on Review A and on my own re-checks, not on an adversarial result. Owner: orchestrator. Action: run adversarial testing for Phase 1, or obtain a PM waiver and correct the table at test-strategy.md:402-409. Phases 2, 4, and 5 raise the same question.",
+    "F3 [Nit] phase-acceptance: Eight of the 58 map names are sim kinds, not bus names: `burst`, `freed`, `pick`, `reject`, `shield`, `storm`, `swap`, and `tower`. They occur only in `.sfx('<name>')` calls of the six src/games/*/view/driver.ts files. The hosts translate them through their `SFX` tables before `audio.play`: `pick` becomes `tap`, and `storm` becomes `spawn`. So the bus never receives these eight names, and their map rows are dead entries. The `storm` and `tower` rows say `synth`, but the games play `spawn` (`chibi/pop`) for them. Rationale: AC1 counts `.sfx` names, so AC1 holds, and every literal inside a non-literal `audio.play(...)` call is in the map. Owner: user or build session. Action: none for Phase 1. T6b already passes the `SFX` values (plan.md:188-189). The spec author may add one sentence to the Context.",
+    "F4 [Nit] phase-acceptance: These records are untracked at HEAD: review-a-ffbe96a.json and .log, spec-review-1bbdbec.json and .log, and the two files of this role. `git ls-files` lists none of them. Both reviewer JSON files pass prettier. Owner: orchestrator. Action: commit them with explicit paths.",
+    "F5 [Nit] phase-acceptance: Forward note for Phase 5 (T8, spec AC6). The command at plan.md:220, `git status --short ../reading-advantage-monorepo`, exits 128 with `outside repository` when it runs in this repository. The strategy form `git -C ../reading-advantage-monorepo status --short` runs, and it lists 23 entries today from other sessions, for example 3 modified next-env.d.ts files. So `stays empty` (plan.md:220, spec.md:182-183) cannot hold as worded. Owner: orchestrator. Action: use the `git -C` form, and compare the status before and after the hand-off, or word the check as `no change caused by Forge`."
+  ],
+  "evidence": [
+    "Provenance: `git rev-parse HEAD` printed ffbe96a8676f34784017af9c5ee7d8a92e4a2ca1 at the start. It equals role_base_sha and audited_head_sha. phase_base_sha 1bbdbecb is an ancestor of HEAD.",
+    "Phase range 1bbdbecb..ffbe96a8 holds 6 commits, all of this track: 7ecd5832 (test), 77d960de and 09d7e21d (Red records), 75e56e8d (map), 498c587c and ffbe96a8 (Green records and status). No commit of another track sits in the range.",
+    "Prerequisites: review-a-ffbe96a.json reports status pass and audited_head_sha ffbe96a8, the current HEAD, so no test-only exemption applies. spec-review-1bbdbec.json reports pass at 1bbdbecb, the phase base. The mid-red and jr-green logs agree with the git history.",
+    "AC1 table check: a python3 -I script parsed the table at spec.md:73-82 and compared it with the map. Result: 58 events, 31 mapped and 27 synth, 0 missing, 0 extra, 0 wrong source, 0 duplicate in the table. The seven set entries equal the names in sounds/sets/chibi.json, and each appears in the map.",
+    "AC1 structure check: docs/sound-event-map.tsv holds 1561 bytes and 59 lines with LF endings only. Line 1 equals `event<TAB>source<TAB>note`. There is no blank line, no comment line, no CR byte, and no non-ASCII byte. Each row has 3 nonempty fields, 58 events are unique, and every note holds two words (histogram {2: 58}). Source counts: tap 4, right 3, wrong 4, star 7, pop 5, whoosh 7, level-end 1, synth 27.",
+    "Byte identity: `git diff --exit-code 75e56e8d ffbe96a8 -- docs/sound-event-map.tsv` exits 0, and the same command for tests/audio-event-map.test.ts against 7ecd5832 exits 0. Red added only the test (255 lines), and Green added only the map (59 lines). Green did not edit the test.",
+    "Targeted test: `HEAVY_MIN_AVAIL_MB=1500 bash heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/audio-event-map.test.ts'` exits 0 with `Test Files 1 passed (1)` and `Tests 8 passed (8)` in 118 ms.",
+    "Aggregate suite: `heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts'` (the PROJECT_TESTS command of measure/gates.json) exits 0 with 212 files and 3241 tests passed in 70.07 s. The counts equal the claim in green-p1.log. No stale intentional-red test sits in the suite at HEAD.",
+    "Red state: at 7ecd5832 the map is absent (`git cat-file -e 7ecd5832:docs/sound-event-map.tsv` exits 128). Every case body calls readContentLines() or readRows() first (tests/audio-event-map.test.ts:140,152,173,186,196,205,220,241), so all 8 cases fail with ENOENT. red-p1.log records exit 1 with 8 failed. The test file holds no skip, only, todo, or conditional guard.",
+    "A3: every count is a labeled integer in an assertion message (data row count, event count, mapped row count, synth row count, src event count). The test holds no bare-digit regex (my scan found none).",
+    "Case 8 and A7: the test reads every src/ subfolder with three exact patterns that end at the closing quote. My scan found 368 audio.play, 140 audio.defineSfx, and 29 .sfx occurrences, with 49, 41, and 12 unique names. The union is 58 names and equals the map. Review A reports the same three counts.",
+    "A7 filter check: src/ holds 575 .ts files, and its other files are css, jpg, json, png, txt, and woff2 data. The `.ts` filter drops no code file. A grep found 0 audio.play, .sfx, or .defineSfx calls with a double-quoted or template-literal name. Every name has a call site under src/games/.",
+    "Non-literal calls: 28 audio.play(...) calls pass a ternary or an SFX table value. The literals inside them are correct, fizzle, roar, spawn, and wrong, plus the SFX values tap, correct, wrong, heal, hit, defeat, victory, and spawn. All are in the map. `dragon-fire` is a condition literal, not an event name. See F3 for the eight sim kinds.",
+    "A5 plan text: plan.md:57-75 cites commits 7ecd5832985b61624c34bfcf2d0cb29215e487d2 and 75e56e8d00b97854c2993bb6ce17699740a11f53. Both resolve, both lie inside the range, and the subjects match. The claims `exited 0 with 8 passed (8)`, `31 mapped and 27 synth`, and 58 rows match my reruns.",
+    "Byte claim: the seven sounds/chibi/*.ogg files total 90468 bytes (5534, 24579, 10800, 11149, 7639, 7730, 23037). This equals the plan claim at plan.md:74-75 and the byte column of sounds/README.md:18-24.",
+    "Task markers: plan.md:38 and :63 carry [x] with the short SHAs 7ecd5832 and 75e56e8d. The validator count for the phase is 2 tasks, 2 complete, 0 incomplete. Metadata, plan.md:3, measure/tracks.md:70, and measure/generated/status.md agree on in_progress and 2/11.",
+    "A6: the phase diff changes measure/tracks.md at line 70 only, from [ ] to [~] for this track. The diff adds no `was resolved` claim. A3, A4, and A7 framework surfaces (contract tests, Measure filters) did not change.",
+    "Gates: `./measure/doctor.sh --structural-only` exits 0 with no structural errors. `node measure/tools/generate.mjs --check` exits 0 (4 files current). `node_modules/.bin/prettier --check` on tests/audio-event-map.test.ts, plan.md, and metadata.json exits 0. The .tsv has no prettier parser and is excluded, as test-strategy.md:78-79 states.",
+    "Route parity: Red ran on Muse, Green on Hunyuan (a substitution the brief records), Review A on OpenAI, and this acceptance on Anthropic. The acceptance family differs from the Red family, and Red and Green differ.",
+    "Working tree: the only tracked modification is assets/sprout-mom.ts (another track). The audited paths match HEAD, and my runs changed no tracked file. Existing worktrees (advantage-forge-release, advantage-forge-shelf-sync) and branches (shelf-sync-20261030, wip/oct-skill-docs-20261023) belong to other work. I created none.",
+    "Not verified by this role: audible quality (not applicable to a data file), an adversarial result (see F2), and a live Red replay. I proved the Red state by commit content and test structure. measure/anti-patterns.md is absent, a gap that test-strategy.md:435-437 already records."
+  ],
+  "commands": [
+    "git rev-parse HEAD (start and end) => ffbe96a8676f34784017af9c5ee7d8a92e4a2ca1",
+    "git log --format='%H %s' --name-status 1bbdbecb..ffbe96a8; git diff --stat 1bbdbecb..ffbe96a8; git merge-base --is-ancestor 1bbdbec ffbe96a8 => exit 0",
+    "python3 -I (parse spec.md AC1 table, compare with docs/sound-event-map.tsv) => 58 events, 31 mapped, 27 synth, 0 missing, 0 extra, 0 wrong source",
+    "python3 -I (byte and structure check of docs/sound-event-map.tsv) => 1561 bytes, 59 lines, 58 unique rows, two-word notes",
+    "git diff --exit-code 75e56e8d ffbe96a8 -- docs/sound-event-map.tsv; git diff --exit-code 7ecd5832 ffbe96a8 -- tests/audio-event-map.test.ts => exit 0, exit 0",
+    "git cat-file -e 7ecd5832:docs/sound-event-map.tsv => exit 128; git cat-file -e 75e56e8d:docs/sound-event-map.tsv => exit 0; git show --stat 7ecd5832 75e56e8d",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/audio-event-map.test.ts' => exit 0; 1 file, 8 tests passed",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts' => exit 0; 212 files, 3241 tests passed",
+    "./measure/doctor.sh --structural-only => exit 0; node measure/tools/generate.mjs --check => exit 0; node_modules/.bin/prettier --check tests/audio-event-map.test.ts measure/tracks/audio_game_integration_20261014/plan.md measure/tracks/audio_game_integration_20261014/metadata.json => exit 0",
+    "python3 -I (scan src/**/*.ts with the three test patterns, the SFX tables, and non-literal audio.play calls) => 368, 140, 29 occurrences; union 58 equals the map; 28 non-literal calls",
+    "grep over src for .play(, .sfx(, .defineSfx( with a non-quote first argument, and for double-quoted or template-literal names => the non-literal calls above; 0 quoted-literal calls",
+    "find src -type f | sed 's/.*\\.//' | sort | uniq -c => 575 ts, 32 css, 6 woff2, 4 txt, 2 png, 1 jpg, 1 json",
+    "python3 -I (stat of the seven sounds/chibi/*.ogg files) => total 90468 bytes",
+    "git diff 1bbdbecb..ffbe96a8 -- measure/tracks.md measure/generated/status.md measure/tracks/audio_game_integration_20261014/metadata.json measure/tracks/audio_game_integration_20261014/plan.md",
+    "node_modules/.bin/prettier --check measure/runs/audio_game_integration_20261014/review-a-ffbe96a.json measure/runs/audio_game_integration_20261014/spec-review-1bbdbec.json => exit 0",
+    "git status --short; git ls-files measure/runs/audio_game_integration_20261014; git worktree list; git branch -a",
+    "git status --short ../reading-advantage-monorepo => exit 128; git -C ../reading-advantage-monorepo status --short | wc -l => 23"
+  ],
+  "changed_files": [
+    "measure/runs/audio_game_integration_20261014/phase-acceptance-p1-ffbe96a.json",
+    "measure/runs/audio_game_integration_20261014/phase-acceptance-p1-ffbe96a.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "claude-code/claude-sonnet-5-5#max",
+  "ac_results": [
+    {
+      "ac": "AC1",
+      "result": "pass",
+      "basis": "The map holds the exact header and 58 rows. The sources match the spec table and the seven set entries, with 0 missing, 0 extra, and 0 wrong."
+    },
+    {
+      "ac": "AC8 (Phase 1 part)",
+      "result": "pass",
+      "basis": "The targeted test, the generator check, the structural doctor, and prettier on the touched text files all exit 0."
+    },
+    {
+      "ac": "T1 Red",
+      "result": "pass",
+      "basis": "Commit 7ecd5832 adds the 8-case test, and the map is absent in that commit, so each case fails on ENOENT."
+    },
+    {
+      "ac": "T2 Green",
+      "result": "pass",
+      "basis": "Commit 75e56e8d adds the map, and the T1 command exits 0 with 8 of 8 passing at HEAD."
+    }
+  ],
+  "prerequisite_results": [
+    {
+      "role": "review-a",
+      "file": "measure/runs/audio_game_integration_20261014/review-a-ffbe96a.json",
+      "status": "pass",
+      "audited_head_sha": "ffbe96a8676f34784017af9c5ee7d8a92e4a2ca1",
+      "targets_audited_head": true
+    },
+    {
+      "role": "spec-review",
+      "file": "measure/runs/audio_game_integration_20261014/spec-review-1bbdbec.json",
+      "status": "pass",
+      "audited_head_sha": "1bbdbecbc2368868859722cf5eee0be0c302f82c",
+      "targets_audited_head": false,
+      "covered_by": "the phase base commit; track setup only"
+    },
+    {
+      "role": "adversarial-testing",
+      "file": "none",
+      "status": "absent",
+      "targets_audited_head": false,
+      "covered_by": "not covered; see F2"
+    }
+  ],
+  "dispositions_of_prior_findings": [
+    {
+      "finding": "review-a F1",
+      "disposition": "carried",
+      "reason": "The committed notes comply, and no code reads the note field. See F1."
+    }
+  ],
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "docs/sound-event-map.tsv:2-59 matches every event and source of spec.md:75-82, with 0 missing, 0 extra, and 0 wrong in a script compare."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "All 8 cases fail with ENOENT without the map and pass with it (8 passed), but no case reads the note field (tests/audio-event-map.test.ts:151-169)."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "git diff --stat 1bbdbecb..ffbe96a8 lists only the map, the test, track records, run logs, one registry marker, and generated status."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "plan.md:57-75 cites two SHAs that resolve in range, and its exit codes and the 90468-byte total match my reruns."
+    }
+  ],
+  "reviewer_ratings": [
+    {
+      "reviewer_role": "review-a",
+      "reviewer_route": "openai/gpt-6.1-sol#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "Its counts of 368, 140, and 29 occurrences, its 90468-byte total, and its note gap F1 all match my own scan and my reading of the test."
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "role": "spec-review",
+  "track": "audio_game_integration_20261014",
+  "phase": "track setup",
+  "baseline_sha": "1bbdbecbc2368868859722cf5eee0be0c302f82c",
+  "audited_head_sha": "1bbdbecbc2368868859722cf5eee0be0c302f82c",
+  "status": "pass",
+  "summary": "All three round 3 findings are closed in the delta. soundBase has one meaning across AC9, T6a, T6b, and the factory type comment, and the traced URL resolves to the demo file. AC6 now matches T8 on the 17-file folder and the sha256sum format. The two-game binding exception is stated and verified. No new decision gap or PM decision change appears in the delta.",
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "evidence": [
+    "HEAD equals audited_head_sha and the baseline: git rev-parse HEAD = 1bbdbecbc2368868859722cf5eee0be0c302f82c; commit subject: measure(audio_game_integration): close spec review r3 findings",
+    "F7 closed: spec AC9 defines soundBase as the site base with a trailing slash, '/demo/' or ${BASE}, and says the helper appends audio/chibi/; plan T6a case 3 states the same append and the file '/demo/audio/chibi/tap.ogg'; case 5 states the append happens once for '/x/audio/chibi/tap.ogg'; T6b requires the doc comment in src/apk3d/factory/types.ts to name the site base and the append; T6b sets src/host/main.ts to ${BASE}, not ${BASE}audio/chibi/; the plan file list calls main.ts the soundBase value ${BASE}",
+    "End-to-end URL trace: src/host/main.ts:34 sets BASE = import.meta.env.BASE_URL, so the demo root is '/'; soundBase '/' plus the helper's 'audio/chibi/' gives base '/audio/chibi/'; adding 'tap.ogg' gives '/audio/chibi/tap.ogg', which is the path of demo/public/audio/chibi/tap.ogg copied in T6b. No doubled folder remains",
+    "F8 closed: spec AC6 now lists 17 files (seven .ogg, seven .mp3, MANIFEST.tsv, MANIFEST.sha256, README.md) and specifies the sha256sum line format as 64 lowercase hex characters, two spaces, then the file name; this matches the unchanged T8 folder list and the test-strategy statement that the folder holds 17 files",
+    "F9 closed: spec AC9 now names 27 games with the literal pack string and names dragon-rider and griffin-sky-joust as the two that bind another way; grep confirms 27 of the 29 game folders hold the literal; the two exceptions declare requiredAssetBindings: [...FILES_2D] built from HERO_CLIPS_2D and other clip lists in their manifest.ts files",
+    "Binding chain verified: all 29 src/games/*/view2d/game.ts hosts reference edition.bindings; src/host/main.ts:43 sets PACK_2D = 'primary-chibi-2d' and main.ts:146 defines edition2dOf, which builds the edition from that pack",
+    "Zero-decision re-scan of the delta found no new schema, API, dependency, edge-case, or file-location choice; T6a case 3, case 5, T6b, AC9, and the factory type comment now agree on one soundBase meaning, and AC6 and T8 now agree on the hand-off folder",
+    "The revised test-strategy wiring note and the Phase 4 harness sentence both point at the T6b wireChibiSounds call; the strategy's ordered harness shapes are context for the measurement and do not change the pinned plan command",
+    "PM decisions (a) to (d) are unchanged by the delta: no Decision table row changed, the proposed monorepo target and PM confirmation gate in T8 and AC6 remain, and no acceptance criterion was moved to the monorepo",
+    "Per role rules, measure/tracks/<track>/spec-review.md was not read; closure was verified from spec.md, plan.md, and test-strategy.md"
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "git log -1 --oneline HEAD",
+    "git show --stat --oneline 1bbdbecb",
+    "git diff 70dd2688..1bbdbec -- measure/tracks/audio_game_integration_20261014/spec.md measure/tracks/audio_game_integration_20261014/plan.md measure/tracks/audio_game_integration_20261014/test-strategy.md",
+    "grep of plan.md for soundBase, audio/chibi/, and the factory and host file descriptions",
+    "grep of spec.md AC6 and AC9 for MANIFEST.sha256, 17 files, the sha256sum format, and the binding exception",
+    "per-game grep for primary-chibi-2d over src/games/*/",
+    "per-host grep for edition.bindings over src/games/*/view2d/game.ts",
+    "grep -n of PACK_2D, edition2dOf, and BASE in src/host/main.ts",
+    "grep of test-strategy.md for the wiring closure note and the Phase 4 harness sentence"
+  ],
+  "changed_files": [
+    "measure/runs/audio_game_integration_20261014/spec-review-1bbdbec.json",
+    "measure/runs/audio_game_integration_20261014/spec-review-1bbdbec.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "opencode-go/hy4-flash-free#high",
+  "paraphrase": {
+    "proposes": "The delta fixes the wiring base path so soundBase is the site base and the helper appends audio/chibi/ once, traced from the standalone host to the demo file. It adds MANIFEST.sha256 to AC6 with the sha256sum line format and a 17-file folder, matching T8. It replaces the wrong skin claim with a verified account of 27 literal pack bindings and two games that bind through their manifests and the shared edition bindings. The wiring task and PM decisions stay as decided.",
+    "current_system": "Per the spec, the 29 2D hosts each create an AudioBus and now gain one call to the wiring helper, which sets the 31-entry map and preloads each game's own mapped events. The standalone host reads BASE from import.meta.env.BASE_URL, sets soundBase to that site base, and builds the 2D edition from the primary-chibi-2d pack. Twenty-seven game folders name that pack string; dragon-rider and griffin-sky-joust bind their 2D files through requiredAssetBindings and the shared edition bindings."
+  }
+}

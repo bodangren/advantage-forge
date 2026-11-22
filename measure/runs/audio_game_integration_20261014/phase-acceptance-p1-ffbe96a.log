@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: measure-phase-acceptance
+status: complete
+track: audio_game_integration_20261014
+phase: ## Phase 1: Event map
+commits: none made by this role; audited HEAD ffbe96a8676f34784017af9c5ee7d8a92e4a2ca1 (phase base 1bbdbecbc2368868859722cf5eee0be0c302f82c)
+tests_run: heavy-run.sh vitest run --maxWorkers=1 tests/audio-event-map.test.ts => exit 0, 8 passed; heavy-run.sh vitest run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts (PROJECT_TESTS) => exit 0, 212 files and 3241 tests passed; ./measure/doctor.sh --structural-only => exit 0; node measure/tools/generate.mjs --check => exit 0; prettier --check on the test, plan.md, and metadata.json => exit 0
+files_changed: measure/runs/audio_game_integration_20261014/phase-acceptance-p1-ffbe96a.json; measure/runs/audio_game_integration_20261014/phase-acceptance-p1-ffbe96a.log
+plan_updates: none (gate-only role)
+known_failures: none in Phase 1; no blocking finding; five nonblocking findings F1 to F5 (see the JSON)
+handoff: PASS at ffbe96a8676f34784017af9c5ee7d8a92e4a2ca1, retry_recommendation none. Review A F1 is carried, not fixed: the committed notes comply and no code reads the note field. F2 [Major] needs your decision: test-strategy.md:404 marks adversarial testing applicable for Phase 1, no adversarial result exists, and no record waives it; run it or get a PM waiver and correct test-strategy.md:402-409 (Phases 2, 4, 5 have the same question). F3: eight map names are sim kinds the hosts translate through SFX tables; no Phase 1 change. F4: commit the untracked review-a, spec-review, and acceptance records with explicit paths. F5: the plan.md:220 monorepo command exits 128; use git -C and compare before and after in Phase 5.
+END_MEASURE_AGENT_RESULT

@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: measure-phase-acceptance
+status: complete
+track: audio_game_integration_20261014
+phase: ## Phase 1: Event map
+commits: none made by this role; audited HEAD 79ae99b562acb4050ce710b2a86c81ab23e650c1 (phase base 1bbdbecbc2368868859722cf5eee0be0c302f82c); allowed test-only commit 79ae99b562acb4050ce710b2a86c81ab23e650c1; HEAD at the end was 5b353043 (another track, no audited path touched)
+tests_run: heavy-run.sh vitest run --maxWorkers=1 tests/audio-event-map.test.ts tests/audio-event-map.adversarial.test.ts => exit 0, 2 files and 29 tests passed (after a heavy-lock wait of more than 10 minutes); ./measure/doctor.sh --structural-only => exit 0; node measure/tools/generate.mjs --check => exit 0; prettier --check on both test files, plan.md, metadata.json, and four JSON records => exit 0; git diff --check => exit 0; audit-result on the adversarial and review-a results => PASS; the aggregate suite was not re-run in r2
+files_changed: measure/runs/audio_game_integration_20261014/phase-acceptance-p1-79ae99b.json; measure/runs/audio_game_integration_20261014/phase-acceptance-p1-79ae99b.log
+plan_updates: none (gate-only role)
+known_failures: none in Phase 1; no blocking finding; five nonblocking Nits F3 to F7 (see the JSON)
+handoff: PASS r2 at 79ae99b562acb4050ce710b2a86c81ab23e650c1, retry_recommendation none. r1 F1 is closed because the adversarial file covers the note rule. r1 F2 is closed because adversarial testing ran and passed. Carried: F3 (eight sim kinds, no change), F4 (commit the untracked records with explicit paths: adversarial-p1, review-a, spec-review-1bbdbec, and the r1 and r2 acceptance files), F5 (plan.md:220 monorepo command exits 128; use git -C and compare before and after). New Nits: F6 (the plan file list and the AC8 command omit the adversarial test) and F7 (fixtures under ~/.cache/opencode; a second consumer of the classic TypeScript API for the TypeScript 7 deferral). The aggregate suite was not re-run: rely on the adversarial result (213 files, 3262 tests) and the sum 3241 + 21.
+END_MEASURE_AGENT_RESULT
