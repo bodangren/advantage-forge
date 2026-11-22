@@ -580,6 +580,28 @@ Workbooks does not wait for it.
       `invalid` (assertion, no syntax or import error). `tests/storytime-cover-guards.test.ts`
       still passes 10/10. `prettier --check` passes on the new file. Log
       red-faces-r2-guard.log.
+    - Green (2026-11-22, implementation commit `4b1dd5af817d93a0106639c019093b4b2efce8ae`):
+      `scripts/storytime-muse-guards.mjs` gains `FACES_R2_RUN` (start `2026-11-22T09:43:00Z`, cap
+      0.08, report 0.06, margin 0.01, 1 try, outDir `out/chibi-sprouts/faces-r2/muse`), the
+      `FACES_R2_CAP_MESSAGE` refusal, `isFacesR2OutDir`, and `scanFacesR2CostFiles`.
+      `classifyOutDir` returns `facesR2` for exactly that folder and `invalid` for every sibling,
+      child, elements, and scene path. A faces call reads only that folder's own `costs.tsv`, so
+      book, app, and cover spend stay out of the faces cap and faces spend stays out of their caps.
+      `cliGuardOptions` drops the test-only `facesR2CapUsd` key. `scripts/storytime-muse.mjs` needs
+      no change: the guard resolves the fixed folder from the spec outDir. The file needed a full
+      Prettier format because it failed the current Prettier at role base; no behavior changed
+      outside the faces class. The targeted command
+      `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/storytime-faces-r2-guards.test.ts'`
+      exits 0 with 8 of 8 tests. Its first rerun waited on the heavy lock held by the parallel Dad
+      face pass and ran after this edit; the Red log records the failing-first state. The 18-file
+      storytime guard subset exits 0 with 243 of 243 tests. `prettier --check` exits 0 on the
+      script. The wider `tests/storytime-*.test.ts` run exits 1 on 9 assertions in
+      `tests/storytime-book-pictures.test.ts`, a file that does not import the guard module: its
+      fixtures read a live Workbooks picture list (227 rows against 196 expected) and a
+      `/tmp/opencode` TMPDIR path. All guard files pass in that run. No provider call was made and
+      nothing was written under the real `out/`. `phase_base_sha` was not supplied; role base
+      `a293e443` is the fallback baseline, and Red commit `33655cec` is an ancestor of it. Log
+      `measure/runs/asset_chibi_sprouts_r1_20261022/green-faces-r2-guard.log`.
   - Step 3, one Muse call per character, with both references of the production recipe, through
     `node scripts/storytime-muse.mjs color <spec>`. One spec file per character at
     `docs/chibi-sprouts/faces-r2/<character>.json`, with `references:

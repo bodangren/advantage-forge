@@ -1,0 +1,45 @@
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+track: asset_chibi_sprouts_r1_20261022
+phase: Phase 5: The rest of the inventory (after the look check)
+task: Faces r2 and the Muse likeness test (Daniel 2026-11-22), Step 2b Green sub-step (plan.md lines 544-556)
+status: complete
+role_base_sha: a293e443d75643033673f0619231c6e73d6d6934
+phase_base_sha: not supplied by the orchestrator; role_base_sha is the fallback baseline, as the Red log records
+red_commit: 33655cece30448f98daf8fd6a87b35fa9e4b948f
+red_commit_confirmation: ancestor of role_base_sha; diff-tree lists only tests/storytime-faces-r2-guards.test.ts; that test is unchanged
+implementation_commit: 4b1dd5af817d93a0106639c019093b4b2efce8ae
+plan_evidence_commit: this log and the plan evidence commit together
+commits:
+  - 4b1dd5af817d93a0106639c019093b4b2efce8ae feat(chibi_sprouts_r1): FACES_R2_RUN guard
+files_added:
+  - measure/runs/asset_chibi_sprouts_r1_20261022/green-faces-r2-guard.log (this file)
+files_changed:
+  - scripts/storytime-muse-guards.mjs (owned implementation)
+  - measure/tracks/asset_chibi_sprouts_r1_20261022/plan.md (Green evidence, separate commit)
+tasks_flipped_to_x: none; the task stays [~] because Steps 1, 3, 4, and 5 remain
+tasks_flipped_to_b: none
+implementation:
+  - FACES_R2_RUN: startTime 2026-11-22T09:43:00Z, capUsd 0.08, reportAtUsd 0.06, marginUsd 0.01, maxTries 1, outDir out/chibi-sprouts/faces-r2/muse
+  - FACES_R2_CAP_MESSAGE, isFacesR2OutDir, and scanFacesR2CostFiles are exported
+  - classifyOutDir returns facesR2 for exactly that folder and invalid for muse2, the bare faces-r2 folder, muse/extra, muse/elements, scene, and faces-r1/muse
+  - a faces call reads only that folder's own costs.tsv; book, app, and cover spend never counts against the faces cap, and faces spend never counts against their caps
+  - cliGuardOptions drops the test-only facesR2CapUsd key
+  - scripts/storytime-muse.mjs needs no change: the guard resolves the fixed faces folder from the spec outDir and reads the real folder in production
+  - the file needed a full Prettier format because it failed the current Prettier at role base; the format changes no behavior
+gates:
+  targeted_red_command: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/storytime-faces-r2-guards.test.ts'
+  targeted_red_output: Test Files 1 passed (1); Tests 8 passed (8); duration 142 ms; EXIT=0
+  targeted_red_note: the first rerun waited on the heavy lock held by the parallel Dad face pass and executed after the Green edit, so it passed; the committed Red log at 33655cec records the failing-first state, 8 failed and 0 passed
+  guard_subset_command: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 <18 storytime guard and adversarial test files>'
+  guard_subset_output: Test Files 18 passed (18); Tests 243 passed (243); EXIT=0
+  full_storytime_glob_command: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/storytime-*.test.ts'
+  full_storytime_glob_output: Test Files 1 failed | 27 passed (28); Tests 9 failed | 490 passed (499); EXIT=1
+  full_storytime_glob_note: the only failing file is tests/storytime-book-pictures.test.ts, which does not import the guard module; its 9 assertions read a live Workbooks picture list (227 rows instead of 196) and a /tmp/opencode TMPDIR path; every guard file passes in that run
+  prettier: node node_modules/prettier/bin/prettier.cjs --check scripts/storytime-muse-guards.mjs exits 0
+  prettier_plan: plan.md is not Prettier-managed; it fails the current Prettier check at role base as well, so no whole-file reformat was applied
+  syntax: node --check scripts/storytime-muse-guards.mjs exits 0
+provider_calls: none
+out_writes: none
+parallel_work_preserved: assets/sprout-dad.ts, src/apk3d/audio/*, and other untracked work were never staged
+END_MEASURE_AGENT_RESULT
