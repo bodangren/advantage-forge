@@ -1,10 +1,16 @@
 /** A local replacement for `structuredClone`, which throws on the oldest supported browsers.
  *
- * The helper copies the plain data that a simulation state holds, plus the built-in containers that
- * a later state may hold. It throws a TypeError for unsupported values: functions, symbols,
- * WeakMap, WeakSet, and promises. The native clone throws a DataCloneError for those values. This
- * helper copies values from the current realm. The module imports nothing so it stays inside the
- * `apk3d/sim` import rule.
+ * The helper copies the plain data that a simulation state holds. It copies own string keys and the
+ * built-in containers that a later state may hold. It throws a TypeError for unsupported values:
+ * functions, symbols, WeakMap, WeakSet, and promises. The native clone throws a DataCloneError for
+ * those values.
+ *
+ * The helper has contract limits. It does not copy own Symbol-keyed properties. It does not copy
+ * non-enumerable own properties. It copies a RegExp or another class instance as a plain object.
+ * The copy keeps no class behavior. A copied RegExp throws on `exec`. It does not recognize a Map,
+ * a Set, a Date or a typed array from another realm, such as an iframe. Such a value copies as a
+ * plain object. The helper recognizes values from the current realm only. The module imports
+ * nothing so it stays inside the `apk3d/sim` import rule.
  */
 
 /** Copy `value` into a new graph that shares no object with the source. */
