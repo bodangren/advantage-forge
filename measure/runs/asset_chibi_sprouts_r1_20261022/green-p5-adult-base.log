@@ -747,3 +747,28 @@ plan_evidence_commit: 3f69e64ff0583ccbe171ca58bfcfa931f6c69ba3
 handoff: Phase acceptance should audit assets/sprout-grandpa.ts at 10632c67. Check the fresh grandpa listen cut-out at the waist right side and under the hem, plus turn-side, reach, hug-self, and point-up. Decide whether Mom and Dad need the same leg-cone treatment as a follow-up.
 dispositions: none (no routed findings in this brief).
 END_MEASURE_AGENT_RESULT
+
+MEASURE_AGENT_RESULT
+role: jr-green. Phase: P5 The rest of the inventory. Task: The remaining cast (Mom and Dad listen fixes; Grandma checked). Role base (start of this turn): b18d2814.
+Scope: only assets/sprout-mom.ts and assets/sprout-dad.ts changed (one fix commit each). No Red test, no sprout-gestures.ts, no humanoid-kind.ts, no Grandma/Grandpa file edited. No push. No generate.sh.
+
+Findings (orchestrator look check, now in scope): mom/listen.png showed a blue jeans oval through the sweater's right side at the waist plus a skin patch under the hem centre; dad/listen.png showed a blue jeans oval through the shirt/tee's right side at the waist plus a small skin patch under the tee hem centre. Grandma's listen.png shows no fault of this class (long skirt covers the legs; cardigan sides clean), so she is untouched.
+
+Cause: same as Grandpa 10632c67 (confirmed by that round's magenta probe). Both files ran rigid leg cones up to the HIP joint, leaving a sharp cap rim at chest height; the listen spine roll plus 30-degree arm abduction swung the sweater/shirt side off the static rim. Check baselines captured live before editing: Mom FAIL 2 clips (touch-nose HEAD, listen HEAD into hair 1.2 cm), ground ok; Dad FAIL 3 clips (touch-nose, touch-neck, listen HEAD 0.7 cm), ground ok.
+
+Fix per file: leg cones start tucked inside the hip mass (cone top at hipsY - 0.03, radius 0.058); hip mass takes the torso weight bands (Ben's jeans recipe) at 0.90/0.92 slimmer than the outer waist; hems 12 mm lower (Mom 0.688 flat hem; Dad tee+open-shirt hemY - 0.062). Mom's separate sleeve body, Dad's open plaid shirt, and the ef5be6c4 sleeve fix stay; visible legs below the hems unchanged.
+
+Gates (all through heavy-run.sh, one heavy job at a time), final sources:
+- Mom: typecheck-asset 0 errors. ./forge all sprout-mom exit 0, no warning lines (34,468 tris, 0.544 x 1.552 x 0.37 m). ./forge check sprout-mom: exit 1 on the same two waived clips (touch-nose, listen); ground ok. 25 cut-outs re-rendered at 1760x1856 via cutout-gestures-cast.sh mom; cutout-check on gestures-adult flags only the four known reach tiptoe frames.
+- Dad: typecheck-asset 0 errors. ./forge all sprout-dad exit 0, no warning lines (35,570 tris, 0.544 x 1.61 x 0.357 m, dims unchanged). ./forge check sprout-dad: exit 1 on the same three waived clips (touch-nose, touch-neck, listen); ground ok. 25 cut-outs re-rendered at 1760x1856 via cutout-gestures-cast.sh dad; cutout-check flags only the four known reach tiptoe frames.
+- Three sprout vitest files (sprout-base, sprout-gestures, sprout-gesture-offset) with --maxWorkers=1: exit 0, 15/15 pass.
+- Pixel proof: mom/listen waist zone holds 0 blue pixels; dad/listen waist zone holds only 10 grey edge-alias pixels, no jeans blue; mom crotch map below the hem shows only sweater, jeans, and background, no skin.
+- Images read after the final rebuilds: mom listen (waist side clean cream, hem dips between legs with no skin), mom turn-side/reach/hug-self/point-up (clean waist and hem); dad listen (waist side clean plaid/tee, white tee dips between legs with no skin), dad turn-side/reach/hug-self/point-up (clean waist and hem).
+
+new_files_added_for_reviewer_scope: none. The 50 mom/dad cut-out PNGs are git-ignored delivery files; the only tracked changes are the two asset files. No Red test edited. Parent P5 cast task stays [~].
+mom_implementation_commit: a73bc9a7c2733b55b4491a894634987be83a6123
+dad_implementation_commit: c3307a6b940852564fe857e2b8b0ffd0a3eb55e5
+plan_evidence_commit: 13d3ad5cf1bbc36808410f0312c489444fff8b7c
+handoff: Phase acceptance should audit assets/sprout-mom.ts at a73bc9a7 and assets/sprout-dad.ts at c3307a6b. Check the fresh mom and dad listen cut-outs at the waist right side and under the hem, plus turn-side, reach, hug-self, and point-up per character. Grandma needs no action.
+dispositions: F-listen-mom fixed; F-listen-dad fixed
+END_MEASURE_AGENT_RESULT
