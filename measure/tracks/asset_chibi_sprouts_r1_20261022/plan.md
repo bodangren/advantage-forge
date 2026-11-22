@@ -435,6 +435,22 @@ Workbooks does not wait for it.
     GLBs keep byte-identical hashes (3b6c6796, ec71c3d8). The sleeve fix ef5be6c4 and
     the listen fix c3307a6b stand (fresh listen.png waist clean). Log
     green-faces-dad-r4.log.
+  - Dad face r5 259b05ae (2026-11-22, judge fix, new maker family): `assets/sprout-dad.ts`
+    only. The r4 judge rated the face 7.2: the hair read as a domed cap, the eyes read as
+    too round, and the 128 px smile read as a dash. The crown dome is back at full height.
+    Five tapered locks rise from the front hairline and sweep to his left, with pointed
+    tips and a side part on his right. Strand grooves radiate over the crown and sides.
+    The eyes are about 85 % of the r4 size, with a flatter upper lid and thin lash wings.
+    The open smile has a wider mouth, a wider tongue, and a teeth band 0.026 m tall.
+    `./forge all sprout-dad` exits 0 with no warning lines. `./forge check sprout-dad`
+    output is byte-identical to the role_base_sha baseline (sha b1fcc16f, exit 1 on the
+    three known waived clips). Dad's 25 cut-outs were re-rendered at 1760x1856 after the
+    last edit; cutout-check flags only the known reach tiptoe (dad row 1834, foot 1840).
+    The three sprout vitest files pass 15/15. typecheck-asset reports 0 errors. A textured
+    `./forge render sprout-dad` ran after the last edit. Open: the 128 px S sprite smile
+    reads as a small open smile; the teeth band is not confirmed as two sprite pixels by
+    count. The sprout-sam and teacher GLBs keep byte-identical hashes (3b6c6796, ec71c3d8).
+    Log green-faces-dad-r5.log.
   - Grandma face r2 d470ef24 (2026-11-22, Faces r2 Step 1): `assets/sprout-grandma.ts`
     only, matched to `docs/sprout-mockups/grandma.jpg`. Paint-only face through the
     existing `paintSkin` hook (arm cut kept, then face): dark round iris with one big

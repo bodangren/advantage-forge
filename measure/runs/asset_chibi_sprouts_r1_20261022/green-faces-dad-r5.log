@@ -1,0 +1,49 @@
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+track: asset_chibi_sprouts_r1_20261022
+task: Faces r2 and the Muse likeness test (Daniel 2026-11-22), Step 1, Dad round 5
+phase_base_sha: e43ccce0 (from the r4 judge record)
+role_base_sha: 4a7bf19d8692cddb8120b6a0c40d7c0c589a4bed
+status: done; gates pass; review pending (no self-rating)
+commits:
+  - 259b05ae fix(chibi_sprouts_r1): Dad face detail r5 (assets/sprout-dad.ts only)
+  - plan evidence commit: docs(chibi_sprouts_r1): Dad face r5 plan evidence (plan.md, this log)
+changes:
+  - hair: crown dome at r4 height; five tapered locks rise from the front hairline and
+    sweep to his left (+X) with pointed tips; side part kept on his right; scallop
+    notches and the sweep ridge removed; radial strand grooves painted over crown and sides
+  - eyes: almond about 85 % of r4; iris and pupil smaller; flatter upper lid arc; thinner
+    lash wings
+  - smile: mouth wider and taller; tongue wider; teeth band 0.026 m tall (was 0.009 m)
+  - round fixes: the first crown cut left a bald patch (cap restored); the taller quiff
+    tips made hop-up overflow the 1856 px canvas (tips lowered; hop-up re-rendered)
+gates:
+  - ./forge all sprout-dad: exit 0; 0 "warning:" lines
+  - ./forge check sprout-dad: output sha256 b1fcc16f, identical to the role_base_sha
+    baseline; exit 1 on the three known waived clips (same as baseline)
+  - bash bench/sonnet/sprouts/cutout-gestures-cast.sh dad: 25 frames rendered
+  - node scripts/cutout-check.mjs out/chibi-sprouts/r1/week2-7/gestures-adult/: dad 24 ok,
+    1 FAIL = dad/reach.png (known reach tiptoe, lowest opaque row 1834, foot row 1840)
+  - vitest (sprout-gesture-offset, sprout-gestures, sprout-base): 3 files, 15/15 pass
+  - node scripts/typecheck-asset.mjs sprout-dad: 0 errors
+  - shared kind: out/sprout-sam/sprout-sam.glb sha 3b6c6796; out/teacher/teacher.glb sha ec71c3d8
+    (both unchanged, byte-identical to the plan record)
+mtimes (after the last edit):
+  - assets/sprout-dad.ts: 22:17:07
+  - out/sprout-dad/sprites/S.png: 22:21:03
+  - earliest dad cut-out: 22:24:31 (25 files)
+  - out/sprout-dad/render.png (textured ./forge render sprout-dad): 22:33:25
+render (fresh textured render, read by Green):
+  - front and three-quarter: dark hair, full crown, spiky quiff tips at the front top that
+    sweep to his left (viewer right); side view shows the quiff rising at the front
+  - eyes: smaller brown almond eyes with one catchlight at normal size
+  - smile: open mouth with a white teeth band and a pink tongue at close zoom
+open:
+  - 128 px S sprite: the smile reads as a small open smile; the teeth band is not confirmed
+    as two sprite pixels by count
+  - the quiff reads weakly at 128 px in the S view
+  - the judge (ux-browser-review) has not rated r5; the face bar is 7.5
+tasks: no task flipped; the Faces r2 Step 1 task stays [~] until the review passes
+dispositions: none (no routed findings in this brief)
+handoff: route to ux-browser-review on the plan-evidence commit HEAD; judge checks hair and smile at 128 px
+END_MEASURE_AGENT_RESULT
