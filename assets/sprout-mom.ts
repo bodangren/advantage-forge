@@ -1,6 +1,7 @@
 import { mixRgb, profile, rgb, sdf } from '../src/index.js';
 import type { AnimationDef, Pose, Rgb } from '../src/index.js';
 import { ADULT, humanoidAsset } from './parts/humanoid-kind.js';
+import type { HumanoidShape } from './parts/humanoid-kind.js';
 import { sproutGestures } from './parts/sprout-gestures.js';
 
 /**
@@ -28,6 +29,93 @@ const C = {
 };
 const CABLES = 14;
 
+/** Mom's face detail: dark round eyes, a gentle open smile with one teeth band. */
+const MOM_FACE = {
+  irisDark: '#3a2412',
+  irisLow: '#6e4520',
+  pupil: '#101314',
+  mouth: '#7e2a2e',
+  teeth: '#fbf8f0',
+  tongue: '#e88a9a',
+  freckle: '#b06a48',
+  noseShade: '#d89a78',
+};
+
+const momFace = (skin: sdf.Shape, h: HumanoidShape): sdf.Shape => {
+  const pair = (s: sdf.Shape) => s.mirror('x', 0);
+  const [EX, EY] = h.joints.EYE;
+  const smileY = ADULT.face.smileY;
+  const browY = ADULT.face.browY;
+
+  // Dark round iris with a warm low arc, the pupil, and one big catchlight.
+  const dark = pair(h.onFace(sdf.ellipsoid([0.037, 0.044, 0.07]), EX, EY - 0.006));
+  const low = dark.intersect(sdf.halfSpace([0, 1, 0], EY - 0.008));
+  const pupil = pair(h.onFace(sdf.ellipsoid([0.026, 0.029, 0.07]), EX, EY + 0.004));
+  const big = pair(h.onFace(sdf.sphere(0.012), EX + 0.015, EY + 0.018));
+  const small = pair(h.onFace(sdf.sphere(0.005), EX - 0.013, EY - 0.02));
+
+  // The shared brow band is heavy; cover it with an exact-footprint hard skin
+  // stencil (a wider or soft cover left a pale slab in Lily's rounds) and paint a
+  // shorter, thinner, gently arched brow in the same place.
+  const cover = pair(sdf.extrude(profile.arc(0.1, 0.024, 58, 122), 0.3).at(0.1, browY - 0.1, 0.1));
+  const brow = pair(sdf.extrude(profile.arc(0.07, 0.014, 62, 118), 0.3).at(0.1, browY - 0.1, 0.1));
+
+  // A gentle open smile with one rounded white teeth band (no fang corners), as in
+  // the reference: the band is a rounded box clipped to the mouth interior.
+  const outline = profile.polygon(
+    (
+      [
+        [-0.052, 0.014],
+        [-0.026, 0.006],
+        [0, 0.004],
+        [0.026, 0.006],
+        [0.052, 0.014],
+        [0.044, -0.012],
+        [0.018, -0.03],
+        [-0.018, -0.03],
+        [-0.044, -0.012],
+      ] as [number, number][]
+    ).map(([x, y]): [number, number] => [x * 0.9, y * 0.9]),
+    { smooth: true },
+  );
+  const mouth = sdf.extrude(outline, 0.3).at(0, smileY, 0.1);
+  const teeth = sdf
+    .box([0.058, 0.013, 0.3], 0.006)
+    .at(0, smileY - 0.006, 0.1)
+    .intersect(mouth);
+  const tongue = mouth.intersect(sdf.ellipsoid([0.022, 0.011, 0.5]).at(0, smileY - 0.024, 0.1));
+
+  // A soft shade under the small nose and a scatter of freckles over the nose bridge.
+  const shade = sdf.ellipsoid([0.02, 0.008, 0.05]).at(0, ADULT.face.noseY - 0.018, h.faceZ(0, ADULT.face.noseY - 0.018));
+  const dots: [number, number][] = [
+    [-0.03, 0.012],
+    [-0.014, 0.02],
+    [0.004, 0.014],
+    [0.022, 0.02],
+    [0.038, 0.01],
+    [-0.048, 0.004],
+    [0.052, 0.002],
+  ];
+  const freckles = sdf.union(...dots.map(([dx, dy]) => h.onFace(sdf.sphere(0.0026), dx, ADULT.face.noseY + dy)));
+
+  return skin
+    .paintWhere(dark, MOM_FACE.irisDark, 0.006)
+    .paintWhere(low, MOM_FACE.irisLow, 0.008)
+    .paintWhere(pupil, MOM_FACE.pupil)
+    .paintWhere(big, '#ffffff')
+    .paintWhere(small, '#ffffff')
+    .paintWhere(cover, h.tint.skin!)
+    .paintWhere(brow, h.tint.brow!)
+    // The chin dot below the shared smile persists with mouth, tongue and teeth all
+    // off, so it predates this pass (a shared-smile vertex artifact, sub-pixel at sheet
+    // scale); the open smile below is restored.
+    .paintWhere(mouth, MOM_FACE.mouth, 0.001)
+    .paintWhere(tongue, MOM_FACE.tongue, 0.002)
+    .paintWhere(teeth, MOM_FACE.teeth, 0.001)
+    .paintWhere(shade, MOM_FACE.noseShade, 0.01)
+    .paintWhere(freckles, MOM_FACE.freckle, 0.001);
+};
+
 export default humanoidAsset({
   name: 'sprout-mom',
   description: 'Mom, a young mother: large dark-brown eyes, long wavy medium-brown hair past her shoulders, a cream cable-knit sweater, blue jeans, brown flats, and pearl stud earrings.',
@@ -53,7 +141,8 @@ export default humanoidAsset({
   // Cut the arm skin inside the long sleeves. The skin upper arm blends into the chest
   // band near the shoulder while the sleeve takes only arm weights, so a raised arm left
   // a skin strip under the sleeve. Keep a short wrist stub inside the cuff; the hand is
-  // its own body below it.
+  // its own body below it. Then Mom's face detail (Daniel 2026-11-22), matched to
+  // docs/sprout-mockups/mom.jpg. Paint only: the shared kind keeps today's look.
   paintSkin(skin, h) {
     const { SHOULDER, ELBOW, WRIST } = h.joints;
     const d: readonly [number, number, number] = [WRIST[0] - ELBOW[0], WRIST[1] - ELBOW[1], WRIST[2] - ELBOW[2]];
@@ -68,7 +157,7 @@ export default humanoidAsset({
       sdf.cone(SHOULDER, ELBOW, ADULT.limb.upper[0] + 0.022, ADULT.limb.upper[1] + 0.022),
       sdf.cone(ELBOW, cutEnd, ADULT.limb.fore[0] + 0.022, ADULT.limb.fore[1] + 0.022),
     );
-    return skin.subtract(sdf.union(armCut, armCut.mirror('x', 0)));
+    return momFace(skin.subtract(sdf.union(armCut, armCut.mirror('x', 0))), h);
   },
 
   extra(k, h) {
@@ -105,14 +194,32 @@ export default humanoidAsset({
       )
       .smoothIntersect(0.015, outerHug);
     const fringe = sdf
-      .chain(
-        [
-          [-0.1, 0.1, 0.09, 0.024],
-          [0.0, 0.08, 0.12, 0.028],
-          [0.1, 0.055, 0.115, 0.026],
-          [0.15, 0.015, 0.09, 0.022],
-        ],
-        0.025,
+      .smoothUnion(
+        0.012,
+        sdf.chain(
+          [
+            [-0.06, 0.115, 0.12, 0.023],
+            [0.02, 0.095, 0.13, 0.024],
+            [0.1, 0.07, 0.125, 0.022],
+          ],
+          0.02,
+        ),
+        sdf.chain(
+          [
+            [-0.1, 0.095, 0.095, 0.024],
+            [0.0, 0.07, 0.115, 0.025],
+            [0.12, 0.045, 0.105, 0.022],
+          ],
+          0.02,
+        ),
+        sdf.chain(
+          [
+            [-0.08, 0.06, 0.095, 0.022],
+            [0.03, 0.045, 0.11, 0.023],
+            [0.14, 0.02, 0.09, 0.019],
+          ],
+          0.02,
+        ),
       )
       .smoothIntersect(0.02, outerHug);
     // The front hair in two parts. The inner lock hugs the jaw and ends there, so the clap
