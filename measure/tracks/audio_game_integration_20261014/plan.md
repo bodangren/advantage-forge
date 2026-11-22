@@ -735,13 +735,26 @@ Files this track touches:
 
 ## Phase 5: Hand-off to the PM
 
-- [ ] T8 Hand-off: Check the 14 files in `demo/public/audio/chibi/` byte for byte against
+- [~] T8 Hand-off: Check the 14 files in `demo/public/audio/chibi/` byte for byte against
       `sounds/chibi/`; T6b made the copy, so this task verifies it and does not write it again. Add
       one row to `docs/apk-port.md` with the pattern of the model pack row (`docs/apk-port.md`, line
       238: `apps/advantage-games/public/packs/`): `demo/public/audio/chibi/` to
       `apps/advantage-games/public/audio/chibi/`. Build `out/apk-audio-handoff/chibi/` with the 14
       files, `MANIFEST.tsv`, `MANIFEST.sha256`, and `README.md` per spec AC6. Give the folder path to
       the PM.
+  - Red result: test commit a97e88c862c4ec88569920a558fc0dd73c6250c8 adds
+    `tests/audio-handoff.test.ts` with 8 cases. Cases 1 to 3 run in the default suite (14 demo
+    files byte-identical to the 14 sources; one docs row from `demo/public/audio/chibi/` to the
+    proposed target plus the model-pack row; no track-named path in the monorepo status). Cases 4
+    to 8 run only under `AUDIO_HANDOFF_ARTIFACTS=1` (exact 17-name folder set; shipped files
+    byte-identical; checksum-line format plus `sha256sum -c`; six-column MANIFEST with matching
+    bytes, hashes, and proposed targets; README with the target, load rule, and model-pack row).
+  - Red command `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'rm -rf out/apk-audio-handoff/chibi && AUDIO_HANDOFF_ARTIFACTS=1 node node_modules/vitest/vitest.mjs run tests/audio-handoff.test.ts --maxWorkers=1'`
+    exits 1 with 5 failed and 3 passed (8). Cases 1 to 3 pass. Cases 4 to 8 fail with ENOENT for
+    the missing folder (`scandir 'out/apk-audio-handoff/chibi'`, then the shipped file,
+    `MANIFEST.sha256`, and `README.md` reads), with no syntax or import error.
+    The default command without the flag exits 0 with 3 passed and 5 skipped (8).
+    `node_modules/.bin/prettier --check tests/audio-handoff.test.ts` exits 0.
   - The monorepo path `apps/advantage-games/public/audio/chibi/` is a proposed target. The MANIFEST
     names it as proposed, and the PM or Monorepo session confirms or replaces it at hand-off. This
     repository holds no copy of that folder, so the plan cannot verify it here.
