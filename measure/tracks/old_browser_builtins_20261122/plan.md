@@ -317,6 +317,18 @@ tests/apk3d/no-unpolyfilled-builtins.test.ts'` exits 0: 1 file passed, 2 tests p
   - Probe result 2026-11-23: a temporary visitor copied from the state-types case ran on states that hold one new kind each. The probe path is `measure/runs/old_browser_builtins_20261122/probe-state-types-r2.mjs`, and the probe is not committed. The test catches a RegExp value through `other:[object RegExp]`. The test catches a class instance through `other:[object Object]`. The test does not catch a Symbol-keyed own property: the visitor walks `Object.keys`, so its kinds are `plain-object, string` and no extra kind appears. A plain-data control also shows no extra kind, as expected. The probe exits 0. No test changed.
   - Gates 2026-11-23: `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts tests/apk3d/imports.test.ts'` exits 0 with 4 files and 19 tests passed. `node_modules/.bin/prettier --check src/apk3d/sim/copy.ts` exits 0.
 
+- [x] T3r3 Red (1c6f3831): state-type pin walks Reflect.ownKeys (PM 2026-11-23)
+  - Red evidence (commit `1c6f3831`, gap-closing round): the final three-file gate exits 0 with 3
+    files and 16 tests passed (log `measure/runs/old_browser_builtins_20261122/red-p2-r3-final.log`;
+    all 29 real game states still pass). The visitor records `symbol-key` for a Symbol-keyed own
+    property, `non-enumerable` for a non-enumerable own property, and `accessor` for a
+    getter/setter without invoking it, so test 111 fails on any of them; RegExp and class-instance
+    values keep reporting their `other:` tag. Breakage proof: the temporary probe
+    `measure/runs/old_browser_builtins_20261122/probe-state-types-r3.mjs` runs the old Object.keys
+    visitor against the new expectations — the Symbol-key, non-enumerable, and getter cases fail
+    there while RegExp and class instance pass (log `red-p2-r3-breakage.log`). `tsc --noEmit`
+    reports no error in the file; `prettier --check` exits 0.
+
 ## Phase 3: Browser check
 
 - [ ] T7 Measure: Add `scripts/old-browser-check.mjs` per AC5. Prerequisite, met: task T6k
