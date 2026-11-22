@@ -797,6 +797,16 @@ Workbooks does not wait for it.
       2026-11-22. No retry. A failed call at 0 USD still uses its try.
     - Record each cost in this plan, one line per character, from the `usage_cost` column of
       `out/chibi-sprouts/faces-r2/muse/costs.tsv`.
+    - Muse calls 2026-11-22 (5 calls, 1 try each, no failures, no retries; Dad OUT per PM: waits
+      for Daniel's look decision; commit f6e563ad):
+      - Lily: 0.01 USD; `out/chibi-sprouts/faces-r2/muse/faces-r2-lily-m1-color.png` (1920x1280).
+      - Mom: 0.01 USD; `out/chibi-sprouts/faces-r2/muse/faces-r2-mom-m1-color.png` (1920x1280).
+      - Tom: 0.01 USD; `out/chibi-sprouts/faces-r2/muse/faces-r2-tom-m1-color.png` (1920x1280).
+      - Grandma: 0.01 USD; `out/chibi-sprouts/faces-r2/muse/faces-r2-grandma-m1-color.png` (1920x1280).
+      - Grandpa: 0.01 USD; `out/chibi-sprouts/faces-r2/muse/faces-r2-grandpa-m1-color.png` (1920x1280).
+      - Total 0.05 USD, inside the 0.06 plan bound and the FACES_R2_RUN cap 0.08. Compare sheets
+        in `out/chibi-sprouts/faces-r2/sheets/<character>-compare.png` via
+        `bench/sonnet/sprouts/faces-r2.sh`. Likeness rating stays with the independent judge.
   - Step 4, one compare sheet per character: the original reference picture, the 3D
     `out/sprout-<name>/render.png` sheet (the four views), and the Muse output, side by side, with the
     character name. `bench/sonnet/sprouts/faces-r2.sh` builds the six sheets with sharp into
