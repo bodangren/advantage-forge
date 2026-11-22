@@ -344,6 +344,28 @@ Workbooks does not wait for it.
     fresh listen.png the waist side is clean cream with no blue, and the pixel map
     under the hem shows only sweater, jeans, and background, no skin; turn-side,
     reach, hug-self, and point-up are clean. Log green-p5-adult-base.log.
+  - Mom hem closes on the jeans 99fe921a (2026-11-22, look judge r3: the area
+    under the sweater hem between the legs read as a skin-toned patch in listen,
+    point-up, stretch-up, hug-self, and reach). The pale lobe was the sweater
+    revolve's closed bottom hanging between the leg tops, cable-ribbed like skin
+    at sprite size; the a73bc9a7 hem drop never moved geometry (the cut sat below
+    the closure, so only the rib paint moved). The hem is a true cut at 0.75 now:
+    one clean straight edge across both hips like the mockup. A jeans crotch bib
+    fills the leg gap in blue, and a blue inner liner just inside the sweater
+    (torso wall 2 mm in, same torso weights, clearances constant in every clip)
+    swallows the kind skin torso bottom, so the hem window reads jeans-blue.
+    Tucked cones, weighted slimmer hips, side-waist fix, ef5be6c4 sleeves
+    unchanged. `./forge all sprout-mom` exits 0 with no warning lines (34,764
+    tris, 0.544 x 1.552 x 0.37 m). `./forge check sprout-mom` fails only the two
+    earlier waived clips (touch-nose, listen); ground ok. Mom's 25 cut-outs were
+    re-rendered at 1760x1856; cutout-check flags only the four known reach tiptoe
+    frames. The three sprout vitest files pass 15/15. typecheck-asset reports 0
+    errors. Colour probe (box rows 1000-1140, cols 800-1000): listen blue
+    24,902 cream 2,537 skin 0; point-up blue 24,884 cream 2,550 skin 0;
+    stretch-up blue 27,724 cream 0 skin 0; hug-self blue 24,884 cream 2,550 skin
+    0; reach blue 27,667 cream 0 skin 0 (remaining cream is the sweater body above
+    the hem line). All five frames viewed: straight ribbed hem with blue jeans
+    directly below, no lobe, no skin. Log green-p5-adult-base.log.
   - [x] Dad (young father, tallest of the family, due 11-22; feat 633a40c5)
   - Dad listen waist/hem fix c3307a6b (2026-11-22, orchestrator look check:
     a blue jeans oval through the shirt/tee's right side at the waist in listen,
