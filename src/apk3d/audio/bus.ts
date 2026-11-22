@@ -260,6 +260,7 @@ export class AudioBus {
   private requestFile(name: string): void {
     this.ensureFormat();
     if (!this.files || !this.format) return;
+    if (!Object.hasOwn(this.files.events, name)) return;
     const entry = this.files.events[name];
     if (!entry) return;
     if (this.buffers.has(name) || this.loading.has(name) || this.failed.has(name)) return;

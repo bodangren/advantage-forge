@@ -21,7 +21,7 @@ export function chibiPreload(events: readonly string[]): string[] {
   const seen = new Set<string>();
   const preload: string[] = [];
   for (const event of events) {
-    if (CHIBI_EVENTS[event] === undefined) continue;
+    if (!Object.hasOwn(CHIBI_EVENTS, event)) continue;
     if (seen.has(event)) continue;
     seen.add(event);
     preload.push(event);
