@@ -1,6 +1,7 @@
 /**
  * Measures the Rune Match audio preload budget with a real browser and a slow-3G profile.
- * The page, the files, and the fetches are real. The script only observes resource timing.
+ * The page, the files, and the fetches are real. The script observes resource timing, decodes,
+ * and the first effect. It installs no stub and changes no bus call.
  */
 import { spawn } from 'node:child_process';
 import { mkdirSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs';
@@ -19,6 +20,7 @@ const MAX_BYTES = 100000;
 const MAX_SECONDS = 1.5;
 const LATENCY_MS = 300;
 const DOWNLOAD_BYTES_PER_SECOND = Math.round((1.6 * 1024 * 1024) / 8);
+const USAGE = 'usage: node scripts/audio-budget.mjs --game rune-match';
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 /** Prints the row details on a failed gate, so a zero or a foreign row is visible. */
@@ -48,9 +50,16 @@ async function stopServer(child) {
 }
 
 const args = process.argv.slice(2);
+if (args.includes('--help') || args.includes('-h')) {
+  console.log(USAGE);
+  process.exit(0);
+}
 const gameIndex = args.indexOf('--game');
 const game = gameIndex >= 0 ? args[gameIndex + 1] : undefined;
-if (game !== 'rune-match') fail('pass --game rune-match');
+if (game !== 'rune-match') {
+  console.error(USAGE);
+  process.exit(1);
+}
 
 const set = JSON.parse(readFileSync(join(ROOT, 'sounds', 'sets', 'chibi.json'), 'utf8'));
 const allowed = new Set(set.sounds.flatMap((sound) => [`${sound.name}.ogg`, `${sound.name}.mp3`]));
@@ -95,7 +104,16 @@ async function waitForServer() {
     try {
       const response = await fetch(PROBE_URL);
       await response.arrayBuffer();
-      if (response.ok) return;
+      if (response.ok) {
+        // A foreign listener can answer while --strictPort makes vite exit. Accept only our child.
+        await sleep(250);
+        if (server.exitCode !== null || server.signalCode !== null) {
+          fail(
+            `vite exited before it served the page (${server.exitCode ?? server.signalCode}): ${serverLog.slice(-2000)}`,
+          );
+        }
+        if (serverLog.includes('ready in')) return;
+      }
     } catch {
       // The port is not open yet; poll again.
     }
@@ -105,6 +123,19 @@ async function waitForServer() {
 }
 
 let browser;
+let stopping = false;
+const stopOnSignal = (signal) => {
+  if (stopping) return;
+  stopping = true;
+  void (async () => {
+    if (browser) await browser.close().catch(() => {});
+    await stopServer(server);
+    process.exit(signal === 'SIGINT' ? 130 : 143);
+  })();
+};
+process.on('SIGINT', () => stopOnSignal('SIGINT'));
+process.on('SIGTERM', () => stopOnSignal('SIGTERM'));
+
 try {
   await waitForServer();
   browser = await chromium.launch({
@@ -113,6 +144,33 @@ try {
   });
   const context = await browser.newContext({ viewport: { width: 1280, height: 800 } });
   const page = await context.newPage();
+  // Observe decodes and the first effect from the page. No bus or fetch stub is installed.
+  await page.addInitScript(() => {
+    const budget = { decodes: 0, fileStarts: 0, events: [], unlockAt: null };
+    const decodedBuffers = new WeakSet();
+    const decode = AudioContext.prototype.decodeAudioData;
+    AudioContext.prototype.decodeAudioData = function (...params) {
+      return decode.apply(this, params).then((buffer) => {
+        budget.decodes += 1;
+        decodedBuffers.add(buffer);
+        return buffer;
+      });
+    };
+    const bufferStart = AudioBufferSourceNode.prototype.start;
+    AudioBufferSourceNode.prototype.start = function (...params) {
+      if (decodedBuffers.has(this.buffer)) {
+        budget.fileStarts += 1;
+        budget.events.push({ at: performance.now(), kind: 'file' });
+      }
+      return bufferStart.apply(this, params);
+    };
+    const oscStart = OscillatorNode.prototype.start;
+    OscillatorNode.prototype.start = function (...params) {
+      budget.events.push({ at: performance.now(), kind: 'synth' });
+      return oscStart.apply(this, params);
+    };
+    window.__audioBudget = budget;
+  });
   const consoleErrors = [];
   const pageErrors = [];
   page.on('console', (message) => {
@@ -147,7 +205,23 @@ try {
   const box = await canvas.boundingBox();
   if (!box) fail('the 2D game canvas has no visible bounds');
   await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
+  await page.evaluate(() => {
+    if (window.__audioBudget) window.__audioBudget.unlockAt = performance.now();
+  });
   await page.keyboard.press('Space');
+
+  // The first game effect can follow the spawn banner, so wait for an effect after the unlock.
+  const effectDeadline = Date.now() + 60000;
+  while (Date.now() < effectDeadline) {
+    const seen = await page.evaluate(() => {
+      const budget = window.__audioBudget;
+      return (
+        !!budget && budget.unlockAt !== null && budget.events.some((event) => event.at >= budget.unlockAt)
+      );
+    });
+    if (seen) break;
+    await sleep(200);
+  }
 
   const countRows = () =>
     page.evaluate(
@@ -219,7 +293,31 @@ try {
     fail(`page errors ${JSON.stringify({ consoleErrors, pageErrors })}`, rows);
   }
 
-  const result = { bytes, files, seconds };
+  const observed = await page.evaluate(() => {
+    const budget = window.__audioBudget;
+    if (!budget) return { decodes: 0, fileStarts: 0, events: [], unlockAt: null };
+    return {
+      decodes: budget.decodes,
+      fileStarts: budget.fileStarts,
+      events: budget.events,
+      unlockAt: budget.unlockAt,
+    };
+  });
+  const decoded = observed.decodes;
+  if (!Number.isInteger(decoded) || decoded !== files) {
+    fail(`successful decodes ${decoded} differ from the ${files} fetched files`, rows);
+  }
+  const firstEffect =
+    observed.unlockAt === null ? undefined : observed.events.find((event) => event.at >= observed.unlockAt);
+  const fileEffect = observed.fileStarts > 0 && firstEffect?.kind === 'file';
+  if (!fileEffect) {
+    fail(
+      `first effect did not play a decoded file (decoded starts ${observed.fileStarts}, first event ${JSON.stringify(firstEffect)}, observed ${JSON.stringify(observed)})`,
+      rows,
+    );
+  }
+
+  const result = { bytes, files, seconds, decoded, fileEffect };
   mkdirSync(dirname(OUT), { recursive: true });
   writeFileSync(OUT, `${JSON.stringify(result, null, 2)}\n`);
   console.log(JSON.stringify(result, null, 2));
