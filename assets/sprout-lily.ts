@@ -1,6 +1,7 @@
 import { mixRgb, profile, rgb, sdf } from '../src/index.js';
 import type { Rgb } from '../src/index.js';
 import { AGE5, humanoidAsset } from './parts/humanoid-kind.js';
+import type { HumanoidShape } from './parts/humanoid-kind.js';
 import { sproutGestures } from './parts/sprout-gestures.js';
 
 /**
@@ -19,6 +20,108 @@ import { sproutGestures } from './parts/sprout-gestures.js';
 const C = { skirt: '#cf3a2e', fold: '#8e2318', sock: '#f6f4ef', shoe: '#c8352e', sole: '#f6f4ef', lace: '#f6f4ef', collar: '#f6f4ef', shirt: '#3f8fd0' };
 const PLEATS = 10;
 
+// Lily's face detail (Daniel 2026-11-22: more detail in the faces), matched to
+// docs/sprout-mockups/lily.jpg. Paint only: the shared stencils and every other
+// kind user keep today's geometry and paint, so their GLBs stay byte-identical.
+const FACE = {
+  irisDark: '#452714',
+  irisLow: '#7a4a26',
+  pupil: '#141a18',
+  mouth: '#7e2a2e',
+  teeth: '#fbf8f0',
+  tongue: '#e88a9a',
+  freckle: '#b06a48',
+  noseShade: '#d89a78',
+};
+
+/** Lily's face over the shared paint: dark round iris, open toothy smile, soft brows, nose shade, freckles. */
+const lilyFace = (skin: sdf.Shape, h: HumanoidShape): sdf.Shape => {
+  const pair = (s: sdf.Shape) => s.mirror('x', 0);
+  const [EX, EY] = h.joints.EYE;
+  const smileY = AGE5.face.smileY;
+  const browY = AGE5.face.browY;
+
+  // Dark round iris over the shared amber one, a warm low arc, the pupil, and one
+  // big catchlight: the reference eye is deep brown with a single bright spark.
+  const dark = pair(h.onFace(sdf.ellipsoid([0.037, 0.044, 0.07]), EX, EY - 0.006));
+  const low = dark.intersect(sdf.halfSpace([0, 1, 0], EY - 0.008));
+  const pupil = pair(h.onFace(sdf.ellipsoid([0.026, 0.029, 0.07]), EX, EY + 0.004));
+  const big = pair(h.onFace(sdf.sphere(0.012), EX + 0.015, EY + 0.018));
+  const small = pair(h.onFace(sdf.sphere(0.005), EX - 0.013, EY - 0.02));
+
+  // The shared brow band is long and heavy; cover it with skin and paint a shorter,
+  // thinner, softer arc in the same place (the reference brow is short and light).
+  // The cover matches the shared stencil exactly, so no skin margin shows.
+  const cover = pair(sdf.extrude(profile.arc(0.1, 0.024, 58, 122), 0.3).at(0.1, browY - 0.1, 0.1));
+  const brow = pair(sdf.extrude(profile.arc(0.068, 0.013, 64, 116), 0.3).at(0.1, browY - 0.1, 0.1));
+
+  // An open happy smile with an upper teeth band and a tongue, Lily-wide: smaller
+  // and rounder than Tom's laugh, the teeth tucked inside the mouth corners.
+  const s = 0.88;
+  const outline = profile.polygon(
+    (
+      [
+        [-0.052, 0.014],
+        [-0.026, 0.006],
+        [0, 0.004],
+        [0.026, 0.006],
+        [0.052, 0.014],
+        [0.044, -0.012],
+        [0.018, -0.03],
+        [-0.018, -0.03],
+        [-0.044, -0.012],
+      ] as [number, number][]
+    ).map(([x, y]): [number, number] => [x * s, y * s]),
+    { smooth: true },
+  );
+  const tooth = profile.polygon(
+    (
+      [
+        [-0.052, 0.014],
+        [-0.026, 0.006],
+        [0, 0.004],
+        [0.026, 0.006],
+        [0.052, 0.014],
+        [0.044, -0.012],
+        [0.018, -0.03],
+        [-0.018, -0.03],
+        [-0.044, -0.012],
+      ] as [number, number][]
+    ).map(([x, y]): [number, number] => [x * 0.72, y * 0.72]),
+    { smooth: true },
+  );
+  const mouth = sdf.extrude(outline, 0.3).at(0, smileY, 0.1);
+  const teeth = sdf.extrude(tooth, 0.3).at(0, smileY + 0.002, 0.1).intersect(sdf.halfSpace([0, -1, 0], -(smileY - 0.003)));
+  const tongue = mouth.intersect(sdf.ellipsoid([0.022, 0.011, 0.5]).at(0, smileY - 0.024, 0.1));
+
+  // A soft shade under the small nose and a scatter of freckles over the nose bridge.
+  const shade = sdf.ellipsoid([0.02, 0.008, 0.05]).at(0, AGE5.face.noseY - 0.018, h.faceZ(0, AGE5.face.noseY - 0.018));
+  const dots: [number, number][] = [
+    [-0.03, 0.012],
+    [-0.014, 0.02],
+    [0.004, 0.014],
+    [0.022, 0.02],
+    [0.038, 0.01],
+    [-0.048, 0.004],
+    [0.052, 0.002],
+  ];
+  const freckles = sdf.union(...dots.map(([dx, dy]) => h.onFace(sdf.sphere(0.0026), dx, AGE5.face.noseY + dy)));
+
+  return skin
+    .paintWhere(dark, FACE.irisDark, 0.006)
+    .paintWhere(low, FACE.irisLow, 0.008)
+    .paintWhere(pupil, FACE.pupil)
+    .paintWhere(big, '#ffffff')
+    .paintWhere(small, '#ffffff')
+    .paintWhere(cover, h.tint.skin!)
+    .paintWhere(brow, h.tint.brow!)
+    .paintWhere(mouth, FACE.mouth, 0.001)
+    .paintWhere(tongue, FACE.tongue, 0.002)
+    .paintWhere(teeth, FACE.teeth, 0.001)
+    .paintWhere(shade, FACE.noseShade, 0.01)
+    .paintWhere(freckles, FACE.freckle, 0.001);
+};
+
 export default humanoidAsset({
   name: 'sprout-lily',
   description: 'Lily, a seven-year-old girl: large dark-brown eyes, chin-length straight brown hair with straight bangs, a mid-blue T-shirt with a white round collar, a red pleated skirt, white mid-calf socks, and red sneakers with white laces.',
@@ -28,6 +131,7 @@ export default humanoidAsset({
   sproutFace: true,
   sproutHands: true,
   handClearance: 0.04,
+  paintSkin: (skin, h) => lilyFace(skin, h),
   hair: false,
   undershirt: false,
   pants: false,
@@ -124,7 +228,16 @@ export default humanoidAsset({
         * Math.max(0, 1 - Math.abs(y + 0.09) / 0.13)
         * Math.min(1, Math.max(0, (Math.abs(x) - 0.09) / 0.06));
       const edge = Math.max(bangEdge, cheekEdge);
-      return mixRgb(mixRgb(base, rgb('#3a1e10'), low), rgb('#8b5535'), 0.3 * edge);
+      // Strand separations combed into the fringe: five soft vertical grooves where the
+      // reference parts the bangs. Front only, so the side panels stay smooth.
+      let groove = 0;
+      for (const gx of [-0.108, -0.054, 0, 0.054, 0.108]) {
+        const t = (x - gx) / 0.007;
+        groove += Math.exp(-t * t);
+      }
+      const fringeBand = Math.min(1, Math.max(0, (y + 0.03) / 0.03)) * Math.min(1, Math.max(0, (yTop - y) / 0.02 + 1));
+      const strand = Math.min(1, groove) * fringeBand * (z > 0.08 ? 0.16 : 0);
+      return mixRgb(mixRgb(mixRgb(base, rgb('#3a1e10'), low), rgb('#8b5535'), 0.3 * edge), rgb('#3a1e10'), strand);
     };
     // No separate fringe lip. Hollow the bob into a thin shell, so the cut edge is thin too. The
     // original shell (0.93 scale, 0.006 m fillet) stays: a thinner shell opened tiny slivers at the
