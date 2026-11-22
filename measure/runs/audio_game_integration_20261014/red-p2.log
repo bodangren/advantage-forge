@@ -32,3 +32,39 @@ task_state: T3 stays [~]; Green marks [x]
 correction_for_green: plan case 1 says "14 files" for two entries; two entries give four files (two .ogg, two .mp3) and 14 is the seven-entry real-set count; the committed test asserts four files and the plan records this note
 handoff: Green implements the MP3 step in scripts/sound-set.mjs per spec AC2; the T3 Red command must then exit 0
 END_MEASURE_AGENT_RESULT
+MEASURE_AGENT_RESULT
+track: audio_game_integration_20261014
+phase: "Phase 2: MP3 copies in the wrapper"
+task: T3 Red (fixture repair, AC2 unchanged)
+role: mid-red
+role_base_sha: 3caf71e5a2e3bb7d74b589b44476b849fb1193ed
+phase_base_sha: 16b398b595354f5da754268f1b32c8e864b9312a
+head: efdb0314ec42561ec162d46e2d92f61623341c94
+commits:
+  - efdb0314ec42561ec162d46e2d92f61623341c94 test(audio_game_integration): T3 fixtures follow the AC2 argv and order
+tests:
+  - tests/sound-set-mp3.test.ts (fix A: fake takes the output from the last positional argv element)
+  - tests/sound-set.test.ts (fix B: run() sets a fake FFMPEG_BIN that writes the last positional argv element)
+  - tests/sound-set.adversarial.test.ts (fix C: same fake ffmpeg in every fixture, .mp3 stdout lines, AC2 per-entry order)
+production_untouched: scripts/sound-set.mjs reverted to the committed wrapper after each check; patch file left at /home/daniebo/.cache/opencode/green-p2-sound-set.patch for Green
+red_run_against_committed_wrapper:
+  command: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sound-set.test.ts tests/sound-set-mp3.test.ts tests/sound-set.adversarial.test.ts'
+  exit: 1
+  summary: 17 failed, 74 passed (91); no syntax or import error
+  failures_all_from_absent_mp3_step:
+    - mp3 case 1: absent `sound-set: alpha.mp3 <- tap/soft` line; ffmpeg-calls.log absent
+    - mp3 cases 2-4: status 0 instead of 1; the committed wrapper never calls ffmpeg
+    - mp3 case 5: ENOENT on sounds/chibi/tap.mp3
+    - sound-set case 1: absent .mp3 stdout lines
+    - adversarial design cases (5): stdout missing the alpha.mp3 line
+    - adversarial zero-byte case: absent alpha.mp3 file
+    - adversarial symlink cases (3) and dir-symlink case: ENOENT reading the absent alpha.mp3
+    - adversarial later-prep-failure case: stdout missing the alpha.mp3 line
+green_throwaway_check_with_patch_applied:
+  exit: 1
+  summary: 1 failed, 90 passed (91)
+  only_failure: mp3 case 5 ENOENT on the committed sounds/chibi/*.mp3; needs T4's real render, not a fixture or implementation defect
+  note: the first throwaway run caught a real fixture bug (FFMPEG_BIN derived from run()'s root instead of beside the earshot fake, so the dir-symlink case missed the fake); fixed by deriving it from dirname(bin); the rerun gives 90 passed
+task_state: T3 stays [~]; Green marks [x]
+handoff: Green reuses /home/daniebo/.cache/opencode/green-p2-sound-set.patch, runs the real render for case 5, and commits
+END_MEASURE_AGENT_RESULT

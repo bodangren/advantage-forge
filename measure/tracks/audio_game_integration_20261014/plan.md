@@ -87,7 +87,7 @@ Files this track touches:
 
 ## Phase 2: MP3 copies in the wrapper
 
-- [~] T3 Red (6fbb39bd): Add `tests/sound-set-mp3.test.ts`, and change the stdout assertion of case 1 in
+- [~] T3 Red (efdb0314): Add `tests/sound-set-mp3.test.ts`, and change the stdout assertion of case 1 in
       `tests/sound-set.test.ts` to the new line order. The test uses `spawnSync` with
       `SOUNDS_ROOT=<temp root>`, a fake earshot binary, and a fake ffmpeg binary. Each fake appends
       `process.argv.slice(2).join(' ')` to its own log, as `tests/sound-set.test.ts` does. The five
@@ -118,7 +118,7 @@ Files this track touches:
     four files (two `.ogg`, two `.mp3`); 14 is the seven-entry real-set count. The committed test
     asserts the four fake files and names this correction here.
 
-- [ ] T4 Green: Add the MP3 step to `scripts/sound-set.mjs` per spec AC2. Add the `FFMPEG_BIN`
+- [~] T4 Green: Add the MP3 step to `scripts/sound-set.mjs` per spec AC2. Add the `FFMPEG_BIN`
       lookup, the target preparation for the `.mp3`, and the three failure lines with their exits.
       Then render the real set once, and stage the seven `.mp3` files with explicit paths.
   - Green done-when: the T3 command exits 0 with every test passing. The render command exits 0 and
