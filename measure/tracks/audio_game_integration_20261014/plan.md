@@ -477,6 +477,17 @@ Files this track touches:
   - Dispositions: F1=FIX; F4=FIX. Result:
     `measure/runs/audio_game_integration_20261014/green-p3-t6h.log`.
 
+- Adversarial round 2 (`09f808bd`): `tests/apk3d/audio-files.adversarial-r2.test.ts` pins the
+  remap, preload, disposal, repeated unlock, memory, and unmapped-event cases. The targeted gate
+  fails on F1, F2, and F3. The tests stay failing for Green. No production file changed.
+  - F1: A stale preload overwrites the current file before unlock. Later plays use the synth
+    without fetching the current file again.
+  - F2: A decode that finishes after disposal supplies the sound when the original bus unlocks
+    again. A separate new bus uses its own file.
+  - F3: The Chibi helper and the bus request invalid URLs for inherited names outside the map.
+  - Gate results: `measure/runs/audio_game_integration_20261014/adversarial-p3-09f808bd.log`.
+- Late finding F3: one-fix-round (The Phase 3 helper sends requests for nonexistent files. The round limit still applies.)
+
 ## Phase 4: Preload budget
 
 - [ ] T7 Measure: Add `scripts/audio-budget.mjs`. It serves the demo with vite, opens one game in
