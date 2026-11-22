@@ -17386,6 +17386,14 @@
       "source_present": true
     },
     {
+      "source_path": "src/apk3d/sim/copy.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/apk3d/sim/index-math.ts",
+      "source_present": true
+    },
+    {
       "source_path": "src/apk3d/sim/index.ts",
       "source_present": true
     },

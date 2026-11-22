@@ -161,10 +161,23 @@ tests/apk3d/no-unpolyfilled-builtins.test.ts` exits 1 with exactly 44 hits group
 
 ## Phase 2: Green
 
-- [ ] T4 Green: Add `src/apk3d/sim/copy.ts` with `deepCopy` per AC1 rules 3 to 6, and
+- [x] T4 Green (c8ddd883): Add `src/apk3d/sim/copy.ts` with `deepCopy` per AC1 rules 3 to 6, and
       `src/apk3d/sim/index-math.ts` with `atIndex` and `lastIndexWhere` per AC2 rules 2 and 3.
       Re-export the three functions from `src/apk3d/sim/index.ts`. Keep the module free of imports,
       because `apk3d/sim` may import only `apk3d/contracts`.
+  - Green evidence 2026-11-23: `node node_modules/vitest/vitest.mjs run tests/apk3d/imports.test.ts
+    --maxWorkers=1` through the heavy runner exits 0 (1 file, 4 tests). The targeted
+    `node node_modules/vitest/vitest.mjs run tests/old-browser/deep-copy.test.ts
+    tests/old-browser/index-math.test.ts --maxWorkers=1` exits 1 as expected before T5: deep-copy
+    cases 1, 2 and 4 pass, index-math cases 1 and 2 pass, and only index-math case 3 fails on the
+    nine old sites. `node node_modules/typescript/bin/tsc --noEmit` reports no error in the three
+    new or changed files; the run has 52 error lines against a measured baseline of 57 at this
+    revision, because the five `Cannot find module` errors for the two new modules are gone.
+    `node_modules/.bin/prettier --check` exits 0 on all three files.
+  - `deepCopy` handles plain data, `Map`, `Set`, `Date`, typed arrays and `ArrayBuffer` through one
+    WeakMap seen-set; a function, symbol, `WeakMap`, `WeakSet` or promise raises a TypeError.
+    `atIndex` matches `ToIntegerOrInfinity`, including `NaN` to index 0, and `lastIndexWhere`
+    scans from the tail.
   - Green done-when: cases 1, 2, and 4 of T1 pass. Cases 1 and 2 of T2 pass. Case 3 of T2 still
     fails on the 8 `.at(` sites and the 1 `findLastIndex` site.
   - Gate: `tests/apk3d/imports.test.ts` exits 0. The command is
@@ -172,7 +185,7 @@ tests/apk3d/no-unpolyfilled-builtins.test.ts` exits 1 with exactly 44 hits group
   - Type check: `node node_modules/typescript/bin/tsc --noEmit` reports no error in the two new
     modules. The 38 baseline errors of TD-35 to TD-39 stay open.
 
-- [ ] T5 Green: Replace all 44 uses and remove the flag path. The 35 `structuredClone` calls become
+- [x] T5 Green (1dcc1043): Replace all 44 uses and remove the flag path. The 35 `structuredClone` calls become
       `deepCopy`, with one import per file. The 8 `.at(` calls become `atIndex`, and the
       `findLastIndex` call of `src/host/reader.ts:197` becomes `lastIndexWhere`. The call order and
       the expression shape stay the same, because a copy or an index result is equal. In
@@ -180,6 +193,29 @@ tests/apk3d/no-unpolyfilled-builtins.test.ts` exits 1 with exactly 44 hits group
       `SCAN_ROOT = join(ROOT, 'src')` without a condition, and keep the strip, the patterns, the
       exclusion rows, the controls, and the witness. A `grep -n SCAN_WIDE
 tests/apk3d/no-unpolyfilled-builtins.test.ts` returns nothing.
+  - Green evidence 2026-11-23: the commit changes 37 files: 29 game `core/sim.ts` files,
+    `labyrinth/core/mazes.ts`, four view files, `storytime/book-pictures.ts`, `host/reader.ts`, and
+    the scan test. The 44 replacements are 35 `deepCopy` calls across 30 files, 8 `atIndex` calls
+    across 5 files, and 1 `lastIndexWhere` call in 1 file. Commit `1dcc1043` removes the flag.
+    `grep -n SCAN_WIDE tests/apk3d/no-unpolyfilled-builtins.test.ts` returns nothing. A grep of
+    `src/` finds 35 `deepCopy(` calls, no `structuredClone(`, no array `.at(` target and no
+    `.findLastIndex(`.
+  - The three-file gate
+    `node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts`
+    through the heavy runner exits 0: 3 files passed, 9 tests passed. `node node_modules/typescript/bin/tsc
+    --noEmit` reports no error in any changed file; 52 error lines remain against a measured
+    baseline of 57 at this revision. `node_modules/.bin/prettier --check` on the changed files
+    reports 35 pre-existing failures that also fail at HEAD, and zero new failures; the two new
+    modules and the edited scan test pass. No baseline file is reformatted for style only.
+  - The 29 game snapshot replay tests pass in the AC4 project run; no game test fails.
+  - AC4 project gate 2026-11-23 at commit `b2d87dbe` (the audio track's parallel commit; the last
+    old-browser source commit is `1dcc1043`): `node node_modules/vitest/vitest.mjs run
+    --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts` through the heavy runner exits
+    0. Reporter: `Test Files 228 passed (228)`, `Tests 3376 passed | 2 skipped (3378)`. The first
+    attempt at this revision exited 1 only because the parallel audio track's `tests/audio-budget.test.ts`
+    was still in its intentional Red state; after that track produced its measurement artifact the
+    same command exited 0 with the counts above. No file of this track was changed between the two
+    runs.
   - Green done-when: T1 and T2 exit 0. The scan without the flag exits 0 with zero hits, and its
     control test still passes. The AC4 command exits 0. The 29 snapshots pass the replay tests of
     their own game.
@@ -190,9 +226,21 @@ tests/apk3d/no-unpolyfilled-builtins.test.ts` returns nothing.
     commits the unconditional `src/` root with the replacements. No committed state holds a failing
     scan. The two T3 logs stay in `measure/runs/old_browser_builtins_20261122/`.
 
-- [ ] T6 Green: Close the scan with its evidence. Record the zero-hit run of
+- [x] T6 Green (1dcc1043): Close the scan with its evidence. Record the zero-hit run of
       `tests/apk3d/no-unpolyfilled-builtins.test.ts` over `src/` without the flag, and record the met
       prerequisite.
+  - Green evidence 2026-11-23: `HEAVY_MIN_AVAIL_MB=1500 bash
+    /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node
+    node_modules/vitest/vitest.mjs run --maxWorkers=1
+    tests/apk3d/no-unpolyfilled-builtins.test.ts'` exits 0: 1 file passed, 2 tests passed, zero
+    hits. The scan test at `1dcc1043` sets `SCAN_ROOT = join(ROOT, 'src')` with no condition;
+    `grep -n SCAN_WIDE tests/apk3d/no-unpolyfilled-builtins.test.ts` returns nothing. Audio task
+    T6k of `audio_game_integration_20261014` at `0cc7b5c4` removed the two `Object.hasOwn` calls
+    before Red baseline `a414b406`, so this scan starts from 44 hits and never reports that label.
+  - Control evidence: all six AC3 rows pass. The three rows where the witness `stripCommentsFirst`
+    misses and the fixed scanner catches are "URL before a call on one line", "call in a template
+    interpolation", and "argument on the next lines". The receiver row and the two-line
+    `structuredClone(` row pass for both scanners; the 19-label row gives zero for both.
   - Done-when: this task holds the run command, the exit code 0, the date, and the commit. A `grep`
     of the test file finds no `SCAN_WIDE`. It names task T6k of `audio_game_integration_20261014` at
     `0cc7b5c4` as the commit that removed the two `Object.hasOwn` calls before the Red baseline
