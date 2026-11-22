@@ -7,7 +7,9 @@ import { describe, expect, it } from 'vitest';
 // Rune Match budget JSON holds the measured bytes, files, and seconds.
 // Review r1: the JSON case runs only with AUDIO_BUDGET_JSON=1 (A-F1), requires
 // decoded and fileEffect evidence (A-F2, C-F1), and the CLI case pins usage
-// text with no stack trace (C-F4 nit). No script or JSON is written here.
+// text with no stack trace (C-F4 nit). Review r2: the JSON case also requires
+// decodeSeconds within 1.5 s (A-F4) and the before-launch effect marker with
+// the first file-backed effect (C-F4). No script or JSON is written here.
 
 const README_PATH = join('sounds', 'README.md');
 const SETS_PATH = join('sounds', 'sets', 'chibi.json');
@@ -55,8 +57,10 @@ function readSetNames(): string[] {
 }
 
 // The six Rune Match mapped entries: tap, correct->right, wrong,
-// victory->level-end, whoosh, spawn->pop.
+// victory->level-end, whoosh, spawn->pop. The first file-backed game effect
+// must be one of these effect files, in either served format, never a music file.
 const RUNE_MATCH_FILES = ['tap', 'right', 'wrong', 'level-end', 'whoosh', 'pop'];
+const RUNE_MATCH_EFFECT_FILES = RUNE_MATCH_FILES.flatMap((name) => [`${name}.ogg`, `${name}.mp3`]);
 
 const jsonIt = JSON_ENABLED ? it : it.skip;
 
@@ -120,17 +124,27 @@ describe('audio preload budget', () => {
         seconds?: unknown;
         decoded?: unknown;
         fileEffect?: unknown;
+        decodeSeconds?: unknown;
+        effectMarker?: unknown;
+        firstEffect?: unknown;
       };
       expect(typeof parsed.bytes, 'rune-match bytes is a labeled number').toBe('number');
       expect(typeof parsed.files, 'rune-match files is a labeled number').toBe('number');
       expect(typeof parsed.seconds, 'rune-match seconds is a labeled number').toBe('number');
       expect(typeof parsed.decoded, 'rune-match decoded is a labeled number').toBe('number');
       expect(typeof parsed.fileEffect, 'rune-match fileEffect is a labeled boolean').toBe('boolean');
+      expect(typeof parsed.decodeSeconds, 'rune-match decodeSeconds is a labeled number').toBe('number');
+      expect(parsed.effectMarker, 'rune-match effectMarker is set before the Start action').toBe(
+        'before-launch',
+      );
+      expect(typeof parsed.firstEffect, 'rune-match firstEffect is a labeled file name').toBe('string');
       const bytes = parsed.bytes as number;
       const files = parsed.files as number;
       const seconds = parsed.seconds as number;
       const decoded = parsed.decoded as number;
       const fileEffect = parsed.fileEffect as boolean;
+      const decodeSeconds = parsed.decodeSeconds as number;
+      const firstEffect = parsed.firstEffect as string;
       expect(Number.isInteger(files), `rune-match files count ${String(files)}`).toBe(true);
       expect(files, `rune-match files count ${String(files)}`).toBe(6);
       expect(Number.isInteger(bytes), `rune-match bytes ${String(bytes)}`).toBe(true);
@@ -145,6 +159,12 @@ describe('audio preload budget', () => {
       expect(Number.isInteger(decoded), `rune-match decoded count ${String(decoded)}`).toBe(true);
       expect(decoded, `rune-match decoded count ${String(decoded)}`).toBe(files);
       expect(fileEffect, 'rune-match fileEffect plays the first effect from a decoded file').toBe(true);
+      expect(decodeSeconds, `rune-match decodeSeconds ${String(decodeSeconds)}`).toBeGreaterThan(0);
+      expect(decodeSeconds, `rune-match decodeSeconds ${String(decodeSeconds)}`).toBeLessThanOrEqual(1.5);
+      expect(
+        RUNE_MATCH_EFFECT_FILES.includes(firstEffect),
+        `rune-match firstEffect ${firstEffect} is one of the six Rune Match effect files`,
+      ).toBe(true);
     },
   );
 
