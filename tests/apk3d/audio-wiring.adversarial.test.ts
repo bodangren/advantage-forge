@@ -4,6 +4,7 @@ import { join } from 'node:path';
 import { AudioBus } from '../../src/apk3d/audio/bus.js';
 import { CHIBI_EVENTS } from '../../src/apk3d/audio/chibi-events.gen.js';
 import { chibiPreload, chibiSoundFiles, wireChibiSounds } from '../../src/apk3d/audio/chibi.js';
+import { playedEventsOf, stripComments } from './audio-wiring-parser.js';
 
 // Adversarial round for Phase 3 wiring (spec AC9). The reviews pinned the helper contract
 // and the 29 host lists; this file attacks the edges they left open: preload lists with
@@ -28,25 +29,8 @@ const readHostPaths = (): string[] =>
       }
     });
 
-// The extraction rules of tests/apk3d/audio-wiring.test.ts case 6, copied exactly, so a
-// change there cannot drift from this file without failing a fixture below.
-function playedEventsOf(text: string): Set<string> {
-  const played = new Set<string>();
-  for (const call of text.matchAll(/audio\.play\(([^;]*?)\)/gs)) {
-    let args = call[1]!;
-    const branch = args.indexOf('?');
-    if (branch >= 0) args = args.slice(branch);
-    for (const literal of args.matchAll(/'([a-z][a-z-]*)'/g)) played.add(literal[1]!);
-  }
-  const sfx = text.match(/const SFX[^=]*=\s*\{([^}]*)\}/s);
-  if (sfx) for (const literal of sfx[1]!.matchAll(/'([^'"]+)'/g)) played.add(literal[1]!);
-  return played;
-}
-
-/** The host text without comments, so a play call that exists only in a comment shows as a difference. */
-function stripComments(text: string): string {
-  return text.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\/\/[^\n]*/g, '');
-}
+// The extraction rules live in tests/apk3d/audio-wiring-parser.ts, shared
+// with tests/apk3d/audio-wiring.test.ts case 6, so the two files cannot drift.
 
 class FakeParam {
   value = 0;

@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { AudioBus } from '../../src/apk3d/audio/bus.js';
+import { playedEventsOf } from './audio-wiring-parser.js';
 
 // Covers spec AC9: the 2D game hosts set the sound map and preload at start.
 // Red: case 1 fails with ENOENT for the generated map, case 2 finds 0 of 29
@@ -10,6 +11,7 @@ import { AudioBus } from '../../src/apk3d/audio/bus.js';
 // checks that each host's wireChibiSounds list holds every event the host plays:
 // the literals of its audio.play calls (branch names of ternaries) and its SFX
 // values. Sprite animation .play calls never count: only audio.play does.
+// A play call inside a comment or a string literal never counts either.
 
 const OGG_TYPE = 'audio/ogg; codecs="vorbis"';
 
@@ -255,18 +257,9 @@ describe('audio wiring', () => {
       const text = readFileSync(host, 'utf8');
       const wire = text.match(/wireChibiSounds\(\s*audio\s*,[^,]*,\s*\[([^\]]*)\]/);
       const listed = wire ? [...wire[1]!.matchAll(/['"]([^'"]+)['"]/g)].map((m) => m[1]!) : [];
-      const played = new Set<string>();
-      // Every literal inside an audio.play call. A ternary plays its branch names, not the
-      // compared value, so only the text after the first ? counts as played.
-      for (const call of text.matchAll(/audio\.play\(([^;]*?)\)/gs)) {
-        let args = call[1]!;
-        const branch = args.indexOf('?');
-        if (branch >= 0) args = args.slice(branch);
-        for (const literal of args.matchAll(/'([a-z][a-z-]*)'/g)) played.add(literal[1]!);
-      }
-      // A host with an SFX map plays the map values through audio.play(SFX[name]).
-      const sfx = text.match(/const SFX[^=]*=\s*\{([^}]*)\}/s);
-      if (sfx) for (const literal of sfx[1]!.matchAll(/'([^'"]+)'/g)) played.add(literal[1]!);
+      // Comment- and string-aware: a commented-out or quoted audio.play call
+      // is not a played event and forces no wire-list entry.
+      const played = playedEventsOf(text);
       const missing = [...played].filter((event) => !listed.includes(event));
       if (missing.length > 0) failures.push(`${host} misses [${missing.join(', ')}]`);
     }
