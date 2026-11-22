@@ -1,0 +1,57 @@
+MEASURE_AGENT_RESULT
+role: jr-green
+track: audio_game_integration_20261014
+phase_heading: Phase 3: File playback in the AudioBus
+task: T6b Green (plan.md from line 288)
+phase_base_sha: af4e57aff730b1cf8ee9c716802920699f1eaaac
+role_base_sha: 4b1dd5af817d93a0106639c019093b4b2efce8ae
+immutable_red_commit: c02dde0fcb0c0016a75248dbae58d6a12c07b657
+red_commit_in_phase_range: c02dde0f is inside phase_base_sha..HEAD; phase_base_sha is its ancestor
+red_evidence_commit: 8cddb26f5feb08fec1797f7f9d110c92d127b3de
+implementation_commit: 5b4f5110319abcdca031e09c8afb8e36892bcbe4
+implementation_commit_message: feat(audio_game_integration): T6b Chibi sound map generator and 2D host wiring
+green_head: 5b4f5110319abcdca031e09c8afb8e36892bcbe4
+note_on_head: this block is committed in the follow-up plan-evidence commit; a commit cannot embed its own SHA, so green_head names the Green head before that commit.
+tasks_flipped_to_x:
+  - T6a Red (c02dde0f): "tests/apk3d/audio-wiring.test.ts" verified at 5b4f5110; plan line flipped [~] -> [x].
+  - T6b Green (5b4f5110): implementation and all Phase 3 named gates pass; plan line flipped [ ] -> [x].
+tasks_flipped_to_b: none
+targeted_red_command: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-wiring.test.ts'
+targeted_red_exit: 1
+targeted_red_output: |
+  RUN  v5.1.1 /home/daniebo/Desktop/advantage-forge
+  tests/apk3d/audio-wiring.test.ts (5 tests | 5 failed) 19ms
+  Case 1: Error: ENOENT: no such file or directory, open 'src/apk3d/audio/chibi-events.gen.ts'
+  Case 2: AssertionError: src/games/abyssal-well/view2d/game.ts holds 0 wireChibiSounds( calls
+  Cases 3-5: Error: Cannot find module '/src/apk3d/audio/chibi.js' imported from tests/apk3d/audio-wiring.test.ts
+  Test Files  1 failed (1)
+       Tests  5 failed (5)
+green_commands_and_exits:
+  - "targeted three-file command via heavy runner: exit 0; 3 passed files, 19 passed tests (audio-wiring 5/5, audio-files 10/10, imports 4/4)"
+  - "per-file commands chained in one heavy-run call: exit 0; 5/5, 10/10, 4/4"
+  - "node scripts/audio-event-map.mjs --check: exit 0; audio-event-map: 31 events current; writes no file"
+  - "drift check, one TSV row changed then restored byte for byte: exit 1; audio-event-map: tap: expected star, found tap"
+  - "node node_modules/typescript/bin/tsc --noEmit via heavy runner: exit 2; 51 'error TS' lines, zero in src/ or any changed file; the 38 TD-35 to TD-39 errors stay open and 13 belong to the committed concurrent storytime faces guard test"
+  - "node_modules/.bin/prettier --check scripts/audio-event-map.mjs src/apk3d/audio/chibi.ts src/apk3d/audio/chibi-events.gen.ts src/apk3d/audio/index.ts: exit 0"
+  - "node measure/tools/generate.mjs --check: exit 0; Measure facts are current (4 files)"
+  - "bash measure/doctor.sh --structural-only: exit 0; Measure doctor found no structural errors"
+  - "bash measure/doctor.sh: exit 0 after the generated facts were committed; before that commit exit 1 with 'committed generated facts differ from the working tree'"
+host_check: "29 of 29 src/games/*/view2d/game.ts hosts hold exactly one wireChibiSounds( call"
+new_files_added:
+  - scripts/audio-event-map.mjs (generator; committed in the implementation commit)
+  - src/apk3d/audio/chibi-events.gen.ts (31 entries; committed in the implementation commit)
+  - src/apk3d/audio/chibi.ts (helper; committed in the implementation commit)
+  - demo/public/audio/chibi/*.ogg and *.mp3 (14 files; committed in the implementation commit)
+  - measure/runs/audio_game_integration_20261014/green-p3-t6b.log (this evidence file; committed in the plan-evidence commit)
+changed_files_in_implementation_commit:
+  - src/apk3d/audio/index.ts
+  - src/apk3d/factory/types.ts
+  - src/apk3d/factory/mount.ts
+  - src/apk3d/factory/phaser-factory.ts
+  - src/host/main.ts
+  - 29 src/games/*/view2d/game.ts hosts
+generated_fact_change: measure/generated/architecture.json (76 -> 78 TypeScript files in src/apk3d), measure/generated/asset-inventory.json (two new audio source rows), measure/generated/status.md (audio track 4/11 -> 8/11)
+dirty_scope_check: git status --short before editing showed unrelated work in assets/sprout-dad.ts, assets/wizard-argon-trial.ts, bench/**, docs mockups and other tracks' run folders. None of it was staged. The staged implementation list held exactly 51 intended paths. The committed Red tests were not edited. No monorepo write. No push.
+prettier_scope_note: The 29 hosts and four edited source files were already Prettier-dirty at the role base. measure/workflow.md line 149 says prettier --check is not the lint and no formatting track owns that work. Reformatting them would add thousands of unrelated lines, so this task checks the new text files and leaves the dirty baseline unchanged.
+dev_server_note: This role did not start a vite dev server on port 5199 and did not run a browser; no dev server was left running.
+END_MEASURE_AGENT_RESULT

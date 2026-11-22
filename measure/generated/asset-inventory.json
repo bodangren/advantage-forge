@@ -17182,6 +17182,14 @@
       "source_present": true
     },
     {
+      "source_path": "src/apk3d/audio/chibi-events.gen.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/apk3d/audio/chibi.ts",
+      "source_present": true
+    },
+    {
       "source_path": "src/apk3d/audio/clip.ts",
       "source_present": true
     },

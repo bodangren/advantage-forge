@@ -244,7 +244,7 @@ Files this track touches:
     recipe in `BUILT_IN_SFX`, the `Ctx` assignment, the `synth` arrow, and the `tone` signature)
     because the baseline file was not Prettier-clean at printWidth 110; the recipes are unchanged.
 
-- [~] T6a Red: Add `tests/apk3d/audio-wiring.test.ts`. It proves that a 2D game host sets the sound
+- [x] T6a Red (c02dde0f): Add `tests/apk3d/audio-wiring.test.ts`. It proves that a 2D game host sets the sound
       map and preloads at start. The five cases:
 
   1. `src/apk3d/audio/chibi-events.gen.ts` holds 31 entries. The keys equal the 31 mapped events of
@@ -285,7 +285,7 @@ Files this track touches:
     marker keeps `plan.md` outside Prettier's task-list shape, so the plan file stays
     Prettier-dirty until Green marks it `[x]`; the Red done-when names the test file only.
 
-- [ ] T6b Green: Add `scripts/audio-event-map.mjs`. It reads `docs/sound-event-map.tsv` and writes
+- [x] T6b Green (5b4f5110): Add `scripts/audio-event-map.mjs`. It reads `docs/sound-event-map.tsv` and writes
       `src/apk3d/audio/chibi-events.gen.ts`: a header line that names the generator and the source
       file, then `CHIBI_EVENTS` with the 31 mapped events. Add `src/apk3d/audio/chibi.ts` with
       `chibiSoundFiles`, `chibiPreload`, and `wireChibiSounds`, and export the three from
@@ -306,6 +306,24 @@ Files this track touches:
     TD-35 to TD-39 stay open.
   - The 29 hosts pass their event list. No host calls `useSoundFiles` or `preload` directly: the
     helper does. A host with no `SFX` map passes the literal names of its `audio.play` calls.
+
+  - Green result 2026-11-22: implementation commit
+    `5b4f5110319abcdca031e09c8afb8e36892bcbe4` adds `scripts/audio-event-map.mjs`, the generated
+    `src/apk3d/audio/chibi-events.gen.ts` with 31 entries, and `src/apk3d/audio/chibi.ts` with
+    `chibiSoundFiles`, `chibiPreload`, and `wireChibiSounds`, exported from the audio barrel.
+    `soundBase?: string` reaches each host through `Game2DContext`, `PhaserFactoryContext`, and
+    `ThreeFactoryContext`; `src/host/main.ts` sets it to `${BASE}`. Each of the 29 hosts calls the
+    helper once with its own event list. The 14 rendered files land in `demo/public/audio/chibi/`.
+    The targeted command through the heavy runner exits 0: 5 of 5, 10 of 10, and 4 of 4 across the
+    three named files (19 of 19 together). `node scripts/audio-event-map.mjs --check` exits 0 and
+    writes no file. A changed TSV row exits 1 and names the event; the TSV was restored byte for
+    byte. `node node_modules/typescript/bin/tsc --noEmit` exits 2 with 51 errors, all in `assets/`
+    and `tests/`, and none in a changed file. The 38 errors of TD-35 to TD-39 stay open; the other
+    13 come from the committed concurrent storytime faces guard test. Prettier `--check` exits 0
+    on the generator, the generated map, the helper, and the audio barrel. The 29 hosts and the
+    four edited source files were already Prettier-dirty at the role base; `measure/workflow.md`
+    says no formatting track owns that work, so this task adds no unrelated reformatting. The
+    committed Red tests were not edited.
 
 ## Phase 4: Preload budget
 
