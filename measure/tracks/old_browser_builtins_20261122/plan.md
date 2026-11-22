@@ -250,7 +250,7 @@ tests/apk3d/no-unpolyfilled-builtins.test.ts` returns nothing.
     catches: the URL row, the template row, and the argument row. The same rows passed in the T3
     default run, so the controls hold with and without the flag.
 
-- [ ] T5r Green remediation (review r1 A-F1, C-F1, C-F4 JSDoc)
+- [~] T5r Green remediation (review r1 A-F1, C-F1, C-F4 JSDoc; Red 64ddb5e9)
 
 - [x] T3r Red (64ddb5e9): review r1 test findings A-F2, A-F3, A-F4, C-F2, C-F3 and F1 regression cases
   - Red evidence (commit `64ddb5e9`): the three-file gate exits 1 with only the two F1 regression
