@@ -1,5 +1,5 @@
-import { mixRgb, rgb, sdf } from '../src/index.js';
-import type { HumanoidProportions } from './parts/humanoid-kind.js';
+import { mixRgb, profile, rgb, sdf } from '../src/index.js';
+import type { HumanoidProportions, HumanoidShape } from './parts/humanoid-kind.js';
 import { ADULT, humanoidAsset } from './parts/humanoid-kind.js';
 import { sproutGestures } from './parts/sprout-gestures.js';
 
@@ -111,6 +111,147 @@ const C = {
   glasses: '#4a2c1a',
 };
 
+// Grandpa's face detail (Daniel 2026-11-22: more detail in the faces), matched to
+// docs/sprout-mockups/grandpa.jpg. Paint only: the shared stencils and every other
+// kind user keep today's look, so their GLBs stay byte-identical.
+const GRANDPA_FACE = {
+  irisDark: '#3a2412',
+  irisLow: '#6e4520',
+  pupil: '#101314',
+  mouth: '#7e2a2e',
+  teeth: '#fbf8f0',
+  tongue: '#e88a9a',
+  noseShade: '#d89a78',
+  // Fixed light warm grey: the shared tint.brow follows the hair color, which is
+  // white here, so it would wash out (Grandma fixed hers pale grey for the same
+  // reason, Dad his dark). The reference brows are soft white-grey arcs. The
+  // white brow-tuft geometry covers most of this paint; it reads in the gaps.
+  brow: '#c9c4ba',
+  ageLine: '#c98f6e',
+};
+
+/** Grandpa's face over the shared paint: dark round iris, open smile below the mustache, age marks. */
+const grandpaFace = (skin: sdf.Shape, h: HumanoidShape): sdf.Shape => {
+  const pair = (s: sdf.Shape) => s.mirror('x', 0);
+  const [EX, EY] = h.joints.EYE;
+  const smileY = GRANDPA.face.smileY;
+  const browY = GRANDPA.face.browY;
+  const noseY = GRANDPA.face.noseY;
+
+  // Dark round iris with a warm low arc, the pupil, and one big catchlight: the
+  // reference eye is deep brown with a single bright spark, seen through glasses.
+  const dark = pair(h.onFace(sdf.ellipsoid([0.037, 0.044, 0.07]), EX, EY - 0.006));
+  const low = dark.intersect(sdf.halfSpace([0, 1, 0], EY - 0.008));
+  const pupil = pair(h.onFace(sdf.ellipsoid([0.026, 0.029, 0.07]), EX, EY + 0.004));
+  const big = pair(h.onFace(sdf.sphere(0.012), EX + 0.015, EY + 0.018));
+  const small = pair(h.onFace(sdf.sphere(0.005), EX - 0.013, EY - 0.02));
+
+  // The shared brow band is heavy and brown; cover it with an exact-footprint hard
+  // skin stencil (a wider cover left a pale slab in Lily's rounds, a soft edge a
+  // halo) and paint a shorter, thinner, softly arched brow in the same place: the
+  // reference brow is short, light, and bushy, sitting just above the glasses.
+  const cover = pair(sdf.extrude(profile.arc(0.1, 0.024, 58, 122), 0.3).at(0.1, browY - 0.1, 0.1));
+  const brow = pair(sdf.extrude(profile.arc(0.07, 0.014, 62, 118), 0.3).at(0.1, browY - 0.1, 0.1));
+
+  // A gentle open smile below the mustache: dark inside, one thin rounded white
+  // teeth band at the top and a wide tongue, so the open smile still reads at
+  // 128 px (Tom r3: teeth 0.009, tongue 0.03). Both bands are clipped inside the
+  // mouth. The mouth sits a full teeth-band lower than the parents' so the
+  // mustache bottom edge clears the white band: tucked any higher, the mustache
+  // silk occludes the teeth and only the tongue shows.
+  const mY = smileY - 0.012;
+  const outline = profile.polygon(
+    (
+      [
+        [-0.052, 0.014],
+        [-0.026, 0.006],
+        [0, 0.004],
+        [0.026, 0.006],
+        [0.052, 0.014],
+        [0.044, -0.012],
+        [0.018, -0.03],
+        [-0.018, -0.03],
+        [-0.044, -0.012],
+      ] as [number, number][]
+    ).map(([x, y]): [number, number] => [x * 0.9, y * 0.9]),
+    { smooth: true },
+  );
+  const mouth = sdf.extrude(outline, 0.3).at(0, mY, 0.1);
+  const teeth = sdf
+    .box([0.062, 0.009, 0.3], 0.004)
+    .at(0, mY - 0.0035, 0.1)
+    .intersect(mouth);
+  const tongue = mouth.intersect(sdf.ellipsoid([0.03, 0.015, 0.5]).at(0, mY - 0.022, 0.1));
+
+  // Age marks the reference shows: soft smile (nasolabial) lines from the nose
+  // wings to the mouth corners, crow's feet at the outer eye corners, and two
+  // forehead lines across the bald crown. Thin chains sunk 1 mm into the face
+  // surface, so they read as soft creases.
+  const crease = (pts: [number, number][], r: number) =>
+    sdf.chain(
+      pts.map(([x, y]): [number, number, number, number] => [x, y, h.faceZ(x, y) - 0.001, r]),
+      0.002,
+    );
+  const nasolabial = pair(
+    crease(
+      [
+        [0.026, noseY + 0.004],
+        [0.037, noseY - 0.012],
+        [0.046, mY + 0.019],
+      ],
+      0.0025,
+    ),
+  );
+  const crowsfeet = pair(
+    crease(
+      [
+        [EX + 0.04, EY + 0.002],
+        [EX + 0.05, EY + 0.008],
+        [EX + 0.054, EY + 0.016],
+      ],
+      0.0022,
+    ),
+  );
+  const foreheadLow = crease(
+    [
+      [-0.055, browY + 0.03],
+      [-0.02, browY + 0.036],
+      [0.02, browY + 0.036],
+      [0.055, browY + 0.03],
+    ],
+    0.0022,
+  );
+  const foreheadHigh = crease(
+    [
+      [-0.045, browY + 0.05],
+      [-0.015, browY + 0.055],
+      [0.015, browY + 0.055],
+      [0.045, browY + 0.05],
+    ],
+    0.0022,
+  );
+
+  // A soft shade under the nose. The reference cheeks are smooth, so no freckles.
+  const shade = sdf.ellipsoid([0.02, 0.008, 0.05]).at(0, noseY - 0.018, h.faceZ(0, noseY - 0.018));
+
+  return skin
+    .paintWhere(dark, GRANDPA_FACE.irisDark, 0.006)
+    .paintWhere(low, GRANDPA_FACE.irisLow, 0.008)
+    .paintWhere(pupil, GRANDPA_FACE.pupil)
+    .paintWhere(big, '#ffffff')
+    .paintWhere(small, '#ffffff')
+    .paintWhere(cover, h.tint.skin!)
+    .paintWhere(brow, GRANDPA_FACE.brow!)
+    .paintWhere(mouth, GRANDPA_FACE.mouth, 0.001)
+    .paintWhere(tongue, GRANDPA_FACE.tongue, 0.002)
+    .paintWhere(teeth, GRANDPA_FACE.teeth, 0.001)
+    .paintWhere(nasolabial, GRANDPA_FACE.ageLine, 0.002)
+    .paintWhere(crowsfeet, GRANDPA_FACE.ageLine, 0.002)
+    .paintWhere(foreheadLow, GRANDPA_FACE.ageLine, 0.002)
+    .paintWhere(foreheadHigh, GRANDPA_FACE.ageLine, 0.002)
+    .paintWhere(shade, GRANDPA_FACE.noseShade, 0.01);
+};
+
 export default humanoidAsset({
   name: 'sprout-grandpa',
   description:
@@ -138,7 +279,8 @@ export default humanoidAsset({
   // Cut the arm skin inside the long sleeves. The skin upper arm blends into the chest
   // band near the shoulder while the sleeve takes only arm weights, so a raised arm left
   // a skin strip under the sleeve. Keep a short wrist stub inside the cuff; the hand is
-  // its own body below it.
+  // its own body below it. Then Grandpa's face detail (Daniel 2026-11-22), matched to
+  // docs/sprout-mockups/grandpa.jpg. Paint only: the shared kind keeps today's look.
   paintSkin(skin, h) {
     const { SHOULDER, ELBOW, WRIST } = h.joints;
     const d: V3 = [WRIST[0] - ELBOW[0], WRIST[1] - ELBOW[1], WRIST[2] - ELBOW[2]];
@@ -149,7 +291,7 @@ export default humanoidAsset({
       sdf.cone(SHOULDER, ELBOW, GRANDPA.limb.upper[0] + 0.022, GRANDPA.limb.upper[1] + 0.022),
       sdf.cone(ELBOW, cutEnd, GRANDPA.limb.fore[0] + 0.022, GRANDPA.limb.fore[1] + 0.022),
     );
-    return skin.subtract(sdf.union(armCut, armCut.mirror('x', 0)));
+    return grandpaFace(skin.subtract(sdf.union(armCut, armCut.mirror('x', 0))), h);
   },
 
   extra(k, h) {
@@ -159,14 +301,29 @@ export default humanoidAsset({
 
     // ---------------------------------------------------------------- white hair at the sides, bald crown
     // Local frame: y 0 is the head center (eyes at -0.038, brows at +0.038). No cap:
-    // the crown stays bare skin. Compact puffs hug the temples above the ears and a
-    // slim band crosses the nape, all well behind the cheeks, so the wave hand and
+    // the crown stays bare skin. Three tapered strands per side sweep back from the
+    // temples toward the nape (staggered tips and depths, grooves between strands,
+    // skin showing between the tips), inside the old puff envelope, plus a slim
+    // band across the nape, all well behind the cheeks, so the wave hand and
     // the point-to-self hand pass clean in front of them.
-    const puff = sdf.smoothUnion(
-      0.02,
-      sdf.sphere(0.038).at(0.175, 0.03, -0.005),
-      sdf.sphere(0.034).at(0.2, -0.015, -0.02),
-      sdf.sphere(0.03).at(0.185, -0.055, -0.035),
+    const strand = (pts: [number, number, number, number][]) => sdf.chain(pts, 0.008);
+    const sideLocks = sdf.smoothUnion(
+      0.004,
+      strand([
+        [0.155, 0.05, -0.002, 0.014],
+        [0.182, 0.016, -0.008, 0.009],
+        [0.2, -0.022, -0.018, 0.005],
+      ]),
+      strand([
+        [0.15, 0.038, -0.018, 0.013],
+        [0.174, -0.006, -0.026, 0.009],
+        [0.188, -0.048, -0.038, 0.005],
+      ]),
+      strand([
+        [0.145, 0.024, -0.032, 0.012],
+        [0.164, -0.022, -0.04, 0.008],
+        [0.174, -0.062, -0.052, 0.005],
+      ]),
     );
     const backBand = sdf
       .chain(
@@ -178,7 +335,7 @@ export default humanoidAsset({
         0.022,
       )
       .smoothIntersect(0.015, sdf.ellipsoid([0.225, 0.22, 0.21]).at(0, -0.01, -0.008));
-    const sideHair = sdf.smoothUnion(0.02, pair(puff), backBand).bone('head');
+    const sideHair = sdf.smoothUnion(0.02, pair(sideLocks), backBand).bone('head');
     k.body('hair', sideHair.at(0, HEAD_Y, 0), {
       color: k.tint('hair'),
       roughness: 0.65,
@@ -187,19 +344,29 @@ export default humanoidAsset({
     });
 
     // ---------------------------------------------------------------- bushy white mustache, rigid on the head
-    // Two wings sweep out from under the nose and end above the smile, sitting proud
-    // of the face surface. The mouth stays visible below it, like the reference.
+    // Three tapered cords per side sweep out from under the nose and end in
+    // staggered flicked tips above the smile (grooves between cords, skin-depth
+    // steps, tips sideways of their roots), inside the old wing envelope, so no
+    // gesture hand meets new surface. The mouth stays visible below it, like the
+    // reference.
+    const cord = (pts: [number, number, number, number][]) => sdf.chain(pts, 0.012);
     const wing = sdf.smoothUnion(
-      0.015,
-      sdf.ellipsoid([0.045, 0.02, 0.025]).at(0.055, -0.112, 0.135),
-      sdf.ellipsoid([0.032, 0.024, 0.026]).at(0.095, -0.105, 0.12),
-      sdf.chain(
-        [
-          [0.01, -0.108, 0.145, 0.02],
-          [0.05, -0.112, 0.14, 0.02],
-        ],
-        0.018,
-      ),
+      0.008,
+      cord([
+        [0.012, -0.098, 0.142, 0.02],
+        [0.052, -0.102, 0.14, 0.016],
+        [0.1, -0.09, 0.13, 0.007],
+      ]),
+      cord([
+        [0.01, -0.108, 0.146, 0.019],
+        [0.056, -0.112, 0.14, 0.015],
+        [0.11, -0.1, 0.128, 0.006],
+      ]),
+      cord([
+        [0.012, -0.116, 0.142, 0.017],
+        [0.05, -0.12, 0.136, 0.013],
+        [0.09, -0.112, 0.126, 0.006],
+      ]),
     );
     const mustache = pair(wing).bone('head');
     k.body('mustache', mustache.at(0, HEAD_Y, 0), {
@@ -209,8 +376,26 @@ export default humanoidAsset({
     });
 
     // ---------------------------------------------------------------- white brow tufts above the glasses
-    const brow = sdf.ellipsoid([0.045, 0.015, 0.02]).at(0.095, 0.058, 0.135).bone('head');
-    k.body('brows', pair(brow).at(0, HEAD_Y, 0), {
+    // Two short tapered locks per side lean outward with staggered tips (groove
+    // between them), sitting low just above the frames so the painted brow ends
+    // peek out at the sides, inside the old tuft envelope, so the count-fingers
+    // and eat hands meet no new surface at the glass rims.
+    const tuft = (pts: [number, number, number, number][]) => sdf.chain(pts, 0.006);
+    const browLocks = sdf.smoothUnion(
+      0.006,
+      tuft([
+        [0.073, 0.038, 0.132, 0.01],
+        [0.093, 0.044, 0.136, 0.008],
+        [0.114, 0.04, 0.133, 0.005],
+      ]),
+      tuft([
+        [0.077, 0.048, 0.134, 0.009],
+        [0.095, 0.053, 0.138, 0.007],
+        [0.108, 0.048, 0.134, 0.004],
+      ]),
+    );
+    const brow = pair(browLocks).bone('head');
+    k.body('brows', brow.at(0, HEAD_Y, 0), {
       color: k.tint('hair'),
       roughness: 0.65,
       detail: 0.004,
