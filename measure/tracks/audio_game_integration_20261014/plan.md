@@ -23,8 +23,8 @@ Files this track touches:
 - `src/apk3d/audio/chibi-events.gen.ts` (new, generated from `docs/sound-event-map.tsv`)
 - `src/apk3d/audio/chibi.ts` (new, the wiring helper)
 - `tests/apk3d/audio-wiring.test.ts` (new)
-- `src/apk3d/factory/types.ts` (the `soundBase` launch field)
-- `src/host/main.ts` (the `soundBase` value)
+- `src/apk3d/factory/types.ts` (the `soundBase` launch field, the site base)
+- `src/host/main.ts` (the `soundBase` value, `${BASE}`)
 - `src/games/*/view2d/game.ts` (29 hosts, the wiring call)
 - `scripts/audio-budget.mjs` (new)
 - `tests/audio-budget.test.ts` (new)
@@ -134,12 +134,15 @@ Files this track touches:
   2. Each of the 29 `src/games/*/view2d/game.ts` hosts holds one `wireChibiSounds(` call. The host
      count is 29. A host with zero calls or with two calls fails with its path.
   3. `wireChibiSounds(bus, '/demo/', ['tap', 'tap', 'hit', 'victory'])` calls `useSoundFiles` once
-     with `{ base: '/demo/audio/chibi/', events: <the 31 entries> }`. It calls `preload` once with
-     `['tap', 'victory']`: `tap` appears once, and `hit` is synth only.
+     with `{ base: '/demo/audio/chibi/', events: <the 31 entries> }`. The `soundBase` argument is
+     the site base, and the helper appends `audio/chibi/`; the file URL is
+     `'/demo/audio/chibi/tap.ogg'`. It calls `preload` once with `['tap', 'victory']`: `tap`
+     appears once, and `hit` is synth only.
   4. `wireChibiSounds(bus, undefined, ['tap'])` calls neither method and returns false. A host with
      no sound base keeps the synth recipe for every event.
   5. On a real `AudioBus` with a fake `fetch`, one `wireChibiSounds(audio, '/x/', ['tap'])` starts
-     one fetch, and its URL ends `/x/audio/chibi/tap.ogg`. A later `play('hit')` starts no fetch.
+     one fetch. The URL ends `/x/audio/chibi/tap.ogg`, because the helper appends `audio/chibi/` to
+     the site base once. A later `play('hit')` starts no fetch.
   - The bus calls sit in one helper, not in 29 copies. `src/apk3d/audio/chibi.ts` holds
     `wireChibiSounds(audio, soundBase, gameEvents)`, `chibiSoundFiles(soundBase)`, and
     `chibiPreload(events)`. Case 2 counts the helper call in each host. Case 3 counts the bus calls
@@ -158,10 +161,13 @@ Files this track touches:
       file, then `CHIBI_EVENTS` with the 31 mapped events. Add `src/apk3d/audio/chibi.ts` with
       `chibiSoundFiles`, `chibiPreload`, and `wireChibiSounds`, and export the three from
       `src/apk3d/audio/index.ts`. Add `soundBase?: string` to the launch context in
-      `src/apk3d/factory/types.ts`. Set it in `src/host/main.ts` to `${BASE}audio/chibi/`. Call
-      `wireChibiSounds(audio, ctx.soundBase, <the game's events>)` once in each of the 29
-      `src/games/*/view2d/game.ts` hosts. Copy the 14 files of `sounds/chibi/` to
-      `demo/public/audio/chibi/` in this task, because the preload needs the files.
+      `src/apk3d/factory/types.ts`, with a doc comment that names it the site base with a trailing
+      slash (`${BASE}`) and says the helper appends `audio/chibi/`. Set it in `src/host/main.ts` to
+      `${BASE}`, not `${BASE}audio/chibi/`: the helper appends the folder, so the page fetches
+      `${BASE}audio/chibi/tap.ogg`. Call `wireChibiSounds(audio, ctx.soundBase, <the game's events>)`
+      once in each of the 29 `src/games/*/view2d/game.ts` hosts. Copy the 14 files of
+      `sounds/chibi/` to `demo/public/audio/chibi/` in this task, because the preload needs the
+      files.
   - Green done-when: the T6a command exits 0 with 5 of 5 tests passing.
   - `node scripts/audio-event-map.mjs --check` exits 0 on the committed generated file, and writes
     no file. A changed TSV row makes it exit 1 and name the event.

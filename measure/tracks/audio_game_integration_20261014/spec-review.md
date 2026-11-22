@@ -51,3 +51,17 @@ Date: 2026-11-22. Scope: `spec.md`, `plan.md`, and `spec-review.md` only. No imp
   and preloads the game's own mapped events. `estimated_tasks` becomes 11.
 - T8 no longer copies the demo files, because T6b does it; T8 checks the copy and builds the
   hand-off. The synth fallback, AC4, and every later task number stay as they are.
+
+## Amendment after r3 (2026-11-22)
+
+- F7 closed: `soundBase` has one meaning, the site base with a trailing slash (`'/demo/'` or
+  `${BASE}`), and `wireChibiSounds` appends `audio/chibi/`. `spec.md` AC9, `plan.md` T6a cases 3 and
+  5, `plan.md` T6b, and the T6b doc comment for `src/apk3d/factory/types.ts` say this. T6b sets
+  `src/host/main.ts` to `${BASE}`, so `'/demo/'` gives `'/demo/audio/chibi/tap.ogg'`.
+- F8 closed: `spec.md` AC6 now lists `MANIFEST.sha256`, with the `sha256sum` format and one line per
+  shipped file, and counts 17 files. AC6 and `plan.md` T8 agree.
+- F9 closed: `spec.md` AC9 now says 29 hosts create the `AudioBus`, 27 games name
+  `primary-chibi-2d` by that string, and dragon-rider and griffin-sky-joust bind their 2D files
+  through `requiredAssetBindings: [...FILES_2D]` from `HERO_CLIPS_2D` without the string. A grep of
+  the 29 game folders gives 27 with the string and those 2 without. All 29 call `wireChibiSounds`
+  once. `test-strategy.md` marks the product wiring gap closed by T6a and T6b.

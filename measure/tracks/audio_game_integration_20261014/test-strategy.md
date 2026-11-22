@@ -256,6 +256,9 @@ the demo. The API is inert until a caller sets the map. Unit proof and browser p
 observe a real file request in a game page without that call. Record the gap. Phase 4 must create
 the call inside its own harness, as stated there.
 
+Closed by T6a and T6b: each of the 29 2D hosts now calls `wireChibiSounds` once, and the helper
+sets the map and preloads the game's own events (spec AC9).
+
 ## Phase 4: Preload budget
 
 Risk: `high`. Timing under emulation is noisy, and a zero-row measurement looks like a number.
@@ -283,8 +286,9 @@ records both numbers and the file count. `out/` stays untracked.
 **Closeout addition.** Re-run the measurement once. Report both numbers. A second run may differ;
 record the later number and keep the earlier in the plan note. Do not commit `out/`.
 
-**The measurement must not be vacuous.** The script must name how the page receives the map,
-because no game calls `useSoundFiles` today. Allowed shapes, in order of preference: a demo page
+**The measurement must not be vacuous.** The script must name how the page receives the map. After
+T6b, the game's own `wireChibiSounds` call with the host `soundBase` is one such source. Allowed
+shapes, in order of preference: the game page itself, with the host `soundBase`; a demo page
 under `demo/` that calls `useSoundFiles({ base: '/audio/chibi/', events })` and the game mount; a
 launch-context field; an in-page hook the script sets before the first click. The script then
 asserts before it writes JSON: the audio resource entries are at least 1, each entry URL ends

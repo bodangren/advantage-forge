@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "role": "spec-review",
+  "track": "audio_game_integration_20261014",
+  "phase": "track setup",
+  "baseline_sha": "70dd26882135d3e262b77d80e9ad120f7e7b81fe",
+  "audited_head_sha": "70dd26882135d3e262b77d80e9ad120f7e7b81fe",
+  "status": "fail",
+  "summary": "The delta closes the inert-API gap with falsifiable T6a and T6b cases and keeps PM decisions (a) to (d) intact. One changed line blocks: T6a fixes the helper to append audio/chibi/ to soundBase, while T6b sets the standalone host soundBase to ${BASE}audio/chibi/, which doubles the folder in the real URL.",
+  "blocking_findings": [
+    "F7 [Blocker] plan.md T6a cases 3 and 5 / T6b Green: T6a requires the helper to turn soundBase '/demo/' into base '/demo/audio/chibi/' and '/x/' into '/x/audio/chibi/tap.ogg', so chibiSoundFiles appends audio/chibi/. T6b instead sets the standalone host soundBase to `${BASE}audio/chibi/`, so the wired URL becomes `${BASE}audio/chibi/audio/chibi/<file>` and the 14 files copied to demo/public/audio/chibi/ are never reached. Rationale: The two changed lines give soundBase incompatible meanings; Red passes only with the append behavior, while Green's host value makes the real page fetch a missing folder, so the implementer must choose the file location."
+  ],
+  "nonblocking_findings": [
+    "F8 [Major] plan.md Phase 5 T8 / spec.md AC6: T8 now says the hand-off folder holds MANIFEST.sha256 per spec AC6, but AC6 is unchanged by the delta and still lists only the 14 sound files, MANIFEST.tsv, and README.md. Rationale: The strategy calls the checksum file the settlement of r2 F6 and tells Green to create it, so the work is executable, but the spec and plan disagree on the folder contents; add the file to AC6 or drop the 'per spec AC6' phrase.",
+    "F9 [Nit] spec.md AC9: The claim that each of the 29 games with a 2D view binds the primary-chibi-2d skin is not literal in two cases; dragon-rider and griffin-sky-joust bind 2D assets through requiredAssetBindings and HERO_CLIPS_2D without that string. Rationale: All 29 hosts still get the wiring call, so the build does not change; narrow the wording to the sprite pack those games use."
+  ],
+  "evidence": [
+    "HEAD equals audited_head_sha and the baseline: git rev-parse HEAD = 70dd26882135d3e262b77d80e9ad120f7e7b81fe; commit subject: measure(audio_game_integration): wiring task, strategy, review records",
+    "Host count verified: ls src/games/*/view2d/game.ts gives 29; grep -l 'new AudioBus' over those files gives 29, each with `const audio = ctx.audio ?? new AudioBus();` (for example src/games/abyssal-well/view2d/game.ts:62)",
+    "src/host/main.ts and src/apk3d/factory/types.ts both exist; main.ts:34 sets BASE = import.meta.env.BASE_URL and main.ts:77 creates `const audio = new AudioBus()`; types.ts:125 defines Game2DContext with optional audio at line 135 and types.ts:238 defines PhaserFactoryContext with optional audio at line 255",
+    "Base-path contradiction: plan.md T6a case 3 expects { base: '/demo/audio/chibi/' } from soundBase '/demo/'; case 5 expects /x/audio/chibi/tap.ogg from '/x/'; plan.md T6b line 161 sets soundBase in main.ts to `${BASE}audio/chibi/`; the helper therefore appends and the host value doubles the folder",
+    "Five T6a cases are falsifiable and Red can fail them cleanly: case 1 reads the absent generated map and fails with ENOENT; case 2 counts zero of 29 helper calls; cases 3 to 5 dynamically import the absent src/apk3d/audio/chibi.js inside each case, so collection continues and each case fails on the import",
+    "AC9 matches T6a and T6b on the 31 generated entries, one helper call per host, one useSoundFiles call, one deduplicated preload, and the no-soundBase synth path; the stale format-timing wording ('preload can resolve the file format before the first unlock()') is recorded but not escalated because AC9 states the resolution",
+    "T8 change verified: the demo file copy moved to T6b, T8 now verifies the 14 files byte for byte, and T8 lists MANIFEST.sha256 among the hand-off files; spec AC6 was not changed and still omits that file",
+    "PM decisions (a) to (d) are unchanged in the delta: the Decision table in spec.md has no changed row, metadata.json keeps the same description and adds only the wiring-gap note, and T8 keeps the proposed-target wording with the PM or Monorepo confirmation gate",
+    "test-strategy.md was added in this delta but has no T6a, T6b, AC9, or wiring section; its Phase 3 still says 'Product wiring gap (nonblocking). No phase calls useSoundFiles or preload from a game or the demo.' That note is stale after T6b and was not escalated because the strategy is context and plan.md owns execution",
+    "Closure was verified from spec.md, plan.md, metadata.json, and test-strategy.md; per role rules, measure/tracks/<track>/spec-review.md was not read"
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "git log -1 --oneline HEAD",
+    "git show --stat --oneline 70dd2688",
+    "git diff 6dc8114f..70dd2688 -- measure/tracks/audio_game_integration_20261014/spec.md measure/tracks/audio_game_integration_20261014/plan.md measure/tracks/audio_game_integration_20261014/metadata.json",
+    "git diff 6dc8114f..70dd2688 -- measure/tracks/audio_game_integration_20261014/test-strategy.md",
+    "sed -n of the amended spec.md AC6 and plan.md T6a, T6b, T8 sections",
+    "sed -n of test-strategy.md Phase 3 and Phase 5 sections",
+    "ls src/games/*/view2d/game.ts and grep -l 'new AudioBus' over those files",
+    "grep for primary-chibi-2d across the 29 game directories, src/host/main.ts, and src/apk3d/factory/types.ts",
+    "grep of plan.md for soundBase, base URLs, chibi paths, and the launch context fields",
+    "ls -l src/host/main.ts src/apk3d/factory/types.ts src/apk3d/audio/index.ts"
+  ],
+  "changed_files": [
+    "measure/runs/audio_game_integration_20261014/spec-review-70dd268.json",
+    "measure/runs/audio_game_integration_20261014/spec-review-70dd268.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "escalate_human",
+  "confidence": "high",
+  "route": "opencode-go/hy4-flash-free#high",
+  "paraphrase": {
+    "proposes": "The delta adds game wiring so the file API is not inert: a generator writes the 31-entry map module, one helper sets the map and preloads a game's own mapped events, and each of the 29 2D hosts calls that helper with a sound base from the standalone host. The demo file copy moves into the wiring task, the hand-off adds MANIFEST.sha256, and AC9 records the wiring contract. PM decisions (a) to (d) stay unchanged.",
+    "current_system": "Per the spec, the AudioBus synthesizes every effect and the 29 2D hosts each create an AudioBus with `ctx.audio ?? new AudioBus()`. No host currently calls useSoundFiles or preload, so the file API from phases 1 to 3 has no caller and the demo serves no chibi audio folder. The standalone host reads BASE from import.meta.env.BASE_URL, and the launch context types already carry an optional audio bus."
+  }
+}

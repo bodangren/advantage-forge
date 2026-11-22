@@ -171,8 +171,10 @@ and asserts a total of at most 100,000 bytes for each format.
 ### AC6: Hand-off to the PM
 
 `out/apk-audio-handoff/chibi/` holds the seven `.ogg` files, the seven `.mp3` files, `MANIFEST.tsv`,
-and `README.md`. `MANIFEST.tsv` holds the columns `file`, `bytes`, `sha256`, `format`, `source`, and
-`target`. Each `target` value is `proposed: apps/advantage-games/public/audio/chibi/<file>`, so the
+`MANIFEST.sha256`, and `README.md`: 17 files. `MANIFEST.sha256` uses the `sha256sum` format, with
+one line for each shipped file: 64 lowercase hex characters, two spaces, then the file name.
+`MANIFEST.tsv` holds the columns `file`, `bytes`, `sha256`, `format`, `source`, and `target`. Each
+`target` value is `proposed: apps/advantage-games/public/audio/chibi/<file>`, so the
 prefix names the path as proposed. `README.md` names the same proposed target and the load rule of
 AC4. It also cites the model pack row in `docs/apk-port.md`, line 238:
 `apps/advantage-games/public/packs/`. The folder goes to the PM, and the PM routes it to the
@@ -196,12 +198,25 @@ These commands pass:
 
 ### AC9: Game wiring
 
-Each of the 29 games with a 2D view binds the `primary-chibi-2d` skin. Each host calls
-`wireChibiSounds(audio, soundBase, gameEvents)` once, at game start. The call sets the map with
-`useSoundFiles` once: 31 entries, from `src/apk3d/audio/chibi-events.gen.ts`. The generator
-`scripts/audio-event-map.mjs` writes that file from `docs/sound-event-map.tsv`. The call starts
-`preload` once with the game's own mapped events, with no duplicate. An event outside the map is
-not preloaded and keeps the synth recipe.
+Each of the 29 hosts `src/games/*/view2d/game.ts` creates one `AudioBus` with
+`ctx.audio ?? new AudioBus()`. Each host calls `wireChibiSounds(audio, soundBase, gameEvents)` once,
+at game start.
+
+Twenty-seven games name the `primary-chibi-2d` sprite pack by that string in their own folder. Two
+games, dragon-rider and griffin-sky-joust, name no such string; they bind their 2D files another
+way. Their manifest lists `requiredAssetBindings: [...FILES_2D]`, and `FILES_2D` is built from
+`HERO_CLIPS_2D` and the other clip lists (`src/games/dragon-rider/manifest.ts`). All 29 hosts read
+their files from `ctx.edition.bindings`, and the standalone host builds that edition from the
+`primary-chibi-2d` pack (`src/host/main.ts`, `PACK_2D` and `edition2dOf`).
+
+`soundBase` is the site base, with a trailing slash: `'/demo/'` or `${BASE}`. The helper appends
+`audio/chibi/`, so `'/demo/'` gives the folder `'/demo/audio/chibi/'` and the file
+`'/demo/audio/chibi/tap.ogg'`.
+
+The call sets the map with `useSoundFiles` once: 31 entries, from
+`src/apk3d/audio/chibi-events.gen.ts`. The generator `scripts/audio-event-map.mjs` writes that file
+from `docs/sound-event-map.tsv`. The call starts `preload` once with the game's own mapped events,
+with no duplicate. An event outside the map is not preloaded and keeps the synth recipe.
 
 A host with no `soundBase` makes neither call, so every event keeps the synth recipe. The 14 files
 of `demo/public/audio/chibi/` are the files that the wiring loads. `preload` can resolve the file
