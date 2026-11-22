@@ -23,10 +23,15 @@ Files this track touches:
 - `src/host/reader.ts` (1 `findLastIndex` call, line 197)
 - `tests/old-browser/deep-copy.test.ts` (new)
 - `tests/old-browser/index-math.test.ts` (new)
-- `tests/old-browser/no-es2022-builtins.test.ts` (new)
+- `tests/apk3d/no-unpolyfilled-builtins.test.ts` (the `SCAN_ROOT` widening, the strip line
+  numbers, the missing patterns, the named exclusions, and the two controls; the audio track
+  committed the file at `1f45fcfe`)
 - `scripts/old-browser-check.mjs` (new)
 - `out/old-browser/` (not in git)
 - `measure/tracks/old_browser_builtins_20261122/*`
+
+The track adds no second scan file. `tests/apk3d/no-unpolyfilled-builtins.test.ts` is the one scan
+(decision c of `spec.md`).
 
 The heavy runner wraps every test run and every browser run:
 
@@ -41,8 +46,9 @@ HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/hea
       runs at HEAD, before the helper exists. The four cases:
 
   1. State types: build the start snapshot of each of the 29 games through
-     `tests/games/<game>/helpers.ts`, walk every value, and require a plain object, an array, a
-     string, a number, a boolean, `null`, or `undefined`. Print the type set.
+     `tests/games/<game>/helpers.ts`, walk every value, and record the observed type set per game
+     first. Then require the allowed list: a plain object, an array, a string, a number, a boolean,
+     `null`, or `undefined`.
   2. Equal values: a copy of each snapshot is `toEqual` its source, for each of the 29 games.
   3. No shared reference: change one nested value of a copy, and show the source unchanged, for each
      of the 29 games.
@@ -64,25 +70,34 @@ HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/hea
      index after the end, `-0`, a fractional index, `NaN`, `Infinity`, and `-Infinity`.
   2. `lastIndexWhere` equals `Array.prototype.findLastIndex` over the AC2 rule 3 table: no match,
      one match, several matches, and a match at index 0.
-  3. The 9 sites: each file holds one `atIndex(` or `lastIndexWhere(` call and no array `.at(` and
-     no `.findLastIndex(`. The case reads the file text and imports no view module.
+  3. The 8 `.at(` sites and the one `findLastIndex` site: each file holds a helper call and no array
+     `.at(` and no `.findLastIndex(`. The case reads the file text and imports no view module. The
+     nine lines are `src/games/dragon-flight/view2d/game.ts:565`,
+     `src/games/dragon-rider/view2d/game.ts:591`, `src/games/spellweavers-run/view/game.ts:216`,
+     `src/games/spellweavers-run/view2d/game.ts:311`, `src/games/spellweavers-run/view2d/game.ts:429`,
+     `src/storytime/book-pictures.ts:2269`, `src/storytime/book-pictures.ts:3935`,
+     `src/storytime/book-pictures.ts:4558`, and `src/host/reader.ts:197`.
   - Red evidence: `node node_modules/vitest/vitest.mjs run tests/old-browser/index-math.test.ts --maxWorkers=1`
   - Red done-when: the command exits 1. Cases 1 and 2 fail on the absent helper module, inside the
-    case. Case 3 fails and names the 9 paths. No syntax or import error.
-  - Record in this task: the 9 sites and their line numbers.
+    case. Case 3 fails and names the nine lines. No syntax or import error.
+  - Record in this task: the nine lines and the 8 `.at(` count against the 1 `findLastIndex` count.
 
-- [ ] T3 Red: Add `tests/old-browser/no-es2022-builtins.test.ts` per AC3. It strips block comments,
-      line comments, and string and template literal text, then matches the 19 patterns. The named
-      false positives stay out: `this.at(`, `.at(` with two or more arguments, `z.union(`, and the
-      three `Box3.union` calls of `src/render/page.ts`. The two controls: a fixture string with
-      every pattern fails, and a comment or a string with every pattern passes.
-  - Red evidence: `node node_modules/vitest/vitest.mjs run tests/old-browser/no-es2022-builtins.test.ts --maxWorkers=1`
-  - Red done-when: the command exits 1 with 46 hits: the 44 hits of AC1 and AC2 and the two
-    `Object.hasOwn` hits of `src/apk3d/audio/`. Each hit line is `<path>:<line>: <pattern>`. The
-    two controls pass. No syntax error.
-  - Record in this task: the 46 hits as a list, grouped by pattern.
-  - Dependency: the two hits in `src/apk3d/audio/` leave with task T6k of
-    `audio_game_integration_20261014`. This track changes no file in that folder.
+- [ ] T3 Red: Widen the committed scan `tests/apk3d/no-unpolyfilled-builtins.test.ts` per AC3, and
+      run it, but commit it in T5, because a committed failing scan turns the shared suite red for
+      the other sessions. The changes: `SCAN_ROOT` becomes `src/`; the strip keeps the line numbers;
+      the pattern list stays the 19 labels; the named exclusions join the file; the two controls join
+      the test. The scan reports 44 hits.
+  - Red evidence: copy the widened file to `measure/runs/old_browser_builtins_20261122/`, run it
+    through the heavy runner, and write the log next to it:
+    `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 <the copy>'`
+  - Red done-when: the run exits 1 with 44 hits: 35 `structuredClone`, 8 array `.at(`, and 1
+    `findLastIndex`. `Object.hasOwn` reports no hit, because task T6k `0cc7b5c4` fixed the two audio
+    calls. Each hit line is `<path>:<line>: <label>`, and the line matches the real source line. The
+    two controls pass. No syntax error. The repository file stays at HEAD after the run.
+  - Record in this task: the 44 hits as a list, grouped by label, and the log path.
+  - Prerequisite, met: task T6k of `audio_game_integration_20261014` (`0cc7b5c4`) removed both
+    `Object.hasOwn` calls from `src/apk3d/audio/`. A scan of `src/` at baseline `a414b406` finds
+    none.
 
 ## Phase 2: Green
 
@@ -91,36 +106,40 @@ HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/hea
       Re-export the three functions from `src/apk3d/sim/index.ts`. Keep the module free of imports,
       because `apk3d/sim` may import only `apk3d/contracts`.
   - Green done-when: cases 1, 2, and 4 of T1 pass. Cases 1 and 2 of T2 pass. Case 3 of T2 still
-    fails on the 9 sites.
+    fails on the 8 `.at(` sites and the 1 `findLastIndex` site.
   - Gate: `tests/apk3d/imports.test.ts` exits 0. The command is
     `node node_modules/vitest/vitest.mjs run tests/apk3d/imports.test.ts --maxWorkers=1`.
   - Type check: `node node_modules/typescript/bin/tsc --noEmit` reports no error in the two new
     modules. The 38 baseline errors of TD-35 to TD-39 stay open.
 
-- [ ] T5 Green: Replace all 44 uses. The 35 `structuredClone` calls become `deepCopy`, with one
-      import per file. The 8 `.at(` calls become `atIndex`, and the `findLastIndex` call of
-      `src/host/reader.ts:197` becomes `lastIndexWhere`. The call order and the expression shape
-      stay the same, because a copy or an index result is equal.
-  - Green done-when: T1 and T2 exit 0. T3 exits 0 with the 2 audio hits only, or with zero hits when
-    T6k has landed.
-  - Gate: the AC4 command exits 0. The 29 snapshots pass the replay tests of their own game.
-  - Record in this task: the 37 changed files, the 44 replacements, and the file count of each
-    pattern.
+- [ ] T5 Green: Replace all 44 uses and commit the widened scan. The 35 `structuredClone` calls
+      become `deepCopy`, with one import per file. The 8 `.at(` calls become `atIndex`, and the
+      `findLastIndex` call of `src/host/reader.ts:197` becomes `lastIndexWhere`. The call order and
+      the expression shape stay the same, because a copy or an index result is equal.
+  - Green done-when: T1 and T2 exit 0. The widened scan, now committed at
+    `tests/apk3d/no-unpolyfilled-builtins.test.ts`, exits 0 with zero hits. The AC4 command exits 0.
+    The 29 snapshots pass the replay tests of their own game.
+  - Gate: `node node_modules/vitest/vitest.mjs run tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts --maxWorkers=1`
+  - Record in this task: the 37 changed source files, the 44 replacements, the file count of each
+    label, and the commit that lands the widened scan. The scan lands in the same commit as the
+    replacements, so the shared suite never sees a failing scan.
 
-- [ ] T6 Green: Close the scan. Run `tests/old-browser/no-es2022-builtins.test.ts` after task T6k of
-      `audio_game_integration_20261014` lands, and record that commit here.
-  - Green done-when: the T3 command exits 0 with zero hits, and this task names the audio commit and
-    its date.
-  - If T6k has not landed at the T5 gate, this task waits. The wait does not block the browser
-    check or the gates, because the AC3 test reports the two known hits and AC5 covers behaviour.
+- [ ] T6 Green: Close the scan with its evidence. Record the zero-hit run of
+      `tests/apk3d/no-unpolyfilled-builtins.test.ts` over `src/`, and record the met prerequisite.
+  - Done-when: this task holds the run command, the exit code 0, the date, and the commit. It names
+    task T6k of `audio_game_integration_20261014` at `0cc7b5c4` as the commit that removed the two
+    `Object.hasOwn` calls before the Red baseline `a414b406`, so the scan of AC3 starts at 44 hits
+    and never reports that label.
 
 ## Phase 3: Browser check
 
-- [ ] T7 Measure: Add `scripts/old-browser-check.mjs` per AC5. It serves the demo with the Vite dev
-      server in the pattern of `scripts/apk3d-shot.ts`, opens `spellweavers-run` at
-      `?qc=1&renderer=phaser`, and installs `context.addInitScript` before the first navigation. The
-      init script deletes the four built-ins. The script asserts each absence in the page, starts
-      the game, plays one move, and writes `out/old-browser/check.json` and two screenshots.
+- [ ] T7 Measure: Add `scripts/old-browser-check.mjs` per AC5. Prerequisite, met: task T6k
+      (`0cc7b5c4`) removed both `Object.hasOwn` calls from `src/apk3d/audio/`. The script serves the
+      demo with the Vite dev server in the pattern of `scripts/apk3d-shot.ts`, opens
+      `spellweavers-run` at `?qc=1&renderer=phaser`, and installs `context.addInitScript` before the
+      first navigation. The init script deletes the four built-ins. The script asserts each absence
+      in the page, starts the game, plays one move, and writes `out/old-browser/check.json` and two
+      screenshots.
   - Run: `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/old-browser-check.mjs --game spellweavers-run'`
   - Done-when: the command exits 0. `check.json` holds `started: true`, `moves` of 1 or more, and
     `errors: []`. The two screenshots exist. The plan records the game, the four deleted names, the
@@ -132,18 +151,23 @@ HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/hea
 
 - [ ] T8 Gates: Run every gate of AC6 and record each exit code in this plan.
   - Commands, each run through the heavy runner where it starts tests:
-    - `node node_modules/vitest/vitest.mjs run tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/old-browser/no-es2022-builtins.test.ts --maxWorkers=1`
+    - `node node_modules/vitest/vitest.mjs run tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts --maxWorkers=1`
     - `node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts`
     - `node measure/tools/generate.mjs --check`
     - `./measure/doctor.sh --structural-only`
-    - `node_modules/.bin/prettier --check` on each new text file
-  - Done-when: each command exits 0, and this plan holds one line per command with its date and its
-    count. The three new test files pass in one run. A failure that belongs to TD-35 to TD-40 stays
-    named as that debt and does not count as a pass.
+    - `node_modules/.bin/prettier --check` on each new or changed text file
+  - Done-when: each command exits 0, and this plan holds one line per command with its date, its
+    exit code, and the reporter output of the run. For the project command, the reporter line gives
+    the file count, the passed test count, and the skipped count, and the line names the commit that
+    the run tested. A pinned count from an earlier track is not part of the record.
+  - A failure that belongs to TD-35 to TD-40 stays named as that debt and does not count as a pass.
 
 ## Known limits
 
 - `tsc --noEmit` is not a gate while TD-35 to TD-39 are open. It reports 38 baseline errors.
 - `PROJECT_TESTS` excludes `tests/storytime-book-pictures.test.ts` while TD-40 is open.
-- The scan reads text. A built-in that a generated file or a dependency brings in is out of its
-  reach, and the browser check of AC5 is the only runtime proof of the four deleted names.
+- The scan skips `*.gen.ts`, as the committed file does. A built-in that a generated file or a
+  dependency brings in is out of its reach, and the browser check of AC5 is the only runtime proof
+  of the four deleted names.
+- The scan reads text. A hit line is only as true as the strip, and AC3 rule 2 keeps the line
+  numbers for that reason.
