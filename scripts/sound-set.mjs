@@ -16,7 +16,7 @@ import {
   rmSync,
   statSync,
 } from 'node:fs';
-import { dirname, join, resolve } from 'node:path';
+import { dirname, isAbsolute, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = resolve(process.env.SOUNDS_ROOT ?? join(dirname(fileURLToPath(import.meta.url)), '..'));
@@ -64,17 +64,8 @@ for (let index = 0; index < sounds.length; index += 1) {
   seen.add(entry.name);
 }
 
-const earshot = resolve(process.env.EARSHOT_BIN ?? join(ROOT, '.venv-earshot', 'bin', 'earshot'));
-try {
-  accessSync(earshot, fsConstants.X_OK);
-} catch {
-  fail(`sound-set: earshot not found at ${earshot}; run scripts/sound-setup.sh`, 1);
-}
-
-// FFMPEG_BIN is an absolute path or a basename searched on PATH. An empty value is unset.
-// Only a regular executable file qualifies. The working directory is never searched.
-// The check runs once, before the first entry and before any target preparation.
-const ffmpegInput = process.env.FFMPEG_BIN || 'ffmpeg';
+// Both binaries are checked before any target preparation. Only a regular executable file
+// qualifies, so a directory or a non-executable file fails closed with the exact diagnostic.
 function isExecutableFile(path) {
   try {
     if (!statSync(path).isFile()) return false;
@@ -84,10 +75,20 @@ function isExecutableFile(path) {
     return false;
   }
 }
+
+const earshot = resolve(process.env.EARSHOT_BIN ?? join(ROOT, '.venv-earshot', 'bin', 'earshot'));
+if (!isExecutableFile(earshot)) {
+  fail(`sound-set: earshot not found at ${earshot}; run scripts/sound-setup.sh`, 1);
+}
+
+// FFMPEG_BIN is an absolute path or a basename searched on PATH. An empty value is unset.
+// Only absolute PATH entries are searched, so the working directory is never a candidate.
+// The check runs once, before the first entry and before any target preparation.
+const ffmpegInput = process.env.FFMPEG_BIN || 'ffmpeg';
 function findFfmpeg(bin) {
   if (bin.includes('/')) return isExecutableFile(bin) ? bin : null;
   for (const dir of (process.env.PATH ?? '').split(':')) {
-    if (dir === '') continue;
+    if (!isAbsolute(dir)) continue;
     const candidate = join(dir, bin);
     if (isExecutableFile(candidate)) return candidate;
   }
