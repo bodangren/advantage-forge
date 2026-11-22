@@ -218,8 +218,10 @@ export default humanoidAsset({
 
     // ---------------------------------------------------------------- white T-shirt under the open shirt
     // The tee covers the full torso; the open plaid shirt sits outside it. Both hems run
-    // 0.05 m below the belt line, so no skin shows between the shirt and the jeans.
-    const HEM = P.shirt.hemY - 0.05;
+    // below the belt line, so no skin shows between the shirt and the jeans; they sit
+    // a further 12 mm lower than before so the skin wedge under the old tee hem stays
+    // covered at rest and in the listen lean. The open front design is unchanged.
+    const HEM = P.shirt.hemY - 0.062;
     // The long plaid sleeves cover the arms fully (like the reference), so the tee
     // needs no sleeves: a sleeved tee poked white through the shoulder tops.
     const teeBody = h.torso.round(0.002).smoothIntersect(0.008, sdf.halfSpace([0, -1, 0], -HEM));
@@ -297,17 +299,33 @@ export default humanoidAsset({
     k.body('pocket-buttons', pair(button), { color: C.button, roughness: 0.5, detail: 0.002 });
 
     // ---------------------------------------------------------------- dark-blue jeans to the shoe tops
+    // The leg cones start tucked inside the hip mass (hipsY - 0.03), not up at the
+    // HIP joint: the old cone ran to chest height with a sharp cap rim, and in a
+    // spine roll (listen) the shirt side swung off that static rim, so blue broke
+    // through at the waist. Everything above the hem hides under the shirt and tee,
+    // so the visible leg below the hem is unchanged.
     const kneeR = 0.054;
     const jeanLeg = sdf.smoothUnion(
       0.012,
-      sdf.cone(HIP, KNEE, 0.064, kneeR).bone('leg.L'),
+      sdf.cone([HIP[0], P.pants.hipsY - 0.03, HIP[2]], KNEE, 0.058, kneeR).bone('leg.L'),
       sdf.sphere(kneeR).at(...KNEE).bone('leg.L'),
       sdf.cone(KNEE, [P.ankle[0], 0.17, P.ankle[2]], kneeR, 0.044).round(0.002).bone('shin.L'),
+    );
+    // The hip mass takes the torso weight bands (the shirt's layout), not a rigid
+    // hips tag: in a spine roll the shirt side shifts while rigid jeans stay, so the
+    // jeans broke through at the waist. Weighted like the shirt, the hip mass leans
+    // with it. It is also slimmer than the shirt waist (0.90/0.92 vs the shirt's
+    // full torso round), so the inner layer keeps clearance through the roll. At
+    // rest the weights are the identity and the mass hides inside, so the
+    // silhouette is unchanged (the Grandpa fix 10632c67; Ben's jeans use the same
+    // weighted-hips recipe).
+    const jeanHips = h.weighted(
+      sdf.ellipsoid([P.pants.hipsSize[0] * 0.9, P.pants.hipsSize[1], P.pants.hipsSize[2] * 0.92]).at(0, P.pants.hipsY, 0),
     );
     const jeans = sdf
       .smoothUnion(
         0.03,
-        sdf.ellipsoid([P.pants.hipsSize[0] * 0.98, P.pants.hipsSize[1], P.pants.hipsSize[2] * 0.98]).at(0, P.pants.hipsY, 0).bone('hips'),
+        jeanHips,
         pair(jeanLeg),
       )
       .paintFn((x, y, z, base) => mixRgb(base, rgb(C.denimDark), 0.3 * (0.5 - 0.5 * Math.cos((x * 2 + z) * 40) * Math.cos(y * 25))));
