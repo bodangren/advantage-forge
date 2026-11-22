@@ -758,7 +758,7 @@ Files this track touches:
   - The monorepo path `apps/advantage-games/public/audio/chibi/` is a proposed target. The MANIFEST
     names it as proposed, and the PM or Monorepo session confirms or replaces it at hand-off. This
     repository holds no copy of that folder, so the plan cannot verify it here.
-  - Done-when: `sha256sum -c out/apk-audio-handoff/chibi/MANIFEST.sha256` exits 0. The folder holds
+  - Done-when: `(cd out/apk-audio-handoff/chibi && sha256sum -c MANIFEST.sha256)` exits 0. The folder holds
     14 sound files. `git -C ../reading-advantage-monorepo status --short` lists no path that this
     track names, both before and after the hand-off. Other sessions edit the monorepo, so the
     status need not be empty. No Forge command writes in the monorepo. The PM answer lands in this
@@ -802,7 +802,31 @@ Files this track touches:
     and the README case (`README states the one-time format choice: expected false to be true`).
     `node_modules/.bin/prettier --check tests/audio-handoff.test.ts` exits 0. `tsc --noEmit`
     through the heavy runner reports 51 baseline errors with none in the test file.
-  - [~] T8g Green remediation (name check, README load rule and recipient steps, --help, plan checksum command, symlink rejection)
+  - [x] T8g Green remediation (a0cdaf4f): name check, README load rule and recipient steps, --help, plan checksum command, symlink rejection
+  - Implementation commit `a0cdaf4f42beaef56397d643f1ed6a949d9ccb1c` changes only
+    `scripts/audio-handoff.mjs`. Before any write, the script requires the exact seven effect names
+    in both `.ogg` and `.mp3` in each input folder and prints one diagnostic on a bad inventory.
+    Format labels come only from the file extension. `lstatSync` rejects a symlink in either input
+    folder. `--help` prints one usage line on stdout and exits 0; an unsupported argument prints
+    usage on stderr and exits 1. Both paths end before any folder change.
+  - The README now states the real load rule: one format choice with `canPlayType`, Ogg preferred,
+    `keep the choice`, a preload that can choose before the first unlock, and a first unlock that
+    reuses that choice. It tells the recipient to verify with `sha256sum -c MANIFEST.sha256` from
+    inside the folder, then to copy the 14 sound files to the target that the PM or Monorepo
+    session confirms.
+  - The T8 Done-when checksum command now runs inside the folder:
+    `(cd out/apk-audio-handoff/chibi && sha256sum -c MANIFEST.sha256)`.
+  - Gate 1 2026-11-23: `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run tests/audio-handoff.test.ts tests/audio-handoff.adversarial.test.ts --maxWorkers=1'`
+    exits 0 with 6 passed and 5 skipped (11). The skips are the opt-in artifact cases.
+  - Gate 2 2026-11-23: the strategy's Green command with the before and after monorepo status runs
+    exits 0 with 11 passed (11) across the two test files. `sha256sum -c MANIFEST.sha256` from
+    inside the folder prints 14 OK lines and exits 0. The folder holds 17 files. Both monorepo
+    status outputs list the same 24 unrelated paths from other sessions, with no path this track
+    names. `node_modules/.bin/prettier --check scripts/audio-handoff.mjs` exits 0.
+  - Symlink probe 2026-11-23: an isolated copy with a symlink at `sounds/chibi/tap.ogg` exits 1 with
+    `audio-handoff: symlink in ...: tap.ogg` and creates no `out/` folder. The adversarial name
+    check passes in both gates through `tests/audio-handoff.adversarial.test.ts`.
+  - dispositions: A-F1=FIX; A-F2=FIX; A-F3=FIX; C-F1=FIX; C-F2=FIX; C-F3=FIX; ADV-P5-1=FIX; B-N1=FIX
 
 ## Phase 6: Deferred work
 
