@@ -12,8 +12,8 @@ Files this track touches:
 
 - `src/apk3d/sim/copy.ts` (new, `deepCopy`)
 - `src/apk3d/sim/index-math.ts` (new, `atIndex` and `lastIndexWhere`)
-- `src/apk3d/sim/index.ts` (the two exports)
-- 29 `src/games/*/core/sim.ts` files (35 `structuredClone` calls; 5 files hold 2)
+- `src/apk3d/sim/index.ts` (the three exports)
+- 29 `src/games/*/core/sim.ts` files (34 `structuredClone` calls; 5 files hold 2)
 - `src/games/labyrinth/core/mazes.ts` (1 `structuredClone` call)
 - `src/games/dragon-flight/view2d/game.ts` (1 `.at(` call)
 - `src/games/dragon-rider/view2d/game.ts` (1 `.at(` call)
@@ -166,14 +166,15 @@ tests/apk3d/no-unpolyfilled-builtins.test.ts` exits 1 with exactly 44 hits group
       Re-export the three functions from `src/apk3d/sim/index.ts`. Keep the module free of imports,
       because `apk3d/sim` may import only `apk3d/contracts`.
   - Green evidence 2026-11-23: `node node_modules/vitest/vitest.mjs run tests/apk3d/imports.test.ts
-    --maxWorkers=1` through the heavy runner exits 0 (1 file, 4 tests). The targeted
+--maxWorkers=1` through the heavy runner exits 0 (1 file, 4 tests). The targeted
     `node node_modules/vitest/vitest.mjs run tests/old-browser/deep-copy.test.ts
-    tests/old-browser/index-math.test.ts --maxWorkers=1` exits 1 as expected before T5: deep-copy
+tests/old-browser/index-math.test.ts --maxWorkers=1` exits 1 as expected before T5: deep-copy
     cases 1, 2 and 4 pass, index-math cases 1 and 2 pass, and only index-math case 3 fails on the
     nine old sites. `node node_modules/typescript/bin/tsc --noEmit` reports no error in the three
-    new or changed files; the run has 52 error lines against a measured baseline of 57 at this
-    revision, because the five `Cannot find module` errors for the two new modules are gone.
-    `node_modules/.bin/prettier --check` exits 0 on all three files.
+    new or changed files. The phase base `3f6a192` has 51 errors. Red at `25612156` has 57, and
+    this Green run has 52: the five extra Red errors are `Cannot find module` for the two new
+    modules, and Green adds one TS2769 diagnostic in the deep-copy test. Red T3r removes that
+    diagnostic. `node_modules/.bin/prettier --check` exits 0 on all three files.
   - `deepCopy` handles plain data, `Map`, `Set`, `Date`, typed arrays and `ArrayBuffer` through one
     WeakMap seen-set; a function, symbol, `WeakMap`, `WeakSet` or promise raises a TypeError.
     `atIndex` matches `ToIntegerOrInfinity`, including `NaN` to index 0, and `lastIndexWhere`
@@ -203,15 +204,16 @@ tests/apk3d/no-unpolyfilled-builtins.test.ts` returns nothing.
   - The three-file gate
     `node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts`
     through the heavy runner exits 0: 3 files passed, 9 tests passed. `node node_modules/typescript/bin/tsc
-    --noEmit` reports no error in any changed file; 52 error lines remain against a measured
-    baseline of 57 at this revision. `node_modules/.bin/prettier --check` on the changed files
+--noEmit` reports no error in any changed file. The phase base `3f6a192` has 51 errors; Red at
+    `25612156` has 57, and the audited Green run has 52. The five Red-only errors are missing-helper
+    imports, and Green adds one TS2769 diagnostic. Red T3r removes that diagnostic.
+    `node_modules/.bin/prettier --check` on the changed files
     reports 35 pre-existing failures that also fail at HEAD, and zero new failures; the two new
     modules and the edited scan test pass. No baseline file is reformatted for style only.
   - The 29 game snapshot replay tests pass in the AC4 project run; no game test fails.
   - AC4 project gate 2026-11-23 at commit `b2d87dbe` (the audio track's parallel commit; the last
     old-browser source commit is `1dcc1043`): `node node_modules/vitest/vitest.mjs run
-    --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts` through the heavy runner exits
-    0. Reporter: `Test Files 228 passed (228)`, `Tests 3376 passed | 2 skipped (3378)`. The first
+--maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts` through the heavy runner exits 0. Reporter: `Test Files 228 passed (228)`, `Tests 3376 passed | 2 skipped (3378)`. The first
     attempt at this revision exited 1 only because the parallel audio track's `tests/audio-budget.test.ts`
     was still in its intentional Red state; after that track produced its measurement artifact the
     same command exited 0 with the counts above. No file of this track was changed between the two
@@ -221,8 +223,9 @@ tests/apk3d/no-unpolyfilled-builtins.test.ts` returns nothing.
     their own game.
   - Gate, no flag anywhere in the command:
     `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts'`
-  - Record in this task: the 37 changed source files, the 44 replacements, the file count of each
-    label, and the commit that removes the flag. T3 already committed the scan code, so this task
+  - Record in this task: the 36 changed source files and one scan test, the 44 replacements, the
+    file count of each label, and the commit that removes the flag. T3 already committed the scan
+    code, so this task
     commits the unconditional `src/` root with the replacements. No committed state holds a failing
     scan. The two T3 logs stay in `measure/runs/old_browser_builtins_20261122/`.
 
@@ -230,9 +233,9 @@ tests/apk3d/no-unpolyfilled-builtins.test.ts` returns nothing.
       `tests/apk3d/no-unpolyfilled-builtins.test.ts` over `src/` without the flag, and record the met
       prerequisite.
   - Green evidence 2026-11-23: `HEAVY_MIN_AVAIL_MB=1500 bash
-    /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node
-    node_modules/vitest/vitest.mjs run --maxWorkers=1
-    tests/apk3d/no-unpolyfilled-builtins.test.ts'` exits 0: 1 file passed, 2 tests passed, zero
+/home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node
+node_modules/vitest/vitest.mjs run --maxWorkers=1
+tests/apk3d/no-unpolyfilled-builtins.test.ts'` exits 0: 1 file passed, 2 tests passed, zero
     hits. The scan test at `1dcc1043` sets `SCAN_ROOT = join(ROOT, 'src')` with no condition;
     `grep -n SCAN_WIDE tests/apk3d/no-unpolyfilled-builtins.test.ts` returns nothing. Audio task
     T6k of `audio_game_integration_20261014` at `0cc7b5c4` removed the two `Object.hasOwn` calls
@@ -250,7 +253,31 @@ tests/apk3d/no-unpolyfilled-builtins.test.ts` returns nothing.
     catches: the URL row, the template row, and the argument row. The same rows passed in the T3
     default run, so the controls hold with and without the flag.
 
-- [~] T5r Green remediation (review r1 A-F1, C-F1, C-F4 JSDoc; Red 64ddb5e9)
+- [x] T5r Green remediation (9440c572): review r1 A-F1, C-F1, C-F4 JSDoc, A-F4, A-F5, C-F5, A-F7; Red 64ddb5e9
+  - Targeted Red rerun at `3ddaaf53` exits 1 with 2 failed and 11 passed (13). The two failures are
+    cases "sparse arrays keep their length and their holes" and "an own **proto** key stays an own
+    data key" (log `/tmp/red-r1-rerun.log`, recorded in `red-p2-r1.log`).
+  - Source fix in `src/apk3d/sim/copy.ts`: an array copy uses `new Array(source.length)` and copies
+    own indexes only. The generic branch defines each own key with `Object.defineProperty` and sets
+    `value`, `writable`, `enumerable` and `configurable`, so an own `__proto__` key stays an own data
+    property and the prototype stays `Object.prototype`.
+  - JSDoc fix (C-F4): `copy.ts` states that the helper throws a TypeError while the native clone
+    throws a DataCloneError, and that the helper copies values from the current realm.
+    `index-math.ts` states that `lastIndexWhere` passes the value and the index to its predicate,
+    while the native method also passes the array.
+  - Import fix (A-F7): 33 changed files now hold one import from the simulation barrel. The merge
+    keeps the `type` modifier in `src/games/monster-encounters/core/sim.ts`. The pre-existing second
+    `./tuning.js` import in `src/games/archers-revenge/core/sim.ts` stays untouched.
+  - Plan fixes (A-F4, A-F5, C-F5): the TypeScript lines state the phase base count of 51 separately
+    from the Red-to-Green comparison of 57 to 52. The file list states 34 clone calls in 29 sims
+    plus 1 call in the maze file, three barrel exports, and 36 source files plus one scan test.
+    `prettier --check measure/tracks/old_browser_builtins_20261122/plan.md` exits 0.
+  - Green gates 2026-11-23 at commit `9440c572`: the three-file command exits 0 with 3 files and
+    13 tests passed. The AC4 command exits 0 with `Test Files 228 passed (228)` and
+    `Tests 3380 passed | 3 skipped (3383)`. `tests/apk3d/imports.test.ts` exits 0 with 1 file and
+    4 tests. `node node_modules/typescript/bin/tsc --noEmit` exits 2 with 51 error lines, none in a
+    changed file. `node_modules/.bin/prettier --check` on the 35 changed source files reports 32
+    pre-existing failures and zero new failures; `plan.md` passes. No committed Red test changed.
 
 - [x] T3r Red (64ddb5e9): review r1 test findings A-F2, A-F3, A-F4, C-F2, C-F3 and F1 regression cases
   - Red evidence (commit `64ddb5e9`): the three-file gate exits 1 with only the two F1 regression
