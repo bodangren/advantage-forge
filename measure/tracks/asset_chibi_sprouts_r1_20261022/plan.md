@@ -814,11 +814,34 @@ Workbooks does not wait for it.
     - An independent look judge, not the maker family, writes one line on the face likeness and one line
       on the clothes for each sheet. The judge sees the sheet only. Both lines go into this plan.
     - A likeness line names the largest difference, or says "match" for the face and for the clothes.
+    - Judge record 2026-11-22 (independent look judge, sheet only; likeness score out of 10 versus
+      the original reference; artifact
+      `measure/runs/asset_chibi_sprouts_r1_20261022/ux-browser-review-faces-r2-muse.json`). Every
+      output is closer to the reference than to the 3D render. Every output is rated G. No output
+      adds text.
+      - Lily 8/10. Face: Muse shows an open toothy grin, freckles and larger round eyes; the reference has a gentle closed smile and clear cheeks. Clothes: Muse has short white ankle socks instead of the reference's knee-high socks; top, skirt and shoes match.
+      - Mom 8/10. Face: Muse has much larger round eyes with long lashes and an open toothy smile; the reference has smaller almond eyes and a closed smile. Clothes: match.
+      - Tom 8/10. Face: Muse adds freckles, an open toothy grin and spikier hair; the reference has a closed smile, clear cheeks and neater spikes. Clothes: match.
+      - Grandma 9/10. Face: Muse's eyes are a little larger and rounder and the face is longer; bun, wrinkles, smile and earrings match. Clothes: match.
+      - Grandpa 8/10. Face: Muse has an open toothy grin and dark glasses rims instead of the reference's closed smile and brown rims. Clothes: match.
+      - Dad: no Muse call; face failed five judge rounds (7.0, 7.0, 7.2, 7.0); waits for Daniel's look decision (PM 2026-11-22)
+      - Total Muse spend 0.05 USD (5 calls, 1 try each).
   - Step 5, upload the six sheets to Drive folder `1W6iwGCe0qQ3EXqPASvzat5fLqNnEIbaA`, sub-folder
     `faces-r2`, one file per character named `<character>-compare.png`, with the `gws` CLI.
     - Create the sub-folder once: `gws drive files create --json '{"name":"faces-r2","mimeType":"application/vnd.google-apps.folder","parents":["1W6iwGCe0qQ3EXqPASvzat5fLqNnEIbaA"]}'`.
     - Upload each file with `gws drive files create --upload <path> --upload-content-type image/png`.
     - Check each file with `gws drive files get`; its `md5Checksum` must equal the local MD5.
+    - Uploaded 2026-11-22. The sub-folder is `faces-r2`, id
+      `1XLjQ9bEI_3h_xw8NFwjDE81hZsNzK7fM`, link
+      https://drive.google.com/drive/folders/1XLjQ9bEI_3h_xw8NFwjDE81hZsNzK7fM. The folder was
+      absent before the call, so this run created it. It holds five files and no other file:
+      `lily-compare.png` `1ujj1diXS0tgKCK13jzOr0YkoMLUkGAHr`,
+      `mom-compare.png` `1GDNJpjwDxb-WC4L9_IXoX5xL7d5U7--w`,
+      `tom-compare.png` `1Qi1Qp2WTCJbIx9z_icB9xE5hh-boIYdO`,
+      `grandma-compare.png` `1cYeyIvZMUitDjTmoCgYRY6OLxU2orGSM`,
+      `grandpa-compare.png` `1YFb25HzMP34UciWNA7-luOizkpMEUoPl`. `gws drive files get` reports
+      an MD5 equal to the local file for each of the five. Dad has no sheet and no Muse output, so
+      five sheets sit in the folder, not six.
   - Done-when: the six sheets sit in the `faces-r2` Drive sub-folder with six equal MD5 values;
     `costs.tsv` sums to 0.06 USD or less, plus rounding; this plan holds one line per Muse character
     with the face judgment, the clothes judgment, and the cost; and `node measure/tools/generate.mjs
