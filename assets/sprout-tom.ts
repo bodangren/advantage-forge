@@ -1,5 +1,6 @@
 import { profile, sdf } from '../src/index.js';
 import { AGE5, humanoidAsset } from './parts/humanoid-kind.js';
+import type { HumanoidShape } from './parts/humanoid-kind.js';
 import { sproutGestures } from './parts/sprout-gestures.js';
 import { scaleAsset } from './parts/scale-asset.js';
 
@@ -36,8 +37,42 @@ const C = {
   tongue: '#e88a9a',
 };
 
-/** An open laughing mouth painted on the face: dark inside, a row of teeth, a tongue. */
-const openSmile = (skin: sdf.Shape, smileY: number): sdf.Shape => {
+/** Tom's face detail (Daniel 2026-11-22: more detail in the faces), matched to
+ * docs/sprout-mockups/tom.jpg. Paint only: the shared stencils and every other
+ * kind user keep today's geometry and paint, so their GLBs stay byte-identical. */
+const TOM = {
+  irisDark: '#2e1a0e',
+  irisLow: '#5a3418',
+  pupil: '#101314',
+  mouth: '#7e2a2e',
+  teeth: '#fbf8f0',
+  tongue: '#e88a9a',
+  freckle: '#b06a48',
+  noseShade: '#d89a78',
+};
+
+/** An open laughing mouth with one white teeth band, a tongue, and Tom's dark round eyes. */
+const tomFace = (skin: sdf.Shape, h: HumanoidShape): sdf.Shape => {
+  const pair = (s: sdf.Shape) => s.mirror('x', 0);
+  const [EX, EY] = h.joints.EYE;
+  const smileY = AGE5.face.smileY;
+  const browY = AGE5.face.browY;
+
+  // Near-black round iris with a warm low arc, the pupil, and one big catchlight.
+  const dark = pair(h.onFace(sdf.ellipsoid([0.037, 0.044, 0.07]), EX, EY - 0.006));
+  const low = dark.intersect(sdf.halfSpace([0, 1, 0], EY - 0.008));
+  const pupil = pair(h.onFace(sdf.ellipsoid([0.026, 0.029, 0.07]), EX, EY + 0.004));
+  const big = pair(h.onFace(sdf.sphere(0.012), EX + 0.015, EY + 0.018));
+  const small = pair(h.onFace(sdf.sphere(0.005), EX - 0.013, EY - 0.02));
+
+  // The shared brow band is long and heavy; cover it with an exact-footprint skin
+  // stencil (hard edge: a wider or soft cover left a pale slab in Lily's rounds)
+  // and paint a shorter, thinner arc in the same place.
+  const cover = pair(sdf.extrude(profile.arc(0.1, 0.024, 58, 122), 0.3).at(0.1, browY - 0.1, 0.1));
+  const brow = pair(sdf.extrude(profile.arc(0.07, 0.014, 62, 118), 0.3).at(0.1, browY - 0.1, 0.1));
+
+  // An open laughing mouth: dark inside, one rounded white teeth band (no fang
+  // corners), a tongue. The band is a rounded box clipped to the mouth.
   const outline = (s: number) =>
     profile.polygon(
       (
@@ -56,9 +91,36 @@ const openSmile = (skin: sdf.Shape, smileY: number): sdf.Shape => {
       { smooth: true },
     );
   const mouth = sdf.extrude(outline(1), 0.3).at(0, smileY, 0.1);
-  const teeth = sdf.extrude(outline(0.9), 0.3).at(0, smileY + 0.001, 0.1).intersect(sdf.halfSpace([0, -1, 0], -(smileY - 0.005)));
+  const teeth = sdf
+    .box([0.06, 0.014, 0.3], 0.006)
+    .at(0, smileY - 0.007, 0.1)
+    .intersect(mouth);
   const tongue = mouth.intersect(sdf.ellipsoid([0.024, 0.012, 0.5]).at(0, smileY - 0.026, 0.1));
-  return skin.paintWhere(mouth, C.mouth, 0.001).paintWhere(tongue, C.tongue, 0.002).paintWhere(teeth, C.teeth, 0.001);
+
+  // A soft shade under the small nose and a scatter of freckles over the nose bridge.
+  const shade = sdf.ellipsoid([0.02, 0.008, 0.05]).at(0, AGE5.face.noseY - 0.018, h.faceZ(0, AGE5.face.noseY - 0.018));
+  const dots: [number, number][] = [
+    [-0.03, 0.012],
+    [-0.014, 0.02],
+    [0.004, 0.014],
+    [0.022, 0.02],
+    [0.038, 0.01],
+    [-0.048, 0.004],
+    [0.052, 0.002],
+  ];
+  const freckles = sdf.union(...dots.map(([dx, dy]) => h.onFace(sdf.sphere(0.0026), dx, AGE5.face.noseY + dy)));
+
+  return skin
+    .paintWhere(dark, TOM.irisDark, 0.006)
+    .paintWhere(low, TOM.irisLow, 0.008)
+    .paintWhere(pupil, TOM.pupil)
+    .paintWhere(big, '#ffffff')
+    .paintWhere(small, '#ffffff')
+    .paintWhere(cover, h.tint.skin!)
+    .paintWhere(brow, h.tint.brow!)
+    .paintWhere(mouth, TOM.mouth, 0.001)
+    .paintWhere(tongue, TOM.tongue, 0.002)
+    .paintWhere(teeth, TOM.teeth, 0.001);
 };
 
 export default scaleAsset(
@@ -84,50 +146,48 @@ export default scaleAsset(
     presets: {
       tom: { skin: 'fair', hair: 'brown', eyes: 'brown', cloth: 'blue' },
     },
-    paintSkin: (skin) => openSmile(skin, AGE5.face.smileY),
+    paintSkin: (skin, h) => tomFace(skin, h),
 
     extra(k, h) {
       const { HIP, ANKLE, HEAD_Y } = h.joints;
       const pair = (s: sdf.Shape) => s.mirror('x', 0);
       const P = AGE5;
 
-      // ---------------------------------------------------------------- brown hair: one smooth cap, a fringe swept to his left, a crown tuft
+      // ---------------------------------------------------------------- brown hair: one smooth cap, five separate swept locks, a crown tuft
       const H = P.head;
       const faceMask = sdf.ellipsoid([0.24, 0.15, 0.25]).rotateZ(12).at(0.02, -0.06, 0.14);
       const outer = sdf.ellipsoid([H[0] + 0.03, H[1] + 0.03, H[2] + 0.03]).at(0, 0.008, -0.01);
       const cap = sdf.ellipsoid([H[0] + 0.013, H[1] + 0.015, H[2] + 0.013]).at(0, 0.008, -0.01).smoothSubtract(0.02, faceMask);
-      // The sweep: long locks run from the part (his right) across to his left temple.
-      const fringe = sdf.chain(
-        [
-          [-0.11, 0.13, 0.11, 0.042],
-          [-0.04, 0.14, 0.17, 0.05],
-          [0.05, 0.115, 0.205, 0.05],
-          [0.12, 0.075, 0.19, 0.04],
-          [0.165, 0.045, 0.13, 0.028],
-        ],
-        0.03,
+      // The sweep: five tapered locks run from the part (his right) across to his left
+      // temple. The roots merge but the tips stay distinct: a small fillet (0.008) with
+      // wide tip spacing and varied tip depths, so the hairline reads as separated
+      // pointed locks with skin showing between them, not one smooth helmet edge.
+      const lock = (rx: number, tx: number, ty: number) =>
+        sdf.cone([rx, 0.155, 0.14], [tx, ty, 0.2], 0.046, 0.013);
+      const fringe = sdf.smoothUnion(
+        0.008,
+        lock(-0.14, -0.1, 0.055),
+        lock(-0.07, -0.045, 0.03),
+        lock(0.0, 0.02, 0.052),
+        lock(0.06, 0.085, 0.028),
+        lock(0.11, 0.15, 0.058),
       );
-      const lock2 = sdf.chain(
-        [
-          [-0.15, 0.1, 0.08, 0.034],
-          [-0.085, 0.1, 0.175, 0.038],
-          [-0.01, 0.075, 0.215, 0.03],
-        ],
-        0.02,
-      );
-      const fringeAll = sdf.smoothUnion(0.02, fringe, lock2).smoothIntersect(0.02, outer);
-      // The crown tuft: short spiky locks that lie almost flat on the crown
-      // toward his left, standing only just proud of the cap surface.
+      // Thin sideburn strands drop in front of the ears to mid-ear, as in the reference.
+      const burn = (sx: number) => sdf.cone([sx, 0.06, 0.06], [sx + 0.005, -0.05, 0.085], 0.02, 0.011);
+      const fringeAll = sdf.smoothUnion(0.008, fringe, burn(-0.2), burn(0.2)).smoothIntersect(0.015, outer);
+      // The crown tuft: tousled spikes that lean toward his left and lie almost flat on
+      // the crown, standing only just proud of the cap surface.
       const spike = (dx: number, dz: number, lean: number, r: number) =>
-        sdf.capsule([0.05 + dx, 0.15, -0.03 + dz], [0.05 + dx + lean, 0.21, -0.03 + dz], r);
+        sdf.capsule([0.05 + dx, 0.13, -0.03 + dz], [0.05 + dx + lean, 0.185, -0.03 + dz], r);
       const tuft = sdf.smoothUnion(
         0.01,
-        spike(0, 0, 0.035, 0.015),
-        spike(-0.045, 0.01, 0.01, 0.013),
-        spike(0.03, -0.04, 0.05, 0.013),
-        spike(-0.01, 0.045, 0.02, 0.012),
+        spike(0, 0, 0.06, 0.015),
+        spike(-0.045, 0.01, 0.03, 0.013),
+        spike(0.03, -0.04, 0.075, 0.013),
+        spike(-0.01, 0.045, 0.045, 0.012),
+        spike(-0.075, -0.02, 0.02, 0.011),
       );
-      const hair = sdf.smoothUnion(0.025, cap, fringeAll, tuft).bone('head');
+      const hair = sdf.smoothUnion(0.012, cap, fringeAll, tuft).bone('head');
       k.body('hair', hair.at(0, HEAD_Y, 0), { color: k.tint('hair'), roughness: 0.6, detail: 0.004 });
 
       // ---------------------------------------------------------------- blue T-shirt with wide orange and dark-blue stripes
