@@ -1,0 +1,27 @@
+{
+  "track_id": "old_browser_builtins_20261122",
+  "type": "bug",
+  "status": "new",
+  "created_at": "2026-11-22T00:00:00Z",
+  "updated_at": "2026-11-22T00:00:00Z",
+  "due": "2026-11-27",
+  "description": "Every game and the host run on iOS 15.0+ and WebView 80+: one local deep-copy helper replaces structuredClone, index math replaces Array.prototype.at and findLastIndex, and a scan of src/ fails on any ES2022+ built-in that the demo build does not polyfill",
+  "estimated_tasks": 8,
+  "actual_tasks": null,
+  "deviation_notes": "Created 2026-11-22 from the ES2022+ built-in scan of src/ on 2026-11-22: 44 hits outside src/apk3d/audio/ and 2 Object.hasOwn hits inside it. The device gate stays as it is (PM decision 2026-11-22): old Android phones with WebView 80 to 97 are the audience. Due 2026-11-27, before the Storytime launch of 2026-11-30. The scan file widens the audio track scan from src/apk3d/audio/ to src/, hence the single dependency.",
+  "workstream": "games",
+  "retrospective": false,
+  "evidence": [
+    "vite.demo.config.ts",
+    "src/apk3d/device/gate.ts",
+    "src/apk3d/contracts/manifest.ts",
+    "src/apk3d/sim/index.ts",
+    "src/games/abyssal-well/core/sim.ts",
+    "src/games/labyrinth/core/mazes.ts",
+    "src/games/spellweavers-run/view2d/game.ts",
+    "src/storytime/book-pictures.ts",
+    "src/host/reader.ts",
+    "scripts/apk3d-shot.ts"
+  ],
+  "dependencies": ["audio_game_integration_20261014"]
+}
