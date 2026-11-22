@@ -772,3 +772,28 @@ plan_evidence_commit: 13d3ad5cf1bbc36808410f0312c489444fff8b7c
 handoff: Phase acceptance should audit assets/sprout-mom.ts at a73bc9a7 and assets/sprout-dad.ts at c3307a6b. Check the fresh mom and dad listen cut-outs at the waist right side and under the hem, plus turn-side, reach, hug-self, and point-up per character. Grandma needs no action.
 dispositions: F-listen-mom fixed; F-listen-dad fixed
 END_MEASURE_AGENT_RESULT
+
+MEASURE_AGENT_RESULT
+role: jr-green. Phase: P5 The rest of the inventory. Task: The remaining cast (Mom hem fix). Role base (start of this turn): d2205ddf.
+Scope: only assets/sprout-mom.ts changed. No Red test, no shared code, no other character file edited. No push. No generate.sh.
+
+Finding (look judge r3, ux-browser-review-d2205dd.json): Mom FAIL at 7.0 while Grandpa and Dad PASS at 7.5. The area under the sweater hem between the legs reads as a skin-toned patch in listen, point-up, stretch-up, hug-self, and reach: a pale cream bulge with faint vertical lines between the leg tops.
+
+Cause: the pale lobe is the sweater torso revolve's closed bottom (radius 0 at y 0.72048, ribbed by the cable paint) hanging between the leg tops. Note: the a73bc9a7 12 mm hem drop never moved geometry at all (its cut sat below the closure, so only the rib paint band moved); the lobe predates it. The mockup mom.jpg confirms the intended construction: a straight ribbed hem across the hips with blue jeans directly below.
+
+Fix (assets/sprout-mom.ts): the hem is a true cut at 0.75, above the closure, so the edge is one clean straight line across both hips and the rib band (0.75-0.81) keeps the hem look. A jeans crotch bib (ellipsoid x +-0.10, y 0.66-0.79) fills the leg gap in blue. A blue inner liner (torso wall eroded 2 mm, y 0.68-0.76, same torso weights as the sweater) swallows the kind skin torso bottom, which otherwise shows in the 0.71-0.75 window because the skin wall sits 8 mm inside the sweater but in front of the jeans mass. Liner and sweater share weights, so clearances are constant in every clip. Tucked cones, weighted slimmer hips, side-waist fix, and ef5be6c4 sleeves unchanged. First loop without the liner showed a skin band under the new hem and was corrected in the same turn.
+
+Gates (all through heavy-run.sh, one heavy job at a time), final source:
+1. node scripts/typecheck-asset.mjs assets/sprout-mom.ts: exit 0, 0 errors.
+2. ./forge all sprout-mom: exit 0, no warning lines (34,764 tris, 0.544 x 1.552 x 0.37 m).
+3. ./forge check sprout-mom: exit 1 on the same two waived clips (touch-nose, listen); ground ok.
+4. cutout-gestures-cast.sh mom rebuilt all 25 frames at 1760x1856; cutout-check on gestures-adult flags only the four known reach tiptoe frames.
+5. Three sprout vitest files (sprout-base, sprout-gestures, sprout-gesture-offset) with --maxWorkers=1: exit 0, 15/15 pass.
+6. Colour probe, box rows 1000-1140 x cols 800-1000 (hem line through leg gap), final frames: listen blue 24,902 cream 2,537 skin 0; point-up blue 24,884 cream 2,550 skin 0; stretch-up blue 27,724 cream 0 skin 0; hug-self blue 24,884 cream 2,550 skin 0; reach blue 27,667 cream 0 skin 0. Remaining cream is the sweater body above the hem line; nothing pale sits below any hem.
+7. Images read after the final rebuild: listen, point-up, stretch-up, hug-self, reach. Sightings per frame under the hem: straight ribbed cream edge with blue jeans directly below across the full width, no lobe, no skin, in all five.
+
+new_files_added_for_reviewer_scope: none. The 25 mom cut-out PNGs are git-ignored delivery files; the only tracked change is assets/sprout-mom.ts. No Red test edited. Parent P5 cast task stays [~].
+implementation_commit: 99fe921ae2ec8a0c0f41bedfe5ac609cf18baacc
+handoff: Phase acceptance should audit assets/sprout-mom.ts at 99fe921a. Check the fresh mom listen, point-up, stretch-up, hug-self, and reach cut-outs under the hem: blue jeans directly below a straight ribbed edge, no pale lobe, no skin. Note the construction lesson for any future long-shirt character: a torso-revolve hem cut below the profile closure leaves a skin-toned lobe; cut above it and back the window with a same-weighted blue liner.
+dispositions: F-mom-hem fixed
+END_MEASURE_AGENT_RESULT
