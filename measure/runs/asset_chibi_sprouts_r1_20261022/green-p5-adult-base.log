@@ -719,3 +719,31 @@ handoff: Phase acceptance should audit assets/sprout-grandma.ts at 4fa91ee8. Che
   both cuffs in the fresh grandma point-up cut-out, especially the raised wrist
   and the lowered cuff, and confirm the skin oval and patch are gone.
 END_MEASURE_AGENT_RESULT
+
+MEASURE_AGENT_RESULT
+role: jr-green. Phase: P5 The rest of the inventory. Task: The remaining cast (Grandpa entry). Role base (start of this turn): 996df4cb. Phase base: not named in this fix brief (look-finding remediation on master).
+Scope: only assets/sprout-grandpa.ts changed. No Red test, no sprout-gestures.ts, no humanoid-kind.ts, no Mom/Dad/Grandma file edited. No push. No generate.sh.
+
+Finding (orchestrator look check of grandpa/listen.png): a brown oval through the right side of the green sweater at the waist in the listen lean, and a small skin patch below the hem centre between the legs.
+
+Cause: a magenta/cyan probe cut-out proved the oval is the trousers. The rigid trouser-leg cone ran all the way up to the HIP joint, leaving a sharp cap rim at y 0.945 (chest height, hidden behind the hanging sleeve at rest). The listen spine roll (8 degrees) plus the 30-degree arm abduction swung the sweater side off that static rim, so brown broke through. The first loop (weighted hips mass, slimmer hips, lower hem) changed nothing visible, which pointed at the cone rim, not the hips mass.
+
+Fix (assets/sprout-grandpa.ts): the leg cones start tucked inside the hip mass (cone top at hipsY - 0.03, radius 0.058); the visible leg below the hem is unchanged. The hip mass takes the torso weight bands like the sweater (Ben's jeans recipe) and runs 0.90/0.92 slimmer than the sweater waist for roll clearance. The hem sits 12 mm lower (0.688*TALL), covering the skin crotch wedge. The ef5be6c4 sleeve fix, the silhouette, and all other gestures stay.
+
+Gates (all through heavy-run.sh, FORGE_GL=software, HEAVY_MIN_AVAIL_MB=1500), final source:
+1. node scripts/typecheck-asset.mjs assets/sprout-grandpa.ts: exit 0, 0 errors.
+2. ./forge all sprout-grandpa: exit 0, no warning lines. 38,562 tris, 0.544 x 1.548 x 0.355 m (dims unchanged from feat 95931d6b).
+3. ./forge check sprout-grandpa: exit 1 on the same three waived clips as baseline (touch-nose, count-fingers, eat). listen closest 0.5 cm, same as baseline. Ground ok.
+4. cutout-gestures-cast.sh grandpa rebuilt all 25 frames at 1760x1856. cutout-check on gestures-adult flags only the four known reach tiptoe frames (dad 1834, grandma 1833, grandpa 1834, mom 1833; foot row 1840).
+5. Three sprout vitest files (sprout-base, sprout-gestures, sprout-gesture-offset) with --maxWorkers=1: exit 0, 15/15 pass.
+6. Pixel proof: the region x 950-1100, y 700-950 in the probe listen.png went from 713 non-green pixels (bbox x 995-1017, y 784-843) to 0.
+7. Images read after the final rebuild: grandpa listen, hug-self, turn-side, reach, point-up. Sightings: in listen the waist right side is clean green with no oval, and the hem dips green between the legs with no skin patch; turn-side, reach, hug-self, and point-up show clean waist and hem with no breakthrough.
+
+Note for the orchestrator: Mom's listen (blue jeans oval at the side edge) and Dad's listen (jeans oval at the open shirt side) show the same class of fault in the roll; their files keep the old rigid construction and were left untouched as out of scope.
+
+new_files_added_for_reviewer_scope: none. The 25 grandpa cut-out PNGs are git-ignored delivery files; the only tracked change is assets/sprout-grandpa.ts. No Red test edited. Parent P5 cast task stays [~].
+implementation_commit: 10632c67659a8099fe677f7784ab282f17386e34
+plan_evidence_commit: 3f69e64ff0583ccbe171ca58bfcfa931f6c69ba3
+handoff: Phase acceptance should audit assets/sprout-grandpa.ts at 10632c67. Check the fresh grandpa listen cut-out at the waist right side and under the hem, plus turn-side, reach, hug-self, and point-up. Decide whether Mom and Dad need the same leg-cone treatment as a follow-up.
+dispositions: none (no routed findings in this brief).
+END_MEASURE_AGENT_RESULT
