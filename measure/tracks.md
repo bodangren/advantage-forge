@@ -195,7 +195,7 @@ This registry gives each historical, current, and planned work item one Measure 
 - [ ] **Track: Typing Duel: a typing game for saved words and sentences (keyboard and touch)**
   *Link: [./tracks/game_typing_duel_20261009/](./tracks/game_typing_duel_20261009/)*
 
-- [ ] **Track: Old-browser built-ins: every game and the host run on iOS 15.0+ and WebView 80+**
+- [~] **Track: Old-browser built-ins: every game and the host run on iOS 15.0+ and WebView 80+**
   *Link: [./tracks/old_browser_builtins_20261122/](./tracks/old_browser_builtins_20261122/)*
 
 ## Riven Lands pack
