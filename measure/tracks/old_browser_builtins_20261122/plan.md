@@ -328,6 +328,13 @@ tests/apk3d/no-unpolyfilled-builtins.test.ts'` exits 0: 1 file passed, 2 tests p
     visitor against the new expectations — the Symbol-key, non-enumerable, and getter cases fail
     there while RegExp and class instance pass (log `red-p2-r3-breakage.log`). `tsc --noEmit`
     reports no error in the file; `prettier --check` exits 0.
+- Late finding C3-F6: tech-debt (the copy.ts:9-12 doc wording overstates the behavior of unsupported inputs; the fallback keeps the prototype; no user reaches a wrong result) — source measure/runs/old_browser_builtins_20261122/review-c-5a1da50.json
+- Late finding C3-F5: tech-debt (test-strategy.md:169 counts the changed source files wrong; the plan count is correct; no user reaches a wrong result)
+- Late finding A3-F8: tech-debt (the plan keeps the historical TS2769 attribution at plan.md:173-177 and 206-209; a record error only; no user reaches a wrong result) — source measure/runs/old_browser_builtins_20261122/review-a-5a1da50.json
+- Late finding A3-F9: tech-debt (the scanner misses `math.if() / structuredClone(v) / 2` and `rows.at(one(two(three(four()))))`, and it accepts `otherbox.union(b)` for the exclusion `box.union(b)`; no such call exists in `src/`; no user reaches a wrong result)
+- Late finding A3-F10: tech-debt (tests/old-browser/index-math.test.ts:314-317 matches on a substring, so it also accepts `notatIndex`; the current site uses the correct helper; no user reaches a wrong result)
+- Late finding A3-F11: tech-debt (tests/old-browser/deep-copy.test.ts:119-124 reads an array index before the descriptor walk reports it; the test record overstates the check; no user reaches a wrong result)
+- PM 2026-11-23: Review B r2 F2-F5 deepCopy limits accepted as contract limits, documented in copy.ts 7d5c7129; dispositions CONTEST in green-p2-r2.log
 
 ## Phase 3: Browser check
 

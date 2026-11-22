@@ -34,6 +34,9 @@ Rules:
 - The sprout base model is scrapped: `assets/sprout-base.ts`, `assets/sprout-adult-base.ts`,
   and the models built on them.
 - The files stay in git history. Nothing is deleted.
+- The inventory `docs/chibi-sprouts/scrapped-base-users-2026-11-23.md` lists every asset and
+  deliverable made from the scrapped models, with its file, its source model, its date, and its
+  state.
 - No faces-r2 work and no Muse call continues.
 - No paid call runs until the PM approves the new trial.
 - New direction: a proportion spec from Daniel's drawings, then a first trial on Kim's base. The

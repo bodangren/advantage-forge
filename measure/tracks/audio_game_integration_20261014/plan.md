@@ -730,6 +730,8 @@ Files this track touches:
     with `decode window 2.4116999999284743 s exceeds 1.5 s` and writes no JSON. Port 5199 is free
     afterwards. The good JSON in the plan above came from the later passing Gate 2 run.
   - dispositions: A-F4=FIX; C-F4=FIX
+- Late finding C4-F4: tech-debt (measurement script only; the final fileEffect check can reject a valid opening file effect, a false fail; it cannot give a false PASS or change shipped sound; PM 2026-11-23) — source measure/runs/audio_game_integration_20261014/review-c-p4-5a1da50.json
+- Late finding A3-F5: tech-debt (test-strategy.md Phase 4 still names the old JSON shape and gate; no result changes) — source review-a-p4-5a1da50.json
 
 ## Phase 5: Hand-off to the PM
 
