@@ -362,6 +362,18 @@ Workbooks does not wait for it.
     The three sprout vitest files pass 15/15. typecheck-asset reports 0 errors. The
     shared kind is untouched: sprout-sam and teacher GLBs keep byte-identical hashes
     (3b6c6796, ec71c3d8); the preset pin is unchanged. Log green-p5-adult-base.log.
+  - Tom face r3 9a822cf5 (2026-11-22, judge fix): `assets/sprout-tom.ts` only. The five
+    fringe locks are diagonal swept spikes now (tapering chains, 0.004 tips landing
+    sideways of their roots, 0.006 fillet grooves, staggered depths), not vertical
+    tubes; the cowlick moved to the front crown and sweeps forward. The teeth band is
+    thinner (0.009) at the mouth top and the tongue wider (0.03), so the open smile
+    reads at 128 px. `./forge all sprout-tom` exits 0 with no warning lines (28,808
+    textured tris, 0.483 x 0.925 x 0.44 m, GLB 3521 KB). `./forge check sprout-tom`
+    output byte-identical to the role_base_sha baseline (cc690c95). Tom's 25 cut-outs
+    were re-rendered at 1024x1200; cutout-check flags only the known reach tiptoe
+    (tom row 1175, foot 1184). The three sprout vitest files pass 15/15.
+    typecheck-asset reports 0 errors. sprout-sam and teacher GLBs keep byte-identical
+    hashes (3b6c6796, ec71c3d8). Log green-faces-tom-r3.log.
   - [x] Mom (young mother, medium height, due 11-21). `assets/sprout-mom.ts` ac97d422
     (ADULT proportions; long wavy medium-brown hair past the shoulders, cream cable-knit
     sweater with collar/cuffs/ribbed hem, blue jeans, brown flats, pearl studs; look target
