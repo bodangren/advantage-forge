@@ -3,33 +3,75 @@
  * The script reads only the two sound folders. It writes only under out/.
  */
 import { createHash } from 'node:crypto';
-import { copyFileSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from 'node:fs';
+import {
+  copyFileSync,
+  lstatSync,
+  mkdirSync,
+  readFileSync,
+  readdirSync,
+  rmSync,
+  statSync,
+  writeFileSync,
+} from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+const USAGE = 'usage: node scripts/audio-handoff.mjs';
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const SOURCE = join(ROOT, 'sounds', 'chibi');
 const DEMO = join(ROOT, 'demo', 'public', 'audio', 'chibi');
 const HANDOFF = join(ROOT, 'out', 'apk-audio-handoff', 'chibi');
 const TARGET = 'apps/advantage-games/public/audio/chibi/';
-const COUNT = 14;
+const SOUND_NAMES = ['tap', 'right', 'wrong', 'star', 'pop', 'whoosh', 'level-end'];
+const APPROVED = SOUND_NAMES.flatMap((name) => [`${name}.ogg`, `${name}.mp3`]).sort();
+const COUNT = APPROVED.length;
 
-const names = readdirSync(DEMO).sort();
-const sourceNames = readdirSync(SOURCE).sort();
-if (names.length !== COUNT || sourceNames.length !== COUNT) {
-  throw new Error(
-    `audio-handoff: expected ${COUNT} files, found ${names.length} demo and ${sourceNames.length} sources`,
-  );
+/** Prints one diagnostic and exits before any write. */
+function die(message) {
+  console.error(`audio-handoff: ${message}`);
+  process.exit(1);
 }
-if (names.join('\n') !== sourceNames.join('\n')) {
-  throw new Error(
-    `audio-handoff: demo and source names differ: ${names.join(', ')} vs ${sourceNames.join(', ')}`,
+
+const args = process.argv.slice(2);
+if (args.includes('--help') || args.includes('-h')) {
+  console.log(USAGE);
+  process.exit(0);
+}
+if (args.length > 0) {
+  console.error(USAGE);
+  process.exit(1);
+}
+
+/** Lists a sound folder and rejects a symlink before any read or copy. */
+function inventory(dir) {
+  let entries;
+  try {
+    entries = readdirSync(dir);
+  } catch (error) {
+    die(`cannot read ${dir}: ${error.message}`);
+  }
+  for (const name of entries) {
+    if (lstatSync(join(dir, name)).isSymbolicLink()) die(`symlink in ${dir}: ${name}`);
+  }
+  return entries.sort();
+}
+
+const names = inventory(DEMO);
+const sourceNames = inventory(SOURCE);
+if (
+  names.length !== COUNT ||
+  sourceNames.length !== COUNT ||
+  names.join('\n') !== APPROVED.join('\n') ||
+  sourceNames.join('\n') !== APPROVED.join('\n')
+) {
+  die(
+    `unsupported sound inventory: expected ${APPROVED.join(', ')}; demo has ${names.join(', ')}; sources have ${sourceNames.join(', ')}`,
   );
 }
 for (const name of names) {
   const demoBytes = readFileSync(join(DEMO, name));
   const sourceBytes = readFileSync(join(SOURCE, name));
-  if (!demoBytes.equals(sourceBytes)) throw new Error(`audio-handoff: ${name} differs from its source`);
+  if (!demoBytes.equals(sourceBytes)) die(`${name} differs from its source`);
 }
 
 rmSync(HANDOFF, { recursive: true, force: true });
@@ -40,7 +82,10 @@ for (const name of names) {
   copyFileSync(join(DEMO, name), join(HANDOFF, name));
   const bytes = readFileSync(join(HANDOFF, name));
   const hash = createHash('sha256').update(bytes).digest('hex');
-  const format = name.endsWith('.ogg') ? 'ogg' : 'mp3';
+  let format;
+  if (name.endsWith('.ogg')) format = 'ogg';
+  else if (name.endsWith('.mp3')) format = 'mp3';
+  else die(`unsupported format for ${name}`);
   rows.push({
     name,
     bytes: statSync(join(HANDOFF, name)).size,
@@ -67,10 +112,15 @@ This folder holds ${COUNT} rendered sound files for the Chibi games: seven Ogg f
 Proposed target: ${TARGET}
 The PM or the Monorepo session confirms or replaces this path. It stays proposed until a dated PM answer.
 
-Load rule (spec AC4):
-- The bus asks canPlayType once, in the first unlock. It tries audio/ogg; codecs="vorbis" first, then audio/mpeg. The first nonempty answer wins. Two empty answers keep every event on synth.
+Load rule (spec AC4 and AC9):
+- The bus probes both formats once with canPlayType and prefers Ogg when the Ogg answer is nonempty. It then tries MP3. Two empty answers keep every event on synth. The bus will keep the choice for the rest of the session.
+- A preload can resolve the format before the first unlock. The first unlock reuses that choice. No second probe runs.
 - A file URL is <base><entry>.<ext>, for example tap.ogg. The site base is /demo/. The wiring helper appends audio/chibi/ once.
 - play(name) starts one decoded buffer through the master gain. Before decode, or when no file is mapped, the synth recipe sounds. A failed fetch or a failed decode marks the event, and synth serves every later call.
+
+Recipient steps:
+- Verify the bundle: from inside the folder, run sha256sum -c MANIFEST.sha256. The checksum file lists the 14 sound files by name.
+- After the PM or Monorepo session confirms the target, copy the 14 sound files to the confirmed target. The manifests stay with the hand-off record.
 
 The model pack row in docs/apk-port.md names apps/advantage-games/public/packs/. This hand-off follows the same pattern with a proposed target.
 `;
