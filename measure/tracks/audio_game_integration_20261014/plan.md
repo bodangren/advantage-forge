@@ -586,6 +586,24 @@ Files this track touches:
     none in either changed file. `git diff --check` exits 0.
   - dispositions: F1=FIX; F2=FIX
 
+- [x] T6l Red (1f45fcfe): unpolyfilled built-in scan, scoped to src/apk3d/audio/ (PM 2026-11-22)
+  - `tests/apk3d/no-unpolyfilled-builtins.test.ts` walks one `SCAN_ROOT` constant (today
+    `src/apk3d/audio/`, so track `old_browser_builtins_20261122` can widen it to `src/`),
+    strips block comments, line comments, and quoted strings, skips `*.gen.ts`, and fails
+    naming file and line on the T6j built-in list (`Object.hasOwn`, `structuredClone`,
+    `.findLast(`, `.findLastIndex(`, `.toSorted(`, `.toReversed(`, `.toSpliced(`,
+    `Object.groupBy`, `Map.groupBy`, `Promise.withResolvers`, `Array.fromAsync`,
+    single-argument `.at(` excluding `this.at(`, and the seven Set methods with
+    `z.union(` excluded). The 44 hits outside audio went to TD-45 and the new track.
+  - Gap-closing evidence 2026-11-22: the eight-file command through the heavy runner
+    `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/no-unpolyfilled-builtins.test.ts tests/apk3d/audio-files.test.ts tests/apk3d/audio-files.adversarial.test.ts tests/apk3d/audio-files.adversarial-r2.test.ts tests/apk3d/audio-files.adversarial-r3.test.ts tests/apk3d/audio-wiring.test.ts tests/apk3d/audio-wiring.adversarial.test.ts tests/apk3d/imports.test.ts'`
+    exits 0 with 8 files and 61 passed, 2 skipped (63). The 2 skips are the TD-44 pins.
+    `node_modules/.bin/prettier --check` exits 0 on the scan test.
+  - Breakage proof 2026-11-22: with `SCAN_ROOT` temporarily pointed at
+    `tests/tmp-builtin-fixture/` holding one file with `Object.hasOwn(x, "y")`, the scan
+    exits 1 naming `src/apk3d/audio/evil.ts:2: Object.hasOwn`. The fixture was removed
+    and the root restored; no production file changed.
+
 ## Phase 4: Preload budget
 
 - [ ] T7 Measure: Add `scripts/audio-budget.mjs`. It serves the demo with vite, opens one game in
