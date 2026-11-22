@@ -691,6 +691,23 @@ Files this track touches:
     `out/audio-budget/rune-match.json` stays ignored. `ss -ltnp` finds no listener on 5199 after
     the run. `node_modules/.bin/prettier --check scripts/audio-budget.mjs` exits 0.
   - dispositions: A-F1=FIX; A-F2=FIX; C-F1=FIX; C-F4=FIX; A-F3=FIX; B-N1=FIX
+  - [x] T7r2 Red (03b184b5): review r2 A-F4 decode deadline, C-F4 effect marker in
+    `tests/audio-budget.test.ts` (JSON mode only). The JSON case now requires `decodeSeconds` (a
+    number from the first audio request to the last successful decode, at most 1.5; `seconds` stays
+    the strategy's resource-timing field) and `effectMarker: "before-launch"` plus `firstEffect`
+    (the file name of the first file-backed game effect, one of the twelve six-entry `.ogg`/`.mp3`
+    names, never a music file).
+    Red evidence 2026-11-23: the default command
+    `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run tests/audio-budget.test.ts --maxWorkers=1'`
+    exits 0 with 4 passed and 1 skipped (5). The JSON-mode command
+    `AUDIO_BUDGET_JSON=1 node node_modules/vitest/vitest.mjs run tests/audio-budget.test.ts --maxWorkers=1`
+    against a temporary today's-shape `{"bytes":79319,"files":6,"seconds":0.7038,"decoded":6,"fileEffect":true}`
+    artifact (removed after the run) exits 1 with 1 failed and 4 passed (5): the JSON case fails on
+    `rune-match decodeSeconds is a labeled number: expected 'undefined' to be 'number'`. A second
+    probe with `"decodeSeconds":0.9` added fails on `rune-match effectMarker is set before the Start
+    action` instead, so both new groups fail independently. `node_modules/.bin/prettier --check
+    tests/audio-budget.test.ts` exits 0.
+  - [~] T7g2 Green remediation r2 (decodeSeconds deadline, marker before launch, effect vs music)
 
 ## Phase 5: Hand-off to the PM
 
