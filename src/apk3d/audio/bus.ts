@@ -104,7 +104,24 @@ export class AudioBus {
 
   /** Sets the sound files, or clears them with null so every event uses the synth recipe. */
   useSoundFiles(files: SoundFiles | null): void {
+    const previous = this.files;
     this.files = files;
+    // Invalidate only the events whose mapping changed or vanished. An unchanged event keeps
+    // its decoded or in-flight file, so wiring the same map twice does not fetch twice. Failed
+    // events stay marked (spec AC4 rule 5), and events absent from the new map use the synth
+    // recipe (rule 6).
+    if (!files || !previous || previous.base !== files.base) {
+      this.buffers.clear();
+      this.pendingDecode.clear();
+      this.loading.clear();
+      return;
+    }
+    for (const name of new Set([...Object.keys(previous.events), ...Object.keys(files.events)])) {
+      if (previous.events[name] === files.events[name]) continue;
+      this.buffers.delete(name);
+      this.pendingDecode.delete(name);
+      this.loading.delete(name);
+    }
   }
 
   /** Fetches and decodes the files of the named events, with no sound. */
@@ -153,10 +170,15 @@ export class AudioBus {
       void this.decodeData(name, data);
     }
     // Older iPhones start the context only when a sound starts inside the gesture.
-    const silence = this.ctx.createBufferSource();
-    silence.buffer = this.ctx.createBuffer(1, 1, 22050);
-    silence.connect(this.ctx.destination);
-    silence.start(0);
+    // A strict engine may refuse the pulse; the context still resumes without it.
+    try {
+      const silence = this.ctx.createBufferSource();
+      silence.buffer = this.ctx.createBuffer(1, 1, 22050);
+      silence.connect(this.ctx.destination);
+      silence.start(0);
+    } catch {
+      // The silent pulse is best effort; no sound and no resume depend on it.
+    }
     void this.ctx.resume();
     if (this.mood !== 'none') this.music(this.mood);
   }
@@ -266,7 +288,9 @@ export class AudioBus {
     }
     try {
       const buffer = await ctx.decodeAudioData(data);
-      this.buffers.set(name, buffer);
+      // The map may have changed while the bytes were in flight. An event no longer mapped
+      // falls back to the synth recipe (rule 6), so do not keep a buffer for the old map.
+      if (this.files?.events[name]) this.buffers.set(name, buffer);
       this.loading.delete(name);
     } catch {
       this.failed.add(name);
