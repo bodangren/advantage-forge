@@ -11,7 +11,7 @@
  */
 import type * as Phaser from 'phaser';
 import { preloadAssetBindings, toGameResults } from '../../../apk3d/contracts/index.js';
-import { AudioBus, installAudioUnlock } from '../../../apk3d/audio/index.js';
+import { AudioBus, installAudioUnlock, wireChibiSounds } from '../../../apk3d/audio/index.js';
 import { SESSION_OPTIONS_DEFAULT, type Game2DContext } from '../../../apk3d/factory/index.js';
 import { createI18n } from '../../../apk3d/i18n/catalog.js';
 import { createFixedStepLoop, createManualClock } from '../../../apk3d/sim/index.js';
@@ -70,6 +70,7 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
   const needed = FILES_2D.filter((id) => edition.bindings[id]);
   const [width, height] = fitGameSize();
   const audio = ctx.audio ?? new AudioBus();
+  wireChibiSounds(audio, ctx.soundBase, ['flap', 'hit', 'join', 'roar', 'victory']);
   const unlock = ctx.audio ? null : installAudioUnlock(audio);
   let frame: ((time: number) => void) | null = null;
 

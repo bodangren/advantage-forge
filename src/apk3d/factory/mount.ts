@@ -115,6 +115,7 @@ export function createCartridgeMounter(
         options: rest.options,
         host: rest.host,
         audio: rest.audio,
+        ...(rest.soundBase ? { soundBase: rest.soundBase } : {}),
         ...(rest.answerAudio ? { answerAudio: rest.answerAudio } : {}),
         ...(rest.resolveUrl ? { resolveUrl: rest.resolveUrl } : {}),
         ...(rest.avatarRoot ? { avatarRoot: rest.avatarRoot } : {}),

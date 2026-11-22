@@ -13,7 +13,7 @@ import type * as Phaser from 'phaser';
 import { shownHero } from '../../../apk3d/avatar/launch.js';
 import { playerFigure } from '../../../apk3d/avatar/portrait-of.js';
 import { preloadAssetBindings, toGameResults, type RuntimeEdition, type PracticeInput } from '../../../apk3d/contracts/index.js';
-import { AudioBus, installAudioUnlock } from '../../../apk3d/audio/index.js';
+import { AudioBus, installAudioUnlock, wireChibiSounds } from '../../../apk3d/audio/index.js';
 import { SESSION_OPTIONS_DEFAULT, type Game2DContext } from '../../../apk3d/factory/index.js';
 import { createI18n } from '../../../apk3d/i18n/catalog.js';
 import { createFixedStepLoop, createManualClock } from '../../../apk3d/sim/index.js';
@@ -140,6 +140,7 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
   const [width, height] = fitGameSize();
 
   const audio = ctx.audio ?? new AudioBus();
+  wireChibiSounds(audio, ctx.soundBase, ['bell', 'coins', 'correct', 'ding', 'fizz', 'plop', 'tap', 'victory']);
   const unlock = ctx.audio ? null : installAudioUnlock(audio);
 
   function preload(this: Phaser.Scene): void {

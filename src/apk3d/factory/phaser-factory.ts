@@ -77,6 +77,7 @@ export function createPhaserGameFactory(
       ...(context.options ? { options: context.options } : {}),
       ...(context.host ? { host: context.host } : {}),
       ...(context.audio ? { audio: context.audio } : {}),
+      ...(context.soundBase ? { soundBase: context.soundBase } : {}),
       ...(context.resolveUrl ? { resolveUrl: context.resolveUrl } : {}),
       ...(context.avatarRoot ? { avatarRoot: context.avatarRoot } : {}),
     });

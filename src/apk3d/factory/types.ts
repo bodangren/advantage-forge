@@ -133,6 +133,12 @@ export interface Game2DContext extends Omit<CartridgeGameConfigContext, 'input' 
   host?: HostServices;
   /** The page's audio bus (standalone host); a 2D view makes its own when the APK gives none. */
   audio?: AudioBus;
+  /**
+   * The site base with a trailing slash (`${BASE}` in the standalone host), not the sound folder.
+   * The sound helper appends `audio/chibi/` once, so the page fetches `${BASE}audio/chibi/tap.ogg`.
+   * Absent in the APK, so every event keeps the synthesized recipe.
+   */
+  soundBase?: string;
   /** Where pack files load from; pass it to `preloadAssetBindings`. None in the APK. */
   resolveUrl?: AssetUrlResolver;
   /** The URL folder of the avatar pack versions; none: `/packs/avatar`, as the apps serve it. */
@@ -222,6 +228,12 @@ export interface ThreeFactoryContext {
   composition: Composition3D;
   i18n: ScopedI18n;
   audio: AudioBus;
+  /**
+   * The site base with a trailing slash (`${BASE}` in the standalone host), not the sound folder.
+   * The sound helper appends `audio/chibi/` once, so the page fetches `${BASE}audio/chibi/tap.ogg`.
+   * The 2D factory passes it to the game; absent in the APK.
+   */
+  soundBase?: string;
   options: SessionOptions;
   host: HostServices;
   /** The Read to Select Audio controller; the factory passes it to the game as is. */
@@ -253,6 +265,12 @@ export interface PhaserFactoryContext {
   host?: HostServices;
   /** The page's audio bus (standalone host); the APK factory sets none. */
   audio?: AudioBus;
+  /**
+   * The site base with a trailing slash (`${BASE}` in the standalone host), not the sound folder.
+   * The sound helper appends `audio/chibi/` once, so the page fetches `${BASE}audio/chibi/tap.ogg`.
+   * The factory passes it to the game; absent in the APK.
+   */
+  soundBase?: string;
   /** Where pack files load from (standalone host); none: `<pack.root>/<file.path>`, as the APK. */
   resolveUrl?: AssetUrlResolver;
   /** The URL folder of the avatar pack versions (standalone host); none: `/packs/avatar`. */

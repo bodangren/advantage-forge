@@ -356,6 +356,8 @@ async function startGame(): Promise<void> {
     composition: composition(),
     i18n: i18n.scope(cartridge.manifest.briefingKey.split('.')[0]!),
     audio,
+    // The site base, not the sound folder: wireChibiSounds appends `audio/chibi/` once.
+    soundBase: BASE,
     options: { helper: choice.helper, hero: choice.hero, looks: { ...persistence.load().looks, [choice.hero]: choice.look }, ...(PAGE_AVATAR ? { avatar: PAGE_AVATAR } : {}) },
     host: {
       openStory: (paragraph) => {

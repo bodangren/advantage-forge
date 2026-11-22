@@ -8,7 +8,7 @@ import type * as Phaser from 'phaser';
 import { shownHero } from '../../../apk3d/avatar/launch.js';
 import { playerFigure } from '../../../apk3d/avatar/portrait-of.js';
 import { preloadAssetBindings, type PracticeInput } from '../../../apk3d/contracts/index.js';
-import { AudioBus, installAudioUnlock } from '../../../apk3d/audio/index.js';
+import { AudioBus, installAudioUnlock, wireChibiSounds } from '../../../apk3d/audio/index.js';
 import { SESSION_OPTIONS_DEFAULT, type Game2DContext } from '../../../apk3d/factory/index.js';
 import { createI18n } from '../../../apk3d/i18n/catalog.js';
 import { Actor2D, Arena2D, banner, COLORS, fitGameSize, popup, recolorTag, registerSheetAnimations, StatusBar2D, tag, text, WordPanel2D } from '../../../apk3d/view2d/index.js';
@@ -60,6 +60,7 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
   }).filter((id) => edition.bindings[id]);
   const [width, height] = fitGameSize();
   const audio = ctx.audio ?? new AudioBus();
+  wireChibiSounds(audio, ctx.soundBase, ['arrow', 'correct', 'victory', 'wrong']);
   const unlock = ctx.audio ? null : installAudioUnlock(audio);
   let frame: ((time: number, dt: number) => void) | null = null;
 

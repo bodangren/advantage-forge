@@ -6,6 +6,7 @@ export {
   type SoundFiles,
   type Synth,
 } from './bus.js';
+export { chibiPreload, chibiSoundFiles, wireChibiSounds } from './chibi.js';
 export { canSpeak, speak, stopSpeaking } from './speech.js';
 export { ClipPlayer } from './clip.js';
 export {
