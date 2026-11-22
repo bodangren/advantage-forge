@@ -416,7 +416,8 @@ human listen is an owner check, not a gate for this track.
 
 ## Architecture guardrails
 
-- Keep one rules core. This track changes no `src/games/**` file and no `src/apk3d/sim/**` file.
+- Keep one rules core. This track changes no `src/apk3d/sim/**` file and no game rule; in
+  `src/games/**` it adds only the one `wireChibiSounds` call per 2D host that T6b and AC9 name.
 - `tests/apk3d/imports.test.ts` is the architecture guard. `src/apk3d/audio` may import only
   `apk3d/contracts`, `apk3d/sim`, and `three`. Run it after the barrel change.
 - Do not add a dependency, a build step, or an audio library. `readFileSync` and byte math only.

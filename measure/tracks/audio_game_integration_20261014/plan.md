@@ -486,7 +486,6 @@ Files this track touches:
     again. A separate new bus uses its own file.
   - F3: The Chibi helper and the bus request invalid URLs for inherited names outside the map.
   - Gate results: `measure/runs/audio_game_integration_20261014/adversarial-p3-09f808bd.log`.
-- Late finding F3: one-fix-round (The Phase 3 helper sends requests for nonexistent files. The round limit still applies.)
 - Late finding F1: tech-debt (TD-44; no current host rewires before unlock, so no wrong current result; PM decision 2026-11-22)
 - Late finding F2: tech-debt (TD-44; no host reuses a disposed bus, so no wrong current result; PM decision 2026-11-22)
 - Late finding F3: tech-debt (TD-44; guard added in 1b7312f4; no host passes inherited names; PM decision 2026-11-22)
