@@ -102,9 +102,11 @@ describe('sound-set wrapper through a fake earshot binary', () => {
         'fake-out alpha',
         'fake-err alpha',
         'sound-set: alpha.ogg <- tap/soft',
+        'sound-set: alpha.mp3 <- tap/soft',
         'fake-out beta',
         'fake-err beta',
         'sound-set: beta.ogg <- error/knock',
+        'sound-set: beta.mp3 <- error/knock',
         'sound-set: 2 sounds -> sounds/fake',
       ]);
       const count = Number(result.stdout.match(/(\d+) sounds ->/)?.[1]);
