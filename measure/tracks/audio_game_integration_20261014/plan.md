@@ -401,6 +401,21 @@ Files this track touches:
       with "completed track has an unchecked task"; the marker check is not vacuous. A5 re-run:
       the three original files still pass 21 of 21.
 
+- [~] T6e Red: adversarial F3, wiring parser ignores comments and strings (097231b2). New shared
+      helper `tests/apk3d/audio-wiring-parser.ts` exports `stripComments` and `playedEventsOf`;
+      case 6 of `tests/apk3d/audio-wiring.test.ts` and the adversarial file both use it, so the
+      two files cannot drift. The extraction strips comments, then matches `audio.play(` only
+      outside string literals and reads the real quoted arguments, keeping the ternary-branch,
+      computed-key SFX, and sprite-play rules. Evidence: `HEAVY_MIN_AVAIL_MB=1500 bash
+      /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node
+      node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-wiring.test.ts
+      tests/apk3d/audio-wiring.adversarial.test.ts'` exits 0 with 2 files and 14 of 14 tests
+      (the F3 fixture `ignores play calls that live in comments or strings` now passes).
+      Breakage proof: the pre-fix raw regex on the same fixture yields
+      `["ghost","specter","tap","wisp"]` where `["tap"]` is required, so the fixture fails
+      without the fix. `prettier --check` exits 0 on all three test files. No production file
+      changed.
+
 ## Phase 4: Preload budget
 
 - [ ] T7 Measure: Add `scripts/audio-budget.mjs`. It serves the demo with vite, opens one game in
