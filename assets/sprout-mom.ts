@@ -179,10 +179,12 @@ export default humanoidAsset({
     // are a separate body over the arm skin: a raised arm would otherwise drag the torso union
     // into a point at the hem (the Dad lesson). The torso keeps hips/spine/chest tags only, so
     // the hem never takes an arm weight.
-    // The hem sits 12 mm below the old line so it covers the skin crotch wedge
-    // that showed between the jean legs just under the hem, at rest and in the
-    // listen lean. The hem stays flat; only its height changes.
-    const HEM = 0.688;
+    // The hem is a true cut at 0.75, above the torso revolve's closed bottom: the
+    // old cut sat below that closure, so the closed bottom hung on as a rounded
+    // cream lobe between the leg tops and read as skin at sprite size. Cut here,
+    // the hem ends as one clean straight edge across both hips (the mockup), with
+    // the jeans directly under it. The rib band keeps the hem look.
+    const HEM = 0.75;
     const cableTri = (x: number, z: number) => {
       const t = ((((CABLES * Math.atan2(x, z)) / (2 * Math.PI)) % 1) + 1) % 1;
       return 1 - 4 * Math.abs(t - 0.5);
@@ -252,10 +254,26 @@ export default humanoidAsset({
     const jeanHips = h.weighted(
       sdf.ellipsoid([P.pants.hipsSize[0] * 0.9, P.pants.hipsSize[1], P.pants.hipsSize[2] * 0.92]).at(0, P.pants.hipsY, 0),
     );
+    // The jeans crotch bib: blue directly under the hem across the leg gap, so no
+    // skin and no sweater lobe show between the legs. It spans the gap (x +-0.10)
+    // from below the hem up into the hip mass, stays inside the sweater above the
+    // hem, and hides behind the leg cones at its sides below it. Weighted on the
+    // hips band like the hem region, so it rides every clip with the sweater.
+    // A blue inner liner just inside the sweater across the hem window (y 0.68 to
+    // 0.76): the kind's skin torso wall sits only 8 mm inside the sweater, so with
+    // the lobe cut away the skin showed between the hem and the jeans. The liner
+    // copies the torso wall 2 mm inside the sweater (6 mm outside the skin) in
+    // jeans blue and swallows the skin torso bottom entirely. It takes the same
+    // torso weights as the sweater, so the clearances never change in any clip.
+    // From the front the hem window reads blue, like jeans under the hem.
+    const hemLiner = h.weighted(h.torso.round(-0.002).intersect(sdf.box([0.3, 0.08, 0.3]).at(0, 0.72, 0)));
+    const crotchBib = h.weighted(sdf.ellipsoid([0.1, 0.065, 0.075]).at(0, 0.725, 0.005));
     const jeans = sdf
       .smoothUnion(
         0.03,
         jeanHips,
+        crotchBib,
+        hemLiner,
         pair(jeanLeg),
       )
       .paintFn((x, y, z, base) => mixRgb(base, rgb(C.denimDark), 0.25 * (0.5 - 0.5 * cableTri(x * 2, z * 2))));
