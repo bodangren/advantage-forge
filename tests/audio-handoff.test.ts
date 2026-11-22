@@ -1,20 +1,38 @@
 import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { readdirSync, readFileSync, statSync } from 'node:fs';
+import {
+  cpSync,
+  existsSync,
+  mkdirSync,
+  mkdtempSync,
+  readdirSync,
+  readFileSync,
+  rmSync,
+  statSync,
+} from 'node:fs';
+import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 
 // Covers spec AC6: the 14 demo files match the 14 sources, the docs row names
 // the proposed target, the monorepo holds no track path, and the hand-off
-// folder carries checksums and a README. Cases 1 to 3 run in the default
-// suite. Cases 4 to 8 need the ignored artifact folder: run
-// scripts/audio-handoff.mjs first, then AUDIO_HANDOFF_ARTIFACTS=1.
+// folder carries checksums and a README. Cases 1 and 2 run in the default
+// suite. The monorepo case runs in the explicit hand-off gate and skips in the
+// default suite when the sibling checkout is absent (review r1 A-F1). Cases 5
+// to 9 need the ignored artifact folder: run scripts/audio-handoff.mjs first,
+// then AUDIO_HANDOFF_ARTIFACTS=1. The README asserts the real load rule (the
+// bus picks one format once with an Ogg preference, preload can choose before
+// the first unlock, the first unlock reuses that choice) and the recipient
+// verify and copy steps (review r1 A-F3/C-F1, C-F2). The --help case runs in a
+// temp working copy so a rebuild cannot touch the real out/ folder (C-F3).
+// The A-F2 name check lives in tests/audio-handoff.adversarial.test.ts.
 // No script output or folder is written here.
 
 const SOUNDS_DIR = join('sounds', 'chibi');
 const DEMO_DIR = join('demo', 'public', 'audio', 'chibi');
 const HANDOFF_DIR = join('out', 'apk-audio-handoff', 'chibi');
 const DOCS_PATH = join('docs', 'apk-port.md');
+const SCRIPT_PATH = join('scripts', 'audio-handoff.mjs');
 const MONOREPO_DIR = join('..', 'reading-advantage-monorepo');
 const PROPOSED_TARGET = 'apps/advantage-games/public/audio/chibi/';
 
@@ -23,6 +41,16 @@ const PROPOSED_TARGET = 'apps/advantage-games/public/audio/chibi/';
 const ARTIFACTS_ENABLED = process.env.AUDIO_HANDOFF_ARTIFACTS === '1';
 
 const artifactsIt = ARTIFACTS_ENABLED ? it : it.skip;
+
+// The monorepo status check is mandatory in the explicit hand-off gate. In the
+// default suite it runs when the sibling checkout is present and skips with a
+// reason when it is absent, so a standalone checkout stays green.
+function monorepoMode(siblingPath: string): 'run' | 'skip' {
+  if (ARTIFACTS_ENABLED) return 'run';
+  return existsSync(siblingPath) ? 'run' : 'skip';
+}
+
+const monoIt = monorepoMode(MONOREPO_DIR) === 'run' ? it : it.skip;
 
 const SOUND_NAMES = [
   'level-end.mp3',
@@ -51,6 +79,15 @@ function readHandoffNames(): string[] {
   return readdirSync(HANDOFF_DIR).sort();
 }
 
+function snapshotHandoffDir(): { names: string[]; mtimes: (number | null)[] } | null {
+  try {
+    const names = readdirSync(HANDOFF_DIR).sort();
+    return { names, mtimes: names.map((name) => statSync(join(HANDOFF_DIR, name)).mtimeMs) };
+  } catch {
+    return null;
+  }
+}
+
 describe('audio hand-off to the PM', () => {
   it('ships the 14 demo files byte-identical to the 14 sources', () => {
     const demoNames = readdirSync(DEMO_DIR).sort();
@@ -76,15 +113,56 @@ describe('audio hand-off to the PM', () => {
     expect(text.includes('apps/advantage-games/public/packs/')).toBe(true);
   });
 
-  it('lists no track-named path in the monorepo status', () => {
-    const status = spawnSync('git', ['-C', MONOREPO_DIR, 'status', '--short'], {
-      encoding: 'utf8',
-    });
-    expect(status.status).toBe(0);
-    const hits = status.stdout
-      .split('\n')
-      .filter((line) => line.includes(PROPOSED_TARGET) || SOUND_NAMES.some((name) => line.includes(name)));
-    expect(hits.join('\n')).toBe('');
+  it('skips the monorepo status check when the sibling checkout is absent', () => {
+    const missing = join('..', 'reading-advantage-monorepo-absent-probe');
+    expect(existsSync(missing), 'the probe sibling path stays absent').toBe(false);
+    expect(
+      monorepoMode(missing),
+      'an absent sibling skips the check in the default suite and stays mandatory in the hand-off gate',
+    ).toBe(ARTIFACTS_ENABLED ? 'run' : 'skip');
+  });
+
+  monoIt(
+    'lists no track-named path in the monorepo status (skipped without AUDIO_HANDOFF_ARTIFACTS=1 when the sibling checkout is absent)',
+    () => {
+      const status = spawnSync('git', ['-C', MONOREPO_DIR, 'status', '--short'], {
+        encoding: 'utf8',
+      });
+      expect(status.status).toBe(0);
+      const hits = status.stdout
+        .split('\n')
+        .filter((line) => line.includes(PROPOSED_TARGET) || SOUND_NAMES.some((name) => line.includes(name)));
+      expect(hits.join('\n')).toBe('');
+    },
+  );
+
+  it('prints usage for --help without touching the real hand-off folder', () => {
+    const before = snapshotHandoffDir();
+    const root = mkdtempSync(join(tmpdir(), 'audio-handoff-help-'));
+    try {
+      const scriptDir = join(root, 'scripts');
+      mkdirSync(scriptDir, { recursive: true });
+      cpSync(SCRIPT_PATH, join(scriptDir, 'audio-handoff.mjs'));
+      cpSync(SOUNDS_DIR, join(root, 'sounds', 'chibi'), { recursive: true });
+      cpSync(DEMO_DIR, join(root, 'demo', 'public', 'audio', 'chibi'), { recursive: true });
+      const result = spawnSync(process.execPath, [join(scriptDir, 'audio-handoff.mjs'), '--help'], {
+        cwd: root,
+        encoding: 'utf8',
+      });
+      expect(result.status, '--help exits 0').toBe(0);
+      const outLines = result.stdout
+        .split('\n')
+        .map((line) => line.trim())
+        .filter((line) => line.length > 0);
+      expect(outLines.length, '--help prints one usage line on stdout').toBe(1);
+      expect(/usage/i.test(outLines[0]!), '--help usage line names the usage').toBe(true);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+    expect(
+      JSON.stringify(snapshotHandoffDir()),
+      'the real out/apk-audio-handoff/chibi folder is untouched',
+    ).toBe(JSON.stringify(before));
   });
 
   artifactsIt(
@@ -190,6 +268,22 @@ describe('audio hand-off to the PM', () => {
       }
       const named = SOUND_NAMES.filter((name) => readme.includes(name));
       expect(named.length, 'README names at least one <entry>.<ext> file').toBeGreaterThan(0);
+      expect(readme.includes('keep the choice'), 'README states the one-time format choice').toBe(true);
+      expect(readme.includes('prefers Ogg'), 'README states the Ogg preference').toBe(true);
+      expect(readme.includes('preload'), 'README states preload can choose the format').toBe(true);
+      expect(/reuse/i.test(readme), 'README states the first unlock reuses the choice').toBe(true);
+      expect(
+        readme.includes('sha256sum -c MANIFEST.sha256'),
+        'README tells the recipient how to verify the bundle',
+      ).toBe(true);
+      expect(
+        /copy the 14 sound files/i.test(readme),
+        'README tells the recipient to copy the sounds to the confirmed target',
+      ).toBe(true);
+      expect(
+        /from inside (the folder|the bundle)/i.test(readme),
+        'README runs the verify step inside the folder',
+      ).toBe(true);
     },
   );
 });
