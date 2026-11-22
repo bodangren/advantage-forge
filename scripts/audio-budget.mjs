@@ -16,6 +16,9 @@ const PROBE_URL = `${BASE}/demo/index.html`;
 const PAGE_URL = `${BASE}/demo/index.html?renderer=phaser`;
 const OUT = join(ROOT, 'out', 'audio-budget', 'rune-match.json');
 const AUDIO_PREFIX = '/demo/audio/chibi/';
+const EFFECT_FILES = new Set(
+  ['tap', 'right', 'wrong', 'level-end', 'whoosh', 'pop'].flatMap((name) => [`${name}.ogg`, `${name}.mp3`]),
+);
 const MAX_BYTES = 100000;
 const MAX_SECONDS = 1.5;
 const LATENCY_MS = 300;
@@ -146,21 +149,40 @@ try {
   const page = await context.newPage();
   // Observe decodes and the first effect from the page. No bus or fetch stub is installed.
   await page.addInitScript(() => {
-    const budget = { decodes: 0, fileStarts: 0, events: [], unlockAt: null };
-    const decodedBuffers = new WeakSet();
+    const budget = {
+      decodes: 0,
+      decodeTimes: [],
+      fileStarts: 0,
+      events: [],
+      markAt: null,
+      unlockAt: null,
+    };
+    const responseFiles = new WeakMap();
+    const decodedFiles = new WeakMap();
+    const arrayBuffer = Response.prototype.arrayBuffer;
+    Response.prototype.arrayBuffer = function (...params) {
+      return arrayBuffer.apply(this, params).then((data) => {
+        const path = new URL(this.url, location.href).pathname;
+        const file = path.slice(path.lastIndexOf('/') + 1);
+        if (/\.(ogg|mp3)$/.test(file)) responseFiles.set(data, file);
+        return data;
+      });
+    };
     const decode = AudioContext.prototype.decodeAudioData;
-    AudioContext.prototype.decodeAudioData = function (...params) {
-      return decode.apply(this, params).then((buffer) => {
+    AudioContext.prototype.decodeAudioData = function (data, ...params) {
+      return decode.apply(this, [data, ...params]).then((buffer) => {
         budget.decodes += 1;
-        decodedBuffers.add(buffer);
+        budget.decodeTimes.push(performance.now());
+        decodedFiles.set(buffer, responseFiles.get(data) ?? null);
         return buffer;
       });
     };
     const bufferStart = AudioBufferSourceNode.prototype.start;
     AudioBufferSourceNode.prototype.start = function (...params) {
-      if (decodedBuffers.has(this.buffer)) {
+      const file = decodedFiles.get(this.buffer);
+      if (file) {
         budget.fileStarts += 1;
-        budget.events.push({ at: performance.now(), kind: 'file' });
+        budget.events.push({ at: performance.now(), kind: 'file', file });
       }
       return bufferStart.apply(this, params);
     };
@@ -199,6 +221,9 @@ try {
   await page.waitForSelector('[data-next]', { timeout: 120000 });
   await page.locator('[data-next]').click();
   await page.waitForSelector('[data-start]', { timeout: 240000 });
+  await page.evaluate(() => {
+    if (window.__audioBudget) window.__audioBudget.markAt = performance.now();
+  });
   await page.locator('[data-start]').click();
   const canvas = page.locator('.game-layer canvas').first();
   await canvas.waitFor({ state: 'visible', timeout: 240000 });
@@ -295,11 +320,15 @@ try {
 
   const observed = await page.evaluate(() => {
     const budget = window.__audioBudget;
-    if (!budget) return { decodes: 0, fileStarts: 0, events: [], unlockAt: null };
+    if (!budget) {
+      return { decodes: 0, decodeTimes: [], fileStarts: 0, events: [], markAt: null, unlockAt: null };
+    }
     return {
       decodes: budget.decodes,
+      decodeTimes: budget.decodeTimes,
       fileStarts: budget.fileStarts,
       events: budget.events,
+      markAt: budget.markAt,
       unlockAt: budget.unlockAt,
     };
   });
@@ -307,17 +336,45 @@ try {
   if (!Number.isInteger(decoded) || decoded !== files) {
     fail(`successful decodes ${decoded} differ from the ${files} fetched files`, rows);
   }
-  const firstEffect =
+  // Resource timing keeps the network window. This separate window also covers decoding.
+  const firstRequestAt = Math.min(...rows.map((row) => row.startTime));
+  const lastDecodeAt = Math.max(...observed.decodeTimes);
+  const decodeSeconds = (lastDecodeAt - firstRequestAt) / 1000;
+  if (!(decodeSeconds > 0 && decodeSeconds <= MAX_SECONDS)) {
+    fail(`decode window ${decodeSeconds} s exceeds ${MAX_SECONDS} s`, rows);
+  }
+  if (observed.markAt === null) fail('the effect marker was not installed before launch', rows);
+  const effectMarker = 'before-launch';
+  const firstEffectEvent = observed.events.find(
+    (event) => event.kind === 'file' && event.at >= observed.markAt && EFFECT_FILES.has(event.file),
+  );
+  if (!firstEffectEvent) {
+    fail(
+      `no file-backed Rune Match effect after the launch marker (observed ${JSON.stringify(observed)})`,
+      rows,
+    );
+  }
+  const firstEffect = firstEffectEvent.file;
+  const firstEffectAfterUnlock =
     observed.unlockAt === null ? undefined : observed.events.find((event) => event.at >= observed.unlockAt);
-  const fileEffect = observed.fileStarts > 0 && firstEffect?.kind === 'file';
+  const fileEffect = observed.fileStarts > 0 && firstEffectAfterUnlock?.kind === 'file';
   if (!fileEffect) {
     fail(
-      `first effect did not play a decoded file (decoded starts ${observed.fileStarts}, first event ${JSON.stringify(firstEffect)}, observed ${JSON.stringify(observed)})`,
+      `first effect did not play a decoded file (decoded starts ${observed.fileStarts}, first event ${JSON.stringify(firstEffectAfterUnlock)})`,
       rows,
     );
   }
 
-  const result = { bytes, files, seconds, decoded, fileEffect };
+  const result = {
+    bytes,
+    files,
+    seconds,
+    decodeSeconds,
+    decoded,
+    fileEffect,
+    effectMarker,
+    firstEffect,
+  };
   mkdirSync(dirname(OUT), { recursive: true });
   writeFileSync(OUT, `${JSON.stringify(result, null, 2)}\n`);
   console.log(JSON.stringify(result, null, 2));
