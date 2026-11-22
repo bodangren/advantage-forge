@@ -105,7 +105,7 @@ role_base_sha: 3caf71e5a2e3bb7d74b589b44476b849fb1193ed
 remediation_base_sha: 0b23f6467ddbdd16407dfad8a7ab7d0aea2be032
 audited_head_sha: 6804d082dae31b1532b9251dddc974d089fd4895
 status: pass
-dispositions: F1 fixed; F2 fixed; F3 fixed
+dispositions: F1=FIX; F2=FIX; F3=FIX
 tasks_flipped_to_x:
   T4 Green (dcfad290): fix commit dcfad29055561f890e6d2117871d24e233268288 on the task line.
 tasks_flipped_to_b: none.
