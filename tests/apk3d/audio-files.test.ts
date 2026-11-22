@@ -2,8 +2,10 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { AudioBus } from '../../src/apk3d/audio/bus.js';
 
 // Covers spec AC4 with a fake window.AudioContext and a fake fetch. No audio device, no network.
-// The ten cases call useSoundFiles or preload, so each one fails on that call while the API is
-// absent, and none fails on a parse error.
+// The eleven cases call useSoundFiles or preload, so each one fails on that call while the API
+// is absent, and none fails on a parse error. Game sounds are counted as buffer sources whose
+// buffer is a decoded file: the unlock pulse keeps its own silent source, so it never counts
+// as a game sound.
 
 const OGG_TYPE = 'audio/ogg; codecs="vorbis"';
 const MPEG_TYPE = 'audio/mpeg';
@@ -129,7 +131,9 @@ class FakeAudioContext {
   }
   async decodeAudioData(data: ArrayBuffer): Promise<FakeBuffer> {
     this.decodes += 1;
-    return this.decodeImpl(data);
+    const buffer = await this.decodeImpl(data);
+    decodedBuffers.push(buffer);
+    return buffer;
   }
   async resume() {
     this.resumes += 1;
@@ -146,6 +150,9 @@ const audioQueries: string[] = [];
 let audioConstructions = 0;
 let oggAnswer = '';
 let mp3Answer = '';
+// Every buffer that a decode produced. A game sound plays through one of these buffers; the
+// unlock pulse and the synth recipes use freshly created buffers instead.
+const decodedBuffers: FakeBuffer[] = [];
 
 class FakeAudio {
   constructor() {
@@ -204,6 +211,7 @@ function restoreHarness() {
 
 beforeEach(() => {
   FakeAudioContext.instances = [];
+  decodedBuffers.length = 0;
   audioQueries.length = 0;
   audioConstructions = 0;
   oggAnswer = '';
@@ -227,6 +235,16 @@ const flush = async () => {
 const oscStarts = () => FakeAudioContext.instances.reduce((sum, ctx) => sum + ctx.oscillators.length, 0);
 const sourceStarts = () =>
   FakeAudioContext.instances.reduce((sum, ctx) => sum + ctx.sources.reduce((n, s) => n + s.starts, 0), 0);
+// A game sound starts a source whose buffer is a decoded file. The unlock pulse starts its own
+// silent source, so it never counts here.
+const gameSourceStarts = () =>
+  FakeAudioContext.instances.reduce(
+    (sum, ctx) =>
+      sum +
+      ctx.sources.filter((s) => s.starts > 0 && s.buffer !== null && decodedBuffers.includes(s.buffer))
+        .length,
+    0,
+  );
 const sourceStops = () =>
   FakeAudioContext.instances.reduce((sum, ctx) => sum + ctx.sources.reduce((n, s) => n + s.stops, 0), 0);
 const decodeCalls = () => FakeAudioContext.instances.reduce((sum, ctx) => sum + ctx.decodes, 0);
@@ -297,7 +315,7 @@ describe('AudioBus file playback', () => {
     await bus.play('correct');
     await flush();
     expect(oscStarts()).toBe(afterFirst);
-    expect(sourceStarts()).toBe(1);
+    expect(gameSourceStarts()).toBe(1);
   });
 
   it('starts one fetch for three plays of the same event', async () => {
@@ -345,7 +363,7 @@ describe('AudioBus file playback', () => {
     expect(fetchMock).toHaveBeenCalledTimes(1);
     expect(fetchUrls()).toEqual([OGG_URL]);
     expect(decodeCalls()).toBe(1);
-    expect(sourceStarts()).toBe(0);
+    expect(gameSourceStarts()).toBe(0);
     expect(oscStarts()).toBe(0);
   });
 
@@ -374,9 +392,27 @@ describe('AudioBus file playback', () => {
     await flush();
     await bus.play('correct');
     await flush();
-    expect(sourceStarts()).toBe(1);
+    expect(gameSourceStarts()).toBe(1);
     bus.dispose();
     expect(sourceStops()).toBe(1);
     expect(FakeAudioContext.instances[0]!.closes).toBe(1);
+  });
+
+  it('starts one silent buffer source and resumes the context on unlock', async () => {
+    oggAnswer = 'probably';
+    const bus = new AudioBus();
+    asFilesBus(bus).useSoundFiles(filesMap());
+    bus.unlock();
+    await flush();
+    // The iOS/Safari gesture unlock: one silent pulse through its own source, not a game sound.
+    expect(sourceStarts(), 'unlock starts one silent pulse source').toBe(1);
+    expect(gameSourceStarts(), 'the unlock pulse is not a game sound').toBe(0);
+    const pulse = FakeAudioContext.instances.flatMap((ctx) => ctx.sources).find((s) => s.starts > 0)!;
+    expect(pulse.buffer, 'the unlock pulse carries a silent buffer').not.toBeNull();
+    expect(
+      decodedBuffers.includes(pulse.buffer!),
+      'the unlock pulse buffer is not a decoded sound file',
+    ).toBe(false);
+    expect(FakeAudioContext.instances[0]!.resumes, 'unlock resumes the context').toBe(1);
   });
 });
