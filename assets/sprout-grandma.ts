@@ -1,5 +1,5 @@
 import { mixRgb, profile, rgb, sdf } from '../src/index.js';
-import type { HumanoidProportions } from './parts/humanoid-kind.js';
+import type { HumanoidProportions, HumanoidShape } from './parts/humanoid-kind.js';
 import { ADULT, humanoidAsset } from './parts/humanoid-kind.js';
 import { sproutGestures } from './parts/sprout-gestures.js';
 
@@ -111,6 +111,133 @@ const C = {
 };
 const CABLES = 14;
 
+// Grandma's face detail (Daniel 2026-11-22: more detail in the faces), matched to
+// docs/sprout-mockups/grandma.jpg. Paint only: the shared stencils and every other
+// kind user keep today's look, so their GLBs stay byte-identical.
+const GRANDMA_FACE = {
+  irisDark: '#3a2412',
+  irisLow: '#6e4520',
+  pupil: '#101314',
+  mouth: '#7e2a2e',
+  teeth: '#fbf8f0',
+  tongue: '#e88a9a',
+  freckle: '#b06a48',
+  noseShade: '#d89a78',
+  // Fixed pale grey: the shared tint.brow follows the hair color, which is white
+  // here, so it would wash out (Dad fixed his for the same reason, dark instead).
+  // The reference brows are soft light-grey arcs.
+  brow: '#a8a39c',
+  ageLine: '#c98f6e',
+};
+
+/** Grandma's face over the shared paint: dark round iris, gentle open smile, age marks. */
+const grandmaFace = (skin: sdf.Shape, h: HumanoidShape): sdf.Shape => {
+  const pair = (s: sdf.Shape) => s.mirror('x', 0);
+  const [EX, EY] = h.joints.EYE;
+  const smileY = GRANNY.face.smileY;
+  const browY = GRANNY.face.browY;
+  const noseY = GRANNY.face.noseY;
+
+  // Dark round iris with a warm low arc, the pupil, and one big catchlight: the
+  // reference eye is deep brown with a single bright spark.
+  const dark = pair(h.onFace(sdf.ellipsoid([0.037, 0.044, 0.07]), EX, EY - 0.006));
+  const low = dark.intersect(sdf.halfSpace([0, 1, 0], EY - 0.008));
+  const pupil = pair(h.onFace(sdf.ellipsoid([0.026, 0.029, 0.07]), EX, EY + 0.004));
+  const big = pair(h.onFace(sdf.sphere(0.012), EX + 0.015, EY + 0.018));
+  const small = pair(h.onFace(sdf.sphere(0.005), EX - 0.013, EY - 0.02));
+
+  // The shared brow band is heavy; cover it with an exact-footprint hard skin
+  // stencil (a wider cover left a pale slab in Lily's rounds, a soft edge a halo)
+  // and paint a shorter, thinner, softly arched brow in the same place: the
+  // reference brow is short, light, and gentle.
+  const cover = pair(sdf.extrude(profile.arc(0.1, 0.024, 58, 122), 0.3).at(0.1, browY - 0.1, 0.1));
+  const brow = pair(sdf.extrude(profile.arc(0.07, 0.014, 62, 118), 0.3).at(0.1, browY - 0.1, 0.1));
+
+  // A gentle open smile, smaller than the parents' (Grandma's reference smile is
+  // soft): one rounded white teeth band clipped inside the mouth, and a tongue.
+  const outline = profile.polygon(
+    (
+      [
+        [-0.052, 0.014],
+        [-0.026, 0.006],
+        [0, 0.004],
+        [0.026, 0.006],
+        [0.052, 0.014],
+        [0.044, -0.012],
+        [0.018, -0.03],
+        [-0.018, -0.03],
+        [-0.044, -0.012],
+      ] as [number, number][]
+    ).map(([x, y]): [number, number] => [x * 0.9, y * 0.9]),
+    { smooth: true },
+  );
+  const mouth = sdf.extrude(outline, 0.3).at(0, smileY, 0.1);
+  const teeth = sdf
+    .box([0.055, 0.012, 0.3], 0.006)
+    .at(0, smileY - 0.006, 0.1)
+    .intersect(mouth);
+  const tongue = mouth.intersect(sdf.ellipsoid([0.02, 0.01, 0.5]).at(0, smileY - 0.023, 0.1));
+
+  // Age marks the reference shows: soft smile (nasolabial) lines from the nose
+  // wings to the mouth corners, and crow's feet at the outer eye corners. Thin
+  // chains sunk 1 mm into the face surface, so they read as soft creases.
+  const crease = (pts: [number, number][], r: number) =>
+    sdf.chain(
+      pts.map(([x, y]): [number, number, number, number] => [x, y, h.faceZ(x, y) - 0.001, r]),
+      0.002,
+    );
+  const nasolabial = pair(
+    crease(
+      [
+        [0.026, noseY + 0.004],
+        [0.037, noseY - 0.012],
+        [0.046, smileY + 0.015],
+      ],
+      0.0025,
+    ),
+  );
+  const crowsfeet = pair(
+    crease(
+      [
+        [EX + 0.04, EY + 0.002],
+        [EX + 0.05, EY + 0.008],
+        [EX + 0.054, EY + 0.016],
+      ],
+      0.0022,
+    ),
+  );
+
+  // A soft shade under the small nose and a scatter of freckles over the nose
+  // bridge, as in the reference.
+  const shade = sdf.ellipsoid([0.02, 0.008, 0.05]).at(0, noseY - 0.018, h.faceZ(0, noseY - 0.018));
+  const dots: [number, number][] = [
+    [-0.03, 0.012],
+    [-0.014, 0.02],
+    [0.004, 0.014],
+    [0.022, 0.02],
+    [0.038, 0.01],
+    [-0.048, 0.004],
+    [0.052, 0.002],
+  ];
+  const freckles = sdf.union(...dots.map(([dx, dy]) => h.onFace(sdf.sphere(0.0026), dx, noseY + dy)));
+
+  return skin
+    .paintWhere(dark, GRANDMA_FACE.irisDark, 0.006)
+    .paintWhere(low, GRANDMA_FACE.irisLow, 0.008)
+    .paintWhere(pupil, GRANDMA_FACE.pupil)
+    .paintWhere(big, '#ffffff')
+    .paintWhere(small, '#ffffff')
+    .paintWhere(cover, h.tint.skin!)
+    .paintWhere(brow, GRANDMA_FACE.brow!)
+    .paintWhere(mouth, GRANDMA_FACE.mouth, 0.001)
+    .paintWhere(tongue, GRANDMA_FACE.tongue, 0.002)
+    .paintWhere(teeth, GRANDMA_FACE.teeth, 0.001)
+    .paintWhere(nasolabial, GRANDMA_FACE.ageLine, 0.002)
+    .paintWhere(crowsfeet, GRANDMA_FACE.ageLine, 0.002)
+    .paintWhere(shade, GRANDMA_FACE.noseShade, 0.01)
+    .paintWhere(freckles, GRANDMA_FACE.freckle, 0.001);
+};
+
 export default humanoidAsset({
   name: 'sprout-grandma',
   description:
@@ -138,7 +265,8 @@ export default humanoidAsset({
   // Cut the arm skin inside the long sleeves. The skin upper arm blends into the chest
   // band near the shoulder while the sleeve takes only arm weights, so a raised arm left
   // a skin strip under the sleeve. Keep a short wrist stub inside the cuff; the hand is
-  // its own body below it.
+  // its own body below it. Then Grandma's face detail (Daniel 2026-11-22), matched to
+  // docs/sprout-mockups/grandma.jpg. Paint only: the shared kind keeps today's look.
   paintSkin(skin, h) {
     const { SHOULDER, ELBOW, WRIST } = h.joints;
     const d: V3 = [WRIST[0] - ELBOW[0], WRIST[1] - ELBOW[1], WRIST[2] - ELBOW[2]];
@@ -149,7 +277,7 @@ export default humanoidAsset({
       sdf.cone(SHOULDER, ELBOW, GRANNY.limb.upper[0] + 0.022, GRANNY.limb.upper[1] + 0.022),
       sdf.cone(ELBOW, cutEnd, GRANNY.limb.fore[0] + 0.022, GRANNY.limb.fore[1] + 0.022),
     );
-    return skin.subtract(sdf.union(armCut, armCut.mirror('x', 0)));
+    return grandmaFace(skin.subtract(sdf.union(armCut, armCut.mirror('x', 0))), h);
   },
 
   extra(k, h) {
@@ -213,7 +341,35 @@ export default humanoidAsset({
       sdf.sphere(0.058).at(0, 0.195, -0.035),
       sdf.torus(0.05, 0.018).rotateX(90).at(0, 0.16, -0.035),
     );
-    const mass = sdf.smoothUnion(0.03, cap, pair(sides), bun).smoothSubtract(0.018, part);
+    // Swept strands from the center part: three overlapping cords per side run from
+    // the part over the crown toward the temples, hugging the cap (centers sunk a
+    // few mm into its surface, so they stand proud with grooves between them).
+    // Roots merge at the part but the tips stay distinct with staggered depths;
+    // every tip lands sideways of its root, nothing hanging vertical, and the
+    // whole sweep stays inside outerHug above the face opening, so the forehead
+    // reads and no gesture hand reaches it.
+    const cord = (pts: [number, number, number, number][]) => sdf.chain(pts, 0.012);
+    const sweeps = sdf
+      .smoothUnion(
+        0.01,
+        cord([
+          [0.012, 0.15, 0.078, 0.02],
+          [0.07, 0.132, 0.08, 0.019],
+          [0.128, 0.095, 0.062, 0.014],
+        ]),
+        cord([
+          [0.01, 0.146, 0.082, 0.019],
+          [0.064, 0.126, 0.088, 0.018],
+          [0.124, 0.086, 0.074, 0.013],
+        ]),
+        cord([
+          [0.012, 0.14, 0.089, 0.017],
+          [0.058, 0.118, 0.098, 0.016],
+          [0.112, 0.078, 0.091, 0.012],
+        ]),
+      )
+      .smoothIntersect(0.015, outerHug);
+    const mass = sdf.smoothUnion(0.03, cap, pair(sides), bun, pair(sweeps)).smoothSubtract(0.018, part);
     const hair = mass.smoothSubtract(0.014, faceOpen).bone('head');
     k.body('hair', hair.at(0, HEAD_Y, 0), {
       color: k.tint('hair'),
