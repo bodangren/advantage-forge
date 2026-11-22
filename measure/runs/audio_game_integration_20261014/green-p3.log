@@ -1,4 +1,4 @@
-BEGIN_MEASURE_AGENT_RESULT
+MEASURE_AGENT_RESULT
 role: jr-green
 track: audio_game_integration_20261014
 phase_heading: Phase 3: File playback in the AudioBus
