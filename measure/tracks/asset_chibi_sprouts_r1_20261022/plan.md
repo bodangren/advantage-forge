@@ -555,6 +555,26 @@ Workbooks does not wait for it.
     pass 15/15. typecheck-asset reports 0 errors. The shared kind is untouched:
     sprout-sam and teacher GLBs keep byte-identical hashes (3b6c6796, ec71c3d8);
     the preset pin is unchanged. Log green-faces-grandpa-r3.log.
+  - Adult base face r2 de8dd9db (2026-11-22, Faces r2 Step 1): `assets/sprout-adult-base.ts`
+    only, matched to the adult faces in `docs/sprout-mockups/cast-lineup.jpg`. Paint-only
+    face through a new `paintSkin` hook (short sleeves, so no arm cut): dark almond eyes
+    with one catchlight over fresh white in an exact hard skin opening, shorter thinner
+    brow over an exact-footprint hard skin cover in the variant-following tint, a friendly
+    open smile with one rounded white teeth band (0.065 x 0.02, no fang corners) and a
+    wide tongue, soft nose shade; no freckles, no age lines. The hairline is geometry:
+    the exact shared swept surface re-added through `avatarHair('swept')` (cap, tufts,
+    and back byte-identical), with three groove capsules cut with the fringe flow so the
+    fringe reads as four separated swept locks. Two in-round reverts: a custom cap/sides
+    trial moved three clearance lines, and proud locks read as a topknot. `./forge all
+    sprout-adult-base` exits 0 with no warning lines (GLB 3707392). `./forge check
+    sprout-adult-base` output byte-identical to the role_base_sha baseline (sha 5764bec0,
+    exit 1 on the known face-touch clips). The four adults rebuilt: Mom 1770c3f2, Dad
+    c47c236e, Grandma 16dd184e, Grandpa f610b07a, all byte-identical, each `./forge all`
+    exit 0 with 0 warnings. The three sprout vitest files pass 15/15 (24/24 with cutout).
+    typecheck-asset reports 0 errors. sprout-sam and teacher GLBs keep byte-identical
+    hashes (3b6c6796, ec71c3d8); the preset pin is unchanged. A textured `./forge render
+    sprout-adult-base` ran after the last edit (render newer than the source). Log
+    green-faces-adult-base.log.
   - [x] Mom (young mother, medium height, due 11-21). `assets/sprout-mom.ts` ac97d422
     (ADULT proportions; long wavy medium-brown hair past the shoulders, cream cable-knit
     sweater with collar/cuffs/ribbed hem, blue jeans, brown flats, pearl studs; look target
