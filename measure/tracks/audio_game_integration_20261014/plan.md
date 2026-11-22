@@ -650,6 +650,24 @@ Files this track touches:
     both commands report `measure/generated/status.md: stale generated fact`. `measure/generated/`
     holds uncommitted changes from another track, so this task did not regenerate it; the owner of
     those changes regenerates the status fact.
+  - [x] T7r Red (f0cbd2db): review r1 A-F1, A-F2, C-F1, C-F4 cases in
+    `tests/audio-budget.test.ts`. The three committed-file checks stay in the default suite. The
+    JSON case runs only when `AUDIO_BUDGET_JSON=1` is set (skipped otherwise with the reason
+    "run scripts/audio-budget.mjs, then AUDIO_BUDGET_JSON=1") and requires `decoded` (must equal
+    `files`) and `fileEffect` (must be true). The CLI case runs
+    `node scripts/audio-budget.mjs --help` (exit 0, usage line on stdout) and
+    `--game not-a-game` (exit 1, one usage line on stderr, no "at " stack frames) with
+    `child_process`, before any server work.
+    Red evidence 2026-11-23: default command
+    `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run tests/audio-budget.test.ts --maxWorkers=1'`
+    exits 1 with 1 failed, 3 passed, 1 skipped (5): only the CLI case fails (`--help exits 0:
+    expected 1 to be +0`). JSON mode
+    `AUDIO_BUDGET_JSON=1 node node_modules/vitest/vitest.mjs run tests/audio-budget.test.ts --maxWorkers=1`
+    against a script-shaped `{"bytes":79319,"files":6,"seconds":0.7}` artifact (removed after the
+    run) exits 1 with 2 failed and 3 passed (5): the JSON case fails on
+    `rune-match decoded is a labeled number: expected 'undefined' to be 'number'` and the CLI
+    case fails as above. `node_modules/.bin/prettier --check tests/audio-budget.test.ts` exits 0.
+  - [ ] T7g Green remediation (decode and file-effect evidence, usage text, JSON gate flag)
 
 ## Phase 5: Hand-off to the PM
 
