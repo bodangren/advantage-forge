@@ -133,7 +133,7 @@ Files this track touches:
     default-lookup and basename cases pass as lock-in. See the third block of
     `measure/runs/audio_game_integration_20261014/red-p2.log`.
 
-- [~] T4 Green (debbf930): Add the MP3 step to `scripts/sound-set.mjs` per spec AC2. Add the `FFMPEG_BIN`
+- [x] T4 Green (dcfad290): Add the MP3 step to `scripts/sound-set.mjs` per spec AC2. Add the `FFMPEG_BIN`
       lookup, the target preparation for the `.mp3`, and the three failure lines with their exits.
       Then render the real set once, and stage the seven `.mp3` files with explicit paths.
   - Green done-when: the T3 command exits 0 with every test passing. The render command exits 0 and
@@ -148,15 +148,26 @@ Files this track touches:
     debbf930001ae186a72ec3e860d6a5eba09806b9. The Green command exited 0 with 3 files and 91 of 91
     tests. The render command exited 0 and wrote 14 files. The pre-render run failed only on MP3
     case 5 with ENOENT for `sounds/chibi/tap.mp3`, before the real render.
-  - Ogg byte report: all seven `.ogg` files changed 24 bytes each on render. The changed bytes are
-    the Ogg stream serial and page CRCs. File sizes and decoded audio are unchanged. The seven
-    `.ogg` files were restored to HEAD, and the seven `.mp3` files were re-encoded from those
-    committed Oggs with the pinned argv. Re-encoded MP3 bytes equal the render MP3 bytes.
+  - Ogg byte report: every changed byte is an Ogg stream serial or page CRC. The three-page files
+    change 24 bytes each. `right.ogg` and `level-end.ogg` have four pages and change 32 bytes each.
+    File sizes and decoded audio are unchanged. The seven `.ogg` files were restored to HEAD, and the
+    seven `.mp3` files were re-encoded from those committed Oggs with the pinned argv. Re-encoded MP3
+    bytes equal the render MP3 bytes.
   - `sounds/README.md` now holds byte size and duration for all 14 files, in two tables. It records
     earshot 1.0.0 and `ffmpeg version 8.0.1-3ubuntu2`. The Ogg total is 90,468 bytes and the MP3
     total is 71,136 bytes.
   - Project gate 2026-11-22: `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts'`
     exited 0 with 214 files and 3267 of 3267 tests. `node measure/tools/generate.mjs --check` exited 0. `./measure/doctor.sh --structural-only` exited 0.
+  - Remediation 2026-11-22: fix commit dcfad29055561f890e6d2117871d24e233268288. The wrapper now
+    resolves ffmpeg only to a regular executable file. `FFMPEG_BIN` is an absolute path or a basename
+    searched on PATH, an empty value is unset, the working directory is never searched, and PATH
+    entries that hold directories are skipped. A failed lookup exits with AC2's missing-binary line
+    before target preparation or earshot. Target preparation checks both `.ogg` and `.mp3` before
+    removing either, so a blocked `.mp3` target leaves the stale `.ogg` in place and makes zero
+    earshot calls.
+  - Remediation gate 2026-11-22: `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sound-set.test.ts tests/sound-set-mp3.test.ts tests/sound-set.adversarial.test.ts tests/sound-set-lookup.test.ts'`
+    exited 0 with 4 files and 98 of 98 tests. The project gate exited 0 with 215 files and 3274 of
+    3274 tests. Review A F1 and F2 and Review B F1 and F2 are fixed; the F3 note is corrected above.
 
 ## Phase 3: File playback in the AudioBus
 

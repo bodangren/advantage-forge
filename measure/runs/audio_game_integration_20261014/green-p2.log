@@ -85,13 +85,58 @@ new_files_added:
   - sounds/chibi/whoosh.mp3
   - sounds/chibi/level-end.mp3
 ogg_byte_change_report:
-  All seven committed .ogg files changed 24 bytes each during the render. The changed bytes are
-  Ogg stream serial numbers and page CRCs. Sizes and decoded audio are unchanged; tap.ogg has 5534
-  bytes before and after. The .ogg files were restored to HEAD. The seven .mp3 files were re-encoded
-  from the restored Oggs with the exact AC2 argv; the MP3 SHA-256 values equal those from the render.
+  Every changed byte is an Ogg stream serial or page CRC. The three-page files change 24 bytes
+  each. right.ogg and level-end.ogg have four pages and change 32 bytes each. Sizes and decoded
+  audio are unchanged; tap.ogg has 5534 bytes before and after. The .ogg files were restored to HEAD.
+  The seven .mp3 files were re-encoded from the restored Oggs with the exact AC2 argv; the MP3
+  SHA-256 values equal those from the render.
 readme_report:
   sounds/README.md now lists byte size and duration for all 14 files in two format tables. Ogg total
   90,468 bytes; MP3 total 71,136 bytes. It records earshot 1.0.0 and ffmpeg version 8.0.1-3ubuntu2.
   A reader check confirmed every byte column equals statSync of the committed file.
 handoff: Phase 2 is complete. T3 and T4 are [x] with SHAs on their task lines. No routed findings, so no dispositions line. No product decision was needed. The next task is T5 Red in Phase 3.
+END_MEASURE_AGENT_RESULT
+MEASURE_AGENT_RESULT
+role: Green, Phase 2, remediation of Review A and Review B findings
+track: audio_game_integration_20261014
+phase_heading: ## Phase 2: MP3 copies in the wrapper
+phase_base_sha: 16b398b595354f5da275268f1b32c8e864b9312a
+role_base_sha: 3caf71e5a2e3bb7d74b589b44476b849fb1193ed
+remediation_base_sha: 0b23f6467ddbdd16407dfad8a7ab7d0aea2be032
+audited_head_sha: 6804d082dae31b1532b9251dddc974d089fd4895
+status: pass
+dispositions: F1 fixed; F2 fixed; F3 fixed
+tasks_flipped_to_x:
+  T4 Green (dcfad290): fix commit dcfad29055561f890e6d2117871d24e233268288 on the task line.
+tasks_flipped_to_b: none.
+fix_commit: dcfad29055561f890e6d2117871d24e233268288 fix(audio_game_integration): T4 ffmpeg lookup and target checks before render
+commands_and_exits:
+  Pre-fix targeted command (four files): exit 1; 1 failed, 93 passed (98). The five failures were the
+    directory FFMPEG_BIN, the empty FFMPEG_BIN, the working-directory default, the PATH directory
+    shadow, and the blocked MP3 target keeping the stale Ogg.
+  Post-fix targeted command:
+    HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sound-set.test.ts tests/sound-set-mp3.test.ts tests/sound-set.adversarial.test.ts tests/sound-set-lookup.test.ts'
+    exit 0; 4 files; 98 passed (98); 0 failed.
+  Project gate (once):
+    HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts'
+    exit 0; 215 files; 3274 passed (3274); 0 failed. No failure outside this task.
+  node measure/tools/generate.mjs --check: exit 0.
+  ./measure/doctor.sh --structural-only: exit 0.
+  node_modules/.bin/prettier --check scripts/sound-set.mjs: exit 0.
+fix_details:
+  F1: findFfmpeg accepts only a regular executable file. FFMPEG_BIN is an absolute path or a
+    basename searched on PATH. An empty value is unset. Empty PATH entries are skipped, so the
+    working directory is never searched. A directory on PATH is skipped. A failed lookup exits with
+    AC2's missing-binary line before target preparation and before earshot starts.
+  F2: the wrapper checks both the .ogg and the .mp3 target with lstatSync before removing either.
+    A blocked target exits with the exact preparation line and leaves the other file in place.
+    Stale-target removal failures keep the exact preparation line without a stack trace.
+  F3: plan.md and the earlier block of this log now describe the Ogg byte changes per file. Every
+    changed byte is an Ogg stream serial or page CRC. Three-page files change 24 bytes. right.ogg
+    and level-end.ogg have four pages and change 32 bytes each.
+scope:
+  The AC2 failure lines and the pinned ffmpeg argv are unchanged. No test was edited. No render ran
+  into sounds/. The committed .ogg and .mp3 files are unchanged.
+new_files_added: none.
+handoff: Phase 2 remediation is complete. T4 is [x] with the fix SHA on the task line. The next task is T5 Red in Phase 3. No other routed findings remain. No product decision was needed.
 END_MEASURE_AGENT_RESULT
