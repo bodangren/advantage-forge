@@ -41,7 +41,7 @@ HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/hea
 
 ## Phase 1: Red
 
-- [ ] T1 Red: Add `tests/old-browser/deep-copy.test.ts`, and pin the state types of the 29 games
+- [x] T1 Red (3d7db18f): Add `tests/old-browser/deep-copy.test.ts`, and pin the state types of the 29 games
       first. The file imports `../../src/apk3d/sim/copy.js` inside each case, so the state-type pin
       runs at HEAD, before the helper exists. The four cases:
 
@@ -62,8 +62,36 @@ HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/hea
     `node_modules/.bin/prettier --check tests/old-browser/deep-copy.test.ts` exits 0.
   - Record in this task: the 29 games, the type set that case 1 prints, and one line on each of the
     35 call sites.
+  - Red evidence (commit `3d7db18f`): `node node_modules/vitest/vitest.mjs run
+tests/old-browser/deep-copy.test.ts --maxWorkers=1` exits 1: 3 failed inside the case on the
+    absent `src/apk3d/sim/copy.js`, 1 passed, no collection or syntax error (log
+    `measure/runs/old_browser_builtins_20261122/red-deep-copy.log`).
+    `node_modules/.bin/prettier --check tests/old-browser/deep-copy.test.ts` exits 0. Case 1
+    printed all 29 sets (`red-deep-copy-types.log`), each a subset of the allowed list:
+    abyssal-well (array, boolean, number, plain-object, string), alchemists-synthesis (+null),
+    archers-revenge, astral-mage (+null), castle-defense, devourer-slime, dragon-flight (+null),
+    dragon-rider (+null), dungeon-liberator, enchanted-library (+null), griffin-riders-escape,
+    griffin-sky-joust, gryphon-patrol (+null), haunted-library, hero-vs-zombie, labyrinth (+null),
+    magic-defense, monster-encounters (array, null, number, plain-object, string),
+    paladins-twin-soul, potion-rush (+null), realm-carver (+null), rpg-battle (+null),
+    rune-forge-chamber (+null), rune-match, shadow-gate-dungeon, sorcerer-ziggurat,
+    spellweavers-run (+null), storm-castle-tower, village-guardian (base set plus `null` where
+    noted; no game uses `undefined` at start). The 35 `structuredClone` sites:
+    abyssal-well/core/sim.ts:221, alchemists-synthesis/core/sim.ts:156,
+    archers-revenge/core/sim.ts:64+153, astral-mage/core/sim.ts:280, castle-defense/core/sim.ts:82+208,
+    devourer-slime/core/sim.ts:378, dragon-flight/core/sim.ts:304, dragon-rider/core/sim.ts:265,
+    dungeon-liberator/core/sim.ts:396, enchanted-library/core/sim.ts:389,
+    griffin-riders-escape/core/sim.ts:265, griffin-sky-joust/core/sim.ts:99+313,
+    gryphon-patrol/core/sim.ts:319, haunted-library/core/sim.ts:352, hero-vs-zombie/core/sim.ts:504,
+    labyrinth/core/mazes.ts:232, labyrinth/core/sim.ts:479, magic-defense/core/sim.ts:126+231,
+    monster-encounters/core/sim.ts:35, paladins-twin-soul/core/sim.ts:150,
+    potion-rush/core/sim.ts:401, realm-carver/core/sim.ts:461, rpg-battle/core/sim.ts:152+214,
+    rune-forge-chamber/core/sim.ts:204, rune-match/core/sim.ts:471,
+    shadow-gate-dungeon/core/sim.ts:321, sorcerer-ziggurat/core/sim.ts:138,
+    spellweavers-run/core/sim.ts:256, storm-castle-tower/core/sim.ts:348,
+    village-guardian/core/sim.ts:436 (all `src/games/`, `+` joins two lines in one file).
 
-- [ ] T2 Red: Add `tests/old-browser/index-math.test.ts`. The three cases:
+- [x] T2 Red (3d7db18f): Add `tests/old-browser/index-math.test.ts`. The three cases:
 
   1. `atIndex` equals `Array.prototype.at` over the AC2 rule 2 table: an empty list, an index inside
      the range, a negative index inside the range, a negative index before the start, a positive
@@ -81,8 +109,17 @@ HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/hea
   - Red done-when: the command exits 1. Cases 1 and 2 fail on the absent helper module, inside the
     case. Case 3 fails and names the nine lines. No syntax or import error.
   - Record in this task: the nine lines and the 8 `.at(` count against the 1 `findLastIndex` count.
+  - Red evidence (commit `3d7db18f`): `node node_modules/vitest/vitest.mjs run
+tests/old-browser/index-math.test.ts --maxWorkers=1` exits 1: all 3 cases fail, no syntax or
+    file-scope import error (log `measure/runs/old_browser_builtins_20261122/red-index-math.log`).
+    `node_modules/.bin/prettier --check tests/old-browser/index-math.test.ts` exits 0. Cases 1
+    and 2 fail inside the case on the absent `src/apk3d/sim/index-math.js`. Case 3 names all nine
+    lines with both a missing-helper and a still-calls entry: dragon-flight/view2d/game.ts:565,
+    dragon-rider/view2d/game.ts:591, spellweavers-run/view/game.ts:216,
+    spellweavers-run/view2d/game.ts:311+429, storytime/book-pictures.ts:2269+3935+4558 (8 `.at(`),
+    host/reader.ts:197 (1 `findLastIndex`).
 
-- [ ] T3 Red: Widen the committed scan `tests/apk3d/no-unpolyfilled-builtins.test.ts` per AC3, and
+- [x] T3 Red (3d7db18f): Widen the committed scan `tests/apk3d/no-unpolyfilled-builtins.test.ts` per AC3, and
       commit that file here with the root behind the `SCAN_WIDE` flag. The default root stays
       `src/apk3d/audio/` until T5, so a suite run by any session without the flag stays green. The
       changes: `ROOT` from the file URL, `wide` from `process.env.SCAN_WIDE === '1'`, and
@@ -108,6 +145,19 @@ HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/hea
   - Prerequisite, met: task T6k of `audio_game_integration_20261014` (`0cc7b5c4`) removed both
     `Object.hasOwn` calls from `src/apk3d/audio/`. A scan of `src/` at baseline `a414b406` finds
     none.
+  - Red evidence (commit `3d7db18f`, same commit as the scan code): the wide run
+    `SCAN_WIDE=1 node node_modules/vitest/vitest.mjs run --maxWorkers=1
+tests/apk3d/no-unpolyfilled-builtins.test.ts` exits 1 with exactly 44 hits grouped by label:
+    35 `structuredClone`, 8 array `.at(`, 1 `.findLastIndex`, 0 `Object.hasOwn` (log
+    `measure/runs/old_browser_builtins_20261122/red-scan.log`, whose reporter line reads
+    `expected [ …(44) ] to deeply equal []`). Each hit line is `<path>:<line>: <label>` and matches
+    the source; the three `Box3.union` raw hits in `src/render/page.ts` (lines 263, 440, 447) stay
+    out through the named exclusions with the rot check. The default run without the flag exits 0
+    with 1 file and 2 passed tests (log `measure/runs/old_browser_builtins_20261122/red-scan-default.log`).
+    The control test passes in both runs: URL, template, and argument rows show 1 fixed hit and 0
+    witness hits; the receiver and two-line `structuredClone` rows show 1 hit for both scanners;
+    the 19-label row shows 0 for both.
+    `node_modules/.bin/prettier --check tests/apk3d/no-unpolyfilled-builtins.test.ts` exits 0.
 
 ## Phase 2: Green
 
