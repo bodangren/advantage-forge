@@ -735,7 +735,7 @@ Files this track touches:
 
 ## Phase 5: Hand-off to the PM
 
-- [~] T8 Hand-off: Check the 14 files in `demo/public/audio/chibi/` byte for byte against
+- [x] T8 Hand-off (18cd0516): Check the 14 files in `demo/public/audio/chibi/` byte for byte against
       `sounds/chibi/`; T6b made the copy, so this task verifies it and does not write it again. Add
       one row to `docs/apk-port.md` with the pattern of the model pack row (`docs/apk-port.md`, line
       238: `apps/advantage-games/public/packs/`): `demo/public/audio/chibi/` to
@@ -765,6 +765,27 @@ Files this track touches:
     plan with its date, and that answer confirms or replaces the proposed path. The done-when does
     not depend on the monorepo path: the folder contents and the checksums decide it.
   - The MANIFEST `target` rows hold the value `proposed: apps/advantage-games/public/audio/chibi/<file>`.
+  - Green evidence 2026-11-23: implementation commit
+    `18cd0516ed5e23f9dbb8e3dd3de076e7158d280c` adds only `scripts/audio-handoff.mjs`. The script
+    verifies the 14 demo files against the 14 sources byte for byte, removes a stale folder, copies
+    the 14 files into `out/apk-audio-handoff/chibi/`, and writes `MANIFEST.tsv`, `MANIFEST.sha256`,
+    and `README.md`. It makes no network call, no shell call to another repository, and no write
+    outside `out/`.
+  - The exact Green command, including the before and after monorepo status runs, exits 0. The
+    flagged test reports 8 passed (8). `sha256sum -c MANIFEST.sha256` in the folder prints 14 OK
+    lines, one per shipped file, and exits 0. The folder holds 17 files: 14 sounds, the manifest,
+    the checksum file, and the README. The default command without the flag exits 0 with 3 passed
+    and 5 skipped (8). `node_modules/.bin/prettier --check scripts/audio-handoff.mjs` exits 0.
+  - Monorepo record 2026-11-23: both `git -C ../reading-advantage-monorepo status --short` runs
+    print the same 24 unrelated paths from other sessions. Neither run names
+    `apps/advantage-games/public/audio/chibi/` or any of the 14 sound file names. Forge wrote
+    nothing in the monorepo.
+  - `docs/apk-port.md` already holds the single audio row at line 240, from cell
+    `demo/public/audio/chibi/` to cell `proposed: apps/advantage-games/public/audio/chibi/`. The
+    model pack row at line 238 names `apps/advantage-games/public/packs/`. No second row was added
+    and no docs edit was needed.
+  - The target stays proposed. No dated PM answer has landed in this plan. `out/` stays ignored and
+    untracked.
 
 ## Phase 6: Deferred work
 
