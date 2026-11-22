@@ -1,0 +1,29 @@
+MEASURE_AGENT_RESULT
+role: measure-mid-red
+track: audio_game_integration_20261014
+phase: Phase 3: File playback in the AudioBus
+task: T6g Red: Review A/C r3 stale-decode race
+phase_base_sha: af4e57aff730b1cf8ee9c716802920699f1eaaac
+role_base_sha: eecf3cbac1f7b8a871fbd5ebc24bebad4d82a457
+result_head_sha: d2d70bcfde13b075bfd18a85e2f64ba2b84d2e38
+commits:
+- d2d70bcfde13b075bfd18a85e2f64ba2b84d2e38 test(audio_game_integration): T6g stale decode race
+tests_changed:
+- tests/apk3d/audio-files.adversarial.test.ts (reworked mid-flight swap case to require stale rejection; added decode-pending race case)
+tests_weakened: none (equal-map double-wire case untouched, still fetches once)
+production_files_changed: none
+command: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-files.test.ts tests/apk3d/audio-files.adversarial.test.ts tests/apk3d/audio-wiring.test.ts tests/apk3d/audio-wiring.adversarial.test.ts tests/apk3d/imports.test.ts'
+exit_code: 1
+summary: 1 file failed, 4 passed (5 files); 2 failed, 44 passed (46 tests)
+failing_lines:
+- "FAIL tests/apk3d/audio-files.adversarial.test.ts > AudioBus file playback, adversarial > rejects the stale decode when the map is swapped mid-flight"
+- "AssertionError: the next play fetches the new file: expected [ '/audio/chibi/right.ogg' ] to deeply equal [ '/audio/chibi/right.ogg', …(1) ]"
+- "FAIL tests/apk3d/audio-files.adversarial.test.ts > AudioBus file playback, adversarial > rejects the stale fetch that resolves after the map changed"
+- "AssertionError: exactly one fetch for the new file follows: expected [ '/audio/chibi/right.ogg' ] to deeply equal [ '/audio/chibi/right.ogg', …(1) ]"
+failure_kind: assertion failures only (no syntax or import error); stale decode installs its buffer at HEAD so the new-file fetch never follows
+prettier: node_modules/.bin/prettier --check tests/apk3d/audio-files.adversarial.test.ts exits 0
+reviews_addressed:
+- measure/runs/audio_game_integration_20261014/review-a-9d150f6.json F1 (stale in-flight decode repopulates changed event)
+- measure/runs/audio_game_integration_20261014/review-c-9d150f6.json F4 (old request installs decoded buffer when event remains mapped)
+handoff: T6h Green (bind each load to its mapping; reject stale completions) goes to Green role opencode-go/hy4-flash-free#high
+END_MEASURE_AGENT_RESULT

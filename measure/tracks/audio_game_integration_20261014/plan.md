@@ -441,6 +441,25 @@ Files this track touches:
     `node measure/tools/generate.mjs --check` exited 0 before this plan edit.
   - dispositions: F1=FIX; F2=FIX; F3=FIX(Red)
 
+- [~] T6g Red (d2d70bcf): Review A/C r3 stale-decode race. Rework
+  `tests/apk3d/audio-files.adversarial.test.ts`: the mid-flight swap case is now
+  `rejects the stale decode when the map is swapped mid-flight` (fetch pending at the swap,
+  resolves after), and the new case is `rejects the stale fetch that resolves after the map
+  changed` (decode pending at the swap, resolves after). Each case quotes the AC4 rule in a
+  comment ("the current map decides the file"), asserts the stale completion stores nothing,
+  asserts the next play fetches the new file (`wrong.ogg`, exact URL list of two), plays it
+  (`gameSourceStarts` 1), and never starts a source with the stale buffer. No other case
+  changed; the equal-map double-wire case still fetches once.
+  - Red evidence 2026-11-22: the five-file command through the heavy runner
+    `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-files.test.ts tests/apk3d/audio-files.adversarial.test.ts tests/apk3d/audio-wiring.test.ts tests/apk3d/audio-wiring.adversarial.test.ts tests/apk3d/imports.test.ts'`
+    exits 1 with 2 failed and 44 passed (46). Both failures are assertion failures in the two
+    T6g cases (`the next play fetches the new file` / `exactly one fetch for the new file
+    follows`: only `right.ogg` fetched, `wrong.ogg` never follows, because the stale decode
+    installs its buffer at HEAD). No syntax or import error.
+    `node_modules/.bin/prettier --check tests/apk3d/audio-files.adversarial.test.ts` exits 0.
+  - Full log: `measure/runs/audio_game_integration_20261014/red-p3-t6g.log`.
+- [ ] T6h Green: bind each load to its mapping; reject stale completions
+
 ## Phase 4: Preload budget
 
 - [ ] T7 Measure: Add `scripts/audio-budget.mjs`. It serves the demo with vite, opens one game in
