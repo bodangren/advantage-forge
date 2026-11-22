@@ -8,8 +8,7 @@
  * to the last open window with full courage. When the sentence is built, the top opens, the
  * hazards stop, and the tower is cleared at the top. No lives, no defeat, no timer.
  */
-import { STEP_MS, createRng, type Rng, type Simulation } from '../../../apk3d/sim/index.js';
-import { deepCopy } from '../../../apk3d/sim/index.js';
+import { STEP_MS, createRng, type Rng, type Simulation, deepCopy } from '../../../apk3d/sim/index.js';
 import { bareWord, distractorsOf, sentencesOf, shiftOf, wordKey, type StormCastleTowerInput } from './content.js';
 import type {
   Climber,

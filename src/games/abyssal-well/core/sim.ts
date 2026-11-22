@@ -14,8 +14,7 @@
  *   fire right: [moved], fired, struck, [climbed, spawned] | [descentCleared, [descentStarted | wellComplete]]
  *   fire wrong: [moved], fired, repelled, courageLost, [rest], climbed
  */
-import { createRng, type Rng, type Simulation } from '../../../apk3d/sim/index.js';
-import { deepCopy } from '../../../apk3d/sim/index.js';
+import { createRng, type Rng, type Simulation, deepCopy } from '../../../apk3d/sim/index.js';
 import { descentsOf, echoWordOf, normalWord, type AbyssalWellInput } from './content.js';
 import {
   CREATURES,

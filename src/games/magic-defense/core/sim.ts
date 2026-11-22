@@ -13,8 +13,7 @@
  *   wrong: cast, castleHit, [rest], [missileThrown x n], roundShown
  *   storm: stormCast, [missileThrown x n], roundShown
  */
-import { createRng, type Rng, type Simulation } from '../../../apk3d/sim/index.js';
-import { deepCopy } from '../../../apk3d/sim/index.js';
+import { createRng, type Rng, type Simulation, deepCopy } from '../../../apk3d/sim/index.js';
 import { distinctTerms, formationOf, roundOf, targetsOf, type MagicDefenseInput } from './content.js';
 import type { HeldMissile, MagicDefenseCommand, MagicDefenseEvent, MagicDefenseState, Round, TargetWord, WaveEnemy } from './types.js';
 

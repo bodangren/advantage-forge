@@ -14,8 +14,7 @@
  *   wrong: shot, enemyStrike, [rest], roundShown
  *   miss (including a shut target): missed
  */
-import { createRng, type Rng, type Simulation } from '../../../apk3d/sim/index.js';
-import { deepCopy } from '../../../apk3d/sim/index.js';
+import { createRng, type Rng, type Simulation, deepCopy } from '../../../apk3d/sim/index.js';
 import { distinctTerms, formationOf, roundOf, targetsOf, type ArchersRevengeInput } from './content.js';
 import { layoutOf, shotOf } from './aim.js';
 import { TUNING } from './tuning.js';

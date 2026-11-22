@@ -19,8 +19,9 @@ import {
   type Rng,
   type Simulation,
   type Vec2,
+  deepCopy,
 } from '../../../apk3d/sim/index.js';
-import { deepCopy } from '../../../apk3d/sim/index.js';
+
 import { castingOf, echoWordOf, normalWord, type AstralMageInput } from './content.js';
 import type {
   AstralMageCommand,

@@ -6,8 +6,7 @@
  * it all back). With no choice the wizard waits before the orbs. After the last sentence a portal
  * opens. No timer decides anything and there is no game over.
  */
-import { STEP_MS, createRng, type Rng, type Simulation } from '../../../apk3d/sim/index.js';
-import { deepCopy } from '../../../apk3d/sim/index.js';
+import { STEP_MS, createRng, type Rng, type Simulation, deepCopy } from '../../../apk3d/sim/index.js';
 import { orbsFor, runOf, wordPoolOf, type SpellweaversInput } from './content.js';
 import type { Round, SpellweaversCommand, SpellweaversEvent, SpellweaversState } from './types.js';
 

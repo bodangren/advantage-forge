@@ -8,14 +8,13 @@ import * as THREE from 'three';
 import { toGameResults, type PracticeInput } from '../../../apk3d/contracts/index.js';
 import type { Game3DContext, Game3DInstance } from '../../../apk3d/factory/index.js';
 import { esc, hasThai, pips, sentenceBar } from '../../../apk3d/hud/index.js';
-import { createFixedStepLoop, type LoopClock } from '../../../apk3d/sim/index.js';
+import { createFixedStepLoop, type LoopClock, atIndex } from '../../../apk3d/sim/index.js';
 import { Actor, burst, FollowRig, isAvatarBody, playerBody } from '../../../apk3d/stage/index.js';
 import { createSpellweaversRun, evidenceOf, scoreOf, TUNING, type SpellweaversCommand, type SpellweaversEvent, type SpellweaversState } from '../core/index.js';
 import { nextChoice } from '../qc/bot.js';
 import { buildLand, RUN_MODELS } from './land.js';
 import { laneX, ORB_COLORS } from './land-plan.js';
 import './spellweavers-run.css';
-import { atIndex } from '../../../apk3d/sim/index.js';
 
 const ARCH_SCALE = 1.25;
 const ORB_Y = 1.15;

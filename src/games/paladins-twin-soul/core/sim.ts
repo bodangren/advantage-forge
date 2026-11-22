@@ -11,8 +11,7 @@
  *   right:  boltFired, soulFreed, shadesScattered,
  *           then [waveShown, captured] or victory
  */
-import { createRng, type Rng, type Simulation } from '../../../apk3d/sim/index.js';
-import { deepCopy } from '../../../apk3d/sim/index.js';
+import { createRng, type Rng, type Simulation, deepCopy } from '../../../apk3d/sim/index.js';
 import { shadesOf, targetsOf, type TwinSoulInput } from './content.js';
 import type { TargetWord, TwinSoulCommand, TwinSoulEvent, TwinSoulState } from './types.js';
 

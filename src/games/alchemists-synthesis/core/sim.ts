@@ -6,8 +6,7 @@
  * which counts one reading attempt. No lives, no defeat, no timer: nothing decides a result but
  * the answers.
  */
-import { STEP_MS, createRng, type Rng, type Simulation } from '../../../apk3d/sim/index.js';
-import { deepCopy } from '../../../apk3d/sim/index.js';
+import { STEP_MS, createRng, type Rng, type Simulation, deepCopy } from '../../../apk3d/sim/index.js';
 import { formulasOf, jarsFor, type AlchemistsSynthesisInput } from './content.js';
 import type {
   AlchemistsSynthesisCommand,

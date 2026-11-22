@@ -16,7 +16,7 @@ import { preloadAssetBindings, toGameResults } from '../../../apk3d/contracts/in
 import { AudioBus, installAudioUnlock, wireChibiSounds } from '../../../apk3d/audio/index.js';
 import { SESSION_OPTIONS_DEFAULT, type Game2DContext } from '../../../apk3d/factory/index.js';
 import { createI18n } from '../../../apk3d/i18n/catalog.js';
-import { createFixedStepLoop, createManualClock } from '../../../apk3d/sim/index.js';
+import { createFixedStepLoop, createManualClock, atIndex } from '../../../apk3d/sim/index.js';
 import { animationKeyOf, banner, button, COLORS, depthOf, Figure2D, fitGameSize, popup, recolorTag, registerSheetAnimations, SPRITE_PPM, StatusBar2D, tag, textureKeyOf, WordPanel2D } from '../../../apk3d/view2d/index.js';
 import { createDragonRider, evidenceOf, scoreOf, type DragonRiderCommand, type DragonRiderEvent, type DragonRiderState, type DragonRiderInput, type GateOption } from '../core/index.js';
 import { createAnswerAudioDriver } from '../../shared/answer-audio.js';
@@ -25,7 +25,6 @@ import { manifest, FILES_2D, HEROES_2D } from '../manifest.js';
 import { nextChoice } from '../qc/bot.js';
 import strings from '../strings.en.js';
 import { CHUNK, GATE_X, HIGHLAND, rng } from '../view/land-plan.js';
-import { atIndex } from '../../../apk3d/sim/index.js';
 
 const PPM = 64;
 const ELEVATION = 45;

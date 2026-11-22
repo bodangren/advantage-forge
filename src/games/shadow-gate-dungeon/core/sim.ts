@@ -21,8 +21,9 @@ import {
   type Rng,
   type Simulation,
   type Vec2,
+  deepCopy,
 } from '../../../apk3d/sim/index.js';
-import { deepCopy } from '../../../apk3d/sim/index.js';
+
 import { bareWord, distractorsOf, sentencesOf, shiftOf, wordKey, type ShadowGateInput } from './content.js';
 import type {
   Crystal,

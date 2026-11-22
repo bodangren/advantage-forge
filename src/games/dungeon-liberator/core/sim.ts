@@ -26,8 +26,9 @@ import {
   type Rect,
   type Simulation,
   type Vec2,
+  deepCopy,
 } from '../../../apk3d/sim/index.js';
-import { deepCopy } from '../../../apk3d/sim/index.js';
+
 import { shiftOf, villagerKindsOf, type DungeonLiberatorInput } from './content.js';
 import type {
   DungeonLiberatorCommand,

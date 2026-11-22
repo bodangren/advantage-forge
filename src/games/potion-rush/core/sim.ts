@@ -5,8 +5,7 @@
  * complete potion is served for coins, a customer out of patience sits down and comes back,
  * and the shift ends when every order is served. There is no game over.
  */
-import { STEP_MS, createRng, type Rng, type Simulation } from '../../../apk3d/sim/index.js';
-import { deepCopy } from '../../../apk3d/sim/index.js';
+import { STEP_MS, createRng, type Rng, type Simulation, deepCopy } from '../../../apk3d/sim/index.js';
 import { ordersOf, type PotionRushInput } from './content.js';
 import {
   INGREDIENT_KINDS,

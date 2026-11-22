@@ -30,8 +30,9 @@ import {
   type Rect,
   type Simulation,
   type Vec2,
+  deepCopy,
 } from '../../../apk3d/sim/index.js';
-import { deepCopy } from '../../../apk3d/sim/index.js';
+
 import { nightWordsOf, orbsFor, type HeroVsZombieInput } from './content.js';
 import type {
   HeroVsZombieCommand,

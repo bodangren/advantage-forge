@@ -9,8 +9,7 @@
  * cost of courage. Courage never ends the game: the team rests, comes back, and goes on. No
  * timer decides a result.
  */
-import { STEP_MS, createRng, type Rng, type Simulation } from '../../../apk3d/sim/index.js';
-import { deepCopy } from '../../../apk3d/sim/index.js';
+import { STEP_MS, createRng, type Rng, type Simulation, deepCopy } from '../../../apk3d/sim/index.js';
 import { campaignOf, monsterKindsOf, type RealmCarverInput } from './content.js';
 import {
   BOARD_SIZE,

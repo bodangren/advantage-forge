@@ -1,8 +1,9 @@
 /** A local replacement for `structuredClone`, which throws on the oldest supported browsers.
  *
  * The helper copies the plain data that a simulation state holds, plus the built-in containers that
- * a later state may hold. Uncopyable values (functions, symbols, WeakMap, WeakSet, promises) raise
- * a TypeError, as `structuredClone` does. The module imports nothing so it stays inside the
+ * a later state may hold. It throws a TypeError for unsupported values: functions, symbols,
+ * WeakMap, WeakSet, and promises. The native clone throws a DataCloneError for those values. This
+ * helper copies values from the current realm. The module imports nothing so it stays inside the
  * `apk3d/sim` import rule.
  */
 
@@ -64,12 +65,21 @@ function copyValue<T>(value: T, seen: WeakMap<object, unknown>): T {
     return out as unknown as T;
   }
 
-  const out = (Array.isArray(source) ? [] : Object.create(Object.getPrototypeOf(source))) as Record<
-    PropertyKey,
-    unknown
-  >;
+  let out: Record<PropertyKey, unknown>;
+  if (Array.isArray(source)) {
+    out = new Array<unknown>(source.length) as unknown as Record<PropertyKey, unknown>;
+  } else {
+    out = Object.create(Object.getPrototypeOf(source)) as Record<PropertyKey, unknown>;
+  }
   seen.set(source, out);
   const record = source as Record<string, unknown>;
-  for (const key of Object.keys(record)) out[key] = copyValue(record[key], seen);
+  for (const key of Object.keys(record)) {
+    Object.defineProperty(out, key, {
+      value: copyValue(record[key], seen),
+      writable: true,
+      enumerable: true,
+      configurable: true,
+    });
+  }
   return out as unknown as T;
 }

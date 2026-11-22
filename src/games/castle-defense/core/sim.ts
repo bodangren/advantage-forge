@@ -13,8 +13,7 @@
  *   build: towerBuilt, then each waveStep followed by its attackerThrough and [rest] events,
  *          then waveCleared, then [waveAppeared, stepShown] or victory
  */
-import { createRng, type Rng, type Simulation } from '../../../apk3d/sim/index.js';
-import { deepCopy } from '../../../apk3d/sim/index.js';
+import { createRng, type Rng, type Simulation, deepCopy } from '../../../apk3d/sim/index.js';
 import { attackersOf, choicesOf, shiftOf, type CastleDefenseInput } from './content.js';
 import { type Attacker, type CastleDefenseCommand, type CastleDefenseEvent, type CastleDefenseState, type Spot, type ShotSummary, type Step } from './types.js';
 

@@ -6,8 +6,7 @@
  * courage the rest is longer and all courage returns). Nothing waits on a clock for a result, and
  * there is no game over: the bats hold still in their loops for as long as the student reads.
  */
-import { STEP_MS, createRng, type Rng, type Simulation } from '../../../apk3d/sim/index.js';
-import { deepCopy } from '../../../apk3d/sim/index.js';
+import { STEP_MS, createRng, type Rng, type Simulation, deepCopy } from '../../../apk3d/sim/index.js';
 import { SKY, enemiesFor, enemyAt, patrolOf, wordPoolOf, type PatrolInput } from './content.js';
 import type { Enemy, PatrolCommand, PatrolEvent, PatrolState, Round } from './types.js';
 

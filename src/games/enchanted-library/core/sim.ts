@@ -21,8 +21,9 @@ import {
   type Rng,
   type Simulation,
   type Vec2,
+  deepCopy,
 } from '../../../apk3d/sim/index.js';
-import { deepCopy } from '../../../apk3d/sim/index.js';
+
 import { decoysOf, visitOf, type LibraryInput } from './content.js';
 import type { Book, Hero, LibraryCommand, LibraryEvent, LibraryRound, LibraryState, Spirit } from './types.js';
 

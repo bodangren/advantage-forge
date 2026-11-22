@@ -7,8 +7,7 @@
  * reading attempt. No health, no defeat, no timer: nothing decides a result but the order of
  * the words. (The legacy game had forge health and a 12 s timer per sentence; both are gone.)
  */
-import { STEP_MS, createRng, type Rng, type Simulation } from '../../../apk3d/sim/index.js';
-import { deepCopy } from '../../../apk3d/sim/index.js';
+import { STEP_MS, createRng, type Rng, type Simulation, deepCopy } from '../../../apk3d/sim/index.js';
 import { forgeOf, normalWord, waveWordsOf, type RuneForgeChamberInput } from './content.js';
 import type {
   ForgeSentence,

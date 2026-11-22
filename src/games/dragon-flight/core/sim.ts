@@ -13,8 +13,7 @@
  * missed word still comes back once: its question was not completed.
  */
 import { MAX_LISTENING_SESSION_ITEMS } from '../../../apk3d/contracts/index.js';
-import { STEP_MS, createRng, type Rng, type Simulation } from '../../../apk3d/sim/index.js';
-import { deepCopy } from '../../../apk3d/sim/index.js';
+import { STEP_MS, createRng, type Rng, type Simulation, deepCopy } from '../../../apk3d/sim/index.js';
 import { flightWordsOf, gatesFor, type DragonFlightInput } from './content.js';
 import type {
   DragonFlightCommand,

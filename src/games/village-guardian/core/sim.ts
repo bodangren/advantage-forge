@@ -27,8 +27,9 @@ import {
   type Rect,
   type Simulation,
   type Vec2,
+  deepCopy,
 } from '../../../apk3d/sim/index.js';
-import { deepCopy } from '../../../apk3d/sim/index.js';
+
 import { watchOf, villagerKindsOf, type VillageGuardianInput } from './content.js';
 import type {
   ScareCause,

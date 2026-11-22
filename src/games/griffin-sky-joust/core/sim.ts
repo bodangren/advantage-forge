@@ -8,8 +8,7 @@
  * most 8 riders in the air; the words of a sentence are struck in order, and a repeated word
  * ("the ... the") counts for either rider that carries it.
  */
-import { STEP_MS, createRng, type Rng, type Simulation } from '../../../apk3d/sim/index.js';
-import { deepCopy } from '../../../apk3d/sim/index.js';
+import { STEP_MS, createRng, type Rng, type Simulation, deepCopy } from '../../../apk3d/sim/index.js';
 import { joustOf, normWord, type JoustInput } from './content.js';
 import type { Griffin, JoustCommand, JoustEvent, JoustState, Rider } from './types.js';
 

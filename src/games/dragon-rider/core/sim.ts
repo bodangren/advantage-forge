@@ -13,8 +13,7 @@
  * back once: its question was not completed.
  */
 import { MAX_LISTENING_SESSION_ITEMS } from '../../../apk3d/contracts/index.js';
-import { STEP_MS, createRng, type Rng, type Simulation } from '../../../apk3d/sim/index.js';
-import { deepCopy } from '../../../apk3d/sim/index.js';
+import { STEP_MS, createRng, type Rng, type Simulation, deepCopy } from '../../../apk3d/sim/index.js';
 import { rideWordsOf, gatesFor, type DragonRiderInput } from './content.js';
 import type { DragonRiderCommand, DragonRiderEvent, DragonRiderState, RideWord, Round } from './types.js';
 

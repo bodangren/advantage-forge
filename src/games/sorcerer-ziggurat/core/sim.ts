@@ -6,8 +6,7 @@
  * of the tier return, and the hero keeps its place. No timer, no game over: nothing decides a
  * result but the order of the words.
  */
-import { createRng, type Rng, type Simulation } from '../../../apk3d/sim/index.js';
-import { deepCopy } from '../../../apk3d/sim/index.js';
+import { createRng, type Rng, type Simulation, deepCopy } from '../../../apk3d/sim/index.js';
 import { climbOf, cubesOf, type ZigguratInput } from './content.js';
 import type { Cube, CubeSpawn, Ritual, ZigguratCommand, ZigguratEvent, ZigguratState } from './types.js';
 

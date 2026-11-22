@@ -12,8 +12,7 @@
  *             [heroStrike, [monsterDefeated, [monsterAppeared]], [targetShown]], runesFell;
  *             then [runesFell (placed)] or victory
  */
-import { createRng, type Rng, type Simulation } from '../../../apk3d/sim/index.js';
-import { deepCopy } from '../../../apk3d/sim/index.js';
+import { createRng, type Rng, type Simulation, deepCopy } from '../../../apk3d/sim/index.js';
 import { monstersOf, paletteOf, targetsOf, type RuneMatchInput } from './content.js';
 import {
   HEROES,

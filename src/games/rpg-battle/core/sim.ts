@@ -14,8 +14,7 @@
  *   right:  answered, heroStrike, [heal], [monsterDefeated, [monsterAppeared]], then handShown or victory
  *   wrong:  answered, monsterStrike, [rest], handShown
  */
-import { createRng, type Rng, type Simulation } from '../../../apk3d/sim/index.js';
-import { deepCopy } from '../../../apk3d/sim/index.js';
+import { createRng, type Rng, type Simulation, deepCopy } from '../../../apk3d/sim/index.js';
 import { damageOf, monstersOf, optionsOf, targetsOf, type RpgBattleInput } from './content.js';
 import {
   HERO_OF,

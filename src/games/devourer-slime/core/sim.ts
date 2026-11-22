@@ -24,8 +24,9 @@ import {
   type Rng,
   type Simulation,
   type Vec2,
+  deepCopy,
 } from '../../../apk3d/sim/index.js';
-import { deepCopy } from '../../../apk3d/sim/index.js';
+
 import { guardKindsOf, shiftOf, type DevourerSlimeInput } from './content.js';
 import type { Bubble, DevourerSlimeCommand, DevourerSlimeEvent, DevourerSlimeState, Guard, ShiftSentence } from './types.js';
 

@@ -1,7 +1,9 @@
 /** Local index helpers that replace the ES2022 `Array.prototype.at` and `findLastIndex` methods.
  *
- * Both match the native result for every argument, including out-of-range and non-integer indices.
- * The module imports nothing so it stays inside the `apk3d/sim` import rule.
+ * `atIndex` matches the native result for every argument, including out-of-range and non-integer
+ * indices. `lastIndexWhere` matches the native index result, but it passes only the value and the
+ * index to its predicate; the native method also passes the array. The module imports nothing so it
+ * stays inside the `apk3d/sim` import rule.
  */
 
 /** Return the element at `index`, counting from the end when `index` is negative. */

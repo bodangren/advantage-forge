@@ -7,8 +7,7 @@
  * When courage runs out the team rests and returns to the entrance with full courage. No timer
  * decides a result and there is no game over.
  */
-import { STEP_MS, createRng, type Rng, type Simulation } from '../../../apk3d/sim/index.js';
-import { deepCopy } from '../../../apk3d/sim/index.js';
+import { STEP_MS, createRng, type Rng, type Simulation, deepCopy } from '../../../apk3d/sim/index.js';
 import { visitOf, type LibraryInput } from './content.js';
 import {
   FLOOR_COUNT,
