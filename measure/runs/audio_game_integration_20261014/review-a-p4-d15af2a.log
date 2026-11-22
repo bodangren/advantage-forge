@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: review-a
+status: complete
+track: audio_game_integration_20261014
+phase: Phase 4: Preload budget
+commits: none
+tests_run: Requested heavy-run gates exited 0. Default: four passed, one skipped. Browser: five passed, 79,319 bytes, six files, 0.7063 s, six decodes, fileEffect=true. Probes: missing JSON default 0 and opt-in 1; failed Ogg decodes 1 and no JSON; SIGTERM 143 and no listener; slow successful decodes 0.
+files_changed: measure/runs/audio_game_integration_20261014/review-a-p4-d15af2a.json; measure/runs/audio_game_integration_20261014/review-a-p4-d15af2a.log
+plan_updates: none
+known_failures: F4 [Blocker]: The CLI can pass the AC5 limit when decoding takes more than 1.5 seconds. This late finding is reachable by a user who runs the CLI with slow decoding.
+handoff: F1, F2, and F3 are fixed in their reported cases. Route F4 to Green for one fix round. Retain the response-window metric. Add a separate deadline check for decode completion.
+END_MEASURE_AGENT_RESULT

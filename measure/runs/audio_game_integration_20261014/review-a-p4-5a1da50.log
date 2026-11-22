@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: review-a
+status: complete
+track: audio_game_integration_20261014
+phase: Phase 4: Preload budget
+commits: none
+tests_run: Heavy-run default gate: four passed, one skipped. Browser gate: five passed, 79,319 bytes, six decodes in 0.7091 s, firstEffect=pop.ogg. Slow-decode probe: 2.4125 s, exit 1, no JSON. Three invalid JSON fixtures failed on their expected assertions.
+files_changed: measure/runs/audio_game_integration_20261014/review-a-p4-5a1da50.json; measure/runs/audio_game_integration_20261014/review-a-p4-5a1da50.log
+plan_updates: none
+known_failures: F5 [Nit]: The test strategy still names the old JSON shape and gate. This is late record drift, not a wrong result a CLI user can reach.
+handoff: F4 is withdrawn. Both gates pass. The browser retry and the slow-decode probe ran in one heavy-run call. Record F5 as tech debt only.
+END_MEASURE_AGENT_RESULT

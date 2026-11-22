@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "role": "review-c",
+  "track": "audio_game_integration_20261014",
+  "phase": "Phase 4: Preload budget",
+  "phase_base_sha": "53ae856842ae14a63fb1b65a96edd1c8d6ce22e4",
+  "role_base_sha": "0d8fc7def7b180092fe23ba51cbbfa55a6004991",
+  "audited_head_sha": "0d8fc7def7b180092fe23ba51cbbfa55a6004991",
+  "status": "fail",
+  "summary": "The preload gate can pass when audio decoding fails. The README byte counts match disk, but the observed JSON timing differs from the plan record.",
+  "blocking_findings": [
+    "F1 [Blocker] review-c: scripts/audio-budget.mjs:149-150,194-224 checks resource timing and browser errors but does not verify decoded playback. src/apk3d/audio/bus.ts:212-221,315-329 catches decode failures and uses the synth fallback, so all six downloads can pass the gate without a decoded sound. Verify decode success separately from the network timing metric required by test-strategy.md:355-360."
+  ],
+  "nonblocking_findings": [
+    "F2 [Major] review-c: plan.md:636-639 matches the two Green log runs, but the observed out/audio-budget/rune-match.json reports 0.7038000000715255 s, not the recorded repeat of 0.7216000000238418 s. Preserve the matching repeat output with its run evidence. The byte and file counts agree.",
+    "F3 [Nit] review-c: scripts/audio-budget.mjs:50-53 rejects a missing or unknown game with exit 1 before launch, but prints a stack trace for usage errors, including --help. Print a concise usage line and identify the invalid argument."
+  ],
+  "evidence": [
+    "The audio track commits in 53ae8568..0d8fc7de change scripts/audio-budget.mjs, tests/audio-budget.test.ts, and the track plan. Phase 4 strategy defines a CLI and measurement artifact contract; other-track changes are excluded.",
+    "scripts/audio-budget.mjs:203-225 writes exactly bytes, files, and seconds. The values represent encoded payload bytes, resource rows, and the network window in seconds.",
+    "The first read of out/audio-budget/rune-match.json showed 79319 bytes, 6 files, and 0.7038000000715255 s. The untracked file was absent on a later read. Review did not start a browser or modify the output.",
+    "measure/runs/audio_game_integration_20261014/green-p4-t7.log:17-24 corroborates the two timings in plan.md:636-639. plan.md:640-646 documents the Vite configuration deviation and the matching audio path.",
+    "sounds/README.md:22-44 has 14 byte rows. An independent file-size check matches all 14 and gives Ogg and MP3 totals of 90468 and 71136 bytes.",
+    "The six Rune Match README rows sum to 79319 Ogg bytes and 62496 MP3 bytes. tests/audio-budget.test.ts:91-123 accepts either format sum with six files and a positive duration within 1.5 s."
+  ],
+  "commands": [
+    "git rev-parse HEAD — 0d8fc7def7b180092fe23ba51cbbfa55a6004991.",
+    "git diff --check 53ae856842ae14a63fb1b65a96edd1c8d6ce22e4..0d8fc7def7b180092fe23ba51cbbfa55a6004991 -- scripts/audio-budget.mjs tests/audio-budget.test.ts measure/tracks/audio_game_integration_20261014/plan.md — exit 0.",
+    "node scripts/audio-budget.mjs --game; node scripts/audio-budget.mjs --game not-a-game; node scripts/audio-budget.mjs --help — each exits 1 with an argument hint and stack trace before launch.",
+    "Independent Python README row and stat check — all 14 rows match, full totals 90468 and 71136, Rune Match totals 79319 and 62496.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/audio-budget.test.ts' — PASS, 1 file and 4 tests; the background run completed after the initial report."
+  ],
+  "changed_files": [
+    "scripts/audio-budget.mjs",
+    "tests/audio-budget.test.ts",
+    "measure/tracks/audio_game_integration_20261014/plan.md"
+  ],
+  "test_strategy_violations": [
+    "F1: test-strategy.md:355-360 requires a failed decode to fail the run; page and console checks do not observe the AudioBus decode fallback."
+  ],
+  "live_contract_violations": [
+    "F1: the script can publish a passing preload result after file downloads succeed but decoding fails."
+  ],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "contract_applicability": "applicable",
+  "retry_recommendation": "retry_implementation",
+  "confidence": "high",
+  "route": "openai/gpt-6.2-sol#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 3,
+      "evidence": "scripts/audio-budget.mjs:203-224 validates downloads but cannot detect the silent decode failure at src/apk3d/audio/bus.ts:315-329."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 3,
+      "evidence": "tests/audio-budget.test.ts:91-123 checks the budget artifact but does not prove that the files decoded."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The audio track commits change only the measurement script, budget test, and plan."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 4,
+      "evidence": "The plan matches green-p4-t7.log:17-19, but the observed untracked output has a different timing."
+    }
+  ]
+}

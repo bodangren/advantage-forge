@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "role": "spec-review",
+  "track": "old_browser_builtins_20261122",
+  "phase": "track setup",
+  "baseline_sha": "aaf678693732984a6adbc78af1157610e8225fd9",
+  "audited_head_sha": "aaf678693732984a6adbc78af1157610e8225fd9",
+  "status": "pass",
+  "summary": "F7 is resolved. The T3 default scan remains audio-scoped for shared suite runs, while the flag enables the expected Red scan; T5 removes the flag.",
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "evidence": [
+    "F7 withdrawn: spec.md AC3 rules 1 and 8 define SCAN_WIDE=1 as the only wide mode and keep the default scan on src/apk3d/audio/; plan.md T3 records a default run that exits 0 with 0 hits. Concurrent full-suite runs without the flag therefore retain the existing audio-only passing scan.",
+    "T3 specifies both exact runs and expected results: SCAN_WIDE=1 exits 1 with 44 hits, while the unflagged scan exits 0 with 0 hits. The controls run in both modes.",
+    "T5 specifies removing the flag path, setting SCAN_ROOT unconditionally to join(ROOT, 'src'), and running the three-file gate without the flag. The plan also checks that SCAN_WIDE no longer appears in the test file.",
+    "The delta 18fabd421087432f7a8f065de1f3a0b6ce6eb7d4..aaf678693732984a6adbc78af1157610e8225fd9 resolves the shared-suite window without leaving a choice to Red or Green.",
+    "HEAD at role start (role_base_sha) and audited_head_sha: aaf678693732984a6adbc78af1157610e8225fd9. The audited spec and plan match this HEAD."
+  ],
+  "commands": [
+    "git rev-parse HEAD => aaf678693732984a6adbc78af1157610e8225fd9",
+    "git diff --unified=3 18fabd421087432f7a8f065de1f3a0b6ce6eb7d4 aaf678693732984a6adbc78af1157610e8225fd9 -- measure/tracks/old_browser_builtins_20261122/spec.md measure/tracks/old_browser_builtins_20261122/plan.md",
+    "git diff --exit-code aaf678693732984a6adbc78af1157610e8225fd9 HEAD -- measure/tracks/old_browser_builtins_20261122/spec.md measure/tracks/old_browser_builtins_20261122/plan.md",
+    "Read spec.md AC3 rules 1 and 8; plan.md T3 and T5; and the Amendment after r3 in spec-review.md."
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/spec-review-aaf6786.json",
+    "measure/runs/old_browser_builtins_20261122/spec-review-aaf6786.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "paraphrase": {
+    "proposes": "The track replaces browser-incompatible built-ins with local helpers and widens the existing source scanner. T3 commits the scanner with a flag that enables the wide Red run, while default runs remain audio-scoped; T5 removes the flag and scans all of src/.",
+    "current_system": "The committed scanner currently checks src/apk3d/audio/. The plan keeps that default scope during T3-T4, so concurrent unflagged project-suite runs remain green. The explicit wide Red run reports the remaining 44 hits, and T5 commits the unconditional src/ scan alongside the replacements."
+  }
+}

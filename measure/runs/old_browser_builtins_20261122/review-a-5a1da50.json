@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "role": "review-a",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 2: Green",
+  "baseline_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "phase_base_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "role_base_sha": "5a1da5011f31008102f8563b1f03f2891c23f99b",
+  "audited_head_sha": "5a1da5011f31008102f8563b1f03f2891c23f99b",
+  "status": "pass",
+  "summary": "The exact F2 and F3 cases pass re-review. Both Vitest gates passed. TypeScript found only baseline diagnostics. No late finding causes a user-reachable wrong result.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F8 [Nit] review-a: The historical TS2769 attribution at plan.md:173-177,206-209 remains unchanged. Red introduced the diagnostic, and the original Green run retained it. This record issue does not affect the current product.",
+    "F9 [Nit] review-a: Late finding, tech-debt; not user-reachable. The scanner still misses `math.if() / structuredClone(v) / 2` and `rows.at(one(two(three(four()))))`. It also accepts `otherbox.union(b)` in place of the exact exclusion `box.union(b)`. The scanner uses keyword and substring checks and limits nesting. No such unsupported call exists in the current source.",
+    "F10 [Nit] review-a: Late finding, tech-debt; not user-reachable. tests/old-browser/index-math.test.ts:314-317 accepts `notatIndex(existingVersions, -1)` at the Storytime version site because it checks a substring. The current site uses the correct helper.",
+    "F11 [Nit] review-a: Late finding, tech-debt; not user-reachable. tests/old-browser/deep-copy.test.ts:119-124 invokes an array index getter before the descriptor walk reports it. An in-memory fixture recorded one call, contrary to the no-invocation claim in plan.md:323-325. The current 29 start states pass the pin. Do not reopen the accepted deepCopy contract."
+  ],
+  "evidence": [
+    "git rev-parse HEAD matched audited_head_sha at role start.",
+    "F2 closed for the routed cases: the scanner reports calls in getOrigin() and indexed division, nested calls, and array-literal arguments. The full scan rejects an extra set.union(other) appended at src/render/page.ts:263.",
+    "F3 closed for the routed cases: the exact Storytime comment fixture fails at line 3936. Each of the nine call deletions fails independently at its own line, including both Spellweavers occurrences.",
+    "The independent TypeScript AST source scan found zero non-excluded target calls across 566 files. It counted 35 deepCopy, eight atIndex, and one lastIndexWhere call.",
+    "The emitted deepCopy code is identical at d15af2a and 5a1da50. No other production source path changes in the remediation delta.",
+    "The PM accepted the deepCopy contract limits. This review does not reopen them.",
+    "The targeted heavy-run command exited 0 with three files and 16 tests passed.",
+    "TypeScript exited 2 with 51 baseline diagnostics and no diagnostic in a changed old-browser file.",
+    "The first AC4 attempt timed out while waiting for the shared lock. The standalone retry exited 0 with 228 files passed, 3383 tests passed, and three skipped.",
+    "The generator, structural doctor, and focused Prettier checks each exited 0.",
+    "The empty src fixture fails on stale exclusions. Removing the Object.hasOwn label fails the positive control. The original Red log rows parse as 35 structuredClone, eight .at(, and one .findLastIndex( hit.",
+    "The two test lexers have identical TypeScript bodies after comment removal. Treat their shared lexical gaps as one debt item.",
+    "The build-graph database had no nodes table. The previous in-memory import inventory remains applicable because no affected import changed.",
+    "The release and shelf-sync worktrees, the wip/oct-skill-docs-20261023 branch, and origin refs remain untouched."
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "git diff 3f6a19214994e7ac05a79a8fa7faeded684267b7..5a1da5011f31008102f8563b1f03f2891c23f99b",
+    "git diff d15af2a..5a1da50 -- src tests measure/tracks/old_browser_builtins_20261122",
+    "build-graph callers measure/graph.db deepCopy; build-graph deps measure/graph.db atIndex",
+    "Node in-memory fixtures against the scanner, call-site checker, and state-type visitor from audited HEAD",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts --maxWorkers=1'",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts'",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/typescript/bin/tsc --noEmit --pretty false'",
+    "node measure/tools/generate.mjs --check; ./measure/doctor.sh --structural-only",
+    "node_modules/.bin/prettier --check measure/tracks/old_browser_builtins_20261122/plan.md tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts src/apk3d/sim/copy.ts"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/review-a-5a1da50.json",
+    "measure/runs/old_browser_builtins_20261122/review-a-5a1da50.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "unknown",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 4,
+      "evidence": "The AST scan found no non-excluded target calls in 566 files, and the remediation changes no emitted production code."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 3,
+      "evidence": "The exact F2 and F3 breakage probes now fail as intended, but tests/old-browser/index-math.test.ts:316 also accepts a longer identifier."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The old-browser remediation changes the scoped tests, the copy contract comment, and the phase records."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 4,
+      "evidence": "The targeted run matches the recorded 16 passing tests, but plan.md:323-325 overstates the array accessor check."
+    }
+  ]
+}

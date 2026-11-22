@@ -1,0 +1,29 @@
+MEASURE_AGENT_RESULT
+role: measure-review-b-security
+track: old_browser_builtins_20261122
+phase: Phase 2: Green
+round: re-review r2
+phase_base_sha: 3f6a19214994e7ac05a79a8fa7faeded684267b7
+role_base_sha: d15af2a205c5e1e612b1dc4f59060466fdd28fc8
+audited_head_sha: d15af2a205c5e1e612b1dc4f59060466fdd28fc8
+security_applicability: applicable
+status: pass
+blocking_findings: none
+nonblocking_findings:
+  - F2 kept | CONTEST kept: Symbol-keyed own properties are still silently dropped (probe R15); the spec contract (AC1 rule 3) covers own string keys only, and no pinned sim state uses symbol keys, so the divergence from structuredClone is documented but not remediated.
+  - F3 kept | CONTEST kept: RegExp values still copy into objects that pass instanceof RegExp but throw TypeError on exec (src/apk3d/sim/copy.ts:68-73 generic branch); no sim state holds a RegExp per the T1 type pin, so the latent crash is unreachable today.
+  - F4 kept | CONTEST kept: Non-enumerable own properties are still dropped (Object.keys at src/apk3d/sim/copy.ts:76 is enumerable-only); divergence from structuredClone, unreachable in the pinned plain-data sim states.
+  - F5 kept | CONTEST kept: Cross-realm Map/Set/Date/Promise values still silently flatten to {} because the instanceof guards at src/apk3d/sim/copy.ts:26-51 fail across realms; single-realm codebase today.
+evidence:
+  - F1 withdrawn: r1 finding (own __proto__ data key became the clone prototype) verified fixed; copy.ts:76-83 copies every own key via Object.defineProperty, and probes R4/R5/R6/R9 confirm the key survives as own data, clone prototypes stay clean, and Object.prototype/Array.prototype are untouched. Committed failing-first pin at tests/old-browser/deep-copy.test.ts:255-264 is green.
+  - git rev-parse HEAD = d15af2a205c5e1e612b1dc4f59060466fdd28fc8 at audit start and end; git status --short -- src/ tests/ is empty; no tracked file modified during the audit.
+  - Three-file gate through heavy-run.sh: node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts -> Test Files 3 passed (3), Tests 13 passed (13), exit 0 (9 tests at r1; T5r added failing-first sparse and __proto__ cases, now green).
+  - Probe R1 self-cycle c.self===c true; R2 Map cycle c.get('arr')[0]===c true; R7 getter read once per copy; no infinite recursion after the defineProperty rewrite.
+  - Probe R3 depth 50000 throws RangeError, identical to r1; the r1 depth table showed native structuredClone throws at depth 2000 while deepCopy survives to 8000. No denial-of-service regression.
+  - Probe R8 sparse array keeps length 100 and holes; R9 array with own __proto__ key keeps elements, keeps the own key, and keeps Array.prototype clean; R10 trailing holes preserved; R11 null prototype preserved; R12 frozen source unchanged; R13 two buffer views share one new buffer; R14 TypeError for all five uncopyables; R16/R17 index-math parity fuzz clean.
+  - git show 9440c572: the 33 call-site changes merge the two barrel imports into one import statement (sampled rune-match/core/sim.ts); no expression change; the scan test still reports zero hits.
+  - A2 not applicable: no draft-to-published path in this diff. A6: no overstatement; the T5r plan claims for sparse arrays and own __proto__ keys are backed by committed failing-first tests green at d15af2a.
+retry_recommendation: escalate_human
+result_path: measure/runs/old_browser_builtins_20261122/review-b-d15af2a.json
+log_path: measure/runs/old_browser_builtins_20261122/review-b-d15af2a.log
+END_MEASURE_AGENT_RESULT

@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "role": "review-b",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 2: Green",
+  "baseline_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "phase_base_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "role_base_sha": "0d8fc7def7b180092fe23ba51cbbfa55a6004991",
+  "audited_head_sha": "0d8fc7def7b180092fe23ba51cbbfa55a6004991",
+  "status": "pass",
+  "summary": "Security and data-handling audit of the deepCopy replacement for structuredClone and the 44 call-site replacements. Cycles terminate cleanly via the WeakMap seen-set; deepCopy survives deeper nesting than the native builtin it replaces (no DoS regression); getters, sparse arrays, null-prototype objects, shared-buffer typed-array views, DataView, and frozen sources all copy correctly; atIndex and lastIndexWhere match the native methods on a fuzz table. The 44 replacements are one-for-one with unchanged expression shape, and snapshot copies flow outward only (replay rebuilds from seed; persistence.ts never calls deepCopy), so no player or saved-game path reaches the divergent branches. Five nonblocking hardening notes, all unreachable today.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "deepCopy drops an own __proto__ data key and instead sets the clone's prototype to the copied value (probe P4/P5 in measure/runs/old_browser_builtins_20261122/probe-copy-run.mjs); structuredClone keeps it as an own data key. Unreachable from any sim state (fixed code-owned keys per the T1 pin) or save path (src/host/persistence.ts never calls deepCopy); hardening fix is one Object.defineProperty branch for the __proto__ key at src/apk3d/sim/copy.ts:73.",
+    "Symbol-keyed own properties are silently dropped (probe P11). Within the spec contract (AC1 rule 3 covers own string keys) but a divergence from structuredClone; document it or copy with Reflect.ownKeys.",
+    "RegExp values copy into objects that pass instanceof RegExp but throw TypeError on exec because the internal matcher slot is missing, and non-enumerable lastIndex is lost (probe P12). Silent data loss plus a latent crash if copied code calls the clone; no sim state holds a RegExp per the T1 type pin.",
+    "Non-enumerable own properties are dropped on every copied object (probe P8 class-instance secret field). Divergence from structuredClone; unreachable in the pinned plain-data sim states.",
+    "Cross-realm Map/Set/Date/Promise values silently flatten to {} because the instanceof guards at src/apk3d/sim/copy.ts:25-50 fail across realms (probe P14). Single-realm codebase today; becomes relevant only if a game ever runs inside an iframe."
+  ],
+  "evidence": [
+    "git rev-parse HEAD = 0d8fc7def7b180092fe23ba51cbbfa55a6004991 at audit start and end; no tracked file modified during the audit (git status --short shows only pre-existing untracked files).",
+    "Three-file gate through heavy-run.sh: node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts -> Test Files 3 passed (3), Tests 9 passed (9), exit 0.",
+    "Probe P1 self-cycle: c.self===c true; P2 Map cycle: c.get('arr')[0]===c true; P7 getter self-cycle: c.loop===c true. No infinite recursion on cyclic input.",
+    "Probe-depth.mjs: native structuredClone throws RangeError at depth 2000 while deepCopy survives to 8000; both throw at 16000. deepCopy is strictly more robust on deep nesting; no denial-of-service regression in game state copies.",
+    "Probe P6: source getter read exactly once per copy (1 read after copy 1, 2 after copy 2), matching structuredClone semantics; P9 sparse array keeps length 100 and holes; P10 null prototype preserved; P13 two views over one buffer share one new copied buffer; P16 DataView content and offsets correct; P20 frozen source unchanged after mutating the copy.",
+    "Probe P17 atIndex fuzz vs native .at over holes and indices -5..1e21 plus NaN, Infinity, -Infinity, -0, and fractions: zero mismatches. P18 lastIndexWhere vs native findLastIndex over four list shapes: all match.",
+    "git show 1dcc1043: all 44 replacements are one-for-one (35 deepCopy, 8 atIndex, 1 lastIndexWhere) with unchanged receiver, arguments, and ?? fallback shape; grep -rn 'structuredClone(' src/ returns no hit.",
+    "Reachability: src/apk3d/sim/simulation.ts:226-234 replays from the seed and never re-ingests a snapshot; src/host/persistence.ts:1-4,28-30 reads localStorage JSON of string records only and never calls deepCopy; the T1 pin (tests/old-browser/deep-copy.test.ts:110-120, green) fixes all 29 games' state type sets to plain data with code-owned keys.",
+    "A2 not applicable: no draft-to-published status flip in the diff. A6: measure/tracks.md:199 links the track with no resolved-security overstatement; plan/spec helper claims (WeakMap seen-set; TypeError for function, symbol, WeakMap, WeakSet, promise) are verified by the green gate and probes P1/P2/P7/P15.",
+    "Divergences confirmed by probe: P4/P5 own __proto__ key becomes the clone prototype; P11 symbol keys dropped; P12 RegExp clone throws on exec; P14 cross-realm Map flattens to {}."
+  ],
+  "commands": [
+    "git log --oneline 3f6a19214994e7ac05a79a8fa7faeded684267b7..0d8fc7def7b180092fe23ba51cbbfa55a6004991",
+    "git rev-parse HEAD && git status --short",
+    "git show --stat c8ddd883 && git show 1dcc1043 -- src/games/rune-match/core/sim.ts src/host/reader.ts src/storytime/book-pictures.ts src/games/labyrinth/core/mazes.ts src/games/dragon-flight/view2d/game.ts",
+    "node_modules/.bin/esbuild src/apk3d/sim/copy.ts --format=esm --outfile=measure/runs/old_browser_builtins_20261122/probe-copy.mjs",
+    "node_modules/.bin/esbuild src/apk3d/sim/index-math.ts --format=esm --outfile=measure/runs/old_browser_builtins_20261122/probe-index-math.mjs",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node measure/runs/old_browser_builtins_20261122/probe-copy-run.mjs'",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node measure/runs/old_browser_builtins_20261122/probe-depth.mjs'",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts'"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/review-b-0d8fc7d.json",
+    "measure/runs/old_browser_builtins_20261122/review-b-0d8fc7d.log",
+    "measure/runs/old_browser_builtins_20261122/probe-copy-run.mjs",
+    "measure/runs/old_browser_builtins_20261122/probe-depth.mjs",
+    "measure/runs/old_browser_builtins_20261122/probe-copy.mjs",
+    "measure/runs/old_browser_builtins_20261122/probe-index-math.mjs"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "kimi-code-plan-cn/kimi-for-coding",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 4,
+      "evidence": "Probes P1-P18 and the green three-file gate confirm every spec-contract behavior; the four-point score reflects confirmed edge divergences (own __proto__ key, symbol keys, RegExp, non-enumerables) that the contract does not cover but structuredClone handles."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "tests/old-browser/deep-copy.test.ts and index-math.test.ts are real failing-first tests that pin the 29-game state types and the uncopyable TypeErrors; the hostile edges of probe-copy-run.mjs have no committed test."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "git show --stat 1dcc1043 changes exactly the 37 files the plan lists and nothing else; the two audio-track commits in range were left untouched."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "Every claim cites a probe line, a run result (3 files/9 tests passed; depth table), or a file:line (copy.ts:73, simulation.ts:226-234, persistence.ts:28-30, tracks.md:199)."
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+MEASURE_AGENT_RESULT
+status: PASS
+phase: Phase 2: Green (PM decision round, T5r2)
+track: old_browser_builtins_20261122
+phase_base_sha: 3f6a19214994e7ac05a79a8fa7faeded684267b7
+role_base_sha: 6a65f579be55dcee17dac606599b142f9e2ee0fb
+final_green_head: 937685c63eba0eb620157c36e45082758cc0c638
+dispositions: B-F2=CONTEST(PM 2026-11-23 contract limit, documented in copy.ts); B-F3=CONTEST(PM 2026-11-23 contract limit, documented in copy.ts); B-F4=CONTEST(PM 2026-11-23 contract limit, documented in copy.ts); B-F5=CONTEST(PM 2026-11-23 contract limit, documented in copy.ts)
+tasks_flipped_to_x: T5r2@7d5c712984eb808c4419c2ba08f655bca67a86d4
+tasks_flipped_to_b: none
+source_commit: 7d5c712984eb808c4419c2ba08f655bca67a86d4 (src/apk3d/sim/copy.ts only)
+plan_evidence_commit: 937685c63eba0eb620157c36e45082758cc0c638 (plan.md, generated status.md)
+new_files_added: none
+tests_changed: none
+probe_artifact: measure/runs/old_browser_builtins_20261122/probe-state-types-r2.mjs (untracked, not committed)
+
+PM decision:
+The PM accepts Review B r2 findings B-F2, B-F3, B-F4 and B-F5 as written contract limits. No code changes. No more rounds on deepCopy. The copy.ts doc comment now states that the helper copies plain game state and lists four limits: own Symbol-keyed properties are not copied; non-enumerable own properties are not copied; a RegExp or another class instance copies as a plain object with no class behavior and a copied RegExp throws on exec; a Map, Set, Date or typed array from another realm copies as a plain object. The existing TypeError list stays. The comment passes ASD-STE100 prose rules and prettier.
+
+Probe result (temporary visitor copied from the state-types case at tests/old-browser/deep-copy.test.ts:111):
+- RegExp value: kinds=[other:[object RegExp], plain-object] -> CAUGHT (other:[object RegExp])
+- Symbol-keyed own property: kinds=[plain-object, string] -> ESCAPES THE TEST
+- class instance: kinds=[other:[object Object], plain-object] -> CAUGHT (other:[object Object])
+- plain-data control: kinds=[boolean, plain-object, string] -> no extra kind, passes as expected
+The probe exits 0. The visitor walks Object.keys, so a symbol key stays invisible. No test was changed.
+
+Gates:
+- Four-file command through the heavy runner: exit 0. Test Files 4 passed (4); Tests 19 passed (19).
+- node_modules/.bin/prettier --check src/apk3d/sim/copy.ts: exit 0.
+- node measure/tools/generate.mjs --check: exit 0 after regeneration. measure/generated was clean before regeneration.
+- ./measure/doctor.sh --structural-only: exit 0.
+
+Handoff to review roles:
+- The Symbol-keyed own property escapes the state-types pin. This is the accepted contract limit B-F2. The test belongs to Red; do not edit it here.
+- No task is deferred to a human. Do not archive the track. Do not update final closeout metadata.
+- T7 browser check and T8 gates stay open.
+END_MEASURE_AGENT_RESULT

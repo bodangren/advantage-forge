@@ -1,0 +1,26 @@
+MEASURE_AGENT_RESULT
+role: measure-review-b-security
+track: audio_game_integration_20261014
+phase: Phase 4: Preload budget
+phase_base_sha: 53ae856842ae14a63fb1b65a96edd1c8d6ce22e4
+role_base_sha: 53ae856842ae14a63fb1b65a96edd1c8d6ce22e4
+audited_head_sha: 0d8fc7def7b180092fe23ba51cbbfa55a6004991
+security_applicability: applicable
+route: kimi-code-plan-cn/kimi-for-coding
+status: pass
+summary: Pass on Phase 4 T7, no blocking finding, one nonblocking nit N1. The script binds vite to 127.0.0.1 only on fixed port 5199 with --strictPort, validates --game against a constant before any file or process work and never builds a path from it (OUT is hardcoded to out/audio-budget/rune-match.json), writes only that file, and cleans up in a finally with browser close and SIGTERM-to-SIGKILL server stop. Live probes: the real run exits 0 within budget (79,319 bytes, 6 files, about 0.71 s), five hostile --game variants exit 1 with nothing written, a port collision fails safe at exit 1 after a 120 s page timeout (N1: waitForServer accepts any 200), and nothing listens on 5199 and no vite or chromium process remains after every probe. The failed collision run deleted the prior JSON by design; I regenerated it (79,319 bytes, 6 files, 0.705 s) and the Red test passes 4 of 4.
+blocking_findings: none
+nonblocking_findings:
+- N1 [Nit] review-b: scripts/audio-budget.mjs waitForServer treats any HTTP 200 on 127.0.0.1:5199/demo/index.html as the vite server, so a foreign listener on the port is misdetected and the script burns the first 120 s page timeout before its safe exit; loopback-only impact, no write, no orphan, decoy untouched.
+evidence:
+- Provenance: audited head is a commit, equals the working HEAD, and phase_base_sha is ancestral; old_browser_builtins commits in the range are out of scope.
+- Host and port: --host 127.0.0.1 --strictPort on fixed 5199, matching the config host; loopback only.
+- Argument handling: all five hostile or malformed --game variants exit 1 before spawn or write; only rune-match.json exists under out/audio-budget/.
+- Process lifecycle: finally block closes the browser and stops the vite child with SIGKILL escalation; ss and pgrep confirm nothing listens and nothing remains after success, rejection, and collision runs.
+- Decoy cleanup per PM rule: decoy pid 185538 was already stopped (killed in the same command that ran the probe; ss confirmed nothing on 5199); future probe servers start and stop inside a single heavy-run call.
+retry_recommendation: none
+confidence: high
+paths:
+- measure/runs/audio_game_integration_20261014/review-b-p4-0d8fc7d.json
+- measure/runs/audio_game_integration_20261014/review-b-p4-0d8fc7d.log
+END_MEASURE_AGENT_RESULT

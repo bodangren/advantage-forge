@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "role": "measure-review-c-ux-api",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 2: Green",
+  "baseline_sha": "0d8fc7def7b180092fe23ba51cbbfa55a6004991",
+  "role_base_sha": "0d8fc7def7b180092fe23ba51cbbfa55a6004991",
+  "phase_base_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "audited_head_sha": "0d8fc7def7b180092fe23ba51cbbfa55a6004991",
+  "current_head_sha": "0d8fc7def7b180092fe23ba51cbbfa55a6004991",
+  "audited_head_is_current": true,
+  "contract_applicability": "applicable",
+  "applicability_evidence": [
+    "The track test strategy, line 35, rules out a public API, route, or UI change. No endpoint or browser UI review applies.",
+    "The exact phase diff adds a shared internal API in src/apk3d/sim/index.ts:2-3. Games, the reader, and Storytime import it.",
+    "spec.md:96-132 defines copy and index behavior for those consumers. This brief explicitly requests a review of that internal contract."
+  ],
+  "status": "fail",
+  "summary": "The 44 sites use the simulation barrel consistently. The copy helper loses valid data, and the scan misses valid calls and accepts a stale exclusion.",
+  "blocking_findings": [
+    "F1 [Blocker] review-c: src/apk3d/sim/copy.ts:67-73 loses an own __proto__ data key and shortens arrays with trailing holes. These results violate AC1 rule 3. Green: preserve own data properties and array length. Add regression cases for both.",
+    "F2 [Blocker] review-c: tests/apk3d/no-unpolyfilled-builtins.test.ts:104-107,215,225 misses normal call syntax. The regex-literal heuristic also removes a real call between division operators. Green: cover nested arguments, exact receiver boundaries, and division in the scan.",
+    "F3 [Blocker] review-c: tests/apk3d/no-unpolyfilled-builtins.test.ts:261-298 matches exclusions only by path and line. A structuredClone call on src/render/page.ts:263 takes the place of Box3.union and produces no error. Green: match the specific excluded call and report other calls on the same line."
+  ],
+  "nonblocking_findings": [
+    "F4 [Nit] review-c: src/apk3d/sim/copy.ts:4-5 says the native function throws TypeError for unsupported values. It throws DataCloneError. src/apk3d/sim/index-math.ts:3 claims full native parity, but lastIndexWhere passes two callback arguments, not three. Document the supported helper contracts.",
+    "F5 [Nit] review-c: plan.md:16-17 counts the maze copy twice. plan.md:224 and test-strategy.md:169 count 37 T5 source paths, but the commit has 36 source paths and one scan test. Correct the counts."
+  ],
+  "evidence": [
+    "git rev-parse HEAD matched the requested audited SHA at role start and after the test run. No tracked worktree changes were present.",
+    "The phase base is the strategy commit. The exact phase range also contains parallel audio commits. The named Green commits identify the source and record changes under review.",
+    "The phase diff does not change package metadata, the device gate, Vite config, or demo entries. package.json:5 is private and defines no package exports.",
+    "The source diff replaces 35 structuredClone calls, eight .at calls, and one findLastIndex call. All 36 consuming files use a named relative import from apk3d/sim/index.js.",
+    "src/apk3d/sim/index.ts:2-3 re-exports all three helpers. Both new modules have no imports.",
+    "tests/apk3d/imports.test.ts:22-61 permits the new game and host imports. Its file walk at line 161 does not include Storytime.",
+    "The Green T4 import gate passed four tests, per green-p2.log:24. That evidence is from Green, not an independent rerun.",
+    "The Node copy probe found the own key on the source and native clone but not on the helper copy. The array lengths were 3, 3, and 1 respectively.",
+    "The Node copy probe found TypeError for all five unsupported values. The function and symbol messages name the type. The other three use the same object-type message.",
+    "The scanner matched items.at(-1) but missed items.at(Math.trunc(index)), items.at (index), notthis.at(-1), and quiz.union(other) in isolated fixtures.",
+    "The scanner also missed structuredClone in the valid expression coin / structuredClone(state) / n. Its regex-literal keyword test matches in inside coin.",
+    "The scanner reported an empty problem list when an in-memory fixture replaced the excluded Box3.union at line 263 with structuredClone(state).",
+    "git show for 1dcc1043 lists 36 source paths and one scan test. The five second copy calls in core/sim.ts give 34 there. Labyrinth mazes.ts supplies the 35th.",
+    "The three-file gate passed through the heavy runner. Vitest reported three files and nine tests passed.",
+    "No browser inspection ran. The browser check belongs to Phase 3.",
+    "The audit-result checker accepted the JSON schema. The role gate failed on the audit verdict and listed the three blockers."
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "git diff --name-status 3f6a19214994e7ac05a79a8fa7faeded684267b7 0d8fc7def7b180092fe23ba51cbbfa55a6004991",
+    "git diff --check 3f6a1921 0d8fc7de -- src tests",
+    "git show --format= --name-only 1dcc1043",
+    "git grep on 0d8fc7de for the named sim barrel imports and the three helper calls",
+    "node --input-type=module: read-only deepCopy and structuredClone comparison for an own __proto__ key, a trailing sparse array, and the five unsupported input types",
+    "node --no-warnings --input-type=module: evaluate the existing scanner in memory with named fixtures and a stubbed src/render/page.ts",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts'",
+    "python3 /home/daniebo/.agents/skills/measure-orchestrator/scripts/measure_interphase_checks.py audit-result --role review-c --file measure/runs/old_browser_builtins_20261122/review-c-0d8fc7d.json"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/review-c-0d8fc7d.json",
+    "measure/runs/old_browser_builtins_20261122/review-c-0d8fc7d.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "retry_implementation",
+  "confidence": "high",
+  "route": "openai/gpt-6.2-sol#high",
+  "ratings": [
+    {"axis": "correctness", "score": 3, "evidence": "src/apk3d/sim/copy.ts:67-73 copies dense snapshots but the Node probe confirms data loss for two valid inputs."},
+    {"axis": "test_meaning", "score": 3, "evidence": "The scan controls at tests/apk3d/no-unpolyfilled-builtins.test.ts:328 cover six cases but omit the false negatives confirmed in the audit."},
+    {"axis": "scope_discipline", "score": 5, "evidence": "The T5 commit lists only the 36 consumer files and the scan test."},
+    {"axis": "evidence_quality", "score": 5, "evidence": "The three-file Vitest gate passed, and the separate Node probes reproduced each blocker at the audited HEAD."}
+  ]
+}

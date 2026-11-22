@@ -1,0 +1,29 @@
+MEASURE_AGENT_RESULT
+role: measure-mid-red
+track: audio_game_integration_20261014
+phase: Phase 4: Preload budget
+task: T7
+phase_base_sha: 53ae856842ae14a63fb1b65a96edd1c8d6ce22e4
+role_base_sha: 53ae856842ae14a63fb1b65a96edd1c8d6ce22e4
+resulting_head_sha: 9e1f93b407c30f70097c9e05be19df95ca7cea8a
+commits:
+- c6ccaf463ce477aef526f96ea91ab201d98462dc: measure(audio_game_integration): Phase 4 Red budget test (tests/audio-budget.test.ts only)
+- 9e1f93b407c30f70097c9e05be19df95ca7cea8a: measure(audio_game_integration): Phase 4 Red mark T7 in progress (plan.md only)
+tests:
+- tests/audio-budget.test.ts: 4 collected, 1 failed, 3 passed
+red_command: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'rm -f out/audio-budget/rune-match.json && node node_modules/vitest/vitest.mjs run tests/audio-budget.test.ts --maxWorkers=1'
+red_exit: 1
+failing_output_summary:
+  FAIL tests/audio-budget.test.ts > audio preload budget > holds the Rune Match measurement of six files within budget
+  Error: ENOENT: no such file or directory, open 'out/audio-budget/rune-match.json' at readFileSync (BUDGET_PATH)
+  Test Files 1 failed; Tests 1 failed | 3 passed (4). No syntax or import error. Cases 1-3 (README tables, statSync equality, format totals <= 100000) pass.
+prettier: node_modules/.bin/prettier --check tests/audio-budget.test.ts exits 0
+doctor_structural_only_exit: 1 (error names only measure/tracks/old_browser_builtins_20261122/plan.md: new track has started tasks; belongs to another session)
+generate_check_exit: 0 (Measure facts are current (4 files))
+dirty_classification:
+- relevant: tests/audio-budget.test.ts (committed c6ccaf46), measure/tracks/audio_game_integration_20261014/plan.md (committed 9e1f93b4)
+- generated_ignorable: out/ (untracked budget JSON removed by Red command), measure/graph.db, bench/ outputs
+- unrelated_user_work_preserved: measure/tracks/old_browser_builtins_20261122/plan.md, tests/apk3d/no-unpolyfilled-builtins.test.ts, assets/wizard-argon-trial.ts, docs mockups, download.html, measure/runs/* logs, tests/old-browser/ (untouched)
+handoff: Green implements scripts/audio-budget.mjs per test-strategy Phase 4; out/ stays untracked; record Rune Match bytes/files/seconds in plan.md.
+status: red_complete
+END_MEASURE_AGENT_RESULT

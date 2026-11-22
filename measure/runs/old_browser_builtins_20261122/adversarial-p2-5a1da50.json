@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "role": "measure-adversarial-testing",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 2: Green",
+  "baseline_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "phase_base_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "role_base_sha": "aaf678693732984a6adbc78af1157610e8225fd9",
+  "audited_head_sha": "5a1da5011f31008102f8563b1f03f2891c23f99b",
+  "status": "pass",
+  "summary": "Six seeded game simulations matched structuredClone for 1,200 ticks each. Deep-copy independence, edge index results, and execution with all four built-ins removed passed. No user-reachable defect was found.",
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "evidence": [
+    "The audited HEAD remained 5a1da5011f31008102f8563b1f03f2891c23f99b, with phase_base_sha 3f6a19214994e7ac05a79a8fa7faeded684267b7 and strategy role_base_sha aaf678693732984a6adbc78af1157610e8225fd9.",
+    "Six seeded sims (spellweavers-run, labyrinth, dragon-flight, dragon-rider, castle-defense, rune-match) passed 1,200 per-tick deepCopy versus structuredClone equality and reference-independence checks each.",
+    "All six sims completed 1,200 ticks each after deleting structuredClone, Array.prototype.at, Array.prototype.findLastIndex, and Object.hasOwn from globalThis.",
+    "The eight atIndex call sites matched native Array.prototype.at across 352 cases covering empty, single, sparse, negative, out-of-range, fractional, NaN, and infinite inputs. src/host/reader.ts:198 lastIndexWhere matched native findLastIndex across 12 empty, single, no-match, and multiple-match cases.",
+    "The three-file heavy-run command exited 0 with 3 files and 16 tests passed.",
+    "The AC4 heavy-run command exited 0 with 228 files passed, 3383 tests passed, and 3 skipped.",
+    "build-graph was available, but build-graph stats and callers failed because measure/graph.db has no nodes table; this did not block source and runtime checks."
+  ],
+  "commands": [
+    "git rev-parse HEAD; git diff --stat and --name-status 3f6a19214994e7ac05a79a8fa7faeded684267b7..5a1da5011f31008102f8563b1f03f2891c23f99b",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts' (exit 0; 3 files, 16 tests)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts' (exit 0; 228 files, 3383 passed, 3 skipped)",
+    "node --import tsx --input-type=module: six seeded sims, 1200 ticks each, deepCopy/native equality and independence (exit 0)",
+    "node --import tsx --input-type=module: six sims with four globals deleted, 1200 ticks each (exit 0)",
+    "node --import tsx --input-type=module: 352 atIndex and 12 lastIndexWhere native-comparison edge cases (exit 0)",
+    "build-graph stats measure/graph.db; build-graph callers measure/graph.db deepCopy (exit 4: no such table: nodes)",
+    "git diff --check 3f6a19214994e7ac05a79a8fa7faeded684267b7..5a1da5011f31008102f8563b1f03f2891c23f99b -- relevant source and tests (exit 0)"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/adversarial-p2-5a1da50.json",
+    "measure/runs/old_browser_builtins_20261122/adversarial-p2-5a1da50.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "openai/gpt-6-luna#high",
+  "ratings": [
+    {"axis": "correctness", "score": 5, "evidence": "Six sims stayed equal to native structuredClone at every one of 1,200 seeded ticks each."},
+    {"axis": "test_meaning", "score": 5, "evidence": "The targeted suite passed 16 tests, and independent runtime checks covered 7,200 deep-copy comparisons."},
+    {"axis": "scope_discipline", "score": 5, "evidence": "No production or test source was changed; only the required audit JSON and log were written."},
+    {"axis": "evidence_quality", "score": 5, "evidence": "The three-file and AC4 commands passed with their reporter counts recorded in this audit."}
+  ]
+}

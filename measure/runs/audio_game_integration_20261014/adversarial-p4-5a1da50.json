@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "role": "adversarial-testing",
+  "track": "audio_game_integration_20261014",
+  "phase": "Phase 4: Preload budget",
+  "baseline_sha": "53ae856842ae14a63fb1b65a96edd1c8d6ce22e4",
+  "phase_base_sha": "53ae856842ae14a63fb1b65a96edd1c8d6ce22e4",
+  "role_base_sha": "5a1da5011f31008102f8563b1f03f2891c23f99b",
+  "pre_adversarial_head_sha": "5a1da5011f31008102f8563b1f03f2891c23f99b",
+  "audited_head_sha": "5a1da5011f31008102f8563b1f03f2891c23f99b",
+  "status": "pass",
+  "summary": "The budget gate passes the default, live-browser, and project test runs. The heavier decode probe fails at the 1.5 s limit. Review C F4 remains measurement-only tech debt; it can reject valid playback but cannot create a false PASS or change shipped game sound.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F4 [Nit] adversarial-testing: tech-debt (PM-decided). The final fileEffect check at scripts/audio-budget.mjs:358-360 ignores the qualifying before-launch file event and checks only the first event after unlock. A probe with pop.ogg before unlock and synth after unlock reports fileEffect=false. This can reject a valid measurement, but it cannot create a false PASS or change sound in a shipped game."
+  ],
+  "evidence": [
+    "The default audio budget test passed 4 tests and skipped the measurement-dependent JSON case.",
+    "The live browser run measured 79,319 bytes across 6 files; seconds was 0.7078000000715255 and decodeSeconds was 0.7124000000953674. JSON mode passed all 5 tests.",
+    "The heavier decode probe delayed each decode by 1.7 s and exited 1 with decode window 2.410899999976158 s exceeds 1.5 s.",
+    "The project gate passed 228 files and 3,383 tests; 3 tests skipped.",
+    "Port 5199 had no listener after the live browser and heavier decode runs.",
+    "A completed-status fixture with two all-[~] tasks made the structural doctor exit 1 and report completed track has an unchecked task.",
+    "The Phase 4 plan scan found no all-checks-pass or PASS=N, FAIL=0 claim. The reviewed scope has no A7-style English-word exclusion filter.",
+    "Build Graph scanned 22,260 nodes and 25,079 edges; its search located AudioBus at src/apk3d/audio/bus.ts."
+  ],
+  "commands": [
+    "git rev-parse HEAD => 5a1da5011f31008102f8563b1f03f2891c23f99b",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run tests/audio-budget.test.ts --maxWorkers=1' => exit 0; 4 passed, 1 skipped",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/audio-budget.mjs --game rune-match && AUDIO_BUDGET_JSON=1 node node_modules/vitest/vitest.mjs run tests/audio-budget.test.ts --maxWorkers=1' => exit 0; 5 passed",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts' => exit 0; 228 files, 3,383 passed, 3 skipped",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node measure/runs/audio_game_integration_20261014/slow-decode-probe.mjs --game rune-match' => exit 1 as expected; 2.410899999976158 s decode window exceeded 1.5 s",
+    "A4 temporary completed/all-[~] doctor fixture => exit 1; reports completed track has an unchecked task",
+    "A5 rg scan of Phase 4 plan => no matches",
+    "A7 filter scan of tests and budget script => no A7-style English-word exclusion filter found",
+    "Node probe of the final fileEffect predicate => pop.ogg qualifies before unlock, later synth is first after unlock, fileEffect=false",
+    "ss -ltnp | grep ':5199' => no output; port is free",
+    "build-graph scan /home/daniebo/Desktop/advantage-forge /home/daniebo/.cache/opencode/audio-phase4-5a1da50.db => 22,260 nodes, 25,079 edges"
+  ],
+  "changed_files": [
+    "measure/runs/audio_game_integration_20261014/adversarial-p4-5a1da50.json",
+    "measure/runs/audio_game_integration_20261014/adversarial-p4-5a1da50.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "unknown",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 4,
+      "evidence": "The live gate reports 6 fetched files and 6 successful decodes; the remaining F4 is a false rejection in the measurement script."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "The heavier decode probe fails at scripts/audio-budget.mjs:343-345 when decode time exceeds 1.5 seconds."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "Only the result JSON and role log were created; no production or test source changed."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "The default, live-browser, and project gates have recorded exit codes and observed counts."
+    }
+  ]
+}

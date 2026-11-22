@@ -1,0 +1,23 @@
+MEASURE_AGENT_RESULT
+role: measure-mid-red
+track: old_browser_builtins_20261122
+phase: Phase 2: Green (remediation round 2, test-only, last allowed round)
+tasks: T3r2 Red (done)
+phase_base_sha: 3f6a19214994e7ac05a79a8fa7faeded684267b7
+role_base_sha: d15af2a205c5e1e612b1dc4f59060466fdd28fc8
+reviewed_head_sha: d15af2a205c5e1e612b1dc4f59060466fdd28fc8
+resulting_head_sha: 6a65f579be55dcee17dac606599b142f9e2ee0fb
+commits:
+- 6b4f8367da444705c698e1101d8556f2fdeb1ce7 measure(old_browser_builtins): Phase 2 remediation Red T3r2 review r2 test findings (tests/apk3d/no-unpolyfilled-builtins.test.ts, tests/old-browser/index-math.test.ts)
+- 6a65f579be55dcee17dac606599b142f9e2ee0fb measure(old_browser_builtins): Phase 2 remediation Red T3r2 plan record (plan.md T3r2 Red line + C-F5 note; measure/generated/status.md regenerate)
+production_source_edits: none (src/ untouched)
+red_kind: gap_closing
+gaps: division after ) or ] or an identifier is division (getOrigin() / structuredClone(v) / 2; a[0] / structuredClone(v) / 2); slash after a control-header close paren stays a regex (if (ok) /re/.test(s) before a division); balanced .at( argument lists with brackets and commas (rows.at([0, 1][0])) and deep nesting (rows.at(one(two(three())))); exclusion filters exactly one hit instance (box.union(b) beside items.union(other) or set.union(other)); site check strips comments and strings and requires the exact helper call on each named file:line; per-occurrence breakage mutation of the two identical Spellweavers sites; Storytime helper removed but kept in a comment still fails the site check.
+breakage_proof: fail-first run measure/runs/old_browser_builtins_20261122/red-p2-r2-failfirst.log exits 1 with 4 failed / 11 passed: the 5 new scanner control rows, the same-label exclusion control, the per-occurrence breakage proof, and the Storytime comment control all fail on the scanner at d15af2a2; final run measure/runs/old_browser_builtins_20261122/red-p2-r2-final.log exits 0 with 3 files and 15 passed (all new controls pass; no new control finds a real hit in src/).
+checks:
+- node node_modules/typescript/bin/tsc --noEmit --pretty false | grep -E 'tests/old-browser|tests/apk3d/no-unpolyfilled': no output (no error in the test files)
+- node_modules/.bin/prettier --check on the three test files: exit 0
+- node measure/tools/generate.mjs --check: exit 0 (facts current); ./measure/doctor.sh --structural-only: exit 0
+plan: Phase 2 holds `- [x] T3r2 Red (6b4f8367)` with the Red evidence and the C-F5 note (plan.md already records 36 source files plus one scan test; test-strategy.md untouched per the round brief).
+notes: no src/ edits; reverted the site checker to the d15af2a2 count-based logic for the honest fail-first run, then restored the strip-based checker (backup checksum verified before a cache wipe forced a manual re-apply, verified by grep); the working tree scanner at round start equals the scanner at d15af2a2 (clean status confirmed), so the fail-first run is literally against the reviewed scanner.
+END_MEASURE_AGENT_RESULT

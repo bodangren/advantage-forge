@@ -1,0 +1,44 @@
+
+ RUN  v5.1.1 /home/daniebo/Desktop/advantage-forge
+
+stdout | tests/old-browser/deep-copy.test.ts > state types: every game snapshot holds only the allowed plain-data kinds
+state types abyssal-well: array, boolean, number, plain-object, string
+state types alchemists-synthesis: array, boolean, null, number, plain-object, string
+state types archers-revenge: array, boolean, number, plain-object, string
+state types astral-mage: array, boolean, null, number, plain-object, string
+state types castle-defense: array, boolean, number, plain-object, string
+state types devourer-slime: array, boolean, number, plain-object, string
+state types dragon-flight: array, boolean, null, number, plain-object, string
+state types dragon-rider: array, boolean, null, number, plain-object, string
+state types dungeon-liberator: array, boolean, number, plain-object, string
+state types enchanted-library: array, boolean, null, number, plain-object, string
+state types griffin-riders-escape: array, boolean, number, plain-object, string
+state types griffin-sky-joust: array, boolean, number, plain-object, string
+state types gryphon-patrol: array, boolean, null, number, plain-object, string
+state types haunted-library: array, boolean, number, plain-object, string
+state types hero-vs-zombie: array, boolean, number, plain-object, string
+state types labyrinth: array, boolean, null, number, plain-object, string
+state types magic-defense: array, boolean, number, plain-object, string
+state types monster-encounters: array, null, number, plain-object, string
+state types paladins-twin-soul: array, boolean, number, plain-object, string
+state types potion-rush: array, boolean, null, number, plain-object, string
+state types realm-carver: array, boolean, null, number, plain-object, string
+state types rpg-battle: array, boolean, null, number, plain-object, string
+state types rune-forge-chamber: array, boolean, null, number, plain-object, string
+state types rune-match: array, boolean, number, plain-object, string
+state types shadow-gate-dungeon: array, boolean, number, plain-object, string
+state types sorcerer-ziggurat: array, boolean, number, plain-object, string
+state types spellweavers-run: array, boolean, null, number, plain-object, string
+state types storm-castle-tower: array, boolean, number, plain-object, string
+state types village-guardian: array, boolean, number, plain-object, string
+
+ ✓ tests/old-browser/deep-copy.test.ts > state types: every game snapshot holds only the allowed plain-data kinds 28ms
+ ↓ tests/old-browser/deep-copy.test.ts > equal values: a copied snapshot is toEqual its source, for each of the 29 games
+ ↓ tests/old-browser/deep-copy.test.ts > no shared reference: changing a nested copy value leaves the source unchanged
+ ↓ tests/old-browser/deep-copy.test.ts > type probe: maps, sets, dates, buffers and special numbers copy by value; uncopyables throw
+
+ Test Files  1 passed (1)
+      Tests  1 passed | 3 skipped (4)
+   Start at  00:52:00
+   Duration  415ms (import 49%, transform 41%, tests 9%, worker 1%)
+

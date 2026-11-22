@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: spec-review
+status: complete
+track: old_browser_builtins_20261122
+phase: track setup
+commits: none
+tests_run: read-only delta review; no test suite run
+files_changed: measure/runs/old_browser_builtins_20261122/spec-review-18fabd4.json; measure/runs/old_browser_builtins_20261122/spec-review-18fabd4.log
+plan_updates: none
+known_failures: F7 Blocker shared-suite failure risk during T3-T5
+handoff: F5 and F6 are withdrawn. Add an explicit Red-only environment flag that preserves the audio-only scan for concurrent default suite runs; remove the flag path and widen unconditionally at T5. Audited HEAD is 09b4028f9d5f422f86c4bfa2c6735778b3c10ce7.
+END_MEASURE_AGENT_RESULT

@@ -1,0 +1,32 @@
+Phase base: 3f6a19214994e7ac05a79a8fa7faeded684267b7
+Role base and audited HEAD: 0d8fc7def7b180092fe23ba51cbbfa55a6004991
+git rev-parse HEAD matched the audited SHA at role start and after the test run. The worktree had no tracked diff.
+This review covers the shared internal API. No public API, route, or UI contract changed.
+
+Target command:
+HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts'
+The command passed. Vitest reported three files and nine tests passed.
+Green records four passed tests for the T4 import gate in green-p2.log:24.
+
+The Node probe reproduced copy data loss on an own __proto__ key and an array with trailing holes.
+The in-memory scanner probes reproduced missed valid calls and a stale exclusion that hid a new hit.
+All 44 calls use a named relative import from apk3d/sim/index.js across 36 consumer files.
+The audit-result checker accepted the result schema. The role gate failed on the audit verdict and listed F1-F3.
+
+Worktrees and branches outside master: retain advantage-forge-release and its detached release HEAD. Retain the shelf-sync worktree and its branch for their owning work.
+Leave wip/oct-skill-docs-20261023 and the origin refs unchanged. They are outside this audit.
+
+MEASURE_AGENT_RESULT
+role: measure-review-c-ux-api
+status: complete
+track: old_browser_builtins_20261122
+phase: Phase 2: Green
+commits: none
+tests_run: three-file Vitest gate through heavy-run.sh (pass, 9 tests); Node copy and scan probes reproduced F1-F3
+files_changed: review-c-0d8fc7d.json, review-c-0d8fc7d.log
+plan_updates: none
+known_failures: F1 deepCopy data loss; F2 scan misses valid calls; F3 scan accepts a stale exclusion
+handoff: Route F1-F3 to Green. The JSON also records F4 for Green and F5 for the track owner.
+END_MEASURE_AGENT_RESULT
+
+RESULT: FAIL

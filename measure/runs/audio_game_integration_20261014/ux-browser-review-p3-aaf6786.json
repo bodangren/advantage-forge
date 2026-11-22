@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "role": "ux-browser-review",
+  "track": "audio_game_integration_20261014",
+  "phase": "Phase 3: File playback in the AudioBus",
+  "baseline_sha": "af4e57aff730b1cf8ee9c716802920699f1eaaac",
+  "phase_base_sha": "af4e57aff730b1cf8ee9c716802920699f1eaaac",
+  "role_base_sha": "e6027f509891a301c26eddbbf67fd044bc971729",
+  "audited_head_sha": "aaf678693732984a6adbc78af1157610e8225fd9",
+  "status": "pass",
+  "summary": "The Rune Match browser probe still applies at the audited HEAD. The diff from the probe HEAD to the audited HEAD contains no changes outside measure, so the served page and code are byte-identical. Six valid Chibi Ogg requests returned 200 with no invalid requests or browser errors. The empty active-game accessibility snapshot remains a nonblocking note outside Phase 3 audio scope.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "The active Rune Match screen produces an empty accessibility snapshot, and the game canvas has no accessible name. This does not block the Phase 3 audio gate. Route the canvas semantics and game accessibility review to a UI/accessibility track."
+  ],
+  "evidence": [
+    "git rev-parse HEAD returned aaf678693732984a6adbc78af1157610e8225fd9, matching audited_head_sha. role_base_sha is e6027f509891a301c26eddbbf67fd044bc971729, the probe HEAD.",
+    "git diff --stat e6027f509891a301c26eddbbf67fd044bc971729 aaf678693732984a6adbc78af1157610e8225fd9 -- . ':!measure' printed nothing. No non-measure files changed, so the served page, implementation, and audio files are byte-identical to the probe state.",
+    "Read measure/runs/audio_game_integration_20261014/ux-browser-review-p3-a414b40-probe.json and ux-browser-review-p3-a414b40-probe.out. Both report status pass, six Ogg requests with HTTP 200, no invalid requests, no console errors, and no page errors.",
+    "The six responses were /demo/audio/chibi/tap.ogg, right.ogg, wrong.ogg, level-end.ogg, whoosh.ogg, and pop.ogg. All returned 200 from /demo/audio/chibi/.",
+    "The interaction sequence selected Rune Match, clicked Read, clicked Next, clicked Start, tapped the game canvas to unlock audio, and pressed Space.",
+    "Viewed the carried-forward 1280x800 screenshot. The active Rune Match board and HUD render within the viewport. The probe's active-play accessibility snapshot is empty, and the canvas has no accessible name.",
+    "The probe server log is empty. The build session confirmed the server stopped and port 5199 is no longer listening.",
+    "The test ran muted in headless Chromium. It proves file requests and runtime flow, not audible quality on a real device."
+  ],
+  "commands": [
+    "git rev-parse HEAD => aaf678693732984a6adbc78af1157610e8225fd9",
+    "git diff --stat e6027f509891a301c26eddbbf67fd044bc971729 aaf678693732984a6adbc78af1157610e8225fd9 -- . ':!measure' => no output",
+    "Probe artifacts => pass; 6 audio requests returned 200; no invalid requests, console errors, or page errors",
+    "Dev URL => http://127.0.0.1:5199/demo/"
+  ],
+  "changed_files": [],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "openai/gpt-6-luna#high",
+  "webbridge_status": "not_run",
+  "webbridge_evidence": {
+    "screenshots": [
+      "measure/runs/audio_game_integration_20261014/ux-browser-review-p3-a414b40.png: Rune Match 2D board and HUD visible, 1280x800; carried forward because the diff from probe HEAD to audited HEAD has no non-measure changes"
+    ],
+    "accessibility_snapshots": [
+      "measure/runs/audio_game_integration_20261014/ux-browser-review-p3-a414b40-probe.json: active play snapshot empty; canvas has no accessible name"
+    ],
+    "interactions": [
+      "Selected Rune Match from the game list.",
+      "Clicked Read to open the selected story.",
+      "Clicked Next to open the game briefing.",
+      "Clicked Start to mount Rune Match in the 2D renderer.",
+      "Clicked the game canvas once as the audio unlock gesture.",
+      "Pressed Space once as game input."
+    ],
+    "dev_url": "http://127.0.0.1:5199/demo/"
+  },
+  "ux_applicability": "applicable"
+}

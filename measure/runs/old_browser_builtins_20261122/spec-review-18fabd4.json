@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "role": "spec-review",
+  "track": "old_browser_builtins_20261122",
+  "phase": "track setup",
+  "baseline_sha": "18fabd421087432f7a8f065de1f3a0b6ce6eb7d4",
+  "audited_head_sha": "09b4028f9d5f422f86c4bfa2c6735778b3c10ce7",
+  "status": "fail",
+  "summary": "F5 and F6 are closed. T3 still leaves a known failing scanner in the shared working tree without a safeguard for concurrent full-suite runs.",
+  "blocking_findings": [
+    "F7 [Blocker] plan.md T3 Window and T5 Green: Do not rely on T3 and T5 running back to back to protect shared-suite runs. Keep the existing audio-only scan as the default during T3-T5, and opt into src/ only for Red with an explicit environment flag; T5 must remove the flag path and make src/ the unconditional scan root before commit. Record the exact flag, Red command, expected 44-hit failure, and T5 unflagged zero-hit gate. Rationale: Another session can run the shared project suite while the uncommitted scanner reports 44 expected hits, causing an unrelated gate failure."
+  ],
+  "nonblocking_findings": [],
+  "evidence": [
+    "F5 withdrawn: spec.md AC3 rules 1, 3, 4, and 7 define repository-root resolution, a one-pass scanner, whole-text matching with template interpolation scanning, and six controls including a stripCommentsFirst witness. The URL, interpolation, and multiline cases match the cited scanner gaps.",
+    "F6 withdrawn: plan.md T3 runs tests/apk3d/no-unpolyfilled-builtins.test.ts in place, derives ROOT from the test file URL, writes only its log under measure/runs/, and no longer copies the test to another directory.",
+    "The plan explicitly states that the widened test remains modified and uncommitted from T3 through T5. It says the orchestrator runs those tasks back to back and no other role runs the suite, but also acknowledges that a parallel session running the full suite will fail.",
+    "The plan does not gate or preserve the old audio-only scan during that window. Therefore, any concurrent full-suite run sees the failing widened test.",
+    "HEAD at role start (role_base_sha): 09b4028f9d5f422f86c4bfa2c6735778b3c10ce7. HEAD matches audited_head_sha. The audited track spec and plan are unchanged between baseline 18fabd421087432f7a8f065de1f3a0b6ce6eb7d4 and HEAD.",
+    "The delta e6027f509891a301c26eddbbf67fd044bc971729..18fabd421087432f7a8f065de1f3a0b6ce6eb7d4 resolves F5 and F6 and specifies the scanner controls. The remaining zero-decision gap is the shared-suite behavior during T3-T5."
+  ],
+  "commands": [
+    "git rev-parse HEAD => 09b4028f9d5f422f86c4bfa2c6735778b3c10ce7",
+    "git diff --exit-code 18fabd421087432f7a8f065de1f3a0b6ce6eb7d4 HEAD -- measure/tracks/old_browser_builtins_20261122/spec.md measure/tracks/old_browser_builtins_20261122/plan.md",
+    "git diff --unified=3 e6027f509891a301c26eddbbf67fd044bc971729 18fabd421087432f7a8f065de1f3a0b6ce6eb7d4 -- measure/tracks/old_browser_builtins_20261122/spec.md measure/tracks/old_browser_builtins_20261122/plan.md",
+    "Read the updated AC3 rules 1, 3, 4, and 7 and plan.md T3, T5, and T6."
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/spec-review-18fabd4.json",
+    "measure/runs/old_browser_builtins_20261122/spec-review-18fabd4.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "escalate_human",
+  "confidence": "high",
+  "paraphrase": {
+    "proposes": "This track replaces browser-incompatible built-ins with local helpers and widens the existing scanner to all of src/. It uses a failing Red scan to record the remaining 44 uses before Green replaces them.",
+    "current_system": "The committed scanner currently checks only src/apk3d/audio/. The plan widens it in place during T3, leaves that failing change uncommitted through T4, and commits the replacements and passing scan at T5. Other sessions share the working tree and may run the full project suite during that interval."
+  }
+}

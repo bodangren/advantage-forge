@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: adversarial-testing
+status: complete
+track: audio_game_integration_20261014
+phase: Phase 3: File playback in the AudioBus
+commits: none
+tests_run: Targeted gate exited 0: 8 files, 61 passed, 2 skipped. Project gate exited 0: 225 files, 3,364 passed, 2 skipped. All five runtime scenarios passed. The non-Measure diff was empty.
+files_changed: measure/runs/audio_game_integration_20261014/adversarial-p3-aaf6786.json; measure/runs/audio_game_integration_20261014/adversarial-p3-aaf6786.log
+plan_updates: None.
+known_failures: ADV5-S1 and ADV5-R1 remain recorded tech debt.
+handoff: The adversarial gate passes at aaf678693732984a6adbc78af1157610e8225fd9. Use this result for Phase 3 acceptance. Keep both late findings as tech debt. No tests or commits were added.
+END_MEASURE_AGENT_RESULT

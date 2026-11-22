@@ -1,0 +1,26 @@
+MEASURE_AGENT_RESULT
+role: measure-review-b-security
+track: audio_game_integration_20261014
+phase: Phase 4: Preload budget
+round: 2
+phase_base_sha: 53ae856842ae14a63fb1b65a96edd1c8d6ce22e4
+role_base_sha: 0d8fc7def7b180092fe23ba51cbbfa55a6004991
+audited_head_sha: d15af2a205c5e1e612b1dc4f59060466fdd28fc8
+security_applicability: applicable
+route: kimi-code-plan-cn/kimi-for-coding
+status: pass
+summary: Pass on Phase 4 re-review r2, no blocking and no nonblocking finding; the round-1 nit N1 is withdrawn. The init script installs only into the ephemeral headless page realm and the delta changed no product file, so it cannot leak into product code. SIGINT and SIGTERM close the browser, stop the vite child, and exit 130 and 143, reproduced mid-run with the port free afterwards. The decoy collision now fails fast, exit 1 in one second with the vite 'Port 5199 is already in use' log, with the decoy started and stopped inside a single heavy-run call and nothing listening afterwards. --game handling is unchanged (help exits 0; traversal, missing, and equals forms exit 1 with one usage line before any spawn or write). The real run writes {bytes: 79319, files: 6, seconds: 0.7072, decoded: 6, fileEffect: true} within budget, and the gated Red test passes 5 of 5.
+blocking_findings: none
+nonblocking_findings: none
+evidence:
+- N1 withdrawn: waitForServer now checks the vite child exit before and after the fetch probe and requires 'ready in'; the decoy collision exits 1 in 1 s with the port-in-use log, the decoy dies inside the same heavy-run call, and nothing listens on 5199 afterwards.
+- Provenance: audited head is a commit, ancestral to the working head; the audited script equals the tested script; the two modified working-tree test files belong to the concurrent old_browser_builtins track.
+- Signal handlers: SIGTERM gives exit 143 and SIGINT exit 130 mid-run, page closes, port free, no vite process from the run remains.
+- Init script containment: addInitScript only, observer wrappers, no stub, no product file changed, browser closed on every exit path.
+- A2 not applicable; A6 holds (T7r Red failed first, T7g gate evidence recorded).
+retry_recommendation: none
+confidence: high
+paths:
+- measure/runs/audio_game_integration_20261014/review-b-p4-d15af2a.json
+- measure/runs/audio_game_integration_20261014/review-b-p4-d15af2a.log
+END_MEASURE_AGENT_RESULT

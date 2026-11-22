@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "role": "review-a",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 2: Green",
+  "baseline_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "phase_base_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "role_base_sha": "0d8fc7def7b180092fe23ba51cbbfa55a6004991",
+  "audited_head_sha": "0d8fc7def7b180092fe23ba51cbbfa55a6004991",
+  "status": "fail",
+  "summary": "Both Vitest gates passed. AC1 and AC3 have confirmed defects, and the AC2 call-site test passes despite a missing replacement. The TypeScript run found one track-owned error.",
+  "blocking_findings": [
+    "F1 [Blocker] review-a: src/apk3d/sim/copy.ts:66-73 drops trailing holes from arrays and fails to preserve an own enumerable `__proto__` key. A sparse array of length 4 with only index 1 set returns length 2. A parsed object with an own `__proto__` key loses that key. Both values survive native cloning. Preserve array length and define copied keys as own data properties. Add regression cases for both inputs.",
+    "F2 [Blocker] review-a: tests/apk3d/no-unpolyfilled-builtins.test.ts:100-135,212-230,287-298 misses valid unsupported calls. The regex heuristic strips `origin / structuredClone(value) / 2` as a regex and misses a call after `if (ok) /\"/.test(s)`. The call patterns miss `rows.at(getLastIndex())`, `notthis.at(-1)`, `itemsz.union(other)`, and `structuredClone /* note */ (value)`. The Box3 exclusion also hides unrelated calls on the same line. Distinguish calls from regex literals, match the named receivers exactly, and bind each exclusion to its call. Add positive controls for all 19 labels.",
+    "F3 [Blocker] review-a: tests/old-browser/index-math.test.ts:58-67 checks for a helper anywhere in each file, not at each of the nine sites. Removing the helper from Storytime's version selection left the case green because two other calls remain in that file. Require the expected call at each distinct site and prove the case fails when one is absent.",
+    "F4 [Blocker] review-a: plan.md:205-207 claims no TypeScript error in a changed file. The compiler exits 2 and reports TS2769 at tests/old-browser/deep-copy.test.ts:101 in the Object.keys call. Red added this test after the phase base. Fix the narrowing without weakening the state-type check. Record the phase base separately from the Red-to-Green comparison."
+  ],
+  "nonblocking_findings": [
+    "F5 [Nit] review-a: The new Phase 2 evidence in plan.md:168-235 fails Prettier although the Red plan passes. T5 also calls all 37 touched paths source files; the total includes the scan test. Format the new plan evidence and record 36 source files plus the scan test.",
+    "F6 [Nit] review-a: src/apk3d/sim/copy.ts:25-61 uses realm-specific instanceof checks. A cross-realm typed array of length one copies as length zero, and a cross-realm promise does not throw. The current simulations create their state in one realm. State that limit or add parity for other realms.",
+    "F7 [Nit] review-a: T5 adds a second import from the same simulation barrel in 33 changed game files. One example is src/games/abyssal-well/core/sim.ts:17-18. Add the helper to the existing import."
+  ],
+  "evidence": [
+    "git rev-parse HEAD matched audited_head_sha at role start.",
+    "The TypeScript AST comparison matched receivers and arguments at all 44 replacements across 36 source files: 29 snapshots, six other copies, eight tail lookups, and the reader's last-match search.",
+    "All 29 changed simulations appear once in the Red state-type table. Each has a replay test, including the case in tests/games/monster-encounters/sim.test.ts.",
+    "The build-graph database had no nodes table. An in-memory TypeScript import scan found 212 direct import or re-export files for the barrel. Neither new helper imports a module.",
+    "Green changed only scanner comments and SCAN_ROOT after the Red commit. It changed no Red assertions. git grep found no SCAN_WIDE in the final scanner.",
+    "The Red log contains 35 labeled structuredClone hits, eight labeled .at( hits, and one labeled .findLastIndex( hit. It contains no labeled Object.hasOwn hit.",
+    "The independent AST scan found zero non-excluded target calls across 566 committed non-generated TypeScript files in src/.",
+    "The direct Node fixture matched native clone content for the supported same-realm types. It confirmed separate object identities, copied buffer aliases, and rejection of nested uncopyable values.",
+    "All 29 production snapshot methods matched native clone content and shared no reachable state object with either source or second copy. The Griffin resume call also passed with structuredClone absent.",
+    "The literal scanner's six controls pass on HEAD and still pass when its Object.hasOwn pattern is absent.",
+    "The missing-directory and empty-directory fixtures fail the source scan; the single missing Storytime call passes the nine-site test.",
+    "The three-file Vitest command exited 0 with 3 files and 9 tests.",
+    "The Storytime caller subset T12, T17, and T21 exited 0. A Reader fixture matched native clip bounds across five paragraph ranges with findLastIndex absent.",
+    "The first AC4 attempt hit the shell's 600-second timeout. The retry exited 0 with 228 files passed, 3376 tests passed, and 2 skipped. The reporter matches the earlier plan result from b2d87dbe.",
+    "The TypeScript CLI exited 2 with 52 errors, including TS2769 in the new deep-copy test. No changed production file had an error.",
+    "The in-memory TypeScript comparison found 51 errors at phase base 3f6a192, 57 at Red HEAD 25612156, and 52 at audited HEAD. Green removed five missing-helper errors. TS2769 is the one added error across the full phase.",
+    "The generator check and structural doctor each exited 0. The registry marks the track in progress and does not claim resolution.",
+    "All 35 baseline format failures in the T5 path list remain; the other two paths pass. The plan has a separate new formatting failure.",
+    "The release and shelf-sync worktrees, the wip/oct-skill-docs-20261023 branch, and the origin refs remain untouched. This audit schedules no work for them."
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "git diff 3f6a19214994e7ac05a79a8fa7faeded684267b7..0d8fc7def7b180092fe23ba51cbbfa55a6004991",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts --maxWorkers=1'",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts'",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/storytime-book-pictures.test.ts -t \"T12: injected capture|T17: release requires|T21: contact sheets\"'",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/typescript/bin/tsc --noEmit --pretty false'",
+    "TypeScript createProgram/getPreEmitDiagnostics with an in-memory git-tree overlay at 3f6a192, 25612156, and 0d8fc7d",
+    "build-graph callers measure/graph.db deepCopy; build-graph deps measure/graph.db atIndex",
+    "node measure/tools/generate.mjs --check; ./measure/doctor.sh --structural-only",
+    "node_modules/.bin/prettier --check src/apk3d/sim/copy.ts src/apk3d/sim/index-math.ts src/apk3d/sim/index.ts tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts measure/tracks/old_browser_builtins_20261122/plan.md"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/review-a-0d8fc7d.json",
+    "measure/runs/old_browser_builtins_20261122/review-a-0d8fc7d.log"
+  ],
+  "test_strategy_violations": [
+    "The A4 and A7 defenses in test-strategy.md:340-346 do not fail when one of several same-file replacements or one scanner pattern disappears.",
+    "The new plan evidence fails the format check required by test-strategy.md:207-210.",
+    "The no-changed-file TypeScript claim in plan.md:205-207 contradicts the reproduced TS2769 diagnostic."
+  ],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "retry_implementation",
+  "confidence": "high",
+  "route": "openai/gpt-6.2-sol#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 3,
+      "evidence": "The AST comparison confirms all 44 replacements, but src/apk3d/sim/copy.ts:66-73 loses array length and one class of own key."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 2,
+      "evidence": "The case at tests/old-browser/index-math.test.ts:58 passed after the fixture removed one of its nine required calls."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The exact phase diff changes only the planned helpers, callers, tests, and records after it excludes the parallel audio commits."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 3,
+      "evidence": "The three-file gate proves nine passing tests, but plan.md:205-207 omits a diagnostic that the TypeScript CLI reproduced."
+    }
+  ]
+}

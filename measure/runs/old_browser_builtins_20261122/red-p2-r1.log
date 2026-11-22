@@ -1,0 +1,38 @@
+MEASURE_AGENT_RESULT
+role: measure-mid-red
+track: old_browser_builtins_20261122
+phase: Phase 2: Green (remediation round 1, test-side findings)
+tasks: T3r Red (done), T5r Green remediation (open, owned by Green)
+phase_base_sha: 3f6a19214994e7ac05a79a8fa7faeded684267b7
+role_base_sha: 0d8fc7def7b180092fe23ba51cbbfa55a6004991
+reviewed_head_sha: 0d8fc7def7b180092fe23ba51cbbfa55a6004991
+resulting_head_sha: 3ddaaf531659e7af094cd62dedb24c1401dcb6a1
+commits:
+- 64ddb5e9572a29ebd2a97881caa12a557a7f9f3d measure(old_browser_builtins): Phase 2 remediation Red T3r review r1 test findings (tests/old-browser/deep-copy.test.ts, tests/old-browser/index-math.test.ts, tests/apk3d/no-unpolyfilled-builtins.test.ts)
+- b8db666d2825f9975a0af5dbe8494e633a91f6dd measure(old_browser_builtins): Phase 2 remediation Red T3r plan record (plan.md T5r open line + T3r Red evidence line)
+- a2bc190aece926c4fb7c1f496e320184cb53526b measure(old_browser_builtins): T5r in progress (plan.md T5r [~] with Red SHA)
+- 3ddaaf531659e7af094cd62dedb24c1401dcb6a1 measure(old_browser_builtins): regenerate status for T5r (measure/generated/status.md)
+production_source_edits: none (src/ untouched)
+command: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts'
+fail_first_run:
+  exit: 1
+  log: measure/runs/old_browser_builtins_20261122/red-p2-r1-failfirst.log
+  tests: 4 failed | 9 passed (13)
+  failing_cases:
+  - tests/old-browser/deep-copy.test.ts > sparse arrays keep their length and their holes (review r1 A-F1, C-F1): expected 2 to be 4 (copy.ts collapses trailing holes)
+  - tests/old-browser/deep-copy.test.ts > an own __proto__ key stays an own data key (review r1 A-F1, C-F1): expected false to be true (copy.ts loses the own key)
+  - tests/apk3d/no-unpolyfilled-builtins.test.ts > controls prove the strip and the whole-text patterns: 7 new rows fail (division, regex-literal, nested-args, comment-between, .at( boundary, .union( boundary fixed 0; combined fixed 16/witness 17 vs 19)
+  - tests/apk3d/no-unpolyfilled-builtins.test.ts > exclusions bind to their exact call text, not just the line (review r1 C-F3): line-only filtering hides the foreign call
+final_run:
+  exit: 1
+  log: measure/runs/old_browser_builtins_20261122/red-p2-r1-final.log
+  tests: 2 failed | 11 passed (13)
+  failing_cases:
+  - tests/old-browser/deep-copy.test.ts > sparse arrays keep their length and their holes (review r1 A-F1, C-F1)
+  - tests/old-browser/deep-copy.test.ts > an own __proto__ key stays an own data key (review r1 A-F1, C-F1)
+  note: both remaining failures are Green T5r src work (copy.ts array length + own __proto__ key); no test-side failure remains.
+checks:
+- node node_modules/typescript/bin/tsc --noEmit --pretty false | grep tests/old-browser: no output (TS2769 fixed without weakening the state-type check)
+- node_modules/.bin/prettier --check on the three test files: exit 0 (plan.md keeps its 7 pre-existing over-width lines; no new width violation added)
+plan: Phase 2 holds `- [ ] T5r Green remediation (review r1 A-F1, C-F1, C-F4 JSDoc)` and `- [x] T3r Red (64ddb5e9)` with the Red evidence.
+END_MEASURE_AGENT_RESULT

@@ -1,0 +1,105 @@
+
+ RUN  v5.1.1 /home/daniebo/Desktop/advantage-forge
+
+ ❯ tests/apk3d/no-unpolyfilled-builtins.test.ts (4 tests | 2 failed) 160ms
+   × an exclusion filters one call instance; a second same-label call stays (review r2 C-F3) 5ms
+   × controls prove the strip and the whole-text patterns 2ms
+ ❯ tests/old-browser/index-math.test.ts (5 tests | 2 failed) 23ms
+   × the site check fails when one site loses its helper (review r1 A-F3 breakage proof) 13ms
+   × a commented-out helper call does not satisfy the site check (review r2 A-F3) 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/apk3d/no-unpolyfilled-builtins.test.ts > an exclusion filters one call instance; a second same-label call stays (review r2 C-F3)
+AssertionError: expected [] to deeply equal [ '<fixture>:1: Set .union(' ]
+
+- Expected
++ Received
+
+- [
+-   "<fixture>:1: Set .union(",
+- ]
++ []
+
+ ❯ tests/apk3d/no-unpolyfilled-builtins.test.ts:385:85
+    383|     { file: '<fixture>', line: 1, label: 'Set .union(', call: 'box.uni…
+    384|   ];
+    385|   expect(problemsFor('if (!b.isEmpty()) box.union(b); items.union(othe…
+       |                                                                                     ^
+    386|     '<fixture>:1: Set .union(',
+    387|   ]);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  tests/apk3d/no-unpolyfilled-builtins.test.ts > controls prove the strip and the whole-text patterns
+AssertionError: expected [ …(5) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "division after a call: fixed 0 (want 1), witness 1 (want 1)",
++   "division after an index: fixed 0 (want 1), witness 1 (want 1)",
++   "control header regex before a division: fixed 0 (want 1), witness 1 (want 1)",
++   "array literal in the index argument: fixed 0 (want 1), witness 0 (want 1)",
++   "deeply nested call in the index argument: fixed 0 (want 1), witness 0 (want 1)",
++ ]
+
+ ❯ tests/apk3d/no-unpolyfilled-builtins.test.ts:562:20
+    560|     }
+    561|   }
+    562|   expect(failures).toEqual([]);
+       |                    ^
+    563| });
+    564|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  tests/old-browser/index-math.test.ts > the site check fails when one site loses its helper (review r1 A-F3 breakage proof)
+AssertionError: expected [ …(2) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "site 3 (src/games/spellweavers-run/view2d/game.ts:311) is not independently required",
++   "site 4 (src/games/spellweavers-run/view2d/game.ts:429) is not independently required",
++ ]
+
+ ❯ tests/old-browser/index-math.test.ts:383:18
+    381|     }
+    382|   });
+    383|   expect(broken).toEqual([]);
+       |                  ^
+    384| });
+    385|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  tests/old-browser/index-math.test.ts > a commented-out helper call does not satisfy the site check (review r2 A-F3)
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/old-browser/index-math.test.ts:399:74
+    397|   );
+    398|   const failures = checkSites((entry) => texts.get(entry)!);
+    399|   expect(failures.some((failure) => failure.startsWith(`${file}:4559`)…
+       |                                                                          ^
+    400| });
+    401|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+
+ Test Files  2 failed | 1 passed (3)
+      Tests  4 failed | 11 passed (15)
+   Start at  03:00:10
+   Duration  842ms (tests 40%, import 30%, transform 28%, worker 2%)
+

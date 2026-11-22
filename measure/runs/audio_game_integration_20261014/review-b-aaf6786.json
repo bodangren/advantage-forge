@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "role": "measure-review-b-security",
+  "track": "audio_game_integration_20261014",
+  "phase": "Phase 3: File playback in the AudioBus",
+  "phase_base_sha": "af4e57aff730b1cf8ee9c716802920699f1eaaac",
+  "baseline_sha": "af4e57aff730b1cf8ee9c716802920699f1eaaac",
+  "role_base_sha": "a414b40604bb6bc1cecc65605b7ae5e59789a541",
+  "audited_head_sha": "aaf678693732984a6adbc78af1157610e8225fd9",
+  "security_applicability": "applicable",
+  "route": "kimi-code-plan-cn/kimi-for-coding",
+  "status": "pass",
+  "summary": "Pass, re-bind of the round-6 result to HEAD aaf67869, with no blocking and no nonblocking finding. No code, test, docs, scripts, demo, or sounds file changed between the round-6 audited head a414b406 and this head: `git diff --stat a414b406 aaf678693732984a6adbc78af1157610e8225fd9 -- . ':!measure'` prints nothing, the five commits in the range touch only measure paths (this track's run records, plan, and tech-debt lines, and the old_browser_builtins track's spec-review records), and the working tree sits exactly at the audited head with clean sources. The round-5 F1 stays withdrawn: the local hasOwn helper at bus.ts:38-39 still serves every event-map read, no Object.hasOwn exists in src/apk3d/audio/, and the reruns at this head hold — the committed nine-file gate passes 69 with the 2 TD-44 skips, the round-6 probe passes 3 of 3, and the tsc baseline is unchanged at 51 errors with zero in the audio files. The verdict of the round-6 review therefore binds unchanged to this head.",
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "evidence": [
+    "Provenance: `git cat-file -t aaf678693732984a6adbc78af1157610e8225fd9` printed commit. `git merge-base --is-ancestor aaf6786 HEAD` exited 0 and `git rev-parse HEAD` equals aaf678693732984a6adbc78af1157610e8225fd9, so the working tree is the audited head. `git merge-base --is-ancestor a414b406 aaf6786` exited 0, so the round-6 head is the delta base. phase_base_sha af4e57af is ancestral. `git status --short -- src tests` printed nothing, so no uncommitted source or test change exists.",
+    "No-code-change record: `git diff --stat a414b406 aaf678693732984a6adbc78af1157610e8225fd9 -- . ':!measure'` printed nothing (0 lines), and the same diff narrowed to src, tests, docs, scripts, demo, and sounds also printed nothing. `git log --oneline a414b406..aaf6786` lists e6027f50, cce1251e, 18fabd42, 09b4028f, and aaf67869, each touching only measure paths: the old_browser_builtins spec-review records and this track's Phase 3 run records, plan lines, and tech-debt lines.",
+    "Verdict evidence carries over byte-identical: the audio sources and tests at this head equal the round-6 head, so the round-6 findings, probes, and gate results bind unchanged; the round-5 F1 remains withdrawn on the evidence recorded in review-b-a414b40.json.",
+    "Gate rerun at this head: the heavy-runner run of the committed nine files (audio-files, audio-files.adversarial, audio-files.adversarial-r2, audio-files.adversarial-r3, audio-wiring, audio-wiring.adversarial, imports, no-unpolyfilled-builtins, audio-event-map) exits 0 with 9 files passed, 69 passed and 2 skipped of 71; the 2 skips are the TD-44 pins from the earlier adversarial round.",
+    "Probe rerun at this head: the round-6 probe (H1 runs wiring, preload, and play with Object.hasOwn deleted; H2 own hasOwnProperty key and null-prototype map; H3 inherited-equal remap drop) passes 3 of 3 through the heavy runner.",
+    "tsc at this head: `node node_modules/typescript/bin/tsc --noEmit` through the heavy runner exits 2 with 51 baseline errors, zero in src/apk3d/audio/ (grep exit 1), matching every earlier round.",
+    "A2 not applicable: the re-bind range contains no publish, draft, consent, or anonymization surface. A6 holds: the plan and debt edits in the range are run records and late-finding lines; no security state claim changed, and the withdrawn F1 stays closed by the committed helper and scan.",
+    "Re-review handling: no CONTEST item reached Review B; no finding is kept or opened."
+  ],
+  "commands": [
+    "git cat-file -t aaf678693732984a6adbc78af1157610e8225fd9 -> commit; git merge-base --is-ancestor aaf6786 HEAD -> exit 0; git rev-parse HEAD -> aaf678693732984a6adbc78af1157610e8225fd9; git merge-base --is-ancestor a414b406 aaf6786 -> exit 0; git status --short -- src tests -> empty",
+    "git diff --stat a414b406 aaf678693732984a6adbc78af1157610e8225fd9 -- . ':!measure' -> prints nothing (0 lines); git diff --stat a414b406 aaf6786 -- src tests docs scripts demo sounds -> prints nothing (0 lines); git log --oneline a414b406..aaf6786 -> e6027f50, cce1251e, 18fabd42, 09b4028f, aaf67869, all measure-only",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-files.test.ts tests/apk3d/audio-files.adversarial.test.ts tests/apk3d/audio-files.adversarial-r2.test.ts tests/apk3d/audio-files.adversarial-r3.test.ts tests/apk3d/audio-wiring.test.ts tests/apk3d/audio-wiring.adversarial.test.ts tests/apk3d/imports.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts tests/audio-event-map.test.ts' -> 9 files passed, 69 passed and 2 skipped of 71",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --config measure/runs/audio_game_integration_20261014/review-b-a414b40-vitest.config.mjs' -> 1 file passed, 3 of 3 round-6 probe tests passed",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/typescript/bin/tsc --noEmit' -> exit 2, 51 baseline errors, zero in src/apk3d/audio/ (grep exit 1)"
+  ],
+  "changed_files": [
+    "measure/runs/audio_game_integration_20261014/review-b-aaf6786.json",
+    "measure/runs/audio_game_integration_20261014/review-b-aaf6786.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "The re-bind diff is empty outside measure/, so the verified round-6 behaviour binds byte-identical, and the nine-file gate plus the 3-of-3 round-6 probe rerun green at this head."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 5,
+      "evidence": "The committed gate includes the failing-first pins from every remediation round and passes 69 of 71 with only the recorded TD-44 skips."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The five commits between the heads touch only measure paths, and this review wrote only its two run artifacts."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "Every claim carries a command result, including the empty `git diff --stat ... ':!measure'` record and the rerun exits at the audited head."
+    }
+  ]
+}

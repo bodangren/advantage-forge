@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: spec-review
+status: complete
+track: old_browser_builtins_20261122
+phase: track setup
+commits: none
+tests_run: read-only grep and repository inspection; no test suite run
+files_changed: measure/runs/old_browser_builtins_20261122/spec-review-af00767.json; measure/runs/old_browser_builtins_20261122/spec-review-af00767.log
+plan_updates: none
+known_failures: F1-F3 Blocker findings and F4 Major finding; verdict fail
+handoff: Fix the inaccurate .at() count and related totals; widen the committed audio scan instead of adding a duplicate; order AC5 after the Object.hasOwn replacement; replace stale suite counts with run-specific reporter evidence. Audited HEAD is a414b40604bb6bc1cecc65605b7ae5e59789a541.
+END_MEASURE_AGENT_RESULT

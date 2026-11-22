@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "role": "review-a",
+  "track": "audio_game_integration_20261014",
+  "phase": "Phase 4: Preload budget",
+  "baseline_sha": "53ae856842ae14a63fb1b65a96edd1c8d6ce22e4",
+  "phase_base_sha": "53ae856842ae14a63fb1b65a96edd1c8d6ce22e4",
+  "role_base_sha": "d15af2a205c5e1e612b1dc4f59060466fdd28fc8",
+  "audited_head_sha": "d15af2a205c5e1e612b1dc4f59060466fdd28fc8",
+  "status": "fail",
+  "summary": "F1, F2, and F3 are fixed in their reported cases. Both gates pass. A late, reachable AC5 defect remains: the measurement can pass when decoding exceeds 1.5 seconds.",
+  "blocking_findings": [
+    "F4 [Blocker] review-a: scripts/audio-budget.mjs:150-158,288-290,306-322 records a decode count but measures only the response window. AC5 limits loading and decoding to 1.5 seconds. A browser probe delayed each Ogg decode by 1.7 seconds. The script exited 0 and reported 0.7047 seconds, six decodes, and fileEffect=true. Late finding, one-fix-round: a user running the delivered CLI with slow decoding can get a wrong budget result. Keep the strategy's resource timing field. Add a separate deadline check from the first audio request to the last successful decode, and test a slow successful decode."
+  ],
+  "nonblocking_findings": [],
+  "evidence": [
+    "HEAD matched d15af2a205c5e1e612b1dc4f59060466fdd28fc8 before and after verification. The exact phase diff includes old_browser_builtins commits; they are outside this audio audit.",
+    "F1 withdrawn: the default test gate passes with four tests and one skipped. When the exact JSON read returns ENOENT, the default gate still passes and AUDIO_BUDGET_JSON=1 fails on that read.",
+    "F2 withdrawn: the browser fault probe forced all six Ogg decodes to reject while preserving the real HTTP requests. The CLI reported zero successful decodes, exited 1, and wrote no JSON for the probe.",
+    "F3 withdrawn: after Vite became ready, a SIGTERM sent only to Node returned exit 143. The probe could no longer reach port 5199.",
+    "The requested live gate returned 79,319 bytes, six files, 0.7062999999523163 seconds, six decodes, and fileEffect=true. All five tests passed. This agrees with the dated plan's counts and limits; each run has its own timing.",
+    "The delayed-decode probe added 1,700 ms before each native Ogg decode. It preserved requests and disabled the artifact write. The CLI reached its success output and exited 0 with 0.7047000000476837 seconds.",
+    "spec.md:166-168 sets a load-and-decode cap. test-strategy.md:355-360 fixes the response-window formula, which can stay unchanged if the script checks decode completion separately.",
+    "The audio phase changes a standalone .mjs CLI, a test, and the plan. There is no new exported TypeScript symbol or caller change to trace with build-graph.",
+    "The audio phase did not change an orchestration script, framework contract test, or registry. The registry delta belongs to the excluded track."
+  ],
+  "commands": [
+    "git rev-parse HEAD; git merge-base --is-ancestor 53ae856842ae14a63fb1b65a96edd1c8d6ce22e4 d15af2a205c5e1e612b1dc4f59060466fdd28fc8 => HEAD matched; phase base is an ancestor.",
+    "git diff --name-status 53ae856842ae14a63fb1b65a96edd1c8d6ce22e4..d15af2a205c5e1e612b1dc4f59060466fdd28fc8; git diff 0d8fc7de..d15af2a2 -- scripts/audio-budget.mjs tests/audio-budget.test.ts measure/tracks/audio_game_integration_20261014/plan.md => reviewed the exact audio phase and remediation changes.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run tests/audio-budget.test.ts --maxWorkers=1 && node scripts/audio-budget.mjs --game rune-match && AUDIO_BUDGET_JSON=1 node node_modules/vitest/vitest.mjs run tests/audio-budget.test.ts --maxWorkers=1' => exit 0; default: four passed and one skipped; browser gate: five passed.",
+    "Heavy-run in-memory missing-JSON fixture: default mode => exit 0; opt-in mode => exit 1 on ENOENT.",
+    "Heavy-run in-memory browser probes: Ogg rejection => exit 1 and no JSON; parent-only SIGTERM => exit 143 and no listener; 1,700 ms decode delay => exit 0 with passing measurement.",
+    "git diff --check on the audio phase; node_modules/.bin/prettier --check scripts/audio-budget.mjs tests/audio-budget.test.ts; node measure/tools/generate.mjs --check; ./measure/doctor.sh --structural-only => pass."
+  ],
+  "changed_files": [
+    "measure/runs/audio_game_integration_20261014/review-a-p4-d15af2a.json",
+    "measure/runs/audio_game_integration_20261014/review-a-p4-d15af2a.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [
+    "F4: The CLI can pass AC5 when the six files take more than 1.5 seconds to load and decode."
+  ],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "retry_implementation",
+  "confidence": "high",
+  "route": "unknown",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 3,
+      "evidence": "The CLI rejects six failed decodes but passed with 1.7 seconds of injected latency per Ogg decode."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "The explicit JSON gate requires six decodes and a file effect, but it has no slow-decode negative case."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The remediation changes only the budget CLI, its test, and its plan."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "The two gates, missing-JSON fixture, two decode probes, and parent-only SIGTERM probe produced direct results."
+    }
+  ]
+}

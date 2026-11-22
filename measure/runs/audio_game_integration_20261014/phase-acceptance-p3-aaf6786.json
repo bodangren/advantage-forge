@@ -1,0 +1,113 @@
+{
+  "schema_version": 1,
+  "role": "phase-acceptance",
+  "track": "audio_game_integration_20261014",
+  "phase": "Phase 3: File playback in the AudioBus",
+  "baseline_sha": "aaf678693732984a6adbc78af1157610e8225fd9",
+  "phase_base_sha": "af4e57aff730b1cf8ee9c716802920699f1eaaac",
+  "role_base_sha": "aaf678693732984a6adbc78af1157610e8225fd9",
+  "audited_head_sha": "aaf678693732984a6adbc78af1157610e8225fd9",
+  "status": "pass",
+  "summary": "Phase 3 passes at aaf6786. AC4 and AC9 pass for the delivered game wiring, with TD-44 exceptions recorded. All required gates passed.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "TD-44 [Nit] phase-acceptance: Two skipped tests preserve the pre-unlock remap and post-disposal decode defects. Current hosts do not exercise these cases. The skips do not prove either behavior.",
+    "ADV5-R1 [Nit] adversarial-testing: TD-44 also covers stale playback after removal of a non-enumerable key in a same-base remap. Current hosts use no such map.",
+    "TD-45 [Major] phase-acceptance: The old-browser built-in uses outside audio belong to old_browser_builtins_20261122. This phase does not prove that every game runs on the oldest admitted browsers.",
+    "A6-F2 [Nit] review-a: The scoped scanner can miss a call after a quoted URL. The follow-up track owns the fix under AC3. The gap remains open.",
+    "ADV5-S1 [Nit] adversarial-testing: The scanner also misses executable calls in template interpolations and calls split across lines. The follow-up track owns these fixes under AC3.",
+    "UX [Nit] ux-browser-review: The active Rune Match canvas has no accessible name. The active-game accessibility snapshot is empty. Route this issue to a UI accessibility track.",
+    "PA-N1 [Nit] phase-acceptance: The failure-mode loop at audio-files.test.ts:334-353 keeps the 404 response for the rejected-decode case. The separate adversarial test at lines 500-523 exercises actual decode failure.",
+    "PA-N2 [Nit] phase-acceptance: Cross-reference the AC9 preload exception from AC4 rule 1. Update test-strategy.md:411 to describe the wired game review.",
+    "PA-N3 [Nit] phase-acceptance: plan.md:492-493 says the follow-up track fixed the scanner gaps. Record that its open AC3 owns the fixes."
+  ],
+  "evidence": [
+    "Role start and final HEAD both returned aaf678693732984a6adbc78af1157610e8225fd9. The phase base is an ancestor. No tracked worktree file changed.",
+    "Review A/B/C, adversarial testing, and UX review all report pass and name the exact audited HEAD and phase base. Acceptance used no HEAD exception.",
+    "The UX result reports six valid Ogg requests with HTTP 200 and no errors. The diff from probe HEAD e6027f50 is empty outside measure/. Muted Chromium proves live requests, not audible quality.",
+    "All 13 Phase 3 completion SHAs resolve within the phase range. Six distinct late-finding IDs each have one contract-form disposition. Metadata records the fourth-round escalation.",
+    "AC4 and T5/T6: bus.ts:156-221 and :238-289 preserve gesture unlock, format selection, synth fallback, and disposal. audio-files.test.ts:253-418 exercises both formats and real bus calls.",
+    "AC9 and T6a/T6b: all 29 hosts use ctx.audio or a new AudioBus and call the helper once. audio-wiring.test.ts:174-267 checks the map, host events, fallback, and a fetch.",
+    "The standalone host passes BASE through mount.ts and phaser-factory.ts. The generated map holds 31 entries. The 14 demo audio files match the rendered files byte for byte.",
+    "T6c/T6d: tests distinguish the silent unlock pulse from decoded playback and check each host event list. docs/apk-port.md records the site base and proposed port path.",
+    "T6e/T6f: the wiring fixture rejects comment and string matches. AudioBus tests check map clearing and resume after silent-pulse failure.",
+    "T6g/T6h: the deferred fetch and decode cases check a remap against the new URL and confirm that the stale buffer never plays.",
+    "T6j/T6k: the r3 tests delete the native method and exercise the own-to-inherited remap. Commit 0cc7b5c4 adds the compatible own-key check in both audio files.",
+    "T6l: the test scans only the audio root and asserts an empty list of labeled hits. Green and review evidence records a failing fixture with a banned call.",
+    "A5: the current eight-file claim in plan.md:601-604 matches exit 0, 61 passes, and two skips. Historical Red failures are distinct from current gate results.",
+    "The phase changes no Measure framework contract tests or banned-term filter. The registry adds one unchecked compatibility track and claims no resolution.",
+    "Leave the release worktree, the shelf-sync worktree and branch, and wip/oct-skill-docs-20261023 to their owners. This audit changed none of them."
+  ],
+  "commands": [
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-files.test.ts tests/apk3d/audio-files.adversarial.test.ts tests/apk3d/audio-files.adversarial-r2.test.ts tests/apk3d/audio-wiring.test.ts tests/apk3d/audio-wiring.adversarial.test.ts tests/apk3d/imports.test.ts tests/apk3d/audio-files.adversarial-r3.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts' — exit 0; 8 files, 61 passes, two TD-44 skips.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts' — exit 0; 225 files, 3364 passes, two TD-44 skips.",
+    "./measure/doctor.sh --structural-only — exit 0. node measure/tools/generate.mjs --check — exit 0; four facts files current.",
+    "node scripts/audio-event-map.mjs --check — exit 0; 31 events current. cmp — all 14 demo files match the rendered set.",
+    "node_modules/.bin/prettier --check src/apk3d/audio/bus.ts src/apk3d/audio/chibi.ts tests/apk3d/audio-files.adversarial-r3.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts — exit 0.",
+    "git diff --check af4e57af HEAD — exit 0. git diff --quiet e6027f50 HEAD -- . ':!measure' — exit 0. git diff --quiet a414b406 HEAD -- . ':!measure' — exit 0.",
+    "Static checks — verified five bound prerequisite results, 29 host call sites, 13 completed task SHAs, six unique late-finding dispositions, and the escalation key."
+  ],
+  "changed_files": [
+    "measure/runs/audio_game_integration_20261014/phase-acceptance-p3-aaf6786.json",
+    "measure/runs/audio_game_integration_20261014/phase-acceptance-p3-aaf6786.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "openai/gpt-6.2-sol#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 4,
+      "evidence": "The audio gate proves normal playback and fallback; the two cases at audio-files.adversarial-r2.test.ts:166 and :225 remain open."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "The own-to-inherited remap test checks stale playback by buffer identity, but the scanner has the recorded AC3 gaps."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "Commit 0cc7b5c4 changes two audio files, and the phase diff changes no game rules or sim files."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "The two heavy-run results, structural checks, marker check, and same-HEAD browser result support the phase verdict."
+    }
+  ],
+  "reviewer_ratings": [
+    {
+      "reviewer_role": "review-a",
+      "reviewer_route": "openai/gpt-6-luna#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "The eight-file gate passed, and the scanner strips a URL's double slash before it strips the quoted string at lines 22-29."
+    },
+    {
+      "reviewer_role": "review-b",
+      "reviewer_route": "kimi-code-plan-cn/kimi-for-coding",
+      "agreed": true,
+      "score": 5,
+      "evidence": "The own-key checks at bus.ts:125-133 and :268-289 match the passing older-browser and inherited-key tests."
+    },
+    {
+      "reviewer_role": "review-c",
+      "reviewer_route": "openai/gpt-6-luna#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "The API and site-base wiring match the spec and the eight-file test result."
+    },
+    {
+      "reviewer_role": "adversarial",
+      "reviewer_route": "unknown",
+      "agreed": true,
+      "score": 5,
+      "evidence": "Both gates passed at the audited HEAD, and bus.ts:125 confirms the non-enumerable remap limitation."
+    }
+  ]
+}

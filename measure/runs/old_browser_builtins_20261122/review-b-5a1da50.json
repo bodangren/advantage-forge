@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "role": "review-b",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 2: Green",
+  "round": "re-review r3",
+  "baseline_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "phase_base_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "role_base_sha": "5a1da5011f31008102f8563b1f03f2891c23f99b",
+  "audited_head_sha": "5a1da5011f31008102f8563b1f03f2891c23f99b",
+  "security_applicability": "applicable",
+  "status": "pass",
+  "summary": "Re-review r3 after the PM decision 2026-11-23 accepted the four contract-limit items as written limits. Verified: the copy.ts diff since d15af2a2 is a single doc-comment hunk with all code lines byte-identical; the doc comment lists the four limits (Symbol keys, non-enumerables, RegExp/class instances, cross-realm containers); the state-type test now walks Reflect.ownKeys and flags symbol-key, non-enumerable, and accessor kinds with committed fixture assertions; the three-file gate is green with 16 tests. All four kept items are closed; no findings remain.",
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "evidence": [
+    "F2 closed: PM decision 2026-11-23 accepted the Symbol-key limit as a written contract limit; the copy.ts doc comment states the helper does not copy own Symbol-keyed properties, and tests/old-browser/deep-copy.test.ts:167-170 flags a Symbol-keyed property via a Reflect.ownKeys walk.",
+    "F3 closed: the doc comment states a RegExp or another class instance copies as a plain object with no class behavior and a copied RegExp throws on exec, matching the r2 probe R12 result; no code change (7d5c7129 is comment-only).",
+    "F4 closed: the doc comment states the helper does not copy non-enumerable own properties; the test walk records the non-enumerable kind (tests/old-browser/deep-copy.test.ts:94-100,176-178).",
+    "F5 closed: the doc comment states the helper does not recognize Map/Set/Date/typed-array values from another realm such as an iframe and that such values copy as plain objects, matching r2 probe R14.",
+    "git diff d15af2a2..5a1da50 -- src/apk3d/sim/copy.ts shows a single hunk (@@ -1,10 +1,16 @@) replacing only the doc block; all code lines from 'export function deepCopy' onward are byte-identical.",
+    "git rev-parse HEAD = 5a1da5011f31008102f8563b1f03f2891c23f99b at audit start and end; git status --short -- src/ tests/ is empty; no tracked file modified during the audit.",
+    "Three-file gate through heavy-run.sh: node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts -> Test Files 3 passed (3), Tests 16 passed (16), exit 0.",
+    "A2 not applicable: no draft-to-published path in this diff. A6: no overstatement; the documented limits match the implementation and the widened state-type test is green."
+  ],
+  "commands": [
+    "git rev-parse HEAD && git status --short -- src/ tests/",
+    "git diff d15af2a205c5e1e612b1dc4f59060466fdd28fc8..5a1da5011f31008102f8563b1f03f2891c23f99b --stat",
+    "git diff d15af2a205c5e1e612b1dc4f59060466fdd28fc8..5a1da5011f31008102f8563b1f03f2891c23f99b -- src/apk3d/sim/copy.ts",
+    "grep -n 'ownKeys\\|Symbol\\|accessor\\|non-enumerable' tests/old-browser/deep-copy.test.ts",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts'"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/review-b-5a1da50.json",
+    "measure/runs/old_browser_builtins_20261122/review-b-5a1da50.log",
+    "measure/runs/old_browser_builtins_20261122/review-b-5a1da50-notes.md"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "kimi-code-plan-cn/kimi-for-coding",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "git diff shows the only change since r2 is the doc block; the documented four limits match the r2 probe results exactly, and the gate is green."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 5,
+      "evidence": "The widened state-type walk has committed fixture assertions for symbol-key, non-enumerable, and accessor kinds (tests/old-browser/deep-copy.test.ts:167-184) and fails any future state that reaches a divergent branch."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "git diff --stat since r2 touches only the comment, the tests, and plan/status records; audio-track files in the range were left untouched."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "Every claim cites the diff hunk, a file:line in the test, or the gate result (3 files/16 tests passed)."
+    }
+  ]
+}

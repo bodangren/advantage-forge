@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "role": "measure-review-c-ux-api",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 2: Green",
+  "baseline_sha": "d15af2a205c5e1e612b1dc4f59060466fdd28fc8",
+  "role_base_sha": "d15af2a205c5e1e612b1dc4f59060466fdd28fc8",
+  "phase_base_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "audited_head_sha": "d15af2a205c5e1e612b1dc4f59060466fdd28fc8",
+  "current_head_sha": "d15af2a205c5e1e612b1dc4f59060466fdd28fc8",
+  "audited_head_is_current": true,
+  "contract_applicability": "applicable",
+  "applicability_evidence": [
+    "test-strategy.md:35 excludes public API, route, and UI review.",
+    "The exact phase diff adds the shared internal API in src/apk3d/sim/index.ts:2-3. The remediation changes the helper and its consumers.",
+    "The phase diff does not change package metadata, the device gate, Vite settings, or demo entries."
+  ],
+  "status": "fail",
+  "summary": "F1 and F4 are closed. F2 and F3 remain in scanner code. The plan part of F5 is closed, but the strategy still has the wrong count.",
+  "blocking_findings": [
+    "F2 [Blocker] review-c: tests/apk3d/no-unpolyfilled-builtins.test.ts:111-137 still removes real calls in division expressions after ) or ]. The .at pattern at line 227 also misses a single argument containing an array literal with a comma. These are remaining cases of F2 in the changed scanner, not user-reachable behavior at this HEAD.",
+    "F3 [Blocker] review-c: tests/apk3d/no-unpolyfilled-builtins.test.ts:310-321 still suppresses every same-label hit on the excluded line. With box.union(b) and items.union(other) together, it reports neither hit. Match each exclusion to one exact hit. This is the remaining F3 issue in the changed scanner, not user-reachable behavior at this HEAD."
+  ],
+  "nonblocking_findings": [
+    "F5 [Nit] review-c: plan.md:16-17,226 corrects the T5 counts. test-strategy.md:169 still says 37 existing source files and the barrel. T5 changes 36 source files and one scan test; T4 changes the barrel. This record error is not user-reachable behavior."
+  ],
+  "evidence": [
+    "git rev-parse HEAD matched the requested SHA at role start and after the tests. No tracked worktree changes were present.",
+    "The exact re-review range includes parallel audio work. This audit follows Red 64ddb5e9, Green 9440c572, and the plan record d15af2a2.",
+    "F1 closed: the Node probe matched native clone results for the own __proto__ key and the trailing holes. The two new tests failed before Green, as recorded in green-p2-r1.log:16-18.",
+    "F2 partial: every original scanner probe now gives the intended result. The same probe misses structuredClone in (coin) / structuredClone(state) / n and values[0] / structuredClone(state) / n.",
+    "F2 partial: the scanner also misses items.at([1, 2].length) and items.at(Math.trunc(Math.abs(idx(i)))). All are single-argument calls.",
+    "F3 partial: replacing the excluded call at line 263 with structuredClone now reports the hit and the stale exclusion. Adding structuredClone beside the allowed call also reports it.",
+    "F3 remains: the same-line union fixture yields two raw hits but no problems. The exclusion lookup renders both hits with the same key.",
+    "F4 closed: copy.ts:3-7 documents TypeError versus DataCloneError and the current-realm limit. The Node probe verified both error types across all five inputs.",
+    "F4 closed: index-math.ts:3-6 documents the two arguments passed to the predicate. The loop at line 24 passes exactly those arguments.",
+    "The scanner names each exclusion and its reason. The split between scanText and applyExclusions makes the filter clearer, but the comment at lines 270-274 overstates its precision.",
+    "The TypeScript parser found one named simulation barrel import per consumer across 36 files, including seven multiline imports. The source retains 35 copy calls, eight atIndex calls, and one lastIndexWhere call.",
+    "F5 partial: git show for T5 lists 36 source files and one scan test. The re-review diff does not change test-strategy.md.",
+    "No browser inspection ran. The browser check remains Phase 3 work. The remaining findings concern test tooling and a record, not current product output.",
+    "The independent three-file gate passed through the heavy runner. Vitest reported three files and 13 tests passed.",
+    "The audit-result checker accepted the JSON schema."
+  ],
+  "commands": [
+    "git rev-parse HEAD; git status --short --untracked-files=no",
+    "git diff --stat 0d8fc7de d15af2a",
+    "git diff --check 0d8fc7de d15af2a -- src tests",
+    "git show --format= --name-only 1dcc1043",
+    "node --input-type=module: compare deepCopy with the native clone for the own key, trailing holes, and five error types",
+    "node --no-warnings --input-type=module: evaluate the scanner and exclusion filter in memory against the original and remaining F2 and F3 cases",
+    "node --input-type=module: parse all 36 consumer files at the audited SHA and count helper imports",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts'",
+    "python3 /home/daniebo/.agents/skills/measure-orchestrator/scripts/measure_interphase_checks.py audit-result --role review-c --file measure/runs/old_browser_builtins_20261122/review-c-d15af2a.json"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/review-c-d15af2a.json",
+    "measure/runs/old_browser_builtins_20261122/review-c-d15af2a.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "retry_implementation",
+  "confidence": "high",
+  "route": "unknown",
+  "ratings": [
+    {"axis": "correctness", "score": 3, "evidence": "The copy probes pass, but independent fixtures still show false negatives at tests/apk3d/no-unpolyfilled-builtins.test.ts:111,227,321."},
+    {"axis": "test_meaning", "score": 3, "evidence": "The exclusion test at tests/apk3d/no-unpolyfilled-builtins.test.ts:347 covers a different label but omits a second hit with the same label."},
+    {"axis": "scope_discipline", "score": 5, "evidence": "Commits 64ddb5e9 and 9440c572 change the targeted tests, helpers, and consumer imports."},
+    {"axis": "evidence_quality", "score": 5, "evidence": "The three-file gate passed and independent probes at the audited HEAD reproduced both remaining blockers."}
+  ]
+}

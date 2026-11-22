@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: review-a
+status: complete
+track: audio_game_integration_20261014
+phase: Phase 4: Preload budget
+commits: none
+tests_run: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/audio-budget.mjs --game rune-match && node node_modules/vitest/vitest.mjs run tests/audio-budget.test.ts --maxWorkers=1' exited 0; 79,319 bytes, 6 files, 0.7065 s; 4 tests passed. Missing-JSON probe: 3 passed, 1 failed. Forced Ogg decode failures: all six decodes rejected, measurement still exited 0. Parent-only SIGTERM probe: Vite stayed alive and returned HTTP 200.
+files_changed: measure/runs/audio_game_integration_20261014/review-a-p4-0d8fc7d.json; measure/runs/audio_game_integration_20261014/review-a-p4-0d8fc7d.log
+plan_updates: none
+known_failures: F1: The default suite fails without ignored Rune Match JSON. F2: The measurement passes when all six Ogg decodes fail. F3: A signal sent only to Node bypasses child cleanup.
+handoff: Route F1 and F2 to Green. Keep the JSON check required only in the explicit browser gate. Require decode and first-effect evidence before writing JSON. The Vite config and CDP settings match the intended measurement. No other track was audited.
+END_MEASURE_AGENT_RESULT

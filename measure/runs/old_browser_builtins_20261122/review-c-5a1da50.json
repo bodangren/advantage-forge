@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "role": "measure-review-c-ux-api",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 2: Green",
+  "baseline_sha": "5a1da5011f31008102f8563b1f03f2891c23f99b",
+  "role_base_sha": "5a1da5011f31008102f8563b1f03f2891c23f99b",
+  "phase_base_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "audited_head_sha": "5a1da5011f31008102f8563b1f03f2891c23f99b",
+  "current_head_sha": "5a1da5011f31008102f8563b1f03f2891c23f99b",
+  "audited_head_is_current": true,
+  "contract_applicability": "applicable",
+  "applicability_evidence": [
+    "test-strategy.md:35 excludes public API, route, and UI review.",
+    "The exact phase diff adds the internal API in src/apk3d/sim/index.ts:2-3 and updates the named game, host, and Storytime consumers.",
+    "This re-review covers the internal copy contract and its scan gate. There are no package, demo route, or device gate changes in the phase diff."
+  ],
+  "status": "pass",
+  "summary": "F2 and F3 are closed on the reported cases. The three-file gate passed. The copy documentation has one late issue for tech debt.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F5 [Nit] review-c: The strategy count at test-strategy.md:169 remains unchanged. plan.md:311-313 records that the strategy count is outside this round. The plan count is correct.",
+    "F6 [Nit] review-c: Late finding, tech-debt. src/apk3d/sim/copy.ts:9-12 says unsupported classes copy as plain objects with no class behavior. The fallback keeps the prototype, and some methods still work. The cross-realm typed-array probe returned an empty typed array, not a plain object. State these as unsupported inputs without promising their result shape. Users cannot reach these unsupported cases through the current game paths."
+  ],
+  "evidence": [
+    "git rev-parse HEAD matched the requested audited SHA at role start and after the tests. The worktree had no tracked changes.",
+    "The scoped remediation is Red 6b4f8367 for the scanner, Green 7d5c7129 for helper documentation, and Red 1c6f3831 for state types. Parallel audio changes are outside this review.",
+    "F2 closed on the reported inputs: the scanner reports structuredClone for both (coin) / structuredClone(state) / n and values[0] / structuredClone(state) / n.",
+    "F2 closed on the reported inputs: the scanner reports .at for items.at([1, 2].length) and items.at(Math.trunc(Math.abs(idx(i)))). The control-header regex fixture still reports just the real structuredClone call.",
+    "F3 closed on the reported input: box.union(b); items.union(other); at src/render/page.ts:263 reports exactly one Set .union hit. The allowed call alone reports none.",
+    "The original exclusion controls also passed: structuredClone beside the allowed call is reported. Replacing the allowed call with structuredClone reports a stale exclusion and a hit.",
+    "The new JSDoc separates supported state, error types, and contract limits. F6 records where it incorrectly describes behavior outside that contract.",
+    "The Node doc probe verified that a copied sample remains an instance of its class and its method returns 14. The copied RegExp still has the prototype, but exec throws.",
+    "The Node doc probe found that the cross-realm Map copy keeps its prototype and get throws. The cross-realm typed array still reports as a view, but its length changes from 2 to 0.",
+    "The TypeScript symbol documentation returns the function summary only. The contract limits appear in the file comment, not in the symbol documentation.",
+    "The repeat F1 and F4 probes passed. Prettier accepted src/apk3d/sim/copy.ts.",
+    "No browser inspection ran. The game start states are plain data, as pinned in tests/old-browser/deep-copy.test.ts. The phase has no current user path to the unsupported F6 cases.",
+    "The Red log red-p2-r3-final.log reports 16 passed tests. There is no source, test, or test-config diff from 1c6f3831 to the audited HEAD.",
+    "The independent heavy-run command completed. Vitest reported three files and 16 tests passed.",
+    "The wrapper reported a missing /proc cmdline before Vitest started. Vitest still ran all three files."
+  ],
+  "commands": [
+    "git rev-parse HEAD; git status --short --untracked-files=no",
+    "git diff --stat d15af2a2 5a1da501",
+    "git diff --check d15af2a2 5a1da501 -- src tests",
+    "node --no-warnings --input-type=module: run the actual scanner and exclusion filter in memory against the exact F2 and F3 fixtures",
+    "node --input-type=module: compare documented limits with prototype, method, and cross-realm container behavior",
+    "node_modules/.bin/prettier --check src/apk3d/sim/copy.ts",
+    "git diff --exit-code 1c6f3831 5a1da501 -- src tests vitest.config.ts package.json pnpm-lock.yaml",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts'"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/review-c-5a1da50.json",
+    "measure/runs/old_browser_builtins_20261122/review-c-5a1da50.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "unknown",
+  "ratings": [
+    {"axis": "correctness", "score": 4, "evidence": "The independent scan reproduced the expected findings for all F2 and F3 cases, but copy.ts:9-12 overstates behavior outside the supported inputs."},
+    {"axis": "test_meaning", "score": 4, "evidence": "The controls at tests/apk3d/no-unpolyfilled-builtins.test.ts:413 and :560 cover the same-label exclusion and the division and index cases."},
+    {"axis": "scope_discipline", "score": 5, "evidence": "The three named remediation commits change only the scanner, state and site tests, and copy documentation."},
+    {"axis": "evidence_quality", "score": 5, "evidence": "The independent Vitest result and the in-memory probes verify the named cases at the audited HEAD."}
+  ]
+}

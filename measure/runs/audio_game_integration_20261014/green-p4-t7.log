@@ -1,0 +1,44 @@
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+track: audio_game_integration_20261014
+phase: Phase 4: Preload budget
+status: pass
+phase_base_sha: 53ae856842ae14a63fb1b65a96edd1c8d6ce22e4 (immutable; verified ancestor of final HEAD)
+role_base_sha: 9e1f93b407c30f70097c9e05be19df95ca7cea8a (HEAD at Green start; the plan Red mark)
+red_commit: c6ccaf463ce477aef526f96ea91ab201d98462dc (tests/audio-budget.test.ts; verified inside phase_base_sha..HEAD)
+final_green_head: b2d87dbee0c97f4508615db5feabff99474e6da5
+
+tasks_flipped_to_x:
+  T7 Measure -> [x] in plan.md, with implementation SHA 5343710d6f7c84ac062342718f5767412856c626, both measured runs, and both numbers recorded.
+tasks_flipped_to_b: none; no deferred owner.
+
+dispositions: none
+
+measured_result:
+  Run 1: {"bytes":79319,"files":6,"seconds":0.7048000000715255}
+  Run 2 (closeout repeat, recorded): {"bytes":79319,"files":6,"seconds":0.7216000000238418}
+  Both runs under the 100000-byte and 1.5-second limits. The six files are tap, right, wrong, level-end, whoosh, and pop in Ogg. out/audio-budget/rune-match.json holds only those three fields and stays untracked.
+
+commands:
+  Red re-run: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'rm -f out/audio-budget/rune-match.json && node node_modules/vitest/vitest.mjs run tests/audio-budget.test.ts --maxWorkers=1' => exit 1; 1 failed, 3 passed (4); ENOENT for out/audio-budget/rune-match.json.
+  Green command, run twice: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/audio-budget.mjs --game rune-match && node node_modules/vitest/vitest.mjs run tests/audio-budget.test.ts --maxWorkers=1' => exit 0 twice; 4 passed (4) each time; JSON printed as above.
+  node_modules/.bin/prettier --check scripts/audio-budget.mjs => exit 0.
+  node --check scripts/audio-budget.mjs => exit 0.
+  ss -ltnp grep :5199 after each run => no listener. No server this script did not start was killed.
+
+server_deviation:
+  The strategy's literal spawn command omits a Vite config. With the root config the demo page cannot fetch /stories/index.json, and /demo/audio/chibi/*.ogg answers with an HTML fallback, so the page never reaches ready and the byte cross-check cannot hold. The script therefore spawns node node_modules/vite/bin/vite.js --config vite.demo.config.ts --base /demo/ --port 5199 --strictPort --host 127.0.0.1 from the repo root. This keeps the required port, strictPort, host, cwd, page URL, /demo/audio/chibi/ row prefix, and real Ogg bytes. Recorded in plan.md T7.
+
+gates:
+  node measure/tools/generate.mjs --check before the T7 [x] edit => exit 0; "Measure facts are current (4 files)."
+  ./measure/doctor.sh --structural-only before the T7 [x] edit => exit 0; "Measure doctor found no structural errors."
+  After the T7 [x] edit both commands report "error: measure/generated/status.md: stale generated fact" (exit 1). measure/generated/architecture.json, asset-inventory.json, and status.md hold uncommitted changes from another track, so this role did not regenerate them. The owner of those changes regenerates the status fact.
+
+commits:
+  implementation_commit: 5343710d6f7c84ac062342718f5767412856c626 feat(audio_game_integration): T7 Rune Match audio budget measurement (explicit path: scripts/audio-budget.mjs)
+  plan_evidence_commit: b2d87dbee0c97f4508615db5feabff99474e6da5 docs(audio_game_integration): T7 measured budget evidence (5343710d) (explicit path: measure/tracks/audio_game_integration_20261014/plan.md)
+
+new_files: scripts/audio-budget.mjs entered the implementation commit. The untracked result log is new. No committed test, source, game, or audio file changed. This role did not touch src/games/, tests/old-browser/, tests/apk3d/no-unpolyfilled-builtins.test.ts, or measure/generated/.
+
+handoff: Review runs the Green command and compares its printed JSON to the plan values. The browser proves requests and timing under the slow-3G profile; it proves no audible quality on a device. The generated status fact needs regeneration by the session that owns the measure/generated/ changes. No product decision was needed.
+END_MEASURE_AGENT_RESULT

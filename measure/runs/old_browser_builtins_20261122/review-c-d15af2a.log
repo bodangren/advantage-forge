@@ -1,0 +1,32 @@
+Phase base: 3f6a19214994e7ac05a79a8fa7faeded684267b7
+Role base and audited HEAD: d15af2a205c5e1e612b1dc4f59060466fdd28fc8
+git rev-parse HEAD matched at role start and after tests. The tracked worktree was clean.
+The shared internal API remains in scope. No public API, route, or UI change applies.
+
+HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts'
+Result: 3 test files passed. All 13 tests passed. The audit JSON schema passed validation.
+
+F1 closed: own key and sparse array now match native clone results.
+F2 remains: the old fixtures pass. The same division class fails after ) and ]. Single arguments that contain an array literal with a comma also fail.
+F3 remains: the different label now fails the scan. A second .union call with the same label on the excluded line still passes it.
+F4 closed: the JSDoc now states both error types and the two-argument predicate contract.
+F5 partly closed: the plan counts are correct. The strategy still overcounts the T5 files.
+F2 and F3 concern the changed test scanner. F5 concerns a record. Users cannot reach these cases through the product at this HEAD.
+
+The TypeScript parser confirmed one simulation barrel import per consumer in all 36 consumer files.
+Retain the detached release worktree, the shelf-sync worktree and branch, and wip/oct-skill-docs-20261023 for their owners. Leave the origin refs unchanged.
+
+MEASURE_AGENT_RESULT
+role: measure-review-c-ux-api
+status: complete
+track: old_browser_builtins_20261122
+phase: Phase 2: Green
+commits: none
+tests_run: three-file Vitest gate through heavy-run.sh (pass, 13 tests); independent copy and scanner probes
+files_changed: review-c-d15af2a.json, review-c-d15af2a.log
+plan_updates: none
+known_failures: F2 scanner still misses valid calls; F3 same-label hits remain hidden; F5 strategy count remains incorrect
+handoff: Route remaining F2 and F3 to Green. Route F5 to the track owner. None of these cases is user-reachable at this HEAD.
+END_MEASURE_AGENT_RESULT
+
+RESULT: FAIL

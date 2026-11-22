@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: review-a
+status: complete
+track: old_browser_builtins_20261122
+phase: Phase 2: Green
+commits: none
+tests_run: Three-file Vitest: exit 0, 13 passed. AC4: exit 0, 228 files, 3380 passed, 3 skipped. TypeScript: exit 2, 51 baseline diagnostics and none in changed files. Generate, structural doctor, and focused Prettier: exit 0.
+files_changed: review-a-d15af2a.json and review-a-d15af2a.log
+plan_updates: none
+known_failures: F2 scanner still hides calls; F3 site check still accepts a missing call; F8 historical TypeScript record. No current user-reachable defect found.
+handoff: Route F2 and F3 to Green. F8 is a late plan-only finding. Rerun the review on the remediation HEAD.
+END_MEASURE_AGENT_RESULT

@@ -1,0 +1,23 @@
+MEASURE_AGENT_RESULT
+role: measure-mid-red
+track: audio_game_integration_20261014
+phase: Phase 4: Preload budget
+task: T7r2 remediation round 2 (last allowed round) Red
+phase_base_sha: 53ae856842ae14a63fb1b65a96edd1c8d6ce22e4
+role_base_sha: d15af2a205c5e1e612b1dc4f59060466fdd28fc8
+reviewed_head_sha: d15af2a205c5e1e612b1dc4f59060466fdd28fc8
+resulting_head_sha: f7d3187e59b7f2c673642087ccbc6819be38ff4d
+commits:
+- 03b184b5aac4a7b39fb8cfef698d2d8ea4897af9: measure(audio_game_integration): Phase 4 Red r2 decode deadline and effect marker (tests/audio-budget.test.ts only)
+- f7d3187e59b7f2c673642087ccbc6819be38ff4d: measure(audio_game_integration): Phase 4 Red r2 plan record (plan.md only)
+tests:
+- default: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run tests/audio-budget.test.ts --maxWorkers=1' => exit 0, 5 collected, 4 passed, 1 skipped (JSON case skipped without AUDIO_BUDGET_JSON=1)
+- json_mode_r2a: AUDIO_BUDGET_JSON=1 against temporary today's-shape {"bytes":79319,"files":6,"seconds":0.7038,"decoded":6,"fileEffect":true} artifact (removed after the run) => exit 1, 5 collected, 1 failed, 4 passed: JSON case fails on rune-match decodeSeconds is a labeled number, expected 'undefined' to be 'number' (A-F4)
+- json_mode_r2b: AUDIO_BUDGET_JSON=1 against the same shape plus "decodeSeconds":0.9 (removed after the run) => exit 1, 5 collected, 1 failed, 4 passed: JSON case fails on rune-match effectMarker is set before the Start action instead (C-F4), proving both new groups fail independently
+failing_cases:
+- A-F4: JSON must hold decodeSeconds (number, first audio request to last successful decode) with decodeSeconds <= 1.5; seconds stays the resource-timing field (fails: field absent in today's output)
+- C-F4: JSON must hold effectMarker "before-launch" and firstEffect (file name of the first file-backed game effect, one of the six Rune Match effect files in .ogg/.mp3 form, not music) (fails: fields absent in today's output)
+prettier: node_modules/.bin/prettier --check tests/audio-budget.test.ts exits 0
+notes: no src/ or scripts/ file edited; both staging artifacts removed after their runs; out/ stays ignored; parallel old_browser_builtins commit 6b4f8367 touched only its own paths
+status: red_complete
+END_MEASURE_AGENT_RESULT

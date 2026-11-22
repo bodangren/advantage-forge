@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "role": "measure-review-b-security",
+  "track": "audio_game_integration_20261014",
+  "phase": "Phase 4: Preload budget",
+  "phase_base_sha": "53ae856842ae14a63fb1b65a96edd1c8d6ce22e4",
+  "baseline_sha": "53ae856842ae14a63fb1b65a96edd1c8d6ce22e4",
+  "role_base_sha": "53ae856842ae14a63fb1b65a96edd1c8d6ce22e4",
+  "audited_head_sha": "0d8fc7def7b180092fe23ba51cbbfa55a6004991",
+  "security_applicability": "applicable",
+  "route": "kimi-code-plan-cn/kimi-for-coding",
+  "status": "pass",
+  "summary": "Pass on Phase 4 T7 with no blocking finding and one nonblocking nit. The delta on audited paths is the Red budget test c6ccaf46, the measurement script 5343710d, and the plan evidence b2d87dbe; old_browser_builtins commits in the range are out of scope. scripts/audio-budget.mjs binds the vite dev server to 127.0.0.1 only (CLI --host 127.0.0.1 on fixed port 5199 with --strictPort, matching the config default host), validates --game against the constant 'rune-match' before any file or process work and never concatenates the value into a path (OUT is hardcoded to out/audio-budget/rune-match.json), writes only that one file, and cleans up in a finally block: browser close with catch, then SIGTERM with a five-second SIGKILL escalation for the vite child. Live probes confirm: the real run exits 0 within budget (79,319 bytes, 6 files, 0.705-0.707 s), five hostile --game variants all exit 1 before any spawn or write, a port collision fails safe with exit 1 and no orphans, and nothing listens on 5199 and no vite or chromium process remains after every probe. The one nit: waitForServer accepts any HTTP 200 on the probe URL, so a foreign listener on 5199 is misdetected as the server and the script burns the first 120 s page timeout instead of failing fast on the strictPort exit; it still exits 1, cleans up, and the only side effect is the by-design deletion of the prior measurement, which I regenerated.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "N1 [Nit] review-b: scripts/audio-budget.mjs waitForServer (lines 78-93) treats any HTTP 200 on http://127.0.0.1:5199/demo/index.html as the vite server. When a foreign process already holds the port, vite exits because of --strictPort, but the decoy keeps answering 200, so the script passes waitForServer and fails only at the first page wait with a 120 s timeout (reproduced with a decoy listener: 'page.waitForFunction: Timeout 120000ms exceeded', exit 1). The failure is safe: no write occurs (the pre-run rmSync of the prior out/audio-budget/rune-match.json is by design), the finally block cleans up, and the decoy is untouched. A vite-log or process-exit check before the fetch probe would fail in seconds. Impact is loopback-only measurement delay, so this is a Nit for Green or tech-debt, not a blocker."
+  ],
+  "evidence": [
+    "Provenance: `git cat-file -t 0d8fc7def7b180092fe23ba51cbbfa55a6004991` printed commit. `git merge-base --is-ancestor 0d8fc7d HEAD` exited 0 and `git log --oneline 0d8fc7d..HEAD` printed nothing, so the working tree equals the audited head. `git merge-base --is-ancestor 53ae8568 0d8fc7d` exited 0, so phase_base_sha is ancestral; it equals role_base_sha because this is the first Review B round of the phase. The delta holds c6ccaf46 (tests/audio-budget.test.ts), 9e1f93b4 (Red mark), 5343710d (scripts/audio-budget.mjs, +232), b2d87dbe (plan evidence); old_browser_builtins commits 3d7db18f, efc0e600, 25612156, c8ddd883, 1dcc1043 and the final record 0d8fc7de are out of scope.",
+    "Host binding and port: the script spawns vite with --host 127.0.0.1 --port 5199 --strictPort (lines 63-77), BASE is http://127.0.0.1:5199, and vite.demo.config.ts sets server.host 127.0.0.1 as well, so the dev server is loopback-only on a fixed port and cannot silently shift ports; fs.allow ['..'] stays loopback-local. No SSRF or LAN exposure exists: the only outbound targets are 127.0.0.1 and the Playwright browser.",
+    "Argument handling and path containment: --game is parsed by exact flag match and validated against the constant 'rune-match' at line 53, before the set file is read, before rmSync, and before spawn; the value is never concatenated into a path. OUT is hardcoded to out/audio-budget/rune-match.json (line 18), mkdirSync/writeFileSync touch only dirname(OUT), and the statSync reads join(ROOT, 'demo/public/audio/chibi', row.file) where row.file must be in the allowed set built from sounds/sets/chibi.json, so no traversal reaches the disk check. Probe B: `--game ../../../evil`, `--game 'rune-match;id'`, bare `--game`, `--game=rune-match`, and no args all exit 1 with 'audio-budget: pass --game rune-match' before any file or process work; `ls out/audio-budget/` shows only rune-match.json and `git status --short -- out scripts tests sounds demo src` is clean after the probes.",
+    "Process lifecycle: the finally block (lines 225-228) closes the browser with a catch and calls stopServer, which sends SIGTERM and escalates to SIGKILL after five seconds; every error and timeout path funnels through the catch into that finally. Probe A (the real run) exits 0 and afterwards `ss -ltn | grep 5199` finds nothing (exit 1) and no vite.js or headless_shell process from the run remains (the only pgrep hit was the probe command itself, and a transient pid check with `ps -p` showed it already gone). The five rejection probes and the collision probe likewise leave nothing listening and no stray processes.",
+    "Port collision behavior: with a decoy HTTP server holding 127.0.0.1:5199, vite exits under --strictPort, the decoy answers the probe 200 so waitForServer passes, and the script fails at page.waitForFunction after the 120 s timeout with exit 1; it does not kill or disturb the decoy (a foreign process), writes nothing, and cleans up its own already-exited child. This is the N1 nit: safe but slow and indirect. PM load-watch rule recorded: the decoy from the first collision attempt (pid 185538) ran outside heavy-run; `kill 185538` reported no such process because the same shell command had already killed its own background job and `ss` confirmed nothing on 5199, and from now on any probe server starts and stops inside a single heavy-run call. The failed collision run had deleted out/audio-budget/rune-match.json by the pre-run rmSync; I regenerated it with a final clean run (79,319 bytes, 6 files, 0.705 s) and the committed Red test passes 4 of 4 against it.",
+    "Budget gate: the successful run prints and writes {bytes: 79319, files: 6, seconds: 0.705-0.707}, inside the 100,000 byte and 1.5 s limits; the script itself enforces six mapped files, foreign-row rejection, zero-byte rejection, the disk-byte equality check, and the page-error check, and the Red test pins the README byte column against statSync for all 14 files. Red failed first as recorded in the plan: case 4 fails with ENOENT for the JSON before the script existed.",
+    "No new secret or data surface: the delta grep for https?://, api keys, tokens, secrets, passwords, bearer, new URL, XMLHttpRequest, and WebSocket found no match, and the A2 grep for published, draft, consent, and anonymi found no match; the script observes resource timing on a local page only.",
+    "A6: the plan T7 record matches the implementation and evidence (Red ENOENT failure, Green run output recorded); the plan wording 'out/audio-budget/<game>.json' generalizes a path the script hardcodes to rune-match.json, a doc wording gap only, and the hardcoding is exactly what makes --game path injection impossible. tsc --noEmit stays at the 51-error baseline with none in scripts/audio-budget.mjs (it is an .mjs outside the tsconfig include; the gate that covers it is the heavy-runner run and the Red test)."
+  ],
+  "commands": [
+    "git cat-file -t 0d8fc7def7b180092fe23ba51cbbfa55a6004991 -> commit; git merge-base --is-ancestor 0d8fc7d HEAD -> exit 0; git log --oneline 0d8fc7d..HEAD -> empty; git merge-base --is-ancestor 53ae8568 0d8fc7d -> exit 0",
+    "git show 5343710d --stat -> scripts/audio-budget.mjs (+232) only; git show c6ccaf46 --stat -> tests/audio-budget.test.ts (+125) only; git diff 53ae8568..0d8fc7d --stat on audited paths -> the same plus plan.md",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/audio-budget.mjs --game rune-match' -> exit 0, {bytes: 79319, files: 6, seconds: 0.707}; rerun after the collision probe -> {bytes: 79319, files: 6, seconds: 0.705}",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/audio-budget.mjs --game ../../../evil; node scripts/audio-budget.mjs --game rune-match;id; node scripts/audio-budget.mjs --game; node scripts/audio-budget.mjs --game=rune-match; node scripts/audio-budget.mjs' -> every variant exits 1 with 'audio-budget: pass --game rune-match' before any spawn or write (two variants ran as background jobs through the same wrapper and completed identically)",
+    "decoy collision probe: node http server on 127.0.0.1:5199 plus the script through the heavy runner -> 'page.waitForFunction: Timeout 120000ms exceeded' at scripts/audio-budget.mjs:134, exit-collision:1; decoy untouched and killed afterwards; ss -ltn | grep 5199 -> empty (exit 1) after the probe and after the final clean run",
+    "hygiene checks after every probe: ss -ltn | grep 5199 -> exit 1 (nothing listens); pgrep -af vite.js -> no match; pgrep for headless_shell -> only self-matches and a transient pid that ps showed already gone; ls out/audio-budget/ -> rune-match.json only",
+    "node node_modules/vitest/vitest.mjs run tests/audio-budget.test.ts --maxWorkers=1 -> 1 file passed, 4 of 4 tests passed against the regenerated JSON",
+    "git diff 53ae8568..0d8fc7d -- scripts/audio-budget.mjs tests/audio-budget.test.ts sounds docs demo src | grep -niE 'https?://|api[_-]?key|token|secret|password|bearer|new URL|XMLHttpRequest|WebSocket' -> no match; same delta grep for published|draft|consent|anonymi -> no match (A2)"
+  ],
+  "changed_files": [
+    "measure/runs/audio_game_integration_20261014/review-b-p4-0d8fc7d.json",
+    "measure/runs/audio_game_integration_20261014/review-b-p4-0d8fc7d.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 4,
+      "evidence": "The script measures within budget and rejects every hostile --game variant, but a foreign listener on 5199 passes waitForServer and burns a 120 s timeout before the safe exit (N1)."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "The Red test failed first with ENOENT on the missing JSON and now pins the byte column and budget, but process hygiene and argument rejection have no committed pin and rest on my ad hoc probes."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "Green added only scripts/audio-budget.mjs (+232); the Red added only the budget test; no source, host, or audio file changed."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "Every claim carries a command result or a file:line, including the exit codes of all five rejection variants, the collision timeout at audio-budget.mjs:134, and the empty ss/pgrep hygiene checks."
+    }
+  ]
+}

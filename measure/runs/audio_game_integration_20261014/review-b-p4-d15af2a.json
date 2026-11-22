@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "role": "measure-review-b-security",
+  "track": "audio_game_integration_20261014",
+  "phase": "Phase 4: Preload budget",
+  "phase_base_sha": "53ae856842ae14a63fb1b65a96edd1c8d6ce22e4",
+  "baseline_sha": "53ae856842ae14a63fb1b65a96edd1c8d6ce22e4",
+  "role_base_sha": "0d8fc7def7b180092fe23ba51cbbfa55a6004991",
+  "audited_head_sha": "d15af2a205c5e1e612b1dc4f59060466fdd28fc8",
+  "security_applicability": "applicable",
+  "route": "kimi-code-plan-cn/kimi-for-coding",
+  "status": "pass",
+  "summary": "Pass on Phase 4 re-review r2 with no blocking and no nonblocking finding; the round-1 nit N1 is withdrawn. The audio delta 0d8fc7d..d15af2a2 is the Red r1 test f0cbd2db, the Green remediation 31d5adae (scripts/audio-budget.mjs +106), and the plan evidence fe90b0d0; old_browser_builtins commits in the range are out of scope, and the working tree's two modified test files belong to that concurrent track, not to this audit. Verified on the re-check list: the init script installs through Playwright addInitScript into an ephemeral headless page realm only — the audio delta changed no src, host, demo, or sound file, the wrapper observes decodes and starts without stubbing any bus or fetch call, and the browser closes on every exit path, so it cannot leak into product code. SIGINT and SIGTERM handlers close the browser, stop the vite child through the same SIGTERM-to-SIGKILL stopServer as normal completion, and exit 130 and 143 (both reproduced mid-run: the page closes, the port is free, and no vite process from the run remains). The port collision now fails fast: with a decoy holding 127.0.0.1:5199 inside a single heavy-run call, the script exits 1 in one second with the vite 'Port 5199 is already in use' log, the decoy is killed inside the same call, and nothing listens afterwards. --game handling is unchanged: --help exits 0 with one usage line, and traversal, semicolon, missing-value, and equals forms exit 1 with one usage line and no stack before any spawn or write. The real run regenerates the JSON with the new evidence fields within budget ({bytes: 79319, files: 6, seconds: 0.707, decoded: 6, fileEffect: true}) and the gated Red test passes 5 of 5.",
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "evidence": [
+    "N1 withdrawn: checked the round-1 nit against 31d5adae. waitForServer now re-checks after a 200 that the vite child is still alive and that the server log holds 'ready in', and it checks the child's exit before the fetch probe. With a decoy HTTP server holding 127.0.0.1:5199 (started and stopped inside one heavy-run call per the PM rule), the run exits 1 in one second with 'audio-budget: vite exited before it answered (1): Port 5199 is already in use' instead of the 120 s page timeout observed at r1; the decoy waits 143 inside the same call, and `ss -ltn | grep 5199` afterwards finds nothing (exit 1).",
+    "Provenance: `git cat-file -t d15af2a205c5e1e612b1dc4f59060466fdd28fc8` printed commit. `git merge-base --is-ancestor d15af2a2 HEAD` exited 0 and `git diff d15af2a2 -- scripts/audio-budget.mjs` is empty, so the audited script is exactly what the probes ran; `git diff d15af2a2 --stat` shows the only working-tree modifications are tests/apk3d/no-unpolyfilled-builtins.test.ts and tests/old-browser/index-math.test.ts, concurrent uncommitted work of the old_browser_builtins track outside this audit. `git merge-base --is-ancestor 0d8fc7d d15af2a2` exited 0, so the round-1 head is the delta base, and phase_base_sha 53ae8568 is ancestral. role_base_sha is the round-1 head 0d8fc7def7b180092fe23ba51cbbfa55a6004991.",
+    "Init script containment: 31d5adae changed only scripts/audio-budget.mjs, and `git diff --stat 0d8fc7d..d15af2a2 -- scripts/audio-budget.mjs tests/audio-budget.test.ts sounds demo src/apk3d/audio src/host` lists the script and the budget test only — no product file changed. The init script is a Playwright addInitScript callback: it wraps AudioContext.prototype.decodeAudioData, AudioBufferSourceNode.prototype.start, and OscillatorNode.prototype.start in the measured page's JavaScript realm, counts decodes and file starts, and returns the original results; it writes nothing and stubs no bus or fetch call. It lives only in the ephemeral headless context, and the browser closes in the finally block and in both signal handlers, so it cannot leak into product code or any later page.",
+    "Signal handling: stopOnSignal guards against double cleanup, awaits browser.close() and stopServer (the same SIGTERM with five-second SIGKILL escalation), then exits 130 or 143. Reproduced under the heavy runner: SIGTERM at 25 s gives exit 143 and SIGINT gives exit 130, each with the page closing mid-navigation, `ss -ltn | grep 5199` finding nothing afterwards (exit 1), and no vite process from the run remaining (pgrep hits during the run belonged to other transient processes and were gone when inspected with ps).",
+    "CLI handling: `node scripts/audio-budget.mjs --help` prints 'usage: node scripts/audio-budget.mjs --game rune-match' on stdout and exits 0; `--game ../../../evil`, bare `--game`, and `--game=rune-match` each print the single usage line and exit 1 with no stack trace, before the set file is read, before the pre-run rmSync, and before spawn, exactly as at r1; the --game value still never enters a path because OUT stays hardcoded to out/audio-budget/rune-match.json.",
+    "Budget and gates at this head: the real run exits 0 and writes {bytes: 79319, files: 6, seconds: 0.7072, decoded: 6, fileEffect: true}, inside the 100,000 byte and 1.5 s limits, with the new decode-count and first-file-effect gates enforced by the script itself; `AUDIO_BUDGET_JSON=1 node node_modules/vitest/vitest.mjs run tests/audio-budget.test.ts --maxWorkers=1` through the heavy runner passes 5 of 5, and the collision and signal probes left no JSON gap because the failed runs wrote nothing and the successful run rewrote the artifact.",
+    "A2: the delta grep for published, draft, consent, and anonymi found no match, and the secret-surface grep for https?://, api keys, tokens, secrets, passwords, bearer, new URL, XMLHttpRequest, and WebSocket found no match on the audio delta. A6: the plan records T7r Red f0cbd2db failing first ('rune-match decoded is a labeled number: expected undefined') and T7g Green 31d5adae with the gate commands and outputs, so no registry claim outruns the implementation.",
+    "Re-review handling: the round-1 nonblocking finding N1 is withdrawn with the checks above; no CONTEST item reached Review B, and no new defect sits in the remediation-changed lines of scripts/audio-budget.mjs."
+  ],
+  "commands": [
+    "git cat-file -t d15af2a205c5e1e612b1dc4f59060466fdd28fc8 -> commit; git merge-base --is-ancestor d15af2a2 HEAD -> exit 0; git diff d15af2a2 -- scripts/audio-budget.mjs -> empty; git diff d15af2a2 --stat -> only the two old_browser_builtins test files modified (concurrent track, uncommitted)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/audio-budget.mjs --help; node scripts/audio-budget.mjs --game ../../../evil; node scripts/audio-budget.mjs --game; node scripts/audio-budget.mjs --game=rune-match' -> exit-help:0, exit-traversal:1, exit-missing:1, exit-equals:1, each bad form printing one usage line with no stack",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node -e decoy-http-server & DECOY=$!; sleep 2; node scripts/audio-budget.mjs --game rune-match; kill $DECOY; wait $DECOY; ss -ltn | grep 5199' -> 'vite exited before it answered (1): Port 5199 is already in use', exit-collision:1 elapsed:1s, decoy-wait:143, port-after:1 (decoy started and stopped inside the single heavy-run call)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/audio-budget.mjs --game rune-match & RUN=$!; sleep 25; kill -TERM $RUN; wait $RUN; ss -ltn | grep 5199' -> exit-sigterm:143, port-after-term:1, no vite process from the run remains",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/audio-budget.mjs --game rune-match & RUN=$!; sleep 25; kill -INT $RUN; wait $RUN; ss -ltn | grep 5199' -> exit-sigint:130, port-after-int:1",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/audio-budget.mjs --game rune-match' -> exit 0, {bytes: 79319, files: 6, seconds: 0.7072, decoded: 6, fileEffect: true}",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'AUDIO_BUDGET_JSON=1 node node_modules/vitest/vitest.mjs run tests/audio-budget.test.ts --maxWorkers=1' -> 1 file passed, 5 of 5 tests passed",
+    "git diff 0d8fc7d..d15af2a2 -- scripts/audio-budget.mjs tests/audio-budget.test.ts sounds demo src/apk3d/audio src/host | grep -niE 'https?://|api[_-]?key|token|secret|password|bearer|new URL|XMLHttpRequest|WebSocket' -> no match; same delta grep for published|draft|consent|anonymi -> no match (A2)"
+  ],
+  "changed_files": [
+    "measure/runs/audio_game_integration_20261014/review-b-p4-d15af2a.json",
+    "measure/runs/audio_game_integration_20261014/review-b-p4-d15af2a.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "N1 is closed: the collision fails in one second with the vite port error, both signals stop the browser and the server and exit 130 and 143, and the real run holds the budget with the new decode and file-effect gates."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "The Red r1 cases pin the new JSON fields and CLI behavior with failing-first evidence in the plan, but signal cleanup and fast collision still rest on my ad hoc probes rather than committed tests."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "Green 31d5adae changed only scripts/audio-budget.mjs (+106); the working-tree modifications belong to the concurrent old_browser_builtins track."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "Every claim carries a command result, including the 1-second collision exit, the 130 and 143 signal exits, the empty ss checks after each probe, and the 5-of-5 gated test."
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: review-a
+status: complete
+track: old_browser_builtins_20261122
+phase: Phase 2: Green
+commits: none
+tests_run: Independent F2 and F3 fixtures passed. Three-file Vitest: exit 0, 16 passed. AC4 retry: exit 0, 228 files, 3383 passed, 3 skipped. TypeScript: exit 2, 51 baseline diagnostics. Generate, structural doctor, and focused Prettier: exit 0.
+files_changed: review-a-5a1da50.json and review-a-5a1da50.log
+plan_updates: none
+known_failures: F8 historical plan record. F9-F11 are late test-only findings. No current user-reachable wrong result found.
+handoff: F2 and F3 are closed. Route F9-F11 to tech debt, not Green. Continue to Phase 2 acceptance.
+END_MEASURE_AGENT_RESULT

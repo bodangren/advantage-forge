@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "role": "phase-acceptance",
+  "track": "audio_game_integration_20261014",
+  "phase": "Phase 3: File playback in the AudioBus",
+  "baseline_sha": "09b4028f9d5f422f86c4bfa2c6735778b3c10ce7",
+  "phase_base_sha": "af4e57aff730b1cf8ee9c716802920699f1eaaac",
+  "role_base_sha": "09b4028f9d5f422f86c4bfa2c6735778b3c10ce7",
+  "audited_head_sha": "09b4028f9d5f422f86c4bfa2c6735778b3c10ce7",
+  "status": "fail",
+  "summary": "Phase 3 remains blocked at 09b4028. Both non-Measure diffs are empty. The same-HEAD rule does not allow the intervening Measure commits outside measure/runs/.",
+  "blocking_findings": [
+    "F1 [Blocker] phase-acceptance: Review A/B/C and adversarial testing target a414b406. The UX browser review targets e6027f50. Neither range to 09b4028 contains only test or run files. Obtain current prerequisite results before acceptance."
+  ],
+  "nonblocking_findings": [
+    "F2 [Nit] phase-acceptance: TD-44 retains two skipped lifecycle tests and the non-enumerable remap case. Current hosts do not exercise those cases. The skips do not prove those AC4 behaviors.",
+    "F3 [Nit] phase-acceptance: The scanner misses calls after quoted URLs, in template interpolations, and across lines. AC3 of old_browser_builtins_20261122 owns these gaps. TD-45 covers the compatibility uses outside audio.",
+    "F4 [Nit] phase-acceptance: plan.md:492-493 says the follow-up track fixed the scanner gaps. The follow-up AC3 is still open. Say that the follow-up track owns the fixes.",
+    "F5 [Nit] ux-browser-review: The active Rune Match canvas has no accessible name. The accessibility snapshot is empty. Route this issue to a UI accessibility track.",
+    "F6 [Nit] phase-acceptance: Cross-reference the AC9 preload exception from AC4 rule 1. Update test-strategy.md:411 to describe the wired game review rather than the earlier harness plan."
+  ],
+  "evidence": [
+    "Acceptance role rule: \"confirm the audited HEAD is current and every prerequisite result targets the same HEAD. After adversarial testing a test-only commit can advance HEAD: when every commit between a prerequisite result's HEAD and the audited HEAD touches only test files or `measure/runs/`, the prerequisite results still apply (the implementation content is unchanged by definition), and the acceptance records the exact HEAD it accepted and names the test-only commits it allowed.\"",
+    "Start and final HEAD both returned 09b4028f9d5f422f86c4bfa2c6735778b3c10ce7. The phase base is an ancestor. No tracked worktree change was present at the start.",
+    "All five prerequisite results say pass. Their audited SHAs include T6k. Git found no difference outside measure/ in either range to 09b4028. This proves content equality outside measure/ but does not meet the acceptance rule.",
+    "The range after a414b406 contains e6027f50, cce1251e, and 18fabd42, which change Measure plan, metadata, status, debt, or spec files. Both cce1251e and 18fabd42 follow the UX audit SHA.",
+    "09b4028 changes only measure/runs and qualifies on its own. It does not make the full ranges from the prerequisite SHAs eligible. Acceptance allowed no HEAD exception.",
+    "The prior duplicate F3 finding is closed. All six late-finding IDs have one disposition in the contract form. All 13 current completed task lines cite in-range commits.",
+    "The test strategy now allows the planned 2D host edits. Metadata records the fourth-round escalation. Commit b88cb45d removes the T6i task line; the F3 line still cites its guard commit.",
+    "T6k uses Object.prototype.hasOwnProperty.call at the event map checks in bus.ts and chibi.ts. The browser report records six Ogg requests with HTTP 200 and no errors. Acceptance did not rerun the browser or audio tests.",
+    "A5 current gate exits are unverified. The scope diff changes no Measure framework contract test or banned-term filter. The registry adds an unchecked follow-up track and claims no resolution.",
+    "Leave the release worktree, the shelf-sync worktree and branch, and wip/oct-skill-docs-20261023 to their owners. This audit changed none of them."
+  ],
+  "commands": [
+    "git diff --stat a414b406 09b4028f -- . ':!measure'; git diff --stat e6027f50 09b4028f -- . ':!measure' — both print nothing. Both matching git diff --quiet commands exit 0.",
+    "git log --format='%h %s' --name-only a414b406..09b4028f -- . ':!measure/runs'; same command for e6027f50..09b4028f — both ranges contain Measure changes outside measure/runs/.",
+    "git rev-parse HEAD; git merge-base --is-ancestor af4e57af HEAD; git merge-base --is-ancestor 0cc7b5c4 a414b406 — HEAD confirmed and both ancestry checks exited 0.",
+    "git log --format='%h %s' --name-status a414b406..HEAD; git diff --name-status e6027f50..HEAD -- . ':!measure/runs' — identified the intervening files outside the exception.",
+    "git diff --quiet a414b406 HEAD -- src scripts tests docs demo — exit 0. git diff --check af4e57af HEAD — exit 0.",
+    "Static plan marker check — 13 completed task SHAs resolve in range, six unique late-finding IDs match the contract, and metadata has a nonempty escalation.",
+    "Not run: the eight-file audio gate, the project gate, doctor, and generate --check. The prerequisite HEAD check failed."
+  ],
+  "changed_files": [
+    "measure/runs/audio_game_integration_20261014/phase-acceptance-p3-09b4028.json",
+    "measure/runs/audio_game_integration_20261014/phase-acceptance-p3-09b4028.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "retry_audit",
+  "confidence": "high",
+  "route": "unknown"
+}

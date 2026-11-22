@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: measure-adversarial-testing
+status: complete
+track: old_browser_builtins_20261122
+phase: Phase 2: Green
+commits: none
+tests_run: targeted heavy-run passed (3 files, 16 tests); AC4 heavy-run passed (228 files, 3383 passed, 3 skipped); seeded sim comparisons passed for six games at 1200 ticks each; old-global runtime passed for six games at 1200 ticks each; 352 atIndex and 12 lastIndexWhere edge comparisons passed
+files_changed: measure/runs/old_browser_builtins_20261122/adversarial-p2-5a1da50.json; measure/runs/old_browser_builtins_20261122/adversarial-p2-5a1da50.log
+plan_updates: none
+known_failures: build-graph commands could not run because measure/graph.db has no nodes table; no product test failed
+handoff: No product defect found. The audited HEAD is unchanged. No test additions or commits were needed.
+END_MEASURE_AGENT_RESULT

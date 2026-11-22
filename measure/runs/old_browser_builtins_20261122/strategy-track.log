@@ -1,0 +1,16 @@
+MEASURE_AGENT_RESULT
+role: measure-strategy
+track: old_browser_builtins_20261122
+session: Strategy · track · old_browser_builtins
+status: pass
+role_base_sha: aaf678693732984a6adbc78af1157610e8225fd9
+strategy_commit: 3f6a19214994e7ac05a79a8fa7faeded684267b7
+strategy_commit_message: measure(old_browser_builtins): test strategy
+strategy_path: measure/tracks/old_browser_builtins_20261122/test-strategy.md
+phase_base_sha_capture: The orchestrator must run git rev-parse HEAD immediately after commit 3f6a19214994e7ac05a79a8fa7faeded684267b7 lands. Store that output as the immutable phase_base_sha. The role_base_sha predates the committed strategy and is not the phase_base_sha.
+checks: node measure/tools/generate.mjs --check exit 0; ./measure/doctor.sh --structural-only exit 0; node_modules/.bin/prettier --check measure/tracks/old_browser_builtins_20261122/test-strategy.md exit 0. Both structural checks passed before and after the commit.
+committed_paths: measure/tracks/old_browser_builtins_20261122/test-strategy.md only. plan.md was not changed; the contract requires no strategy line there.
+content: Per-task T1-T8 test files, exact heavy-run Red commands, expected failing evidence, Green gates, closeout gates, SCAN_WIDE=1 two-mode rule of AC3, AC5 browser check in one heavy-run call, fixtures and mocks, live-behavior proof, architecture guardrails, changed-contract risks, intentionally-red aggregate-suite handling, artifact versus live-behavior notes, per-phase risk, review applicability, and per-phase anti-pattern defenses with falsification conditions.
+red_and_green_left_no_decision: yes
+RESULT: PASS
+END_MEASURE_AGENT_RESULT

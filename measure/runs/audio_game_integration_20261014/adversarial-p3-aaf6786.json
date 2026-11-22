@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "role": "adversarial-testing",
+  "track": "audio_game_integration_20261014",
+  "phase": "Phase 3: File playback in the AudioBus",
+  "baseline_sha": "af4e57aff730b1cf8ee9c716802920699f1eaaac",
+  "phase_base_sha": "af4e57aff730b1cf8ee9c716802920699f1eaaac",
+  "role_base_sha": "aaf678693732984a6adbc78af1157610e8225fd9",
+  "pre_adversarial_head_sha": "aaf678693732984a6adbc78af1157610e8225fd9",
+  "audited_head_sha": "aaf678693732984a6adbc78af1157610e8225fd9",
+  "status": "pass",
+  "summary": "The Phase 3 adversarial verdict remains PASS at aaf6786. Both Vitest gates and all five runtime scenarios pass. ADV5-S1 and ADV5-R1 remain tech debt.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "ADV5-S1 [Nit] adversarial-testing: tech-debt. The scan at tests/apk3d/no-unpolyfilled-builtins.test.ts:22–29 and :62–66 misses executable calls in template interpolations, calls split across lines, and a call after a quoted URL. Follow-up: old_browser_builtins_20261122 AC3. No current user reaches this test tool.",
+    "ADV5-R1 [Nit] adversarial-testing: tech-debt (TD-44). The same-base remap at src/apk3d/audio/bus.ts:124–132 can retain a decoded file after removal of a non-enumerable own key. No current host uses that map."
+  ],
+  "evidence": [
+    "The pinned audit scope matches the scope of adversarial-p3-a414b40.json. The Git diff is empty outside measure/.",
+    "The runtime matrix loads the exact bus, Chibi helper, and generated map from aaf6786. Each built-in is absent before evaluation of the modules.",
+    "All five runtime scenarios pass: Object.hasOwn, structuredClone, Array.prototype.at, and Array.prototype.findLastIndex removed separately, then all four together.",
+    "Each runtime scenario makes three exact file requests and starts three file sources and one synth tone. It stops all three file sources and closes the audio context.",
+    "A plain map and a null-prototype map both accept an own enumerable hasOwnProperty key. The bus plays the new take after the remap.",
+    "The seven scan fixtures reproduce ADV5-S1. Direct controls report four calls, but the interpolation, split-call, and quoted-URL fixtures report none.",
+    "The runtime debt probe reproduces ADV5-R1. It verifies the key is absent after the remap, but the old tap.ogg starts with one fetch total.",
+    "The Phase 3 plan records ADV5-S1 and ADV5-R1 at lines 493–494. Their dispositions remain tech debt. Both TD-44 skip pins remain unchanged.",
+    "The pinned source search finds 29 host wiring calls and only one source call that supplies a map. The Chibi helper supplies the generated map.",
+    "The all-[~] fixture reports two incomplete tasks. The live scan preserves a hit before a real comment with the word 'never'.",
+    "The eight-file gate reproduces the T6l plan result. The plan has no unqualified all-checks-pass phrase.",
+    "HEAD remains aaf678693732984a6adbc78af1157610e8225fd9 after both gates. The non-Measure working tree and index match that commit.",
+    "The structural doctor and generated facts now pass. The prior stale generated status does not persist at this HEAD."
+  ],
+  "commands": [
+    "git rev-parse HEAD at role start => aaf678693732984a6adbc78af1157610e8225fd9",
+    "git diff --stat a414b406 aaf678693732984a6adbc78af1157610e8225fd9 -- . ':!measure' => exit 0; empty output",
+    "Node VM probe with pinned module blobs => five built-in removal scenarios pass; ADV5-R1 reproduces",
+    "Node VM probe with pinned scanner and seven temporary TypeScript fixtures => ADV5-S1 reproduces",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-files.test.ts tests/apk3d/audio-files.adversarial.test.ts tests/apk3d/audio-files.adversarial-r2.test.ts tests/apk3d/audio-files.adversarial-r3.test.ts tests/apk3d/audio-wiring.test.ts tests/apk3d/audio-wiring.adversarial.test.ts tests/apk3d/imports.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts' => exit 0; 8 files, 61 passed, 2 TD-44 skips",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts' => exit 0; 225 files, 3364 passed, 2 TD-44 skips",
+    "bash measure/doctor.sh --structural-only; node measure/tools/generate.mjs --check => both exit 0",
+    "node_modules/.bin/prettier --check src/apk3d/audio/bus.ts src/apk3d/audio/chibi.ts tests/apk3d/no-unpolyfilled-builtins.test.ts => exit 0",
+    "git diff --check a414b406..aaf6786 => exit 0"
+  ],
+  "changed_files": [
+    "measure/runs/audio_game_integration_20261014/adversarial-p3-aaf6786.json",
+    "measure/runs/audio_game_integration_20261014/adversarial-p3-aaf6786.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "unknown",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 4,
+      "evidence": "Five runtime scenarios pass, but bus.ts:124–132 does not clear a removed non-enumerable custom entry."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 3,
+      "evidence": "Four direct scan controls pass, but no-unpolyfilled-builtins.test.ts:22–29 hides executable template expressions."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The non-Measure diff is empty, and this audit writes only its JSON and log."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "Both heavy-run gates, the empty non-Measure diff, and the pinned VM probes support the recorded verdict."
+    }
+  ]
+}

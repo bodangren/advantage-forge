@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: adversarial-testing
+status: complete
+track: audio_game_integration_20261014
+phase: Phase 4: Preload budget
+commits: none
+tests_run: Default gate passed 4/4 with one skip; live browser JSON gate passed 5/5; project gate passed 228 files and 3383 tests with 3 skips; slow-decode probe failed as expected at 2.4109 s; A4 fixture failed as expected; port 5199 is free.
+files_changed: measure/runs/audio_game_integration_20261014/adversarial-p4-5a1da50.json; measure/runs/audio_game_integration_20261014/adversarial-p4-5a1da50.log
+plan_updates: None.
+known_failures: Review C F4 remains PM-decided measurement-only tech debt. The final fileEffect predicate can reject valid opening file playback after a later synth event, but it cannot create a false PASS or change shipped sound.
+handoff: Phase 4 adversarial result is PASS at 5a1da501. Audit JSON records F4 as nonblocking tech debt. No production or test files changed.
+END_MEASURE_AGENT_RESULT

@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "role": "review-a",
+  "track": "audio_game_integration_20261014",
+  "phase": "Phase 4: Preload budget",
+  "baseline_sha": "53ae856842ae14a63fb1b65a96edd1c8d6ce22e4",
+  "phase_base_sha": "53ae856842ae14a63fb1b65a96edd1c8d6ce22e4",
+  "role_base_sha": "0d8fc7def7b180092fe23ba51cbbfa55a6004991",
+  "audited_head_sha": "0d8fc7def7b180092fe23ba51cbbfa55a6004991",
+  "status": "fail",
+  "summary": "The combined gate passes, but the ordinary suite fails without an untracked JSON file. The measurement also passes when all six Ogg decodes fail.",
+  "blocking_findings": [
+    "F1 [Blocker] review-a: tests/audio-budget.test.ts:91-105 unconditionally reads an ignored browser artifact. In a fresh checkout, the fourth test fails with ENOENT even after Green. The old-browser project gate hit this failure, and the audit reproduced it without removing the real artifact. Keep the three committed-file checks in the default suite. Make the JSON check opt-in after the browser command, and require the JSON in that mode.",
+    "F2 [Blocker] review-a: scripts/audio-budget.mjs:145-150,194-225 can report a passing AC5 measurement even if none of the six files decode. AudioBus catches decode rejections at src/apk3d/audio/bus.ts:315-328 and uses synth fallback. The script checks neither decode completion nor whether the first effect used a file. An audit probe rejected all six Ogg decodes and still got a passing measurement. Observe successful decodes and verify a decoded effect before writing JSON. Keep the strategy's resource timing formula and report its limit."
+  ],
+  "nonblocking_findings": [
+    "F3 [Nit] review-a: scripts/audio-budget.mjs:229-232 cleans up after normal completion and caught failures. A parent-only SIGTERM leaves Vite serving port 5199. Add SIGINT and SIGTERM cleanup for the child this script started."
+  ],
+  "evidence": [
+    "HEAD equaled 0d8fc7def7b180092fe23ba51cbbfa55a6004991 at review start and after the main gate. The supplied phase base is an ancestor.",
+    "The phase diff covers the new CLI, the new budget test, and the audio plan update. The old_browser_builtins commits in the range are outside this review.",
+    "scripts/audio-budget.mjs:20-21,123-134 sets 209,715 bytes per second down, 300 ms latency, unlimited upload, and applies the profile before navigation.",
+    "scripts/audio-budget.mjs:194-215 sums encodedBodySize and checks the sum against the served files. This counts the uncompressed audio bodies, not HTTP headers.",
+    "scripts/audio-budget.mjs:63-78 uses the Vite demo config and /demo/ base. vite.demo.config.ts:44-48 supplies the demo root and public directory. plan.md:640-646 records the deviation.",
+    "scripts/audio-budget.mjs:132-150 follows the prescribed host flow and sends the canvas click and Space. Rune Match starts its opening effect during scene startup (src/games/rune-match/view2d/game.ts:115-119,182-183). The inputs alone do not prove a decoded file played.",
+    "The requested combined gate exited 0 with four tests passing and measured 79,319 bytes, six files, and 0.7065 s. The byte and file counts match the plan. The timing is within budget and differs from the dated plan samples.",
+    "The missing-artifact fixture raised ENOENT only for the JSON path. The ordinary test run exited 1 with three passing checks and one failure at tests/audio-budget.test.ts:105.",
+    "The decoder fault probe preserved real HTTP responses and resource timings, forced only Ogg decode rejections, and disabled artifact writes. The script observed six forced rejections and still returned 79,319 bytes, six files, and about 0.7052 s with exit 0.",
+    "The server cleanup uses finally and escalates from SIGTERM to SIGKILL after five seconds. No port 5199 listener remained after the main gate.",
+    "The cancellation probe paused the script after Vite readiness, then sent SIGTERM to Node only. Vite stayed alive and returned HTTP 200. The probe stopped its own Vite child.",
+    "The budget tests parse named JSON fields and the README byte column. No bare-digit matching satisfies the assertions. The phase did not change Measure contract tests or orchestration scripts.",
+    "No TypeScript production export changed in the audio phase. The new measurement is a standalone .mjs entry point and the budget test reads files."
+  ],
+  "commands": [
+    "git rev-parse HEAD; git merge-base --is-ancestor 53ae856842ae14a63fb1b65a96edd1c8d6ce22e4 0d8fc7def7b180092fe23ba51cbbfa55a6004991 => HEAD matched; ancestry check passed.",
+    "git diff --name-status 53ae856842ae14a63fb1b65a96edd1c8d6ce22e4..0d8fc7def7b180092fe23ba51cbbfa55a6004991 => reviewed the audio budget paths and separated the old-browser track paths.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/audio-budget.mjs --game rune-match && node node_modules/vitest/vitest.mjs run tests/audio-budget.test.ts --maxWorkers=1' => exit 0; 79,319 bytes; 6 files; 0.7065 s; 4 tests passed.",
+    "Heavy-run Vitest with a Node preload hook returning ENOENT for the exact generated JSON path => exit 1; 3 passed, 1 failed.",
+    "Heavy-run in-memory Playwright fault probe: reject Ogg decodeAudioData promises without changing responses; suppress writes => exit 0; 6 forced rejections; budget output still printed.",
+    "Heavy-run in-memory cancellation probe: pause after waitForServer, send parent-only SIGTERM, request the demo URL => Vite still alive; HTTP 200.",
+    "git check-ignore -v out/audio-budget/rune-match.json => .gitignore:2:out/.",
+    "node_modules/.bin/prettier --check scripts/audio-budget.mjs tests/audio-budget.test.ts; git diff --check on the audio phase paths => pass.",
+    "node measure/tools/generate.mjs --check && ./measure/doctor.sh --structural-only => both pass on the audited checkout."
+  ],
+  "changed_files": [
+    "measure/runs/audio_game_integration_20261014/review-a-p4-0d8fc7d.json",
+    "measure/runs/audio_game_integration_20261014/review-a-p4-0d8fc7d.log"
+  ],
+  "test_strategy_violations": [
+    "F2: The Phase 4 strategy says a decode failure must fail the run. The forced Ogg decode failures passed the gate."
+  ],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "retry_implementation",
+  "confidence": "high",
+  "route": "openai/gpt-6.2-sol#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 3,
+      "evidence": "The script measured 79,319 bytes in 0.7065 s, but the forced-decode-failure run also passed."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 3,
+      "evidence": "The three committed-file checks pass, but tests/audio-budget.test.ts:105 fails in the ordinary suite without the ignored JSON."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The audio phase diff adds only its budget script, test, and plan evidence."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 4,
+      "evidence": "The required heavy-run passed and the two independent probes exposed failures that the Green result cannot detect."
+    }
+  ]
+}

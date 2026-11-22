@@ -1,0 +1,25 @@
+MEASURE_AGENT_RESULT
+role: measure-review-b-security
+track: old_browser_builtins_20261122
+phase: Phase 2: Green
+round: re-review r3
+phase_base_sha: 3f6a19214994e7ac05a79a8fa7faeded684267b7
+role_base_sha: 5a1da5011f31008102f8563b1f03f2891c23f99b
+audited_head_sha: 5a1da5011f31008102f8563b1f03f2891c23f99b
+security_applicability: applicable
+status: pass
+blocking_findings: none
+nonblocking_findings: none
+evidence:
+  - "F2 closed: PM decision 2026-11-23 accepted the Symbol-key limit as a written contract limit; the copy.ts doc comment states the helper does not copy own Symbol-keyed properties, and tests/old-browser/deep-copy.test.ts:167-170 flags a Symbol-keyed property via a Reflect.ownKeys walk."
+  - "F3 closed: the doc comment states a RegExp or another class instance copies as a plain object with no class behavior and a copied RegExp throws on exec, matching the r2 probe R12 result; no code change (7d5c7129 is comment-only)."
+  - "F4 closed: the doc comment states the helper does not copy non-enumerable own properties; the test walk records the non-enumerable kind (tests/old-browser/deep-copy.test.ts:94-100,176-178)."
+  - "F5 closed: the doc comment states the helper does not recognize Map/Set/Date/typed-array values from another realm such as an iframe and that such values copy as plain objects, matching r2 probe R14."
+  - "git diff d15af2a2..5a1da50 -- src/apk3d/sim/copy.ts shows a single hunk (@@ -1,10 +1,16 @@) replacing only the doc block; all code lines from 'export function deepCopy' onward are byte-identical."
+  - "git rev-parse HEAD = 5a1da5011f31008102f8563b1f03f2891c23f99b at audit start and end; git status --short -- src/ tests/ is empty; no tracked file modified during the audit."
+  - "Three-file gate through heavy-run.sh: node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts -> Test Files 3 passed (3), Tests 16 passed (16), exit 0."
+  - "A2 not applicable: no draft-to-published path in this diff. A6: no overstatement; the documented limits match the implementation and the widened state-type test is green."
+retry_recommendation: none
+result_path: measure/runs/old_browser_builtins_20261122/review-b-5a1da50.json
+log_path: measure/runs/old_browser_builtins_20261122/review-b-5a1da50.log
+END_MEASURE_AGENT_RESULT

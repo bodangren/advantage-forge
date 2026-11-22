@@ -1,0 +1,19 @@
+MEASURE_AGENT_RESULT
+status: complete
+verdict: PASS
+role: measure-strategy for audio_game_integration_20261014, Phase 4 (T7)
+role_base_sha: 3f6a19214994e7ac05a79a8fa7faeded684267b7
+phase3_accepted_sha: aaf678693732984a6adbc78af1157610e8225fd9
+strategy_commit_sha: 53ae856842ae14a63fb1b65a96edd1c8d6ce22e4
+strategy_commit_subject: measure(audio_game_integration): Phase 4 test strategy
+strategy_path: measure/tracks/audio_game_integration_20261014/test-strategy.md
+phase_base_sha_capture_point: Run `git rev-parse HEAD` as the first command after the strategy commit 53ae856842ae14a63fb1b65a96edd1c8d6ce22e4 lands. Capture before any Red command. At that point HEAD was 53ae856842ae14a63fb1b65a96edd1c8d6ce22e4; parallel commits may move HEAD, so the orchestrator must capture at the point, not from this note. No predated SHA is embedded as phase_base_sha in the strategy.
+red_command: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'rm -f out/audio-budget/rune-match.json && node node_modules/vitest/vitest.mjs run tests/audio-budget.test.ts --maxWorkers=1'
+green_command: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/audio-budget.mjs --game rune-match && node node_modules/vitest/vitest.mjs run tests/audio-budget.test.ts --maxWorkers=1'
+red_expectation: Exit 1 with 4 cases collected and 1 failed. Cases 1 to 3 pass because sounds/README.md already holds both format tables with correct byte values. Case 4 fails with ENOENT for out/audio-budget/rune-match.json. A green Red is a broken Red.
+settlements: bytes comes from sum of resource-timing encodedBodySize; Vite serves uncompressed so this equals statSync size, and transferSize is rejected because it includes response headers. seconds is (max(responseEnd) - min(startTime)) / 1000 over kept audio rows. files is the labeled integer 6 for Rune Match. Thresholds are bytes <= 100000 and seconds <= 1.5. Byte cross-check sums are 79319 for Ogg and 62496 for MP3.
+checks: node measure/tools/generate.mjs --check exited 0 with 'Measure facts are current (4 files)'. node_modules/.bin/prettier --check on the strategy exited 0 after formatting. git diff --check on the strategy exited 0. The commit contains only the explicitly named strategy path.
+nonblocking_findings: ./measure/doctor.sh --structural-only exited 1 with one error, 'measure/tracks/old_browser_builtins_20261122/plan.md: new track has started tasks'. Another session owns that track and its status is still 'new' with two [~] tasks. No doctor error names this track. Nine retries over about four minutes gave the same external error. The orchestrator must clear that parallel-track error before Phase 4 acceptance. This did not block the strategy commit.
+anti_pattern_coverage: Phase 4 defends against A3 with labeled numeric parses, A4 with a nonvacuous JSON gate and a red Red, A5 with plan-to-JSON matching, A6 with no overstated claims, A7 with row-anchored README parsing and exact URL matching, A9 with live-path reads, A10 with generated-facts checks and untracked out/, A11 with truthful review status, and A2 as not applicable. Phases 1 to 6 keep their existing per-phase tables and falsification conditions. Anti-pattern definitions were read from ../advantage-pr/measure/anti-patterns.md (A1 to A10) and ../reading-advantage-monorepo/measure/anti-patterns.md (A11); the local catalog is absent.
+handoff: The orchestrator must capture phase_base_sha now, before any parallel commit. Route the doctor error to the owner of track old_browser_builtins_20261122. The Red and Green commands above leave no decision to the Red and Green agents.
+END_MEASURE_AGENT_RESULT

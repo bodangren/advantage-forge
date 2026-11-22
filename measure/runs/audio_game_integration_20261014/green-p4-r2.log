@@ -1,0 +1,42 @@
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+track: audio_game_integration_20261014
+phase: Phase 4: Preload budget
+task: T7g2 remediation round 2 Green (last allowed round)
+status: pass
+phase_base_sha: 53ae856842ae14a63fb1b65a96edd1c8d6ce22e4 (immutable; verified ancestor of final HEAD)
+role_base_sha: 6a65f579be55dcee17dac606599b142f9e2ee0fb (HEAD at Green start)
+red_commit: 03b184b5aac4a7b39fb8cfef698d2d8ea4897af9 (tests/audio-budget.test.ts; verified inside phase_base_sha..HEAD)
+final_green_head: 082ac19c63fd04e74396133d995d7441a219e320
+
+tasks_flipped_to_x:
+  T7g2 Green remediation r2 -> [x] in plan.md with implementation SHA 9147326b15ed50f834413876e513f7dc706cfb19 and the eight measured fields.
+
+tasks_flipped_to_b: none; no deferred owner.
+
+dispositions: A-F4=FIX; C-F4=FIX
+
+measured_result:
+  {"bytes":79319,"files":6,"seconds":0.7056000000238418,"decodeSeconds":0.7101000000238419,"decoded":6,"fileEffect":true,"effectMarker":"before-launch","firstEffect":"pop.ogg"}
+  seconds stays the resource-timing response window. decodeSeconds runs from the first audio request to the last successful decode. The first attempt at Gate 2 timed out waiting for the canvas while other sessions held the machine at load average 11; the unchanged command passed on retry. out/audio-budget/ stays ignored.
+
+implementation:
+  scripts/audio-budget.mjs tags each decoded buffer with its response file name through pass-through observation of Response.prototype.arrayBuffer. It records decode completion times and file-backed buffer starts. The effect marker is installed before the Start click. firstEffect is the first file-backed start of one of the six Rune Match effect files after that marker; music and other files do not count. The script exits 1 and writes no JSON when decodeSeconds exceeds 1.5 s or no such effect exists. No src/ file, committed test, or audio file changed.
+
+gates:
+  Gate 1: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run tests/audio-budget.test.ts --maxWorkers=1' => exit 0; 4 passed, 1 skipped (5). The skip is the opt-in JSON case.
+  Gate 2: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/audio-budget.mjs --game rune-match && AUDIO_BUDGET_JSON=1 node node_modules/vitest/vitest.mjs run tests/audio-budget.test.ts --maxWorkers=1' => exit 0; 5 passed (5); JSON printed as above.
+  Slow-decode proof: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node measure/runs/audio_game_integration_20261014/slow-decode-probe.mjs --game rune-match' => exit 1 with "audio-budget: decode window 2.4116999999284743 s exceeds 1.5 s" and no JSON. The probe is an uncommitted copy of the script with a 1.7 s delay before each decode.
+  node --check scripts/audio-budget.mjs => exit 0. node_modules/.bin/prettier --check scripts/audio-budget.mjs => exit 0.
+  ss -ltnp grep :5199 after the runs => no listener.
+  node measure/tools/generate.mjs --check initially stale after the plan edit; regenerated because measure/generated/ held no foreign change; then exit 0 with "Measure facts are current (4 files)."
+  ./measure/doctor.sh --structural-only after the plan-evidence commit => exit 0; "Measure doctor found no structural errors."
+
+commits:
+  implementation_commit: 9147326b15ed50f834413876e513f7dc706cfb19 fix(audio_game_integration): T7g2 decode deadline and before-launch effect marker (explicit path: scripts/audio-budget.mjs)
+  plan_evidence_commit: 082ac19c63fd04e74396133d995d7441a219e320 docs(audio_game_integration): T7g2 decode deadline evidence (9147326b) (explicit paths: measure/tracks/audio_game_integration_20261014/plan.md, measure/generated/status.md)
+
+new_files: no new file entered either commit. The slow-decode probe and this result log stay untracked under measure/runs/audio_game_integration_20261014/. No committed test, source, game, or audio file changed. This role did not touch src/ or tests/old-browser/.
+
+handoff: Review reruns both gates and the slow-decode probe and compares the printed JSON to plan.md. decodeSeconds covers the decode window that resource timing omits. firstEffect proves the opening game effect used a mapped file, not music. Neither proves audible quality on a device. No product decision was needed.
+END_MEASURE_AGENT_RESULT

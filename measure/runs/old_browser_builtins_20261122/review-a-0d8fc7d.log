@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: review-a
+status: complete
+track: old_browser_builtins_20261122
+phase: Phase 2: Green
+commits: none
+tests_run: Three-file Vitest: exit 0, 9 passed. AC4 retry: exit 0, 228 files, 3376 passed, 2 skipped. Storytime caller subset: exit 0, 3 passed. TypeScript CLI: exit 2, 52 errors. Generate and structural doctor: exit 0. Plan Prettier: exit 1.
+files_changed: review-a-0d8fc7d.json and review-a-0d8fc7d.log
+plan_updates: none
+known_failures: F1 deep-copy parity; F2 scanner false negatives; F3 vacuous site check; F4 track-owned TS2769; F5 plan format and count; F6 realm limit; F7 duplicate imports.
+handoff: Route F1-F4 to Green. Route the plan record correction to its owner. Rerun the review on the remediation HEAD.
+END_MEASURE_AGENT_RESULT

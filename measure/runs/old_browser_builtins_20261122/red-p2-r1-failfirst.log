@@ -1,0 +1,105 @@
+
+ RUN  v5.1.1 /home/daniebo/Desktop/advantage-forge
+
+ ❯ tests/apk3d/no-unpolyfilled-builtins.test.ts (3 tests | 2 failed) 188ms
+   × exclusions bind to their exact call text, not just the line (review r1 C-F3) 5ms
+   × controls prove the strip and the whole-text patterns 2ms
+ ❯ tests/old-browser/deep-copy.test.ts (6 tests | 2 failed) 46ms
+   × sparse arrays keep their length and their holes (review r1 A-F1, C-F1) 4ms
+   × an own __proto__ key stays an own data key (review r1 A-F1, C-F1) 0ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/apk3d/no-unpolyfilled-builtins.test.ts > exclusions bind to their exact call text, not just the line (review r1 C-F3)
+AssertionError: expected [ '<fixture>:1: structuredClone' ] to deeply equal [ …(3) ]
+
+- Expected
++ Received
+
+  [
+-   "stale exclusion <fixture>:1: test bind",
+-   "<fixture>:1: Set .union(",
+    "<fixture>:1: structuredClone",
+  ]
+
+ ❯ tests/apk3d/no-unpolyfilled-builtins.test.ts:351:48
+    349|     { file: '<fixture>', line: 1, label: 'Set .union(', call: 'box.mer…
+    350|   ];
+    351|   expect(applyExclusions(raw, rotted, lineOf)).toEqual([
+       |                                                ^
+    352|     'stale exclusion <fixture>:1: test bind',
+    353|     '<fixture>:1: Set .union(',
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  tests/apk3d/no-unpolyfilled-builtins.test.ts > controls prove the strip and the whole-text patterns
+AssertionError: expected [ …(7) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "division around a call: fixed 0 (want 1), witness 1 (want 1)",
++   "regex literal before a call: fixed 0 (want 1), witness 1 (want 1)",
++   "nested call as the index argument: fixed 0 (want 1), witness 0 (want 1)",
++   "comment between the call name and its parentheses: fixed 0 (want 1), witness 0 (want 1)",
++   "receiver boundary on .at(: fixed 0 (want 1), witness 0 (want 1)",
++   "receiver boundary on .union(: fixed 0 (want 1), witness 0 (want 1)",
++   "all 19 labels as code: fixed 16 (want 19), witness 17 (want 19)",
++ ]
+
+ ❯ tests/apk3d/no-unpolyfilled-builtins.test.ts:497:20
+    495|     }
+    496|   }
+    497|   expect(failures).toEqual([]);
+       |                    ^
+    498| });
+    499|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  tests/old-browser/deep-copy.test.ts > sparse arrays keep their length and their holes (review r1 A-F1, C-F1)
+AssertionError: expected 2 to be 4 // Object.is equality
+
+- Expected
++ Received
+
+- 4
++ 2
+
+ ❯ tests/old-browser/deep-copy.test.ts:247:23
+    245|   sparse[1] = 'b';
+    246|   const copy = deepCopy(sparse);
+    247|   expect(copy.length).toBe(4);
+       |                       ^
+    248|   expect(0 in copy).toBe(false);
+    249|   expect(1 in copy).toBe(true);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  tests/old-browser/deep-copy.test.ts > an own __proto__ key stays an own data key (review r1 A-F1, C-F1)
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/old-browser/deep-copy.test.ts:263:67
+    261|   const copy = deepCopy(source);
+    262|   expect(Object.getPrototypeOf(copy)).toBe(Object.prototype);
+    263|   expect(Object.prototype.hasOwnProperty.call(copy, '__proto__')).toBe…
+       |                                                                   ^
+    264|   expect(Object.getOwnPropertyDescriptor(copy, '__proto__')).toMatchOb…
+    265|     value: 1,
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+
+ Test Files  2 failed | 1 passed (3)
+      Tests  4 failed | 9 passed (13)
+   Start at  02:16:21
+   Duration  846ms (tests 40%, transform 31%, import 27%, worker 1%)
+

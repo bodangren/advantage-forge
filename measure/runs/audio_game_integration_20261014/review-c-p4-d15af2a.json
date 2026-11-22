@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "role": "review-c",
+  "track": "audio_game_integration_20261014",
+  "phase": "Phase 4: Preload budget",
+  "phase_base_sha": "53ae856842ae14a63fb1b65a96edd1c8d6ce22e4",
+  "role_base_sha": "d15af2a205c5e1e612b1dc4f59060466fdd28fc8",
+  "audited_head_sha": "d15af2a205c5e1e612b1dc4f59060466fdd28fc8",
+  "status": "fail",
+  "summary": "The decode count, timing correction, and CLI checks address the prior findings. The new playback check can miss the first Rune Match effect.",
+  "blocking_findings": [
+    "F4 [Blocker] review-c: scripts/audio-budget.mjs:201-211,310-317 sets the effect marker after Start and the canvas click. Rune Match plays its opening effect from scene creation, so the filter can discard a valid opening file start and fail on later music. Set the marker before the launch action and distinguish effects from music."
+  ],
+  "nonblocking_findings": [],
+  "evidence": [
+    "F1 withdrawn: scripts/audio-budget.mjs:148-166 counts fulfilled decode promises and tracks decoded buffers. Lines 306-318 reject unequal counts and missing decoded playback before writing JSON.",
+    "F2 withdrawn: plan.md:636-643 separates the old ignored artifact from historical timings. The T7g JSON at plan.md:688-691 matches green-p4-r1.log:21.",
+    "The live ignored artifact has 79319 bytes, 6 files, 0.7038000000715255 s, 6 successful decodes, and fileEffect true. Its 02:46:35 mtime is later than the 02:33:08 plan commit.",
+    "F3 withdrawn: --help exits 0 and an invalid --game exits 1. Each prints one usage line with no stack trace before starting Vite or Chromium.",
+    "src/host/main.ts:77-78,210,397 installs gesture unlock and starts the game from Start. src/games/rune-match/view2d/game.ts:115-119,182-183 starts the opening effect from scene creation.",
+    "src/apk3d/audio/bus.ts:396-411 schedules music through oscillators. scripts/audio-budget.mjs:167-170 records all oscillator starts as synth effects.",
+    "The Phase 4 strategy and exact audio diff cover the CLI and measurement artifact. Other-track changes in the range do not change those reviewed paths."
+  ],
+  "commands": [
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/audio-budget.mjs --help; help_code=$?; printf \"help exit=%s\\n\" \"$help_code\"; node scripts/audio-budget.mjs --game not-a-game; bad_code=$?; printf \"bad-game exit=%s\\n\" \"$bad_code\"; test \"$help_code\" -eq 0 && test \"$bad_code\" -eq 1 && node node_modules/vitest/vitest.mjs run tests/audio-budget.test.ts --maxWorkers=1' — exit 0; four tests pass and the opt-in JSON case skips.",
+    "git diff --check 0d8fc7de..d15af2a2 -- scripts/audio-budget.mjs tests/audio-budget.test.ts measure/tracks/audio_game_integration_20261014/plan.md — exit 0.",
+    "git rev-parse HEAD — d15af2a205c5e1e612b1dc4f59060466fdd28fc8. The working copies of the reviewed paths match that commit.",
+    "stat -c '%y %n' out/audio-budget/rune-match.json; git show -s --format='%ci %h' fe90b0d0 — the current artifact is newer than the recorded plan commit."
+  ],
+  "changed_files": [
+    "scripts/audio-budget.mjs",
+    "tests/audio-budget.test.ts",
+    "measure/tracks/audio_game_integration_20261014/plan.md"
+  ],
+  "test_strategy_violations": [
+    "F4: The new playback gate does not reliably observe the first effect required by the Phase 4 flow."
+  ],
+  "live_contract_violations": [
+    "F4: A decoded opening effect can occur before the observation marker. The script can reject a valid measurement rather than report the first effect."
+  ],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "contract_applicability": "applicable",
+  "retry_recommendation": "retry_implementation",
+  "confidence": "high",
+  "route": "unknown",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 3,
+      "evidence": "scripts/audio-budget.mjs:201-211 arms the effect filter after the action that starts Rune Match."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 3,
+      "evidence": "tests/audio-budget.test.ts:145-172 checks the artifact flags and CLI, but it does not test the order of the opening effect and marker."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The audio commits in 0d8fc7de..d15af2a2 change the budget script, test, and track plan."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "The wrapped CLI and unit checks pass, and file timestamps distinguish the live artifact from the plan run."
+    }
+  ]
+}

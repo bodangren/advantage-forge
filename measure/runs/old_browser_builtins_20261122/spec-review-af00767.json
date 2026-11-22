@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "role": "spec-review",
+  "track": "old_browser_builtins_20261122",
+  "phase": "track setup",
+  "baseline_sha": "af00767174b5547f72ef6e0069cab80f0c9c587f",
+  "audited_head_sha": "a414b40604bb6bc1cecc65605b7ae5e59789a541",
+  "status": "fail",
+  "summary": "The plan has inaccurate use counts, duplicates the audio scan instead of widening it, and allows a browser check before its audio dependency is fixed.",
+  "blocking_findings": [
+    "F1 [Blocker] spec.md Scan of 2026-11-22; plan.md T2, T3, T5, and Scope control: The plan counts 8 array .at( calls, but grep finds 9 across the five named files; correct the replacements, totals, per-file counts, and T5 changed-file count. Rationale: The plan's fixed Red and Green gates cannot pass against the repository contents it describes.",
+    "F2 [Blocker] spec.md Decisions (c), AC3, and Scope; plan.md T3: Widen the committed tests/apk3d/no-unpolyfilled-builtins.test.ts SCAN_ROOT to src/ instead of adding tests/old-browser/no-es2022-builtins.test.ts; update the existing test's controls and false-positive exclusions. Rationale: A duplicate scanner leaves two sources of truth and conflicts with the stated requirement to widen the audio scan.",
+    "F3 [Blocker] plan.md T6 and T7; spec.md AC5: T7 may run before audio task T6k, but the selected game's audio wiring still calls Object.hasOwn while AC5 deletes it. Require T6k before T7 or define a browser path that does not exercise the unfixed audio code. Rationale: The current sequencing permits the browser gate to fail for a known, unrelated hit.",
+    "F4 [Major] spec.md AC4; plan.md AC4 reference and T8: Replace the stale 217-file/3,299-test reference with the exact gate command, audited baseline SHA, exit code, and file/test counts captured from that run's reporter; the current tree has 226 test files. Rationale: The old counts no longer describe the suite and cannot serve as a current baseline."
+  ],
+  "nonblocking_findings": [],
+  "evidence": [
+    "HEAD at role start (role_base_sha): 1f45fcfe831f43f33453033c001a08c22ee93cdc. The audio T6l evidence commit advanced HEAD to a414b40604bb6bc1cecc65605b7ae5e59789a541 before review completion; this audited_head_sha matches current HEAD.",
+    "rg -n 'structuredClone' src: 35 hits in 30 files.",
+    "rg -n '\\.at\\(' in the five named target files: 9 hits; spellweavers-run view2d has two, view has one, dragon-flight has one, dragon-rider has one, and storytime has three.",
+    "rg -n 'findLastIndex' src: one hit at src/host/reader.ts:197. The corrected source total is 45 track-owned hits and 47 including audio's two Object.hasOwn hits.",
+    "False-positive search confirms this.at() calls in both boards, multi-argument arena/shape .at() calls, z.union(), and three Box3.union() calls in src/render/page.ts.",
+    "The plan names 29 game helper files for a Red-time snapshot type walk. Its intended types are objects, arrays, strings, numbers, booleans, null, and undefined; the type walk must record observed types per game rather than assume the claim.",
+    "The current committed audio scanner is tests/apk3d/no-unpolyfilled-builtins.test.ts; its SCAN_ROOT points to src/apk3d/audio/ and its comment explicitly expects this track to widen it.",
+    "tests/apk3d/imports.test.ts permits apk3d/sim imports only from apk3d/contracts; the proposed deepCopy module has no imports and is compatible with that rule."
+  ],
+  "commands": [
+    "git rev-parse HEAD (at start): 1f45fcfe831f43f33453033c001a08c22ee93cdc",
+    "git rev-parse HEAD (final): a414b40604bb6bc1cecc65605b7ae5e59789a541",
+    "rg -n 'structuredClone' src; rg -l 'structuredClone' src",
+    "rg -n '\\.at\\(' src/games/dragon-flight/view2d/game.ts src/games/dragon-rider/view2d/game.ts src/games/spellweavers-run/view/game.ts src/games/spellweavers-run/view2d/game.ts src/storytime/book-pictures.ts",
+    "rg -n 'findLastIndex' src",
+    "rg -n '\\.at\\([^)]*,[^)]*\\)|z\\.union\\(' src",
+    "Read tests/apk3d/no-unpolyfilled-builtins.test.ts, tests/apk3d/imports.test.ts, measure/tracks/audio_game_integration_20261014/plan.md T6l, scripts/apk3d-shot.ts, vite.config.ts, vite.demo.config.ts, and measure/gates.json."
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/spec-review-af00767.json",
+    "measure/runs/old_browser_builtins_20261122/spec-review-af00767.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "escalate_human",
+  "confidence": "high",
+  "paraphrase": {
+    "proposes": "This track removes unsupported built-ins from the games and host while keeping the iOS 15 and WebView 80 device gate. It adds local deep-copy and index helpers, broadens a source scan, and tests one game after deleting the affected built-ins in a browser.",
+    "current_system": "The demo build targets ES2020 but adds no polyfills, and the device gate accepts browsers that lack several built-ins used in src/. The current source has 35 structuredClone calls in 30 files, 9 array .at() calls in the five named files, one findLastIndex call, and two audio Object.hasOwn calls. The audio track has committed a scanner limited to src/apk3d/audio/ and has documented this track's intended root widening."
+  }
+}

@@ -1,0 +1,22 @@
+MEASURE_AGENT_RESULT
+role: measure-mid-red
+track: old_browser_builtins_20261122
+phase: Phase 2: Green (remediation round 3, test-only, PM 2026-11-23)
+tasks: T3r3 Red (done)
+phase_base_sha: 3f6a19214994e7ac05a79a8fa7faeded684267b7
+role_base_sha: 9147326b15ed50f834413876e513f7dc706cfb19
+resulting_head_sha: 5a1da5011f31008102f8563b1f03f2891c23f99b
+commits:
+- 1c6f3831b7ada3141e893bc7ade0d76772dbd0f4 measure(old_browser_builtins): Phase 2 remediation Red T3r3 Reflect.ownKeys state-type pin (tests/old-browser/deep-copy.test.ts)
+- 5a1da5011f31008102f8563b1f03f2891c23f99b measure(old_browser_builtins): Phase 2 remediation Red T3r3 plan record (plan.md T3r3 Red line; measure/generated/status.md regenerate)
+production_source_edits: none (src/ untouched)
+red_kind: gap_closing
+gaps: state-type visitor walks Reflect.ownKeys and records symbol-key for a Symbol-keyed own property, non-enumerable for a non-enumerable own property, and accessor for a getter/setter without invoking it, so test 111 fails on any new kind beyond the allowed plain-data set.
+breakage_proof: temporary probe measure/runs/old_browser_builtins_20261122/probe-state-types-r3.mjs runs the old Object.keys visitor against the five new expectations: Symbol-key, non-enumerable, and getter cases fail there (gap escapes old visitor) while RegExp and class-instance cases pass (log measure/runs/old_browser_builtins_20261122/red-p2-r3-breakage.log, probe exit 0 on exactly 3 failures); the committed inline control passes on the new visitor in measure/runs/old_browser_builtins_20261122/red-p2-r3-final.log (exit 0, 3 files, 16 passed, all 29 real game states still pass).
+checks:
+- HEAVY three-file gate: exit 0, 3 files passed, 16 passed (final log red-p2-r3-final.log)
+- node_modules/.bin/prettier --check tests/old-browser/deep-copy.test.ts: exit 0
+- node node_modules/typescript/bin/tsc --noEmit: no error in the file (narrowed holder const, same pattern as the r1 TS2769 fix)
+- node measure/tools/generate.mjs --check: exit 0; ./measure/doctor.sh --structural-only: exit 0
+plan: Phase 2 holds `- [x] T3r3 Red (1c6f3831)` with the Red evidence and the breakage proof paths.
+END_MEASURE_AGENT_RESULT

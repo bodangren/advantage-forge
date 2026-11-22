@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "role": "spec-review",
+  "track": "old_browser_builtins_20261122",
+  "phase": "track setup",
+  "baseline_sha": "e6027f509891a301c26eddbbf67fd044bc971729",
+  "audited_head_sha": "e6027f509891a301c26eddbbf67fd044bc971729",
+  "status": "fail",
+  "summary": "The .at() count and earlier plan findings are corrected, but scanner false negatives remain unspecified and the Red scan copy resolves the wrong source root.",
+  "blocking_findings": [
+    "F6 [Blocker] plan.md T3 Red evidence: The copied test at measure/runs/old_browser_builtins_20261122 resolves SCAN_ROOT relative to its new location, so `../../src` resolves to measure/src rather than the repository src directory; specify how the temporary copy targets the actual repository src/. Rationale: The prescribed Red run cannot produce the required 44 source hits with the copied test's current relative-root calculation."
+  ],
+  "nonblocking_findings": [
+    "F5 [Major] spec.md AC3 rule 5; plan.md T3: Add scanner regression cases for a URL string before an executable built-in call on the same line, calls inside template-literal interpolations, and calls split across lines; define stripping so comments or strings cannot hide executable calls. Rationale: The committed scanner's known false negatives can let an unsupported built-in pass the widened source guard."
+  ],
+  "evidence": [
+    "F1 withdrawn: `rg -n '\\.at\\(' src/games/dragon-flight/view2d/game.ts src/games/dragon-rider/view2d/game.ts src/games/spellweavers-run/view/game.ts src/games/spellweavers-run/view2d/game.ts src/storytime/book-pictures.ts` prints exactly 8 executable hits: dragon-flight:565; dragon-rider:591; spellweavers-run view:216; spellweavers-run view2d:311 and 429; book-pictures:2269, 3935, and 4558. The nearby `src/sdf/profile.ts:189` match is a doc comment, not a call.",
+    "F2 withdrawn: `spec.md` Decision (c), Scope, Exclusions, AC3, and `plan.md` T3, T5, T6, and T8 now require widening the committed `tests/apk3d/no-unpolyfilled-builtins.test.ts` scanner and adding no second scanner.",
+    "F3 withdrawn: `spec.md` AC5 rule 1 and `plan.md` T7 record audio T6k commit `0cc7b5c4` as a met prerequisite; the baseline has no `Object.hasOwn` calls in src/.",
+    "F4 withdrawn: `spec.md` AC4 and `plan.md` T8 require actual reporter counts, skipped count, exit code, and tested commit; they no longer pin 217 files or 3,299 tests.",
+    "The r1 delta `af00767174b5547f72ef6e0069cab80f0c9c587f..e6027f509891a301c26eddbbf67fd044bc971729` corrects F1-F4 and preserves the fixed PM decisions.",
+    "Audio review A round 6 F2 at `measure/runs/audio_game_integration_20261014/review-a-a414b40.json` reproduces a URL-string false negative because line comments are stripped before strings.",
+    "Audio adversarial round 5 at `measure/runs/audio_game_integration_20261014/adversarial-p3-a414b40.json` reports executable calls missed in template interpolations and multiline call expressions, plus the URL-string case.",
+    "The new AC3 and T3 controls do not test those cases. AC3 says to strip strings and template literals, but does not preserve executable template interpolation content or cover multiline calls.",
+    "The committed scan derives SCAN_ROOT from `dirname(fileURLToPath(import.meta.url))`. T3 copies it into `measure/runs/old_browser_builtins_20261122/`; from that location, `../../src` resolves to `measure/src`, not the repository `src/`."
+  ],
+  "commands": [
+    "git rev-parse HEAD => e6027f509891a301c26eddbbf67fd044bc971729",
+    "rg -n '\\.at\\(' src/games/dragon-flight/view2d/game.ts src/games/dragon-rider/view2d/game.ts src/games/spellweavers-run/view/game.ts src/games/spellweavers-run/view2d/game.ts src/storytime/book-pictures.ts",
+    "rg -n --glob '*.ts' '\\.at\\([^,()]*\\)' src",
+    "git diff --stat af00767174b5547f72ef6e0069cab80f0c9c587f e6027f509891a301c26eddbbf67fd044bc971729 -- measure/tracks/old_browser_builtins_20261122",
+    "git diff --unified=3 af00767174b5547f72ef6e0069cab80f0c9c587f e6027f509891a301c26eddbbf67fd044bc971729 -- measure/tracks/old_browser_builtins_20261122/spec.md measure/tracks/old_browser_builtins_20261122/plan.md",
+    "Read tests/apk3d/no-unpolyfilled-builtins.test.ts, measure/runs/audio_game_integration_20261014/review-a-a414b40.json, measure/runs/audio_game_integration_20261014/adversarial-p3-a414b40.json, and the updated spec.md and plan.md."
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/spec-review-e6027f5.json",
+    "measure/runs/old_browser_builtins_20261122/spec-review-e6027f5.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "escalate_human",
+  "confidence": "high",
+  "paraphrase": {
+    "proposes": "This track replaces browser-incompatible built-ins with local deep-copy and index helpers while keeping the device gate. It widens the existing source scanner, adds controls, and checks one game in a browser with the unsupported built-ins removed.",
+    "current_system": "The demo targets ES2020 without polyfills, while the device gate includes browsers that lack several built-ins used in src/. At baseline a414b406, src/ contained 35 structuredClone calls, 8 array .at() calls, and one findLastIndex call; audio T6k had already removed the two Object.hasOwn calls. The existing scanner only scans src/apk3d/audio/."
+  }
+}

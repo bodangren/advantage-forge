@@ -1,0 +1,40 @@
+MEASURE_AGENT_RESULT
+status: PASS
+phase: Phase 2: Green (remediation round 1)
+track: old_browser_builtins_20261122
+phase_base_sha: 3f6a19214994e7ac05a79a8fa7faeded684267b7
+role_base_sha: 3ddaaf531659e7af094cd62dedb24c1401dcb6a1
+final_green_head: d15af2a205c5e1e612b1dc4f59060466fdd28fc8
+dispositions: A-F1=FIX; C-F1=FIX; C-F4=FIX; A-F4=FIX; A-F5=FIX; C-F5=FIX; A-F7=FIX
+tasks_flipped_to_x: T5r@9440c5726c6e6195bc00e706c594714d1060532d
+tasks_flipped_to_b: none
+source_commit: 9440c5726c6e6195bc00e706c594714d1060532d (35 files: copy.ts, index-math.ts, 33 call sites)
+plan_evidence_commit: d15af2a205c5e1e612b1dc4f59060466fdd28fc8 (plan.md, generated status.md)
+new_files_added: none
+tests_changed: none (committed Red tests at 64ddb5e9 remain immutable)
+
+Targeted Red command, rerun before implementation:
+HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts'
+Exit 1. Reporter: Test Files 1 failed | 2 passed (3); Tests 2 failed | 11 passed (13). The two failures are the new Red cases for sparse-array length and the own __proto__ data key.
+
+Fixes:
+- A-F1 and C-F1: copy.ts allocates an array copy with new Array(source.length), so trailing holes stay absent and length stays fixed. The generic branch uses Object.defineProperty with value, writable, enumerable and configurable, so an own __proto__ key stays an own data key and the prototype stays Object.prototype.
+- C-F4: copy.ts states that the helper throws TypeError while the native clone throws DataCloneError and that the helper copies current-realm values. index-math.ts states the two-argument predicate contract of lastIndexWhere.
+- A-F7: 33 call-site files now have one import from the simulation barrel. The type modifier stays in monster-encounters/core/sim.ts. The pre-existing second ./tuning.js import in archers-revenge/core/sim.ts is untouched.
+- A-F4: the plan states the phase base count of 51 separately from the Red-to-Green comparison of 57 to 52 and the T3r TS2769 fix.
+- A-F5 and C-F5: the plan states three barrel exports, 34 clone calls in 29 sims plus one in the maze file, and 36 source files plus one scan test. plan.md passes prettier.
+
+Green gates:
+- Three-file command through the heavy runner at commit 9440c572: exit 0. Test Files 3 passed (3); Tests 13 passed (13).
+- AC4 command through the heavy runner at commit 9440c572: exit 0. Test Files 228 passed (228); Tests 3380 passed | 3 skipped (3383).
+- imports.test.ts through the heavy runner: exit 0. Test Files 1 passed (1); Tests 4 passed (4).
+- tsc --noEmit: exit 2 with 51 error lines, zero in a changed file.
+- prettier --check on the 35 changed source files: 32 pre-existing failures and zero new failures; plan.md exits 0.
+- node measure/tools/generate.mjs --check: exit 0 after regeneration. measure/generated was clean before regeneration.
+- ./measure/doctor.sh --structural-only: exit 0.
+
+Handoff to review roles:
+- Test-side findings A-F2, A-F3, C-F2 and C-F3 were fixed by Mid Red at 64ddb5e9; this role did not edit a test.
+- No task is deferred to a human. Do not archive the track. Do not update final closeout metadata.
+- T7 browser check and T8 gates stay open.
+END_MEASURE_AGENT_RESULT

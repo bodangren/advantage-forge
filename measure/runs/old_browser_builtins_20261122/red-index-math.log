@@ -1,0 +1,78 @@
+
+ RUN  v5.1.1 /home/daniebo/Desktop/advantage-forge
+
+ ❯ tests/old-browser/index-math.test.ts (3 tests | 3 failed) 18ms
+   × atIndex returns the same value as Array.prototype.at for every argument shape 8ms
+   × lastIndexWhere returns the same index as Array.prototype.findLastIndex 2ms
+   × the nine call sites hold a helper call and no array .at( or .findLastIndex( 6ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/old-browser/index-math.test.ts > atIndex returns the same value as Array.prototype.at for every argument shape
+Error: Cannot find module '/src/apk3d/sim/index-math.js' imported from /home/daniebo/Desktop/advantage-forge/tests/old-browser/index-math.test.ts
+ ❯ tests/old-browser/index-math.test.ts:15:24
+     13|
+     14| it('atIndex returns the same value as Array.prototype.at for every arg…
+     15|   const { atIndex } = (await import('../../src/apk3d/sim/index-math.js…
+       |                        ^
+     16|     atIndex: <T>(list: readonly T[], index: number) => T | undefined;
+     17|   };
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  tests/old-browser/index-math.test.ts > lastIndexWhere returns the same index as Array.prototype.findLastIndex
+Error: Cannot find module '/src/apk3d/sim/index-math.js' imported from /home/daniebo/Desktop/advantage-forge/tests/old-browser/index-math.test.ts
+ ❯ tests/old-browser/index-math.test.ts:27:31
+     25|
+     26| it('lastIndexWhere returns the same index as Array.prototype.findLastI…
+     27|   const { lastIndexWhere } = (await import('../../src/apk3d/sim/index-…
+       |                               ^
+     28|     lastIndexWhere: <T>(list: readonly T[], predicate: (value: T, inde…
+     29|   };
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  tests/old-browser/index-math.test.ts > the nine call sites hold a helper call and no array .at( or .findLastIndex(
+AssertionError: expected [ …(18) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "src/games/dragon-flight/view2d/game.ts:565: missing atIndex( call",
++   "src/games/dragon-flight/view2d/game.ts:565: still calls .at(",
++   "src/games/dragon-rider/view2d/game.ts:591: missing atIndex( call",
++   "src/games/dragon-rider/view2d/game.ts:591: still calls .at(",
++   "src/games/spellweavers-run/view/game.ts:216: missing atIndex( call",
++   "src/games/spellweavers-run/view/game.ts:216: still calls .at(",
++   "src/games/spellweavers-run/view2d/game.ts:311: missing atIndex( call",
++   "src/games/spellweavers-run/view2d/game.ts:311: still calls .at(",
++   "src/games/spellweavers-run/view2d/game.ts:429: missing atIndex( call",
++   "src/games/spellweavers-run/view2d/game.ts:429: still calls .at(",
++   "src/storytime/book-pictures.ts:2269: missing atIndex( call",
++   "src/storytime/book-pictures.ts:2269: still calls .at(",
++   "src/storytime/book-pictures.ts:3935: missing atIndex( call",
++   "src/storytime/book-pictures.ts:3935: still calls .at(",
++   "src/storytime/book-pictures.ts:4558: missing atIndex( call",
++   "src/storytime/book-pictures.ts:4558: still calls .at(",
++   "src/host/reader.ts:197: missing lastIndexWhere( call",
++   "src/host/reader.ts:197: still calls .findLastIndex(",
++ ]
+
+ ❯ tests/old-browser/index-math.test.ts:68:20
+     66|     if (hasOld) failures.push(`${site.file}:${site.line}: still calls …
+     67|   }
+     68|   expect(failures).toEqual([]);
+       |                    ^
+     69| });
+     70|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  3 failed (3)
+   Start at  00:54:14
+   Duration  133ms (transform 39%, tests 37%, import 18%, worker 6%)
+

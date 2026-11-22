@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "role": "review-a",
+  "track": "audio_game_integration_20261014",
+  "phase": "Phase 4: Preload budget",
+  "baseline_sha": "53ae856842ae14a63fb1b65a96edd1c8d6ce22e4",
+  "phase_base_sha": "53ae856842ae14a63fb1b65a96edd1c8d6ce22e4",
+  "role_base_sha": "5a1da5011f31008102f8563b1f03f2891c23f99b",
+  "audited_head_sha": "5a1da5011f31008102f8563b1f03f2891c23f99b",
+  "status": "pass",
+  "summary": "F4 is fixed. Both requested gates pass. A 1.7-second decode delay now causes exit 1 without writing JSON.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F5 [Nit] review-a: test-strategy.md:286-303,344-346 still prescribes an unflagged JSON test and exactly three result fields. T7g and T7g2 change both in plan.md:674-732. Late finding, tech-debt: this record drift does not change the CLI result. Align the strategy with the explicit JSON gate and the additional evidence fields."
+  ],
+  "evidence": [
+    "git rev-parse HEAD matches the audited SHA. The phase base is an ancestor. Old-browser commits in the exact phase range are out of scope.",
+    "scripts/audio-budget.mjs:170-177 records successful decode completion on the page clock. Lines 339-344 compare the latest decode to the earliest audio request before writing JSON.",
+    "scripts/audio-budget.mjs:223-227 sets the marker before Start. Lines 346-357 restrict firstEffect to the six Rune Match effect names in either format.",
+    "git grep found AudioBus as the only production caller of decodeAudioData in this checkout. No exported TypeScript symbol changed in the audio phase.",
+    "F4 withdrawn: the repeat browser probe inserted a 1,700 ms delay before each native Ogg decode. The original deadline check reported 2.4125 s, exited 1, and wrote no JSON to the probe path.",
+    "The live gate measured 79,319 bytes, six files, 0.7038999999761582 s for transfers, and 0.7090999999046326 s to finish six decodes. It recorded before-launch and pop.ogg. The values agree with the dated plan's byte count, file count, bounds, and effect. The two timings differ by run.",
+    "In-memory JSON fixtures independently fail on a missing decodeSeconds, a missing effectMarker, and a decodeSeconds of 1.7. The default gate skips only the browser JSON case.",
+    "The first browser command reached the shell's 600 s limit before the readiness check completed. The unchanged gate passed with a larger outer timeout. The expected probe failure then set the combined command's exit to 1.",
+    "After verification, HEAD still matched the audited SHA. No process was listening on port 5199."
+  ],
+  "commands": [
+    "git rev-parse HEAD; git merge-base --is-ancestor 53ae856842ae14a63fb1b65a96edd1c8d6ce22e4 5a1da5011f31008102f8563b1f03f2891c23f99b => HEAD matched and phase base is an ancestor.",
+    "git diff --name-status 53ae856842ae14a63fb1b65a96edd1c8d6ce22e4..5a1da5011f31008102f8563b1f03f2891c23f99b; git diff d15af2a2..5a1da50 -- scripts/audio-budget.mjs tests/audio-budget.test.ts measure/tracks/audio_game_integration_20261014/plan.md => reviewed the exact audio changes.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run tests/audio-budget.test.ts --maxWorkers=1' => exit 0, four passed and one skipped.",
+    "Heavy-run browser retry: node scripts/audio-budget.mjs --game rune-match && AUDIO_BUDGET_JSON=1 node node_modules/vitest/vitest.mjs run tests/audio-budget.test.ts --maxWorkers=1 => both commands exited 0, five tests passed.",
+    "Heavy-run slow-decode probe, sequenced after the live gate: Node module-load hook added a 1,700 ms Ogg decode delay and an isolated output path => exit 1 at the decode deadline, no JSON.",
+    "Heavy-run Vitest with three in-memory JSON fixtures => each exited 1 on its expected assertion.",
+    "git diff --check on the audio phase; node_modules/.bin/prettier --check scripts/audio-budget.mjs tests/audio-budget.test.ts; node measure/tools/generate.mjs --check; ./measure/doctor.sh --structural-only => pass."
+  ],
+  "changed_files": [
+    "measure/runs/audio_game_integration_20261014/review-a-p4-5a1da50.json",
+    "measure/runs/audio_game_integration_20261014/review-a-p4-5a1da50.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "unknown",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "The live gate passed in 0.7091 s, and the same script rejected the delayed decode window of 2.4125 s."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "The JSON gate passed live and rejected three invalid artifacts, while the slow-decode runtime proof remains a separate probe."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The remediation changes only the audio budget script, its test, and the Measure records."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "Both gates, the JSON checks, and the slow-decode probe produced direct exit results on the audited HEAD."
+    }
+  ]
+}

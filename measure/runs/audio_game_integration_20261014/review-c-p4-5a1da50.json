@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "role": "review-c",
+  "track": "audio_game_integration_20261014",
+  "phase": "Phase 4: Preload budget",
+  "phase_base_sha": "53ae856842ae14a63fb1b65a96edd1c8d6ce22e4",
+  "role_base_sha": "5a1da5011f31008102f8563b1f03f2891c23f99b",
+  "audited_head_sha": "5a1da5011f31008102f8563b1f03f2891c23f99b",
+  "status": "fail",
+  "summary": "The new before-launch marker captures the opening file, but the retained after-canvas gate still rejects valid opening playback.",
+  "blocking_findings": [
+    "F4 [Blocker] review-c: scripts/audio-budget.mjs:224-235,346-365 now finds the opening file after the pre-Start marker. The final fileEffect gate still discards events before the canvas click and counts later music as synth. A valid opening pop.ogg followed by music can still exit 1. Use the filtered before-launch effect for the final gate."
+  ],
+  "nonblocking_findings": [],
+  "evidence": [
+    "F4 remains open. A browserless check of the exact committed predicate rejects pop.ogg before the canvas marker followed by music. It accepts the same file after the canvas marker.",
+    "src/games/rune-match/view2d/game.ts:115-119,182-183 plays the opening effect during scene creation. src/apk3d/audio/bus.ts:396-411 schedules music through oscillators, which scripts/audio-budget.mjs:189-192 records as synth events.",
+    "scripts/audio-budget.mjs:339-344 checks decodeSeconds separately from seconds. Lines 368-379 write bytes, files, seconds, decodeSeconds, decoded, fileEffect, effectMarker, and firstEffect.",
+    "The initial ignored JSON read showed 79319 bytes, 6 files, 0.7052000000476837 s network time, and 0.7097000000476837 s decode time. It reported decoded 6, fileEffect true, effectMarker before-launch, and firstEffect pop.ogg.",
+    "plan.md:721-731 and green-p4-r2.log:20 agree on the recorded Green run. The observed ignored artifact had different timings but the same fields and counts; it was absent on a later stat check.",
+    "The Phase 4 strategy and exact audio diff cover the measurement contract. This run reports no new late findings; F4 is the previously routed wrong-result defect."
+  ],
+  "commands": [
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run tests/audio-budget.test.ts --maxWorkers=1' — exit 0; 4 passed and the JSON case skipped.",
+    "Browserless Node probe of scripts/audio-budget.mjs:346-365 — opening file before the canvas marker plus later synth was rejected; opening file after the canvas marker passed.",
+    "git diff --check d15af2a..5a1da50 -- scripts/audio-budget.mjs tests/audio-budget.test.ts measure/tracks/audio_game_integration_20261014/plan.md — exit 0.",
+    "git rev-parse HEAD — 5a1da5011f31008102f8563b1f03f2891c23f99b. The working copies of the reviewed paths match this commit."
+  ],
+  "changed_files": [
+    "scripts/audio-budget.mjs",
+    "tests/audio-budget.test.ts",
+    "measure/tracks/audio_game_integration_20261014/plan.md"
+  ],
+  "test_strategy_violations": [
+    "F4: The final playback gate can ignore a valid opening file and judge an unrelated music event instead."
+  ],
+  "live_contract_violations": [
+    "F4: A user running the budget CLI can receive exit 1 and no result even when the opening effect played from a decoded file."
+  ],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "contract_applicability": "applicable",
+  "retry_recommendation": "escalate_human",
+  "confidence": "high",
+  "route": "unknown",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 3,
+      "evidence": "The exact gate at scripts/audio-budget.mjs:346-365 rejects the valid opening file in the browserless probe."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 3,
+      "evidence": "tests/audio-budget.test.ts:161-167 checks JSON fields but does not exercise the gate with an opening file before the canvas click."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The audio phase diff is limited to the budget script, budget test, and track plan."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "The wrapped test passed, and the browserless probe isolated the retained playback gate."
+    }
+  ]
+}

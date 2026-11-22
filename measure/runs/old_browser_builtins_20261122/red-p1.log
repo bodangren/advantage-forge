@@ -1,0 +1,29 @@
+MEASURE_AGENT_RESULT
+role: measure-mid-red
+track: old_browser_builtins_20261122
+phase: Phase 1: Red
+tasks: T1, T2, T3
+phase_base_sha: 3f6a19214994e7ac05a79a8fa7faeded684267b7
+role_base_sha: 3f6a19214994e7ac05a79a8fa7faeded684267b7
+resulting_head_sha: 25612156b6266332892d964178c3a5dde1fe18a8
+commits:
+- 3d7db18f64c2c58ed74fd28784a9252dd81b95e3 measure(old_browser_builtins): Phase 1 Red tests T1-T3 (tests/old-browser/deep-copy.test.ts, tests/old-browser/index-math.test.ts, tests/apk3d/no-unpolyfilled-builtins.test.ts)
+- efc0e60088fd40880bfe11a1c8569c990b227b5e measure(old_browser_builtins): Phase 1 Red evidence T1-T3 (plan.md records + metadata.json status new -> in_progress)
+- 25612156b6266332892d964178c3a5dde1fe18a8 measure(old_browser_builtins): track in progress registry and status (measure/tracks.md marker, measure/generated/status.md regenerate)
+production_source_edits: none (src/ untouched)
+tests:
+- tests/old-browser/deep-copy.test.ts: exit 1 (3 failed inside the case on absent src/apk3d/sim/copy.js, 1 passed: state-type pin over all 29 games). Log: measure/runs/old_browser_builtins_20261122/red-deep-copy.log. Type sets also in red-deep-copy-types.log.
+- tests/old-browser/index-math.test.ts: exit 1 (cases 1-2 fail inside the case on absent src/apk3d/sim/index-math.js; case 3 fails naming all nine lines, 18 entries). Log: measure/runs/old_browser_builtins_20261122/red-index-math.log.
+- tests/apk3d/no-unpolyfilled-builtins.test.ts SCAN_WIDE=1: exit 1 with 44 hits (35 structuredClone, 8 array .at(, 1 .findLastIndex, 0 Object.hasOwn; reporter: expected [ …(44) ] to deeply equal []; controls 1 passed). Log: measure/runs/old_browser_builtins_20261122/red-scan.log.
+- tests/apk3d/no-unpolyfilled-builtins.test.ts default: exit 0 (1 file, 2 passed, zero hits, SCAN_ROOT on src/apk3d/audio/). Log: measure/runs/old_browser_builtins_20261122/red-scan-default.log.
+- prettier --check on all five new/changed text files: exit 0 (measure/tracks.md and measure/generated/status.md were already prettier-unclean at baseline HEAD and were left unformatted).
+- node measure/tools/generate.mjs --check: exit 0 (after regenerate).
+- ./measure/doctor.sh --structural-only: exit 0 (after metadata.json status -> in_progress and tracks.md marker -> [~]).
+remaining_failures:
+- tests/old-browser/deep-copy.test.ts cases 2-4 (need src/apk3d/sim/copy.ts, Green T4)
+- tests/old-browser/index-math.test.ts cases 1-2 (need src/apk3d/sim/index-math.ts, Green T4) and case 3 (needs the 44 call-site replacements, Green T5)
+- tests/apk3d/no-unpolyfilled-builtins.test.ts SCAN_WIDE=1 mode (needs the 44 replacements and flag removal, Green T5)
+notes:
+- The one-pass stripper needs a regex-literal state: the /"/ literal in src/storytime/book-pictures.ts would otherwise open a string that swallows the .at( call at line 4558. With it the wide run reports the specified 44 hits with source-matching lines. The 19-label pattern list, six control rows, stripCommentsFirst witness, exclusion rows with rot check, and ROOT-from-file-URL resolution are per AC3.
+- No unrelated user work was touched; dirty paths outside the track (bench/, assets/, other measure/runs/) were left alone.
+END_MEASURE_AGENT_RESULT

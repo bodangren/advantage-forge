@@ -1,0 +1,53 @@
+
+ RUN  v5.1.1 /home/daniebo/Desktop/advantage-forge
+
+ ❯ tests/old-browser/deep-copy.test.ts (6 tests | 2 failed) 48ms
+   × sparse arrays keep their length and their holes (review r1 A-F1, C-F1) 4ms
+   × an own __proto__ key stays an own data key (review r1 A-F1, C-F1) 0ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/old-browser/deep-copy.test.ts > sparse arrays keep their length and their holes (review r1 A-F1, C-F1)
+AssertionError: expected 2 to be 4 // Object.is equality
+
+- Expected
++ Received
+
+- 4
++ 2
+
+ ❯ tests/old-browser/deep-copy.test.ts:247:23
+    245|   sparse[1] = 'b';
+    246|   const copy = deepCopy(sparse);
+    247|   expect(copy.length).toBe(4);
+       |                       ^
+    248|   expect(0 in copy).toBe(false);
+    249|   expect(1 in copy).toBe(true);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/old-browser/deep-copy.test.ts > an own __proto__ key stays an own data key (review r1 A-F1, C-F1)
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/old-browser/deep-copy.test.ts:263:67
+    261|   const copy = deepCopy(source);
+    262|   expect(Object.getPrototypeOf(copy)).toBe(Object.prototype);
+    263|   expect(Object.prototype.hasOwnProperty.call(copy, '__proto__')).toBe…
+       |                                                                   ^
+    264|   expect(Object.getOwnPropertyDescriptor(copy, '__proto__')).toMatchOb…
+    265|     value: 1,
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed | 2 passed (3)
+      Tests  2 failed | 11 passed (13)
+   Start at  02:21:17
+   Duration  834ms (tests 36%, transform 32%, import 30%, worker 2%)
+

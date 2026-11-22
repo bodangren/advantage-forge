@@ -1,0 +1,37 @@
+MEASURE_AGENT_RESULT
+status: PASS
+phase: Phase 2 Green
+track: old_browser_builtins_20261122
+phase_base_sha: 3f6a19214994e7ac05a79a8fa7faeded684267b7
+role_base_sha: 25612156b6266332892d964178c3a5dde1fe18a8
+final_green_head: 0d8fc7def7b180092fe23ba51cbbfa55a6004991
+dispositions: none
+tasks_flipped_to_x: T4@c8ddd88340749e89baa3320ad04328559c80cd86; T5@1dcc1043890d4067cb2c1cd2b843e456c1e9ee56; T6@1dcc1043890d4067cb2c1cd2b843e456c1e9ee56
+tasks_flipped_to_b: none
+implementation_commits: c8ddd88340749e89baa3320ad04328559c80cd86 (T4 source); 1dcc1043890d4067cb2c1cd2b843e456c1e9ee56 (T5 source); 0d8fc7def7b180092fe23ba51cbbfa55a6004991 (plan evidence and regenerated facts)
+new_files_added: src/apk3d/sim/copy.ts; src/apk3d/sim/index-math.ts
+new_test_files_added: none (committed Red tests remain immutable)
+changed_test_file: tests/apk3d/no-unpolyfilled-builtins.test.ts (flag path removed, strip and controls preserved)
+
+Targeted Red command, rerun before implementation:
+HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts --maxWorkers=1'
+Exit 1. Reporter: Test Files 2 failed | 1 passed (3); Tests 6 failed | 3 passed (9). The failures are the three deep-copy cases that import the missing copy module and all three index-math cases. The state-types case and the two scan cases pass.
+
+Green gates:
+- Three-file command through the heavy runner: exit 0. Test Files 3 passed (3); Tests 9 passed (9).
+- T6 standalone scan over src/ with no flag through the heavy runner: exit 0. Test Files 1 passed (1); Tests 2 passed (2); zero hits.
+- AC4 command through the heavy runner: exit 0. Test Files 228 passed (228); Tests 3376 passed | 2 skipped (3378). The run tested HEAD b2d87dbe. An earlier attempt at the same source exited 1 only because the parallel audio track had not yet produced out/audio-budget/rune-match.json. No old-browser file changed between the two runs. No artifact was fabricated by this role.
+- T4 imports gate through the heavy runner: exit 0. Test Files 1 passed (1); Tests 4 passed (4).
+- tsc --noEmit: exit 2, 52 error lines against a measured baseline of 57 at this revision. Zero errors in changed files. The five removed errors are "Cannot find module" for the two new helpers. The remaining deep-copy.test.ts:101 TS2769 error predates this phase.
+- prettier --check: exit 0 on the two new helper modules, the barrel and the edited scan test. On all changed files, 35 files fail, and the same 35 files fail at HEAD. This role adds zero new prettier failures and reformats no baseline file for style only.
+- node measure/tools/generate.mjs --check: exit 0 after regeneration. measure/generated was clean before regeneration.
+- ./measure/doctor.sh --structural-only: exit 0.
+
+Counts: 44 replacements across 37 files in commit 1dcc1043: 35 deepCopy calls across 30 files; 8 atIndex calls across 5 files; 1 lastIndexWhere call in 1 file. A grep of src/ finds no structuredClone( and no .findLastIndex(. The scan file has no SCAN_WIDE text.
+
+Handoff to review roles:
+- No task is deferred to a human. Do not move the track to archive. Do not update final closeout metadata.
+- The Phase 3 browser check T7 and Phase 4 gates T8 remain unstarted.
+- Audit the 44 replacement sites for value and reference equality; the AC4 run passes all game replay tests.
+- Audit the prettier baseline note. The 35 changed files were already unformatted at HEAD before this phase.
+END_MEASURE_AGENT_RESULT

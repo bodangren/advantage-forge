@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "role": "measure-review-b-security",
+  "track": "audio_game_integration_20261014",
+  "phase": "Phase 4: Preload budget",
+  "phase_base_sha": "53ae856842ae14a63fb1b65a96edd1c8d6ce22e4",
+  "baseline_sha": "53ae856842ae14a63fb1b65a96edd1c8d6ce22e4",
+  "role_base_sha": "d15af2a205c5e1e612b1dc4f59060466fdd28fc8",
+  "audited_head_sha": "5a1da5011f31008102f8563b1f03f2891c23f99b",
+  "security_applicability": "applicable",
+  "route": "kimi-code-plan-cn/kimi-for-coding",
+  "status": "pass",
+  "summary": "Pass on Phase 4 re-review r3 with no blocking and no nonblocking finding. The audio delta d15af2a2..5a1da50 is the Red r2 cases 03b184b5, the Green remediation 9147326b (scripts/audio-budget.mjs +81/-... adding a decode deadline and a before-launch effect marker), and the plan evidence 082ac19c; old_browser_builtins commits in the range are out of scope, and the working-tree script equals the audited script. The T7g2 change extends the page-realm observer — a Response.prototype.arrayBuffer wrapper that maps decode inputs to filenames, decode timestamps, and a markAt marker before launch — and adds three gates: the decode window from first request to last decode must stay within 1.5 s, a file-backed Rune Match effect from the constant EFFECT_FILES set must occur after the marker, and the JSON records decodeSeconds, effectMarker, and firstEffect. Every r2 security property holds at this head: loopback-only server (--host 127.0.0.1 --strictPort on 5199), port collision fails fast (exit 1 in one second with the vite port-in-use log, decoy started and stopped inside one heavy-run call, nothing listening afterwards), SIGTERM exits 143 and SIGINT exits 130 with the browser and vite child stopped and the port free, --game handling is unchanged (--help exits 0; traversal, missing-value, and equals forms exit 1 with one usage line before any spawn or write), the init script stays confined to the ephemeral headless page realm (no stub, no product file touched, browser closed on every exit path), and the only write is the hardcoded out/audio-budget/rune-match.json. The real run passes all new gates within budget and the gated Red test passes 5 of 5.",
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "evidence": [
+    "Provenance: `git cat-file -t 5a1da5011f31008102f8563b1f03f2891c23f99b` printed commit. `git merge-base --is-ancestor 5a1da50 HEAD` exited 0 and `git diff 5a1da50 -- scripts/audio-budget.mjs` is empty, so the tested script equals the audited script. `git merge-base --is-ancestor d15af2a2 5a1da50` exited 0, so the round-2 head is the delta base, and phase_base_sha 53ae8568 is ancestral. role_base_sha is the round-2 head d15af2a205c5e1e612b1dc4f59060466fdd28fc8. The delta holds 03b184b5 (Red r2 test cases), f7d3187e (Red r2 record), 9147326b (Green, scripts/audio-budget.mjs only), 082ac19c (plan evidence); old_browser_builtins commits 6b4f8367, 6a65f579, 7d5c7129, 937685c6, 1c6f3831, and 5a1da50 are out of scope.",
+    "Delta review of 9147326b: the new Response.prototype.arrayBuffer wrapper returns the original bytes and only records a WeakMap from the buffer to the audio filename; decodeAudioData and both start wrappers remain observers that return the original results. EFFECT_FILES is a hardcoded constant of the six Rune Match entries, so no page input enters a gate decision. No new process, network target, or file path appears: spawn, BASE, PROBE_URL, and OUT are unchanged, and the only writes stay mkdirSync plus writeFileSync on the hardcoded OUT. The markAt evaluate runs before the start click so the effect gate cannot credit a pre-launch sound.",
+    "Loopback and fast collision: the spawn still passes --host 127.0.0.1 --port 5199 --strictPort. With a decoy HTTP server holding 127.0.0.1:5199, started and stopped inside one heavy-run call per the PM rule, the run exits 1 in one second with 'vite exited before it answered (1): Port 5199 is already in use' at audio-budget.mjs:103, the decoy waits 143 inside the same call, and `ss -ltn | grep 5199` afterwards finds nothing (exit 1).",
+    "Signal cleanup: SIGTERM at 25 s gives exit-sigterm:143 and SIGINT gives exit-sigint:130, each closing the page mid-navigation, with `ss -ltn | grep 5199` finding nothing afterwards (exit 1) and no vite process from the run remaining.",
+    "CLI handling: --help prints the usage line on stdout and exits 0; `--game ../../../evil`, bare `--game`, and `--game=rune-match` each print one usage line on stderr and exit 1 with no stack, before the set file read, the pre-run rmSync, and spawn; the --game value still never enters a path because OUT stays hardcoded to out/audio-budget/rune-match.json.",
+    "Budget and gates at this head: the real run exits 0 and writes {bytes: 79319, files: 6, seconds: 0.7056, decodeSeconds: 0.7101, decoded: 6, fileEffect: true, effectMarker: 'before-launch', firstEffect: 'pop.ogg'}, inside the 100,000 byte and 1.5 s limits on both the network and decode windows; `AUDIO_BUDGET_JSON=1 node node_modules/vitest/vitest.mjs run tests/audio-budget.test.ts --maxWorkers=1` through the heavy runner passes 5 of 5, `ls out/audio-budget/` shows only rune-match.json, and `git status --short -- out scripts/audio-budget.mjs` is clean.",
+    "A2: the delta grep for published, draft, consent, and anonymi found no match, and the secret-surface grep for https?://, api keys, tokens, secrets, passwords, bearer, new URL, XMLHttpRequest, and WebSocket found no match on the audio delta. A6: the plan records Red r2 03b184b5 failing first and Green 9147326b with gate evidence, so no registry claim outruns the implementation.",
+    "Late-finding rule: round 3 raises no new finding; every re-checked property holds, so nothing moves to tech-debt. Re-review handling: no CONTEST item reached Review B and no earlier finding is kept."
+  ],
+  "commands": [
+    "git cat-file -t 5a1da5011f31008102f8563b1f03f2891c23f99b -> commit; git merge-base --is-ancestor 5a1da50 HEAD -> exit 0; git diff 5a1da50 -- scripts/audio-budget.mjs -> empty; git merge-base --is-ancestor d15af2a2 5a1da50 -> exit 0",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/audio-budget.mjs --help; node scripts/audio-budget.mjs --game ../../../evil; node scripts/audio-budget.mjs --game; node scripts/audio-budget.mjs --game=rune-match' -> exit-help:0, exit-traversal:1, exit-missing:1, exit-equals:1, each bad form one usage line, no stack",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node -e decoy-http-server & DECOY=$!; sleep 2; node scripts/audio-budget.mjs --game rune-match; kill $DECOY; wait $DECOY; ss -ltn | grep 5199' -> 'vite exited before it answered (1): Port 5199 is already in use' at audio-budget.mjs:103, exit-collision:1 elapsed:1s, decoy-wait:143, port-after:1 (decoy started and stopped inside the single heavy-run call)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/audio-budget.mjs --game rune-match & RUN=$!; sleep 25; kill -TERM $RUN; wait $RUN; ss -ltn | grep 5199' -> exit-sigterm:143, port-after-term:1",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/audio-budget.mjs --game rune-match & RUN=$!; sleep 25; kill -INT $RUN; wait $RUN; ss -ltn | grep 5199' -> exit-sigint:130, port-after-int:1",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/audio-budget.mjs --game rune-match' -> exit 0, {bytes: 79319, files: 6, seconds: 0.7056, decodeSeconds: 0.7101, decoded: 6, fileEffect: true, effectMarker: 'before-launch', firstEffect: 'pop.ogg'}",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'AUDIO_BUDGET_JSON=1 node node_modules/vitest/vitest.mjs run tests/audio-budget.test.ts --maxWorkers=1' -> 1 file passed, 5 of 5 tests passed",
+    "git diff d15af2a2..5a1da50 -- scripts/audio-budget.mjs tests/audio-budget.test.ts sounds demo src/apk3d/audio src/host | grep -niE 'https?://|api[_-]?key|token|secret|password|bearer|new URL|XMLHttpRequest|WebSocket' -> no match; same delta grep for published|draft|consent|anonymi -> no match (A2)"
+  ],
+  "changed_files": [
+    "measure/runs/audio_game_integration_20261014/review-b-p4-5a1da50.json",
+    "measure/runs/audio_game_integration_20261014/review-b-p4-5a1da50.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "The new decode-window and effect-marker gates pass on the real run (decodeSeconds 0.7101, firstEffect 'pop.ogg') and every r2 property — fast collision, signal exits, CLI rejection, loopback binding — reruns green at this head."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "Red r2 pins the new gates with failing-first evidence recorded in the plan, but process hygiene still rests on my ad hoc probes rather than committed tests."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "Green 9147326b changed only scripts/audio-budget.mjs; the Red changed only the budget test; the working tree equals the audited script."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "Every claim carries a command result, including the 1-second collision exit at audio-budget.mjs:103, the 130 and 143 signal exits, the 5-of-5 gated test, and the empty ss checks after each probe."
+    }
+  ]
+}

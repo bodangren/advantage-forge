@@ -1,0 +1,30 @@
+Phase base: 3f6a19214994e7ac05a79a8fa7faeded684267b7
+Role base and audited HEAD: 5a1da5011f31008102f8563b1f03f2891c23f99b
+The shared internal API applies. No public API, route, or UI change applies.
+
+HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts'
+Vitest reported three test files and 16 tests passed. The wrapper reported a missing /proc cmdline before Vitest ran.
+git rev-parse HEAD matched after the gate. The worktree had no tracked changes.
+
+F2 closed: both division cases and both nested index arguments report the expected built-in.
+F3 closed: the same-line union pair reports one hit. The allowed call alone reports none.
+F5 remains a nonblocking record issue. The plan records the decision to leave the strategy count unchanged.
+F6 is a new late finding for tech-debt, not a user-reachable wrong result. The doc comment overstates unsupported behavior.
+The Node probe confirmed that the copy keeps a class prototype and can keep methods. A cross-realm view copies as a zero-length view.
+
+Retain the detached release worktree, the shelf-sync worktree and branch, and wip/oct-skill-docs-20261023 for their owners. Leave the origin refs unchanged.
+
+MEASURE_AGENT_RESULT
+role: measure-review-c-ux-api
+status: complete
+track: old_browser_builtins_20261122
+phase: Phase 2: Green
+commits: none
+tests_run: three-file Vitest gate through heavy-run.sh (pass, 16 tests); independent F2 and F3 probes passed
+files_changed: review-c-5a1da50.json, review-c-5a1da50.log
+plan_updates: none
+known_failures: F5 strategy count and F6 doc wording are nonblocking
+handoff: F2 and F3 are closed. Send late finding F6 to tech debt only. No new user-reachable wrong result was found.
+END_MEASURE_AGENT_RESULT
+
+RESULT: PASS

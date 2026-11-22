@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: spec-review
+status: complete
+track: old_browser_builtins_20261122
+phase: track setup
+commits: none
+tests_run: read-only grep and repository inspection; no test suite run
+files_changed: measure/runs/old_browser_builtins_20261122/spec-review-e6027f5.json; measure/runs/old_browser_builtins_20261122/spec-review-e6027f5.log
+plan_updates: none
+known_failures: F5 Major scanner test gap; F6 Blocker T3 scan-copy root
+handoff: F1-F4 are withdrawn. Add scanner controls for URL strings before calls, template interpolations, and multiline calls. Define how the T3 temporary copy resolves the repository src/ root. Audited HEAD is e6027f509891a301c26eddbbf67fd044bc971729.
+END_MEASURE_AGENT_RESULT

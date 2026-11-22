@@ -1,0 +1,22 @@
+MEASURE_AGENT_RESULT
+role: measure-mid-red
+track: audio_game_integration_20261014
+phase: Phase 4: Preload budget
+task: T7r remediation round 1 Red
+phase_base_sha: 53ae856842ae14a63fb1b65a96edd1c8d6ce22e4
+role_base_sha: 0d8fc7def7b180092fe23ba51cbbfa55a6004991
+reviewed_head_sha: 0d8fc7def7b180092fe23ba51cbbfa55a6004991
+resulting_head_sha: fb653349bb3cd6da26861e308dfffb326fb6aa1d
+commits:
+- f0cbd2dbbf263fce82df3437fd8860fc4cf04cd1: measure(audio_game_integration): Phase 4 Red r1 gated JSON and CLI cases (tests/audio-budget.test.ts only)
+- fb653349bb3cd6da26861e308dfffb326fb6aa1d: measure(audio_game_integration): Phase 4 Red r1 plan record (plan.md only)
+tests:
+- default: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run tests/audio-budget.test.ts --maxWorkers=1' => exit 1, 5 collected, 1 failed (CLI case: --help exits 0, expected 1 to be +0), 3 passed, 1 skipped (JSON case skipped: run scripts/audio-budget.mjs, then AUDIO_BUDGET_JSON=1)
+- json_mode: AUDIO_BUDGET_JSON=1 node node_modules/vitest/vitest.mjs run tests/audio-budget.test.ts --maxWorkers=1 (against a temporary script-shaped {"bytes":79319,"files":6,"seconds":0.7} artifact, removed after the run) => exit 1, 5 collected, 2 failed (JSON case: rune-match decoded is a labeled number, expected 'undefined' to be 'number'; CLI case: --help exits 0, expected 1 to be +0), 3 passed
+failing_cases:
+- prints usage for --help and rejects a bad --game without a stack trace (fails in both modes: script throws with a stack trace and exits 1 on --help)
+- holds the Rune Match measurement of six decoded files within budget (fails in JSON mode: current script output holds no decoded/fileEffect fields)
+prettier: node_modules/.bin/prettier --check tests/audio-budget.test.ts exits 0
+notes: no src/ or scripts/ file edited; out/audio-budget/rune-match.json staging artifact removed after the JSON-mode run; out/ stays ignored; neighboring old_browser_builtins dirty paths untouched
+status: red_complete
+END_MEASURE_AGENT_RESULT

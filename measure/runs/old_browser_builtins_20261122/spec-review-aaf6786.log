@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: spec-review
+status: complete
+track: old_browser_builtins_20261122
+phase: track setup
+commits: none
+tests_run: read-only delta review; no test suite run
+files_changed: measure/runs/old_browser_builtins_20261122/spec-review-aaf6786.json; measure/runs/old_browser_builtins_20261122/spec-review-aaf6786.log
+plan_updates: none
+known_failures: none
+handoff: F7 is withdrawn. The default T3 scan stays audio-scoped for shared suite runs; SCAN_WIDE=1 opts into the 44-hit Red run. T5 removes the flag and makes src/ unconditional. Audited HEAD is aaf678693732984a6adbc78af1157610e8225fd9.
+END_MEASURE_AGENT_RESULT

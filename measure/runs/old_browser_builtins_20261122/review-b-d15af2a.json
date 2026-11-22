@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "role": "review-b",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 2: Green",
+  "round": "re-review r2",
+  "baseline_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "phase_base_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "role_base_sha": "d15af2a205c5e1e612b1dc4f59060466fdd28fc8",
+  "audited_head_sha": "d15af2a205c5e1e612b1dc4f59060466fdd28fc8",
+  "security_applicability": "applicable",
+  "status": "pass",
+  "summary": "Re-review r2 of the T5r remediation (9440c572). The __proto__ finding is fixed: copy.ts now copies every own key via Object.defineProperty, and probes confirm own __proto__ keys survive as data, clone prototypes stay clean, Object.prototype and Array.prototype are untouched, sparse arrays keep length and holes, cycles still terminate, getters are read once per copy, and the depth/DoS profile is unchanged (deepCopy survives deeper than native structuredClone). The three-file gate is green with 13 tests, including new failing-first pins for the remediated items. Four earlier nonblocking findings (symbol keys, RegExp clones, non-enumerable properties, cross-realm flattening) are kept, all contract-out and unreachable in the pinned plain-data sim states.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F2 kept | CONTEST kept: Symbol-keyed own properties are still silently dropped (probe R15); the spec contract (AC1 rule 3) covers own string keys only, and no pinned sim state uses symbol keys, so the divergence from structuredClone is documented but not remediated.",
+    "F3 kept | CONTEST kept: RegExp values still copy into objects that pass instanceof RegExp but throw TypeError on exec (src/apk3d/sim/copy.ts:68-73 generic branch); no sim state holds a RegExp per the T1 type pin, so the latent crash is unreachable today.",
+    "F4 kept | CONTEST kept: Non-enumerable own properties are still dropped (Object.keys at src/apk3d/sim/copy.ts:76 is enumerable-only); divergence from structuredClone, unreachable in the pinned plain-data sim states.",
+    "F5 kept | CONTEST kept: Cross-realm Map/Set/Date/Promise values still silently flatten to {} because the instanceof guards at src/apk3d/sim/copy.ts:26-51 fail across realms; single-realm codebase today."
+  ],
+  "evidence": [
+    "F1 withdrawn: r1 finding (own __proto__ data key became the clone prototype) verified fixed; copy.ts:76-83 copies every own key via Object.defineProperty, and probes R4/R5/R6/R9 confirm the key survives as own data, clone prototypes stay clean, and Object.prototype/Array.prototype are untouched. Committed failing-first pin at tests/old-browser/deep-copy.test.ts:255-264 is green.",
+    "git rev-parse HEAD = d15af2a205c5e1e612b1dc4f59060466fdd28fc8 at audit start and end; git status --short -- src/ tests/ is empty; no tracked file modified during the audit.",
+    "Three-file gate through heavy-run.sh: node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts -> Test Files 3 passed (3), Tests 13 passed (13), exit 0 (9 tests at r1; T5r added failing-first sparse and __proto__ cases, now green).",
+    "Probe R1 self-cycle c.self===c true; R2 Map cycle c.get('arr')[0]===c true; R7 getter read once per copy; no infinite recursion after the defineProperty rewrite.",
+    "Probe R3 depth 50000 throws RangeError, identical to r1; the r1 depth table showed native structuredClone throws at depth 2000 while deepCopy survives to 8000. No denial-of-service regression.",
+    "Probe R8 sparse array keeps length 100 and holes; R9 array with own __proto__ key keeps elements, keeps the own key, and keeps Array.prototype clean; R10 trailing holes preserved; R11 null prototype preserved; R12 frozen source unchanged; R13 two buffer views share one new buffer; R14 TypeError for all five uncopyables; R16/R17 index-math parity fuzz clean.",
+    "git show 9440c572: the 33 call-site changes merge the two barrel imports into one import statement (sampled rune-match/core/sim.ts); no expression change; the scan test still reports zero hits.",
+    "A2 not applicable: no draft-to-published path in this diff. A6: no overstatement; the T5r plan claims for sparse arrays and own __proto__ keys are backed by committed failing-first tests green at d15af2a."
+  ],
+  "commands": [
+    "git rev-parse HEAD && git status --short -- src/ tests/ && git log --oneline 3f6a19214994e7ac05a79a8fa7faeded684267b7..d15af2a205c5e1e612b1dc4f59060466fdd28fc8",
+    "git show --stat 9440c572 && git show 9440c572 -- src/games/rune-match/core/sim.ts src/apk3d/sim/index.ts",
+    "node_modules/.bin/esbuild src/apk3d/sim/copy.ts --format=esm --outfile=measure/runs/old_browser_builtins_20261122/probe-copy.mjs",
+    "node_modules/.bin/esbuild src/apk3d/sim/index-math.ts --format=esm --outfile=measure/runs/old_browser_builtins_20261122/probe-index-math.mjs",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node measure/runs/old_browser_builtins_20261122/probe-copy-run-r2.mjs'",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts'",
+    "grep -n '__proto__\\|sparse\\|hole\\|defineProperty' tests/old-browser/deep-copy.test.ts"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/review-b-d15af2a.json",
+    "measure/runs/old_browser_builtins_20261122/review-b-d15af2a.log",
+    "measure/runs/old_browser_builtins_20261122/review-b-d15af2a-notes.md",
+    "measure/runs/old_browser_builtins_20261122/probe-copy-run-r2.mjs",
+    "measure/runs/old_browser_builtins_20261122/probe-copy.mjs",
+    "measure/runs/old_browser_builtins_20261122/probe-index-math.mjs"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "escalate_human",
+  "confidence": "high",
+  "route": "kimi-code-plan-cn/kimi-for-coding",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "Probes R1-R17 against the rewritten copy.ts confirm the remediation fixes the __proto__ and sparse-array divergences with no regression to cycles, getters, buffers, or depth; remaining divergences are outside the spec contract and unreachable (src/apk3d/sim/copy.ts:68-83)."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 5,
+      "evidence": "The remediated items each gained a failing-first committed test (tests/old-browser/deep-copy.test.ts:240 sparse arrays, :255 own __proto__ key) that is green at d15af2a; the three-file gate reports 13 passed tests."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "git show --stat 9440c572 changes exactly copy.ts, index-math.ts doc lines, and the 33 planned call-site import merges; audio commits in range were untouched."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "Every claim cites a probe line from probe-copy-run-r2.mjs, the gate result (3 files/13 tests), or a file:line (copy.ts:76-83, deep-copy.test.ts:255-264)."
+    }
+  ]
+}

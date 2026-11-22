@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "role": "review-a",
+  "track": "audio_game_integration_20261014",
+  "phase": "Phase 3: File playback in the AudioBus",
+  "baseline_sha": "af4e57aff730b1cf8ee9c716802920699f1eaaac",
+  "phase_base_sha": "af4e57aff730b1cf8ee9c716802920699f1eaaac",
+  "role_base_sha": "8a08830554d8e6e88aeebdfa0af0523b205ac2f0",
+  "audited_head_sha": "aaf678693732984a6adbc78af1157610e8225fd9",
+  "status": "pass",
+  "summary": "The prior PASS remains valid at the requested HEAD. No non-Measure files changed since a414b40, and the eight-file suite passes with the expected two TD-44 skips. F2 remains recorded as a late, nonblocking finding.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F2 [Nit] review-a: tests/apk3d/no-unpolyfilled-builtins.test.ts:22-29 strips line comments before quoted strings. A line such as `const url = \"https://example.test\"; Object.hasOwn(events, name);` is truncated at the URL's `//`, so the scan misses the unsupported call. This is a late test-tool finding with no current user-reachable product defect; record it as tech debt."
+  ],
+  "evidence": [
+    "F1 withdrawn: no code changed after a414b40; the hasOwn helper and its guards remain in bus.ts requestFile, useSoundFiles, and isCurrent, and chibiPreload. The inherited-remap test still passes in the eight-file run.",
+    "The requested command `git diff --stat a414b40604bb6bc1cecc65605b7ae5e59789a541 aaf678693732984a6adbc78af1157610e8225fd9 -- . ':!measure'` produced no output.",
+    "The full a414b40..aaf6786 name-status diff contains only measure paths; later plan and debt edits cannot change the reviewed runtime.",
+    "The eight-file heavy-run passed: 8 files, 61 passed, 2 skipped. The skipped tests are the TD-44 pins.",
+    "F2 remains recorded as a late, nonblocking test-tool finding. The scan can miss a built-in call after a URL string because its comment stripping runs before string stripping.",
+    "HEAD equals audited_head_sha aaf678693732984a6adbc78af1157610e8225fd9."
+  ],
+  "commands": [
+    "git rev-parse HEAD => aaf678693732984a6adbc78af1157610e8225fd9",
+    "git rev-parse aaf678693732984a6adbc78af1157610e8225fd9 => aaf678693732984a6adbc78af1157610e8225fd9",
+    "git diff --stat a414b40604bb6bc1cecc65605b7ae5e59789a541 aaf678693732984a6adbc78af1157610e8225fd9 -- . ':!measure' => no output",
+    "git diff --name-status a414b40604bb6bc1cecc65605b7ae5e59789a541 aaf678693732984a6adbc78af1157610e8225fd9 => changed paths are under measure/ only",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-files.test.ts tests/apk3d/audio-files.adversarial.test.ts tests/apk3d/audio-files.adversarial-r2.test.ts tests/apk3d/audio-wiring.test.ts tests/apk3d/audio-wiring.adversarial.test.ts tests/apk3d/imports.test.ts tests/apk3d/audio-files.adversarial-r3.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts' => exit 0; 8 files; 61 passed; 2 skipped"
+  ],
+  "changed_files": [
+    "measure/runs/audio_game_integration_20261014/review-a-aaf6786.json",
+    "measure/runs/audio_game_integration_20261014/review-a-aaf6786.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "openai/gpt-6-luna#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "No non-Measure files changed after a414b40, and the own-key guards plus inherited-remap test remain unchanged."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "The eight-file heavy-run passed 61 tests and 2 TD-44 skips; the scanner's previously reported false negative remains."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The a414b40..aaf6786 diff outside measure/ is empty."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "The exact non-Measure diff command returned no output, HEAD matches the target, and the requested heavy-run passed."
+    }
+  ]
+}

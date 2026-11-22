@@ -1,0 +1,6 @@
+Symbol key: got=[plain-object, string] want=[plain-object, string, symbol-key] -> FAIL (gap escapes old visitor)
+non-enumerable property: got=[plain-object, string] want=[non-enumerable, number, plain-object, string] -> FAIL (gap escapes old visitor)
+getter property: got=[plain-object, string] want=[accessor, plain-object] -> FAIL (gap escapes old visitor)
+RegExp value: got=[other:[object RegExp], plain-object] want=[other:[object RegExp], plain-object] -> PASS
+class instance: got=[other:[object Object], plain-object] want=[other:[object Object], plain-object] -> PASS
+old visitor: 3 of 5 new expectations fail

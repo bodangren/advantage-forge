@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "role": "review-a",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 2: Green",
+  "baseline_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "phase_base_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "role_base_sha": "d15af2a205c5e1e612b1dc4f59060466fdd28fc8",
+  "audited_head_sha": "d15af2a205c5e1e612b1dc4f59060466fdd28fc8",
+  "status": "fail",
+  "summary": "Both Vitest gates passed. The F1 clone defects and the F4 TypeScript diagnostic are fixed. F2 and F3 remain open in the revised tests.",
+  "blocking_findings": [
+    "F2 [Blocker] review-a: The scanner still misses unsupported calls in the changed lexical rules at tests/apk3d/no-unpolyfilled-builtins.test.ts:103-138,224-243. It strips `getOrigin() / structuredClone(v) / 2` as a regex. It misses one-argument calls such as `rows.at([0, 1][0])` and `rows.at(one(two(three())))`. The changed exclusion at lines 308-321 also hides `set.union(other)` beside the permitted `box.union(b)` on the same line. Match balanced arguments and distinguish an expression from a control header. Exclude one matched call instance, not all hits of its label on the line. User reachability: no current product hit; the source gate can miss a regression.",
+    "F3 [Blocker] review-a: tests/old-browser/index-math.test.ts:112-123 still checks counts of text in each file. The site check passes when the real Storytime version helper is removed and its exact text remains in a comment. The breakage loop at lines 140-145 also replaces the same first match for both identical Spellweavers sites. Require a real call at each named site and mutate each distinct occurrence independently. User reachability: no current product defect; the test can miss an absent replacement."
+  ],
+  "nonblocking_findings": [
+    "F8 [Nit] review-a: Late finding, not user-reachable. The edited historical notes at plan.md:173-177,206-209 still misstate TS2769. The original Red commit 3d7db18f introduced the error. The original Green run retained it. The note that this run had no error in any changed file is false for the full phase."
+  ],
+  "evidence": [
+    "git rev-parse HEAD matched audited_head_sha at role start.",
+    "F1 closed: the prior two fixtures and a nested own-key fixture now match native cloning. The Red log records fail-first results for the two new tests.",
+    "The AST comparison preserved receivers, arguments, and call order at all 44 replacements in 36 source files. All 34 changed game files have one simulation barrel import.",
+    "All 29 production snapshots and Griffin resume passed an independent copy check with the global structuredClone absent.",
+    "The TypeScript AST scan found zero non-excluded target calls in 566 tracked, non-generated source files. The build-graph database had no nodes table.",
+    "The in-memory TypeScript import scan found 212 direct barrel dependents and 447 transitive dependents across the three changed modules.",
+    "The targeted Vitest command exited 0 with three files and 13 tests passed.",
+    "AC4 exited 0 with 228 files passed, 3380 tests passed, and three skipped. The reporter matches T5r's record at 9440c572.",
+    "F4 diagnostic closed: tsc exited 2 with 51 baseline diagnostics and none in a changed file. The phase-base count is 51.",
+    "Green changed no test after Red commit 64ddb5e9.",
+    "The six original controls and the remediation controls pass. Removing the Object.hasOwn pattern now fails the control. An empty src fixture fails on stale exclusions.",
+    "All nine actual call deletions fail individually. Adding the removed Storytime call text back in a comment makes that case pass.",
+    "The original scanner fixtures now report their expected hits. The remediated scanner still hides division after a call or index expression and same-label Set calls at an exclusion.",
+    "The complete in-memory source scan passed with an added set.union(other) at src/render/page.ts:263. It failed with structuredClone(value) added at that location instead.",
+    "The generator, structural doctor, and focused Prettier check each exited 0. The 35 Green remediation source paths have the same 32 Prettier failures before and after.",
+    "The release and shelf-sync worktrees, the wip/oct-skill-docs-20261023 branch, and origin refs remain untouched."
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "git diff 3f6a19214994e7ac05a79a8fa7faeded684267b7..d15af2a205c5e1e612b1dc4f59060466fdd28fc8",
+    "git diff 0d8fc7d..d15af2a -- src tests measure/tracks/old_browser_builtins_20261122",
+    "git diff --name-status 64ddb5e9..d15af2a -- tests/apk3d/no-unpolyfilled-builtins.test.ts tests/old-browser",
+    "build-graph callers measure/graph.db deepCopy; build-graph deps measure/graph.db atIndex",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts --maxWorkers=1'",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts'",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/typescript/bin/tsc --noEmit --pretty false'",
+    "node measure/tools/generate.mjs --check; ./measure/doctor.sh --structural-only",
+    "node_modules/.bin/prettier --check measure/tracks/old_browser_builtins_20261122/plan.md tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts src/apk3d/sim/{copy,index-math,index}.ts"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/review-a-d15af2a.json",
+    "measure/runs/old_browser_builtins_20261122/review-a-d15af2a.log"
+  ],
+  "test_strategy_violations": [
+    "The A4 defense at test-strategy.md:343 still accepts a missing site when its text remains in a comment.",
+    "The A7 defense at test-strategy.md:346 does not detect an exclusion that hides two hits with one label."
+  ],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "retry_implementation",
+  "confidence": "high",
+  "route": "unknown",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 3,
+      "evidence": "All 29 snapshots pass the native comparison, but tests/apk3d/no-unpolyfilled-builtins.test.ts:308-321 hides a second union call on an excluded line."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 3,
+      "evidence": "The F1 cases fail before the fix, but tests/old-browser/index-math.test.ts:117 counts text in comments as a call."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The old-browser commits in 0d8fc7d..d15af2a change only the remediation code, tests, and records."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 3,
+      "evidence": "Both Vitest reporters match the current plan evidence, but git blame contradicts the historical diagnostic attribution at plan.md:176."
+    }
+  ]
+}
