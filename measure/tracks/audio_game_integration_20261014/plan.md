@@ -372,6 +372,35 @@ Files this track touches:
     are clean. `git diff --check` exits 0. No new file entered the implementation commit.
   - dispositions: F1=FIX; F2=FIX; C-F1=FIX
 
+  - Adversarial evidence (1e610cdb): `tests/apk3d/audio-files.adversarial.test.ts` (16 cases) and
+    `tests/apk3d/audio-wiring.adversarial.test.ts` (8 cases) attack the Phase 3 edges the reviews
+    left open: odd `canPlayType` answers (`no`, whitespace, both `maybe`), unlock before the map,
+    play before unlock, double `useSoundFiles` and map swaps mid-flight, a base without a trailing
+    slash, a fetch that resolves or rejects after `dispose()`, play during a pending decode with a
+    later decode failure, preload of unmapped and duplicate names, and the unlock pulse when
+    `createBuffer` throws. The wiring file also pins the host-list parser against computed keys,
+    nested SFX braces, sprite plays, and comment- or string-hidden play calls, and requires a
+    literal wire list in all 29 hosts. Targeted command:
+    `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-files.adversarial.test.ts tests/apk3d/audio-wiring.adversarial.test.ts'`
+    exits 1 with 3 failed and 21 passed (24). The three failing cases pin real defects; the result
+    is `adversarial-p3-1e610cdb.json`, retry recommendation `retry_implementation`.
+    - F1 [Major] `src/apk3d/audio/bus.ts` `useSoundFiles` does not clear the per-event file state:
+      a decoded buffer survives `useSoundFiles(null)` (and a swap to a map without the event), so
+      the cleared event still plays its file. This contradicts the method contract ("clears them
+      with null so every event uses the synth recipe") and AC4 rule 6. Green: clear `buffers`,
+      `pendingDecode`, and `loading` when the map changes.
+    - F2 [Minor] `unlock()` throws when `createBuffer` throws (older engines), so the gesture
+      handler breaks and the context never resumes. Green: guard the silent pulse with a try/catch
+      and keep `resume()`.
+    - F3 [Minor] `tests/apk3d/audio-wiring.test.ts` case 6 counts `audio.play` calls inside
+      comments and strings as played events. No host triggers it today (the raw-vs-stripped guard
+      case passes), but a commented-out play would force a useless preload entry. Green: strip
+      comments and strings before the extraction, and mirror the same rules in the `playedEventsOf`
+      copy of the adversarial file.
+    - A4 probe: a fixture track with a `completed` status and all-`[~]` markers fails the doctor
+      with "completed track has an unchecked task"; the marker check is not vacuous. A5 re-run:
+      the three original files still pass 21 of 21.
+
 ## Phase 4: Preload budget
 
 - [ ] T7 Measure: Add `scripts/audio-budget.mjs`. It serves the demo with vite, opens one game in
