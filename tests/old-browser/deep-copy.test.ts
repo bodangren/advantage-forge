@@ -98,7 +98,8 @@ function kindsOf(value: unknown): Set<string> {
     const proto = Object.getPrototypeOf(node);
     if (proto === Object.prototype || proto === null) {
       kinds.add('plain-object');
-      for (const key of Object.keys(node)) visit((node as Record<string, unknown>)[key]);
+      const record = node as Record<string, unknown>;
+      for (const key of Object.keys(record)) visit(record[key]);
       return;
     }
     kinds.add(`other:${Object.prototype.toString.call(node)}`);
@@ -234,4 +235,36 @@ it('type probe: maps, sets, dates, buffers and special numbers copy by value; un
   for (const [name, value] of bad) {
     expect(() => deepCopy(value), name).toThrow(TypeError);
   }
+});
+
+it('sparse arrays keep their length and their holes (review r1 A-F1, C-F1)', async () => {
+  const { deepCopy } = (await import('../../src/apk3d/sim/copy.js')) as unknown as {
+    deepCopy: <T>(value: T) => T;
+  };
+  const sparse: unknown[] = new Array<unknown>(4);
+  sparse[1] = 'b';
+  const copy = deepCopy(sparse);
+  expect(copy.length).toBe(4);
+  expect(0 in copy).toBe(false);
+  expect(1 in copy).toBe(true);
+  expect(copy[1]).toBe('b');
+  expect(2 in copy).toBe(false);
+  expect(3 in copy).toBe(false);
+});
+
+it('an own __proto__ key stays an own data key (review r1 A-F1, C-F1)', async () => {
+  const { deepCopy } = (await import('../../src/apk3d/sim/copy.js')) as unknown as {
+    deepCopy: <T>(value: T) => T;
+  };
+  const source = JSON.parse('{"__proto__":1}') as Record<string, unknown>;
+  expect(Object.prototype.hasOwnProperty.call(source, '__proto__')).toBe(true);
+  const copy = deepCopy(source);
+  expect(Object.getPrototypeOf(copy)).toBe(Object.prototype);
+  expect(Object.prototype.hasOwnProperty.call(copy, '__proto__')).toBe(true);
+  expect(Object.getOwnPropertyDescriptor(copy, '__proto__')).toMatchObject({
+    value: 1,
+    enumerable: true,
+    writable: true,
+    configurable: true,
+  });
 });

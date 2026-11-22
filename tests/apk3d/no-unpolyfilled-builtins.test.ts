@@ -29,7 +29,10 @@ function walk(dir: string): string[] {
  * Dropped characters become spaces and each newline stays, so a hit line matches the source.
  * A `/` opens a regex literal unless the previous significant character closes a value (a word
  * character, `)`, or `]`), because the `/"` literal of `src/storytime/book-pictures.ts` would
- * otherwise open a string that swallows the `.at(` call further down the file.
+ * otherwise open a string that swallows the `.at(` call further down the file. The keyword test
+ * uses a word boundary, so `origin / x / 2` stays a division while `return /re/` stays a regex.
+ * A `/` after `)` or `]` is tried as a regex first (as in `if (ok) /"/.test(s)`); when no
+ * closing `/` sits on the same line it falls back to division.
  */
 function strip(code: string): string {
   const out: string[] = new Array(code.length);
@@ -101,10 +104,11 @@ function strip(code: string): string {
         let j = i - 1;
         while (j >= 0 && (code[j] === ' ' || code[j] === '\t' || code[j] === '\n' || code[j] === '\r')) j--;
         const prev = j >= 0 ? code[j]! : ';';
-        const keyword = /return|typeof|instanceof|delete|void|throw|case|do|else|in|of|new/.test(
-          code.slice(Math.max(0, j - 9), j + 1),
-        );
-        if (!/[\w$)\]]/.test(prev) || keyword) {
+        const keyword =
+          /(?:^|[^\w$])(?:return|typeof|instanceof|delete|void|throw|case|do|else|in|of|new)$/.test(
+            code.slice(Math.max(0, j - 10), j + 1),
+          );
+        if (!/[\w$)\]]/.test(prev) || keyword || prev === ')' || prev === ']') {
           let k = i + 1;
           let inClass = false;
           let closed = false;
@@ -130,6 +134,11 @@ function strip(code: string): string {
               out[i] = ' ';
               i++;
             }
+            continue;
+          }
+          if (prev === ')' || prev === ']') {
+            out[i] = c;
+            i++;
             continue;
           }
         }
@@ -205,30 +214,33 @@ function stripCommentsFirst(code: string): string {
     .replace(/"(?:\\.|[^"\\])*"/g, '""');
 }
 
-// The 19 labels. Array/String.prototype.at takes exactly one argument, so a multi-argument
-// custom call such as arena.at(x, y, z) never matches; a trailing comma is still one argument.
-// this.at( is the Board/Board2d tile lookup, not Array.prototype.at. z.union( is a zod schema
-// combinator, not Set.prototype.union.
+// The 19 labels. A call name may be followed by a comment before its parentheses, so every
+// pattern allows whitespace between the name and `(`. Array/String.prototype.at takes exactly
+// one argument, which itself may hold a nested call such as `getLastIndex()`; a multi-argument
+// custom call such as arena.at(x, y, z) never matches, and a trailing comma is still one
+// argument. this.at( is the Board/Board2d tile lookup, not Array.prototype.at: the boundary
+// keeps `notthis.at(` a hit while `this.at(` stays out. z.union( is a zod schema combinator,
+// not Set.prototype.union: the boundary keeps `itemsz.union(` a hit while `z.union(` stays out.
 const PATTERNS: Array<[string, RegExp]> = [
-  ['Object.hasOwn', /Object\.hasOwn\(/g],
-  ['structuredClone', /structuredClone\(/g],
-  ['.at(', /(?<!this)\.at\(\s*[^(),]*?(,\s*)?\)/g],
-  ['.findLast(', /\.findLast\(/g],
-  ['.findLastIndex(', /\.findLastIndex\(/g],
-  ['.toSorted(', /\.toSorted\(/g],
-  ['.toReversed(', /\.toReversed\(/g],
-  ['.toSpliced(', /\.toSpliced\(/g],
-  ['Object.groupBy', /Object\.groupBy\(/g],
-  ['Map.groupBy', /Map\.groupBy\(/g],
-  ['Promise.withResolvers', /Promise\.withResolvers\(/g],
-  ['Array.fromAsync', /Array\.fromAsync\(/g],
-  ['Set .union(', /(?<!z)\.union\(/g],
-  ['Set .intersection(', /\.intersection\(/g],
-  ['Set .difference(', /\.difference\(/g],
-  ['Set .symmetricDifference(', /\.symmetricDifference\(/g],
-  ['Set .isSubsetOf(', /\.isSubsetOf\(/g],
-  ['Set .isSupersetOf(', /\.isSupersetOf\(/g],
-  ['Set .isDisjointFrom(', /\.isDisjointFrom\(/g],
+  ['Object.hasOwn', /Object\.hasOwn\s*\(/g],
+  ['structuredClone', /structuredClone\s*\(/g],
+  ['.at(', /(?<!\bthis)\.at\s*\(\s*(?:[^(),]|\((?:[^()]|\([^()]*\))*\))*(,\s*)?\)/g],
+  ['.findLast(', /\.findLast\s*\(/g],
+  ['.findLastIndex(', /\.findLastIndex\s*\(/g],
+  ['.toSorted(', /\.toSorted\s*\(/g],
+  ['.toReversed(', /\.toReversed\s*\(/g],
+  ['.toSpliced(', /\.toSpliced\s*\(/g],
+  ['Object.groupBy', /Object\.groupBy\s*\(/g],
+  ['Map.groupBy', /Map\.groupBy\s*\(/g],
+  ['Promise.withResolvers', /Promise\.withResolvers\s*\(/g],
+  ['Array.fromAsync', /Array\.fromAsync\s*\(/g],
+  ['Set .union(', /(?<!\bz)\.union\s*\(/g],
+  ['Set .intersection(', /\.intersection\s*\(/g],
+  ['Set .difference(', /\.difference\s*\(/g],
+  ['Set .symmetricDifference(', /\.symmetricDifference\s*\(/g],
+  ['Set .isSubsetOf(', /\.isSubsetOf\s*\(/g],
+  ['Set .isSupersetOf(', /\.isSupersetOf\s*\(/g],
+  ['Set .isDisjointFrom(', /\.isDisjointFrom\s*\(/g],
 ];
 
 type Hit = { path: string; line: number; label: string };
@@ -257,47 +269,99 @@ function render(hit: Hit): string {
 
 // Named false positives: the three Box3.union calls of src/render/page.ts are three.js geometry,
 // not Set.prototype.union. this.at(, multi-argument .at(, and z.union( stay out by pattern.
-// An exclusion that matches nothing fails the test, so the list cannot rot.
-const EXCLUSIONS: Array<{ file: string; line: number; reason: string }> = [
+// Each exclusion binds the file, the line, the label, and the exact excluded call text: a
+// different built-in on the same line is still reported. An exclusion that matches nothing fails
+// the test, so the list cannot rot.
+type Exclusion = { file: string; line: number; label: string; call: string; reason: string };
+
+const EXCLUSIONS: Exclusion[] = [
   {
     file: 'src/render/page.ts',
     line: 263,
+    label: 'Set .union(',
+    call: 'box.union(b)',
     reason: 'Box3.union (three.js geometry), not Set.prototype.union',
   },
   {
     file: 'src/render/page.ts',
     line: 440,
+    label: 'Set .union(',
+    call: 'restBox.union(posedBox(effect))',
     reason: 'Box3.union (three.js geometry), not Set.prototype.union',
   },
   {
     file: 'src/render/page.ts',
     line: 447,
+    label: 'Set .union(',
+    call: 'box.union(posedBox(effect))',
     reason: 'Box3.union (three.js geometry), not Set.prototype.union',
   },
 ];
 
-it('uses no unpolyfilled ES2022+ built-ins under SCAN_ROOT', () => {
-  const scope = toPosix(relative(ROOT, SCAN_ROOT));
-  const raw: Hit[] = [];
-  for (const file of walk(SCAN_ROOT)) {
-    raw.push(...scanText(strip(readFileSync(file, 'utf8')), toPosix(relative(ROOT, file))));
-  }
+/** Applies applicable exclusions to raw hits; other hits on an excluded line stay reported. */
+function applyExclusions(
+  raw: Hit[],
+  exclusions: Exclusion[],
+  strippedLine: (path: string, line: number) => string | null,
+): string[] {
   const problems: string[] = [];
   const excluded = new Set<string>();
-  for (const exclusion of EXCLUSIONS) {
-    const applies = exclusion.file === scope || exclusion.file.startsWith(`${scope}/`);
-    if (!applies) continue;
-    const matched = raw.some((hit) => hit.path === exclusion.file && hit.line === exclusion.line);
-    if (!matched) {
+  for (const exclusion of exclusions) {
+    const lineText = strippedLine(exclusion.file, exclusion.line);
+    const matched = raw.some(
+      (hit) => hit.path === exclusion.file && hit.line === exclusion.line && hit.label === exclusion.label,
+    );
+    if (!matched || lineText === null || !lineText.includes(exclusion.call)) {
       problems.push(`stale exclusion ${exclusion.file}:${exclusion.line}: ${exclusion.reason}`);
     } else {
-      excluded.add(`${exclusion.file}:${exclusion.line}`);
+      excluded.add(`${exclusion.file}:${exclusion.line}:${exclusion.label}`);
     }
   }
   for (const hit of raw) {
-    if (!excluded.has(`${hit.path}:${hit.line}`)) problems.push(render(hit));
+    if (!excluded.has(`${hit.path}:${hit.line}:${hit.label}`)) problems.push(render(hit));
   }
+  return problems;
+}
+
+it('uses no unpolyfilled ES2022+ built-ins under SCAN_ROOT', () => {
+  const scope = toPosix(relative(ROOT, SCAN_ROOT));
+  const strippedByFile = new Map<string, string[]>();
+  const raw: Hit[] = [];
+  for (const file of walk(SCAN_ROOT)) {
+    const path = toPosix(relative(ROOT, file));
+    const stripped = strip(readFileSync(file, 'utf8'));
+    strippedByFile.set(path, stripped.split('\n'));
+    raw.push(...scanText(stripped, path));
+  }
+  const applicable = EXCLUSIONS.filter(
+    (exclusion) => exclusion.file === scope || exclusion.file.startsWith(`${scope}/`),
+  );
+  const problems = applyExclusions(
+    raw,
+    applicable,
+    (path, line) => strippedByFile.get(path)?.[line - 1] ?? null,
+  );
   expect(problems, 'unpolyfilled built-ins (file:line:builtin)').toEqual([]);
+});
+
+it('exclusions bind to their exact call text, not just the line (review r1 C-F3)', () => {
+  const fixture = 'if (!b.isEmpty()) box.union(b); structuredClone(s);';
+  const stripped = strip(fixture);
+  const raw = scanText(stripped, '<fixture>');
+  const lineOf = (path: string, line: number): string | null =>
+    path === '<fixture>' && line === 1 ? stripped : null;
+  const bound: Exclusion[] = [
+    { file: '<fixture>', line: 1, label: 'Set .union(', call: 'box.union(b)', reason: 'test bind' },
+  ];
+  expect(applyExclusions(raw, bound, lineOf)).toEqual(['<fixture>:1: structuredClone']);
+  const rotted: Exclusion[] = [
+    { file: '<fixture>', line: 1, label: 'Set .union(', call: 'box.merge(b)', reason: 'test bind' },
+  ];
+  expect(applyExclusions(raw, rotted, lineOf)).toEqual([
+    'stale exclusion <fixture>:1: test bind',
+    '<fixture>:1: structuredClone',
+    '<fixture>:1: Set .union(',
+  ]);
 });
 
 /** Total pattern hits over the whole stripped text. */
@@ -324,6 +388,29 @@ const LABELS_FIXTURE =
   'items.toSorted( items.toReversed( items.toSpliced( Object.groupBy( Map.groupBy( ' +
   'Promise.withResolvers( Array.fromAsync( items.union( items.intersection( items.difference( ' +
   'items.symmetricDifference( items.isSubsetOf( items.isSupersetOf( items.isDisjointFrom(';
+
+/** Every label once as code, with the tricky call shapes the fixed scanner must keep. */
+const LABELS_CODE_FIXTURE = [
+  'const own = Object.hasOwn(obj, "k");',
+  'const q = origin / structuredClone(value) / 2;',
+  'const last = rows.at(getLastIndex());',
+  'const f = items.findLast(isX);',
+  'const fi = items.findLastIndex(isX);',
+  'const s = items.toSorted(cmp);',
+  'const r = items.toReversed();',
+  'const p = items.toSpliced(0, 1);',
+  'const g = Object.groupBy(items, fn);',
+  'const m = Map.groupBy(items, fn);',
+  'const d = Promise.withResolvers();',
+  'const a = Array.fromAsync(iter);',
+  'const u = itemsz.union(other);',
+  'const n = items.intersection(other);',
+  'const e = items.difference(other);',
+  'const y = items.symmetricDifference(other);',
+  'const b = items.isSubsetOf(other);',
+  'const c = items.isSupersetOf(other);',
+  'const j = items.isDisjointFrom(other);',
+].join('\n');
 
 it('controls prove the strip and the whole-text patterns', () => {
   const rows: Array<{ name: string; fixture: string; fixed: number; witness: number }> = [
@@ -362,6 +449,48 @@ it('controls prove the strip and the whole-text patterns', () => {
       fixture: `// ${LABELS_FIXTURE}\nconst s = "${LABELS_FIXTURE}";`,
       fixed: 0,
       witness: 0,
+    },
+    {
+      name: 'division around a call',
+      fixture: 'const q = origin / structuredClone(value) / 2;',
+      fixed: 1,
+      witness: 1,
+    },
+    {
+      name: 'regex literal before a call',
+      fixture: 'if (ok) /"/.test(s); structuredClone(state);',
+      fixed: 1,
+      witness: 1,
+    },
+    {
+      name: 'nested call as the index argument',
+      fixture: 'const last = rows.at(getLastIndex());',
+      fixed: 1,
+      witness: 1,
+    },
+    {
+      name: 'comment between the call name and its parentheses',
+      fixture: 'const s = structuredClone /* note */ (state);',
+      fixed: 1,
+      witness: 1,
+    },
+    {
+      name: 'receiver boundary on .at(',
+      fixture: 'const a = notthis.at(-1);\nconst t = this.at(0, 1);',
+      fixed: 1,
+      witness: 1,
+    },
+    {
+      name: 'receiver boundary on .union(',
+      fixture: 'const u = itemsz.union(other);\nconst s = z.union([a]);',
+      fixed: 1,
+      witness: 1,
+    },
+    {
+      name: 'all 19 labels as code',
+      fixture: LABELS_CODE_FIXTURE,
+      fixed: 19,
+      witness: 19,
     },
   ];
   const failures: string[] = [];
