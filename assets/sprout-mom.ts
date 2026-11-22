@@ -179,7 +179,10 @@ export default humanoidAsset({
     // are a separate body over the arm skin: a raised arm would otherwise drag the torso union
     // into a point at the hem (the Dad lesson). The torso keeps hips/spine/chest tags only, so
     // the hem never takes an arm weight.
-    const HEM = 0.7;
+    // The hem sits 12 mm below the old line so it covers the skin crotch wedge
+    // that showed between the jean legs just under the hem, at rest and in the
+    // listen lean. The hem stays flat; only its height changes.
+    const HEM = 0.688;
     const cableTri = (x: number, z: number) => {
       const t = ((((CABLES * Math.atan2(x, z)) / (2 * Math.PI)) % 1) + 1) % 1;
       return 1 - 4 * Math.abs(t - 0.5);
@@ -226,17 +229,33 @@ export default humanoidAsset({
     k.body('collar', collar, { color: C.rib, roughness: 0.9, detail: 0.003 });
 
     // ---------------------------------------------------------------- blue jeans to the shoe tops
+    // The leg cones start tucked inside the hip mass (hipsY - 0.03), not up at the
+    // HIP joint: the old cone ran to y 0.92 with a sharp cap rim at chest height,
+    // and in a spine roll (listen) the sweater side swung off that static rim, so
+    // blue broke through the sweater. Everything above the hem hides inside the
+    // sweater, so the visible leg below the hem is unchanged.
     const kneeR = 0.052;
     const jeanLeg = sdf.smoothUnion(
       0.012,
-      sdf.cone(HIP, KNEE, 0.062, kneeR).bone('leg.L'),
+      sdf.cone([HIP[0], P.pants.hipsY - 0.03, HIP[2]], KNEE, 0.058, kneeR).bone('leg.L'),
       sdf.sphere(kneeR).at(...KNEE).bone('leg.L'),
       sdf.cone(KNEE, [P.ankle[0], 0.16, P.ankle[2]], kneeR, 0.042).round(0.002).bone('shin.L'),
+    );
+    // The hip mass takes the torso weight bands (the sweater's layout), not a rigid
+    // hips tag: in a spine roll the sweater hem shifts sideways while rigid jeans
+    // stay, so the jeans broke through the sweater side at the waist. Weighted like
+    // the sweater, the hip mass leans with it. It is also slimmer than the sweater
+    // waist (0.90/0.92 vs the sweater's full torso round), so the inner layer keeps
+    // clearance through the roll. At rest the weights are the identity and the mass
+    // hides inside the sweater, so the silhouette is unchanged (the Grandpa fix
+    // 10632c67; Ben's jeans use the same weighted-hips recipe).
+    const jeanHips = h.weighted(
+      sdf.ellipsoid([P.pants.hipsSize[0] * 0.9, P.pants.hipsSize[1], P.pants.hipsSize[2] * 0.92]).at(0, P.pants.hipsY, 0),
     );
     const jeans = sdf
       .smoothUnion(
         0.03,
-        sdf.ellipsoid([P.pants.hipsSize[0] * 0.98, P.pants.hipsSize[1], P.pants.hipsSize[2] * 0.98]).at(0, P.pants.hipsY, 0).bone('hips'),
+        jeanHips,
         pair(jeanLeg),
       )
       .paintFn((x, y, z, base) => mixRgb(base, rgb(C.denimDark), 0.25 * (0.5 - 0.5 * cableTri(x * 2, z * 2))));
