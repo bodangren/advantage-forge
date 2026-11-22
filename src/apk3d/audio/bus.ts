@@ -26,6 +26,14 @@ export interface Mood {
   drum: boolean;
 }
 
+/** Files to play for game events: a folder of rendered takes and an event-to-entry map. */
+export interface SoundFiles {
+  /** The folder of the sound files, with a trailing slash. */
+  base: string;
+  /** An event name to a set entry name: `{ correct: 'right' }`. */
+  events: Record<string, string>;
+}
+
 const MINOR_VAULT = [
   [57, 60, 64],
   [53, 57, 60],
@@ -63,7 +71,10 @@ const BUILT_IN_SFX: Record<string, SfxRecipe> = {
   },
   defeat: (s) => [392, 330, 262].forEach((f, i) => s.tone(f, 0.25, 'triangle', 0.12, i * 0.09, 0.9)),
   heal: (s) => [1047, 1319, 1568, 2093].forEach((f, i) => s.tone(f, 0.4, 'sine', 0.08, i * 0.06)),
-  victory: (s) => [523, 659, 784, 1047, 784, 1047].forEach((f, i) => s.tone(f, i === 5 ? 0.9 : 0.28, 'square', 0.1, i * 0.13)),
+  victory: (s) =>
+    [523, 659, 784, 1047, 784, 1047].forEach((f, i) =>
+      s.tone(f, i === 5 ? 0.9 : 0.28, 'square', 0.1, i * 0.13),
+    ),
 };
 
 const hz = (midi: number): number => 440 * Math.pow(2, (midi - 69) / 12);
@@ -80,6 +91,26 @@ export class AudioBus {
   private readonly moods = new Map(Object.entries(BUILT_IN_MOODS));
   private suspended = false;
   muted = false;
+
+  // File playback (spec AC4). A null file map or format keeps every event on the synth recipe.
+  private files: SoundFiles | null = null;
+  private format: 'ogg' | 'mp3' | null = null;
+  private formatChecked = false;
+  private readonly buffers = new Map<string, AudioBuffer>();
+  private readonly pendingDecode = new Map<string, ArrayBuffer>();
+  private readonly loading = new Set<string>();
+  private readonly failed = new Set<string>();
+  private readonly sources = new Set<AudioBufferSourceNode>();
+
+  /** Sets the sound files, or clears them with null so every event uses the synth recipe. */
+  useSoundFiles(files: SoundFiles | null): void {
+    this.files = files;
+  }
+
+  /** Fetches and decodes the files of the named events, with no sound. */
+  preload(events: string[]): void {
+    for (const name of events) this.requestFile(name);
+  }
 
   /** Adds or replaces an effect (a game's own sounds). */
   defineSfx(name: string, recipe: SfxRecipe): void {
@@ -103,20 +134,24 @@ export class AudioBus {
       if (this.ctx.state !== 'running' && !this.suspended) void this.ctx.resume();
       return;
     }
-    const Ctx = window.AudioContext ?? (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+    const Ctx =
+      window.AudioContext ??
+      (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
     if (!Ctx) return;
     this.ctx = new Ctx();
+    // Pick the file format once, on the first unlock (spec AC4 rule 1).
+    this.ensureFormat();
     this.master = this.ctx.createGain();
     this.master.gain.value = this.muted ? 0 : 0.8;
     this.master.connect(this.ctx.destination);
     this.musicGain = this.ctx.createGain();
     this.musicGain.gain.value = 0.22;
     this.musicGain.connect(this.master);
-    // Older iPhones start the context only when a sound starts inside the gesture.
-    const silence = this.ctx.createBufferSource();
-    silence.buffer = this.ctx.createBuffer(1, 1, 22050);
-    silence.connect(this.ctx.destination);
-    silence.start(0);
+    // A preload before the first unlock fetched bytes that now have a context to decode on.
+    for (const [name, data] of this.pendingDecode) {
+      this.pendingDecode.delete(name);
+      void this.decodeData(name, data);
+    }
     void this.ctx.resume();
     if (this.mood !== 'none') this.music(this.mood);
   }
@@ -139,7 +174,14 @@ export class AudioBus {
 
   play(name: string): void {
     if (!this.ctx) return;
+    const buffer = this.buffers.get(name);
+    if (buffer) {
+      this.startBuffer(buffer);
+      return;
+    }
+    // No decoded file yet: the recipe sounds now, and the file is fetched for the next play.
     this.sfx.get(name)?.(this.synth(this.master));
+    this.requestFile(name);
   }
 
   /** Starts, changes, or stops ('none') the looping tune. */
@@ -159,18 +201,103 @@ export class AudioBus {
   dispose(): void {
     window.clearInterval(this.timer);
     this.timer = 0;
+    for (const src of this.sources) {
+      try {
+        src.stop();
+      } catch {
+        // A source that already ended needs no stop.
+      }
+    }
+    this.sources.clear();
     void this.ctx?.close();
     this.ctx = null;
+    this.buffers.clear();
+    this.pendingDecode.clear();
+    this.loading.clear();
+    this.failed.clear();
+  }
+
+  /** Ask the browser once which container plays, then keep the choice (spec AC4 rule 1). */
+  private ensureFormat(): void {
+    if (this.formatChecked) return;
+    this.formatChecked = true;
+    if (typeof Audio === 'undefined') return;
+    const ogg = new Audio().canPlayType('audio/ogg; codecs="vorbis"');
+    const mp3 = new Audio().canPlayType('audio/mpeg');
+    this.format = ogg ? 'ogg' : mp3 ? 'mp3' : null;
+  }
+
+  /** Start one fetch and decode for a mapped event. Each event is tried at most once. */
+  private requestFile(name: string): void {
+    this.ensureFormat();
+    if (!this.files || !this.format) return;
+    const entry = this.files.events[name];
+    if (!entry) return;
+    if (this.buffers.has(name) || this.loading.has(name) || this.failed.has(name)) return;
+    const url = `${this.files.base}${entry}.${this.format}`;
+    this.loading.add(name);
+    void this.fetchFile(name, url);
+  }
+
+  private async fetchFile(name: string, url: string): Promise<void> {
+    try {
+      const response = await fetch(url);
+      if (!response.ok) throw new Error(`audio fetch status ${response.status}`);
+      const data = await response.arrayBuffer();
+      await this.decodeData(name, data);
+    } catch {
+      // A network error, a non-OK status, or a bad array all mark the event as synth-only.
+      this.failed.add(name);
+      this.loading.delete(name);
+    }
+  }
+
+  private async decodeData(name: string, data: ArrayBuffer): Promise<void> {
+    const ctx = this.ctx;
+    if (!ctx) {
+      // A preload can run before the first unlock; resume decoding when the context exists.
+      this.pendingDecode.set(name, data);
+      return;
+    }
+    try {
+      const buffer = await ctx.decodeAudioData(data);
+      this.buffers.set(name, buffer);
+      this.loading.delete(name);
+    } catch {
+      this.failed.add(name);
+      this.loading.delete(name);
+    }
+  }
+
+  /** Play a decoded file through the master gain, and track it so dispose can stop it. */
+  private startBuffer(buffer: AudioBuffer): void {
+    const ctx = this.ctx;
+    if (!ctx || !this.master) return;
+    const src = ctx.createBufferSource();
+    src.buffer = buffer;
+    src.connect(this.master);
+    src.onended = () => this.sources.delete(src);
+    this.sources.add(src);
+    src.start(0);
   }
 
   private synth(dest: AudioNode | null): Synth {
     return {
-      tone: (freq, dur, type, gain, when = 0, slide = 0) => this.tone(freq, dur, type, gain, when, slide, dest),
+      tone: (freq, dur, type, gain, when = 0, slide = 0) =>
+        this.tone(freq, dur, type, gain, when, slide, dest),
       noise: (dur, gain, cutoff, when = 0) => this.noise(dur, gain, cutoff, when, dest),
     };
   }
 
-  private tone(freq: number, dur: number, type: OscillatorType, gain: number, when: number, slide: number, dest: AudioNode | null): void {
+  private tone(
+    freq: number,
+    dur: number,
+    type: OscillatorType,
+    gain: number,
+    when: number,
+    slide: number,
+    dest: AudioNode | null,
+  ): void {
     const ctx = this.ctx;
     if (!ctx || !dest) return;
     const t = ctx.currentTime + when;
