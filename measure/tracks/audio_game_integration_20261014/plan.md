@@ -449,7 +449,8 @@ Files this track touches:
   comment ("the current map decides the file"), asserts the stale completion stores nothing,
   asserts the next play fetches the new file (`wrong.ogg`, exact URL list of two), plays it
   (`gameSourceStarts` 1), and never starts a source with the stale buffer. No other case
-  changed; the equal-map double-wire case still fetches once.
+  changed; the equal-map double-wire case still fetches once. Fixture repair (1bc1cd21):
+  the mid-flight case resolves later fetches at once, so the new file decodes and plays.
   - Red evidence 2026-11-22: the five-file command through the heavy runner
     `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-files.test.ts tests/apk3d/audio-files.adversarial.test.ts tests/apk3d/audio-wiring.test.ts tests/apk3d/audio-wiring.adversarial.test.ts tests/apk3d/imports.test.ts'`
     exits 1 with 2 failed and 44 passed (46). Both failures are assertion failures in the two

@@ -27,3 +27,35 @@ reviews_addressed:
 - measure/runs/audio_game_integration_20261014/review-c-9d150f6.json F4 (old request installs decoded buffer when event remains mapped)
 handoff: T6h Green (bind each load to its mapping; reject stale completions) goes to Green role opencode-go/hy4-flash-free#high
 END_MEASURE_AGENT_RESULT
+
+MEASURE_AGENT_RESULT
+role: measure-mid-red (fixture repair)
+track: audio_game_integration_20261014
+phase: Phase 3: File playback in the AudioBus
+task: T6g Red fixture repair (Green T6h valid block)
+phase_base_sha: af4e57aff730b1cf8ee9c716802920699f1eaaac
+role_base_sha: 4a7bf19d8692cddb8120b6a0c40d7c0c589a4bed
+result_head_sha: 1bc1cd2183a0faf11ffe111bc9e0489a283a394c
+commits:
+- 1bc1cd2183a0faf11ffe111bc9e0489a283a394c test(audio_game_integration): T6g fixture resolves the new file fetch
+green_patch: /home/daniebo/.cache/opencode/green-t6h-bus.patch (94 lines, saved from working tree, left uncommitted for Green; bus.ts reverted to committed state before and after the throwaway check)
+fixture_fix: tests/apk3d/audio-files.adversarial.test.ts mid-flight case now sets fetchImpl to auto-resolve after the first fetch is released, so the second fetch (wrong.ogg) completes, decodes, and plays; the companion decode-pending case already auto-resolves and needed no change; every assertion meaning kept
+production_files_changed: none
+red_run_on_committed_bus:
+  command: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-files.test.ts tests/apk3d/audio-files.adversarial.test.ts tests/apk3d/audio-wiring.test.ts tests/apk3d/audio-wiring.adversarial.test.ts tests/apk3d/imports.test.ts'
+  exit_code: 1
+  summary: 1 file failed, 4 passed (5 files); 2 failed, 44 passed (46 tests)
+  failing_lines:
+  - "FAIL tests/apk3d/audio-files.adversarial.test.ts > AudioBus file playback, adversarial > rejects the stale decode when the map is swapped mid-flight"
+  - "AssertionError: the next play fetches the new file: expected [ '/audio/chibi/right.ogg' ] to deeply equal [ '/audio/chibi/right.ogg', …(1) ]"
+  - "FAIL tests/apk3d/audio-files.adversarial.test.ts > AudioBus file playback, adversarial > rejects the stale fetch that resolves after the map changed"
+  - "AssertionError: exactly one fetch for the new file follows: expected [ '/audio/chibi/right.ogg' ] to deeply equal [ '/audio/chibi/right.ogg', …(1) ]"
+  failure_kind: assertion failures only (no syntax or import error); stale decode installs its buffer at HEAD so the new-file fetch never follows
+throwaway_check_with_green_patch:
+  command: same five-file command after git apply of the patch file
+  exit_code: 0
+  summary: 5 files passed; 46 passed (46 tests)
+  then: git checkout -- src/apk3d/audio/bus.ts (patch file left in place for Green)
+prettier: node_modules/.bin/prettier --check tests/apk3d/audio-files.adversarial.test.ts exits 0
+handoff: T6h Green retries on the repaired fixture; Green's uncommitted [~] T6h plan line was left untouched in the working tree and staged nowhere
+END_MEASURE_AGENT_RESULT
