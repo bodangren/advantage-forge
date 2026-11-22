@@ -707,7 +707,29 @@ Files this track touches:
     probe with `"decodeSeconds":0.9` added fails on `rune-match effectMarker is set before the Start
     action` instead, so both new groups fail independently. `node_modules/.bin/prettier --check
     tests/audio-budget.test.ts` exits 0.
-  - [~] T7g2 Green remediation r2 (decodeSeconds deadline, marker before launch, effect vs music)
+  - [x] T7g2 Green remediation r2 (9147326b): decodeSeconds deadline, marker before launch, effect vs music
+  - Implementation commit `9147326b15ed50f834413876e513f7dc706cfb19` changes only
+    `scripts/audio-budget.mjs`; no test or `src/` file changed. An init script tags each decoded
+    buffer with its response file name and records each successful decode time. `decodeSeconds`
+    is the window from the first audio request to the last successful decode. The effect marker is
+    set before the Start click, and `firstEffect` names the first file-backed start of one of the
+    six Rune Match effect files after that marker. Music and other files do not count. The script
+    exits 1 and writes no JSON when `decodeSeconds` exceeds 1.5 s or no such effect exists.
+    The resource-timing `seconds` field is unchanged.
+  - Gate 1 2026-11-23: `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run tests/audio-budget.test.ts --maxWorkers=1'`
+    exits 0 with 4 passed and 1 skipped (5).
+  - Gate 2 2026-11-23: `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/audio-budget.mjs --game rune-match && AUDIO_BUDGET_JSON=1 node node_modules/vitest/vitest.mjs run tests/audio-budget.test.ts --maxWorkers=1'`
+    exits 0 with 5 passed (5). The printed JSON is
+    `{"bytes":79319,"files":6,"seconds":0.7056000000238418,"decodeSeconds":0.7101000000238419,"decoded":6,"fileEffect":true,"effectMarker":"before-launch","firstEffect":"pop.ogg"}`.
+    The first attempt timed out waiting for the canvas at load average 11 with other sessions
+    active; the unchanged command passed on retry. `out/audio-budget/` stays ignored. `ss -ltnp`
+    finds no listener on 5199 after the run. `node_modules/.bin/prettier --check
+    scripts/audio-budget.mjs` exits 0.
+  - Slow-decode probe 2026-11-23: `measure/runs/audio_game_integration_20261014/slow-decode-probe.mjs`
+    is an uncommitted copy of the script with a 1.7 s delay before each decode. The probe exits 1
+    with `decode window 2.4116999999284743 s exceeds 1.5 s` and writes no JSON. Port 5199 is free
+    afterwards. The good JSON in the plan above came from the later passing Gate 2 run.
+  - dispositions: A-F4=FIX; C-F4=FIX
 
 ## Phase 5: Hand-off to the PM
 
