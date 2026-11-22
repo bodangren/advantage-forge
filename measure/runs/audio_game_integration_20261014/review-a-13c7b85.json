@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "role": "review-a",
+  "track": "audio_game_integration_20261014",
+  "phase": "Phase 3: File playback in the AudioBus",
+  "baseline_sha": "af4e57aff730b1cf8ee9c716802920699f1eaaac",
+  "phase_base_sha": "af4e57aff730b1cf8ee9c716802920699f1eaaac",
+  "role_base_sha": "4b1dd5af817d93a0106639c019093b4b2efce8ae",
+  "audited_head_sha": "13c7b85ca337b137bc481ac94883b686d1c14732",
+  "status": "fail",
+  "summary": "Phase 3 fails review. The unlock pulse is removed, and host preload lists omit played events.",
+  "blocking_findings": [
+    "F1 [Major] src/apk3d/audio/bus.ts:150-157 removes the buffer-source silence pulse from unlock(). That pulse supports iOS/Safari gesture-based audio activation; resume() alone is not an equivalent unlock. This also conflicts with plan.md:222-224, which requires unlock() to keep its current shape. Restore the pulse, or use a separate silent source path that the fixture does not count as a game sound.",
+    "F2 [Major] Several game hosts do not preload all event names they play, despite the plan requiring each host's SFX values or literal audio.play names. For example, dragon-rider passes ['flap','hit','join','roar','victory'] at src/games/dragon-rider/view2d/game.ts:86, but also plays 'correct' and 'wrong' at lines 402-403. Rune-match passes a list without 'spawn' at line 46, while it plays 'spawn' at line 107. The wiring test only counts one helper call per host and does not validate the event arguments. Complete the host lists and add per-host caller coverage."
+  ],
+  "nonblocking_findings": [],
+  "evidence": [
+    "Provenance: git rev-parse HEAD returned 13c7b85ca337b137bc481ac94883b686d1c14732, equal to audited_head_sha. phase_base_sha af4e57aff730b1cf8ee9c716802920699f1eaaac and role_base_sha 4b1dd5af817d93a0106639c019093b4b2efce8ae resolve from the supplied phase and Green T6b evidence.",
+    "Read the Phase 3 spec AC4 and AC9, plan.md Phase 3, test-strategy.md Phase 3, and Measure routing artifacts.",
+    "Read the exact phase_base_sha..audited_head_sha diff limited to the paths in the brief. git diff --check exited 0.",
+    "The removed unlock pulse was a createBufferSource()/start() sequence in the prior bus implementation. Its removal avoids counting a silent source in fake tests but changes the specified unlock behavior.",
+    "Spot-checks of eight hosts found event-list mismatches in dragon-rider and rune-match; remaining spot-checked lists include the mapped and synth-only events for those examples.",
+    "T6b plan line 324 confirms tsc reports 51 errors, all outside changed Phase 3 files: 38 baseline errors and 13 from the concurrent storytime-faces-r2 guard test.",
+    "The generator check reports 31 mapped events current. A byte comparison reports all 14 demo audio files identical to sounds/chibi/.",
+    "The four Prettier changes in bus.ts only wrap existing BUILT_IN_SFX victory, Ctx assignment, synth arrow, and tone signature expressions; their expressions and behavior remain the same.",
+    "The Chibi map and helper use the site base plus audio/chibi/ once; src/host/main.ts passes Vite BASE_URL as soundBase.",
+    "build-graph is installed, but graph.db is absent; no graph inspection is available."
+  ],
+  "commands": [
+    "git rev-parse HEAD => 13c7b85ca337b137bc481ac94883b686d1c14732",
+    "git diff --stat af4e57aff730b1cf8ee9c716802920699f1eaaac..13c7b85ca337b137bc481ac94883b686d1c14732 -- assigned paths; git diff --check ... => 55 files, 1063 insertions, 43 deletions; no whitespace errors",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-files.test.ts tests/apk3d/audio-wiring.test.ts tests/apk3d/imports.test.ts' => exit 0; 3 files, 19 tests",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/audio-event-map.mjs --check && node -e <byte comparison> && node node_modules/typescript/bin/tsc --noEmit' => generator current; 14 files identical; tsc exit 2 with 51 errors, none in Phase 3 files"
+  ],
+  "changed_files": [
+    "measure/runs/audio_game_integration_20261014/review-a-13c7b85.json",
+    "measure/runs/audio_game_integration_20261014/review-a-13c7b85.log"
+  ],
+  "test_strategy_violations": [
+    "The test harness counts all created buffer-source starts, leading Green to remove the platform unlock pulse rather than preserve unlock behavior as planned."
+  ],
+  "live_contract_violations": [
+    "Several hosts do not preload every event they play."
+  ],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "retry_implementation",
+  "confidence": "high",
+  "route": "openai/gpt-6-luna#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 3,
+      "evidence": "The targeted 19 tests pass, but bus.ts removes the unlock pulse and dragon-rider omits two played events from its preload list."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 3,
+      "evidence": "The 19 passing tests cover file playback and host call counts, but audio-wiring.test.ts does not compare each host's event list to its call sites."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The assigned diff covers the Phase 3 API, generator, wiring, hosts, tests, files, and phase evidence."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 4,
+      "evidence": "The heavy-run targeted suite, tsc result, generator check, byte comparison, source-line checks, and exact diff are recorded."
+    }
+  ]
+}

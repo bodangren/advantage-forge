@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: review-a
+status: blocked
+track: audio_game_integration_20261014
+phase: Phase 3: File playback in the AudioBus
+commits: none
+tests_run: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-files.test.ts tests/apk3d/audio-files.adversarial.test.ts tests/apk3d/audio-wiring.test.ts tests/apk3d/audio-wiring.adversarial.test.ts tests/apk3d/imports.test.ts' exited 0 with 5 files and 45 tests.
+files_changed: measure/runs/audio_game_integration_20261014/review-a-9d150f6.json; measure/runs/audio_game_integration_20261014/review-a-9d150f6.log
+plan_updates: none
+known_failures: The checkout HEAD eecf3cbac1f7b8a871fbd5ebc24bebad4d82a457 differs from the requested audited_head_sha 9d150f629ef8346439f29e2927a83f90dfe17324. F1 [Major] documents a stale decode after a changed mapping.
+handoff: The requested target diff and five-file test suite were reviewed. The audit cannot satisfy the required audited_head_sha-equals-HEAD check in this checkout. F1 is a late Phase 3 finding: an old in-flight decode can repopulate a changed event and play the wrong file. Ask the orchestrator: Should a stale decode after an event mapping changes be rejected, or should the old fetched file remain usable? Options: A) reject the stale decode and load the new mapping; B) keep the old decode and accept stale playback. Result JSON records the exact evidence and escalates the late finding for human review.
+END_MEASURE_AGENT_RESULT

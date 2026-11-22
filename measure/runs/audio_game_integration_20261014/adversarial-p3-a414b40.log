@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: adversarial-testing
+status: complete
+track: audio_game_integration_20261014
+phase: Phase 3: File playback in the AudioBus
+commits: none
+tests_run: Targeted gate exited 0: 8 files, 61 passed, 2 skipped. Project gate exited 0: 225 files, 3,364 passed, 2 skipped. Five runtime scenarios and Prettier passed. Seven scan fixtures confirmed F1.
+files_changed: measure/runs/audio_game_integration_20261014/adversarial-p3-a414b40.json; measure/runs/audio_game_integration_20261014/adversarial-p3-a414b40.log
+plan_updates: none
+known_failures: F1 misses executable syntax in the scan. F2 retains a stale file after a non-enumerable custom key is removed. Neither affects a current host. The separate structural check reports stale measure/generated/status.md.
+handoff: The adversarial gate passes at a414b40. Keep F1 and F2 as tech debt only. No new tests or implementation changes were committed. Refresh generated status before acceptance.
+END_MEASURE_AGENT_RESULT

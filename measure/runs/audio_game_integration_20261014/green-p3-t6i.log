@@ -1,0 +1,46 @@
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+track: audio_game_integration_20261014
+phase: Phase 3: File playback in the AudioBus
+status: pass
+phase_base_sha: af4e57aff730b1cf8ee9c716802920699f1eaaac (immutable; verified ancestor of final HEAD)
+role_base_sha: 4d4b0d271bcc554b23220941d522c0778581beec (from adversarial-p3-09f808bd.json)
+green_start_head: 07bbc341c87f268735605559a135eb09d72a2d20
+red_commit: 09f808bd27f932fe9bca3388c49d315c339f1667 (adversarial round 2 test; inside phase_base_sha..HEAD, verified by git merge-base and git log)
+red_skip_commit: 5024ddeb (parallel Red; TD-44 it.skip pins for F1 and F2; inside phase_base_sha..HEAD)
+
+tasks_flipped_to_x:
+  T6i Green -> [x] in plan.md with implementation SHA 1b7312f49c0a022d39cacafe923a03ba9099141c (own-property guard for event names, adversarial F3).
+  Three Phase 3 late-finding lines added: F1 tech-debt, F2 tech-debt, F3 tech-debt with guard SHA 1b7312f4.
+tasks_flipped_to_b: none. No deferred owner. F1 and F2 are routed to TD-44 as Open/Low debt with committed skip pins by parallel Red; they are not deferred human actions.
+
+dispositions: F3=FIX; F1=DECLINE; F2=DECLINE
+
+targeted_red_output:
+  Command (heavy runner): node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-files.test.ts tests/apk3d/audio-files.adversarial.test.ts tests/apk3d/audio-files.adversarial-r2.test.ts tests/apk3d/audio-wiring.test.ts tests/apk3d/audio-wiring.adversarial.test.ts tests/apk3d/imports.test.ts
+  Rerun at Green start: exit 1; 1 failed, 52 passed, 2 skipped (55). Failure: "wires a real bus without fetching inherited object names" — fetchUrls expected ['/demo/audio/chibi/tap.ogg'], received the tap URL plus '/demo/audio/chibi/function Object() { [native code] }.ogg' and '/demo/audio/chibi/function toString() { [native code] }.ogg'; preload.mock.calls expected [['tap']], received [['constructor','tap','toString']]. F1 and F2 were already skipped by the parallel Red pins.
+  Gate after fix, before Red skip commit: exit 0; 6 files; 53 passed, 2 skipped (55).
+  Gate after fix, with Red skip commit 5024ddeb in HEAD: exit 0; 6 files; 53 passed, 2 skipped (55).
+
+gates:
+  tsc --noEmit through the heavy runner: exit 2 with 51 baseline error TS lines; none in src/apk3d/audio/chibi.ts or src/apk3d/audio/bus.ts.
+  node_modules/.bin/prettier --check src/apk3d/audio/chibi.ts src/apk3d/audio/bus.ts: exit 0; "All matched files use Prettier code style!"
+  git diff --check on the two source files: exit 0.
+  bash measure/doctor.sh --structural-only: exit 0 after regeneration; "Measure doctor found no structural errors."
+  node measure/tools/generate.mjs --check: exit 0; "Measure facts are current (4 files)."
+  measure/generated/status.md regenerated from 14/17 to 15/18 for this track; no foreign change existed in measure/generated/ before regeneration.
+  measure/tech-debt.md is 45 lines, within the 50-line limit; no Resolved row was archived.
+
+commits:
+  implementation_commit: 1b7312f49c0a022d39cacafe923a03ba9099141c fix(audio_game_integration): T6i own-property event guard (explicit paths: src/apk3d/audio/chibi.ts, src/apk3d/audio/bus.ts)
+  plan_evidence_commit: 022eb9f93b368f53df1b7fd7510c03e498e7e262 measure(audio_game_integration): TD-44 and Phase 3 late findings (explicit paths: measure/tech-debt.md, measure/tracks/audio_game_integration_20261014/plan.md, measure/generated/status.md)
+  final_green_head: 022eb9f93b368f53df1b7fd7510c03e498e7e262
+
+new_files: no new file entered either commit. This log is untracked. No committed Red test was edited by this role. Unrelated concurrent work (assets, bench, docs, other measure runs) was left untouched.
+
+implementation:
+  src/apk3d/audio/chibi.ts: chibiPreload now skips an event unless Object.hasOwn(CHIBI_EVENTS, event), so inherited names such as constructor and toString never enter the preload list.
+  src/apk3d/audio/bus.ts: requestFile now returns unless Object.hasOwn(this.files.events, name), so the bus never builds or fetches a file URL for an inherited name. The existing falsy-entry check, public method shapes, and all other behavior are unchanged.
+
+handoff: F3 is fixed by the two own-property guards. F1 and F2 go to TD-44 with committed it.skip pins from parallel Red; the PM decision records that no current host rewires the bus before unlock or reuses a disposed bus, so neither produces a wrong current result. Reopen TD-44 if a host rewires the bus or passes dynamic event names. Review roles should audit the two implementation files and the three Measure files on final HEAD 022eb9f9. No product decision was needed.
+END_MEASURE_AGENT_RESULT

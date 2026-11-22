@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: adversarial-testing
+status: fail
+track: audio_game_integration_20261014
+phase: Phase 3: File playback in the AudioBus
+commits: 0750febc
+tests_run: Targeted gate exited 1: 57 passed, 2 failed, 2 skipped across 7 files. Project gate exited 1: 3,360 passed, 2 failed, 2 skipped across 224 files. Only the new compatibility tests failed. Prettier passed.
+files_changed: tests/apk3d/audio-files.adversarial-r3.test.ts; measure/runs/audio_game_integration_20261014/adversarial-p3-8a08830.json; measure/runs/audio_game_integration_20261014/adversarial-p3-8a08830.log
+plan_updates: none
+known_failures: F1 blocks startup on supported browsers without Object.hasOwn. F2 can retain a stale file after a custom own-to-inherited remap. No current host uses that remap.
+handoff: Route F1 to Green with retry_implementation. Preserve own-property semantics on the supported browser range. Record F2 as tech debt only. Keep the TD-44 dispositions unchanged. Rerun the applicable reviews and adversarial gate after the fix.
+END_MEASURE_AGENT_RESULT

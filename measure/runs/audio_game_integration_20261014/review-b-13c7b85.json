@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "role": "measure-review-b-security",
+  "track": "audio_game_integration_20261014",
+  "phase": "## Phase 3: File playback in the AudioBus",
+  "phase_base_sha": "af4e57aff730b1cf8ee9c716802920699f1eaaac",
+  "baseline_sha": "af4e57aff730b1cf8ee9c716802920699f1eaaac",
+  "role_base_sha": "d7ca282ebd6e7602420096055266f527d2f9ff7f",
+  "audited_head_sha": "13c7b85ca337b137bc481ac94883b686d1c14732",
+  "security_applicability": "applicable",
+  "route": "kimi-code-plan-cn/kimi-for-coding",
+  "status": "pass",
+  "summary": "Pass, with no blocking and no nonblocking finding. The Phase 3 delta adds a public bus API that builds a fetch URL, a generator script, and wiring in 29 game hosts. The URL is built only from the caller base, the mapped entry, and the picked extension; event names never reach the URL; no user input reaches any URL part. Production fetches are same-origin site files only. Every failure mode is contained: no throw into the game loop, one fetch per event, the synth fallback, and dispose frees sources, buffers, and pending decodes. The generator reads only the TSV, writes only the generated file, and --check writes nothing. No secret or remote URL is committed. The 27 targeted tests, the 8-case bus probe, and the 7-check generator probe all pass, and tsc shows no error in a changed file.",
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "evidence": [
+    "Provenance: `git rev-parse HEAD` printed 13c7b85ca337b137bc481ac94883b686d1c14732, equal to audited_head_sha. `git cat-file -t` on af4e57aff730b1cf8ee9c716802920699f1eaaac and on 13c7b85ca337b137bc481ac94883b686d1c14732 printed commit for both. `git merge-base --is-ancestor af4e57af 13c7b85c` exited 0, and `git merge-base --is-ancestor d7ca282e 13c7b85c` exited 0, so phase_base_sha and role_base_sha (the prior Review B head) are ancestors. The range holds five track commits: 7b75bd3d (T5 test), 51b48de5 (T6 bus), c02dde0f (T6a test), 5b4f5110 (T6b generator, wiring, hosts, demo copy), and 13c7b85c (docs evidence). The other commits in the range belong to chibi_sprouts faces and touch no audited path.",
+    "Applicability: test-strategy.md:406 marks Phase 3 Review B as `Applicable: URL build, fetch scope`. The delta adds a public API that builds a URL and fetches (src/apk3d/audio/bus.ts:231-253), a generator script (scripts/audio-event-map.mjs), and wiring in 29 game hosts, so the security role applies in full.",
+    "URL build: bus.ts:234-237 uses the event name only as a map key and builds the URL as `${this.files.base}${entry}.${this.format}`. Probe S1 (measure/runs/audio_game_integration_20261014/review-b-13c7b85-probe.test.ts) played and preloaded eight hostile names (`../admin`, `..%2f..%2fadmin`, `?query=1`, `#frag`, `https://evil.example/x`, a quote injection, a newline, and a NUL byte). They produced zero fetches, and the only fetch URL stayed the exact constant `/demo/audio/chibi/tap.ogg`. The format extension is an internal two-value constant (bus.ts:221-228), so no string from a caller reaches the extension.",
+    "Entry boundary: probe S2 shows an entry flows verbatim into the URL: entry `../../admin` produced `/demo/audio/chibi/../../admin.ogg`, so the bus does not sanitize entries. All production entries come from src/apk3d/audio/chibi-events.gen.ts, generated from docs/sound-event-map.tsv. Probe S7 and genprobe G7 show all 31 entries are the seven set names and match `^[a-z-]+$`, and tests/audio-event-map.test.ts plus tests/apk3d/audio-wiring.test.ts case 1 pin both directions of the map.",
+    "Base boundary: probe S2b shows the bus does not restrict the base: `https://evil.example/a/` and `//evil.example/b/` each produced a fetch to that origin. No committed caller supplies one. The 29 hosts pass `ctx.soundBase`; only src/host/main.ts:360 sets it, to `import.meta.env.BASE_URL`, a Vite build constant and a same-origin path. mount.ts:118 and phaser-factory.ts:80 forward it only when present. The APK sets none, and wireChibiSounds returns false without a base (src/apk3d/audio/chibi.ts:41), so every event keeps the synth recipe. A grep of all 29 call sites shows each passes a literal event array, so no user input reaches the base or the events.",
+    "Failure handling: probe S5 ran a rejected fetch, a non-OK status, a rejected arrayBuffer, a malformed response object, and a rejected decode. Each mode left play and preload non-throwing, at exactly one fetch, with the synth fallback (oscillator starts greater than zero). bus.ts:242-252 catches every fetch failure and marks the event; bus.ts:255-270 does the same for decode. Committed case 7 of tests/apk3d/audio-files.test.ts covers the three AC4 failure modes with the fetch count pinned at one.",
+    "Retry bounds: bus.ts:236 guards on buffers, loading, and failed, so each event is tried at most once. Probe S3 ran 10 plays, 3 preloads, then 5 plays of an event whose fetch returns 500; the fetch count stayed 1. Dispose clears the caches (bus.ts:201-219); a bus unlocked again after dispose re-fetches each event once (probe S4 counted 2 fetches across a dispose). Dispose is terminal in every committed caller, because each host owns its bus. Memory stays bounded: buffers and pendingDecode hold at most one entry per mapped event, 31 entries, and the source bytes total at most 100,000 per the AC5 budget.",
+    "Dispose and sources: bus.ts:201-219 stops each tracked source and closes the context once; startBuffer (bus.ts:273-282) untracks a source onended. Probe S6 ended one of three sources and disposed: the ended source was not stopped again, and the two live sources were stopped. Committed case 10 covers stop and close.",
+    "Generator scope: scripts/audio-event-map.mjs reads only docs/sound-event-map.tsv and writes only src/apk3d/audio/chibi-events.gen.ts in write mode; --check reads the target and writes nothing. The file imports node:fs, node:path, and node:url only, with no shell, no environment read, and no network. Genprobe G1 to G7 ran the copied script in a temp tree: write mode created exactly one file; --check changed no byte, mtime, or size; a changed TSV row exited 1 and named the event; an extra generated key exited 1; a missing target exited 1 with `cannot read` and wrote nothing; the regenerated bytes equal the committed file; all 31 entries are set names.",
+    "Secrets and remote URLs: a grep of the text diff for URL, key, token, secret, password, and bearer patterns found no match. A strings scan of the 14 committed audio files found no http, www, token, or key marker; the AC2 argv strips metadata and ID3. The 14 files of demo/public/audio/chibi match sounds/chibi byte for byte under cmp per name, and the folder holds exactly 14 files.",
+    "Gates: the four-file targeted command through heavy-run.sh gave 4 files passed and 27 of 27 tests passed (audio-files 10, wiring 5, imports 4, event-map 8). `node node_modules/typescript/bin/tsc --noEmit` through heavy-run.sh exited 2 with 51 errors, all in assets/ (35) and tests/ (16: 13 storytime concurrent-track, 2 castle-defense, 1 part), and zero in src/; the count matches the plan Green record, and none is in an audited file. `node scripts/audio-event-map.mjs --check` exited 0 with `31 events current`, and git status stayed clean. Prettier --check passed on all five run artifacts. The bus probe gave 8 of 8 and the generator probe gave 7 of 7, each rerun after formatting.",
+    "A2: not applicable. The range holds no draft-to-published flip: a grep of the audited diff for published, draft, consent, and anonymi found nothing. The track holds no personal data and no named subject.",
+    "A6: measure/tracks.md links the track without a security claim, and metadata.json keeps status in_progress. The plan Green claims match my independent reruns: 19 of 19 tests across the three named files, 51 tsc errors with none in a changed file, and the generator check. The plan records no security state as resolved, so there is nothing to overstate.",
+    "Observation, no finding: the bus trusts its caller for the base and the entries (probes S2 and S2b). That is the AC4 API design, every committed caller passes constants, and no user input reaches the URL.",
+    "Observation, no finding: dispose resets the file state, so a bus unlocked again after dispose re-fetches each event once (probe S4). Dispose is terminal in all committed callers, so the re-fetch does not occur in production wiring.",
+    "Observation, no finding: the generator interpolates TSV fields into TypeScript source unescaped. The Phase 1 test pins the exact 58 event names and the seven source values, so a TSV edit that would inject code fails that gate, and the TSV is developer input, not user input.",
+    "Independence and CONTEST: I did not read the review-a and review-c result files that share the run folder. No CONTEST item reached Review B in this round, and the brief lists no earlier Review B finding for Phase 3."
+  ],
+  "commands": [
+    "git rev-parse HEAD -> 13c7b85ca337b137bc481ac94883b686d1c14732; git cat-file -t af4e57aff730b1cf8ee9c716802920699f1eaaac 13c7b85ca337b137bc481ac94883b686d1c14732 -> commit commit; git merge-base --is-ancestor af4e57af 13c7b85c -> exit 0; git merge-base --is-ancestor d7ca282e 13c7b85c -> exit 0",
+    "git log --format='%h %s' af4e57af..13c7b85c -> five track commits (7b75bd3d, 51b48de5, c02dde0f, 5b4f5110, 13c7b85c) plus chibi_sprouts faces commits; git diff --name-status af4e57af..13c7b85c -> audited paths match the brief filter",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-files.test.ts tests/apk3d/audio-wiring.test.ts tests/apk3d/imports.test.ts tests/audio-event-map.test.ts' -> 4 files passed, 27 of 27 tests passed",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/typescript/bin/tsc --noEmit' -> exit 2, 51 'error TS' lines (35 in assets/, 16 in tests/), zero in src/ or an audited file",
+    "node scripts/audio-event-map.mjs --check -> exit 0, 'audio-event-map: 31 events current'; git status --short src/apk3d/audio/chibi-events.gen.ts -> empty",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --config measure/runs/audio_game_integration_20261014/review-b-13c7b85-vitest.config.mjs' -> 1 file passed, 8 of 8 probe tests passed (run twice, including after Prettier formatting)",
+    "node measure/runs/audio_game_integration_20261014/review-b-13c7b85-genprobe.mjs -> SUMMARY pass=7 fail=0 (run twice, including after Prettier formatting)",
+    "git diff af4e57af..13c7b85c --text -- src/ scripts/audio-event-map.mjs tests/apk3d/ | grep -niE 'https?://|api[_-]?key|token|secret|password|bearer' -> no match; strings scan of demo/public/audio/chibi/* for http/www/token/key -> no match",
+    "git diff af4e57af..13c7b85c --text -- src/ scripts/audio-event-map.mjs tests/apk3d/ | grep -niE 'published|draft|consent|anonymi' -> no match (A2)",
+    "for n in tap right wrong star pop whoosh level-end; do cmp -s sounds/chibi/$n.ogg demo/public/audio/chibi/$n.ogg && cmp -s sounds/chibi/$n.mp3 demo/public/audio/chibi/$n.mp3; done -> 7 names, 14 matches; ls demo/public/audio/chibi | wc -l -> 14",
+    "grep -rn 'soundBase' src/ -> set only at src/host/main.ts:360 (import.meta.env.BASE_URL), forwarded at mount.ts:118 and phaser-factory.ts:80, consumed by 29 hosts with literal event arrays; grep -n 'if (!soundBase) return false' src/apk3d/audio/chibi.ts -> :41",
+    "grep -c 'error TS' $OUT on the saved full tsc output -> 51; per-file counts: assets 35, tests 16 (13 storytime, 2 castle-defense, 1 part)",
+    "node node_modules/prettier/bin/prettier.cjs --check measure/runs/audio_game_integration_20261014/review-b-13c7b85-probe.test.ts measure/runs/audio_game_integration_20261014/review-b-13c7b85-genprobe.mjs measure/runs/audio_game_integration_20261014/review-b-13c7b85-vitest.config.mjs -> exit 0",
+    "git status --short -- src scripts/audio-event-map.mjs tests/apk3d demo/public/audio sounds -> clean for audited paths (only unrelated untracked mockup JPGs elsewhere); ls -d /tmp/review-b-* -> none"
+  ],
+  "changed_files": [
+    "measure/runs/audio_game_integration_20261014/review-b-13c7b85.json",
+    "measure/runs/audio_game_integration_20261014/review-b-13c7b85.log",
+    "measure/runs/audio_game_integration_20261014/review-b-13c7b85-probe.test.ts",
+    "measure/runs/audio_game_integration_20261014/review-b-13c7b85-genprobe.mjs",
+    "measure/runs/audio_game_integration_20261014/review-b-13c7b85-vitest.config.mjs"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "bus.ts:231-253 builds the URL from base, entry, and extension only, and probes S1-S6 confirmed injection containment, one fetch per event, and dispose cleanup (8 of 8 passed)."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 5,
+      "evidence": "Red logs record 10 of 10 and 5 of 5 failing on the absent API, and the Green cases map one-to-one to AC4 rules 1-8 with positive counters."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The five track commits touch only the bus, the audio barrel, the generator, the generated map, the helper, the factory context, the 29 hosts, and the demo audio copy."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "Every claim carries a command result or a file:line, including bus.ts:234-237 for the URL build and chibi.ts:41 for the empty-base guard."
+    }
+  ]
+}

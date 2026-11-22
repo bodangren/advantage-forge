@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: review-a
+status: complete
+track: audio_game_integration_20261014
+phase: Phase 3: File playback in the AudioBus
+commits: none
+tests_run: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-files.test.ts tests/apk3d/audio-files.adversarial.test.ts tests/apk3d/audio-files.adversarial-r2.test.ts tests/apk3d/audio-wiring.test.ts tests/apk3d/audio-wiring.adversarial.test.ts tests/apk3d/imports.test.ts tests/apk3d/audio-files.adversarial-r3.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts' exited 0 with 8 files, 61 passed, and 2 skipped.
+files_changed: measure/runs/audio_game_integration_20261014/review-a-a414b40.json; measure/runs/audio_game_integration_20261014/review-a-a414b40.log
+plan_updates: none
+known_failures: F2 [Nit] review-a: tests/apk3d/no-unpolyfilled-builtins.test.ts:22-29 strips comments before strings; a URL string can hide a later unsupported call on the same line. This test-tool gap has no current user-reachable product defect and should be recorded as tech debt.
+handoff: F1 is withdrawn: the local helper uses Object.prototype.hasOwnProperty.call and guards the event-map reads in requestFile, useSoundFiles, isCurrent, and chibiPreload. The inherited-remap pin passes. Route F2 to tech debt, not Green, because no current user can reach this scanner gap. The eight-file suite passes with 61 passed and two TD-44 skips. Audit bound to phase_base_sha af4e57aff730b1cf8ee9c716802920699f1eaaac, role_base_sha 8a08830554d8e6e88aeebdfa0af0523b205ac2f0, and audited_head_sha a414b40604bb6bc1cecc65605b7ae5e59789a541.
+END_MEASURE_AGENT_RESULT

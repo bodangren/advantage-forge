@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: review-a
+status: complete
+track: audio_game_integration_20261014
+phase: Phase 3: File playback in the AudioBus
+commits: none
+tests_run: Heavy-run targeted suite passes 3 files, 21 tests. Generator, 14-file byte comparison, Prettier, and diff checks pass. Fresh tsc was refused by heavy-run under the PM rule; the Green log records 51 errors outside changed files.
+files_changed: measure/runs/audio_game_integration_20261014/review-a-b000b91.json; measure/runs/audio_game_integration_20261014/review-a-b000b91.log
+plan_updates: none
+known_failures: Tsc was not rerun because heavy-run refused with exit 65 under the PM rule. T6d Green records 51 errors, none in changed files.
+handoff: Verdict PASS. F1 withdrawn: the original unlock pulse and resume() are restored, and case 11 distinguishes the pulse from game sounds. F2 withdrawn: the host-list test checks literal play names, ternary branches, and SFX values for all 29 hosts. Facts changed: both Review A findings are closed; Phase 3 audit status is pass.
+END_MEASURE_AGENT_RESULT

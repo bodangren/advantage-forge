@@ -1,0 +1,23 @@
+MEASURE_AGENT_RESULT
+role: measure-review-b-security
+track: audio_game_integration_20261014
+phase: Phase 3: File playback in the AudioBus
+round: 5
+phase_base_sha: af4e57aff730b1cf8ee9c716802920699f1eaaac
+role_base_sha: e3405e703db4b9f97d8ac2b1030a1b3296fb9676
+audited_head_sha: 8a08830554d8e6e88aeebdfa0af0523b205ac2f0
+security_applicability: applicable
+route: kimi-code-plan-cn/kimi-for-coding
+status: fail
+summary: Fail, round 5, on one blocking finding. The T6i own-property guard is sound and closes the junk-URL path for inherited names in every lookup that can start a fetch (probes G1-G4 pass 4 of 4; round-4 probe 7 of 7, round-3 probe 8 of 8, round-2 probe 10 of 10, committed seven-file gate 61 passed with the 2 TD-44 skips). But the guard lines call Object.hasOwn with no fallback, and iOS 15.0-15.3 Safari and Chrome WebView 80-92 lack it while the device gate admits them (minIosVersion 15, minWebViewChromeVersion 80), so Chibi wiring throws on the first event and direct AudioBus preload or play throws instead of loading the mapped sound. This defect sits in the remediation-changed lines; the adversarial pass at this same HEAD recorded it as F1 with retry_implementation, the failing-first pin 0750febc is committed after the audited HEAD, and the audio sources at HEAD are byte-identical to the audited HEAD. The fix is a local hasOwn fallback; the verified guard semantics need no redesign. No CONTEST item of my earlier findings reached Review B this round.
+blocking_findings:
+- F1 [Blocker] adversarial-testing: T6i calls Object.hasOwn in src/apk3d/audio/chibi.ts:24 and src/apk3d/audio/bus.ts:263 with no fallback. Safari on iOS 15.0-15.3 and Chrome WebView 80-92 lack this method, and the device gate admits those versions (src/apk3d/contracts/manifest.ts defaults minIosVersion 15 and minWebViewChromeVersion 80, enforced at src/apk3d/device/gate.ts:115-116), so Chibi wiring throws on the first event and can abort 2D game startup, and a direct AudioBus preload or an unbuffered play throws TypeError instead of loading the mapped sound. Kept from adversarial-p3-8a08830.json F1 and reproduced with the 0750febc pin, 2 failed of 6 at HEAD with TypeError at bus.ts:263.
+nonblocking_findings: none
+retry_recommendation: retry_implementation
+confidence: high
+paths:
+- measure/runs/audio_game_integration_20261014/review-b-8a08830.json
+- measure/runs/audio_game_integration_20261014/review-b-8a08830.log
+- measure/runs/audio_game_integration_20261014/review-b-8a08830-probe.test.ts
+- measure/runs/audio_game_integration_20261014/review-b-8a08830-vitest.config.mjs
+END_MEASURE_AGENT_RESULT

@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "role": "review-c",
+  "track": "audio_game_integration_20261014",
+  "phase": "Phase 3: File playback in the AudioBus",
+  "phase_base_sha": "af4e57aff730b1cf8ee9c716802920699f1eaaac",
+  "role_base_sha": "b000b91e1fd5c734557818d3912d48f4f9d9c03b",
+  "audited_head_sha": "9d150f629ef8346439f29e2927a83f90dfe17324",
+  "status": "fail",
+  "summary": "The five requested audio test files pass. The map replacement path can still play a stale file after its event mapping changes.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F4 [Major] review-c: src/apk3d/audio/bus.ts:119-124,282-294 clears the loading marker when an event mapping changes, but an older request can still install its decoded buffer when that event remains mapped. tests/apk3d/audio-files.adversarial.test.ts expects the old file to play after changing correct from right to wrong, so callers hear stale audio instead of the newly mapped file. Bind the request to its mapping and reject stale completion."
+  ],
+  "evidence": [
+    "The exact delta changes src/apk3d/audio/bus.ts and audio test/parser files; it changes no host or 3D view path.",
+    "src/apk3d/audio/bus.ts:105-129 preserves the public method signatures and documents null clearing and silent preloading.",
+    "src/apk3d/audio/bus.ts:119-124 clears changed-event loading state, but src/apk3d/audio/bus.ts:282-294 accepts a stale decode if the event remains mapped.",
+    "tests/apk3d/audio-files.adversarial.test.ts:346-367 preserves an in-flight old URL across a changed mapping and then counts its stale buffer as played.",
+    "src/apk3d/audio/chibi.ts:34-45 wires files and preloads events on every helper call; the five-file test command passes the double-wire case.",
+    "docs/apk-port.md:240-247 documents the proposed Chibi audio path and the site-base soundBase behavior.",
+    "Current HEAD eecf3cbac1f7b8a871fbd5ebc24bebad4d82a457 differs from audited HEAD 9d150f629ef8346439f29e2927a83f90dfe17324 only at assets/sprout-dad.ts."
+  ],
+  "commands": [
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-files.test.ts tests/apk3d/audio-files.adversarial.test.ts tests/apk3d/audio-wiring.test.ts tests/apk3d/audio-wiring.adversarial.test.ts tests/apk3d/imports.test.ts' — PASS, 5 files and 45 tests.",
+    "git diff --check b000b91e1fd5c734557818d3912d48f4f9d9c03b..9d150f629ef8346439f29e2927a83f90dfe17324 -- src/apk3d/audio/bus.ts tests/apk3d/audio-wiring-parser.ts tests/apk3d/audio-files.adversarial.test.ts tests/apk3d/audio-wiring.adversarial.test.ts tests/apk3d/audio-wiring.test.ts docs/apk-port.md src/games/*/view2d/game.ts — PASS.",
+    "git rev-parse 9d150f629ef8346439f29e2927a83f90dfe17324^{commit} — PASS; current HEAD eecf3cbac1f7b8a871fbd5ebc24bebad4d82a457 differs only by assets/sprout-dad.ts."
+  ],
+  "changed_files": [
+    "src/apk3d/audio/bus.ts",
+    "tests/apk3d/audio-files.adversarial.test.ts",
+    "tests/apk3d/audio-wiring-parser.ts",
+    "tests/apk3d/audio-wiring.adversarial.test.ts",
+    "tests/apk3d/audio-wiring.test.ts"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [
+    "F4: a decode from the previous event mapping can replace the new mapping's file buffer after map changes, yielding stale audio."
+  ],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "contract_applicability": "applicable",
+  "retry_recommendation": "retry_implementation",
+  "confidence": "high",
+  "route": "openai/gpt-6-luna#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 3,
+      "evidence": "src/apk3d/audio/bus.ts:282-294 checks only whether the event still exists, so an old mapped file can replace the new mapping."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 3,
+      "evidence": "The five-file heavy-run command passes 45 tests, but the map-swap case asserts that stale audio plays."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The b000b91..9d150f6 delta changes the bus and audio tests; it changes no host or 3D view path."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "The heavy-run command passed, and bus.ts:119-124 plus audio-files.adversarial.test.ts:346-367 show the mapping race and stale-play expectation."
+    }
+  ]
+}

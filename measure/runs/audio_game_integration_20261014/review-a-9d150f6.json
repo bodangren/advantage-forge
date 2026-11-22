@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "role": "review-a",
+  "track": "audio_game_integration_20261014",
+  "phase": "Phase 3: File playback in the AudioBus",
+  "baseline_sha": "af4e57aff730b1cf8ee9c716802920699f1eaaac",
+  "phase_base_sha": "af4e57aff730b1cf8ee9c716802920699f1eaaac",
+  "role_base_sha": "b000b91e1fd5c734557818d3912d48f4f9d9c03b",
+  "audited_head_sha": "9d150f629ef8346439f29e2927a83f90dfe17324",
+  "status": "fail",
+  "summary": "The Phase 3 code and tests pass the requested five-file suite, but an old in-flight decode can repopulate a changed event and play the wrong file. The checkout HEAD also differs from the requested audited head.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F1 [Major] review-a: src/apk3d/audio/bus.ts:125-136, 288-299 clears the changed event's buffer and loading marker but does not invalidate the outstanding fetch/decode. decodeData stores the result whenever the current event has any mapping, without checking that the mapping or base still matches the request. If correct maps to right, its fetch starts, then correct maps to wrong before the decode resolves, the old right buffer is stored and play('correct') plays right under the new map. The adversarial test `keeps the in-flight fetch URL when the map is swapped mid-flight` currently accepts this stale buffer. Preserve per-event retry behavior, but bind each async load to the mapping/version that started it and reject stale completion."
+  ],
+  "evidence": [
+    "Provenance: requested phase_base_sha af4e57aff730b1cf8ee9c716802920699f1eaaac resolves. role_base_sha b000b91e1fd5c734557818d3912d48f4f9d9c03b is the previous Review A audited head. The requested audited_head_sha resolves to 9d150f629ef8346439f29e2927a83f90dfe17324.",
+    "The actual checkout HEAD is eecf3cbac1f7b8a871fbd5ebc24bebad4d82a457, not audited_head_sha. The current HEAD adds later asset and plan commits, so the required audited_head_sha-equals-HEAD provenance check cannot pass here.",
+    "git diff --quiet 9d150f629ef8346439f29e2927a83f90dfe17324 HEAD over the Phase 3 bus, audio test/parser files, and track spec/plan/test-strategy exits 0; those audited paths match the requested target.",
+    "Read Phase 3 AC4 and AC9, plan Phase 3, track test-strategy.md, prior Review A and adversarial results, T6e Red log, and T6f Green log.",
+    "Read the exact requested delta b000b91e..9d150f629ef8346439f29e2927a83f90dfe17324 for src/apk3d/audio/bus.ts, the shared parser and wiring tests, adversarial tests, and the Phase 3 plan.",
+    "F1 code path: useSoundFiles deletes buffers/loading for changed mappings at bus.ts:125-136. The earlier fetch remains live; decodeData checks only `this.files?.events[name]` before storing at bus.ts:288-299. The in-flight swap fixture confirms the changed-map path remains accepted without a mapping-identity check.",
+    "Unlock pulse closure confirmed: the pulse is inside try/catch; ctx.resume() and the mood restart are after the catch at bus.ts:169-181. The adversarial test `still unlocks when the silent pulse buffer cannot be created` passes.",
+    "Vanished-event closure confirmed: decodeData does not store when the current event mapping is absent. Null map, changed base, changed or vanished mapping invalidate the respective state, while equal mappings preserve it.",
+    "Failed events remain in the failed set after map changes, preserving AC4 rule 5.",
+    "The shared parser is used by ordinary and adversarial wiring tests. Its call scanner runs on comment-stripped text with string bodies blanked; the ternary, SFX values, and sprite-play cases remain covered.",
+    "The required five-file heavy-run command exits 0 with 5 files and 45 tests passing.",
+    "The current Phase 3 plan's T6e/T6f test claim of 5 files and 45 tests matches the observed test result.",
+    "build-graph is installed, but no graph database exists in the repository; exported-symbol and caller analysis could not run without one.",
+    "No framework-wide anti-pattern checks apply because the phase changed neither orchestration scripts, contract tests, nor the registry."
+  ],
+  "commands": [
+    "git rev-parse HEAD => eecf3cbac1f7b8a871fbd5ebc24bebad4d82a457; differs from requested audited_head_sha 9d150f629ef8346439f29e2927a83f90dfe17324",
+    "git rev-parse 9d150f629ef8346439f29e2927a83f90dfe17324^{commit} => 9d150f629ef8346439f29e2927a83f90dfe17324",
+    "git diff --name-only b000b91e..9d150f629ef8346439f29e2927a83f90dfe17324 => the Phase 3 bus/tests/parser/plan changes plus unrelated Chibi assets and plan evidence",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-files.test.ts tests/apk3d/audio-files.adversarial.test.ts tests/apk3d/audio-wiring.test.ts tests/apk3d/audio-wiring.adversarial.test.ts tests/apk3d/imports.test.ts' => exit 0; 5 files, 45 tests"
+  ],
+  "changed_files": [
+    "measure/runs/audio_game_integration_20261014/review-a-9d150f6.json",
+    "measure/runs/audio_game_integration_20261014/review-a-9d150f6.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [
+    "F1: A changed mapping can receive a decoded buffer from the old mapping after invalidation, so play() can return the wrong file."
+  ],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "escalate_human",
+  "confidence": "medium",
+  "route": "openai/gpt-6-luna#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 3,
+      "evidence": "The five-file suite passes, but bus.ts:288-299 can store an old decode after a mapping changes."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 3,
+      "evidence": "The adversarial suite covers map changes but its in-flight swap test accepts stale decoded data."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The reviewed Phase 3 implementation delta changes only the planned bus behavior and test support."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 3,
+      "evidence": "The five-file heavy-run passes, but the requested audited head is not the checkout HEAD."
+    }
+  ]
+}

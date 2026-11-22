@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: phase-acceptance
+status: blocked
+track: audio_game_integration_20261014
+phase: Phase 3: File playback in the AudioBus
+commits: none
+tests_run: No acceptance tests ran. Git and static task-marker checks ran. All 11 completion SHAs resolve in range.
+files_changed: phase-acceptance-p3-82b9c88.json, phase-acceptance-p3-82b9c88.log
+plan_updates: none
+known_failures: Review A/B/C and adversarial results do not cover the T6i implementation. The plan records two F3 dispositions. TD-44 leaves two skipped AC4 cases.
+handoff: Correct the F3 record. Obtain Review A/B/C, adversarial, and UX results bound to the resulting HEAD before rerunning acceptance.
+END_MEASURE_AGENT_RESULT

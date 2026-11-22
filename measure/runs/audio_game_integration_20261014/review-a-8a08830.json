@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "role": "review-a",
+  "track": "audio_game_integration_20261014",
+  "phase": "Phase 3: File playback in the AudioBus",
+  "baseline_sha": "af4e57aff730b1cf8ee9c716802920699f1eaaac",
+  "phase_base_sha": "af4e57aff730b1cf8ee9c716802920699f1eaaac",
+  "role_base_sha": "e3405e703db4b9f97d8ac2b1030a1b3296fb9676",
+  "audited_head_sha": "8a08830554d8e6e88aeebdfa0af0523b205ac2f0",
+  "status": "fail",
+  "summary": "T6i blocks ordinary inherited event names, but it does not guard the in-flight current-map check. A remap to an inherited-only event can still install and play the old file.",
+  "blocking_findings": [
+    "F1 [Blocker] review-a: src/apk3d/audio/bus.ts:122,278; T6i adds an own-property guard to requestFile, but the in-flight validation still reads this.files.events[name] without checking ownership. Reproduction: start a load for an own event tap->tap, then call useSoundFiles with the same base and an events object inheriting tap->tap but with no own tap property. useSoundFiles compares inherited values as equal and does not invalidate the load; isCurrent also accepts the inherited value, installs the old decoded buffer, and play('tap') can play a file for an unmapped event. This contradicts the own-property guard's unmapped-event behavior. Check ownership in all event-map reads and add a regression test for an in-flight load followed by an inherited-only remap."
+  ],
+  "nonblocking_findings": [],
+  "evidence": [
+    "T6i changes src/apk3d/audio/chibi.ts:24 and src/apk3d/audio/bus.ts:263-264. chibiPreload filters own CHIBI_EVENTS keys, and requestFile rejects non-own keys before reading their entry.",
+    "src/apk3d/audio/bus.ts:121-125 compares previous.events[name] and files.events[name] using names collected from Object.keys; a same-valued inherited property can make a formerly-own mapping appear unchanged.",
+    "src/apk3d/audio/bus.ts:275-280 isCurrent reads this.files.events[name] without Object.hasOwn, so an in-flight load can treat an inherited value as a current mapping.",
+    "tests/apk3d/audio-files.adversarial-r2.test.ts:341-363 checks inherited constructor/toString names against an ordinary Chibi map, but does not test an in-flight load followed by an inherited-only map.",
+    "The six-file heavy-run passed: 6 files; 53 passed and the two TD-44-pinned cases skipped.",
+    "Both skipped cases at tests/apk3d/audio-files.adversarial-r2.test.ts:165-166 and :224-225 name TD-44 and identify their skipped late findings. measure/tech-debt.md:43 records TD-44, its F1/F2 lifecycle issues, fixed F3, and the reopen trigger.",
+    "The current HEAD equals audited_head_sha 8a08830554d8e6e88aeebdfa0af0523b205ac2f0. No later commits need exclusion.",
+    "build-graph is installed, but the existing measure/graph.db has no nodes table, so symbol and caller queries are unavailable."
+  ],
+  "commands": [
+    "git rev-parse HEAD => 8a08830554d8e6e88aeebdfa0af0523b205ac2f0",
+    "git rev-parse 8a08830554d8e6e88aeebdfa0af0523b205ac2f0 => 8a08830554d8e6e88aeebdfa0af0523b205ac2f0",
+    "git diff e3405e703db4b9f97d8ac2b1030a1b3296fb9676 8a08830554d8e6e88aeebdfa0af0523b205ac2f0 -- src/apk3d/audio/chibi.ts src/apk3d/audio/bus.ts tests/apk3d/audio-files.adversarial-r2.test.ts => T6i own-property guards, adversarial r2 coverage, and TD-44 skip pins",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-files.test.ts tests/apk3d/audio-files.adversarial.test.ts tests/apk3d/audio-files.adversarial-r2.test.ts tests/apk3d/audio-wiring.test.ts tests/apk3d/audio-wiring.adversarial.test.ts tests/apk3d/imports.test.ts' => exit 0; 6 files; 53 passed; 2 skipped",
+    "git diff --check e3405e703db4b9f97d8ac2b1030a1b3296fb9676 8a08830554d8e6e88aeebdfa0af0523b205ac2f0 => exit 0",
+    "build-graph files /home/daniebo/Desktop/advantage-forge/measure/graph.db src/apk3d/audio => exit 4; no nodes table"
+  ],
+  "changed_files": [
+    "src/apk3d/audio/chibi.ts",
+    "src/apk3d/audio/bus.ts",
+    "tests/apk3d/audio-files.adversarial-r2.test.ts",
+    "measure/tracks/audio_game_integration_20261014/plan.md",
+    "measure/tracks/audio_game_integration_20261014/test-strategy.md",
+    "measure/tech-debt.md"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [
+    "An in-flight load may install a file after the map changes to an inherited-only event entry, despite the T6i own-property guard."
+  ],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "retry_implementation",
+  "confidence": "high",
+  "route": "openai/gpt-6-luna#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 2,
+      "evidence": "src/apk3d/audio/bus.ts:121-125 and :275-280 allow an inherited-only remap to preserve and install an in-flight file."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 3,
+      "evidence": "The six-file suite passes 53 tests, but the inherited-name case does not cover a pending load across an inherited-only remap."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The reviewed delta limits implementation changes to the two planned own-property guards and associated tests and records."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 4,
+      "evidence": "The six-file heavy-run and exact e3405e7..8a08830 code diff were checked; the missed async case follows from the map comparisons and URL validation."
+    }
+  ]
+}

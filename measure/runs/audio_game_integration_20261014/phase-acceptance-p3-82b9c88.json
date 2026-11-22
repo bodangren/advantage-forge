@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "role": "phase-acceptance",
+  "track": "audio_game_integration_20261014",
+  "phase": "Phase 3: File playback in the AudioBus",
+  "baseline_sha": "82b9c88506b2185f0b1d2daed3f2449eff23e4e7",
+  "phase_base_sha": "af4e57aff730b1cf8ee9c716802920699f1eaaac",
+  "role_base_sha": "82b9c88506b2185f0b1d2daed3f2449eff23e4e7",
+  "audited_head_sha": "82b9c88506b2185f0b1d2daed3f2449eff23e4e7",
+  "status": "fail",
+  "summary": "Phase 3 does not pass at 82b9c88. Review A/B/C and adversarial testing do not cover the final implementation. The plan records two dispositions for F3.",
+  "blocking_findings": [
+    "F1 [Blocker] phase-acceptance: Reviews A and B target e3405e7, Review C targets 4d4b0d27, and adversarial round 2 fails at 09f808bd. Commit 1b7312f4 changes bus.ts and chibi.ts after all four audits. The test-only exception does not apply. Obtain current results before acceptance.",
+    "F2 [Blocker] phase-acceptance: plan.md:489 and :492 give F3 both one-fix-round and tech-debt dispositions. The contract requires one line per finding. Record one disposition that agrees with T6i and TD-44."
+  ],
+  "nonblocking_findings": [
+    "F3 [Nit] phase-acceptance: Correct test-strategy.md:419 to allow the 29 planned 2D host edits without allowing rules changes. Line 411 also predates the game wiring.",
+    "F4 [Nit] phase-acceptance: Cross-reference the preload exception in spec.md:233-234 from AC4 rule 1. The rule alone says format selection occurs inside the first unlock.",
+    "F5 [Nit] ux-browser-review: The active Rune Match canvas has no accessible name. The browser review reports an empty accessibility snapshot. Route this issue to a UI accessibility track.",
+    "F6 [Nit] phase-acceptance: Carry TD-44 under the recorded PM decision. The two skipped tests preserve reproducers for the stale preload and the late decode after disposal. The skips do not prove those AC4 behaviors."
+  ],
+  "evidence": [
+    "The start and final HEAD checks both returned 82b9c88506b2185f0b1d2daed3f2449eff23e4e7. The phase base is an ancestor. No tracked audio audit path has a worktree change.",
+    "022eb9f9..82b9c885 changes only the Chibi Sprouts plan. The UX result already records audited_head_sha 82b9c885 and reports six Ogg responses with HTTP 200 in muted Chromium.",
+    "09f808bd and 5024ddeb each touch only tests/apk3d/audio-files.adversarial-r2.test.ts. Neither can carry the reviews across 1b7312f4. No prerequisite HEAD exception was allowed.",
+    "All eleven Phase 3 task lines have completed markers and SHAs. Each SHA resolves to its named task commit inside the phase range.",
+    "T6i adds an own-property check in bus.ts:263 and chibi.ts:24. This blocks inherited names before URL construction and preload selection. The Green log reports the inherited-name case failing before T6i and passing after it. Acceptance did not rerun it.",
+    "The exact diff changes 29 game host files and no 3D view or sim files. It changes no Measure framework contract tests, filters, or tracks registry. A3, A4, A6, and A7 do not apply.",
+    "A5 review found dated gate claims, a historical failing adversarial run, and the later skip decision. The current exit codes remain unverified because the prerequisites failed.",
+    "The PM noted that the third remediation round ran without an escalation key. The track metadata contains no escalation key. This report does not approve that process deviation.",
+    "Leave the release worktree at e01ac17b, the shelf-sync worktree and branch at 623e7b5d, and wip/oct-skill-docs-20261023 to their owners. This audit changed none of them."
+  ],
+  "commands": [
+    "git rev-parse HEAD; git merge-base --is-ancestor af4e57af HEAD — audited SHA current; ancestry exit 0.",
+    "git diff --stat 022eb9f9 HEAD; git log --name-status e3405e7..HEAD — confirmed the separate Sprouts plan commit and the intervening T6i implementation changes.",
+    "git diff --stat af4e57af..HEAD; git diff --check af4e57af HEAD — read the phase range; no whitespace errors.",
+    "git diff --name-status 4d4b0d27 09f808bd; git show --stat 09f808bd 5024ddeb 1b7312f4 022eb9f9 82b9c885 — identified the test-only, implementation, and plan changes.",
+    "Static plan marker and SHA check — 11 complete tasks; every SHA resolves and is in range. Late-finding IDs: F3, F1, F2, F3.",
+    "Not run: six-file audio gate, aggregate project gate with the requested exclusion, doctor, and generate --check. The prerequisite HEAD check failed.",
+    "measure_interphase_checks.py audit-result --role phase-acceptance --file measure/runs/audio_game_integration_20261014/phase-acceptance-p3-82b9c88.json — valid audit result."
+  ],
+  "changed_files": [
+    "measure/runs/audio_game_integration_20261014/phase-acceptance-p3-82b9c88.json",
+    "measure/runs/audio_game_integration_20261014/phase-acceptance-p3-82b9c88.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "retry_audit",
+  "confidence": "high",
+  "route": "openai/gpt-6.2-sol#high",
+  "reviewer_ratings": [
+    {
+      "reviewer_role": "review-a",
+      "reviewer_route": "openai/gpt-6-luna#high",
+      "agreed": false,
+      "score": 1,
+      "evidence": "The stale-load verdict missed the pre-unlock branch at bus.ts:299-304, which can replace newer bytes."
+    },
+    {
+      "reviewer_role": "review-b",
+      "reviewer_route": "kimi-code-plan-cn/kimi-for-coding",
+      "agreed": true,
+      "score": 3,
+      "evidence": "The T6h diff adds no URL source, but the disposal probe did not cover a decode that completes after disposal."
+    },
+    {
+      "reviewer_role": "review-c",
+      "reviewer_route": "openai/gpt-6-luna#high",
+      "agreed": false,
+      "score": 1,
+      "evidence": "The public API verdict missed the stale pre-unlock preload path at bus.ts:299-304."
+    },
+    {
+      "reviewer_role": "adversarial",
+      "reviewer_route": "openai/gpt-6.2-sol#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "The tests at lines 166, 225, and 344 match the three reported behaviors in the pre-T6i code."
+    }
+  ]
+}

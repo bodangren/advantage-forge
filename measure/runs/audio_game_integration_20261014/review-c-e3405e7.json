@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "role": "review-c",
+  "track": "audio_game_integration_20261014",
+  "phase": "Phase 3: File playback in the AudioBus",
+  "phase_base_sha": "af4e57aff730b1cf8ee9c716802920699f1eaaac",
+  "role_base_sha": "4d4b0d271bcc554b23220941d522c0778581beec",
+  "audited_head_sha": "4d4b0d271bcc554b23220941d522c0778581beec",
+  "status": "pass",
+  "summary": "F4 is closed, the five audio tests pass, and the audio phase paths are identical between the original audited commit and current HEAD.",
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "evidence": [
+    "F4 withdrawn: src/apk3d/audio/bus.ts:100-102 binds pending bytes to their URL; lines 281-323 compare the completing URL with the current event mapping before storing a buffer or marking a failure.",
+    "tests/apk3d/audio-files.adversarial.test.ts:346-410 covers stale decode and stale fetch after a remap; the five-file test run passes all 46 tests.",
+    "src/apk3d/audio/bus.ts:107-131 keeps useSoundFiles and preload signatures stable. Same-map wiring retains work; changed mappings clear the event state; preload may hold fetched bytes until unlock creates the decoding context.",
+    "src/apk3d/audio/bus.ts:144-185 documents gesture unlock and implements queued decode replay, with a guarded silent pulse and resume.",
+    "docs/apk-port.md:240-247 matches the launch soundBase and audio/chibi/ URL. The phase diff updates 29 2D game hosts and zero 3D-view paths.",
+    "Current HEAD is 4d4b0d271bcc554b23220941d522c0778581beec. git diff --quiet e3405e703db4b9f97d8ac2b1030a1b3296fb9676 HEAD -- src scripts tests demo docs measure/tracks/audio_game_integration_20261014 exited 0, confirming no scoped Phase 3 paths changed."
+  ],
+  "commands": [
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-files.test.ts tests/apk3d/audio-files.adversarial.test.ts tests/apk3d/audio-wiring.test.ts tests/apk3d/audio-wiring.adversarial.test.ts tests/apk3d/imports.test.ts' — PASS, 5 files and 46 tests.",
+    "git rev-parse HEAD — 4d4b0d271bcc554b23220941d522c0778581beec.",
+    "git diff --quiet e3405e703db4b9f97d8ac2b1030a1b3296fb9676 HEAD -- src scripts tests demo docs measure/tracks/audio_game_integration_20261014 — exit 0; scoped paths are unchanged.",
+    "git diff --name-only af4e57aff730b1cf8ee9c716802920699f1eaaac..e3405e703db4b9f97d8ac2b1030a1b3296fb9676 -- 'src/games/*/view2d/game.ts' | wc -l — 29; 3D-view path count — 0.",
+    "git diff --quiet e3405e703db4b9f97d8ac2b1030a1b3296fb9676..HEAD -- src/apk3d/audio/bus.ts src/apk3d/audio/chibi.ts docs/apk-port.md 'src/games/*/view2d/game.ts' — PASS, these audio paths are unchanged after the audited commit."
+  ],
+  "changed_files": [
+    "src/apk3d/audio/bus.ts",
+    "src/apk3d/audio/chibi.ts",
+    "src/apk3d/audio/chibi-events.gen.ts",
+    "src/apk3d/audio/index.ts",
+    "src/host/main.ts",
+    "docs/apk-port.md",
+    "tests/apk3d/audio-files.test.ts",
+    "tests/apk3d/audio-files.adversarial.test.ts",
+    "tests/apk3d/audio-wiring.test.ts",
+    "tests/apk3d/audio-wiring.adversarial.test.ts"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "contract_applicability": "applicable",
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "openai/gpt-6-luna#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "src/apk3d/audio/bus.ts:281-323 rejects fetch or decode completion when its URL no longer matches the event mapping."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 5,
+      "evidence": "The five-file heavy-run command passes 46 tests, including tests/apk3d/audio-files.adversarial.test.ts stale-load cases."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The phase diff wires audio to 29 2D hosts and changes zero 3D-view paths."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "The test command passes and git rev-parse reports current HEAD 4d4b0d27, distinct from audited HEAD e3405e70."
+    }
+  ]
+}

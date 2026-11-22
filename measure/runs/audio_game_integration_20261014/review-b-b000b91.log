@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: measure-review-b-security
+status: complete
+track: audio_game_integration_20261014
+phase: Phase 3: File playback in the AudioBus
+commits: none (audit only)
+tests_run: heavy-run.sh vitest run tests/apk3d/audio-files.test.ts tests/apk3d/audio-wiring.test.ts tests/apk3d/imports.test.ts tests/audio-event-map.test.ts -> 4 files passed, 29 of 29 tests passed; heavy-run.sh tsc --noEmit -> exit 2, 51 errors (35 assets/, 16 tests/), zero in src/ or a changed file; heavy-run.sh vitest run review-b-b000b91-probe.test.ts via its config -> 10 of 10 passed (all round-1 cases carried, S6 reworked for the pulse, plus S8 pulse bounds and S9 suspended/closed-context cases); node review-b-13c7b85-genprobe.mjs -> 7 of 7 passed (generator unchanged); not run by Review B: real browser fetch, project-wide gate, measure/doctor.sh, Phase 4 measurement
+files_changed: measure/runs/audio_game_integration_20261014/review-b-b000b91.json, measure/runs/audio_game_integration_20261014/review-b-b000b91.log, measure/runs/audio_game_integration_20261014/review-b-b000b91-probe.test.ts, measure/runs/audio_game_integration_20261014/review-b-b000b91-vitest.config.mjs
+plan_updates: none
+known_failures: none; no Blocker, Major, or new finding in round 2
+handoff: Verdict pass, retry_recommendation none, for audited commit b000b91e1fd5c734557818d3912d48f4f9d9c03b. HEAD equals the audited commit. role_base_sha is the round-1 head 13c7b85ca337b137bc481ac94883b686d1c14732, an ancestor. The unlock pulse is one silent source per context, self-ending and bounded under dispose and re-unlock (bus.ts:155-159, probe S8). Unlock stays non-throwing on the suspended and closed-context paths (probe S9). The 7 host lists add only literal map names; roar is synth and never preloads, so no new fetch surface exists (wiring case 6 pins every played event). docs/apk-port.md:240-247 keeps the monorepo path as proposed and states the soundBase contract as implemented. No secret or remote URL entered the delta. A2 is not applicable and A6 shows no overstatement. Two observations are recorded in the JSON with no finding. No CONTEST item reached Review B in round 1, and round 2 opens no finding to contest. Orchestrator actions: keep review-b-b000b91-probe.test.ts and review-b-b000b91-vitest.config.mjs as the round-2 helper files alongside the round-1 helpers. Run Review B again only if a later commit changes src/apk3d/audio/, the 29 hosts, scripts/audio-event-map.mjs, tests/apk3d/, or demo/public/audio/.
+END_MEASURE_AGENT_RESULT

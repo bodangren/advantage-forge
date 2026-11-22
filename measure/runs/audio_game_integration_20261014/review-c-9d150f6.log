@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: review-c
+status: complete
+track: audio_game_integration_20261014
+phase: Phase 3: File playback in the AudioBus
+commits: none
+tests_run: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-files.test.ts tests/apk3d/audio-files.adversarial.test.ts tests/apk3d/audio-wiring.test.ts tests/apk3d/audio-wiring.adversarial.test.ts tests/apk3d/imports.test.ts' — PASS, 5 files and 45 tests.
+files_changed: measure/runs/audio_game_integration_20261014/review-c-9d150f6.json and review-c-9d150f6.log
+plan_updates: none; orchestrator should record Late finding F4: one-fix-round (a changed mapping can play stale audio).
+known_failures: F4 map-change race can play a stale decoded file; the test currently expects that result.
+handoff: API signatures and comments match; double wiring is safe; docs/apk-port.md matches; the 29 hosts and 3D views are unchanged. Current HEAD differs from the audited SHA only by assets/sprout-dad.ts. F4 is a late wrong-result finding and meets the one-fix-round exception.
+END_MEASURE_AGENT_RESULT

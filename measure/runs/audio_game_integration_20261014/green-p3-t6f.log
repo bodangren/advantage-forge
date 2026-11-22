@@ -1,0 +1,19 @@
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+status: pass
+track: audio_game_integration_20261014
+phase: Phase 3: File playback in the AudioBus
+commits: 9d03b6bdeeaf5f7ac353bc8754d206b39a586c86, 353d514572e05847bd86612026dc9879fa3fbc64
+phase_base_sha: af4e57aff730b1cf8ee9c716802920699f1eaaac
+role_base_sha: 913bbb5223cffe472512de85908ff6daca2de713
+final_head: 9d150f629ef8346439f29e2927a83f90dfe17324
+tests_run: Red baseline on the two adversarial files exited 1 with 2 failed and 22 passed (24). Green five-file command through the heavy runner exited 0 with 5 files and 45 of 45 tests. Green two-adversarial command exited 0 with 2 files and 24 of 24. node node_modules/typescript/bin/tsc --noEmit exited 2 with baseline errors in assets/ and tests/ only and no error in src/apk3d/audio/bus.ts. prettier --check on bus.ts and git diff --check both exited 0. bash measure/doctor.sh exited 0 with no structural errors. node measure/tools/generate.mjs --check exited 0 before the plan edit and again after regeneration.
+files_changed: src/apk3d/audio/bus.ts; measure/tracks/audio_game_integration_20261014/plan.md; measure/generated/status.md; measure/runs/audio_game_integration_20261014/green-p3-t6f.log
+plan_updates: T6f Green marked [x] with implementation SHA 9d03b6bd, the F1 and F2 fix evidence, the exit-0 five-file 45-of-45 and two-adversarial 24-of-24 results, the tsc/prettier/doctor/generate results, and the per-event invalidation rationale. status.md regenerated from 10/14 to 11/15.
+tasks_flipped: T6f Green -> [x] with SHA 9d03b6bdeeaf5f7ac353bc8754d206b39a586c86. No task flipped to [b] and no deferred owner.
+targeted_red_output: 2 failed, 22 passed (24). F1: gameSourceStarts() was 1 where 0 was required after useSoundFiles(null). F2: expect(() => bus.unlock()).not.toThrow() failed with 'Error: createBuffer unsupported' and the context never resumed. F3 was already fixed by the parallel Red session (T6e) and its adversarial file passed at the Green baseline.
+new_files: no new file entered either commit. The untracked log measure/runs/audio_game_integration_20261014/green-p3-t6f.log records this result.
+dispositions: F1=FIX; F2=FIX; F3=FIX
+handoff: F1 fixed by per-event invalidation in useSoundFiles. A null map, a different base, or an event whose mapping changed or vanished clears its decoded buffer, pending bytes, and in-flight load. An event that keeps its mapping keeps its file, so the committed double-wiring case, which passes one equal map twice, still fetches once. Failed events stay marked per AC4 rule 5, and a decode that lands after its mapping vanished stores no buffer. F2 fixed by a try/catch around the silent pulse, with resume() and the mood restart outside the catch. An earlier attempt that cleared loading on every call broke the double-wiring case and was replaced. No test file was edited. Review roles should re-audit the five named test files on final HEAD 353d5145.
+verification_commit: 9d150f629ef8346439f29e2927a83f90dfe17324 docs(audio_game_integration): T6e verified; T6e flipped to [x] with SHA 097231b2 kept, evidence 'Green verified at 9d03b6bd: 5 files, 45 of 45 tests'; status.md regenerated from 11/15 to 12/15; five-file gate on HEAD exiting 0 with 5 files and 45 of 45 tests.
+END_MEASURE_AGENT_RESULT

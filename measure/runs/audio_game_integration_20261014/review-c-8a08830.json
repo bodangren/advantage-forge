@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "role": "review-c",
+  "track": "audio_game_integration_20261014",
+  "phase": "Phase 3: File playback in the AudioBus",
+  "phase_base_sha": "af4e57aff730b1cf8ee9c716802920699f1eaaac",
+  "role_base_sha": "0750febc587c89162a76e776bdd7ccb9248ae45f",
+  "audited_head_sha": "0750febc587c89162a76e776bdd7ccb9248ae45f",
+  "status": "pass",
+  "summary": "The T6i API guards and strategy scope pass review. The six requested tests pass with two skips. Current HEAD also contains the separate T6j Red compatibility test, which is expected to fail before Green.",
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "evidence": [
+    "src/apk3d/audio/chibi.ts:19-29 uses Object.hasOwn to keep chibiPreload limited to own CHIBI_EVENTS entries and retains first-play order without duplicates.",
+    "src/apk3d/audio/bus.ts:259-269 checks Object.hasOwn before resolving a mapped entry or constructing a URL, preventing inherited names from triggering fetches.",
+    "src/apk3d/audio/bus.ts:107-148 preserves the useSoundFiles, preload, and unlock signatures; their comments remain consistent with map clearing, quiet preloading, and gesture-based context creation.",
+    "measure/tracks/audio_game_integration_20261014/test-strategy.md:259-260 and 420-421 state that the 29 2D hosts each call wireChibiSounds once, matching spec.md:210-230 (AC9) and plan.md T6b.",
+    "F4 withdrawn: URL-bound stale completion checks remain at src/apk3d/audio/bus.ts:272-304; the T6i change does not alter this behavior.",
+    "Current HEAD is 0750febc587c89162a76e776bdd7ccb9248ae45f. It adds the in-progress T6j Red test, while the T6i implementation and strategy paths are unchanged from 8a08830554d8e6e88aeebdfa0af0523b205ac2f0.",
+    "measure/tracks/audio_game_integration_20261014/plan.md:492-493 assigns the missing-Object.hasOwn compatibility case to active T6j Red and T6k Green. The added T6j Red test fails before Green as intended; it is outside this narrow T6i re-review."
+  ],
+  "commands": [
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-files.test.ts tests/apk3d/audio-files.adversarial.test.ts tests/apk3d/audio-files.adversarial-r2.test.ts tests/apk3d/audio-wiring.test.ts tests/apk3d/audio-wiring.adversarial.test.ts tests/apk3d/imports.test.ts' — PASS, 6 files; 53 passed and 2 skipped (55 total).",
+    "git rev-parse HEAD — 0750febc587c89162a76e776bdd7ccb9248ae45f.",
+    "git diff --quiet 8a08830554d8e6e88aeebdfa0af0523b205ac2f0 HEAD -- src/apk3d/audio/bus.ts src/apk3d/audio/chibi.ts measure/tracks/audio_game_integration_20261014/test-strategy.md — exit 0; T6i implementation and strategy text are unchanged.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-files.adversarial-r3.test.ts' — expected T6j Red failure, 1 file; 4 passed, 2 failed before the planned T6k Green fix."
+  ],
+  "changed_files": [
+    "src/apk3d/audio/bus.ts",
+    "src/apk3d/audio/chibi.ts",
+    "tests/apk3d/audio-files.adversarial-r2.test.ts",
+    "measure/tracks/audio_game_integration_20261014/test-strategy.md"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "contract_applicability": "applicable",
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "openai/gpt-6-luna#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "src/apk3d/audio/chibi.ts:24 and src/apk3d/audio/bus.ts:263 reject inherited event names in the reviewed T6i behavior."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 5,
+      "evidence": "The six requested audio files pass 53 tests with two skips; the separate T6j Red test fails as planned before Green."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The T6i source delta adds only the two own-property guards and their adversarial coverage."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "The six-file heavy-run passes, the scoped source diff is empty after 8a088305, and git rev-parse confirms current HEAD 0750febc."
+    }
+  ]
+}

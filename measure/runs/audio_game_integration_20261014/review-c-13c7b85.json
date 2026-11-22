@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "role": "review-c",
+  "track": "audio_game_integration_20261014",
+  "phase": "Phase 3: File playback in the AudioBus",
+  "phase_base_sha": "af4e57aff730b1cf8ee9c716802920699f1eaaac",
+  "role_base_sha": "af4e57aff730b1cf8ee9c716802920699f1eaaac",
+  "audited_head_sha": "13c7b85ca337b137bc481ac94883b686d1c14732",
+  "status": "pass",
+  "summary": "The Phase 3 audio API and 29-host wiring satisfy the reviewed contracts. The monorepo port needs an audio-asset and sound-base note in docs/apk-port.md.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F1 [Major] docs/apk-port.md: Record the Chibi audio port difference before the monorepo port. The Forge change adds 14 files under demo/public/audio/chibi/ and game code that expects soundBase to be the site base; the current path table lists no audio row. Rationale: Without the files and the soundBase contract, the copied helper resolves missing audio files or no files."
+  ],
+  "evidence": [
+    "HEAD equals audited_head_sha 13c7b85ca337b137bc481ac94883b686d1c14732 at audit start and end; phase_base_sha and role_base_sha both resolve to af4e57aff730b1cf8ee9c716802920699f1eaaac.",
+    "src/apk3d/audio/index.ts exports SoundFiles, wireChibiSounds, chibiSoundFiles, and chibiPreload.",
+    "src/apk3d/factory/types.ts:134-141 documents optional soundBase as the site base with a trailing slash and explains that the helper appends audio/chibi/.",
+    "src/host/main.ts sets soundBase: BASE; src/apk3d/factory/mount.ts and phaser-factory.ts pass it to the 2D launch context.",
+    "tests/apk3d/audio-wiring.test.ts:190-220 asserts 29 hosts each call wireChibiSounds once and verifies that missing soundBase makes no bus calls.",
+    "tests/apk3d/audio-wiring.test.ts:222-242 verifies the actual /x/audio/chibi/tap.ogg fetch and that an unmapped synth event does not fetch.",
+    "The exact phase diff includes no view3d paths; src/apk3d/factory/mount.ts still passes result as GameResults and invokes complete with outcome and evidence.",
+    "docs/apk-port.md:232-239 lists story, model, and sprite pack paths, but no audio asset path."
+  ],
+  "commands": [
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-wiring.test.ts tests/apk3d/audio-files.test.ts tests/apk3d/imports.test.ts' — PASS, 3 files and 19 tests.",
+    "git diff --check af4e57aff730b1cf8ee9c716802920699f1eaaac..13c7b85ca337b137bc481ac94883b686d1c14732 -- src/ scripts/audio-event-map.mjs tests/apk3d/ demo/public/audio/ — PASS.",
+    "git rev-parse HEAD — 13c7b85ca337b137bc481ac94883b686d1c14732, both before and after review."
+  ],
+  "changed_files": [
+    "src/apk3d/audio/index.ts",
+    "src/apk3d/audio/chibi.ts",
+    "src/apk3d/audio/bus.ts",
+    "src/apk3d/factory/types.ts",
+    "src/apk3d/factory/mount.ts",
+    "src/apk3d/factory/phaser-factory.ts",
+    "src/host/main.ts",
+    "src/games/*/view2d/game.ts",
+    "tests/apk3d/audio-wiring.test.ts",
+    "tests/apk3d/audio-files.test.ts",
+    "demo/public/audio/chibi/*"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "contract_applicability": "applicable",
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "openai/gpt-6-luna#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 4,
+      "evidence": "src/apk3d/audio/chibi.ts:35-45 skips both bus calls when soundBase is absent and sets the expected file map when present."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "The heavy-run test command passed 3 files and 19 tests, including host count, missing-base, and real-fetch assertions."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The exact phase diff changes audio wiring, the launch-context plumbing, host files, tests, and audio assets; no 3D view path changed."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "The heavy-run command passed 19 tests, git diff --check passed, and HEAD matched the audited SHA at both checks."
+    }
+  ]
+}

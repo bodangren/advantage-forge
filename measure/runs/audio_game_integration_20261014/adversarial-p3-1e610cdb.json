@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "role": "adversarial-testing",
+  "track": "audio_game_integration_20261014",
+  "phase": "Phase 3: File playback in the AudioBus",
+  "baseline_sha": "af4e57aff730b1cf8ee9c716802920699f1eaaac",
+  "phase_base_sha": "af4e57aff730b1cf8ee9c716802920699f1eaaac",
+  "role_base_sha": "c5b06ab7944e2d58cfffda1c3b171da0928fb21f",
+  "pre_adversarial_head_sha": "c5b06ab7944e2d58cfffda1c3b171da0928fb21f",
+  "audited_head_sha": "1e610cdbd105d80c7b273cc3218a1cb4939020e7",
+  "status": "fail",
+  "summary": "Phase 3 fails the adversarial round. 21 of 24 new tests pass and close the review gaps (odd canPlayType answers, lifecycle order, map swaps, trailing-slash base, late fetch after dispose, pending-decode plays, duplicate preload, double wiring, parser drift guards). Three committed tests stay failing and pin two implementation defects and one test defect: F1 useSoundFiles never clears decoded buffers, F2 unlock throws when createBuffer throws, F3 the wiring parser counts play calls in comments and strings.",
+  "blocking_findings": [
+    "F1 [Major] adversarial-testing: src/apk3d/audio/bus.ts:106-108 useSoundFiles only replaces this.files; it never clears this.buffers, this.pendingDecode, or this.loading. A decoded buffer survives useSoundFiles(null) and a swap to a map without the event, so play(name) still starts the stale file buffer (bus.ts:182-186 checks buffers before the map). This contradicts the method contract 'clears them with null so every event uses the synth recipe' (bus.ts:105) and spec AC4 rule 6 ('An event without a file mapping plays the synth recipe and starts no fetch'). tests/apk3d/audio-files.adversarial.test.ts proves gameSourceStarts() is 1 after the clear where 0 is required. Green: clear buffers, pendingDecode, and loading when the file map changes; keep the failed set per AC4 rule 5 unless the map change is decided as a retry signal."
+  ],
+  "nonblocking_findings": [
+    "F2 [Minor] adversarial-testing: src/apk3d/audio/bus.ts:156-160 the unlock pulse calls this.ctx.createBuffer unguarded. When createBuffer throws (older engines), unlock() throws out of the global gesture handler and resume() at bus.ts:160 never runs, so the context stays suspended and the whole unlock is lost. tests/apk3d/audio-files.adversarial.test.ts pins the expected behavior: unlock does not throw, the context still resumes, and the master gain still exists. Green: wrap the pulse creation in try/catch and keep resume() unconditional.",
+    "F3 [Minor] adversarial-testing: tests/apk3d/audio-wiring.test.ts:261-265 case 6 extracts audio.play literals from the raw host text, so a play call inside a comment or a string counts as a played event and forces a useless wire-list entry and preload file on the next host that comments one out. No host triggers it today (the raw-vs-comment-stripped guard passes on all 29 hosts). Green: strip comments and strings before the extraction in audio-wiring.test.ts case 6 and mirror the same rules in the playedEventsOf copy of tests/apk3d/audio-wiring.adversarial.test.ts so the failing fixture case passes."
+  ],
+  "evidence": [
+    "Provenance: the role started at c5b06ab7944e2d58cfffda1c3b171da0928fb21f, whose only delta from reviewed HEAD b000b91e is assets/sprout-grandpa.ts and the Chibi Sprouts plan, both outside the Phase 3 paths. phase_base_sha af4e57aff730b1cf8ee9c716802920699f1eaaac resolves as an ancestor.",
+    "Read spec AC4 and AC9, plan Phase 3, test-strategy Phase 3 with the anti-pattern table, and the three round-2 review JSONs at reviewed HEAD b000b91e (Reviews A, B, C all pass with zero findings).",
+    "Commit 1e610cdbd105d80c7b273cc3218a1cb4939020e7 adds only the two adversarial test files: tests/apk3d/audio-files.adversarial.test.ts (16 cases) and tests/apk3d/audio-wiring.adversarial.test.ts (8 cases). No production code changed.",
+    "Targeted command on the two new files exits 1 with 3 failed and 21 passed (24). The failing cases are exactly the three defect pins; every other new case passes against the unmodified bus and helper.",
+    "F1 proof: the test decodes 'correct', calls useSoundFiles(null), plays again, and observes gameSourceStarts() 1 where the contract requires 0 with the synth recipe running (oscStarts grows by the 4-tone recipe). The same failure shows for a swap to a map that lacks the event. bus.ts:106-108 changes only this.files; bus.ts:182-186 serves the stale buffer.",
+    "F2 proof: with FakeAudioContext.createBuffer throwing, expect(() => bus.unlock()).not.toThrow() fails; resume count is 0 because bus.ts:157 throws before bus.ts:160.",
+    "F3 proof: the fixture with a commented and a quoted audio.play extracts ['ghost', 'specter', 'tap', 'wisp'] where a comment- and string-aware extraction yields ['tap'].",
+    "Gap-closing pins that pass: canPlayType 'no' and whitespace are non-empty so the first answer wins (ogg URL by exact equality); both 'maybe' asks each type once and picks ogg; unlock before the map still fetches after the map arrives; play before unlock starts no fetch and no sound; the second useSoundFiles replaces without merging; an in-flight fetch keeps its URL across a map swap; a base without a trailing slash concatenates literally (/audio/chibiright.ogg) with no silent repair; a fetch resolving after dispose never decodes on the closed context and its late bytes decode on a later unlock with no refetch; a rejection after dispose is swallowed; each play during a pending decode runs the synth and a later decode failure marks the event with one fetch; preload skips unmapped and duplicate names; a preloaded file decodes on the first unlock and plays with no synth; a failed event is not retried across a map swap (AC4 rule 5).",
+    "Wiring pins that pass: chibiPreload deduplicates, drops synth and unknown names, and keeps first-play order; chibiSoundFiles appends audio/chibi/ with one trailing slash and does not repair a slash-less base; a double wireChibiSounds passes through with no hidden guard and still fetches each file once on a real bus; an empty sound base wires nothing; all 29 hosts carry a literal wire list; the parser copies extract both ternary branches and computed-key SFX values while sprite .play calls never count; no host hides a play call in a comment and no SFX object holds a nested brace.",
+    "A4 probe: a temp-root fixture track with a completed status and all-[~] plan markers fails the structural doctor with 'completed track has an unchecked task' (exit 1), so the marker check is not vacuous for the false-done direction; the in_progress all-[~] variant is a legitimate shape and is not flagged by the marker rule.",
+    "A5 re-verification: the plan claims the three-file gate passes 21 of 21 at b000b91e; the re-run of tests/apk3d/audio-files.test.ts tests/apk3d/audio-wiring.test.ts tests/apk3d/imports.test.ts exits 0 with 3 files and 21 of 21 at the adversarial head.",
+    "The pre-existing generated-fact drift (status.md 8/11 vs plan 10/13) came from the earlier T6x commits, not this round; commit 913bbb52 regenerates it. generate.mjs --check exits 0 and the structural doctor exits 0 after the regeneration.",
+    "Prettier --check exits 0 on both new test files, the plan note, and the regenerated status.md. git diff --check exits 0 on the committed deltas.",
+    "Final HEAD is 913bbb5223cffe472512de85908ff6daca2de713 (test commit 1e610cdb plus the plan note and regenerated fact). The bus, helper, hosts, and sounds are byte-identical to reviewed HEAD b000b91e.",
+    "Facts changed: Phase 3 has committed adversarial coverage and a failing adversarial gate with three routed defects. No product fact changed.",
+    "Limits: the fake AudioContext and fetch prove bus logic only; this round ran no browser check and assessed no audible quality. F1 and F2 have no current caller trigger in the 29 hosts (they call wireChibiSounds once and never dispose mid-life); they are public-API contract defects on a shared runtime."
+  ],
+  "commands": [
+    "git rev-parse HEAD => c5b06ab7944e2d58cfffda1c3b171da0928fb21f at role start",
+    "node /home/daniebo/.cache/opencode/audio-p3-a4-probe.mjs => completed-status all-[~] fixture flagged 'completed track has an unchecked task', doctor exit 1; not vacuous",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-files.adversarial.test.ts tests/apk3d/audio-wiring.adversarial.test.ts' => exit 1; 2 files failed; 3 failed, 21 passed (24)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-files.test.ts tests/apk3d/audio-wiring.test.ts tests/apk3d/imports.test.ts' => exit 0; 3 files, 21 of 21 (A5 re-verification)",
+    "node_modules/.bin/prettier --check tests/apk3d/audio-files.adversarial.test.ts tests/apk3d/audio-wiring.adversarial.test.ts measure/tracks/audio_game_integration_20261014/plan.md measure/generated/status.md => exit 0",
+    "node measure/tools/generate.mjs --check => stale fact before regeneration (pre-existing T6x drift); ./measure/generate.sh => regenerated 4 facts; --check => exit 0",
+    "bash measure/doctor.sh --structural-only => exit 0 after regeneration",
+    "git commit --only tests/apk3d/audio-files.adversarial.test.ts tests/apk3d/audio-wiring.adversarial.test.ts -m 'test(audio_game_integration): Phase 3 adversarial cases' => 1e610cdbd105d80c7b273cc3218a1cb4939020e7",
+    "git commit --only measure/tracks/audio_game_integration_20261014/plan.md measure/generated/status.md -m 'docs(audio_game_integration): Phase 3 adversarial evidence and findings' => 913bbb5223cffe472512de85908ff6daca2de713",
+    "git diff --exit-code 1e610cdb -- src/apk3d/audio/bus.ts src/apk3d/audio/chibi.ts src/games docs/sound-event-map.tsv demo/public/audio => exit 0; no production path changed"
+  ],
+  "changed_files": [
+    "tests/apk3d/audio-files.adversarial.test.ts",
+    "tests/apk3d/audio-wiring.adversarial.test.ts",
+    "measure/tracks/audio_game_integration_20261014/plan.md",
+    "measure/generated/status.md",
+    "measure/runs/audio_game_integration_20261014/adversarial-p3-1e610cdb.json",
+    "measure/runs/audio_game_integration_20261014/adversarial-p3-1e610cdb.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [
+    "F1: useSoundFiles(null) does not give every event the synth recipe when a buffer was decoded, contradicting the method contract and spec AC4 rule 6."
+  ],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "retry_implementation",
+  "confidence": "high",
+  "route": "kimi-code-plan-cn/kimi-for-coding",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 3,
+      "evidence": "The eleven AC4 rules and the AC9 wiring hold in the main cases (reviews pass, 21 of 21), but F1 breaks the documented clear contract at the map-swap edge (bus.ts:106-108 vs bus.ts:182-186)."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "21 of 24 new adversarial cases pass and pin lifecycle, failure-path, and parser edges the reviews left open; the 3 failing cases are committed failing-first defect pins."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "Commit 1e610cdb adds only the two test files; commit 913bbb52 adds only the plan note and the regenerated fact; no production path changed."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "Every claim carries a command result or a file:line, including gameSourceStarts() 1-vs-0 for F1 and the doctor exit for the A4 probe."
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "role": "ux-browser-review",
+  "track": "audio_game_integration_20261014",
+  "phase": "Phase 3: File playback in the AudioBus",
+  "baseline_sha": "af4e57aff730b1cf8ee9c716802920699f1eaaac",
+  "phase_base_sha": "af4e57aff730b1cf8ee9c716802920699f1eaaac",
+  "role_base_sha": "022eb9f93b368f53df1b7fd7510c03e498e7e262",
+  "audited_head_sha": "82b9c88506b2185f0b1d2daed3f2449eff23e4e7",
+  "status": "pass",
+  "summary": "Rune Match mounted in the 2D renderer. Six valid Chibi Ogg requests returned 200, with no invalid requests or browser errors. The active game has no accessibility snapshot because its canvas has no accessible name; this is outside Phase 3 audio scope.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "The active Rune Match screen produces an empty accessibility snapshot, and the game canvas has no accessible name. This does not block the Phase 3 audio gate. Route the canvas semantics and game accessibility review to a UI/accessibility track."
+  ],
+  "evidence": [
+    "HEAD at final audit was 82b9c88506b2185f0b1d2daed3f2449eff23e4e7. It is the audited_head_sha. The only commit after role_base_sha 022eb9f is 82b9c885, which changes only the separate Chibi Sprouts plan; the Phase 3 audio and game paths are unchanged.",
+    "The user-facing phase diff changes the AudioBus, the host launch context, all 29 2D game hosts, and adds 14 audio files. Browser UX review applies.",
+    "Read the Phase 3 spec, plan, test strategy, exact phase diff, and host/game wiring. Test-strategy.md:411-415 requires a live game runtime, one click, one audio request, no console error, and a limit statement that the review does not prove audible quality.",
+    "Read measure/runs/audio_game_integration_20261014/ux-browser-review-p3-022eb9f-probe.json and ux-browser-review-p3-022eb9f-probe.out. Both report status pass, six Ogg requests with HTTP 200, no invalid requests, no console errors, and no page errors.",
+    "The six responses were /demo/audio/chibi/tap.ogg, right.ogg, wrong.ogg, level-end.ogg, whoosh.ogg, and pop.ogg. Chromium used Ogg; all requests returned 200 from /demo/audio/chibi/.",
+    "The interaction sequence selected Rune Match, clicked Read, clicked Next, clicked Start, tapped the game canvas to unlock audio, and pressed Space.",
+    "The screenshot shows the active Rune Match 2D game at 1280x800. The board and HUD render within the viewport. The saved accessibility snapshot is empty in active play; the canvas has no accessible name.",
+    "The Vite server log is empty after the run. The user confirmed the server was stopped and port 5199 is no longer listening.",
+    "The test ran muted in headless Chromium. It proves file requests and runtime flow, not audible quality on a real device."
+  ],
+  "commands": [
+    "git rev-parse HEAD at final audit => 82b9c88506b2185f0b1d2daed3f2449eff23e4e7",
+    "git show --stat --oneline HEAD => 82b9c885 measure(chibi_sprouts_r1): faces r2 Muse likeness record; changes only measure/tracks/asset_chibi_sprouts_r1_20261022/plan.md",
+    "git diff --name-status 022eb9f93b368f53df1b7fd7510c03e498e7e262..HEAD -- demo src/apk3d/audio src/apk3d/factory src/games src/host/main.ts tests/apk3d/audio*.test.ts => no output",
+    "Probe artifacts => pass; 6 audio requests returned 200; no invalid requests, console errors, or page errors",
+    "Dev URL => http://127.0.0.1:5199/demo/"
+  ],
+  "changed_files": [],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "openai/gpt-6-luna#high",
+  "webbridge_status": "not_run",
+  "webbridge_evidence": {
+    "screenshots": [
+      "measure/runs/audio_game_integration_20261014/ux-browser-review-p3-022eb9f.png: Rune Match 2D board and HUD visible, 1280x800"
+    ],
+    "accessibility_snapshots": [
+      "measure/runs/audio_game_integration_20261014/ux-browser-review-p3-022eb9f-probe.json: active play snapshot empty; canvas has no accessible name"
+    ],
+    "interactions": [
+      "Selected Rune Match from the game list.",
+      "Clicked Read to open the selected story.",
+      "Clicked Next to open the game briefing.",
+      "Clicked Start to mount Rune Match in the 2D renderer.",
+      "Clicked the game canvas once as the audio unlock gesture.",
+      "Pressed Space once as game input."
+    ],
+    "dev_url": "http://127.0.0.1:5199/demo/"
+  },
+  "ux_applicability": "applicable"
+}

@@ -1,0 +1,44 @@
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+track: audio_game_integration_20261014
+phase: Phase 3: File playback in the AudioBus
+status: pass
+phase_base_sha: af4e57aff730b1cf8ee9c716802920699f1eaaac (immutable; verified ancestor of final HEAD)
+role_base_sha: b88cb45d10de5e50f59927e54231bc99f42e06c3 (current HEAD at Green start)
+red_commit: b913e55dac1e5c8d8f8295144e980eff436dc28b (tests/apk3d/audio-files.adversarial-r3.test.ts; verified inside phase_base_sha..HEAD by git merge-base and git log)
+
+tasks_flipped_to_x:
+  T6j Red -> [x] in plan.md, keeping Red test SHA b913e55d in the task line. Green verification 0cc7b5c4 recorded below the Red evidence.
+  T6k Green -> [x] in plan.md with implementation SHA 0cc7b5c493d488deec2f7e4341c94ef78d48b46a and full gate evidence.
+tasks_flipped_to_b: none. No deferred owner. The routed findings need no human action.
+
+dispositions: F1=FIX; F2=FIX
+
+targeted_red_output:
+  Command (heavy runner): node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-files.test.ts tests/apk3d/audio-files.adversarial.test.ts tests/apk3d/audio-files.adversarial-r2.test.ts tests/apk3d/audio-wiring.test.ts tests/apk3d/audio-wiring.adversarial.test.ts tests/apk3d/imports.test.ts tests/apk3d/audio-files.adversarial-r3.test.ts
+  Rerun at Green start: exit 1; 7 files; 3 failed, 57 passed, 2 skipped (62). Failures: "wires a Chibi host on the supported browser range without native Object.hasOwn" (TypeError: Object.hasOwn is not a function at src/apk3d/audio/chibi.ts:24); "preloads an own event on the supported browser range without native Object.hasOwn" (same TypeError at src/apk3d/audio/bus.ts:263); "drops a pending load when the event is remapped to an inherited-only entry" (stale load installs its decoded buffer, staleStarts [{}] instead of []). The 2 skips are the TD-44 pins. The uncommitted built-in scan test is not part of this gate.
+  Gate after fix: exit 0; 7 files; 60 passed, 2 skipped (62). The three Red cases pass.
+
+gates:
+  grep -rn 'Object.hasOwn' src/apk3d/audio/: no match after the fix (the helper doc comment does not name the static method).
+  node_modules/.bin/prettier --check src/apk3d/audio/bus.ts src/apk3d/audio/chibi.ts: exit 0; "All matched files use Prettier code style!"
+  node node_modules/typescript/bin/tsc --noEmit through the heavy runner: exit 2 with 51 baseline errors; none in the two changed files. The 38 errors of TD-35 to TD-39 and 13 concurrent storytime faces errors stay open.
+  git diff --check: exit 0.
+  node measure/tools/generate.mjs --check: exit 0; "Measure facts are current (4 files)."
+  bash measure/doctor.sh after the plan-evidence commit: exit 0; "Measure doctor found no structural errors."
+  measure/generated/status.md regenerated from 15/18 to 16/19 for this track and committed with the plan evidence. No foreign change existed in measure/generated/ before regeneration.
+
+commits:
+  implementation_commit: 0cc7b5c493d488deec2f7e4341c94ef78d48b46a fix(audio_game_integration): T6k hasOwnProperty at every event-map read (explicit paths: src/apk3d/audio/bus.ts, src/apk3d/audio/chibi.ts)
+  plan_evidence_commit: 20a2ecc2c0904edd36faf9f22dc93d5ab3460037 docs(audio_game_integration): T6j/T6k Green evidence (0cc7b5c4) (explicit paths: measure/tracks/audio_game_integration_20261014/plan.md, measure/generated/status.md)
+  final_green_head: 20a2ecc2c0904edd36faf9f22dc93d5ab3460037
+
+new_files: no new file entered either commit. This log is untracked. No committed Red test was edited by this role. Unrelated concurrent work (bench/, mockups, reference images, other measure runs, Chibi Sprouts outputs) was left untouched.
+
+implementation:
+  src/apk3d/audio/bus.ts: adds one exported local helper hasOwn that calls Object.prototype.hasOwnProperty.call. requestFile and isCurrent use it. useSoundFiles compares both maps for own keys before treating a mapping as unchanged, so an own-to-inherited remap invalidates the load. Public method shapes, equal-map behavior, the failed set, and the unlock pulse try/catch are unchanged.
+  src/apk3d/audio/chibi.ts: chibiPreload uses the shared helper. It skips inherited and odd names without the native static method.
+  The scan hits outside src/apk3d/audio/ stay out of scope; no file under src/games/** was changed.
+
+handoff: Review roles should audit the two changed source files and the two Measure files on final HEAD 20a2ecc2. Adversarial r4 F1 and Review B r5 F1 are fixed by the helper; Review A r5 F1 and adversarial r4 F2 are fixed by the own-key checks in useSoundFiles and isCurrent. No product decision was needed. The built-in scan file remains uncommitted by PM order; the PM should decide its scope separately.
+END_MEASURE_AGENT_RESULT

@@ -1,0 +1,48 @@
+{
+  "status": "pass",
+  "dev_url": "http://127.0.0.1:5199/demo/index.html?renderer=phaser",
+  "viewport": {
+    "width": 1280,
+    "height": 800
+  },
+  "audio_requests": [
+    {
+      "url": "http://127.0.0.1:5199/demo/audio/chibi/tap.ogg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5199/demo/audio/chibi/right.ogg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5199/demo/audio/chibi/wrong.ogg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5199/demo/audio/chibi/level-end.ogg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5199/demo/audio/chibi/whoosh.ogg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5199/demo/audio/chibi/pop.ogg",
+      "status": 200
+    }
+  ],
+  "console_errors": [],
+  "page_errors": [],
+  "invalid_audio_requests": [],
+  "interactions": [
+    "Selected the 2D game rune-match (🔮 Rune Match Swap the runes to match the word in English and Thai.) from the game list.",
+    "Clicked Read to open the selected story.",
+    "Clicked the reader Next button to open the game briefing.",
+    "Clicked Start to mount rune-match in the 2D renderer.",
+    "Clicked the center of the 2D game canvas once as the audio unlock gesture.",
+    "Pressed Space once to provide game input."
+  ],
+  "accessibility_snapshot": "",
+  "screenshot": "/home/daniebo/Desktop/advantage-forge/measure/runs/audio_game_integration_20261014/ux-browser-review-p3-a414b40.png",
+  "limitation": "Muted headless playback proves file requests and runtime flow, not audible quality."
+}

@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: review-c-ux-api
+status: complete
+track: audio_game_integration_20261014
+phase: Phase 3: File playback in the AudioBus
+commits: none
+tests_run: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-files.test.ts tests/apk3d/audio-files.adversarial.test.ts tests/apk3d/audio-wiring.test.ts tests/apk3d/audio-wiring.adversarial.test.ts tests/apk3d/imports.test.ts' — PASS, 5 files and 46 tests
+files_changed: measure/runs/audio_game_integration_20261014/review-c-e3405e7.json and review-c-e3405e7.log
+plan_updates: none
+known_failures: none
+handoff: F4 is withdrawn after checking the URL-bound fetch and decode completion logic. Public method signatures, map-change behavior, unlock handling, docs, all 29 2D hosts, and unchanged 3D views match. The five audio tests pass. The scoped diff from e3405e703db4b9f97d8ac2b1030a1b3296fb9676 to current HEAD 4d4b0d271bcc554b23220941d522c0778581beec exits 0.
+END_MEASURE_AGENT_RESULT

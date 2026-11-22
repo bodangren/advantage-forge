@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "role": "adversarial-testing",
+  "track": "audio_game_integration_20261014",
+  "phase": "Phase 3: File playback in the AudioBus",
+  "baseline_sha": "af4e57aff730b1cf8ee9c716802920699f1eaaac",
+  "phase_base_sha": "af4e57aff730b1cf8ee9c716802920699f1eaaac",
+  "role_base_sha": "a414b40604bb6bc1cecc65605b7ae5e59789a541",
+  "pre_adversarial_head_sha": "a414b40604bb6bc1cecc65605b7ae5e59789a541",
+  "audited_head_sha": "a414b40604bb6bc1cecc65605b7ae5e59789a541",
+  "status": "pass",
+  "summary": "The final Phase 3 adversarial gate passes. Both Vitest runs and all five runtime scenarios pass. Two findings go to tech debt only. No current host exposes either finding.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F1 [Nit] adversarial-testing: tech-debt. tests/apk3d/no-unpolyfilled-builtins.test.ts:22–29 and :62–66 miss calls in template interpolations and calls split across lines. Comment stripping also hides a call after a quoted URL. The current audio paths use none of these calls.",
+    "F2 [Nit] adversarial-testing: tech-debt. src/apk3d/audio/bus.ts:124–132 skips non-enumerable own keys during same-base remaps. Removing a non-enumerable own hasOwnProperty entry can leave its decoded file playable. No current caller uses a map with non-enumerable keys."
+  ],
+  "evidence": [
+    "The audit starts at a414b40604bb6bc1cecc65605b7ae5e59789a541. The review covers T6k 0cc7b5c4 and T6l 1f45fcfe only.",
+    "The VM loads the exact pinned bus.ts, chibi.ts, and generated map before any audio call. Each deleted built-in is absent before module evaluation.",
+    "The runtime matrix removes Object.hasOwn, structuredClone, Array.prototype.at, and Array.prototype.findLastIndex one at a time, then all at once. Each case wires Chibi audio, fetches three exact files, plays three files and one synth tone, stops the file sources, and closes the context.",
+    "In each runtime case, a plain object and a null-prototype object accept an own enumerable hasOwnProperty key. The bus plays the new mapped take after the remap.",
+    "F1: The exact scanner reports all four direct call controls. A comment, a quoted string, and plain template text report zero hits as expected.",
+    "F1: The same scan reports zero hits for `copy: ${structuredClone(data)}` and for four parse-valid calls with line breaks inside the call expression.",
+    "F1: The same scan reports zero hits for `const note = \"never see https://example.test\"; structuredClone(data);`. The active call followed by a real line comment with 'never' still reports one hit.",
+    "The scanner reports a call on line 4 as line 2 after removing a multiline block comment. Plan T6j already records this line-number limitation.",
+    "F2: A null-prototype map owns a non-enumerable hasOwnProperty entry and loads tap.ogg. The next map has no such entry. After the remap, the old tap.ogg starts with one fetch total.",
+    "Late finding F1: tech-debt (The false negatives affect a test tool, not current game behavior.)",
+    "Late finding F2: tech-debt (Current hosts use the generated map with enumerable properties.)",
+    "The pinned source search finds 29 host wiring calls and only the Chibi helper supplying sound maps. No current source caller supplies a custom map.",
+    "The PM dispositions for the two TD-44 skip pins stay unchanged. TD-45 remains outside the audio-only audit.",
+    "The all-[~] fixture reports two incomplete tasks. The live scan reports the active built-in call before a real comment with the filter word.",
+    "The eight-file command exits 0 and reproduces the T6l plan result. The plan has no unqualified all-checks-pass phrase.",
+    "The separate structural check reports stale measure/generated/status.md on the pinned tree. No audit file change caused that drift."
+  ],
+  "commands": [
+    "git rev-parse HEAD at role start => a414b40604bb6bc1cecc65605b7ae5e59789a541",
+    "git show 0cc7b5c4 -- src/apk3d/audio; git show 1f45fcfe -- tests/apk3d/no-unpolyfilled-builtins.test.ts => bounded audit diff",
+    "Node VM probe with git show pinned module blobs => all five removal scenarios pass; non-enumerable-remap probe reproduces F2",
+    "Node VM probe with git show pinned scan blob and real temporary fixtures => seven fixtures parse; three false-negative classes reproduce F1",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-files.test.ts tests/apk3d/audio-files.adversarial.test.ts tests/apk3d/audio-files.adversarial-r2.test.ts tests/apk3d/audio-files.adversarial-r3.test.ts tests/apk3d/audio-wiring.test.ts tests/apk3d/audio-wiring.adversarial.test.ts tests/apk3d/imports.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts' => exit 0; 8 files, 61 passed, 2 TD-44 skips",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts' => exit 0; 225 files, 3364 passed, 2 TD-44 skips",
+    "build-graph update <local cache graph> src/apk3d/audio/bus.ts src/apk3d/audio/chibi.ts => both files updated",
+    "node_modules/.bin/prettier --check src/apk3d/audio/bus.ts src/apk3d/audio/chibi.ts tests/apk3d/no-unpolyfilled-builtins.test.ts => exit 0",
+    "bash measure/doctor.sh --structural-only; node measure/tools/generate.mjs --check => both report stale measure/generated/status.md on pinned HEAD",
+    "git diff --check 0cc7b5c4^..a414b406 => exit 0"
+  ],
+  "changed_files": [
+    "measure/runs/audio_game_integration_20261014/adversarial-p3-a414b40.json",
+    "measure/runs/audio_game_integration_20261014/adversarial-p3-a414b40.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "unknown",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 4,
+      "evidence": "The VM plays the expected files with all four built-ins removed, but a non-enumerable custom key survives remap at bus.ts:124–132."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 3,
+      "evidence": "The scan catches all four direct controls, but no-unpolyfilled-builtins.test.ts:22–29 misses executable template expressions."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The audited paths match a414b40, and the audit writes only its JSON and log."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "Two heavy-run gates, five runtime scenarios, and seven scan fixtures provide the results in this audit."
+    }
+  ]
+}

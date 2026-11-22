@@ -1,0 +1,27 @@
+MEASURE_AGENT_RESULT
+role: measure-review-b-security
+track: audio_game_integration_20261014
+phase: Phase 3: File playback in the AudioBus
+round: 6
+phase_base_sha: af4e57aff730b1cf8ee9c716802920699f1eaaac
+role_base_sha: 8a08830554d8e6e88aeebdfa0af0523b205ac2f0
+audited_head_sha: a414b40604bb6bc1cecc65605b7ae5e59789a541
+security_applicability: applicable
+route: kimi-code-plan-cn/kimi-for-coding
+status: pass
+summary: Pass, round 6, the last re-review of the fourth fix round, no blocking and no nonblocking finding; the round-5 F1 is withdrawn. T6k 0cc7b5c4 replaces Object.hasOwn with a local hasOwn helper (Object.prototype.hasOwnProperty.call) at every event-map read in bus.ts and chibi.ts. Closure verified four ways: no Object.hasOwn remains in src/apk3d/audio/; wiring, preload, and play run with the static method deleted; a map with an own hasOwnProperty key and a null-prototype map both work; an inherited-equal remap drops its in-flight completion. Probe stack: round-6 3 of 3, round-5 4 of 4, round-4 7 of 7, round-3 8 of 8, round-2 10 of 10, committed nine-file gate 69 passed with the 2 TD-44 skips. The T6l scan guards the audio root; out-of-audio built-in hits sit in TD-45 per the PM rule.
+blocking_findings: none
+nonblocking_findings: none
+evidence:
+- F1 withdrawn: no Object.hasOwn in src/apk3d/audio/ at the audited HEAD; probe H1 runs with the static method deleted; H2 covers an own hasOwnProperty key and a null-prototype map; the committed adversarial-r3 pins pass in the gate; Red b913e55d failed first on exactly these cases.
+- Provenance: audited HEAD is ancestral to the working HEAD; the only later commit is another track; the tested audio and test tree equals the audited tree; phase_base_sha is ancestral.
+- No new URL, input, or secret surface; A2 not applicable; A6 holds (Red failed first, Green gate passes, T6l scan committed).
+- Re-review handling: round-5 F1 withdrawn after verification; no CONTEST item reached Review B; no new defect in the remediation-changed lines.
+retry_recommendation: none
+confidence: high
+paths:
+- measure/runs/audio_game_integration_20261014/review-b-a414b40.json
+- measure/runs/audio_game_integration_20261014/review-b-a414b40.log
+- measure/runs/audio_game_integration_20261014/review-b-a414b40-probe.test.ts
+- measure/runs/audio_game_integration_20261014/review-b-a414b40-vitest.config.mjs
+END_MEASURE_AGENT_RESULT

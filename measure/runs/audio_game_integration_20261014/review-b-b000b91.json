@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "role": "measure-review-b-security",
+  "track": "audio_game_integration_20261014",
+  "phase": "Phase 3: File playback in the AudioBus",
+  "phase_base_sha": "af4e57aff730b1cf8ee9c716802920699f1eaaac",
+  "baseline_sha": "af4e57aff730b1cf8ee9c716802920699f1eaaac",
+  "role_base_sha": "13c7b85ca337b137bc481ac94883b686d1c14732",
+  "audited_head_sha": "b000b91e1fd5c734557818d3912d48f4f9d9c03b",
+  "security_applicability": "applicable",
+  "route": "kimi-code-plan-cn/kimi-for-coding",
+  "status": "pass",
+  "summary": "Pass, round 2, with no blocking and no nonblocking finding. The delta 13c7b85c..b000b91e restores the one-sample unlock pulse, grows 7 host event lists with literal map names, and records the audio path and the soundBase contract in docs/apk-port.md. The pulse runs once per context lifetime, self-ends in about 45 microseconds, and stays bounded under dispose and re-unlock (probe S8). Unlock stays non-throwing on the suspended and closed-context paths (probe S9). No new fetch surface exists: the added names are literals of the 58-name map, and the synth name roar is filtered out of preload. No secret or remote URL entered the delta, and the docs keep the monorepo path as proposed. The 29 targeted tests, the 10-case round-2 probe, and the 7-check generator probe all pass, and tsc shows no error in a changed file.",
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "evidence": [
+    "Provenance: `git rev-parse HEAD` printed b000b91e1fd5c734557818d3912d48f4f9d9c03b, equal to audited_head_sha. `git cat-file -t b000b91e1fd5c734557818d3912d48f4f9d9c03b` printed commit. `git merge-base --is-ancestor 13c7b85c b000b91e` exited 0, so the round-1 head is an ancestor and role_base_sha is 13c7b85ca337b137bc481ac94883b686d1c14732. phase_base_sha af4e57aff730b1cf8ee9c716802920699f1eaaac is unchanged and stays an ancestor. The delta holds three track commits: e481628d (T6c tests), 19ecca62 (T6d fix), and b000b91e (docs evidence). The commits dbb55822, d470ef24, ac6946a5 belong to chibi_sprouts faces and touch no audited path, per the brief.",
+    "Delta scope: `git diff 13c7b85c..b000b91e --stat` shows 11 paths: src/apk3d/audio/bus.ts (+5, the pulse), 7 game hosts (+27 list lines), tests/apk3d/audio-files.test.ts (+41, case 11 and the gameSourceStarts counter), tests/apk3d/audio-wiring.test.ts (+28, case 6), and docs/apk-port.md (+8). No path builds a URL, and scripts/audio-event-map.mjs and demo/public/audio/ are untouched.",
+    "Unlock pulse resource use: bus.ts:155-159 sits inside the context-construction branch, after the `if (this.ctx) return` guard (bus.ts:133-136), so it runs at most once per context. It creates one buffer source with `createBuffer(1, 1, 22050)`, about 45 microseconds of audio, connects it to the destination, and starts it. Probe S8: two unlocks on one context gave exactly one pulse and one context; a play added no pulse; dispose plus re-unlock gave a second context with exactly one new pulse. Probe S6: the pulse owns a silent source that is not a decoded buffer, so the game-source count stayed exact.",
+    "Pulse and dispose: the pulse source is not added to `this.sources`, so dispose does not call stop on it (probe S8 counted zero stops). This is safe because the source self-ends in one sample and dispose closes the whole context (bus.ts:201-219), which releases every node. No accumulation is possible: the construction branch runs only when no context exists.",
+    "Failure behavior when suspended or closed: probe S9 ran unlock after suspend() with the fake state set to suspended: no resume call and no throw, matching the `!this.suspended` guard at bus.ts:134. A context whose state reads closed took the `void this.ctx.resume()` path (bus.ts:134) without throwing. Dispose then unlock built a fresh context without throwing. In a real browser, resume() on a closed context rejects as a floating promise; the bus code is unchanged there and the state is unreachable through the public API, because dispose nulls the context before any later unlock.",
+    "Failure containment holds: probe S5 reran all fetch and decode failure modes (rejected fetch, non-OK status, rejected arrayBuffer, malformed response, rejected decode) with no throw into the game loop, one fetch per event, and the synth fallback. Probe S3 held the one-fetch bound under a 15-call burst, and probe S4 held the pendingDecode clearing across dispose.",
+    "Host lists: the 7 changed lists add only the literal names `correct`, `wrong`, `roar`, and `spawn`. A grep of docs/sound-event-map.tsv shows all four are map names (correct to chibi/right, wrong to chibi/wrong, spawn to chibi/pop, roar to synth). chibiPreload filters through CHIBI_EVENTS and drops duplicates (src/apk3d/audio/chibi.ts:24-33), so roar, a synth name, starts no fetch and the preload set stays inside the 31 mapped files. Wiring case 6 now requires every played event in every host list, and it passed 6 of 6.",
+    "URL boundaries unchanged: probes S1, S2, and S2b reran clean. Hostile event names never reach a URL, entries flow verbatim, and the bus does not restrict the base. Every committed caller still passes constants: src/host/main.ts:360 sets soundBase to the build constant, and each host passes a literal list.",
+    "Docs contract: docs/apk-port.md:240 adds the Chibi audio row with the target `proposed: apps/advantage-games/public/audio/chibi/`, and lines 243-247 repeat that the target is a proposal and state the soundBase contract: a site base with a trailing slash, the helper appends `audio/chibi/` once, and no soundBase keeps every event on the synth recipe. The text matches the implementation (chibi.ts:14-17 and chibi.ts:41) and confirms no path.",
+    "Generator unchanged: scripts/audio-event-map.mjs is byte-identical in the delta, and the genprobe rerun gave 7 of 7, including the single-file write and the byte-equal regeneration of the committed map.",
+    "Secrets and remote URLs: a grep of the delta for URL, key, token, secret, password, and bearer patterns found no match, and the delta adds no audio file, so the round-1 binary scan still covers the committed set.",
+    "Gates: the four-file targeted command through heavy-run.sh gave 4 files passed and 29 of 29 tests passed (audio-files 11, wiring 6, imports 4, event-map 8). `node node_modules/typescript/bin/tsc --noEmit` through heavy-run.sh exited 2 with 51 errors, 35 in assets/ and 16 in tests/ (13 storytime concurrent-track, 2 castle-defense, 1 part), and zero in src/ or a changed file; the count matches the plan Green record. The round-2 probe gave 10 of 10, and the generator probe gave 7 of 7. Prettier --check passed on the new run artifacts.",
+    "A2: not applicable. The delta holds no draft-to-published flip: a grep for published, draft, consent, and anonymi found nothing, and the track holds no personal data.",
+    "A6: the plan T6c/T6d records match the delta and my reruns: Red failed only case 11 and case 6 naming the same 7 hosts, Green exits 0 with 21 of 21 on the three files (my run adds the 8 event-map tests for 29), and tsc prints 51 errors with none in a changed file. The docs keep the monorepo path as proposed. No security state is overstated.",
+    "Observation, no finding: the unlock pulse source is not tracked in `this.sources`, so dispose does not stop it. It self-ends in one sample and the context close releases it, and probe S8 confirmed the bounded counts.",
+    "Observation, no finding: bus.ts:134 calls `void this.ctx.resume()` on an existing context whose state is not running. On a real closed context that promise rejects without a catch; the state is unreachable through the public API because dispose nulls the context, and the line predates this track.",
+    "Independence and CONTEST: I did not read the review-a and review-c result files that share the run folder. No CONTEST item reached Review B in round 1, and this round opens no finding to contest."
+  ],
+  "commands": [
+    "git rev-parse HEAD -> b000b91e1fd5c734557818d3912d48f4f9d9c03b; git cat-file -t b000b91e1fd5c734557818d3912d48f4f9d9c03b -> commit; git merge-base --is-ancestor 13c7b85c b000b91e -> exit 0; git log --format='%h %s' 13c7b85c..b000b91e -> e481628d, fceb67c8, 19ecca62, b000b91e plus chibi_sprouts commits",
+    "git diff 13c7b85c..b000b91e --stat -- src/ scripts/audio-event-map.mjs tests/apk3d/ demo/public/audio/ docs/apk-port.md -> 11 paths, 125 insertions, 14 deletions; git diff 13c7b85c..b000b91e -- src/apk3d/audio/bus.ts -> +5 lines, the pulse at bus.ts:155-159",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-files.test.ts tests/apk3d/audio-wiring.test.ts tests/apk3d/imports.test.ts tests/audio-event-map.test.ts' -> 4 files passed, 29 of 29 tests passed",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/typescript/bin/tsc --noEmit' -> exit 2, 51 'error TS' lines (35 assets/, 16 tests/), zero in src/ or a changed file",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --config measure/runs/audio_game_integration_20261014/review-b-b000b91-vitest.config.mjs' -> 1 file passed, 10 of 10 probe tests passed",
+    "node measure/runs/audio_game_integration_20261014/review-b-13c7b85-genprobe.mjs -> SUMMARY pass=7 fail=0 (generator unchanged in the delta)",
+    "git diff 13c7b85c..b000b91e --text -- src/ scripts/audio-event-map.mjs tests/apk3d/ docs/apk-port.md | grep -niE 'https?://|api[_-]?key|token|secret|password|bearer' -> no match; same filter for published|draft|consent|anonymi -> no match (A2)",
+    "grep -nE '^(correct|wrong|roar|spawn)' docs/sound-event-map.tsv -> all four names are map rows (correct chibi/right, wrong chibi/wrong, spawn chibi/pop, roar synth)",
+    "grep -n 'T6c\\|T6d' measure/tracks/audio_game_integration_20261014/plan.md -> records at :328 and :354; the Red and Green numbers match my reruns (A6)",
+    "node node_modules/prettier/bin/prettier.cjs --check measure/runs/audio_game_integration_20261014/review-b-b000b91-probe.test.ts measure/runs/audio_game_integration_20261014/review-b-b000b91-vitest.config.mjs -> exit 0",
+    "git status --short -- src scripts/audio-event-map.mjs tests/apk3d demo/public/audio -> clean for audited paths"
+  ],
+  "changed_files": [
+    "measure/runs/audio_game_integration_20261014/review-b-b000b91.json",
+    "measure/runs/audio_game_integration_20261014/review-b-b000b91.log",
+    "measure/runs/audio_game_integration_20261014/review-b-b000b91-probe.test.ts",
+    "measure/runs/audio_game_integration_20261014/review-b-b000b91-vitest.config.mjs"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "The pulse runs at most once per context (bus.ts:133-159), and probe S8 confirmed one pulse per context across dispose and re-unlock."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 5,
+      "evidence": "Case 11 and wiring case 6 failed first (Red named the missing pulse and the 7 hosts), and the Green run passes 29 of 29."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The delta changes only the pulse, 7 host lists, two test files, and the docs row; no generator, URL, or audio file changed."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "Every claim carries a command result or a file:line, including bus.ts:155-159 for the pulse and docs/apk-port.md:240-247 for the contract."
+    }
+  ]
+}

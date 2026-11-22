@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "role": "review-a",
+  "track": "audio_game_integration_20261014",
+  "phase": "Phase 3: File playback in the AudioBus",
+  "baseline_sha": "af4e57aff730b1cf8ee9c716802920699f1eaaac",
+  "phase_base_sha": "af4e57aff730b1cf8ee9c716802920699f1eaaac",
+  "role_base_sha": "8a08830554d8e6e88aeebdfa0af0523b205ac2f0",
+  "audited_head_sha": "a414b40604bb6bc1cecc65605b7ae5e59789a541",
+  "status": "pass",
+  "summary": "T6k closes F1. The compatibility helper and own-key checks cover every event-map read, and the inherited-remap regression passes. The scoped scan passes but has a nonblocking false negative when a URL string precedes a built-in call on the same line.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F2 [Nit] review-a: tests/apk3d/no-unpolyfilled-builtins.test.ts:22-29 strips line comments before quoted strings. A line such as `const url = \"https://example.test\"; Object.hasOwn(events, name);` is truncated at the URL's `//`, so the scan misses the unsupported call. This is a test-tool false negative with no current user-reachable product defect; record it as tech debt."
+  ],
+  "evidence": [
+    "F1 withdrawn: src/apk3d/audio/bus.ts:125-134 checks ownership for both maps before retaining state, :271-273 checks before request entry lookup, :284-289 checks before current-map lookup, and src/apk3d/audio/chibi.ts:24 uses the shared helper before accepting a Chibi event.",
+    "The inherited-remap regression at tests/apk3d/audio-files.adversarial-r3.test.ts:89-136 passes; it remaps a pending own custom->tap event to an inherited-only custom->tap map and verifies that no stale buffer starts or new fetch follows.",
+    "src/apk3d/audio/bus.ts:37-39 implements hasOwn with Object.prototype.hasOwnProperty.call, which does not require the missing Object.hasOwn static method.",
+    "The old-browser tests at tests/apk3d/audio-files.adversarial-r3.test.ts:45-58 remove native Object.hasOwn during helper wiring and direct preload, then restore it in finally.",
+    "The seven audio test files plus the scan passed through the heavy runner: 8 files, 61 passed, 2 skipped. The skipped cases are the TD-44 pins.",
+    "The two skipped TD-44 tests identify TD-44 in their comments, and measure/tech-debt.md:43 records the late findings, the fixed F3 guard, and the reopen trigger.",
+    "The phase plan records T6k and T6l results matching the current test exit. metadata.json:13 contains the approved fourth-round escalation key.",
+    "The scan false negative was reproduced by applying its strip sequence to a URL string followed by Object.hasOwn on the same line; the transformed text was truncated before the call.",
+    "HEAD equals audited_head_sha a414b40604bb6bc1cecc65605b7ae5e59789a541. No later commits need exclusion."
+  ],
+  "commands": [
+    "git rev-parse HEAD => a414b40604bb6bc1cecc65605b7ae5e59789a541",
+    "git rev-parse a414b40604bb6bc1cecc65605b7ae5e59789a541 => a414b40604bb6bc1cecc65605b7ae5e59789a541",
+    "git diff --name-status 8a08830554d8e6e88aeebdfa0af0523b205ac2f0 a414b40604bb6bc1cecc65605b7ae5e59789a541 -- src/apk3d/audio tests/apk3d measure/tracks/audio_game_integration_20261014/plan.md measure/tracks/audio_game_integration_20261014/test-strategy.md measure/tracks/audio_game_integration_20261014/metadata.json measure/tech-debt.md => T6k bus/helper changes, adversarial r3 and scanner tests, and Phase 3 records",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-files.test.ts tests/apk3d/audio-files.adversarial.test.ts tests/apk3d/audio-files.adversarial-r2.test.ts tests/apk3d/audio-wiring.test.ts tests/apk3d/audio-wiring.adversarial.test.ts tests/apk3d/imports.test.ts tests/apk3d/audio-files.adversarial-r3.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts' => exit 0; 8 files; 61 passed; 2 skipped",
+    "node -e '<scan strip-sequence probe for URL followed by Object.hasOwn>' => transformed source ends at the URL string; Object.hasOwn is not detected",
+    "git diff --check 8a08830554d8e6e88aeebdfa0af0523b205ac2f0 a414b40604bb6bc1cecc65605b7ae5e59789a541 => exit 0",
+    "build-graph files /home/daniebo/Desktop/advantage-forge/measure/graph.db src/apk3d/audio => unavailable: existing graph database has no nodes table"
+  ],
+  "changed_files": [
+    "src/apk3d/audio/bus.ts",
+    "src/apk3d/audio/chibi.ts",
+    "tests/apk3d/audio-files.adversarial-r3.test.ts",
+    "tests/apk3d/no-unpolyfilled-builtins.test.ts",
+    "measure/tracks/audio_game_integration_20261014/plan.md",
+    "measure/tracks/audio_game_integration_20261014/metadata.json"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "openai/gpt-6-luna#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "src/apk3d/audio/bus.ts:125-134, :271-273, and :284-289 use the shared own-key guard at each event-map access."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "The eight-file heavy-run passed 61 tests and 2 TD-44 skips; the scan misses a URL-string false-negative case."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The implementation delta changes only the planned AudioBus and Chibi helper files."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "The target SHA matches HEAD, the eight-file heavy-run passed, and the scan false negative was reproduced with its strip sequence."
+    }
+  ]
+}

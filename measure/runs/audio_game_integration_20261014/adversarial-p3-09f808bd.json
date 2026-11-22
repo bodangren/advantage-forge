@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "role": "adversarial-testing",
+  "track": "audio_game_integration_20261014",
+  "phase": "Phase 3: File playback in the AudioBus",
+  "baseline_sha": "af4e57aff730b1cf8ee9c716802920699f1eaaac",
+  "phase_base_sha": "af4e57aff730b1cf8ee9c716802920699f1eaaac",
+  "role_base_sha": "4d4b0d271bcc554b23220941d522c0778581beec",
+  "pre_adversarial_head_sha": "4d4b0d271bcc554b23220941d522c0778581beec",
+  "audited_head_sha": "09f808bd27f932fe9bca3388c49d315c339f1667",
+  "status": "fail",
+  "summary": "Phase 3 fails. The targeted gate has 60 passes and 3 failures. The project gate has 3,355 passes and the same 3 failures. The committed tests reproduce each defect. No production file changed.",
+  "blocking_findings": [
+    "F1 [Major] adversarial-testing: src/apk3d/audio/bus.ts:298-312 lets stale pre-unlock bytes overwrite the current preload for the same event. At unlock only the stale file decodes, then it is dropped. The current URL stays marked as loading, so later plays use the synth without fetching the mapped file again (AC4 rules 3, 4 and 7).",
+    "F2 [Major] adversarial-testing: src/apk3d/audio/bus.ts:305-312 allows a decode that finishes after dispose() to refill the disposed bus cache. A separate new bus uses its own file. If the original bus unlocks again, it plays the old context's buffer before its new context decodes or fetches a file (AC4 rule 8).",
+    "F3 [Major] adversarial-testing: src/apk3d/audio/chibi.ts:24 and src/apk3d/audio/bus.ts:263-266 accept inherited object names as mapped events. A host with constructor or toString in its event list preloads invalid function-text URLs instead of skipping these names (AC9 and AC4 rule 6)."
+  ],
+  "nonblocking_findings": [],
+  "evidence": [
+    "The phase diff starts at af4e57aff730b1cf8ee9c716802920699f1eaaac. The audio production paths match reviewed commit e3405e70.",
+    "tests/apk3d/audio-files.adversarial-r2.test.ts:186-188: B completes first, then stale A completes before unlock. The context decodes only /audio/chibi/tap.ogg, not /audio/chibi/other.ogg. Both plays use the synth. Neither play starts another fetch.",
+    "tests/apk3d/audio-files.adversarial-r2.test.ts:247-257: The new bus plays its own decode. The reopened old bus plays the exact buffer from the disposed context. Vitest reports Object.is equality.",
+    "tests/apk3d/audio-files.adversarial-r2.test.ts:359-360: The ordinary absent names pass. The inherited names enter the preload list and add two invalid fetches in the real bus.",
+    "The remaining new cases pass: A to B to A, a base-only remap, a concurrent preload after unlock, two unlocks with one decode, and cache bounds across many names.",
+    "The cache test uses 256 mapped names and 2,048 other names. After a remap, it retains only the mapped survivor and drops the ended source.",
+    "The all-[~] fixture reports two incomplete tasks. The doctor rejects the completed variant of the fixture with an unchecked-task error.",
+    "The Phase 3 tests have no banned-term prose filter. The live parser preserves the real play call on a line that also contains a quoted 'never' instruction.",
+    "The plan has no unqualified A5 pass phrase. The six existing targeted files pass on the current implementation.",
+    "F1 and F2 affect the T6h decode changes. F3 meets the late wrong-result exception because the delivered helper sends invalid file requests.",
+    "This run uses simulated audio device boundaries. The separate browser review covers the live host."
+  ],
+  "commands": [
+    "git rev-parse HEAD at role start => 4d4b0d271bcc554b23220941d522c0778581beec",
+    "build-graph scan \"$PWD/src\" \"$HOME/.cache/opencode/audio-p3-graph.K0cqRd/graph.db\" => 7050 nodes and 8262 edges; query locates AudioBus and wireChibiSounds",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-files.test.ts tests/apk3d/audio-files.adversarial.test.ts tests/apk3d/audio-wiring.test.ts tests/apk3d/audio-wiring.adversarial.test.ts tests/apk3d/imports.test.ts tests/audio-event-map.test.ts tests/apk3d/audio-files.adversarial-r2.test.ts' => exit 1; 6 passing files, 1 failing file; 60 tests passed, 3 failed",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts' => exit 1; 222 passing files, 1 failing file; 3355 tests passed, 3 failed; only the new file failed",
+    "node_modules/.bin/prettier --check tests/apk3d/audio-files.adversarial-r2.test.ts => exit 0",
+    "node scripts/audio-event-map.mjs --check => exit 0; 31 events current",
+    "node measure/tools/generate.mjs --check && ./measure/doctor.sh --structural-only => exit 0",
+    "git diff --check => exit 0",
+    "git diff --exit-code e3405e70..09f808bd -- src/apk3d/audio src/apk3d/factory src/games src/host/main.ts demo/public/audio docs/apk-port.md scripts/audio-event-map.mjs => exit 0",
+    "git commit --only -m 'test(audio_game_integration): Phase 3 adversarial round 2' -- tests/apk3d/audio-files.adversarial-r2.test.ts => 09f808bd",
+    "git commit --only -m 'docs(audio_game_integration): Phase 3 adversarial round 2 evidence' -- measure/tracks/audio_game_integration_20261014/plan.md => 07bbc341"
+  ],
+  "changed_files": [
+    "tests/apk3d/audio-files.adversarial-r2.test.ts",
+    "measure/tracks/audio_game_integration_20261014/plan.md",
+    "measure/runs/audio_game_integration_20261014/adversarial-p3-09f808bd.json",
+    "measure/runs/audio_game_integration_20261014/adversarial-p3-09f808bd.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [
+    "F1: A stale pre-unlock fetch prevents the current file from playing.",
+    "F2: An old decode repopulates a disposed bus and plays on its next context.",
+    "F3: The AudioBus requests files for names that the map does not define."
+  ],
+  "prod_wiring_violations": [
+    "F3: The public Chibi helper passes inherited names to preload. None of the 29 current host lists contains these names."
+  ],
+  "route_parity_violations": [],
+  "retry_recommendation": "retry_implementation",
+  "confidence": "high",
+  "route": "openai/gpt-6.2-sol#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 3,
+      "evidence": "The existing targeted files pass, but the new preload test shows the current mapped file does not play after a late pre-unlock remap."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "The new Vitest suite controls decode order and checks exact fetch URLs, buffer identity, and synth starts."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The path-level git diff shows that 09f808bd and 07bbc341 change only the new test and plan."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "The targeted gate identifies each defect in tests/apk3d/audio-files.adversarial-r2.test.ts by exact assertion."
+    }
+  ]
+}

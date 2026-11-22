@@ -1,0 +1,31 @@
+MEASURE_AGENT_RESULT
+role: measure-review-b-security
+track: audio_game_integration_20261014
+phase: Phase 3: File playback in the AudioBus
+round: 4
+phase_base_sha: af4e57aff730b1cf8ee9c716802920699f1eaaac
+role_base_sha: 9d150f629ef8346439f29e2927a83f90dfe17324
+audited_head_sha: e3405e703db4b9f97d8ac2b1030a1b3296fb9676
+security_applicability: applicable
+route: kimi-code-plan-cn/kimi-for-coding
+status: pass
+summary: Pass, round 4, with no blocking and no nonblocking finding. The delta 9d150f62..e3405e70 on audited paths is the T6h fix commit 2fb45ba3 (bus.ts +36/-15), T6g/T6h plan evidence, the T6g Red pins and fixture repair, and run logs. Each load binds to its starting URL and isCurrent(name, url) drops stale completions: a stale success installs no buffer and frees its bytes, a stale failure marks no failure, a remap alone never refetches, internal state stays empty through a 61-remap storm with an in-flight load, pendingDecode carries the URL and a pre-unlock remap frees the waiting bytes, and dispose still clears every structure. No new URL, input, or trust surface exists. Probes: round-4 7 of 7, round-3 rerun 8 of 8, round-2 rerun 10 of 10, committed six-file suite 54 of 54; tsc baseline unchanged (exit 2, 51 errors, zero in bus.ts).
+blocking_findings: none
+nonblocking_findings: none
+evidence:
+- Provenance: audited HEAD e3405e70 is a commit and an ancestor of the working HEAD; commits after it touch only out-of-scope sprout assets and the chibi plan; phase_base_sha af4e57af is ancestral.
+- Stale drop frees bytes: probes E1 and E4 show no buffer install, no loading marker, and empty internal maps after stale completions, including mid-storm.
+- No retry loop, no stale failure mark: probes E2 and E3 show failed stays empty after stale rejections and exactly one fetch follows for the new file; round-3 D3/D8 and round-2 S1-S9 reruns pass unchanged.
+- pendingDecode URL binding: probe E5 shows a pre-unlock remap frees waiting bytes and the unlock decodes nothing stale; unremapped bytes still decode at unlock with no refetch.
+- Dispose: probe E6 and the D5 rerun show every structure cleared, including the URL-bound pendingDecode.
+- A6: plan T6h claims F1=FIX, F4=FIX with a 46-of-46 gate; the pins failed first at d2d70bcf, Green blocked honestly on the fixture, Mid Red repaired it in 1bc1cd21, and the resumed gate passed before 2fb45ba3 was committed. No overstatement.
+- A2: not applicable; the delta has no publish, draft, consent, or anonymization surface.
+- Observation, no finding: a load whose mapping is restored before completion is legitimately current and installs; late post-dispose bytes still wait bounded in pendingDecode, pinned by the committed suite.
+retry_recommendation: none
+confidence: high
+paths:
+- measure/runs/audio_game_integration_20261014/review-b-e3405e7.json
+- measure/runs/audio_game_integration_20261014/review-b-e3405e7.log
+- measure/runs/audio_game_integration_20261014/review-b-e3405e7-probe.test.ts
+- measure/runs/audio_game_integration_20261014/review-b-e3405e7-vitest.config.mjs
+END_MEASURE_AGENT_RESULT

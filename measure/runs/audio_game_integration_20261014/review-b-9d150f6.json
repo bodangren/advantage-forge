@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "role": "measure-review-b-security",
+  "track": "audio_game_integration_20261014",
+  "phase": "Phase 3: File playback in the AudioBus",
+  "phase_base_sha": "af4e57aff730b1cf8ee9c716802920699f1eaaac",
+  "baseline_sha": "af4e57aff730b1cf8ee9c716802920699f1eaaac",
+  "role_base_sha": "b000b91e1fd5c734557818d3912d48f4f9d9c03b",
+  "audited_head_sha": "9d150f629ef8346439f29e2927a83f90dfe17324",
+  "security_applicability": "applicable",
+  "route": "kimi-code-plan-cn/kimi-for-coding",
+  "status": "pass",
+  "summary": "Pass, round 3, with no blocking and no nonblocking finding. The delta b000b91e..9d150f62 adds per-event invalidation in useSoundFiles (adversarial F1 fix), a try/catch around the unlock pulse (F2 fix), and a late-decode storage guard in decodeData, plus the committed adversarial suites and the shared comment-aware wiring parser (F3 fix). The security scope of the delta holds: every cache stays bounded by the mapped events, a failed event is never retried across map swaps, a late fetch or decode after a swap to an unmapped event stores nothing, the pulse catch hides no failure that leaves the context unusable, and no new URL or input surface exists. The round-2 probe passes 10 of 10 unchanged, the new delta probe passes 8 of 8, and the six-file targeted suite passes 53 of 53.",
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "evidence": [
+    "Provenance: `git cat-file -t 9d150f629ef8346439f29e2927a83f90dfe17324` printed commit. `git merge-base --is-ancestor 9d150f62 HEAD` exited 0, and `git diff 9d150f62..HEAD --stat` shows only assets/sprout-dad.ts, an out-of-scope chibi path, so the audited HEAD is current. `git merge-base --is-ancestor af4e57af 9d150f62` exited 0, so phase_base_sha is unchanged and ancestral. role_base_sha is the round-2 head b000b91e1fd5c734557818d3912d48f4f9d9c03b. The delta holds four track commits on audited paths: 097231b2 (wiring parser, F3), 9d03b6bd (bus.ts, F1/F2), 353d5145 and 9d150f62 (plan evidence); chibi_sprouts commits 95cadeec, 8c7f2891, 8b35d7c1, 3910559f touch only sprout assets and the chibi plan.",
+    "Delta scope: `git diff b000b91e..9d150f62 --stat` on audited paths shows src/apk3d/audio/bus.ts (+29/-5), tests/apk3d/audio-files.adversarial.test.ts (new, 16 cases), tests/apk3d/audio-wiring.adversarial.test.ts (new, 8 cases), tests/apk3d/audio-wiring-parser.ts (new, shared parser), tests/apk3d/audio-wiring.test.ts (+17, case 6 now uses the parser), and the track plan. `git show --stat 9d03b6bd` confirms the fix commit changed only bus.ts. No fetch, URL, or event-name surface was added.",
+    "F1 fix and resource bounds: bus.ts:106-125 reads the previous map, and on null, a base change, or a changed or vanished event entry it deletes that event from buffers, pendingDecode, and loading. Probe D1: after a decode, useSoundFiles(null) leaves the cleared event on the synth recipe with the stale file silent (gameSourceStarts stays 1, one fetch total). Probe D2: a swap to a map without the event clears the buffer and starts no fetch. Probe D7: wiring one equal map object twice still fetches once, so unchanged events keep their decoded or in-flight file.",
+    "No retry storms: the failed set is untouched by useSoundFiles, and probe D3 held one fetch total across six alternating swaps of a failed event between two entries. The state maps stay bounded by the mapped event count because invalidation deletes per event and nothing appends without the requestFile guards (bus.ts:258-267).",
+    "Late fetch and decode after a swap: the decodeData guard at bus.ts:293 stores a buffer only when the event is still mapped, and probe D4 shows a fetch that resolves after its event vanished stores nothing playable, starts no new fetch, and the event plays the synth recipe. Probe D8 shows a changed entry refetches exactly once on the next play with no loop.",
+    "Late fetch after dispose: probe D5 reran the round-2 dispose case; a fetch resolving after dispose takes no decode on the closed context and no game source starts. The committed case at tests/apk3d/audio-files.adversarial.test.ts:407-432 additionally pins that the late bytes wait in pendingDecode and decode on a later unlock with no refetch; pendingDecode holds at most one ArrayBuffer per event and is cleared by dispose, by a map clear, and by consumption at unlock (bus.ts:168-171), so the retention is bounded and test-pinned as intended.",
+    "F2 fix and failure containment: the unlock pulse at bus.ts:174-181 sits in a try/catch after master and musicGain are connected (bus.ts:161-166) and before the unconditional resume (bus.ts:182) and the mood restart (bus.ts:183). Probe D6: with the fake createBuffer throwing, unlock does not throw, resume still runs once, and the bus stays usable for synth playback. Probe S8 and S9 from the round-2 probe rerun unchanged at 10 of 10: the pulse stays one silent source per context and dispose adds no stop, and the suspended and closed-context unlock paths stay non-throwing, so the catch hides no failure that leaves the context in a bad state.",
+    "No new URL or input surface: the only URL construction stays bus.ts:264, and a grep of the delta for https?://, api keys, tokens, secrets, passwords, bearer, fetch(, new URL, XMLHttpRequest, and WebSocket found no match outside the pre-existing test fetch mocks. Hostile event names still never reach a URL (probe S1), entries flow verbatim (S2), and the base stays unrestricted (S2b).",
+    "Secrets and sensitive data: the delta adds no audio file and no credential; the wiring parser processes committed host source text at test time only, with no runtime input.",
+    "A2: not applicable. A grep of the delta for published, draft, consent, and anonymi found no match, and the track holds no personal data and no publish gate.",
+    "A6: the plan T6e/T6f records at measure/tracks/audio_game_integration_20261014/plan.md:404-442 claim F1=FIX, F2=FIX, F3=FIX(Red) with a five-file 45-of-45 gate. The three defect pins were committed failing-first (adversarial-p3-1e610cdb.json failed at status fail on exactly F1, F2, F3 at 1e610cdb), and my six-file rerun passes 53 of 53 including the 24 adversarial cases, so no security state is overstated. The tsc baseline is unchanged: exit 2 with 51 errors, 35 in assets/ and 16 in tests/, zero in src/apk3d/audio/bus.ts or any changed file.",
+    "Observation, no finding: the decodeData guard checks event presence, not entry equality, so an in-flight fetch whose entry changed re-stores the old bytes under the event and masks the refetch; the committed case at tests/apk3d/audio-files.adversarial.test.ts:346-365 pins exactly this. Both maps come from the same trusted caller in one wiring call, so no trust boundary is crossed, and the behavior is test-pinned.",
+    "Observation, no finding: after dispose, a late successful fetch stores its bytes in pendingDecode for a later unlock instead of dropping them; this is bounded and pinned at tests/apk3d/audio-files.adversarial.test.ts:407-432.",
+    "Independence and CONTEST: I did not read the review-a and review-c result files that share the run folder. No CONTEST item reached Review B in rounds 1 or 2, and this round opens no finding to contest."
+  ],
+  "commands": [
+    "git cat-file -t 9d150f629ef8346439f29e2927a83f90dfe17324 -> commit; git merge-base --is-ancestor 9d150f62 HEAD -> exit 0; git diff 9d150f62..HEAD --stat -> assets/sprout-dad.ts only; git merge-base --is-ancestor af4e57af 9d150f62 -> exit 0",
+    "git log --format='%h %s' b000b91e..9d150f62 -> 097231b2, 9d03b6bd, 353d5145, 9d150f62 on audited paths plus four chibi_sprouts commits; git diff b000b91e..9d150f62 --stat -> bus.ts +29/-5, two new adversarial files, new parser, wiring test +17, plan",
+    "git show --stat 9d03b6bd -> 1 file changed, src/apk3d/audio/bus.ts (+29, -5)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --config measure/runs/audio_game_integration_20261014/review-b-9d150f6-vitest.config.mjs' -> 1 file passed, 8 of 8 probe tests passed (D1-D8)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --config measure/runs/audio_game_integration_20261014/review-b-b000b91-vitest.config.mjs' -> 1 file passed, 10 of 10 round-2 probe tests passed unchanged",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-files.test.ts tests/apk3d/audio-files.adversarial.test.ts tests/apk3d/audio-wiring.test.ts tests/apk3d/audio-wiring.adversarial.test.ts tests/apk3d/imports.test.ts tests/audio-event-map.test.ts' -> 6 files passed, 53 of 53 tests passed",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/typescript/bin/tsc --noEmit' -> exit 2, 51 errors (35 assets/, 16 tests/), zero in src/apk3d/audio/bus.ts or a changed file",
+    "git diff b000b91e..9d150f62 -- src/apk3d/audio/bus.ts tests/apk3d/ docs/ scripts/ demo/public/audio sounds/ docs/apk-port.md | grep -niE 'https?://|api[_-]?key|token|secret|password|bearer|fetch\\(|new URL|XMLHttpRequest|WebSocket' -> no match; same delta grep for published|draft|consent|anonymi -> no match (A2)",
+    "git status --short -- src tests/apk3d scripts/audio-event-map.mjs demo/public/audio sounds docs/apk-port.md -> clean for audited paths",
+    "node node_modules/prettier/bin/prettier.cjs --check measure/runs/audio_game_integration_20261014/review-b-9d150f6-probe.test.ts measure/runs/audio_game_integration_20261014/review-b-9d150f6-vitest.config.mjs -> exit 0"
+  ],
+  "changed_files": [
+    "measure/runs/audio_game_integration_20261014/review-b-9d150f6.json",
+    "measure/runs/audio_game_integration_20261014/review-b-9d150f6.log",
+    "measure/runs/audio_game_integration_20261014/review-b-9d150f6-probe.test.ts",
+    "measure/runs/audio_game_integration_20261014/review-b-9d150f6-vitest.config.mjs"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "The F1/F2 fixes match their contracts: probes D1-D2 clear stale buffers to the synth recipe, D6 keeps unlock non-throwing with a usable context, and D3-D8 hold the fetch and state bounds across swaps and dispose."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 5,
+      "evidence": "The three defect pins failed first at 1e610cdb (adversarial-p3-1e610cdb.json) and now pass in the 53-of-53 suite, and my D1-D8 delta probe passes 8 of 8."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The fix commit 9d03b6bd changed only bus.ts (+29/-5); the test commits add only the adversarial suites, the shared parser, and the wiring test update; no generator, host, or audio file changed."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "Every claim carries a command result or a file:line, including bus.ts:106-125 for invalidation, bus.ts:174-181 for the pulse catch, and bus.ts:293 for the late-decode guard."
+    }
+  ]
+}

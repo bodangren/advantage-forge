@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "role": "review-a",
+  "track": "audio_game_integration_20261014",
+  "phase": "Phase 3: File playback in the AudioBus",
+  "baseline_sha": "af4e57aff730b1cf8ee9c716802920699f1eaaac",
+  "phase_base_sha": "af4e57aff730b1cf8ee9c716802920699f1eaaac",
+  "role_base_sha": "9d150f629ef8346439f29e2927a83f90dfe17324",
+  "audited_head_sha": "e3405e703db4b9f97d8ac2b1030a1b3296fb9676",
+  "status": "pass",
+  "summary": "T6h rejects stale file loads after remaps. Both fetch-pending and decode-pending tests pass, and the equal-map and failed-event rules remain covered.",
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "evidence": [
+    "F1 withdrawn: tests/apk3d/audio-files.adversarial.test.ts covers remaps while a fetch is pending and while decodeAudioData is pending; both cases reject the old buffer, fetch the new URL, play its buffer, and assert the old buffer never starts.",
+    "The first T6g case uses a deferred fetch, remaps before resolving it, then swaps fetchImpl to an auto-resolving function; commit 1bc1cd21 adds only that fixture change, and the stale-buffer, new-URL, new-playback, and no-stale-play assertions remain.",
+    "tests/apk3d/audio-wiring.adversarial.test.ts:168-193 wires equal maps twice and asserts exactly one fetch for the mapped file.",
+    "tests/apk3d/audio-files.adversarial.test.ts:554-570 preserves the failed-event behavior across a map swap and asserts the event fetches only once.",
+    "src/apk3d/audio/bus.ts:275-313 checks the resolved current URL before storing a decoded buffer or changing failure/loading state; pending preload bytes retain their originating URL.",
+    "The five-file heavy-run command passed: 5 files and 46 tests.",
+    "The current checkout HEAD is 259b05ae64e50719cf27e893128f88df355f6e5f, not the requested audited head. The only committed changes after e3405e7 are the separate Dad asset track paths; the reviewed audio paths are unchanged."
+  ],
+  "commands": [
+    "git rev-parse af4e57aff730b1cf8ee9c716802920699f1eaaac => af4e57aff730b1cf8ee9c716802920699f1eaaac",
+    "git rev-parse 9d150f629ef8346439f29e2927a83f90dfe17324 => 9d150f629ef8346439f29e2927a83f90dfe17324",
+    "git rev-parse e3405e703db4b9f97d8ac2b1030a1b3296fb9676 => e3405e703db4b9f97d8ac2b1030a1b3296fb9676",
+    "git rev-parse HEAD => 259b05ae64e50719cf27e893128f88df355f6e5f; allowed separate Dad asset track commits follow the requested immutable audited head",
+    "git diff --name-status 9d150f629ef8346439f29e2927a83f90dfe17324 e3405e703db4b9f97d8ac2b1030a1b3296fb9676 => bus.ts, audio-files.adversarial.test.ts, Phase 3 plan, red-p3-t6g.log, plus out-of-scope Dad assets and status/plan evidence",
+    "git diff --name-status e3405e703db4b9f97d8ac2b1030a1b3296fb9676 HEAD => assets/sprout-dad.ts and Chibi Dad plan/evidence only",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-files.test.ts tests/apk3d/audio-files.adversarial.test.ts tests/apk3d/audio-wiring.test.ts tests/apk3d/audio-wiring.adversarial.test.ts tests/apk3d/imports.test.ts' => exit 0; 5 files, 46 tests",
+    "build-graph files /home/daniebo/Desktop/advantage-forge/measure/graph.db src/apk3d/audio => unavailable: no nodes table in the existing database"
+  ],
+  "changed_files": [
+    "src/apk3d/audio/bus.ts",
+    "tests/apk3d/audio-files.adversarial.test.ts",
+    "measure/tracks/audio_game_integration_20261014/plan.md",
+    "measure/runs/audio_game_integration_20261014/red-p3-t6g.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "openai/gpt-6-luna#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "src/apk3d/audio/bus.ts:275-313 rejects fetch and decode completions whose URL no longer matches the current event mapping."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 5,
+      "evidence": "The five-file heavy-run passed 46 tests, including both stale-completion cases and the equal-map and failed-event assertions."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The Phase 3 implementation changes stay within planned AudioBus behavior and its adversarial tests; later Dad work is isolated to separate track paths."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "The five-file heavy-run passed, and the exact 9d150f62..e3405e7 diff and later target-path equality were checked."
+    }
+  ]
+}

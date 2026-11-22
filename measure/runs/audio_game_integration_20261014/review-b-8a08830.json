@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "role": "measure-review-b-security",
+  "track": "audio_game_integration_20261014",
+  "phase": "Phase 3: File playback in the AudioBus",
+  "phase_base_sha": "af4e57aff730b1cf8ee9c716802920699f1eaaac",
+  "baseline_sha": "af4e57aff730b1cf8ee9c716802920699f1eaaac",
+  "role_base_sha": "e3405e703db4b9f97d8ac2b1030a1b3296fb9676",
+  "audited_head_sha": "8a08830554d8e6e88aeebdfa0af0523b205ac2f0",
+  "security_applicability": "applicable",
+  "route": "kimi-code-plan-cn/kimi-for-coding",
+  "status": "fail",
+  "summary": "Fail, round 5, on one blocking finding. The T6i guard itself is sound: Object.hasOwn in bus.ts requestFile (line 263) and chibi.ts chibiPreload (line 24) closes the junk-URL path for inherited names in every lookup that can start a fetch, my guard probes pass 4 of 4, and all earlier probes and the committed gate hold (round-4 probe 7 of 7, round-3 probe 8 of 8, round-2 probe 10 of 10, committed seven-file gate 61 passed with the 2 TD-44 skips). But the two guard lines call Object.hasOwn with no fallback, and iOS 15.0-15.3 Safari and Chrome WebView 80-92 lack that method while the device gate admits them (minIosVersion 15, minWebViewChromeVersion 80), so Chibi wiring throws on the first event and direct AudioBus preload or play throws instead of loading the mapped sound. The adversarial pass at this same HEAD already recorded this as F1 with retry_implementation, and the track committed the failing-first pin 0750febc after the audited HEAD; I reproduced the TypeError at the current HEAD, whose audio sources are byte-identical to the audited HEAD. This defect sits in the lines the T6i remediation changed, so this re-review reports it as blocking; the fix is a local hasOwn fallback and does not disturb the verified guard semantics.",
+  "blocking_findings": [
+    "F1 [Blocker] adversarial-testing: T6i calls Object.hasOwn in src/apk3d/audio/chibi.ts:24 and src/apk3d/audio/bus.ts:263 with no fallback. Safari on iOS 15.0-15.3 and Chrome WebView 80-92 lack this method, and the device gate admits those versions (src/apk3d/contracts/manifest.ts defaults minIosVersion 15 and minWebViewChromeVersion 80, enforced at src/apk3d/device/gate.ts:115-116), so Chibi wiring throws on the first event and can abort 2D game startup, and a direct AudioBus preload or an unbuffered play throws TypeError instead of loading the mapped sound. Kept from the adversarial record at this HEAD (adversarial-p3-8a08830.json F1, retry_implementation) and reproduced: tests/apk3d/audio-files.adversarial-r3.test.ts (pin 0750febc) fails 2 of 6 at the current HEAD with TypeError: Object.hasOwn is not a function at bus.ts:263, and git diff 8a088305..HEAD -- src/apk3d/audio/ is empty, so the audited code fails identically. Fix: a local fallback such as Object.prototype.hasOwnProperty.call(events, name) or a pinned helper; the junk-URL closure itself is verified and needs no redesign."
+  ],
+  "nonblocking_findings": [],
+  "evidence": [
+    "Provenance: `git cat-file -t 8a08830554d8e6e88aeebdfa0af0523b205ac2f0` printed commit. `git merge-base --is-ancestor 8a088305 HEAD` exited 0. `git log --oneline 8a088305..HEAD` lists 0750febc (this track's own T6i compatibility test pin), 1e5ab9b8 and de8dd9db (Chibi Sprouts-only, out of scope per the brief). `git merge-base --is-ancestor e3405e70 8a088305` exited 0, so the round-4 head is the delta base. `git diff 8a088305..HEAD -- src/apk3d/audio/` is empty, so the audio sources at the tested HEAD equal the audited HEAD. phase_base_sha af4e57af is ancestral.",
+    "Delta scope: `git diff e3405e70..8a088305 --stat` on audited paths shows src/apk3d/audio/bus.ts (+1, the hasOwn guard at line 263), src/apk3d/audio/chibi.ts (+2/-1, the guard at line 24), tests/apk3d/audio-files.adversarial-r2.test.ts (new, 364 lines, includes the constructor/toString no-fetch pins and the two TD-44 it.skip pins), the track plan (+14, late-finding lines and T6i), test-strategy.md (3 lines), measure/tech-debt.md (TD-44), and measure/generated/status.md; chibi_sprouts and docs/faces-r2 paths are out of scope.",
+    "Guard closes the junk-URL path in every lookup: the only URL construction that can start a fetch is requestFile (bus.ts:263-269), now gated by Object.hasOwn before the entry read; isCurrent (bus.ts:273-280) reads events[name] but only for (name, url) pairs that requestFile started, so an inherited name can never reach a URL; useSoundFiles iterates Object.keys unions only (bus.ts:121-125); chibiPreload (chibi.ts:24) filters before bus.preload, a second layer. Probe G1: constructor, toString, hasOwnProperty, __proto__, and valueOf produce zero fetches and each runs its synth recipe at the bus level. Probe G2: chibiPreload and wireChibiSounds drop every inherited name, preload reaches the bus as [['tap']] only, and only the mapped event fetches.",
+    "Guard uses own-property semantics, not a proto ban: probe G3 shows a JSON.parse map with an own __proto__ entry still builds its normal URL and fetches once per own event; probe G4 shows absent ordinary names fetch nothing, before or after the guard. Committed pin: tests/apk3d/audio-files.adversarial-r2.test.ts wires a real bus without fetching inherited object names (constructor, toString).",
+    "F1 defect and impact: chibiPreload calls Object.hasOwn (chibi.ts:24), so wireChibiSounds throws during host wiring; requestFile calls it (bus.ts:263), so direct preload throws and play throws after the synth recipe sounds. The device gate admits the affected engines: src/apk3d/contracts/manifest.ts:21-23 defaults minIosVersion 15 and minWebViewChromeVersion 80, checked at src/apk3d/device/gate.ts:115-116; Object.hasOwn shipped in Safari 15.4 and Chrome 93. Empirical proof: the heavy-runner run of tests/apk3d/audio-files.adversarial-r3.test.ts at the current HEAD failed 2 of 6 with 'TypeError: Object.hasOwn is not a function' at bus.ts:263 via preload and via wireChibiSounds; green-p3-t6i.log predates the pin, so the T6i Green gate never exercised this range.",
+    "Cross-check with the adversarial record: adversarial-p3-8a08830.json at this exact HEAD fails with the same F1 (Major, retry_implementation) and an F2 nit on inherited values in invalidation/isCurrent lines that sit outside the T6i diff; I verified those lines predate 1b7312f4, and the adversarial record already routes F2 to tech-debt, so I do not duplicate it as a finding.",
+    "Late-finding rule: F1 names product files this phase delivers (bus.ts, chibi.ts) and states a wrong result a user on an admitted device sees (the wiring throws, the game stays silent or aborts), so it meets the wrong-result exception in the contracts and keeps its one fix round; the track already committed the failing-first pin 0750febc for it. The stop rule sends any further findings to tech-debt.",
+    "No new URL or input surface and no secret surface: the delta grep for https?://, api keys, tokens, secrets, passwords, bearer, new URL, XMLHttpRequest, and WebSocket found no match, and the A2 grep for published, draft, consent, and anonymi found no match. The guards compare property ownership only; no data crosses a trust boundary.",
+    "A6: the plan T6i line and test-strategy edit do not overstate; TD-44 records F1/F2 of the earlier adversarial round as Open with reopen triggers, and the adversarial-p3-8a08830 record keeps F1 open. The 0750febc pin is committed failing-first evidence, so the registry does not outrun the implementation; this review is the one that fails the HEAD for phase acceptance until the fallback lands.",
+    "Re-review CONTEST handling: no contested item of my earlier findings reached Review B this round. The blocking item above is the kept adversarial F1 confirmed in the remediation-changed lines, not a new duplicate: it carries the adversarial id and provenance."
+  ],
+  "commands": [
+    "git cat-file -t 8a08830554d8e6e88aeebdfa0af0523b205ac2f0 -> commit; git merge-base --is-ancestor 8a088305 HEAD -> exit 0; git merge-base --is-ancestor e3405e70 8a088305 -> exit 0; git diff 8a088305..HEAD -- src/apk3d/audio/ -> empty",
+    "git diff e3405e70..8a088305 --stat -> bus.ts +1, chibi.ts +2/-1, adversarial-r2.test.ts new (364), plan.md +14, test-strategy.md 3, tech-debt.md +1, status.md +2, plus out-of-scope chibi_sprouts and faces-r2 paths",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --config measure/runs/audio_game_integration_20261014/review-b-8a08830-vitest.config.mjs' -> 1 file passed, 4 of 4 guard probes passed (G1 inherited names at bus level, G2 through chibiPreload/wireChibiSounds, G3 own __proto__ mapping, G4 absent names)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --config measure/runs/audio_game_integration_20261014/review-b-e3405e7-vitest.config.mjs' -> 1 file passed, 7 of 7 round-4 probe tests passed unchanged",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --config measure/runs/audio_game_integration_20261014/review-b-9d150f6-vitest.config.mjs' -> 1 file passed, 8 of 8 round-3 probe tests passed unchanged",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --config measure/runs/audio_game_integration_20261014/review-b-b000b91-vitest.config.mjs' -> 1 file passed, 10 of 10 round-2 probe tests passed unchanged",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-files.test.ts tests/apk3d/audio-files.adversarial.test.ts tests/apk3d/audio-files.adversarial-r2.test.ts tests/apk3d/audio-wiring.test.ts tests/apk3d/audio-wiring.adversarial.test.ts tests/apk3d/imports.test.ts tests/audio-event-map.test.ts' -> 7 files passed, 61 passed and 2 skipped of 63 (the 2 skips are the TD-44 pins)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-files.adversarial-r3.test.ts' -> 2 failed, 4 passed of 6; both failures are 'TypeError: Object.hasOwn is not a function' at src/apk3d/audio/bus.ts:263 (pin 0750febc, committed after the audited HEAD, audio sources identical to it)",
+    "grep minIosVersion/minWebViewChromeVersion src/apk3d/contracts/manifest.ts -> defaults 15 and 80; grep gate.ts -> checks at lines 115-116, so the device gate admits the engines that lack Object.hasOwn",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/typescript/bin/tsc --noEmit' -> exit 2, 51 baseline errors, zero in src/apk3d/audio/ (grep exit 1), matching earlier rounds",
+    "git diff e3405e70..8a088305 -- src/apk3d/audio/bus.ts src/apk3d/audio/chibi.ts tests/apk3d/ docs/ scripts/ demo/public/audio sounds/ | grep -niE 'https?://|api[_-]?key|token|secret|password|bearer|new URL|XMLHttpRequest|WebSocket' -> no match; same delta grep for published|draft|consent|anonymi -> no match (A2)",
+    "node node_modules/prettier/bin/prettier.cjs --check measure/runs/audio_game_integration_20261014/review-b-8a08830-probe.test.ts measure/runs/audio_game_integration_20261014/review-b-8a08830-vitest.config.mjs -> exit 0"
+  ],
+  "changed_files": [
+    "measure/runs/audio_game_integration_20261014/review-b-8a08830.json",
+    "measure/runs/audio_game_integration_20261014/review-b-8a08830.log",
+    "measure/runs/audio_game_integration_20261014/review-b-8a08830-probe.test.ts",
+    "measure/runs/audio_game_integration_20261014/review-b-8a08830-vitest.config.mjs"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "retry_implementation",
+  "confidence": "high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 3,
+      "evidence": "The guard closes the junk-URL path on modern engines (probes G1-G4 pass 4 of 4), but the same lines throw TypeError on every admitted iOS 15.0-15.3 and WebView 80-92 device, so supported-segment behaviour is wrong."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "The inherited-name pins failed first with literal function-text URLs (green-p3-t6i.log) and the 0750febc pin fails at HEAD with the exact TypeError, but the passing T6i Green gate (53 of 55) ran before that pin existed."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The fix commit 1b7312f4 changed two lines in two files; the later pins and records touch only tests and measure files; concurrent sprout work belongs to another track."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "Every claim carries a command result or a file:line, including bus.ts:263 and chibi.ts:24 for the defect, gate.ts:115-116 and manifest.ts:21-23 for the admitted range, and the 2-of-6 failing pin run."
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "role": "measure-review-b-security",
+  "track": "audio_game_integration_20261014",
+  "phase": "Phase 3: File playback in the AudioBus",
+  "phase_base_sha": "af4e57aff730b1cf8ee9c716802920699f1eaaac",
+  "baseline_sha": "af4e57aff730b1cf8ee9c716802920699f1eaaac",
+  "role_base_sha": "8a08830554d8e6e88aeebdfa0af0523b205ac2f0",
+  "audited_head_sha": "a414b40604bb6bc1cecc65605b7ae5e59789a541",
+  "security_applicability": "applicable",
+  "route": "kimi-code-plan-cn/kimi-for-coding",
+  "status": "pass",
+  "summary": "Pass, round 6, the last re-review of the fourth fix round, with no blocking and no nonblocking finding; the round-5 F1 is withdrawn. The T6k fix 0cc7b5c4 replaces Object.hasOwn with a local hasOwn helper built on Object.prototype.hasOwnProperty.call and applies it at every event-map read: requestFile and isCurrent in bus.ts, the invalidation loop in useSoundFiles, and chibiPreload in chibi.ts. F1 closure is verified four ways: no Object.hasOwn remains in src/apk3d/audio/ at the audited HEAD; my probe runs the wiring, preload, and play with the static method deleted; a map with an own hasOwnProperty key and a null-prototype map both work; and a remap that leaves only an inherited equal entry drops the in-flight completion, which also closes the inherited-value nit the adversarial round recorded. All probe layers hold: round-6 probe 3 of 3, round-5 probe 4 of 4, round-4 probe 7 of 7, round-3 probe 8 of 8, round-2 probe 10 of 10, and the committed nine-file gate 69 passed with the 2 TD-44 skips. The T6l scan guards the audio root against future unpolyfilled built-ins, and the scan hits outside audio sit in TD-45 with a fix track, which the PM rule keeps as tech-debt.",
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "evidence": [
+    "F1 withdrawn: checked the round-5 F1 against the T6k fix 0cc7b5c4. `git grep -n 'Object.hasOwn' a414b406 -- src/apk3d/audio/` exits 1, so no audio source calls the static method; the helper at bus.ts:38-39 is `Object.prototype.hasOwnProperty.call(object, key)`, which exists on every admitted engine and cannot be shadowed by a map key. Probe H1 runs wireChibiSounds, direct preload, and play with Object.hasOwn deleted and no request throws. Probe H2 maps an own `hasOwnProperty` key and a null-prototype events object, and both fetch normally. The committed pin tests/apk3d/audio-files.adversarial-r3.test.ts passes inside the nine-file gate. The failing-first chain holds: Red b913e55d failed on exactly these cases with TypeError at chibi.ts:24 and bus.ts:263 (red-p3-t6j.log, green-p3-t6k.log), and the Green gate after 0cc7b5c4 passes 60 of 62.",
+    "Provenance: `git cat-file -t a414b40604bb6bc1cecc65605b7ae5e59789a541` printed commit. `git merge-base --is-ancestor a414b406 HEAD` exited 0, and the only later commit is e6027f50 of the old_browser_builtins track, which is out of scope per the brief; `git diff a414b406..HEAD -- src/apk3d/audio/ tests/apk3d/` is empty, so the tested audio tree equals the audited tree. `git merge-base --is-ancestor 8a088305 a414b406` exited 0, so the round-5 head is the delta base. phase_base_sha af4e57af is ancestral. role_base_sha is the round-5 head 8a08830554d8e6e88aeebdfa0af0523b205ac2f0.",
+    "Delta scope: `git log --oneline 8a088305..a414b406` on this track lists 0750febc (compatibility pin), b913e55d (T6j Red pins), b88cb45d (T6j evidence and scan hits), 0cc7b5c4 (T6k fix, bus.ts +13/-2 and chibi.ts +4/-2), 20a2ecc2 (Green evidence), 1f45fcfe (T6l scan test), af007671 (TD-45 and the old_browser_builtins track), 022eb9f9-era records, and a414b406 (T6l evidence); chibi_sprouts commits in the range are out of scope. The fix commit touches only the two audio sources.",
+    "Helper semantics at every event-map read: requestFile (bus.ts:271) keeps the junk-URL closure for inherited names; isCurrent (bus.ts:286) gained the own-check, so a remap that leaves only an inherited equal entry drops the in-flight completion (probe H3: buffers, loading, and failed stay empty, no refetch, synth fallback); the invalidation loop (bus.ts:126-130) now compares wasOwn and isOwn so an own entry replaced by an inherited value of the same string counts as a vanished mapping; chibiPreload (chibi.ts:24) filters before the bus sees a name. The round-5 guard probes rerun unchanged at 4 of 4, so the junk-URL closure itself is intact.",
+    "No retry, growth, or disposal regression: the round-4 probe reruns 7 of 7 (stale drops free bytes, 61-remap storm keeps internal maps empty, dispose releases the URL-bound pendingDecode), the round-3 probe reruns 8 of 8, and the round-2 probe reruns 10 of 10 (hostile names never reach a URL).",
+    "T6l scan and TD-45: tests/apk3d/no-unpolyfilled-builtins.test.ts walks src/apk3d/audio/ and fails on any unpolyfilled ES2022+ built-in, so the F1 class cannot re-enter the audio root silently; it passes in the committed gate. The scan hits outside audio (44 uses, mostly structuredClone in game cores) are recorded as TD-45 High Open with fix track old_browser_builtins_20261122; per the PM rule in this brief, a new finding no current user can reach is tech-debt, not blocking, and I do not duplicate it as a finding.",
+    "Committed gate: `node node_modules/vitest/vitest.mjs run --maxWorkers=1` on the nine audio and guard files (audio-files, audio-files.adversarial, audio-files.adversarial-r2, audio-files.adversarial-r3, audio-wiring, audio-wiring.adversarial, imports, no-unpolyfilled-builtins, audio-event-map) exits 0 with 69 passed and 2 skipped of 71; the 2 skips are the TD-44 pins from the earlier adversarial round, recorded with reopen triggers.",
+    "A6: the plan records T6j Red with SHA b913e55d, T6k Green with SHA 0cc7b5c4, and T6l evidence at a414b406; green-p3-t6k.log shows the Red rerun failing 3 of 62 on exactly the fixed cases and the post-fix gate passing 60 of 62, so no registry claim outruns the implementation. The tsc baseline is unchanged: exit 2 with 51 errors, zero in src/apk3d/audio/ (grep exit 1).",
+    "No new URL, input, or secret surface: the delta grep for https?://, api keys, tokens, secrets, passwords, bearer, new URL, XMLHttpRequest, and WebSocket found no match, and the A2 grep for published, draft, consent, and anonymi found no match. The helper compares property ownership only.",
+    "Re-review handling: the round-5 blocking finding F1 is withdrawn with the checks above; no CONTEST item reached Review B, and no new defect sits in the remediation-changed lines."
+  ],
+  "commands": [
+    "git cat-file -t a414b40604bb6bc1cecc65605b7ae5e59789a541 -> commit; git merge-base --is-ancestor a414b406 HEAD -> exit 0; git merge-base --is-ancestor 8a088305 a414b406 -> exit 0; git diff a414b406..HEAD -- src/apk3d/audio/ tests/apk3d/ -> empty",
+    "git grep -n 'Object.hasOwn' a414b406 -- src/apk3d/audio/ -> no match (exit 1); git show a414b406:src/apk3d/audio/bus.ts -> helper at lines 38-39, uses at 126-127, 271, and 286",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --config measure/runs/audio_game_integration_20261014/review-b-a414b40-vitest.config.mjs' -> 1 file passed, 3 of 3 round-6 probe tests passed (H1 runs with Object.hasOwn deleted, H2 own hasOwnProperty key and null-prototype map, H3 inherited-equal remap drop)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --config measure/runs/audio_game_integration_20261014/review-b-8a08830-vitest.config.mjs' -> 1 file passed, 4 of 4 round-5 guard probes passed unchanged",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --config measure/runs/audio_game_integration_20261014/review-b-e3405e7-vitest.config.mjs' -> 1 file passed, 7 of 7 round-4 probe tests passed unchanged",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --config measure/runs/audio_game_integration_20261014/review-b-9d150f6-vitest.config.mjs' -> 1 file passed, 8 of 8 round-3 probe tests passed unchanged",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --config measure/runs/audio_game_integration_20261014/review-b-b000b91-vitest.config.mjs' -> 1 file passed, 10 of 10 round-2 probe tests passed unchanged",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-files.test.ts tests/apk3d/audio-files.adversarial.test.ts tests/apk3d/audio-files.adversarial-r2.test.ts tests/apk3d/audio-files.adversarial-r3.test.ts tests/apk3d/audio-wiring.test.ts tests/apk3d/audio-wiring.adversarial.test.ts tests/apk3d/imports.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts tests/audio-event-map.test.ts' -> 9 files passed, 69 passed and 2 skipped of 71",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/typescript/bin/tsc --noEmit' -> exit 2, 51 baseline errors, zero in src/apk3d/audio/ (grep exit 1), matching earlier rounds",
+    "git diff 8a088305..a414b406 -- src/apk3d/audio/bus.ts src/apk3d/audio/chibi.ts tests/apk3d/ docs/ scripts/ demo/public/audio sounds/ | grep -niE 'https?://|api[_-]?key|token|secret|password|bearer|new URL|XMLHttpRequest|WebSocket' -> no match; same delta grep for published|draft|consent|anonymi -> no match (A2)",
+    "node node_modules/prettier/bin/prettier.cjs --check measure/runs/audio_game_integration_20261014/review-b-a414b40-probe.test.ts measure/runs/audio_game_integration_20261014/review-b-a414b40-vitest.config.mjs -> exit 0 after --write"
+  ],
+  "changed_files": [
+    "measure/runs/audio_game_integration_20261014/review-b-a414b40.json",
+    "measure/runs/audio_game_integration_20261014/review-b-a414b40.log",
+    "measure/runs/audio_game_integration_20261014/review-b-a414b40-probe.test.ts",
+    "measure/runs/audio_game_integration_20261014/review-b-a414b40-vitest.config.mjs"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "The helper runs with Object.hasOwn deleted (probe H1), survives an own hasOwnProperty key and a null-prototype map (H2), and the new isOwn checks drop an inherited-equal remap completion (H3), while every earlier probe layer reruns unchanged."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 5,
+      "evidence": "Red b913e55d failed first on exactly the three fixed cases (green-p3-t6k.log: 3 failed of 62 with TypeError at chibi.ts:24 and bus.ts:263), and the post-fix gate passes 60 of 62 plus the T6l scan file."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The fix commit 0cc7b5c4 changed two audio sources (+13/-2 and +4/-2); the pins, scan, and records stay in tests and measure paths; the only later commit belongs to another track."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "Every claim carries a command result or a file:line, including bus.ts:38-39 for the helper, bus.ts:126-130, 271, and 286 for the four read sites, and the 3-of-3 and 69-of-71 gate runs."
+    }
+  ]
+}

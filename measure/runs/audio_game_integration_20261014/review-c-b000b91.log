@@ -1,0 +1,13 @@
+MEASURE_AGENT_RESULT
+role: review-c
+status: complete
+track: audio_game_integration_20261014
+phase: Phase 3: File playback in the AudioBus
+commits: none
+tests_run: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-files.test.ts tests/apk3d/audio-wiring.test.ts tests/apk3d/imports.test.ts' — PASS, 3 files and 21 tests; exact remediation diff whitespace check — PASS
+files_changed: measure/runs/audio_game_integration_20261014/review-c-b000b91.json and review-c-b000b91.log
+plan_updates: none
+known_failures: none
+handoff: C-F1 withdrawn after checking docs/apk-port.md against src/host/main.ts and src/apk3d/audio/chibi.ts. The unlock pulse and seven host event lists meet the reviewed API and wiring contracts.
+dispositions: C-F1=FIX
+END_MEASURE_AGENT_RESULT

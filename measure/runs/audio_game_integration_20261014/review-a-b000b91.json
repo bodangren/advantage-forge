@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "role": "review-a",
+  "track": "audio_game_integration_20261014",
+  "phase": "Phase 3: File playback in the AudioBus",
+  "baseline_sha": "af4e57aff730b1cf8ee9c716802920699f1eaaac",
+  "phase_base_sha": "af4e57aff730b1cf8ee9c716802920699f1eaaac",
+  "role_base_sha": "b000b91e1fd5c734557818d3912d48f4f9d9c03b",
+  "audited_head_sha": "b000b91e1fd5c734557818d3912d48f4f9d9c03b",
+  "status": "pass",
+  "summary": "Phase 3 passes. Both prior findings are fixed, and the expanded tests check the restored unlock pulse and every host event list.",
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "evidence": [
+    "Provenance: git rev-parse HEAD returned b000b91e1fd5c734557818d3912d48f4f9d9c03b, equal to role_base_sha and audited_head_sha. phase_base_sha af4e57aff730b1cf8ee9c716802920699f1eaaac resolves.",
+    "After the audit started, HEAD moved to c5b06ab7944e2d58cfffda1c3b171da0928fb21f. The two intervening commits affect only assets/sprout-grandpa.ts and the Chibi Sprouts plan/evidence; the audited Phase 3 paths are identical to b000b91e.",
+    "Read the Phase 3 spec AC4 and AC9, current plan, test-strategy.md, T6c Red and T6d Green logs, and the previous Review A result.",
+    "Read the exact phase_base_sha..audited_head_sha diff for the assigned source, test, audio, and track paths, plus docs/apk-port.md added by T6d. git diff --check exits 0.",
+    "F1 withdrawn: bus.ts restores the original unlock pulse shape: create a one-frame silent buffer, connect the source to destination, start it, then resume the context. The new case 11 asserts one silent pulse and one resume.",
+    "F1 harness check: cases 5, 8, and 10 now count sources that use buffers recorded by decodeAudioData. This keeps game-file playback counts separate from the unlock pulse and the synth path.",
+    "F2 withdrawn: the new wiring case checks all 29 hosts. It extracts string literals from audio.play calls, both ternary branches, and each SFX object's values, then requires those events in the host's wireChibiSounds list.",
+    "T6d adds correct/wrong to dragon-flight and dragon-rider, correct to griffin-riders-escape and gryphon-patrol, and roar/spawn to monster-encounters, rpg-battle, and rune-match.",
+    "The heavy-run targeted suite passes 3 files and 21 tests. The passing wiring case includes all 29 host lists; the imports architecture test also passes.",
+    "The generator reports 31 mapped events current. All 14 files in demo/public/audio/chibi/ match sounds/chibi/ byte for byte.",
+    "Prettier passes on bus.ts, docs/apk-port.md, and both audio tests. The assigned diff has no whitespace errors.",
+    "docs/apk-port.md labels the monorepo audio target proposed and describes soundBase as the site base with a trailing slash.",
+    "T6d Green reports 51 TypeScript errors and none in changed files. A fresh tsc command was refused by heavy-run with exit 65 under the PM rule; no new tsc result is claimed.",
+    "build-graph exists, but graph.db is absent. build-graph stats could not run without a database.",
+    "F1 and F2 were reviewed as CONTEST items and withdrawn after checking their exact fixes."
+  ],
+  "commands": [
+    "git rev-parse HEAD => b000b91e1fd5c734557818d3912d48f4f9d9c03b",
+    "git diff --quiet b000b91e1fd5c734557818d3912d48f4f9d9c03b..c5b06ab7944e2d58cfffda1c3b171da0928fb21f -- audited Phase 3 paths => exit 0",
+    "git diff --stat af4e57aff730b1cf8ee9c716802920699f1eaaac..b000b91e1fd5c734557818d3912d48f4f9d9c03b -- src/ scripts/audio-event-map.mjs tests/apk3d/ demo/public/audio/ measure/tracks/audio_game_integration_20261014/ => 55 files, 1208 insertions, 38 deletions",
+    "git diff --check af4e57aff730b1cf8ee9c716802920699f1eaaac..b000b91e1fd5c734557818d3912d48f4f9d9c03b -- src/ scripts/audio-event-map.mjs tests/apk3d/ demo/public/audio/ docs/apk-port.md measure/tracks/audio_game_integration_20261014/ => exit 0",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-files.test.ts tests/apk3d/audio-wiring.test.ts tests/apk3d/imports.test.ts' => exit 0; 3 files, 21 tests",
+    "node scripts/audio-event-map.mjs --check => exit 0; 31 events current",
+    "Node byte comparison of sounds/chibi and demo/public/audio/chibi => 14 files byte-identical",
+    "node_modules/.bin/prettier --check src/apk3d/audio/bus.ts docs/apk-port.md tests/apk3d/audio-files.test.ts tests/apk3d/audio-wiring.test.ts => exit 0",
+    "Fresh tsc attempt through heavy-run => refused with exit 65 by PM rule 11-10 03:20; T6d Green log reports 51 errors, none in changed files",
+    "build-graph stats => exit 3; usage requires a database argument, and graph.db is absent"
+  ],
+  "changed_files": [
+    "measure/runs/audio_game_integration_20261014/review-a-b000b91.json",
+    "measure/runs/audio_game_integration_20261014/review-a-b000b91.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "openai/gpt-6-luna#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "The bus restores the unlock pulse, and the per-host event-list test passes across all 29 hosts."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 5,
+      "evidence": "The 21 passing targeted tests include a pulse-specific case and a host-by-host event extraction case."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The T6d source changes match the two prior findings and the planned audio hand-off note."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "The exact diff, 21-test heavy-run result, generator check, byte comparison, formatting check, and plan logs support the audit."
+    }
+  ]
+}

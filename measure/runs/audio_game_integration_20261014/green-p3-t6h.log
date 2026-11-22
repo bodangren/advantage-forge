@@ -1,0 +1,68 @@
+MEASURE_AGENT_RESULT
+role: measure-jr-green (remediation)
+track: audio_game_integration_20261014
+phase: Phase 3: File playback in the AudioBus
+phase_base_sha: af4e57aff730b1cf8ee9c716802920699f1eaaac
+role_base_sha: 4a7bf19d8692cddb8120b6a0c40d7c0c589a4bed
+red_commit: d2d70bcfde13b075bfd18a85e2f64ba2b84d2e38 (inside phase_base_sha..HEAD, verified by git merge-base and git log)
+status: blocked
+
+tasks:
+  T6g Red (d2d70bcf): left [~]. The committed Red test is unchanged.
+  T6h Green: marked [~] in plan.md; NOT [x] because the Green gate does not pass.
+  tasks flipped to [x]: none.
+  tasks flipped to [b]: none. No deferred owner.
+
+dispositions: F1=FIX; F4=FIX
+
+commands_and_exits:
+  Red rerun at Green start (heavy runner, five files): exit 1; 5 files collected; 2 failed, 44 passed (46). Both failures were the two T6g cases at the fetchUrls assertion: only right.ogg was fetched after the map swap.
+  Green gate after the implementation (heavy runner, five files): exit 1; 5 files collected; 1 failed, 45 passed (46). The remaining failure is the final assertion of rejects the stale decode when the map is swapped mid-flight (gameSourceStarts() was 0 where 1 was required).
+  Single-test probe (-t 'rejects the stale decode', with temporary console.log in bus.ts, reverted): fetch start right.ogg; fetch resolved right.ogg; decode done correct right.ogg current=false; fetch start wrong.ogg; no further fetch resolution. Probe logs were removed; bus.ts matches the intended fix.
+  tsc, prettier, doctor: not recorded as passing; no implementation commit was made.
+
+commits:
+  implementation commit: none (Green gate failed).
+  plan-evidence commit: none.
+  final Green HEAD: 4a7bf19d8692cddb8120b6a0c40d7c0c589a4bed (unchanged; no commit by this role).
+
+uncommitted_paths_created_by_this_role:
+  src/apk3d/audio/bus.ts: binds each load to its starting URL via isCurrent(name, url). fetchFile and decodeData carry the URL; a stale completion stores no buffer, marks no failure, and does not clear another load's marker. pendingDecode stores {data, url}; unlock passes the URL through. Public method shapes, the failed set, equal-map rewiring, and the unlock pulse try/catch are unchanged.
+  measure/tracks/audio_game_integration_20261014/plan.md: T6h Green changed from [ ] to [~] with a short note. No evidence claim and no SHA claim.
+  No new file entered a commit. No committed Red test was edited.
+
+blocking_evidence:
+  tests/apk3d/audio-files.adversarial.test.ts:346-375, rejects the stale decode when the map is swapped mid-flight, is unsatisfiable as written. Its fetchImpl (line 351) returns a NEW pending promise on EVERY call and overwrites resolveFetch. The test resolves only the first fetch at line 360. The next play correctly starts the second fetch for wrong.ogg (fetchUrls equals [right.ogg, wrong.ogg], which passes), but nothing resolves that second promise. Therefore no AudioBuffer is decoded for the new file, and the final assertion gameSourceStarts() === 1 at line 369 cannot pass for any spec-conforming bus.
+  The companion case at lines 377-410 (decode pending at the swap) passes with this implementation because its fetchImpl is the default auto-resolving one. The two cases differ only in that fixture detail.
+  The AC4 decision requires that a stale completion stores nothing and that the event stays free to load its new file. This implementation does that. Passing the remaining assertion would require decoding the stale old-file bytes under the new mapping, which is the exact stale-audio defect the reviews flag.
+
+handoff: Mid Red retry required for Phase 3. Do not edit the committed Red test in Green. Keep AC4 and the staleness decision unchanged. Fix the committed fixture so the second fetch resolves, then rerun Red and Green. Two concrete fixture repairs for the Mid Red role: (A) after resolveFetch!(okResponse()) at line 360, replace fetchImpl with an auto-resolving response so the new wrong.ogg fetch completes; or (B) make the deferred fetchImpl return one shared promise for all calls so a single resolver settles both fetches, while keeping the URL list assertion of two distinct URLs. Either repair must keep all four stale-load assertions intact: stale completion stores nothing, next play fetches exactly one new file, next play plays the new file, and no source starts the stale buffer. No product decision was needed, so no question with options is put to the user. The correct bus implementation sits uncommitted in src/apk3d/audio/bus.ts for the next Green run to verify and commit.
+END_MEASURE_AGENT_RESULT
+
+MEASURE_AGENT_RESULT
+role: measure-jr-green (remediation, resumed after Mid Red fixture repair)
+status: pass
+track: audio_game_integration_20261014
+phase: Phase 3: File playback in the AudioBus
+phase_base_sha: af4e57aff730b1cf8ee9c716802920699f1eaaac
+role_base_sha: bce7744c0baf44c5c1e5b06689f30507e0b535f3
+red_commit: d2d70bcfde13b075bfd18a85e2f64ba2b84d2e38 (inside phase_base_sha..HEAD)
+fixture_repair_commit: 1bc1cd21 (inside phase_base_sha..HEAD)
+red_evidence_commit: bce7744c (inside phase_base_sha..HEAD)
+tasks_flipped_to_x:
+  T6g Red -> [x], SHAs d2d70bcf and 1bc1cd21 kept on its line.
+  T6h Green -> [x] with implementation SHA 2fb45ba3534df6c78b3639cf87803d7d3c5a69ba.
+tasks_flipped_to_b: none. No deferred owner.
+implementation_commit: 2fb45ba3534df6c78b3639cf87803d7d3c5a69ba fix(audio_game_integration): T6h stale load rejection
+plan_evidence_commit: 021d52dfb208c0e7c782a2b876638270dde0cee8 docs(audio_game_integration): T6g/T6h Green evidence
+final_head: 021d52dfb208c0e7c782a2b876638270dde0cee8
+dispositions: F1=FIX; F4=FIX
+tests_run:
+  Five-file gate through the heavy runner: exit 0; 5 files; 46 of 46 tests. Command: node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-files.test.ts tests/apk3d/audio-files.adversarial.test.ts tests/apk3d/audio-wiring.test.ts tests/apk3d/audio-wiring.adversarial.test.ts tests/apk3d/imports.test.ts.
+  node node_modules/typescript/bin/tsc --noEmit through the heavy runner: exit 2 with baseline errors in tests/ only and no error in src/apk3d/audio/bus.ts.
+  node_modules/.bin/prettier --check src/apk3d/audio/bus.ts through the heavy runner: exit 0.
+  git diff --check on bus.ts, plan.md, and status.md: exit 0.
+  node measure/tools/generate.mjs --check: exit 0; status.md regenerated from 12/15 to 14/17 for this track.
+new_files: no new file entered either commit. This log is untracked and records both the earlier blocked attempt and this passing result.
+handoff: F1 and F4 are fixed in src/apk3d/audio/bus.ts. Each fetch and decode carries the URL that started it; isCurrent(name, url) compares that URL with the URL resolved from the current map and base. A completion from an old mapping stores no buffer, marks no failure, and leaves a newer load's marker intact. pendingDecode carries the same URL through the first unlock. Equal-map rewiring still fetches once, failed events stay in the failed set per AC4 rule 5, the unlock pulse stays in its try/catch, and every public method shape is unchanged. The earlier block came from a committed fixture that never resolved the second fetch; Mid Red repaired it in 1bc1cd21 and all 46 tests now pass. No test file was edited by this role. Review roles should re-audit the five named test files on final HEAD 021d52df.
+END_MEASURE_AGENT_RESULT

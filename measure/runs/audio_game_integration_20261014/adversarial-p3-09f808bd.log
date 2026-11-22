@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: adversarial-testing
+status: fail
+track: audio_game_integration_20261014
+phase: Phase 3: File playback in the AudioBus
+commits: 09f808bd (tests), 07bbc341 (plan)
+tests_run: Heavy-run targeted gate exited 1: 60 passed, 3 failed across 7 files. Heavy-run project gate with the storytime exclusion exited 1: 3,355 passed, 3 failed across 223 files. Both failed only on the new file. Prettier, event map, generated facts, structural doctor, and diff checks passed.
+files_changed: tests/apk3d/audio-files.adversarial-r2.test.ts; measure/tracks/audio_game_integration_20261014/plan.md; measure/runs/audio_game_integration_20261014/adversarial-p3-09f808bd.json; measure/runs/audio_game_integration_20261014/adversarial-p3-09f808bd.log
+plan_updates: Phase 3 records the test commit, results, defects, and the late-finding classification for F3.
+known_failures: F1 stale bytes overwrite the current preload before unlock; F2 a late decode from a disposed context plays when its bus reopens; F3 inherited names cause invalid file requests.
+handoff: Route F1-F3 to Green under retry_implementation. Apply the round limit before authorizing work. Keep all three tests. Guard queued bytes by current URL and decode completion by context identity. Require own map entries in the Chibi helper and bus. Retain the A-to-B-to-A behavior and the existing late-fetch contract. Rerun the applicable reviews and adversarial gate after remediation.
+END_MEASURE_AGENT_RESULT

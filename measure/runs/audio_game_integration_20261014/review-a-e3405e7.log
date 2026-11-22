@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: review-a
+status: complete
+track: audio_game_integration_20261014
+phase: Phase 3: File playback in the AudioBus
+commits: none
+tests_run: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-files.test.ts tests/apk3d/audio-files.adversarial.test.ts tests/apk3d/audio-wiring.test.ts tests/apk3d/audio-wiring.adversarial.test.ts tests/apk3d/imports.test.ts' exited 0 with 5 files and 46 tests.
+files_changed: measure/runs/audio_game_integration_20261014/review-a-e3405e7.json; measure/runs/audio_game_integration_20261014/review-a-e3405e7.log
+plan_updates: none
+known_failures: The checkout HEAD is 259b05ae64e50719cf27e893128f88df355f6e5f, not the requested audited head e3405e703db4b9f97d8ac2b1030a1b3296fb9676. The later committed changes are confined to the separate Dad asset track; reviewed audio paths match the requested audited head. build-graph could not query an existing graph database because it has no nodes table.
+handoff: F1 is withdrawn. T6h rejects stale completions when the map changes during a pending fetch or decode. The T6g fixture repair retained its assertions, equal-map wiring still fetches once, and failed events remain failed under AC4 rule 5. The five-file test suite passes. Audit bound to phase_base_sha af4e57aff730b1cf8ee9c716802920699f1eaaac, role_base_sha 9d150f629ef8346439f29e2927a83f90dfe17324, and audited_head_sha e3405e703db4b9f97d8ac2b1030a1b3296fb9676.
+END_MEASURE_AGENT_RESULT

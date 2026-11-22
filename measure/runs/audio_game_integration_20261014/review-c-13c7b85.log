@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: review-c
+status: complete
+track: audio_game_integration_20261014
+phase: Phase 3: File playback in the AudioBus
+commits: none
+tests_run: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-wiring.test.ts tests/apk3d/audio-files.test.ts tests/apk3d/imports.test.ts' — PASS, 3 files and 19 tests; git diff --check for the exact phase paths — PASS
+files_changed: measure/runs/audio_game_integration_20261014/review-c-13c7b85.json and review-c-13c7b85.log
+plan_updates: none
+known_failures: docs/apk-port.md does not yet list the audio asset path or soundBase contract for the future monorepo port.
+handoff: Sound API exports and host wiring pass. The 2D launch context receives BASE, and the APK path keeps soundBase absent for synth-only playback. No 3D view paths changed. Record demo/public/audio/chibi/ and the site-base soundBase contract in docs/apk-port.md before porting. F1 is nonblocking.
+END_MEASURE_AGENT_RESULT

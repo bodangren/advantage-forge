@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: review-a
+status: complete
+track: audio_game_integration_20261014
+phase: Phase 3: File playback in the AudioBus
+commits: none
+tests_run: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-files.test.ts tests/apk3d/audio-files.adversarial.test.ts tests/apk3d/audio-files.adversarial-r2.test.ts tests/apk3d/audio-wiring.test.ts tests/apk3d/audio-wiring.adversarial.test.ts tests/apk3d/imports.test.ts' exited 0 with 6 files, 53 passed, and 2 skipped.
+files_changed: measure/runs/audio_game_integration_20261014/review-a-8a08830.json; measure/runs/audio_game_integration_20261014/review-a-8a08830.log
+plan_updates: none
+known_failures: F1 [Blocker] review-a: src/apk3d/audio/bus.ts:122,278; an in-flight load can survive a remap from an own event to an inherited-only event with the same value, because useSoundFiles compares inherited values and isCurrent accepts them. The old file can then be installed and played for an unmapped event.
+handoff: Route F1 to Green. Add own-property checks to every event-map read that validates or compares mappings, and add a regression test for a pending load followed by an inherited-only remap. The six-file suite passed with the two TD-44 tests skipped. The skips name TD-44 and the debt record states the reopen trigger. Audit bound to phase_base_sha af4e57aff730b1cf8ee9c716802920699f1eaaac, role_base_sha e3405e703db4b9f97d8ac2b1030a1b3296fb9676, and audited_head_sha 8a08830554d8e6e88aeebdfa0af0523b205ac2f0.
+END_MEASURE_AGENT_RESULT

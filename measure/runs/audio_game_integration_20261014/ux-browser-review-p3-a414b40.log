@@ -1,0 +1,14 @@
+MEASURE_AGENT_RESULT
+status: complete
+verdict: PASS
+audited_head: e6027f509891a301c26eddbbf67fd044bc971729
+phase_base_sha: af4e57aff730b1cf8ee9c716802920699f1eaaac
+role_base_sha: e6027f509891a301c26eddbbf67fd044bc971729
+checks: The Phase 3 browser check passed in Rune Match at http://127.0.0.1:5199/demo/. Six Ogg requests returned 200 from /demo/audio/chibi/: tap, right, wrong, level-end, whoosh, and pop. No invalid audio request, console error, or page error occurred. The 1280x800 screenshot shows the active game board and HUD. The active-play accessibility snapshot is empty because the canvas has no accessible name; this is outside the Phase 3 audio scope and remains a nonblocking note for a UI/accessibility track. The muted headless check proves file requests and runtime flow, not audible quality on a real device. The server log is empty, and the build session confirmed port 5199 is stopped. HEAD e6027f509891a301c26eddbbf67fd044bc971729 matches the requested audited head.
+blocking_findings: None.
+nonblocking_findings: The Rune Match active-play accessibility snapshot is empty, and the game canvas has no accessible name. Route this to a UI/accessibility track; it does not block Phase 3 audio.
+evidence: measure/runs/audio_game_integration_20261014/ux-browser-review-p3-a414b40-probe.json and -probe.out report pass, six HTTP 200 Ogg requests, no invalid requests, and no browser errors. Screenshot: measure/runs/audio_game_integration_20261014/ux-browser-review-p3-a414b40.png. Accessibility snapshot: empty string in the probe JSON. Dev URL: http://127.0.0.1:5199/demo/. The probe script in this run directory confirms the game, click, Space input, and request assertions.
+retry_recommendation: none
+handoff: Phase 3 UX browser gate passes at HEAD e6027f509891a301c26eddbbf67fd044bc971729. Route the missing accessible name and empty active-game accessibility tree to a UI/accessibility track. No audible-quality claim is made.
+result_artifact: measure/runs/audio_game_integration_20261014/ux-browser-review-p3-a414b40.json
+END_MEASURE_AGENT_RESULT

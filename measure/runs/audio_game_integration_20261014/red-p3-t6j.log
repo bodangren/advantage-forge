@@ -1,0 +1,34 @@
+MEASURE_AGENT_RESULT
+role: measure-mid-red
+track: audio_game_integration_20261014
+phase: Phase 3: File playback in the AudioBus
+phase_base_sha: af4e57aff730b1cf8ee9c716802920699f1eaaac
+role_base_sha: 0750febc587c89162a76e776bdd7ccb9248ae45f
+baseline_sha: af4e57aff730b1cf8ee9c716802920699f1eaaac
+resulting_head_sha: b88cb45d10de5e50f59927e54231bc99f42e06c3
+commits:
+  - b913e55dac1e5c8d8f8295144e980eff436dc28b test(audio_game_integration): T6j old-browser, inherited-remap and built-in scan (tests/apk3d/audio-files.adversarial-r3.test.ts only, +61)
+  - b88cb45d10de5e50f59927e54231bc99f42e06c3 measure(audio_game_integration): T6j red evidence, escalation, and scan hits (metadata.json, plan.md)
+tests:
+  - tests/apk3d/audio-files.test.ts (pass)
+  - tests/apk3d/audio-files.adversarial.test.ts (pass)
+  - tests/apk3d/audio-files.adversarial-r2.test.ts (pass except 2 TD-44 skips)
+  - tests/apk3d/audio-wiring.test.ts (pass)
+  - tests/apk3d/audio-wiring.adversarial.test.ts (pass)
+  - tests/apk3d/imports.test.ts (pass)
+  - tests/apk3d/audio-files.adversarial-r3.test.ts (3 fail: 2 old-browser pins, 1 new inherited-remap pin)
+  - tests/apk3d/no-unpolyfilled-builtins.test.ts (1 fail: 49 hits; written, run, then REMOVED uncommitted per PM scope order)
+failing_cases:
+  - r3 `wires a Chibi host on the supported browser range without native Object.hasOwn`: TypeError: Object.hasOwn is not a function at src/apk3d/audio/chibi.ts:24
+  - r3 `preloads an own event on the supported browser range without native Object.hasOwn`: TypeError: Object.hasOwn is not a function at src/apk3d/audio/bus.ts:263
+  - r3 `drops a pending load when the event is remapped to an inherited-only entry`: stale buffer installs and starts (staleStarts has 1 entry); no second fetch (fetchUrls stays [tap.ogg])
+  - scan `uses no unpolyfilled ES2022+ built-ins under src/`: 49 hits (2 T6i Object.hasOwn in audio; 34 structuredClone in src/games core; 8 genuine Array.prototype.at; 1 findLastIndex in src/host/reader.ts; 3 THREE.Box3.union false positives in src/render/page.ts)
+red_command: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-files.test.ts tests/apk3d/audio-files.adversarial.test.ts tests/apk3d/audio-files.adversarial-r2.test.ts tests/apk3d/audio-wiring.test.ts tests/apk3d/audio-wiring.adversarial.test.ts tests/apk3d/imports.test.ts tests/apk3d/audio-files.adversarial-r3.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts'
+red_result: exit 1 with 4 failed, 57 passed, 2 skipped (63) across 8 files
+skips: 2 TD-44 pins in audio-files.adversarial-r2.test.ts (unchanged)
+prettier: node_modules/.bin/prettier --check on both test files exits 0
+scan_disposition: NOT committed. Hits outside src/apk3d/audio/ found, so per PM order the scan test was removed after its evidence run; full raw-line hit list is in plan.md T6j and in the handoff reply. Green for T6k: opencode-go/hy4-flash-free#high
+production_files_changed: none
+dirty_paths_at_start: pre-existing untracked bench/, measure/runs/, mockup, reference, and Chibi Sprouts outputs from other sessions; preserved untouched
+status: red_pins_failing_as_required
+END_MEASURE_AGENT_RESULT

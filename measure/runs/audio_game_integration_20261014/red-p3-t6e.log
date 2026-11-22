@@ -1,0 +1,34 @@
+MEASURE_AGENT_RESULT
+role: measure-mid-red
+track: audio_game_integration_20261014
+phase: Phase 3: File playback in the AudioBus
+red_kind: gap_closing
+baseline_sha: af4e57aff730b1cf8ee9c716802920699f1eaaac
+phase_base_sha: af4e57aff730b1cf8ee9c716802920699f1eaaac
+role_base_sha: 913bbb5223cffe472512de85908ff6daca2de713
+head_sha: 2ea441a032f9ffcd95ee7cfd9461f3cffba1364c
+commits:
+  - 097231b2035e4eb1a0776ffe2e144c752eef798e test(audio_game_integration): T6e wiring parser F3
+  - 2ea441a032f9ffcd95ee7cfd9461f3cffba1364c docs(audio_game_integration): T6e Red plan evidence, parser F3
+tests:
+  - tests/apk3d/audio-wiring.test.ts (6 cases)
+  - tests/apk3d/audio-wiring.adversarial.test.ts (8 cases)
+files:
+  - tests/apk3d/audio-wiring-parser.ts (new shared helper: stripComments, playedEventsOf)
+  - tests/apk3d/audio-wiring.test.ts (case 6 uses the shared helper)
+  - tests/apk3d/audio-wiring.adversarial.test.ts (local playedEventsOf/stripComments copies replaced by shared import)
+  - measure/tracks/audio_game_integration_20261014/plan.md (T6e line)
+  - measure/generated/status.md (regenerated)
+gaps: F3 wiring parser counted audio.play calls in comments and strings as played events; closed by comment/string-aware extraction shared by both wiring test files.
+breakage_proof: pre-fix raw regex on the F3 fixture yields ["ghost","specter","tap","wisp"] where ["tap"] is required, so the committed fixture test fails without the fix.
+evidence:
+  - phase_base_sha af4e57aff730b1cf8ee9c716802920699f1eaaac resolves; role_base_sha 913bbb5223cffe472512de85908ff6daca2de713 was HEAD at role start.
+  - git status dirty paths before editing: assets/sprout-dad.ts, assets/sprout-grandpa.ts, bench/, docs mockups, reference/, measure/runs logs; classified as unrelated user work (parallel Green/Chibi Sprouts sessions) or generated/ignorable; left untouched, explicit-path commits only.
+  - No production file edited: git diff of test commit touches only the three tests/apk3d paths.
+  - Targeted command: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-wiring.test.ts tests/apk3d/audio-wiring.adversarial.test.ts' => exit 0, 2 files passed, 14 of 14 tests.
+  - prettier --check on tests/apk3d/audio-wiring.test.ts, tests/apk3d/audio-wiring.adversarial.test.ts, tests/apk3d/audio-wiring-parser.ts => exit 0; git diff --check => exit 0.
+  - No existing assertion weakened: case 6 keeps the 29-host count, ternary-branch, computed-key SFX, and sprite-play rules; per-host missing lists are unchanged on all 29 hosts (the fix only shrinks the played set, and no host hides a play in a comment or string).
+  - node measure/tools/generate.mjs --check => exit 0 after ./measure/generate.sh (status.md regenerated for the new [~] task).
+remaining_failures: none; the Red command exits 0 as the gap-closing gate requires.
+status: pass
+END_MEASURE_AGENT_RESULT

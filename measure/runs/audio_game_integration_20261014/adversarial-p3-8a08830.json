@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "role": "adversarial-testing",
+  "track": "audio_game_integration_20261014",
+  "phase": "Phase 3: File playback in the AudioBus",
+  "baseline_sha": "af4e57aff730b1cf8ee9c716802920699f1eaaac",
+  "phase_base_sha": "af4e57aff730b1cf8ee9c716802920699f1eaaac",
+  "role_base_sha": "8a08830554d8e6e88aeebdfa0af0523b205ac2f0",
+  "pre_adversarial_head_sha": "8a08830554d8e6e88aeebdfa0af0523b205ac2f0",
+  "audited_head_sha": "8a08830554d8e6e88aeebdfa0af0523b205ac2f0",
+  "status": "fail",
+  "summary": "Phase 3 fails. Both gates fail only on the two tests for the T6i browser regression. Four new event-key tests pass. The two TD-44 tests remain skipped.",
+  "blocking_findings": [
+    "F1 [Major] adversarial-testing: T6i calls Object.hasOwn in src/apk3d/audio/chibi.ts:24 and src/apk3d/audio/bus.ts:263. Safari on iOS 15.0–15.3 and Chrome WebView 80–92 lack this method. The device gate admits these versions. Chibi wiring throws on the first event and aborts 2D game startup. Direct AudioBus preload also throws instead of loading the mapped sound."
+  ],
+  "nonblocking_findings": [
+    "F2 [Nit] adversarial-testing: tech-debt. src/apk3d/audio/bus.ts:121–125 and :276–280 still use inherited values when invalidating or completing a load. If a custom remap replaces an own entry with an inherited entry of the same value, the old file can play. No current host uses such a remap. These lines are outside the T6i diff."
+  ],
+  "evidence": [
+    "The two audio source files match the pinned blobs at 8a08830554d8e6e88aeebdfa0af0523b205ac2f0. The shared checkout also received unrelated Chibi Sprouts commits.",
+    "MDN Browser Compatibility Data lists Object.hasOwn from Safari 15.4 and Chrome 93. Safari iOS and Android WebView mirror those versions: https://raw.githubusercontent.com/mdn/browser-compat-data/main/javascript/builtins/Object.json",
+    "docs/apk3d-cartridge.md:598–599 and src/apk3d/contracts/manifest.ts:21–23 specify iOS 15 and Chrome WebView 80 as the minimum versions. A probe using the real checkDevice grants ok to iOS 15.3 and Chrome WebView 80 with valid WebGL2 capabilities.",
+    "vite.demo.config.ts:55 targets ES2020. Vite's transform leaves the Object.hasOwn call intact.",
+    "src/host/main.ts:360 supplies soundBase. src/games/rune-match/view2d/game.ts:46 calls wireChibiSounds during setup with the base and a nonempty event list.",
+    "tests/apk3d/audio-files.adversarial-r3.test.ts:37–49 invokes both changed call paths while Object.hasOwn is absent. Both fail with TypeError at the T6i guard.",
+    "tests/apk3d/audio-files.adversarial-r3.test.ts:52–78 covers inherited names, empty and punctuation keys, both map prototypes, and own keys that match builtin names. All four tests pass.",
+    "F2 probe uses the pinned AudioBus source. A pending own tap decode still installs after a remap to a map with only an inherited tap entry. The next play starts the old buffer, with one fetch total.",
+    "The PM deferred round-2 F1 and F2 to TD-44. Their two skip pins stay unchanged. Round-2 F3 remains covered by the inherited-name test.",
+    "Late finding F2: tech-debt (No current host replaces the map with a custom prototype.)",
+    "The all-[~] fixture reports two incomplete tasks. The live wiring parser keeps a real play call on a line with a quoted 'never' instruction.",
+    "No unqualified A5 pass phrase appears in the plan. All six existing targeted files pass with the two TD-44 skips."
+  ],
+  "commands": [
+    "git rev-parse HEAD at role start => 8a08830554d8e6e88aeebdfa0af0523b205ac2f0",
+    "git show 1b7312f4 -- src/apk3d/audio => two Object.hasOwn guard changes",
+    "build-graph update <local cache graph> src/apk3d/audio/bus.ts src/apk3d/audio/chibi.ts => both files updated",
+    "Node probe: pinned AudioBus.preload without Object.hasOwn => TypeError: Object.hasOwn is not a function",
+    "Node probe: Vite transformWithOxc of Object.hasOwn(events, name) with target es2020 => Object.hasOwn(events, name);",
+    "Node probe: checkDevice with iOS 15.3 and Chrome WebView 80 => ok, ok",
+    "Node probe: pending decode and own-to-inherited remap => own=false; fetches=1; old file starts=1",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-files.test.ts tests/apk3d/audio-files.adversarial.test.ts tests/apk3d/audio-files.adversarial-r2.test.ts tests/apk3d/audio-wiring.test.ts tests/apk3d/audio-wiring.adversarial.test.ts tests/apk3d/imports.test.ts tests/apk3d/audio-files.adversarial-r3.test.ts' => exit 1; 57 passed, 2 failed, 2 skipped across 7 files",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts' => exit 1; 3360 passed, 2 failed, 2 skipped across 224 files",
+    "node_modules/.bin/prettier --check tests/apk3d/audio-files.adversarial-r3.test.ts => exit 0",
+    "git diff --check 8a088305..0750febc => exit 0",
+    "git commit --only -m 'test(audio_game_integration): pin T6i guard compatibility' -- tests/apk3d/audio-files.adversarial-r3.test.ts => 0750febc"
+  ],
+  "changed_files": [
+    "tests/apk3d/audio-files.adversarial-r3.test.ts",
+    "measure/runs/audio_game_integration_20261014/adversarial-p3-8a08830.json",
+    "measure/runs/audio_game_integration_20261014/adversarial-p3-8a08830.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [
+    "F1: A device that passes the documented version check can throw in preload."
+  ],
+  "prod_wiring_violations": [
+    "F1: A normal Chibi host call throws before it completes setup on affected browsers."
+  ],
+  "route_parity_violations": [],
+  "retry_recommendation": "retry_implementation",
+  "confidence": "high",
+  "route": "unknown",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 2,
+      "evidence": "The own-key tests pass, but the T6i guard in chibi.ts:24 stops game setup on part of the documented device range."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "The two compatibility tests fail directly at the changed lines, while four key matrix tests check exact file requests."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "Commit 0750febc adds only tests/apk3d/audio-files.adversarial-r3.test.ts."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "The test stacks, device gate probe, browser compatibility data, and Vite transform all support F1."
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "role": "review-c",
+  "track": "audio_game_integration_20261014",
+  "phase": "Phase 3: File playback in the AudioBus",
+  "phase_base_sha": "af4e57aff730b1cf8ee9c716802920699f1eaaac",
+  "role_base_sha": "13c7b85ca337b137bc481ac94883b686d1c14732",
+  "audited_head_sha": "b000b91e1fd5c734557818d3912d48f4f9d9c03b",
+  "status": "pass",
+  "summary": "The docs fix matches the implementation. The unlock pulse and seven corrected host lists preserve the API and wiring contracts.",
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "evidence": [
+    "F1 withdrawn: docs/apk-port.md:240-247 now records the proposed audio asset target, the 14 files, and the site-base soundBase behavior; src/host/main.ts:359-360 sets soundBase to BASE, and src/apk3d/audio/chibi.ts:14-16 appends audio/chibi/ exactly once.",
+    "src/apk3d/audio/bus.ts:155-160 starts one zero-filled one-frame buffer source synchronously during unlock and then resumes the context; tests/apk3d/audio-files.test.ts verifies the separate silent pulse and game-source counts.",
+    "The exact remediation diff updates seven host event lists; tests/apk3d/audio-wiring.test.ts now asserts each host list includes the events played by audio.play and its SFX map.",
+    "The full Phase 3 diff retains the SoundFiles and helper exports, optional launch context soundBase, BASE host value, and the synth-only no-base behavior.",
+    "HEAD equaled audited_head_sha b000b91e1fd5c734557818d3912d48f4f9d9c03b at review start. The final HEAD is 8c7f28916751425dc821c759a48e21b25ce8da0; its only changed path is assets/sprout-grandpa.ts, excluded by the brief."
+  ],
+  "commands": [
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-files.test.ts tests/apk3d/audio-wiring.test.ts tests/apk3d/imports.test.ts' — PASS, 3 files and 21 tests.",
+    "git diff --check 13c7b85ca337b137bc481ac94883b686d1c14732..b000b91e1fd5c734557818d3912d48f4f9d9c03b -- src/apk3d/audio/bus.ts src/games/*/view2d/game.ts docs/apk-port.md tests/apk3d/audio-files.test.ts tests/apk3d/audio-wiring.test.ts — PASS.",
+    "git rev-parse HEAD — b000b91e1fd5c734557818d3912d48f4f9d9c03b at audit start; 8c7f28916751425dc821c759a48e21b25ce8da0 at final check, with only assets/sprout-grandpa.ts changed between them."
+  ],
+  "changed_files": [
+    "docs/apk-port.md",
+    "src/apk3d/audio/bus.ts",
+    "src/games/dragon-flight/view2d/game.ts",
+    "src/games/dragon-rider/view2d/game.ts",
+    "src/games/griffin-riders-escape/view2d/game.ts",
+    "src/games/gryphon-patrol/view2d/game.ts",
+    "src/games/monster-encounters/view2d/game.ts",
+    "src/games/rpg-battle/view2d/game.ts",
+    "src/games/rune-match/view2d/game.ts",
+    "tests/apk3d/audio-files.test.ts",
+    "tests/apk3d/audio-wiring.test.ts"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "contract_applicability": "applicable",
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "openai/gpt-6-luna#high",
+  "ratings": []
+}

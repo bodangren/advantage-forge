@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "role": "measure-review-b-security",
+  "track": "audio_game_integration_20261014",
+  "phase": "Phase 3: File playback in the AudioBus",
+  "phase_base_sha": "af4e57aff730b1cf8ee9c716802920699f1eaaac",
+  "baseline_sha": "af4e57aff730b1cf8ee9c716802920699f1eaaac",
+  "role_base_sha": "9d150f629ef8346439f29e2927a83f90dfe17324",
+  "audited_head_sha": "e3405e703db4b9f97d8ac2b1030a1b3296fb9676",
+  "security_applicability": "applicable",
+  "route": "kimi-code-plan-cn/kimi-for-coding",
+  "status": "pass",
+  "summary": "Pass, round 4, with no blocking and no nonblocking finding. The delta 9d150f62..e3405e70 on audited paths is the T6h fix commit 2fb45ba3 (bus.ts +36/-15), T6g/T6h plan evidence, the T6g Red pins and fixture repair in the adversarial suite, and run logs; out-of-scope sprout asset and chibi plan commits complete the range. Each load now binds to its starting URL and isCurrent(name, url) drops stale fetch and decode completions: a stale success installs no buffer and frees its bytes, a stale failure marks no failure, a remap never starts a fetch by itself, state maps stay empty through a 61-remap storm with an in-flight load, pendingDecode carries the same URL and a pre-unlock remap frees the waiting bytes, and dispose still clears every structure including the URL-bound pendingDecode. No new URL, input, or trust surface exists. The round-2 probe passes 10 of 10, the round-3 probe passes 8 of 8, my round-4 probe passes 7 of 7, and the committed six-file suite passes 54 of 54.",
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "evidence": [
+    "Provenance: `git cat-file -t e3405e703db4b9f97d8ac2b1030a1b3296fb9676` printed commit. `git merge-base --is-ancestor e3405e70 HEAD` exited 0, and `git diff e3405e70..HEAD --stat` shows only assets/sprout-dad.ts, the asset_chibi_sprouts_r1 plan, and a chibi green log, all out of scope per the brief, so the audited HEAD is current. `git merge-base --is-ancestor af4e57af e3405e70` exited 0, so phase_base_sha is unchanged and ancestral. role_base_sha is the round-3 head 9d150f629ef8346439f29e2927a83f90dfe17324. The delta holds four track commits on audited paths: 2fb45ba3 (bus.ts, T6h), 1bc1cd21 and bce7744c (T6g fixture repair and evidence), 021d52df and e3405e70 (plan evidence), plus run logs; chibi_sprouts commits 4a7bf19d and 4d4b0d27-era sprout edits touch only out-of-scope paths.",
+    "Delta scope: `git diff 9d150f62..e3405e70 --stat` shows src/apk3d/audio/bus.ts (+36/-15), tests/apk3d/audio-files.adversarial.test.ts (+56, the two T6g stale-rejection pins plus the fixture line), the track plan, red-p3-t6g.log, and measure/generated/status.md; `git show --stat 2fb45ba3` confirms the fix commit changed only bus.ts. No fetch, URL, or event-name surface was added.",
+    "Stale completion drop and byte release: isCurrent (bus.ts:275-280) resolves the event under the current map and base and compares the URL. decodeData (bus.ts:298-317) stores a buffer and clears loading only when isCurrent holds, so a stale decode success drops the AudioBuffer with no store. Probe E1: after an entry change, buffers/loading/failed internals stay empty, the stale FakeBuffer is never started by any source, and the next play fetches the new file exactly once and plays it. Probe E4 (remap storm): through 61 alternating remaps with an in-flight load, fetch count stays 1 (a remap never refetches), and the internal buffers, pendingDecode, loading, and failed sizes are all 0 mid-storm and after the stale completion resolves.",
+    "No retry loop and no failure mark on a dropped stale load: fetchFile (bus.ts:282-295) and the decodeData catch add to failed and clear loading only when isCurrent holds. Probe E2: a stale fetch rejection leaves failed empty, and the new mapping loads and plays. Probe E3: a stale decode rejection likewise marks nothing, and exactly one fetch for the new file follows. The round-3 probes rerun unchanged at 8 of 8 (D3: a failed event is never retried across six swaps; D8: a changed entry refetches exactly once), and the round-2 probes rerun unchanged at 10 of 10.",
+    "pendingDecode URL binding and pre-unlock invalidation: pendingDecode now holds {data, url} (bus.ts:102) and unlock passes the URL through (bus.ts:170-173). Probe E5: a preloaded fetch that resolves before the first unlock waits with its URL; a remap before the unlock frees the bytes (pendingDecode size 0), the unlock decodes nothing stale (decodes 0), and the play fetches the current file once; without a remap, the same bytes decode at unlock and play with no refetch.",
+    "Dispose still releases everything: dispose (bus.ts:230-245) clears sources, closes the context, and clears buffers, pendingDecode (now URL-bound entries), loading, and failed. Probe E6: pre-unlock preload bytes vanish at dispose, the fresh context after a later unlock decodes nothing, and the play starts one clean fetch. The round-3 dispose probe D5 reruns green inside the 8-of-8 pass.",
+    "Behavioral nuance, no finding: an in-flight load whose mapping is restored before its completion is legitimately current and installs its buffer (observed when my E4 storm ended on the original entry; I fixed the probe parity to end stale). This matches the spec decision that the current map decides the file, and no trusted boundary is crossed because both maps come from one caller in a single wiring call.",
+    "No new URL or input surface: the only URL construction stays the base-plus-entry concat inside bus.ts (requestFile and isCurrent), and a grep of the delta for https?://, api keys, tokens, secrets, passwords, bearer, fetch(, new URL, XMLHttpRequest, and WebSocket found one match only, the pre-existing fetchFile body line (bus.ts:285 region) carried as diff context. Hostile event names still never reach a URL and entries flow verbatim, as the round-2 probes S1/S2/S2b rerun green.",
+    "Secrets and sensitive data: the delta adds no audio file and no credential; the wiring parser still processes committed host source text at test time only.",
+    "A2: not applicable. A grep of the delta for published, draft, consent, and anonymi found no match, and the track holds no personal data and no publish gate.",
+    "A6: the plan T6h record at measure/tracks/audio_game_integration_20261014/plan.md claims F1=FIX and F4=FIX with a five-file 46-of-46 gate and no test change inside the fix commit. Verified: the T6g Red commit d2d70bcf failed first on exactly the two stale-rejection cases (red-p3-t6g.log, exit 1, 2 failed of 46), Green's first attempt honestly blocked on a fixture that never resolved the second fetch, Mid Red repaired the fixture in 1bc1cd21, and the resumed Green gate passed 46 of 46 before 2fb45ba3 was committed (green-p3-t6h.log). My six-file rerun passes 54 of 54 including both stale pins, so no security state is overstated. The tsc baseline is unchanged: exit 2 with 51 errors, zero in src/apk3d/audio/bus.ts or any changed file.",
+    "Observation, no finding: after dispose, a late successful fetch still stores its bytes in pendingDecode for a later unlock instead of dropping them; this stays bounded at one entry per event, is cleared by dispose and by invalidation, and remains pinned at tests/apk3d/audio-files.adversarial.test.ts:455-481.",
+    "Independence and CONTEST: I did not read the review-a and review-c result files that share the run folder. No CONTEST item reached Review B in rounds 1 to 3, and this round opens no finding to contest."
+  ],
+  "commands": [
+    "git cat-file -t e3405e703db4b9f97d8ac2b1030a1b3296fb9676 -> commit; git merge-base --is-ancestor e3405e70 HEAD -> exit 0; git diff e3405e70..HEAD --stat -> assets/sprout-dad.ts, chibi plan, chibi green log only; git merge-base --is-ancestor af4e57af e3405e70 -> exit 0",
+    "git diff 9d150f62..e3405e70 --stat -> bus.ts +36/-15, audio-files.adversarial.test.ts +56, plan.md +36, red-p3-t6g.log new, status.md +2, plus out-of-scope sprout/chibi paths; git show --stat 2fb45ba3 -> 1 file changed, src/apk3d/audio/bus.ts (+36, -15)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --config measure/runs/audio_game_integration_20261014/review-b-e3405e7-vitest.config.mjs' -> 1 file passed, 7 of 7 round-4 probe tests passed (E1-E7) after three probe-harness fixes; the first E4 failure run demonstrated the legitimate current-again install behavior",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --config measure/runs/audio_game_integration_20261014/review-b-9d150f6-vitest.config.mjs' -> 1 file passed, 8 of 8 round-3 probe tests passed unchanged",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --config measure/runs/audio_game_integration_20261014/review-b-b000b91-vitest.config.mjs' -> 1 file passed, 10 of 10 round-2 probe tests passed unchanged",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-files.test.ts tests/apk3d/audio-files.adversarial.test.ts tests/apk3d/audio-wiring.test.ts tests/apk3d/audio-wiring.adversarial.test.ts tests/apk3d/imports.test.ts tests/audio-event-map.test.ts' -> 6 files passed, 54 of 54 tests passed",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/typescript/bin/tsc --noEmit' -> exit 2, 51 errors, zero in src/apk3d/audio/bus.ts (grep exit 1), matching the round-3 baseline",
+    "git diff 9d150f62..e3405e70 -- src/apk3d/audio/bus.ts tests/apk3d/ docs/ scripts/ demo/public/audio sounds/ docs/apk-port.md | grep -niE 'https?://|api[_-]?key|token|secret|password|bearer|fetch\\(|new URL|XMLHttpRequest|WebSocket' -> one match, the pre-existing fetchFile context line; same delta grep for published|draft|consent|anonymi -> no match (A2)",
+    "node node_modules/prettier/bin/prettier.cjs --check measure/runs/audio_game_integration_20261014/review-b-e3405e7-probe.test.ts measure/runs/audio_game_integration_20261014/review-b-e3405e7-vitest.config.mjs -> exit 0 after --write",
+    "git status --short -- src tests/apk3d scripts demo sounds docs measure/tracks/audio_game_integration_20261014 -> no modified tracked file on audited paths; only pre-existing untracked mockup images outside the audit scope"
+  ],
+  "changed_files": [
+    "measure/runs/audio_game_integration_20261014/review-b-e3405e7.json",
+    "measure/runs/audio_game_integration_20261014/review-b-e3405e7.log",
+    "measure/runs/audio_game_integration_20261014/review-b-e3405e7-probe.test.ts",
+    "measure/runs/audio_game_integration_20261014/review-b-e3405e7-vitest.config.mjs"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "The stale-load rejection matches its contract: probes E1/E4 show stale successes install nothing and state stays empty through a 61-remap storm, E2/E3 show stale failures mark nothing, E5 shows pre-unlock bytes bind to their URL, and E6 shows dispose releases everything."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 5,
+      "evidence": "The two stale-rejection pins failed first at d2d70bcf (red-p3-t6g.log), the Green block on the fixture was honestly reported, and the resumed gate plus my reruns pass 46 of 46 and 54 of 54."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The fix commit 2fb45ba3 changed only bus.ts (+36/-15); the test and plan commits stay inside the track; no generator, host, or audio file changed."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "Every claim carries a command result or a file:line, including bus.ts:102 for the URL-bound pendingDecode, bus.ts:275-280 for isCurrent, bus.ts:291 and bus.ts:310-316 for the guarded failure paths, and bus.ts:244 for dispose."
+    }
+  ]
+}

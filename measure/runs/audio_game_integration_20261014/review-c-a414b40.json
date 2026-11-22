@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "role": "review-c",
+  "track": "audio_game_integration_20261014",
+  "phase": "Phase 3: File playback in the AudioBus",
+  "phase_base_sha": "af4e57aff730b1cf8ee9c716802920699f1eaaac",
+  "role_base_sha": "a414b40604bb6bc1cecc65605b7ae5e59789a541",
+  "audited_head_sha": "a414b40604bb6bc1cecc65605b7ae5e59789a541",
+  "status": "pass",
+  "summary": "T6j–T6l preserve the public audio API and handle own event keys on older browsers. The scan is scoped by one clear root constant for the follow-up track to widen.",
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "evidence": [
+    "src/apk3d/audio/bus.ts:38-40 defines the own-key helper with Object.prototype.hasOwnProperty.call. src/apk3d/audio/chibi.ts:5 imports it for the shared guard.",
+    "src/apk3d/audio/index.ts:1-10 does not re-export hasOwn, so the helper is module-exported for sibling use but is not part of the public audio barrel API.",
+    "src/apk3d/audio/bus.ts:112-151 keeps useSoundFiles, preload, and unlock signatures and comments aligned with map invalidation, silent preload, and gesture-based context creation.",
+    "src/apk3d/audio/bus.ts:123-133, 268-288 uses hasOwn for useSoundFiles comparisons, requestFile, and isCurrent; src/apk3d/audio/chibi.ts:20-29 uses it for Chibi preload filtering.",
+    "tests/apk3d/no-unpolyfilled-builtins.test.ts:6-10 explains the browser constraint and defines one SCAN_ROOT for src/apk3d/audio. The comment identifies old_browser_builtins_20261122 as the follow-up that widens the root to src/.",
+    "git rev-parse HEAD equals audited HEAD a414b40604bb6bc1cecc65605b7ae5e59789a541."
+  ],
+  "commands": [
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/no-unpolyfilled-builtins.test.ts tests/apk3d/audio-files.test.ts tests/apk3d/audio-files.adversarial.test.ts tests/apk3d/audio-files.adversarial-r2.test.ts tests/apk3d/audio-files.adversarial-r3.test.ts tests/apk3d/audio-wiring.test.ts tests/apk3d/audio-wiring.adversarial.test.ts tests/apk3d/imports.test.ts' — PASS, 8 files; 61 passed and 2 skipped (63 total).",
+    "git rev-parse HEAD — a414b40604bb6bc1cecc65605b7ae5e59789a541, equal to audited HEAD.",
+    "git diff --quiet a414b40604bb6bc1cecc65605b7ae5e59789a541 HEAD -- src/apk3d/audio/bus.ts src/apk3d/audio/chibi.ts src/apk3d/audio/index.ts tests/apk3d/audio-files.adversarial-r3.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts measure/tracks/audio_game_integration_20261014/plan.md — exit 0."
+  ],
+  "changed_files": [
+    "src/apk3d/audio/bus.ts",
+    "src/apk3d/audio/chibi.ts",
+    "tests/apk3d/audio-files.adversarial-r3.test.ts",
+    "tests/apk3d/no-unpolyfilled-builtins.test.ts"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "contract_applicability": "applicable",
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "openai/gpt-6-luna#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "src/apk3d/audio/bus.ts:38-40 uses the compatible own-property helper at each event-map read."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 5,
+      "evidence": "The heavy-run command passes 61 tests across eight files with only the two recorded TD-44 skips."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The a414b406 delta covers T6j–T6l audio guards and the scoped scan without changing other track paths."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "The eight-file heavy-run passes and git rev-parse confirms the audited HEAD."
+    }
+  ]
+}

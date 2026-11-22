@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: adversarial-testing
+status: fail
+track: audio_game_integration_20261014
+phase: Phase 3: File playback in the AudioBus
+commits: 1e610cdbd105d80c7b273cc3218a1cb4939020e7, 913bbb5223cffe472512de85908ff6daca2de713
+tests_run: Targeted FAIL on the two new files: 3 failed, 21 passed (24). Original gate PASS: 3 files, 21 of 21 (audio-files, audio-wiring, imports). Prettier, generate --check, structural doctor, and git diff --check pass.
+files_changed: tests/apk3d/audio-files.adversarial.test.ts; tests/apk3d/audio-wiring.adversarial.test.ts; measure/tracks/audio_game_integration_20261014/plan.md; measure/generated/status.md; measure/runs/audio_game_integration_20261014/adversarial-p3-1e610cdb.json; measure/runs/audio_game_integration_20261014/adversarial-p3-1e610cdb.log
+plan_updates: Adversarial evidence bullet added under Phase 3 with both SHAs, the 3 failed / 21 passed targeted result, findings F1-F3, and the A4 and A5 probe results. status.md regenerated (pre-existing T6x drift repaired).
+known_failures: F1 [Major] useSoundFiles(null) or a map swap leaves stale decoded buffers playable, contradicting the method contract and AC4 rule 6; gameSourceStarts() is 1 where 0 is required. F2 [Minor] unlock() throws when createBuffer throws and resume never runs. F3 [Minor] the wiring case-6 parser counts audio.play calls in comments and strings as played events.
+handoff: Route F1 and F2 to Green on src/apk3d/audio/bus.ts (clear buffers/pendingDecode/loading on map change; guard the unlock pulse and keep resume). Route F3 to Green on tests/apk3d/audio-wiring.test.ts case 6 (strip comments and strings before extraction) and mirror the same rules in the playedEventsOf copy of the adversarial file so its failing fixture passes. The three failing tests stay committed as the defect pins; the bus, helper, hosts, and sounds are unchanged from reviewed HEAD b000b91e. Rerun the adversarial gate and the applicable reviews after remediation.
+END_MEASURE_AGENT_RESULT

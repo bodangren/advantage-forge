@@ -1,0 +1,30 @@
+MEASURE_AGENT_RESULT
+role: measure-mid-red
+track: audio_game_integration_20261014
+phase: Phase 3: File playback in the AudioBus
+phase_base_sha: af4e57aff730b1cf8ee9c716802920699f1eaaac
+role_base_sha: af00767174b5547f72ef6e0069cab80f0c9c587f
+baseline_sha: af4e57aff730b1cf8ee9c716802920699f1eaaac
+resulting_head_sha: a414b40604bb6bc1cecc65605b7ae5e59789a541
+red_kind: gap_closing
+commits:
+  - 1f45fcfe831f43f33453033c001a08c22ee93cdc test(audio_game_integration): T6l scoped unpolyfilled built-in scan (tests/apk3d/no-unpolyfilled-builtins.test.ts, new, +72)
+  - a414b40604bb6bc1cecc65605b7ae5e59789a541 measure(audio_game_integration): T6l red evidence for scoped built-in scan (plan.md)
+gaps: T6j left the unpolyfilled built-in scan uncommitted (44 hits outside audio went to TD-45 and track old_browser_builtins_20261122); T6k Green removed Object.hasOwn from audio, so the PM-scoped scan now passes and closes the gap
+breakage_proof: SCAN_ROOT temporarily pointed at tests/tmp-builtin-fixture/ with one file containing Object.hasOwn(x, "y") => scan exits 1 naming src/apk3d/audio/evil.ts:2: Object.hasOwn; fixture removed, root restored, no production file changed
+tests:
+  - tests/apk3d/no-unpolyfilled-builtins.test.ts (pass, scoped to src/apk3d/audio/)
+  - tests/apk3d/audio-files.test.ts (pass)
+  - tests/apk3d/audio-files.adversarial.test.ts (pass)
+  - tests/apk3d/audio-files.adversarial-r2.test.ts (pass except 2 TD-44 skips)
+  - tests/apk3d/audio-files.adversarial-r3.test.ts (pass: T6k fixed the old-browser and inherited-remap pins)
+  - tests/apk3d/audio-wiring.test.ts (pass)
+  - tests/apk3d/audio-wiring.adversarial.test.ts (pass)
+  - tests/apk3d/imports.test.ts (pass)
+red_command: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/no-unpolyfilled-builtins.test.ts tests/apk3d/audio-files.test.ts tests/apk3d/audio-files.adversarial.test.ts tests/apk3d/audio-files.adversarial-r2.test.ts tests/apk3d/audio-files.adversarial-r3.test.ts tests/apk3d/audio-wiring.test.ts tests/apk3d/audio-wiring.adversarial.test.ts tests/apk3d/imports.test.ts'
+red_result: exit 0 with 8 files and 61 passed, 2 skipped (63)
+skips: 2 TD-44 pins in audio-files.adversarial-r2.test.ts (unchanged)
+prettier: node_modules/.bin/prettier --check on the scan test exits 0
+production_files_changed: none
+status: gap_closed_scan_passes
+END_MEASURE_AGENT_RESULT
