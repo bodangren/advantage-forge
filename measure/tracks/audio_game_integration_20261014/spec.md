@@ -42,6 +42,8 @@ approved library take replaces a set file later. The synthesized recipe stays th
   fallback.
 - A preload rule and a budget: a game preloads the files of its own events. The plan records the
   bytes and the load time.
+- Game wiring: each 2D game host sets the map and preloads at start. The map module is generated
+  from `docs/sound-event-map.tsv`, and one helper makes the two bus calls.
 - A hand-off folder with a MANIFEST for the monorepo part.
 
 ## Exclusions
@@ -192,6 +194,22 @@ These commands pass:
 - `./measure/doctor.sh --structural-only`
 - `node_modules/.bin/prettier --check` on each touched text file
 
+### AC9: Game wiring
+
+Each of the 29 games with a 2D view binds the `primary-chibi-2d` skin. Each host calls
+`wireChibiSounds(audio, soundBase, gameEvents)` once, at game start. The call sets the map with
+`useSoundFiles` once: 31 entries, from `src/apk3d/audio/chibi-events.gen.ts`. The generator
+`scripts/audio-event-map.mjs` writes that file from `docs/sound-event-map.tsv`. The call starts
+`preload` once with the game's own mapped events, with no duplicate. An event outside the map is
+not preloaded and keeps the synth recipe.
+
+A host with no `soundBase` makes neither call, so every event keeps the synth recipe. The 14 files
+of `demo/public/audio/chibi/` are the files that the wiring loads. `preload` can resolve the file
+format before the first `unlock()`. The first `unlock()` then reuses that choice.
+
+`tests/apk3d/audio-wiring.test.ts` covers the map, the 29 hosts, the mapped subset, the empty base,
+and one real fetch.
+
 ## Sources
 
 - [audio bus](../../../src/apk3d/audio/bus.ts)
@@ -205,7 +223,8 @@ These commands pass:
 
 ## Scope control
 
-This track adds one map file, five test files, one budget script, and the MP3 step in the wrapper.
-It changes one audio source file. It adds files to the demo package and the hand-off folder. It
-changes no game rule, no asset, and no mood. It runs no new take and no review round. It pushes
-nothing.
+This track adds one map file, six test files, one budget script, one map generator, one wiring
+helper, and the MP3 step in the wrapper. It changes the audio bus, the audio exports, the launch
+context, the standalone host, and the 29 2D game hosts. It adds files to the demo package and the
+hand-off folder. It changes no game rule, no asset, and no mood. It runs no new take and no review
+round. It pushes nothing.

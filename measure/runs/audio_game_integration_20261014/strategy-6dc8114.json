@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "role": "test-strategy",
+  "track": "audio_game_integration_20261014",
+  "phase": "all phases (1-6)",
+  "baseline_sha": "6dc8114fb4deb092dec421a487019afd779eacfc",
+  "audited_head_sha": "6dc8114fb4deb092dec421a487019afd779eacfc",
+  "role_base_sha": "6dc8114fb4deb092dec421a487019afd779eacfc",
+  "status": "pass",
+  "summary": "The strategy covers all six phases with a targeted Red command, a Green gate, a closeout addition, a risk class, and an anti-pattern defense table for each. Risks are medium, medium, high, high, medium, low. The AudioBus phase gets Review B, Review C, adversarial, and browser review; the hand-off phase gets a reduced Review B. The strategy carries spec-review r2 F6 as a settlement: T8 Green creates MANIFEST.sha256 in sha256sum format so the plan done-when can pass. It also names a product wiring gap: no phase calls useSoundFiles or preload, so Phase 4 must supply the map inside its own harness.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F6 carry-forward (spec-review r2, Major but nonblocking there): plan T8 checks out/apk-audio-handoff/chibi/MANIFEST.sha256, and no phase creates that file. The strategy settles it: T8 Green writes a sha256sum-format manifest (64 lowercase hex, two spaces, file name) from the committed bytes, keeps the MANIFEST.tsv sha256 column in agreement, and records the one-file addition in the plan for Review A. The hand-off folder then holds 17 files: 14 sound files, MANIFEST.tsv, MANIFEST.sha256, and README.md. Falsification: one wrong byte, a missing row, or a stale hash fails the Phase 5 gate.",
+    "Product wiring gap (nonblocking, plan-level): no task calls useSoundFiles or preload from a game or the demo. The AudioBus API is inert until a caller sets the map, so the Phase 3 unit proof and the browser review cannot observe a real file request on a stock game page. The strategy requires Phase 4 to create the map inside its own harness (a demo page, a launch-context field, or an in-page hook) and to exit non-zero on zero audio rows. No spec change is needed; scope control already permits demo files.",
+    "Phase 2 spec ambiguity (nonblocking): AC2 lists the per-entry check order as prepare, prepare, render Ogg, render MP3, and it also names ffmpeg-missing as a failure class. A literal per-entry read leaves a new .ogg on disk before the binary failure. The strategy settles fail-fast: check the ffmpeg binary once, before the first entry, so case 2 asserts zero earshot calls and zero output. Review A must confirm this reading; if Green checks per entry instead, case 2 must assert one Ogg call and no MP3 call.",
+    "Documentation gap (nonblocking): measure/anti-patterns.md does not exist in this repository. The strategy cites the canonical A1-A11 catalog and states per-phase defenses and falsification conditions anyway. A repo-local catalog would let future tracks link the guards directly."
+  ],
+  "evidence": [
+    "git rev-parse HEAD at role start: 6dc8114fb4deb092dec421a487019afd779eacfc, the spec-review r2 audited HEAD; the strategy never embeds a phase_base_sha and names the capture point as immediately after its own commit",
+    "spec.md AC1 counted from the source table: 31 mapped names in seven chibi sources plus 27 synth names equals 58; a fresh scan of src/ with audio.play(' , audio.defineSfx(' , and .sfx(' gives 58 unique literal names over 368 audio.play calls",
+    "sounds/sets/chibi.json holds the seven names and designs; sounds/README.md holds seven Ogg rows only, so Phase 2 adds seven MP3 rows and the ffmpeg version line; the Ogg total is 90,468 bytes, below the 100,000-byte budget",
+    "tests/sound-set.test.ts already provides the fake-earshot spawnSync pattern, SOUNDS_ROOT and EARSHOT_BIN overrides, the exact stdout list, and the nine Ogg header steps; the strategy reuses that shape and adds FFMPEG_BIN, an ffmpeg call log, and the six MP3 header steps",
+    "vitest.config.ts has no environment setting, so tests run in Node with no window, navigator, or Audio; tests/apk3d/audio-files.test.ts must install globalThis.window, navigator, Audio, and fetch itself, and needs no audio device",
+    "src/apk3d/audio/bus.ts play() returns early without a context; unlock() creates the context, master gain, music gain, and the one-sample silence buffer; dispose() closes the context; the strategy makes each case unlock first and count new Audio() constructions across two unlocks",
+    "tests/apk3d/imports.test.ts restricts apk3d/audio to apk3d/contracts, apk3d/sim, and three; a SoundFiles type export adds no import",
+    "grep of src/ finds 30 files that construct new AudioBus and the spec names six driver views that call .sfx; no src/games file calls useSoundFiles or preload",
+    "docs/apk-port.md line 238 holds the model-pack row apps/advantage-games/public/packs/; demo/public/audio does not exist yet",
+    "The Phase 5 gate exits 1 today because out/apk-audio-handoff/chibi is absent; the command is executable and its first failing clause names the folder",
+    "node measure/tools/generate.mjs --check printed Measure facts are current (4 files) with exit 0; ./measure/doctor.sh --structural-only printed no structural errors with exit 0",
+    "prettier --check on measure/tracks/audio_game_integration_20261014/test-strategy.md exits 0 after formatting; .tsv and .sha256 files are excluded because prettier has no parser for them",
+    "no graph.db or build-graph database exists in this repository; the AudioBus callers were found with a grep symbol scan instead"
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "grep -rhoE \"audio\\.(play|defineSfx)\\('[^']+'|\\.sfx\\('[^']+'\" src/ | sed -E \"s/.*\\('//; s/'$//\" | sort -u | wc -l",
+    "grep -rl 'new AudioBus' src/ | wc -l",
+    "bash -c '<Phase 5 hand-off gate>' (exit 1; hand-off folder absent)",
+    "node measure/tools/generate.mjs --check",
+    "./measure/doctor.sh --structural-only",
+    "node_modules/.bin/prettier --check measure/tracks/audio_game_integration_20261014/test-strategy.md"
+  ],
+  "changed_files": [
+    "measure/tracks/audio_game_integration_20261014/test-strategy.md",
+    "measure/runs/audio_game_integration_20261014/strategy-6dc8114.json",
+    "measure/runs/audio_game_integration_20261014/strategy-6dc8114.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "opencode/deepseek-v4.1-flash-free#high",
+  "phase_base_sha_instruction": "Capture git rev-parse HEAD immediately after the commit that adds measure/tracks/audio_game_integration_20261014/test-strategy.md. That SHA is phase_base_sha. The 6dc8114f value above predates the strategy and is role_base_sha only."
+}

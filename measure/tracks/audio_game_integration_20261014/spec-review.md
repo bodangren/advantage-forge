@@ -41,3 +41,13 @@ Date: 2026-11-22. Scope: `spec.md`, `plan.md`, and `spec-review.md` only. No imp
 - F5 closed: `plan.md` T4 and T7 name the wrapper
   `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '<cmd>'`
   for the render and the browser measure. Both tasks cite D8 of the sibling track.
+
+## Amendment after strategy (2026-11-22)
+
+- The test strategy named a product wiring gap: the AudioBus gained `useSoundFiles` and `preload`,
+  and no game called them, so no game played a file.
+- F7 closed: `plan.md` adds T6a Red and T6b Green at the end of Phase 3, and `spec.md` adds AC9.
+  Each of the 29 `view2d/game.ts` hosts calls one helper once, and the helper sets the 31-event map
+  and preloads the game's own mapped events. `estimated_tasks` becomes 11.
+- T8 no longer copies the demo files, because T6b does it; T8 checks the copy and builds the
+  hand-off. The synth fallback, AC4, and every later task number stay as they are.

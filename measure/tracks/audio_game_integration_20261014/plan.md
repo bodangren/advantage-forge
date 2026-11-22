@@ -18,10 +18,17 @@ Files this track touches:
 - `sounds/README.md` (the MP3 line, the sizes, and the ffmpeg version)
 - `tests/apk3d/audio-files.test.ts` (new)
 - `src/apk3d/audio/bus.ts` (file playback)
-- `src/apk3d/audio/index.ts` (the `SoundFiles` export)
+- `src/apk3d/audio/index.ts` (the `SoundFiles` export, and the wiring exports)
+- `scripts/audio-event-map.mjs` (new, the generated map module)
+- `src/apk3d/audio/chibi-events.gen.ts` (new, generated from `docs/sound-event-map.tsv`)
+- `src/apk3d/audio/chibi.ts` (new, the wiring helper)
+- `tests/apk3d/audio-wiring.test.ts` (new)
+- `src/apk3d/factory/types.ts` (the `soundBase` launch field)
+- `src/host/main.ts` (the `soundBase` value)
+- `src/games/*/view2d/game.ts` (29 hosts, the wiring call)
 - `scripts/audio-budget.mjs` (new)
 - `tests/audio-budget.test.ts` (new)
-- `demo/public/audio/chibi/` (the 14 files)
+- `demo/public/audio/chibi/` (the 14 files, copied in T6b)
 - `docs/apk-port.md` (one row for the sound files)
 - `out/apk-audio-handoff/chibi/` (not in git)
 - `measure/tracks/audio_game_integration_20261014/*`
@@ -118,6 +125,53 @@ Files this track touches:
     `src/apk3d/audio/bus.ts` or `src/apk3d/audio/index.ts`. The 38 baseline errors of TD-35 to TD-39
     stay open.
 
+- [ ] T6a Red: Add `tests/apk3d/audio-wiring.test.ts`. It proves that a 2D game host sets the sound
+      map and preloads at start. The five cases:
+
+  1. `src/apk3d/audio/chibi-events.gen.ts` holds 31 entries. The keys equal the 31 mapped events of
+     `docs/sound-event-map.tsv`, in both directions. Each value is a `sounds/sets/chibi.json` name,
+     and each value equals the map `source` field with the `chibi/` prefix removed.
+  2. Each of the 29 `src/games/*/view2d/game.ts` hosts holds one `wireChibiSounds(` call. The host
+     count is 29. A host with zero calls or with two calls fails with its path.
+  3. `wireChibiSounds(bus, '/demo/', ['tap', 'tap', 'hit', 'victory'])` calls `useSoundFiles` once
+     with `{ base: '/demo/audio/chibi/', events: <the 31 entries> }`. It calls `preload` once with
+     `['tap', 'victory']`: `tap` appears once, and `hit` is synth only.
+  4. `wireChibiSounds(bus, undefined, ['tap'])` calls neither method and returns false. A host with
+     no sound base keeps the synth recipe for every event.
+  5. On a real `AudioBus` with a fake `fetch`, one `wireChibiSounds(audio, '/x/', ['tap'])` starts
+     one fetch, and its URL ends `/x/audio/chibi/tap.ogg`. A later `play('hit')` starts no fetch.
+  - The bus calls sit in one helper, not in 29 copies. `src/apk3d/audio/chibi.ts` holds
+    `wireChibiSounds(audio, soundBase, gameEvents)`, `chibiSoundFiles(soundBase)`, and
+    `chibiPreload(events)`. Case 2 counts the helper call in each host. Case 3 counts the bus calls
+    in the helper. Each host passes the events it plays: its `SFX` values, or the literal names of
+    its `audio.play` calls.
+  - Cases 3 to 5 load the helper with `await import('../../src/apk3d/audio/chibi.js')` inside the
+    case. A missing module then fails the case and does not stop collection. Cases 1 and 2 read
+    files and import nothing new.
+  - Red evidence: `node node_modules/vitest/vitest.mjs run tests/apk3d/audio-wiring.test.ts --maxWorkers=1`
+  - Red done-when: the command exits 1. Case 1 fails with `ENOENT` for the generated map. Case 2
+    fails with 0 of 29 hosts. Cases 3 to 5 fail on the absent helper module. The test file holds no
+    syntax error.
+
+- [ ] T6b Green: Add `scripts/audio-event-map.mjs`. It reads `docs/sound-event-map.tsv` and writes
+      `src/apk3d/audio/chibi-events.gen.ts`: a header line that names the generator and the source
+      file, then `CHIBI_EVENTS` with the 31 mapped events. Add `src/apk3d/audio/chibi.ts` with
+      `chibiSoundFiles`, `chibiPreload`, and `wireChibiSounds`, and export the three from
+      `src/apk3d/audio/index.ts`. Add `soundBase?: string` to the launch context in
+      `src/apk3d/factory/types.ts`. Set it in `src/host/main.ts` to `${BASE}audio/chibi/`. Call
+      `wireChibiSounds(audio, ctx.soundBase, <the game's events>)` once in each of the 29
+      `src/games/*/view2d/game.ts` hosts. Copy the 14 files of `sounds/chibi/` to
+      `demo/public/audio/chibi/` in this task, because the preload needs the files.
+  - Green done-when: the T6a command exits 0 with 5 of 5 tests passing.
+  - `node scripts/audio-event-map.mjs --check` exits 0 on the committed generated file, and writes
+    no file. A changed TSV row makes it exit 1 and name the event.
+  - `node node_modules/vitest/vitest.mjs run tests/apk3d/imports.test.ts --maxWorkers=1` exits 0.
+  - `node node_modules/typescript/bin/tsc --noEmit` reports no error in `src/apk3d/audio/`,
+    `src/apk3d/factory/types.ts`, `src/host/main.ts`, or the 29 hosts. The 38 baseline errors of
+    TD-35 to TD-39 stay open.
+  - The 29 hosts pass their event list. No host calls `useSoundFiles` or `preload` directly: the
+    helper does. A host with no `SFX` map passes the literal names of its `audio.play` calls.
+
 ## Phase 4: Preload budget
 
 - [ ] T7 Measure: Add `scripts/audio-budget.mjs`. It serves the demo with vite, opens one game in
@@ -136,11 +190,13 @@ Files this track touches:
 
 ## Phase 5: Hand-off to the PM
 
-- [ ] T8 Hand-off: Copy the 14 files to `demo/public/audio/chibi/`. Add one row to
-      `docs/apk-port.md` with the pattern of the model pack row (`docs/apk-port.md`, line 238:
-      `apps/advantage-games/public/packs/`): `demo/public/audio/chibi/` to
+- [ ] T8 Hand-off: Check the 14 files in `demo/public/audio/chibi/` byte for byte against
+      `sounds/chibi/`; T6b made the copy, so this task verifies it and does not write it again. Add
+      one row to `docs/apk-port.md` with the pattern of the model pack row (`docs/apk-port.md`, line
+      238: `apps/advantage-games/public/packs/`): `demo/public/audio/chibi/` to
       `apps/advantage-games/public/audio/chibi/`. Build `out/apk-audio-handoff/chibi/` with the 14
-      files, `MANIFEST.tsv`, and `README.md` per spec AC6. Give the folder path to the PM.
+      files, `MANIFEST.tsv`, `MANIFEST.sha256`, and `README.md` per spec AC6. Give the folder path to
+      the PM.
   - The monorepo path `apps/advantage-games/public/audio/chibi/` is a proposed target. The MANIFEST
     names it as proposed, and the PM or Monorepo session confirms or replaces it at hand-off. This
     repository holds no copy of that folder, so the plan cannot verify it here.
@@ -162,7 +218,8 @@ Files this track touches:
 
 Run these commands after the last phase, and record each exit code in this plan:
 
-- `node node_modules/vitest/vitest.mjs run tests/audio-event-map.test.ts tests/sound-set.test.ts tests/sound-set-mp3.test.ts tests/apk3d/audio-files.test.ts tests/audio-budget.test.ts --maxWorkers=1`
+- `node node_modules/vitest/vitest.mjs run tests/audio-event-map.test.ts tests/sound-set.test.ts tests/sound-set-mp3.test.ts tests/apk3d/audio-files.test.ts tests/apk3d/audio-wiring.test.ts tests/audio-budget.test.ts --maxWorkers=1`
+- `node scripts/audio-event-map.mjs --check`
 - `node measure/tools/generate.mjs --check`
 - `./measure/doctor.sh --structural-only`
 - `node_modules/.bin/prettier --check` on each touched text file

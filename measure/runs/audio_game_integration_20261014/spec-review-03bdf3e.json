@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "role": "spec-review",
+  "track": "audio_game_integration_20261014",
+  "phase": "track setup",
+  "baseline_sha": "03bdf3e5279132c3ea386abc3151cc5264f64123",
+  "audited_head_sha": "03bdf3e5279132c3ea386abc3151cc5264f64123",
+  "status": "fail",
+  "summary": "The pinned 58/31/27 counts, byte total, MP3 header checks, budget numbers, and API and test coverage check out and leave no build decision open. One contradiction blocks Green: plan Phase 1 T2 asks for an event-map header comment that AC1 and the T1 cases forbid. The monorepo target path cannot be verified from this repo and needs confirmation at hand-off.",
+  "blocking_findings": [
+    "F1 [Blocker] plan.md Phase 1 T2 / spec.md AC1: The event-map header comment that T2 requires conflicts with AC1 (58 rows and no other row), T1 case 1 (line 1 is exactly the header), and T1 cases 2-3 (three fields per line, exactly 58 rows), so Green cannot write a file that passes Red while following the Green instruction. Rationale: Comment placement and parser behavior are a schema choice left to the implementer, and no test case says comment lines are skipped."
+  ],
+  "nonblocking_findings": [
+    "F2 [Major] spec.md Decision d / AC6: The monorepo target apps/advantage-games/public/audio/chibi/ cannot be verified from this repo; grep finds it only in this track's spec.md and plan.md, docs/apk-port.md:238 documents only apps/advantage-games/public/packs/, and the local monorepo has no audio/chibi folder. Rationale: The hand-off MANIFEST records this path as the delivery target, so an unverified path can misroute the folder; the PM or Monorepo session must confirm it at hand-off. The PM decision itself is not reopened.",
+    "F3 [Nit] spec.md Context / Exclusions: The claim of 22 synthesized moods does not match the code; src/ holds 26 distinct mood names (3 built-in in BUILT_IN_MOODS and 23 defineMood names). Rationale: This is record drift in a pinned count, but music stays out of scope, so the build does not change.",
+    "F4 [Nit] spec.md Context: The claim that no file in src/ or demo/ loads an .mp3 is false; demo/public/stories/*/story.json reference article.mp3 and words.mp3. Rationale: The intent is game sound effects, so narrowing the wording to game audio files removes the contradiction without changing the build.",
+    "F5 [Nit] plan.md Phase 2 T4: The render command omits the heavy-run route that measure/archive/chore_earshot_sounds_20261121/spec.md D8 pins for every render. Rationale: The cold render takes about 69 s, so the same HEAVY_MIN_AVAIL_MB=1500 heavy-run.sh wrapper should be named; output does not change."
+  ],
+  "evidence": [
+    "HEAD equals audited_head_sha: git rev-parse HEAD = 03bdf3e5279132c3ea386abc3151cc5264f64123",
+    "src/ scan with the three pinned patterns gives 58 unique names (audio.play 49, audio.defineSfx 41, .sfx 12); the set equals the spec AC1 table with 0 names outside it and 0 names missing from it",
+    "spec AC1 split checked by hand: 4+3+4+7+5+7+1 = 31 mapped names; the synth list holds 27 names; 31+27 = 58",
+    "sounds/README.md byte column sums to 90,468 across seven Ogg files, matching the Context claim; git ls-files sounds/chibi shows all seven .ogg committed",
+    "sounds/sets/chibi.json holds the seven names and designs that spec AC1 and tests/sound-set.test.ts EXPECTED_CHIBI_ENTRIES list",
+    "src/apk3d/audio/bus.ts BUILT_IN_SFX has 11 recipes; BUILT_IN_MOODS has 3; the bus has no file load, fetch, decodeAudioData, or canPlayType; src/apk3d/audio/index.ts does not export SoundFiles",
+    "scripts/sound-set.mjs writes Ogg only and has no ffmpeg or FFMPEG_BIN path; tests/sound-set.test.ts asserts the Ogg line order and nine Ogg header steps but no MP3 step",
+    "mood scan of src/ gives 26 distinct names (3 built-in plus 23 defineMood names); a repo-wide scan also gives 26, not the 22 that spec Context and Exclusions claim",
+    "demo/public/stories/lilys-toy-box/story.json, aunt-anna-and-the-band/story.json, mia-is-a-big-bear/story.json, and mias-balloon-animals/story.json reference article.mp3 and words.mp3",
+    "grep for apps/advantage-games/public/audio/chibi returns only spec.md lines 31 and 161 and plan.md lines 136 and 141 of this track; docs/apk-port.md:238 documents the apps/advantage-games/public/packs/ sibling path; ../reading-advantage-monorepo exists but the audio/chibi folder is absent",
+    "package.json:32 declares playwright 1.65.1, so the budget script's browser dependency is named",
+    "measure/archive/chore_earshot_sounds_20261121/spec.md D8 pins HEAVY_MIN_AVAIL_MB=1500 bash heavy-run.sh for every render; the tracked spec-review.md and contracts.md were used; no anti-patterns.md exists in the repo or the skill tree"
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "cat measure/tracks/audio_game_integration_20261014/{spec.md,plan.md,metadata.json}",
+    "cat measure/workflow.md",
+    "cat ~/.agents/skills/measure/references/spec-review.md",
+    "cat ~/.agents/skills/measure-orchestrator/references/contracts.md",
+    "cat src/apk3d/audio/bus.ts src/apk3d/audio/index.ts scripts/sound-set.mjs sounds/sets/chibi.json sounds/README.md tests/sound-set.test.ts docs/sound-effects-list.tsv",
+    "cat measure/archive/chore_earshot_sounds_20261121/spec.md",
+    "node -e scans of src/ for the three pinned event patterns and for mood names",
+    "grep -rn for the monorepo audio path, .ogg/.mp3 references, defineMood and music names, and playwright",
+    "git ls-files sounds/chibi",
+    "ls -d ../reading-advantage-monorepo/apps/advantage-games/public/audio/chibi"
+  ],
+  "changed_files": [
+    "measure/runs/audio_game_integration_20261014/spec-review-03bdf3e.json",
+    "measure/runs/audio_game_integration_20261014/spec-review-03bdf3e.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "escalate_human",
+  "confidence": "high",
+  "route": "opencode-go/hy4-flash-free#high",
+  "paraphrase": {
+    "proposes": "The track maps the 58 game effect names to the seven earshot set entries or to synth. It adds an MP3 copy of each Ogg through a pinned ffmpeg command and picks Ogg or MP3 once per browser with canPlayType. The AudioBus plays a file when one is decoded and falls back to the synth recipe on a missing mapping or a failed load. A preload budget and a manifest hand-off folder send the files to the PM for the monorepo, while credits stay deferred and the moods stay synthesized.",
+    "current_system": "Per the spec, each game names its effects and the AudioBus builds every effect from tones and noise, so no game file loads an audio file today. The sound-set wrapper renders seven Ogg files from sounds/sets/chibi.json into sounds/chibi/, and the files total 90,468 bytes. The bus synthesizes all moods, and the hand-off folder and MP3 copy do not exist yet."
+  }
+}

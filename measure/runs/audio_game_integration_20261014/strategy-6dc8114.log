@@ -1,0 +1,32 @@
+MEASURE_AGENT_RESULT
+schema_version: 1
+role: test-strategy
+track: audio_game_integration_20261014
+phase: all phases (1-6)
+baseline_sha: 6dc8114fb4deb092dec421a487019afd779eacfc
+audited_head_sha: 6dc8114fb4deb092dec421a487019afd779eacfc
+role_base_sha: 6dc8114fb4deb092dec421a487019afd779eacfc
+status: pass
+summary: The strategy covers all six phases with a targeted Red command, a Green gate, a closeout addition, a risk class, and an anti-pattern defense table for each. Risks are medium, medium, high, high, medium, low. The AudioBus phase gets Review B, Review C, adversarial, and browser review; the hand-off phase gets a reduced Review B. The strategy carries spec-review r2 F6 as a settlement: T8 Green creates MANIFEST.sha256 in sha256sum format so the plan done-when can pass. It also names a product wiring gap: no phase calls useSoundFiles or preload, so Phase 4 must supply the map inside its own harness.
+blocking_findings: 0
+nonblocking_findings: 4
+  F6-carry-forward: T8 checks MANIFEST.sha256 and no phase creates it; strategy requires Green to write a sha256sum-format manifest from the committed bytes and records a 17-file hand-off folder. Settlement, not a blocker.
+  product-wiring-gap: no task calls useSoundFiles or preload; the API is inert and Phase 4 must set the event map in its own harness and fail on zero audio rows.
+  phase2-ffmpeg-check-order: AC2 leaves the binary check relative to the Ogg render ambiguous; strategy settles fail-fast before the first entry and asks Review A to confirm.
+  catalog-absence: measure/anti-patterns.md is absent in this repository; the strategy cites the canonical A1-A11 catalog and still states per-phase defenses and falsification conditions.
+phase_base_sha: not embedded; capture git rev-parse HEAD immediately after the commit that adds test-strategy.md. 6dc8114f is role_base_sha only.
+risk_by_phase: 1 medium, 2 medium, 3 high, 4 high, 5 medium, 6 low
+red_commands: phase 1 node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/audio-event-map.test.ts; phase 2 the same shape with tests/sound-set.test.ts tests/sound-set-mp3.test.ts; phase 3 tests/apk3d/audio-files.test.ts; phase 4 tests/audio-budget.test.ts; phase 5 the hand-off filesystem and sha256sum gate; phase 6 none
+heavy_commands: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '<cmd>' for the earshot render and the headless browser measurement; exit 75 means retry
+no_audio_device: phase 3 uses a fake window.AudioContext, a fake Audio canPlayType, and a fake fetch; phase 4 uses headless Chromium with --mute-audio; phase 5 is filesystem only
+evidence: 31 mapped plus 27 synth equals 58 names, confirmed by a fresh src/ scan (58 unique over 368 calls); seven Ogg rows total 90,468 bytes; vitest runs Node with no window; apk3d/audio may import only contracts, sim, and three; the Phase 5 gate exits 1 today; generate.mjs --check and doctor.sh --structural-only exit 0; prettier --check passes on test-strategy.md
+commands: git rev-parse HEAD; grep name scan; grep new AudioBus; Phase 5 gate; node measure/tools/generate.mjs --check; ./measure/doctor.sh --structural-only; prettier --check on test-strategy.md
+changed_files: measure/tracks/audio_game_integration_20261014/test-strategy.md, measure/runs/audio_game_integration_20261014/strategy-6dc8114.json, measure/runs/audio_game_integration_20261014/strategy-6dc8114.log
+test_strategy_violations: none
+live_contract_violations: none
+prod_wiring_violations: none
+route_parity_violations: none
+retry_recommendation: none
+confidence: high
+route: opencode/deepseek-v4.1-flash-free#high
+END_MEASURE_AGENT_RESULT

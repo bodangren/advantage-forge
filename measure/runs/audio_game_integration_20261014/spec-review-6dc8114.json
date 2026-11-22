@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "role": "spec-review",
+  "track": "audio_game_integration_20261014",
+  "phase": "track setup",
+  "baseline_sha": "6dc8114fb4deb092dec421a487019afd779eacfc",
+  "audited_head_sha": "6dc8114fb4deb092dec421a487019afd779eacfc",
+  "status": "pass",
+  "summary": "All five round 1 findings are closed against the amended spec.md and plan.md. No blocked or Major gap remains in the changed lines, so the gate passes. One nonblocking, pre-existing gap stays: the T8 done-when checks a MANIFEST.sha256 file that no phase creates.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F6 [Major] plan.md Phase 5 T8 done-when: The command `sha256sum -c out/apk-audio-handoff/chibi/MANIFEST.sha256` names a file that AC6 and T8 never create; AC6 lists only 14 sound files, MANIFEST.tsv, and README.md in the folder. Rationale: This is a pre-existing gap outside the lines the amendment changed, so it is nonblocking in this re-review. The archive pattern uses `grep -E '^[0-9a-f]{64}  ' MANIFEST.txt | sha256sum -c -`, which works on a manifest column; name that command or add the file to AC6 so Green can make the done-when pass."
+  ],
+  "evidence": [
+    "HEAD equals audited_head_sha and the baseline: git rev-parse HEAD = 6dc8114fb4deb092dec421a487019afd779eacfc; commit subject: measure(audio_game_integration): close spec review r1 findings",
+    "F1 closed: spec.md AC1 lines 61-69 state one header line, exactly 58 data rows, no comment line, no blank line, no other text, and make AC1 the one document of the map's meaning; plan.md T1 case 1 asserts 58 data rows and no other line; plan.md T2 lines 51-55 remove the header-comment instruction and require data only; grep finds 'comment' only in the prohibition sentences",
+    "F2 closed: spec.md Decision d calls the monorepo path a proposed target; spec.md AC6 adds the 'target' column with the exact value `proposed: apps/advantage-games/public/audio/chibi/<file>`, cites docs/apk-port.md line 238, and states that no acceptance criterion depends on the path; plan.md T8 lines 144-151 repeat the proposed wording and the PM or Monorepo confirmation gate; docs/apk-port.md:238 holds the apps/advantage-games/public/packs/ row and the local monorepo has no audio/chibi folder",
+    "F3 closed: fresh recount gives 26 distinct moods, from 3 built-in entries in src/apk3d/audio/bus.ts BUILT_IN_MOODS (calm, battle, boss) and 23 unique defineMood names in src/; spec.md Context and Exclusions now both state 26",
+    "F4 closed: spec.md Context narrows the claim to game sound effects and names demo/public/stories/*/story.json article.mp3 and words.mp3 as story audio; Exclusions adds a Story audio bullet; grep of src/apk3d/audio and src/games finds only MIME type strings and import paths, no audio URL; the story JSON references were confirmed in round 1",
+    "F5 closed: plan.md T4 render command at line 86 and T7 command at line 130 both use HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '<cmd>' and cite sibling spec D8; the wrapper exists and is executable at that path",
+    "Zero-decision re-scan of the changed lines found no new schema, API, dependency, edge-case, or file-location choice; AC1 and T1 case 1 agree line for line; AC6 and T8 agree on the MANIFEST target value; T4 and T7 name the full wrapper command",
+    "Unchanged pinned facts were rechecked from round 1 evidence: 58 event names split 31 mapped plus 27 synth, 90,468 Ogg bytes over seven files, the pinned ffmpeg argument line and three failure lines, the six MP3 header steps, the 100,000-byte and 1.5-second budget at 1.6 Mbit/s and 300 ms, the canPlayType order, and the ten playback test cases",
+    "New nonblocking observation: no script or document in the repo creates MANIFEST.sha256; archive hand-off tracks check a text manifest with grep ... | sha256sum -c - instead",
+    "Closure was verified from spec.md and plan.md only, in line with the role rule that excludes measure/tracks/<track>/spec-review.md from this review"
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "git log -1 --oneline HEAD",
+    "git show --stat --oneline 6dc8114f",
+    "git diff 03bdf3e..6dc8114f -- measure/tracks/audio_game_integration_20261014/spec.md measure/tracks/audio_game_integration_20261014/plan.md",
+    "cat measure/tracks/audio_game_integration_20261014/spec.md measure/tracks/audio_game_integration_20261014/plan.md",
+    "grep -n for comment, proposed, target, heavy-run, D8, and MANIFEST in the amended spec.md and plan.md",
+    "fresh grep and count of built-in, defineMood, and music mood names in src/",
+    "grep of src/apk3d/audio and src/games for audio URLs and of demo/public/stories for MP3 references",
+    "grep -rn for MANIFEST.sha256 and sha256sum -c across scripts, tests, and measure/",
+    "ls -l /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh"
+  ],
+  "changed_files": [
+    "measure/runs/audio_game_integration_20261014/spec-review-6dc8114.json",
+    "measure/runs/audio_game_integration_20261014/spec-review-6dc8114.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "opencode-go/hy4-flash-free#high",
+  "paraphrase": {
+    "proposes": "The track maps the 58 game effect names to the seven earshot set entries or to synth. It adds an MP3 copy of each Ogg through a pinned ffmpeg command and picks Ogg or MP3 once per browser with canPlayType. The AudioBus plays a file when one is decoded and falls back to the synth recipe on a missing mapping or a failed load. A preload budget and a manifest hand-off folder send the files to the PM for the monorepo; the target path is marked proposed until the PM or Monorepo session confirms it. Credits stay deferred, the moods stay synthesized, and story audio stays out of scope.",
+    "current_system": "Per the spec, each game names its effects and the AudioBus builds every effect from tones and noise, so no game sound effect loads from a file today. The sound-set wrapper renders seven Ogg files from sounds/sets/chibi.json into sounds/chibi/, and the files total 90,468 bytes. The bus synthesizes all 26 moods; story player MP3 files exist in demo/public/stories and are not game effects. The hand-off folder and MP3 copy do not exist yet."
+  }
+}
