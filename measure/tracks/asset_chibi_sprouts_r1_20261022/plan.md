@@ -419,6 +419,22 @@ Workbooks does not wait for it.
     known reach tiptoes. The three sprout vitest files pass 15/15.
     typecheck-asset reports 0 errors. sprout-sam and teacher GLBs keep
     byte-identical hashes (3b6c6796, ec71c3d8). Log green-faces-dad-r3.log.
+  - Dad face r4 eecf3cba (2026-11-22, judge fix): `assets/sprout-dad.ts` only. The r3
+    fringe spikes sat outside the outer-hug shell and melted into the cap, so the fringe
+    works the other way: three notches scallop the hairline edge upward between four
+    lock fronts (skin wedges between them) plus two short temple flicks, all inside the
+    real head frame; the part sits on his right and the sweep runs to his left, as in
+    the reference. The eyes are smaller (medium almond), the blush repaint stays clear
+    of the outer eye corner, and the strand paint lines follow the corrected sweep.
+    `./forge all sprout-dad` exits 0 with no warning lines (36,256 textured tris,
+    0.544 x 1.61 x 0.357 m, GLB 4420472). `./forge check sprout-dad` output
+    byte-identical to the pre-pass baseline (sha b1fcc16f, exit 1 on the three known
+    waived clips). Dad's 25 cut-outs were re-rendered at 1760x1856; cutout-check flags
+    only the four known reach tiptoes (dad row 1834, foot 1840). The three sprout
+    vitest files pass 15/15. typecheck-asset reports 0 errors. sprout-sam and teacher
+    GLBs keep byte-identical hashes (3b6c6796, ec71c3d8). The sleeve fix ef5be6c4 and
+    the listen fix c3307a6b stand (fresh listen.png waist clean). Log
+    green-faces-dad-r4.log.
   - Grandma face r2 d470ef24 (2026-11-22, Faces r2 Step 1): `assets/sprout-grandma.ts`
     only, matched to `docs/sprout-mockups/grandma.jpg`. Paint-only face through the
     existing `paintSkin` hook (arm cut kept, then face): dark round iris with one big
