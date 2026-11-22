@@ -35,8 +35,8 @@ Files this track touches:
 
 ## Phase 1: Event map
 
-- [~] T1 Red: Add `tests/audio-event-map.test.ts`. It reads `docs/sound-event-map.tsv` with
-  `readFileSync` and splits each line on the tab. The eight cases:
+- [x] T1 Red: Add `tests/audio-event-map.test.ts`. It reads `docs/sound-event-map.tsv` with
+      `readFileSync` and splits each line on the tab. The eight cases:
 
   1. The file exists. Line 1 is exactly `event\tsource\tnote`, and the file holds 58 data rows and
      no other line.
@@ -60,7 +60,7 @@ Files this track touches:
     and no syntax or import error. `node_modules/.bin/prettier --check tests/audio-event-map.test.ts`
     exited 0.
 
-- [ ] T2 Green: Write `docs/sound-event-map.tsv` as AC1 states: one header line
+- [x] T2 Green: Write `docs/sound-event-map.tsv` as AC1 states: one header line
       `event<TAB>source<TAB>note`, then exactly one row for each of the 58 events, and nothing else.
       Write no comment line, no blank line, and no closing text. The `note` field names the event's
       meaning in three words or less. The seven `chibi/<entry>` values come from
@@ -68,6 +68,11 @@ Files this track touches:
   - Green done-when: the T1 command exits 0 with 8 of 8 tests passing.
   - Record: the plan notes the 31 mapped names and the 27 `synth` names, and the count of `.ogg`
     bytes that a game with every mapped event would load.
+  - Green result 2026-11-22: map commit 75e56e8d00b97854c2993bb6ce17699740a11f53. Green command
+    `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/audio-event-map.test.ts'`
+    exited 0 with 8 passed (8). The file holds one header line and 58 data rows: 31 mapped names
+    and 27 `synth` names. A game with every mapped event loads 90,468 `.ogg` bytes across the seven
+    set entries.
 
 ## Phase 2: MP3 copies in the wrapper
 

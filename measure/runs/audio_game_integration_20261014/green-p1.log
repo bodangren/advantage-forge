@@ -1,0 +1,48 @@
+MEASURE_AGENT_RESULT
+role: jr-green
+track: audio_game_integration_20261014
+phase: "Phase 1: Event map"
+tasks: T1 Red and T2 Green
+phase_base_sha: 1bbdbecbc2368868859722cf5eee0be0c302f82c
+role_base_sha: 09d7e21d463ecfa564db53c91000fc0e2fdf6f71
+implementation_commit: 75e56e8d00b97854c2993bb6ce17699740a11f53
+implementation_commit_message: feat(audio_game_integration): T2 event map (docs/sound-event-map.tsv)
+red_commit_in_phase_range: 7ecd5832985b61624c34bfcf2d0cb29215e487d2 is inside phase_base_sha..HEAD
+red_command: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/audio-event-map.test.ts'
+red_exit: 1
+red_output_lines:
+  - "Test Files  1 failed (1)"
+  - "     Tests  8 failed (8)"
+  - "Error: ENOENT: no such file or directory, open '/home/daniebo/Desktop/advantage-forge/docs/sound-event-map.tsv'"
+green_command: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/audio-event-map.test.ts'
+green_exit: 0
+green_output_lines:
+  - " Test Files  1 passed (1)"
+  - "      Tests  8 passed (8)"
+  - "   Start at  08:48:52"
+  - "   Duration  123ms (tests 66%, import 19%, transform 8%, worker 7%)"
+map_file: docs/sound-event-map.tsv
+map_structure: one header line "event<TAB>source<TAB>note" plus exactly 58 data rows; no comment, blank, or closing line; 58 unique events; 31 mapped names and 27 synth names; every note at most three words; sources are the seven chibi values plus synth; the seven set entries each appear at least once
+ogg_bytes_all_mapped: 90468
+tasks_flipped_to_x:
+  - T1 Red (plan carries red result note and red test commit SHA)
+  - T2 Green (plan carries green result note and implementation commit SHA)
+tasks_flipped_to_b: none
+new_files_added:
+  - docs/sound-event-map.tsv (the map; committed in the implementation commit)
+gates:
+  - "node_modules/.bin/prettier --check measure/tracks/audio_game_integration_20261014/metadata.json measure/tracks/audio_game_integration_20261014/plan.md tests/audio-event-map.test.ts -> exit 0"
+  - "node measure/tools/generate.mjs --check -> exit 0; Measure facts are current (4 files)."
+  - "./measure/doctor.sh --structural-only -> exit 1; one error: measure/tracks/audio_game_integration_20261014/plan.md: new track has started tasks. Metadata status stays new; the status flip is closeout bookkeeping outside Green plan ownership. No other structural error."
+  - "Phase 1 documented Green gate (8 of 8 plus map structure plus prettier) passes."
+generated_fact_change: measure/generated/status.md row for this track updated 0/11 to 2/11; the only generated change
+project_gate_command: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts'
+project_gate_exit: 0
+project_gate_output_lines:
+  - " Test Files  212 passed (212)"
+  - "      Tests  3241 passed (3241)"
+  - "   Duration  74.64s (tests 73%, import 25%, transform 1%, worker 1%)"
+project_gate_failures_outside_task: none
+dirty_scope_check: git status --short before editing showed no tracked modification to the map file or the track plan; unrelated untracked files under bench/, assets/, docs mockups, other tracks' run folders, and two spec-review artifacts in this run folder were left untouched; commits stage explicit paths only
+notes: Red test tests/audio-event-map.test.ts was not edited. No production source changed. No monorepo write. No push. The project test gate ran through the shared heavy runner after its heavy.lock wait and passed with exit 0.
+END_MEASURE_AGENT_RESULT
