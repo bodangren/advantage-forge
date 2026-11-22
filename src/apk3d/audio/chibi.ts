@@ -2,7 +2,7 @@
  * The Chibi sound wiring (spec AC9). One helper sets the AudioBus file map and preloads the
  * events a game plays. A host with no sound base keeps every event on the synthesized recipe.
  */
-import type { SoundFiles } from './bus.js';
+import { hasOwn, type SoundFiles } from './bus.js';
 import { CHIBI_EVENTS } from './chibi-events.gen.js';
 
 /** The two AudioBus calls the helper makes; `AudioBus` satisfies it. */
@@ -21,7 +21,7 @@ export function chibiPreload(events: readonly string[]): string[] {
   const seen = new Set<string>();
   const preload: string[] = [];
   for (const event of events) {
-    if (!Object.hasOwn(CHIBI_EVENTS, event)) continue;
+    if (!hasOwn(CHIBI_EVENTS, event)) continue;
     if (seen.has(event)) continue;
     seen.add(event);
     preload.push(event);

@@ -34,6 +34,10 @@ export interface SoundFiles {
   events: Record<string, string>;
 }
 
+/** Checks whether an object owns a key. Older supported browsers lack the static method. */
+export const hasOwn = (object: object, key: string): boolean =>
+  Object.prototype.hasOwnProperty.call(object, key);
+
 const MINOR_VAULT = [
   [57, 60, 64],
   [53, 57, 60],
@@ -119,7 +123,11 @@ export class AudioBus {
       return;
     }
     for (const name of new Set([...Object.keys(previous.events), ...Object.keys(files.events)])) {
-      if (previous.events[name] === files.events[name]) continue;
+      const wasOwn = hasOwn(previous.events, name);
+      const isOwn = hasOwn(files.events, name);
+      // An inherited value is not a mapping. A key that loses its own entry is a vanished
+      // mapping, even when an inherited value happens to equal the old one.
+      if (wasOwn === isOwn && previous.events[name] === files.events[name]) continue;
       this.buffers.delete(name);
       this.pendingDecode.delete(name);
       this.loading.delete(name);
@@ -260,7 +268,7 @@ export class AudioBus {
   private requestFile(name: string): void {
     this.ensureFormat();
     if (!this.files || !this.format) return;
-    if (!Object.hasOwn(this.files.events, name)) return;
+    if (!hasOwn(this.files.events, name)) return;
     const entry = this.files.events[name];
     if (!entry) return;
     if (this.buffers.has(name) || this.loading.has(name) || this.failed.has(name)) return;
@@ -275,6 +283,7 @@ export class AudioBus {
    */
   private isCurrent(name: string, url: string): boolean {
     if (!this.files || !this.format) return false;
+    if (!hasOwn(this.files.events, name)) return false;
     const entry = this.files.events[name];
     if (!entry) return false;
     return `${this.files.base}${entry}.${this.format}` === url;
