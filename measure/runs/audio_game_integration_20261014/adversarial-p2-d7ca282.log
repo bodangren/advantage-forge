@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: adversarial-testing
+status: complete
+track: audio_game_integration_20261014
+phase: ## Phase 2: MP3 copies in the wrapper
+commits: ca68e6c8a315f55b6cae0f62a6cd9e85c98e8c1b
+tests_run: Targeted PASS: six files, 123 tests. Project PASS: 217 files, 3299 tests. Identity mutation detected. Formatting, A4, generator, and structural doctor passed.
+files_changed: tests/sound-set.adversarial-p2-r2.test.ts; measure/runs/audio_game_integration_20261014/adversarial-p2-d7ca282.json; measure/runs/audio_game_integration_20261014/adversarial-p2-d7ca282.log
+plan_updates: Removed the temporary T4b marker. The plan has no final delta.
+known_failures: none
+handoff: F5 and F6 are closed. EARSHOT_BIN remains an explicit path; AC2 assigns PATH lookup only to ffmpeg. Commit the JSON and log separately. Rerun applicable reviews and adversarial testing after an audio implementation commit.
+END_MEASURE_AGENT_RESULT

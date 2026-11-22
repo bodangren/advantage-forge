@@ -1,0 +1,99 @@
+{
+  "schema_version": 1,
+  "role": "measure-review-b-security",
+  "track": "audio_game_integration_20261014",
+  "phase": "## Phase 2: MP3 copies in the wrapper",
+  "phase_base_sha": "16b398b595354f5da275268f1b32c8e864b9312a",
+  "baseline_sha": "16b398b595354f5da275268f1b32c8e864b9312a",
+  "role_base_sha": "6804d082dae31b1532b9251dddc974d089fd4895",
+  "audited_head_sha": "6804d082dae31b1532b9251dddc974d089fd4895",
+  "security_applicability": "applicable",
+  "route": "claude-code/claude-sonnet-5-5#max",
+  "status": "pass",
+  "summary": "Pass, with four Nits (F1 to F4) and no Blocker or Major. The diff changes scripts/sound-set.mjs and adds seven binary MP3 files, so Review B treated Phase 2 as applicable (reduced). Both child processes start without a shell. A name check stops path traversal. The MP3 files hold no tag and no personal data. A2 is not applicable, and A6 shows no overstatement.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F1 [Nit] review-b: The ffmpeg guard accepts a directory and falls back to the current folder. scripts/sound-set.mjs:75-93 checks the path with accessSync and X_OK, and a directory passes that check. Rationale: four probes pass the guard and then end after one Ogg render with `sound-set: ffmpeg failed for alpha (tap/soft) with exit null` (see the P4 evidence entry). Each of those runs deletes the old `.mp3` and breaks the settlement that an unusable ffmpeg writes no Ogg. The impact is a late and unclear failure, because no program runs that the caller did not name. Disposition: note or fix; candidate fix M7 (regular file only, empty value as unset) keeps 91 of 91 committed tests green.",
+    "F2 [Nit] review-b: Target preparation removes the first target before it checks the second. scripts/sound-set.mjs:108-124 loops over `[out, mp3]` and calls rmSync on each file in turn. Rationale: with a folder at `alpha.mp3`, the wrapper deleted the existing `alpha.ogg` before it printed `cannot prepare output`, and it rendered nothing (probe P5). The loss is one tracked file, and `git checkout` restores it. No committed test covers an `.mp3` target that is a folder or a link. Disposition: note; check both targets with lstatSync first, and call rmSync only after both pass.",
+    "F3 [Nit] review-b: No committed test covers the default `ffmpeg` lookup on PATH. All three test files set FFMPEG_BIN to an absolute path (tests/sound-set.test.ts:90, tests/sound-set-mp3.test.ts:103, tests/sound-set.adversarial.test.ts:86). So `findOnPath` returns at its first line in every test. Rationale: mutation M1 (findOnPath returns the bare name, so the PATH loop is dead) keeps 91 of 91 tests green. AC2 names the PATH default, and probe P1 shows that the default works with the real ffmpeg. Disposition: note; add one case with FFMPEG_BIN unset, a temp folder on PATH, and a fake `ffmpeg` in that folder.",
+    "F4 [Nit] review-b: `red-p2.log` lines 6, 7, and 41 record `16b398b595354f5da754268f1b32c8e864b9312a` as the phase base. That string is not a commit, because `git cat-file -e` fails for it. The real phase base is `16b398b595354f5da275268f1b32c8e864b9312a`; the log has `754268` where git has `275268`. Rationale: a machine check of every 40-hex string in plan.md, red-p2.log, and green-p2.log found these three strings as the only failures. Disposition: note; the orchestrator corrects the log in a track commit. No code is affected."
+  ],
+  "evidence": [
+    "Provenance: `git rev-parse HEAD` printed 6804d082dae31b1532b9251dddc974d089fd4895 at the start and again before the final write. This equals audited_head_sha and role_base_sha. The phase_base_sha 16b398b595354f5da275268f1b32c8e864b9312a resolves to a commit.",
+    "Applicability: `git diff --name-status 16b398b5..6804d082` lists 18 paths. Three groups make the review applicable: scripts/sound-set.mjs (M, starts two programs and writes files), seven sounds/chibi/*.mp3 (A, binary), and three test files that run the wrapper. The test strategy marks Phase 2 as `Applicable, reduced: argv, no shell`. The other paths are sounds/README.md, four measure/ records, and two .claude/skills/forge-assets/ files.",
+    "Scope: commit 2d6202e3 is in the range and does not belong to Phase 2. It adds a docs template for video prompts under .claude/skills/forge-assets/, and it holds no secret and no personal data. The Phase 2 commits change the script, three tests, README.md, seven MP3 files, and track records. tests/sound-set.adversarial.test.ts is missing from the plan file list, but the new MP3 step makes that change necessary.",
+    "Process start: scripts/sound-set.mjs calls spawnSync twice, at :126 for earshot and at :137 for ffmpeg. Each call passes a program path and an argv array, and neither call sets a `shell` option. The file imports no exec, eval, or vm API. Probe P0 confirms this with a pattern scan.",
+    "Probe P2 (no shell) named executable files `ff;touch MARK1;.mjs`, `ff$(touch MARK2).mjs`, a backtick form, and a name with quotes, `&`, `|`, `<`, and `>` as FFMPEG_BIN and then as EARSHOT_BIN. All 8 runs exited 0 and created no marker file. Each ffmpeg call equals the AC2 argv. Positive control: a copy of the script with `shell: true` on either spawn created all three markers. A root path with spaces, quotes, a colon, and a percent sign also works. The real ffmpeg wrote the same bytes as the committed tap.mp3 in a root with a colon and a percent sign.",
+    "Probe P3 gave the wrapper 20 invalid entry names and 9 invalid set arguments. The names include `../evil`, `a/b`, `.`, `..`, `a.b`, uppercase, space, newline, NUL, accents, `__proto__`, full-width and bidi characters, `%2e%2e`, `~`, `$HOME`, `;`, `*`, and a trailing newline. Each run exited 1 or 2 with the exact `bad name` or `bad set name` line, started no earshot, and created no file anywhere in the temp tree. Positive control: a copy with a loosened name check wrote `sounds/evil.ogg` and `sounds/evil.mp3` outside `sounds/fake`. Names like `--help`, `-i`, and `-x` pass the check. The ffmpeg argv then holds absolute paths for `-i` and for the output, so no name can become an option.",
+    "A set named `sets` writes into the sets folder and leaves sets.json and chibi.json unchanged, because the output extensions are `.ogg` and `.mp3` only. SOUNDS_ROOT comes from the environment and is trusted, as before this phase. The `design` value stays unvalidated and goes to earshot as one argv element, as before this phase. The set file is repository content. The wrapper prints a design with control characters unchanged, so a hostile set file could send terminal escape codes.",
+    "Probe P4 (binary lookup): an absent path, a non-executable file, a bare name that PATH lacks, and an unset PATH each exited 1 with the exact `ffmpeg not found` line, zero earshot calls, and no output folder. A relative path with a slash works. Four cases pass the guard and end with `exit null` after one Ogg render (F1): an empty FFMPEG_BIN, a folder as FFMPEG_BIN, a bare name found only in the current folder, and a folder named ffmpeg ahead of the real binary on PATH. An empty PATH entry runs a planted `./ffmpeg`, and bash does the same (`command -v ffmpeg` printed `./ffmpeg`). The wrapper therefore adds no hazard beyond a shell. An attacker-controlled FFMPEG_BIN or EARSHOT_BIN chooses a program that the caller already controls, and I found nothing worse.",
+    "Probe P6 ran six scenarios with a canary value in the environment: ffmpeg missing, ffmpeg exit 3, exit 0, no file written, earshot exit 4, and a folder as ffmpeg. No stdout or stderr line held the canary or any environment value of 12 or more characters. The wrapper never prints ffmpeg output, even after success. It prints earshot output after a successful render, as before this phase. Both child processes inherit the full environment, and neither spawn sets a timeout, as before this phase.",
+    "Neither spawn uses a temp file. The wrapper removes the old target first, so the `-y` flag never overwrites a file. With the real ffmpeg, a 4-byte file, an empty file, and a truncated Ogg (50 percent and 90 percent of tap.ogg) each gave `ffmpeg failed ... with exit 187` and no `.mp3` file (probe P8). Bad input therefore leaves no partial output. Three symlinks at the `.mp3` target (file, folder, dangling) were replaced and the destinations stayed intact (probe P5). A race between removal and the ffmpeg write needs write access to sounds/<set>/, which already gives full control.",
+    "Probe P1b checked the seven committed MP3 files. `ffprobe -show_format -show_streams` printed 0 TAG lines for each file. No file holds ID3, TAG, Xing, Info, Lavf, Lavc, /home, the user name, the host name, or an e-mail address. A frame walk reads each file as whole MPEG-1 Layer III frames of 288 bytes at 96 kbps and 48000 Hz, and the durations equal the README table (0.168 s for tap, 1.872 s for right). Six files hold the encoder text `LAME3.101 (beta`, and pop.mp3 holds the fragments `LAME3.101` and `LAME3.1`. That text names the encoder and holds no personal data. git shows the files as binary, each blob equals the working-tree file, and the repository has no .gitattributes and no autocrlf.",
+    "Probe P1 ran the wrapper in a temp root with the default PATH lookup, the real ffmpeg 8.0.1-3ubuntu2, and a stand-in earshot that copies the committed Ogg. The run exited 0, wrote 14 files, and printed the 15 expected lines. The seven new MP3 files have the same SHA-256 as the committed files, so the Green claim of byte-equal re-encoding holds. The Ogg total of 90,468 bytes and the MP3 total of 71,136 bytes equal the README and the plan.",
+    "Probe P7 encoded an Ogg that carries artist, comment, and title tags. The wrapper output holds no tag and no ID3 header. The same encode without the AC2 flags starts with an ID3 tag that names Lavf, and an explicit stream-to-global map carries the artist and comment text into the MP3. The AC2 flags therefore remove real metadata.",
+    "Targeted tests: `tests/sound-set.test.ts`, `tests/sound-set-mp3.test.ts`, and `tests/sound-set.adversarial.test.ts` through heavy-run.sh gave 3 files passed and 91 of 91 tests passed. After the run, `git status --short -- sounds scripts tests` printed nothing, and the SHA-256 of every file in sounds/ was unchanged. Every write in the three files targets a `mkdtempSync` folder under the OS temp directory or `~/.cache/opencode/sound set adversarial *`. Every use of the repository root is a read. A leftover folder `~/.cache/opencode/sound set adversarial Y9gOA4` dates from 11:12:59, before this audit, and holds only fake fixtures.",
+    "Mutation run (the committed tests copied to a temp tree, variants M0 to M7): the unchanged copy gave 91 passed. `shell: true` on the ffmpeg spawn gave 13 failed. A loosened name check gave 15 failed. A removed ffmpeg guard, an unprepared `.mp3` target, and a removed post-check each gave 1 failed. A dead PATH lookup (M1) gave 91 passed (F3). Candidate fix M7 for F1 gave 91 passed, and the P4 probes on M7 gave `ffmpeg not found` with zero earshot calls for a folder and for a bare name that only the current folder holds.",
+    "A2: not applicable. `git diff 16b398b5..6804d082 -- scripts tests sounds | grep -n -i -E 'published|draft|consent|anonymi'` printed nothing, so no draft-to-published flip exists in this diff. A6: measure/tracks.md:70 lists the track as in progress ([~]) with no resolved claim, and plan.md holds no security claim. measure/generated/status.md changes from 2/11 to 4/11 closed tasks, which matches T1 to T4.",
+    "Secret scan: the added lines of the whole range (without the MP3 files) printed nothing for api key, secret, bearer, password, credential, authorization, token prefixes, private-key headers, e-mail addresses, and IPv4 addresses. Absolute paths that hold the user name appear in plan.md and the Red and Green logs, as in earlier tracks.",
+    "scripts/sound-setup.sh did not change in this range. TD-41 (unpinned transitive pip packages) and TD-42 (`rm -rf` of the venv) stay open as Low items from the sibling track.",
+    "Not tested, for a later track: the AC2 argv pins no input format (`-f`) and no protocol list. The input is the earshot render today, so it is trusted. When a downloaded library take replaces a set file, ffmpeg parses untrusted media, and a hardening review fits that track.",
+    "Process note: red-p2.log:49 says Red applied an AC2 implementation to scripts/sound-set.mjs as a throwaway check and left a patch file at /home/daniebo/.cache/opencode/green-p2-sound-set.patch. The Red commits (6fbb39bd, efdb0314) change test files only. This note is for the orchestrator and is not a security item.",
+    "Limits: I did not run the real earshot render, the project-wide test gate, tsc, or measure/doctor.sh. Green and Review A own those results. This audit proves process, path, and metadata safety, and it proves no audible quality.",
+    "Probe files: review-b-6804d08-probe.mjs (79 checks, 79 passed, 0 failed, run twice with the same result) and review-b-6804d08-mutants.mjs (run through heavy-run.sh). Both read the repository and write only to mkdtemp folders under /tmp, which they remove. The role shell denies rm, so the code removes its own temp folders. Keep or delete the two files.",
+    "Independence: I did not read the Review A result files. No CONTEST item reached Review B in this round.",
+    "Route: the orchestrator substituted claude-code/claude-sonnet-5-5#max for the ra-quota pick, because the pick found no route outside the openai and hy families."
+  ],
+  "commands": [
+    "git rev-parse HEAD -> 6804d082dae31b1532b9251dddc974d089fd4895 (start, middle, and end)",
+    "git diff --name-status 16b398b5..6804d082; git diff --stat 16b398b5..6804d082; git diff 16b398b5..6804d082 -- scripts/sound-set.mjs tests/sound-set.test.ts tests/sound-set.adversarial.test.ts; git show --name-status --format= <each commit in the range>",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sound-set.test.ts tests/sound-set-mp3.test.ts tests/sound-set.adversarial.test.ts' -> 3 files passed, 91 of 91 tests passed",
+    "git status --short -- sounds scripts tests; find sounds -type f | sort | xargs sha256sum | sha256sum -> empty status; 68f9a40e4e5f60898e21899b0edd5f8707c6be4bbb304b285ed71e7a5a2e8376 before and after the tests",
+    "node measure/runs/audio_game_integration_20261014/review-b-6804d08-probe.mjs -> SUMMARY pass=79 fail=0 (run twice)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node measure/runs/audio_game_integration_20261014/review-b-6804d08-mutants.mjs' -> M0 91 passed; M1 91 passed; M2 13 failed; M3, M4, M5 1 failed each; M6 15 failed; M7 91 passed",
+    "ffprobe -v error -show_format -show_streams sounds/chibi/<each of 7>.mp3 -> 0 TAG lines",
+    "grep -a -b -o -E 'LAME[0-9A-Za-z. ]*' sounds/chibi/*.mp3; xxd -s <offset> -l 64 sounds/chibi/tap.mp3; strings -a -n 5 sounds/chibi/tap.mp3 -> encoder text only",
+    "git diff --numstat 16b398b5 6804d082 -- 'sounds/chibi/*.mp3' -> binary; git show HEAD:<file> | sha256sum equals sha256sum <file> for all 7",
+    "git diff --stat 16b398b5 6804d082 -- 'sounds/chibi/*.ogg' sounds/sets/chibi.json -> empty",
+    "grep -H -n -o -E '[0-9a-f]{40}' plan.md red-p2.log green-p2.log, then git cat-file -e <sha>^{commit} for each -> 3 failures, all in red-p2.log (lines 6, 7, 41)",
+    "git diff 16b398b5..6804d082 --text -- . ':!sounds/chibi/*.mp3' | grep -E '^\\+' | grep -n -i -E '<secret, e-mail, and IPv4 patterns>' -> no match",
+    "git diff 16b398b5..6804d082 -- scripts tests sounds | grep -n -i -E 'published|draft|consent|anonymi' -> no match (A2)",
+    "grep -n -i -E 'resolved|secur|injection|shell|vulnerab|sanitiz|traversal' plan.md measure/tracks.md -> no claim about this track (A6)",
+    "node_modules/.bin/prettier --check review-b-6804d08.json review-b-6804d08-probe.mjs review-b-6804d08-mutants.mjs -> exit 0",
+    "node -e '<Ogg tag experiment with ffmpeg and ffprobe>' -> default encode adds an ID3 tag with encoder=Lavf62.3.100; an explicit stream-to-global map carries the comment text; the AC2 flags remove both"
+  ],
+  "changed_files": [
+    "measure/runs/audio_game_integration_20261014/review-b-6804d08.json",
+    "measure/runs/audio_game_integration_20261014/review-b-6804d08.log",
+    "measure/runs/audio_game_integration_20261014/review-b-6804d08-probe.mjs",
+    "measure/runs/audio_game_integration_20261014/review-b-6804d08-mutants.mjs"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 4,
+      "evidence": "scripts/sound-set.mjs:137-177 emits the exact AC2 argv and probe P1 reproduces all 7 committed MP3 files byte for byte, but the guard at :88-93 accepts a directory (F1)."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "The mutation run fails 13 tests for shell:true and 15 for a loosened name check, but a dead PATH lookup (M1) leaves 91 of 91 green (F3)."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 4,
+      "evidence": "Phase 2 commits touch the planned paths plus tests/sound-set.adversarial.test.ts, which the plan file list omits, and the range includes unrelated commit 2d6202e3."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 4,
+      "evidence": "green-p2.log and plan.md give commands and counts that my reruns matched (91 of 91, 71,136 MP3 bytes), but red-p2.log:6-7,41 hold a SHA that is not a commit (F4)."
+    }
+  ]
+}

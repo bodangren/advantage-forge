@@ -15,6 +15,10 @@ node scripts/sound-set.mjs chibi
 The wrapper reads `sounds/sets/chibi.json` and writes an Ogg file and an MP3 copy of each entry to
 `sounds/chibi/`.
 
+Each earshot render writes new Ogg stream serials and page CRCs: 24 bytes in a three-page file,
+32 bytes in a four-page file. A re-render then shows the `.ogg` files as changed with equal audio.
+The committed files are the reference. The MP3 files re-encode from them byte for byte.
+
 Ogg files:
 
 | File            | Design          | Bytes | Duration |

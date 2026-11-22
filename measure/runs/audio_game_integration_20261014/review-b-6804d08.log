@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: measure-review-b-security
+status: complete
+track: audio_game_integration_20261014
+phase: ## Phase 2: MP3 copies in the wrapper
+commits: none
+tests_run: heavy-run.sh vitest run tests/sound-set.test.ts tests/sound-set-mp3.test.ts tests/sound-set.adversarial.test.ts -> 3 files passed, 91 of 91 tests passed; probe file review-b-6804d08-probe.mjs -> 79 passed, 0 failed (run twice); mutation file review-b-6804d08-mutants.mjs through heavy-run.sh -> M0 91 passed, M1 91 passed (F3), M2 13 failed, M3 to M5 1 failed each, M6 15 failed, M7 (candidate fix for F1) 91 passed; ffprobe -show_format on the 7 MP3 files -> 0 TAG lines; git status and the SHA-256 of sounds/ unchanged after the tests; not run by Review B: real earshot render, project gate, tsc, measure/doctor.sh
+files_changed: measure/runs/audio_game_integration_20261014/review-b-6804d08.json, measure/runs/audio_game_integration_20261014/review-b-6804d08.log, measure/runs/audio_game_integration_20261014/review-b-6804d08-probe.mjs, measure/runs/audio_game_integration_20261014/review-b-6804d08-mutants.mjs
+plan_updates: none
+known_failures: none blocking; Nits F1 (the ffmpeg guard accepts a directory, scripts/sound-set.mjs:75-93), F2 (a blocked second target removes the first, scripts/sound-set.mjs:108-124), F3 (no test covers the default PATH lookup), F4 (red-p2.log lines 6, 7, 41 hold a SHA that is not a commit)
+handoff: Verdict pass, retry_recommendation none, at HEAD 6804d082dae31b1532b9251dddc974d089fd4895. HEAD was current at the start and at the end. Both child processes start without a shell, a name check stops path traversal, no output line holds environment content, and the seven MP3 files hold no tag and no personal data. Orchestrator actions: (1) Correct the SHA in red-p2.log lines 6, 7, and 41 from 16b398b595354f5da754268f1b32c8e864b9312a to 16b398b595354f5da275268f1b32c8e864b9312a (F4). (2) Accept F1 to F3 as notes, or route them to a later Green; F1 and F2 are small changes to scripts/sound-set.mjs, F3 adds one test case, and candidate fix M7 for F1 keeps the 91 tests green. (3) Remove the old leftover folder, which Review B did not create and could not delete because the role shell denies rm: rm -r "$HOME/.cache/opencode/sound set adversarial Y9gOA4". (4) Keep or delete review-b-6804d08-probe.mjs and review-b-6804d08-mutants.mjs. Run Review B again only if a later commit changes scripts/sound-set.mjs or a committed MP3 file.
+END_MEASURE_AGENT_RESULT

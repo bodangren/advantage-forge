@@ -1,0 +1,235 @@
+{
+  "schema_version": 1,
+  "role": "measure-phase-acceptance",
+  "track": "audio_game_integration_20261014",
+  "phase": "## Phase 2: MP3 copies in the wrapper",
+  "baseline_sha": "16b398b595354f5da275268f1b32c8e864b9312a",
+  "phase_base_sha": "16b398b595354f5da275268f1b32c8e864b9312a",
+  "role_base_sha": "82a53be2454664b7fb66db3ea594a102d7582af9",
+  "audited_head_sha": "ca68e6c8a315f55b6cae0f62a6cd9e85c98e8c1b",
+  "current_head_sha": "82a53be2454664b7fb66db3ea594a102d7582af9",
+  "audited_head_is_current": false,
+  "audited_head_is_ancestor_of_current_head": true,
+  "commits_after_audited_head_touch_audited_paths": false,
+  "commits_after_audited_head": [
+    "e862566608c83b008b4b82253a51bca4e1f9727b fix(chibi_sprouts_r1): Tom face detail r2 (assets/sprout-tom.ts, another track)",
+    "82a53be2454664b7fb66db3ea594a102d7582af9 docs(chibi_sprouts_r1): Tom face r2 plan evidence (another track's plan.md and run log)"
+  ],
+  "allowed_test_only_commits": ["ca68e6c8a315f55b6cae0f62a6cd9e85c98e8c1b"],
+  "status": "pass",
+  "summary": "Phase 2 passes acceptance at audited HEAD ca68e6c8, and no blocker remains. AC2 holds: a live run with real ffmpeg reproduced 7 of 7 committed MP3 files byte for byte. AC3 holds: all seven committed MP3 files pass the six header steps and decode cleanly. The six-file run passes (123 of 123), and the project suite passes (217 files, 3299 tests). Doctor, the generator check, and prettier exit 0, and Review A r3, Review B r3, and adversarial r2 pass. Seven nonblocking items stay open for the orchestrator (F1 to F7).",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F1 [Minor] phase-acceptance: plan.md does not record the final adversarial round or the test files that the review rounds added. It names no commit ca68e6c8 and no gate result at HEAD (six files, 123 tests; project 217 files, 3299 tests). It names no Review A r3, Review B r3, or adversarial r2 result. No plan claim is false, so A5 holds. Owner: orchestrator. Action: add these facts at the Phase 2 checkpoint, with this acceptance as the source.",
+    "F2 [Nit] phase-acceptance: 24 records in measure/runs/audio_game_integration_20261014/ are untracked. Three Review A files fail `prettier --check`: review-a-6804d08.json, review-a-a1b67c7.json, and review-a-d7ca282.json. Formatting changes only line breaks, and the parsed data stays equal. CI does not run prettier, and the nine tracked JSON records pass. Owner: orchestrator. Action: run `node_modules/.bin/prettier --write` on the three files, then commit the kept records with explicit paths.",
+    "F3 [Nit] phase-acceptance: Carried from Review B (review-b-d7ca282.json, helper files). Keep review-b-d7ca282-probe.mjs and review-b-d7ca282-mutants.mjs as evidence. Delete the four older helper files: review-b-6804d08-probe.mjs, review-b-6804d08-mutants.mjs, review-b-a1b67c7-probe.mjs, and review-b-a1b67c7-mutants.mjs. I agree with this policy. Owner: orchestrator. Action: delete the four files and commit the r3 pair.",
+    "F4 [Nit] phase-acceptance: Carried Ogg serial note. A real render changes the Ogg stream serials and page CRCs, but not the sizes, the decoded audio, or the MP3 bytes. So a later render dirties the seven .ogg files in git without a sound change. The plan records this at plan.md:151-155, and the README and measure/tech-debt.md do not. Owner: orchestrator. Action: none for Phase 2; at closeout, add one line to the README or a TD row.",
+    "F5 [Nit] phase-acceptance: Stale files exist in ~/.cache/opencode, outside the repository. They are the folder \"sound set adversarial Y9gOA4\" and two adversarial helper scripts. The folder comes from tests/sound-set.adversarial.test.ts:31, in a run that did not finish its cleanup. My runs left no new folder. Owner: orchestrator. Action: delete the three items after a listing.",
+    "F6 [Nit] phase-acceptance: spec.md:97 says only that `FFMPEG_BIN` sets the binary and `ffmpeg` on `PATH` is the default. It is silent on three lookup rules that the wrapper enforces. The plan (plan.md:161-167) and the wrapper comment record them, and the tests pin them. Owner: orchestrator. Action: at closeout, add one sentence about them to AC2 or the README.",
+    "F7 [Nit] phase-acceptance: Carried from Review B (limits note, not a finding). The AC2 argv pins no ffmpeg input format and no protocol list. ffmpeg would parse untrusted media if a downloaded take replaced a set file. This phase reads only the committed Ogg files, so the risk is absent now. Owner: the track that adds library takes. Action: pin the input format in that track."
+  ],
+  "evidence": [
+    "Provenance: `git rev-parse HEAD` printed 82a53be2454664b7fb66db3ea594a102d7582af9 at role start, so role_base_sha is that SHA. The audited phase HEAD ca68e6c8 is an ancestor of it, and the phase base 16b398b5 is an ancestor of ca68e6c8.",
+    "Phase range: 16b398b5..ca68e6c8 holds 24 commits. 18 belong to this track. 6 belong to other work.",
+    "Other work in the range: 2d6202e3 is the forge-assets docs template, which the brief names as the orchestrator's. 34f1f89f, 18cc25df, 7cb58934, and cb7e911b belong to chibi_sprouts_r1. a28c5202 is the backlog file. None of the 6 changes a source, test, sounds, or track-folder path of this track. 34f1f89f refreshes the shared generated status file.",
+    "Binding: `git diff --name-status d7ca282e ca68e6c8` lists one path of this track, `A tests/sound-set.adversarial-p2-r2.test.ts`. That is a test file, so the test-only exemption covers Review A r3 and Review B r3 (both at d7ca282e) and adversarial r2. The same diff lists three paths of another track (assets/sprout-lily.ts, one plan, one run log). They touch no audited path. The named test-only commit is ca68e6c8a315f55b6cae0f62a6cd9e85c98e8c1b.",
+    "After the audited HEAD: `git diff --stat ca68e6c8 HEAD` over scripts, the six test files, sounds, this track's plan folder, and measure/tracks.md prints nothing. The two later commits (e8625666 and 82a53be2) change only assets/sprout-tom.ts, one plan, and one run log of asset_chibi_sprouts_r1.",
+    "AC2 code reading: scripts/sound-set.mjs matches spec.md AC2 line by line. Both binaries are checked once, before target preparation. The ffmpeg argv equals the AC2 argv, token by token and in order. Per entry, the wrapper checks both targets, removes both, runs earshot, prints the Ogg line, runs ffmpeg, and prints the MP3 line. The three failure lines and their exit codes match AC2. Both spawnSync calls pass an argv array and set no shell option.",
+    "Live wrapper run (no render into sounds/). The setup used a temp root, the real ffmpeg 8.0.1-3ubuntu2 on PATH, and a stand-in earshot that copies the committed Ogg. `node scripts/sound-set.mjs chibi` exited 0 with empty stderr. It printed 15 lines in the AC2 order, ending `sound-set: 7 sounds -> sounds/chibi`. It wrote 14 files, and all 7 MP3 files equal the committed files byte for byte. The temp root was removed afterwards.",
+    "Live negative control: the same run with `FFMPEG_BIN=/nonexistent/ffmpeg` exited 1 with `sound-set: ffmpeg not found at /nonexistent/ffmpeg; install ffmpeg`, empty stdout, and no output folder. So the binary check stops the run before any file is written.",
+    "AC3: `sounds/chibi` holds 7 .ogg files and 7 .mp3 files. My own byte math applied the six header steps to each MP3. Byte 0 is 0xFF, and the sync bits hold. The version is MPEG1 and the layer is III. The bitrate index is 1 to 14, and the sample-rate index is 1 (48000 Hz).",
+    "AC3 frames: each MP3 file walks as whole 288-byte frames from byte 0 to the end. The frames match 96 kbps at 48 kHz with no padding. No ID3 tag and no Xing tag exist. ffmpeg decodes all seven files with no error.",
+    "README: sounds/README.md matches the files. Its 14 sizes equal the file sizes, with an Ogg total of 90,468 bytes and an MP3 total of 71,136 bytes. Its 14 durations equal the ffprobe format.duration rounded to 3 decimals, and each MP3 duration equals the frame count times 0.024 s. It records earshot 1.0.0 at 7a7f7c5c70d4a763a1eca4b3666af7c77e313f97 and `ffmpeg version 8.0.1-3ubuntu2`, which equals `ffmpeg -version` on this host.",
+    "Reproduction: ffmpeg with the pinned argv, applied to each committed Ogg, reproduces each committed MP3 byte for byte (7 of 7). The Oggs did not change in the phase: under sounds/, the track commits touch only the README and the 7 MP3 files.",
+    "Targeted tests: `HEAVY_MIN_AVAIL_MB=1500 bash heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 <six files> --reporter=verbose'` exited 0 with `Test Files 6 passed (6)` and `Tests 123 passed (123)` in 5.00 s. The verbose list gives these per-file counts: sound-set.adversarial 67, sound-set 19, sound-set-lookup 7, sound-set-mp3 5, sound-set.adversarial-p2 19, and sound-set.adversarial-p2-r2 6.",
+    "A5 holds. Every count in the plan equals a sum of the per-file counts. Red: 19 + 5 = 24. Green: 19 + 5 + 67 = 91 (3 files). Then 91 + 7 = 98 (4 files), and 98 + 19 = 117 (5 files).",
+    "A5 project counts: the r2 file adds 6, so the six files hold 123 tests. The plan project counts (214 files and 3267 tests, 215 and 3274, 216 and 3293) are logged results of earlier HEADs. The run now gives 217 files and 3299 tests, which is 3293 + 6.",
+    "Project suite: `heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts'` exited 0 with `Test Files 217 passed (217)` and `Tests 3299 passed (3299)` in 76.22 s. The exclusion is the PROJECT_TESTS value in measure/gates.json:5. TD-40 (measure/tech-debt.md:39) records the 9 failing tests of that file, which belong to a storytime track. No test of this track is excluded, stale, or intentionally red.",
+    "Gates: `./measure/doctor.sh --structural-only` exits 0 with no structural errors. `node measure/tools/generate.mjs --check` exits 0 (4 files current). `node_modules/.bin/prettier --check` exits 0 on scripts/sound-set.mjs, sounds/README.md, the six test files, plan.md, and metadata.json. `git diff --check 16b398b5 ca68e6c8` over the track paths exits 0.",
+    "Plan evidence: T3 and T4 are marked `[x]`. The Phase 2 section cites seven full SHAs: 6fbb39bd, efdb0314, bb9a1fd7, 3e3ed5a5, debbf930, dcfad290, and 2b29c067. It also cites the short SHA 81511930. All eight resolve to commits in the phase range, and each subject matches its task text. All SHAs in red-p2.log (7) and green-p2.log (12) resolve. The corrected phase_base_sha and the corrected `5 failed, 93 passed (98)` count are present.",
+    "Plan gaps behind F1: the file list at plan.md:10-35 omits tests/sound-set-lookup.test.ts, tests/sound-set.adversarial-p2.test.ts, tests/sound-set.adversarial-p2-r2.test.ts, and the edit to tests/sound-set.adversarial.test.ts. The T4 notes at plan.md:171-177 end at commit 2b29c067 and the five-file gate. The adversarial role removed its temporary T4b marker, so the plan has no final delta. The update to plan.md is a docs-only commit and needs no re-run of this acceptance.",
+    "Review chain: I read Review A r3 (openai/gpt-6.1-sol#high, d7ca282e), Review B r3 (claude-code/claude-sonnet-5-5#max, d7ca282e), and adversarial r2 (openai/gpt-6.1-sol#high, production commit d7ca282e, test commit ca68e6c8). All three report pass with empty finding lists, and the framework `audit-result` check accepts each file. The findings of earlier rounds are closed: Review A r1 and r2, Review B F1 to F8, and adversarial r1 F5 and F6. The brief carries no CONTEST item, so I kept and withdrew none.",
+    "Test meaning: tests/sound-set-mp3.test.ts compares the exact ffmpeg argv string, the exact stdout order, the three exact failure lines, and both call logs. The lookup, adversarial-p2, and adversarial-p2-r2 files add 32 cases for the lookup and preflight rules. Success controls prove that the fakes run through the real wrapper (tests/sound-set.adversarial-p2.test.ts:152-154, the non-executable-shadow case, and the checked-cwd case). Review B's 28 wrapper variants and Review A's reversions fail at least one test each, and the adversarial unresolved-earshot mutation fails the checked-cwd test.",
+    "Edits to old tests: tests/sound-set.test.ts and tests/sound-set.adversarial.test.ts changed only additively (a fake ffmpeg, FFMPEG_BIN, .mp3 stdout lines, and .mp3 file assertions). One expectation moved to the AC2 per-entry order. No assertion was weakened.",
+    "A3, A4, A6, and A7: the three count parses use the labeled form `/(\\d+) sounds ->/` (tests/sound-set.test.ts:133, tests/sound-set-mp3.test.ts:167, tests/sound-set-lookup.test.ts:217), and no bare-digit regex counts anything. Two test files keep a name with filter words (`BANNED never do not`) as literal text, so no filter drops a real hit. The phase diff changes no contract test, filter, or registry line (`git diff --stat 16b398b5 ca68e6c8 -- measure/tracks.md measure/tools measure/tests measure/gates.json` prints nothing), so A4 and A6 do not apply.",
+    "Scope: the 18 commits of this track change 19 distinct paths. They are the wrapper, 7 MP3 files, the README, six test files (four new, two edited), plan.md, two run logs, and the generated status file. Three new test files came from review and adversarial rounds. F1 lists the four test paths that plan.md omits.",
+    "Family independence: Red ran on Muse and Green on Hunyuan. Review A and the adversarial role ran on OpenAI. Review B ran on Anthropic, a recorded substitution. This acceptance runs on Anthropic.",
+    "Rule 4: the rule that phase acceptance uses a family other than Red holds, because Anthropic differs from Muse. Review B shares my family, but Review B is not Red, so rule 4 holds. The rule that Review A and Review B differ holds (OpenAI and Anthropic). No auditor shares the family of the work it audits.",
+    "Shared-family risk: a shared family can share blind spots. So I re-derived the AC2, AC3, and README evidence myself. I did not rely on the Review B verdict.",
+    "Post-run integrity: the sha256 over `find sounds -type f | sort` is 68f9a40e4e5f60898e21899b0edd5f8707c6be4bbb304b285ed71e7a5a2e8376 before and after my runs, and it equals the Review B value. `git status --short --untracked-files=no -- sounds scripts tests` prints nothing. My test run left no new folder in ~/.cache/opencode. I created no worktree and no branch, and I wrote nothing in the monorepo.",
+    "Untracked records behind F2: the 24 untracked files are the Review A, Review B, adversarial-p2, and acceptance records, and six Review B helper files. Prettier flags only the three Review A JSON files. CI (`measure.yml`) does not run prettier, and .prettierignore does not exclude measure/runs/. The nine tracked JSON records pass.",
+    "Helper files behind F3: all six Review B .mjs files pass prettier. Review B says the r3 probe holds every older check id. I did not verify this, because the ids are built at run time. This role is gate-only and deletes nothing.",
+    "Ogg serial detail behind F4: the plan reports that every changed Ogg byte is a stream serial or a page CRC. Each three-page file changes 24 bytes, and right.ogg and level-end.ogg (four pages) change 32 bytes each. I did not re-render the Oggs. I confirmed that the 7 MP3 files re-encode to the same bytes from the committed Oggs.",
+    "Stale files behind F5: the folder \"sound set adversarial Y9gOA4\" dates from 11:12 today. The two scripts are audio-p2-adversarial-mutants-18cc25df.mjs and audio-p2-r2-executable-mutant-cb7e911b.mjs. The folder holds one symlink (repository/sounds/fake) that points inside the same folder. Review B r3 saw the folder already. My test run created no new folder.",
+    "Lookup rules behind F6: an empty FFMPEG_BIN counts as unset. Only absolute PATH entries are searched, so a relative PATH entry finds no ffmpeg. Only a regular executable file qualifies. The wrapper comment is at scripts/sound-set.mjs:84-86.",
+    "Not verified by this role: a real earshot render, audible quality, and a live replay of the Red state. The brief forbids a render into sounds/, and the Ogg files did not change in the phase.",
+    "Red state: the Red log and the commit content support it. At 6fbb39bd the log shows 6 failed and 18 passed (24). At bb9a1fd7 it shows 5 failed lookup cases. I ran no mutation myself. I rely on the mutation results of Review A, Review B, and the adversarial role. I re-ran the tests that those mutations target."
+  ],
+  "commands": [
+    "git rev-parse HEAD (start) => 82a53be2454664b7fb66db3ea594a102d7582af9; (end) => 82a53be2454664b7fb66db3ea594a102d7582af9",
+    "git rev-list 16b398b5..ca68e6c8; git diff-tree per commit => 24 commits, 18 of this track, 6 of other work; 19 distinct paths changed by this track",
+    "git diff --name-status d7ca282e ca68e6c8 => 4 paths, 1 of this track (A tests/sound-set.adversarial-p2-r2.test.ts); git diff --stat ca68e6c8 HEAD over the audited paths => empty",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sound-set.test.ts tests/sound-set-mp3.test.ts tests/sound-set.adversarial.test.ts tests/sound-set-lookup.test.ts tests/sound-set.adversarial-p2.test.ts tests/sound-set.adversarial-p2-r2.test.ts --reporter=verbose; node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts' => exit 0; targeted 6 files and 123 tests in 5.00 s; project 217 files and 3299 tests in 76.22 s; heavy-lock wait about 7 minutes",
+    "python3 -I (live wrapper run in a temp root: real ffmpeg, stand-in earshot, then a negative control with a missing FFMPEG_BIN) => run exit 0, 15 lines in order, 14 files, 7 of 7 MP3 files byte-equal; control exit 1 with the exact line and no output folder",
+    "python3 -I and ffmpeg and ffprobe on the 14 committed files (six header steps, whole-frame walk, tag scan, decode, durations, sizes, re-encode with the pinned argv) => 7 of 7 MP3 files pass; README sizes and durations equal; 7 of 7 re-encodes byte-equal",
+    "./measure/doctor.sh --structural-only => exit 0; node measure/tools/generate.mjs --check => exit 0 (4 files current)",
+    "node_modules/.bin/prettier --check scripts/sound-set.mjs sounds/README.md <six test files> plan.md metadata.json => exit 0; git diff --check 16b398b5 ca68e6c8 over the track paths => exit 0",
+    "python3 -I (resolve the 7 full and 8 short SHAs of the Phase 2 plan section, and the SHAs of red-p2.log and green-p2.log) => all resolve; 15 of 15 plan SHAs lie in the phase range",
+    "python3 measure_interphase_checks.py audit-result on review-a-d7ca282.json (review-a), review-b-d7ca282.json (measure-review-b-security), and adversarial-p2-d7ca282.json (adversarial-testing) => PASS for all three",
+    "grep for digit-only count forms in the six test files => 3 matches, all labeled `/(\\d+) sounds ->/`; git diff --stat 16b398b5 ca68e6c8 -- measure/tracks.md measure/tools measure/tests measure/gates.json => empty",
+    "find sounds -type f | sort | xargs sha256sum | sha256sum (before and after my runs) => 68f9a40e4e5f60898e21899b0edd5f8707c6be4bbb304b285ed71e7a5a2e8376 both times; git status --short --untracked-files=no -- sounds scripts tests => empty",
+    "node_modules/.bin/prettier --check on the 8 untracked JSON records and 6 helper files => 3 Review A JSON files fail, all others pass; python3 -I compare of the parsed data before and after formatting => equal",
+    "find ~/.cache/opencode -maxdepth 1 -name 'sound*' -o -name 'audio*'; find on the stale folder -type l => 1 stale folder (11:12 today), 2 helper scripts, 1 symlink that points inside the folder",
+    "git worktree list; git branch -a => master, shelf-sync-20261030, wip/oct-skill-docs-20261023, and the worktrees advantage-forge-release and advantage-forge-shelf-sync; I created none",
+    "python3 measure_interphase_checks.py role-gate --repo . --role phase-acceptance --track audio_game_integration_20261014 --phase 'Phase 2: MP3 copies in the wrapper' --baseline 16b398b595354f5da275268f1b32c8e864b9312a --result-file phase-acceptance-p2-ca68e6c.json --log-file phase-acceptance-p2-ca68e6c.log => PASS; audit-result on the same file => PASS"
+  ],
+  "changed_files": [
+    "measure/runs/audio_game_integration_20261014/phase-acceptance-p2-ca68e6c.json",
+    "measure/runs/audio_game_integration_20261014/phase-acceptance-p2-ca68e6c.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "claude-code/claude-sonnet-5-5#max",
+  "ac_results": [
+    {
+      "ac": "AC2",
+      "result": "pass",
+      "basis": "scripts/sound-set.mjs matches AC2 token by token. The live run with real ffmpeg wrote 14 files, printed 15 lines in order, and reproduced 7 of 7 MP3 files. The negative control exits 1 with the exact line."
+    },
+    {
+      "ac": "AC3",
+      "result": "pass",
+      "basis": "All seven committed MP3 files pass the six header steps, walk as whole 288-byte frames, carry no tag, and decode cleanly. Test case 5 of tests/sound-set-mp3.test.ts checks the same steps."
+    },
+    {
+      "ac": "README format table",
+      "result": "pass",
+      "basis": "The 14 sizes and 14 durations equal the files, and the pinned earshot and ffmpeg versions match the host."
+    },
+    {
+      "ac": "T3 Red",
+      "result": "pass",
+      "basis": "Commits 6fbb39bd, efdb0314, and bb9a1fd7 resolve. The Red log shows 6 failed and 18 passed (24), and the repaired fixtures and the lookup cases pass against the final wrapper."
+    },
+    {
+      "ac": "T4 Green",
+      "result": "pass",
+      "basis": "Commits 3e3ed5a5, debbf930, dcfad290, and 2b29c067 resolve. The six-file run passes 123 of 123 tests, and the project suite passes 3299 of 3299."
+    },
+    {
+      "ac": "Review and adversarial gates",
+      "result": "pass",
+      "basis": "Review A r3, Review B r3, and adversarial r2 report pass with empty finding lists, and the framework audit-result check accepts all three."
+    },
+    {
+      "ac": "A5 plan claims",
+      "result": "pass",
+      "basis": "Each count in the plan (24, 91, 98, 117) equals a sum of the per-file counts in my run. F1 lists the facts that the plan still lacks."
+    },
+    {
+      "ac": "A3, A4, A6, A7",
+      "result": "pass",
+      "basis": "A3 and A7 hold in the six test files. A4 and A6 do not apply, because the phase diff changes no contract test, filter, or registry line."
+    }
+  ],
+  "prerequisite_results": [
+    {
+      "role": "review-a",
+      "file": "measure/runs/audio_game_integration_20261014/review-a-d7ca282.json",
+      "status": "pass",
+      "route": "openai/gpt-6.1-sol#high",
+      "audited_head_sha": "d7ca282ebd6e7602420096055266f527d2f9ff7f",
+      "targets_audited_head": false,
+      "covered_by": "test-only exemption (ca68e6c8); the other-track commits cb7e911b and 7cb58934 touch no audited path"
+    },
+    {
+      "role": "review-b",
+      "file": "measure/runs/audio_game_integration_20261014/review-b-d7ca282.json",
+      "status": "pass",
+      "route": "claude-code/claude-sonnet-5-5#max",
+      "audited_head_sha": "d7ca282ebd6e7602420096055266f527d2f9ff7f",
+      "targets_audited_head": false,
+      "covered_by": "test-only exemption (ca68e6c8); the other-track commits cb7e911b and 7cb58934 touch no audited path"
+    },
+    {
+      "role": "adversarial-testing",
+      "file": "measure/runs/audio_game_integration_20261014/adversarial-p2-d7ca282.json",
+      "status": "pass",
+      "route": "openai/gpt-6.1-sol#high",
+      "audited_head_sha": "82a53be2454664b7fb66db3ea594a102d7582af9",
+      "targets_audited_head": false,
+      "covered_by": "its own test commit is ca68e6c8, and its audited HEAD 82a53be2 adds only other-track commits after ca68e6c8; the audited paths equal ca68e6c8"
+    }
+  ],
+  "dispositions_of_earlier_round_findings": [
+    {
+      "finding": "Review A r1 and r2 findings (lookup bypass, preparation order, log typos)",
+      "disposition": "closed",
+      "reason": "Review A r3 withdrew F1 to F5, and the lookup, preparation, and mutation cases pass in my run."
+    },
+    {
+      "finding": "Review B F1 to F8",
+      "disposition": "closed",
+      "reason": "Review B r3 closed F5 and F6 by 2b29c067, F7 by the tests of 81511930, and F8 by the log correction of d7ca282e."
+    },
+    {
+      "finding": "adversarial r1 F5 (relative PATH entries) and F6 (empty or directory EARSHOT_BIN)",
+      "disposition": "closed",
+      "reason": "Commit 2b29c067 fixed both. The four former failing cases pass in my run, and adversarial r2 withdrew both."
+    },
+    {
+      "finding": "CONTEST items",
+      "disposition": "none",
+      "reason": "The brief carries no CONTEST item, so none was kept or withdrawn."
+    }
+  ],
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "The live wrapper run with real ffmpeg reproduced 7 of 7 committed MP3 files. The six test files pass 123 of 123 (heavy-run exit 0)."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "tests/sound-set-mp3.test.ts asserts the exact argv and order, and 28 mutants fail tests, but the lookup cases of bb9a1fd7 passed as lock-in at Red time."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 4,
+      "evidence": "The track commits change only the wrapper, sounds, and tests, but plan.md:10-35 omits four test paths (F1)."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "Each claim has a command result. Examples: heavy-run exit 0 twice, a 7 of 7 byte comparison, 15 of 15 resolved plan SHAs, and three audit-result PASS lines."
+    }
+  ],
+  "reviewer_ratings": [
+    {
+      "reviewer_role": "review-a",
+      "reviewer_route": "openai/gpt-6.1-sol#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "Its 117 targeted tests equal my per-file sum (19 + 5 + 67 + 7 + 19). Its argv check matches my token comparison."
+    },
+    {
+      "reviewer_role": "review-b",
+      "reviewer_route": "claude-code/claude-sonnet-5-5#max",
+      "agreed": true,
+      "score": 5,
+      "evidence": "Its sounds/ tree hash 68f9a40e equals mine. Its real-ffmpeg wrapper run matches my 7 of 7 result. Its bare-name EARSHOT_BIN gap became tests in ca68e6c8."
+    },
+    {
+      "reviewer_role": "adversarial",
+      "reviewer_route": "openai/gpt-6.1-sol#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "Its 123 targeted and 3299 project counts equal my run, and ca68e6c8 adds only tests/sound-set.adversarial-p2-r2.test.ts."
+    }
+  ]
+}

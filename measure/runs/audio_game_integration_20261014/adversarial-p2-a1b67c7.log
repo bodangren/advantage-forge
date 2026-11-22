@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: adversarial-testing
+status: partial
+track: audio_game_integration_20261014
+phase: ## Phase 2: MP3 copies in the wrapper
+commits: 81511930c3c72148733234e8c3614e50e38bc294
+tests_run: Targeted FAIL: four failed, 113 passed. Project FAIL: four failed, 3289 passed. Mutation checks detect M2 and M4. Formatting, A4, generator, and structural doctor passed.
+files_changed: tests/sound-set.adversarial-p2.test.ts; measure/runs/audio_game_integration_20261014/adversarial-p2-a1b67c7.json; measure/runs/audio_game_integration_20261014/adversarial-p2-a1b67c7.log
+plan_updates: Removed the temporary T4a marker after the test commit. The plan has no final delta.
+known_failures: F6: invalid earshot inputs delete alpha.ogg and alpha.mp3. F5: relative PATH entries run planted converters.
+handoff: Route F5 and F6 to Green with the exact failures in the JSON. F7 now has proven coverage. AC2 is silent on relative PATH entries; the tests follow the brief and plan rule. The wrapper and sounds remain unchanged. Commit the JSON and log separately. Rerun applicable reviews and adversarial testing after remediation.
+END_MEASURE_AGENT_RESULT

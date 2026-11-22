@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: review-a
+status: complete
+track: audio_game_integration_20261014
+phase: ## Phase 2: MP3 copies in the wrapper
+commits: none
+tests_run: Wrapped targeted Vitest: exit 0, 91 passed. Wrapped project Vitest: exit 0, 3267 passed. Wrapped formatting, generator, and doctor: exit 0. Boundary probes reproduce F1. Native mutations support F2. All 14 files decode; all seven MP3 files reproduce byte-for-byte.
+files_changed: measure/runs/audio_game_integration_20261014/review-a-6804d08.json; measure/runs/audio_game_integration_20261014/review-a-6804d08.log
+plan_updates: none
+known_failures: F1 blocks acceptance: binary lookup bypasses fail-fast checks. F2 concerns regression gaps. F3 corrects Ogg byte counts. F4 corrects Red provenance.
+handoff: FAIL at 6804d082dae31b1532b9251dddc974d089fd4895. Route F1 to Green with retry_implementation. Arrange failing-first fixtures before the repair. The JSON contains four routed findings and provenance. Facts changed: Phase 2 audit status is fail; independent Ogg counts are 32 bytes for right and level-end, and 24 for the others.
+END_MEASURE_AGENT_RESULT

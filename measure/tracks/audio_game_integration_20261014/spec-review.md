@@ -65,3 +65,10 @@ Date: 2026-11-22. Scope: `spec.md`, `plan.md`, and `spec-review.md` only. No imp
   through `requiredAssetBindings: [...FILES_2D]` from `HERO_CLIPS_2D` without the string. A grep of
   the 29 game folders gives 27 with the string and those 2 without. All 29 call `wireChibiSounds`
   once. `test-strategy.md` marks the product wiring gap closed by T6a and T6b.
+
+## Amendment after Phase 2 acceptance (2026-11-22)
+
+- F6 closed: `spec.md` AC2 now records the binary lookup rules of the wrapper (an empty
+  `FFMPEG_BIN` counts as unset, only absolute `PATH` entries are searched, and only a regular
+  executable file qualifies) and the earshot rule (an empty `EARSHOT_BIN` or a directory fails the
+  check). This amendment records behavior; it changes none.

@@ -15,6 +15,10 @@ Files this track touches:
 - `scripts/sound-set.mjs` (the MP3 step)
 - `tests/sound-set-mp3.test.ts` (new)
 - `tests/sound-set.test.ts` (the stdout line list)
+- `tests/sound-set.adversarial.test.ts` (the Phase 2 adversarial file)
+- `tests/sound-set-lookup.test.ts` (new, the lookup fixtures)
+- `tests/sound-set.adversarial-p2.test.ts` (new, the earshot and PATH adversarial file)
+- `tests/sound-set.adversarial-p2-r2.test.ts` (new, the adversarial round 2 file, commit ca68e6c8)
 - `sounds/chibi/<name>.mp3` for the seven names (new, committed)
 - `sounds/README.md` (the MP3 line, the sizes, and the ffmpeg version)
 - `tests/apk3d/audio-files.test.ts` (new)
@@ -175,6 +179,12 @@ Files this track touches:
     every non-absolute PATH entry, so `.` and `bin` cannot supply a binary. The five-file gate exited
     0 with 5 files and 117 of 117 tests. The project gate exited 0 with 216 files and 3293 of 3293
     tests. Adversarial F5 and F6 are fixed.
+  - Phase 2 checkpoint evidence 2026-11-22: test commit ca68e6c8 adds
+    `tests/sound-set.adversarial-p2-r2.test.ts`, the adversarial round 2 file. The six-file command
+    exited 0 with 6 files and 123 of 123 tests. The project gate exited 0 with 217 files and 3299 of
+    3299 tests. Review A r3 (`review-a-d7ca282.json`), Review B r3 (`review-b-d7ca282.json`), and
+    adversarial r2 (`adversarial-p2-d7ca282.json`) each report pass with an empty finding list.
+    Phase acceptance `phase-acceptance-p2-ca68e6c.json` reports PASS.
 
 ## Phase 3: File playback in the AudioBus
 

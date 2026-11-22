@@ -1,0 +1,112 @@
+{
+  "schema_version": 1,
+  "role": "adversarial-testing",
+  "track": "audio_game_integration_20261014",
+  "phase": "## Phase 2: MP3 copies in the wrapper",
+  "baseline_sha": "16b398b595354f5da275268f1b32c8e864b9312a",
+  "phase_base_sha": "16b398b595354f5da275268f1b32c8e864b9312a",
+  "role_base_sha": "18cc25dfa5df0448208dd0926b6e90acbe3ef39b",
+  "pre_adversarial_head_sha": "18cc25dfa5df0448208dd0926b6e90acbe3ef39b",
+  "audited_head_sha": "81511930c3c72148733234e8c3614e50e38bc294",
+  "status": "fail",
+  "summary": "Phase 2 fails. The targeted and project gates expose four failures across F5 and F6. Commit 81511930 adds 19 tests and proves F7 coverage.",
+  "blocking_findings": [
+    "F6 [Blocker] adversarial-testing: scripts/sound-set.mjs:67-72 accepts an empty EARSHOT_BIN or a directory. Both tests print `sound-set: earshot failed for alpha (tap/soft) with exit null` instead of the preflight diagnostic. Preparation deletes alpha.ogg and alpha.mp3 before the failure. tests/sound-set.adversarial-p2.test.ts:200-210 proves both file losses. Green: reject invalid earshot files before preparation and preserve both old files.",
+    "F5 [Blocker] adversarial-testing: scripts/sound-set.mjs:89-93 searches explicit relative PATH entries, including `.` and `bin`. Both tests exit 0, run the planted converter twice, and replace all four old files. Expected: exit 1, `sound-set: ffmpeg not found at ffmpeg; install ffmpeg`, zero calls, and unchanged files. tests/sound-set.adversarial-p2.test.ts:212-223 proves the failures. AC2 is silent on relative entries; the brief requests the stricter rule recorded in plan.md:163. Green: reject relative PATH entries while retaining valid absolute candidates."
+  ],
+  "nonblocking_findings": [],
+  "evidence": [
+    "The role started at 18cc25dfa5df0448208dd0926b6e90acbe3ef39b. The selected phase commit is a1b67c77ad77650bab5fafea8304abeb1b141d60.",
+    "The wrapper, existing Phase 2 tests, sounds, and audio track match the selected phase commit.",
+    "Read the exact phase diff, AC2, the Phase 2 plan, strategy table, anti-pattern defenses, and both r2 reviews.",
+    "The new fixture invokes the real wrapper. Absolute Node shebangs keep the fake binaries independent of the PATH under test.",
+    "Each failure case checks the exact diagnostic, exit code, empty stdout, zero child calls, and preservation of both files for both entries.",
+    "AC2 does not define relative PATH entries. The brief requests the stricter rule, and plan.md:163 records it.",
+    "The strategy's Phase 2 text does not itself say never search the working directory. The test comment flags that distinction.",
+    "EARSHOT_BIN cases retain the existing earshot missing-binary diagnostic. AC2 defines only the ffmpeg missing-binary line.",
+    "The note from Review B F7 has durable tests for five empty PATH forms, execute bits, and later valid candidates.",
+    "Additional tests cover valid and invalid executable symlinks, a basename equal to a PATH directory, and filter words in a missing-binary name.",
+    "A4: an isolated all-[~] plan returns INCOMPLETE with zero completed tasks and two incomplete tasks.",
+    "Prettier and git diff --check passed.",
+    "build-graph exists, but no graph database exists. No TypeScript export changes in this phase.",
+    "The temporary T4a marker was removed after the test commit. The plan has no final delta.",
+    "The targeted command exited 1: one file failed, four files passed; four tests failed and 113 passed.",
+    "All 98 existing Phase 2 tests passed. The new file passed 15 cases and failed its two F5 cases and two F6 cases.",
+    "F6 actual diagnostic: sound-set: earshot failed for alpha (tap/soft) with exit null. Both alpha files disappeared.",
+    "F6 expected diagnostic: sound-set: earshot not found at <resolved-earshot>; run scripts/sound-setup.sh. Both old files must remain.",
+    "F5 actual behavior: PATH=. and PATH=bin each ran four child calls, returned exit 0, and replaced both entries' old files.",
+    "F5 expected behavior: exit 1 with the exact missing-ffmpeg line, zero calls, and unchanged files.",
+    "F7 passes: five empty PATH forms are skipped. Non-executable overrides are rejected before preparation.",
+    "F7 positive controls pass: later absolute candidates run after an empty entry or a non-executable shadow.",
+    "Commit 81511930c3c72148733234e8c3614e50e38bc294 adds only tests/sound-set.adversarial-p2.test.ts.",
+    "No production code or committed sound file changed. All renders in the new tests use temporary SOUNDS_ROOT folders.",
+    "The project gate ran once and exited 1: one file failed, 215 passed; four tests failed and 3289 passed.",
+    "The project gate fails only the same four new cases. No unrelated test failed.",
+    "The isolated native mutation control matches the live result: four failed and 15 passed.",
+    "M2 removes the empty-PATH-entry skip. It gives ten failed and nine passed, adding six F7 failures.",
+    "M4 removes the execute-bit check. It gives seven failed and 12 passed, adding three failures.",
+    "Both former surviving mutants now fail new assertions. Their extra failures prove the F7 tests distinguish the lookup rules.",
+    "The mutations change only temporary wrapper copies outside the repository. The live wrapper remains byte-identical to a1b67c77.",
+    "A5: all 98 original Phase 2 cases still pass, as the plan's historical gate records. The new adversarial gate is explicitly failing.",
+    "The historical count typo from Review A F5 and Review B F8 remains outside this test-only assignment.",
+    "The generator reports four current files. The structural doctor reports no errors.",
+    "Final HEAD is 81511930c3c72148733234e8c3614e50e38bc294. The wrapper, sounds, four existing tests, and audio plan match the selected phase commit.",
+    "The role leaves its JSON and log untracked for the orchestrator. Only the new test file was committed.",
+    "Existing release and shelf-sync worktrees remain unchanged. Existing shelf-sync, wip, and remote branches belong to other work.",
+    "Facts changed: Phase 2 has committed adversarial coverage and a failing gate. No product fact changed.",
+    "Limits: fake binary tests prove process behavior and file preservation. This role ran no real earshot render and assessed no audible quality."
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "git status --short --untracked-files=no",
+    "git diff 16b398b595354f5da275268f1b32c8e864b9312a..a1b67c77 -- scripts/sound-set.mjs sounds/README.md tests/sound-set-mp3.test.ts tests/sound-set-lookup.test.ts tests/sound-set.adversarial.test.ts tests/sound-set.test.ts measure/tracks/audio_game_integration_20261014/plan.md measure/runs/audio_game_integration_20261014/red-p2.log measure/runs/audio_game_integration_20261014/green-p2.log",
+    "node_modules/.bin/prettier --check tests/sound-set.adversarial-p2.test.ts => exit 0",
+    "git diff --check => exit 0",
+    "python3 A4 temporary-plan probe => INCOMPLETE",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sound-set.test.ts tests/sound-set-mp3.test.ts tests/sound-set.adversarial.test.ts tests/sound-set-lookup.test.ts tests/sound-set.adversarial-p2.test.ts' => exit 1; one file failed, four passed; four tests failed, 113 passed",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts' => exit 1; one file failed, 215 passed; four tests failed, 3289 passed",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node /home/daniebo/.cache/opencode/audio-p2-adversarial-mutants-18cc25df.mjs' => exit 0; control four failures, M2 ten failures, M4 seven failures; both mutants detected",
+    "git commit --only tests/sound-set.adversarial-p2.test.ts -m 'test(audio_game_integration): Phase 2 adversarial binary preflight cases' => 81511930c3c72148733234e8c3614e50e38bc294",
+    "git diff --exit-code a1b67c77 -- scripts/sound-set.mjs sounds tests/sound-set.test.ts tests/sound-set-mp3.test.ts tests/sound-set.adversarial.test.ts tests/sound-set-lookup.test.ts measure/tracks/audio_game_integration_20261014/plan.md => exit 0",
+    "node measure/tools/generate.mjs --check => exit 0",
+    "./measure/doctor.sh --structural-only => exit 0",
+    "git rev-parse HEAD => 81511930c3c72148733234e8c3614e50e38bc294",
+    "git worktree list; git branch -a => no worktree or branch created by this role"
+  ],
+  "changed_files": [
+    "tests/sound-set.adversarial-p2.test.ts",
+    "measure/runs/audio_game_integration_20261014/adversarial-p2-a1b67c7.json",
+    "measure/runs/audio_game_integration_20261014/adversarial-p2-a1b67c7.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [
+    "F5: The wrapper searches relative PATH entries despite plan.md:163 and its own never-search-the-working-directory comment."
+  ],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "retry_implementation",
+  "confidence": "high",
+  "route": "openai/gpt-6.1-sol#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 2,
+      "evidence": "F6 deletes both old alpha files before an invalid earshot input fails."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 5,
+      "evidence": "The native mutation run adds six failures for M2 and three failures for M4."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "Commit 81511930 adds only tests/sound-set.adversarial-p2.test.ts."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "The targeted and project gates reproduce the same four failures, with exact diagnostics and file checks."
+    }
+  ]
+}

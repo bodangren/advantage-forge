@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "role": "adversarial-testing",
+  "track": "audio_game_integration_20261014",
+  "phase": "## Phase 2: MP3 copies in the wrapper",
+  "baseline_sha": "16b398b595354f5da275268f1b32c8e864b9312a",
+  "phase_base_sha": "16b398b595354f5da275268f1b32c8e864b9312a",
+  "role_base_sha": "cb7e911ba12bb3cf934815e584ab645fae45517e",
+  "pre_adversarial_head_sha": "cb7e911ba12bb3cf934815e584ab645fae45517e",
+  "audited_head_sha": "82a53be2454664b7fb66db3ea594a102d7582af9",
+  "status": "pass",
+  "summary": "Phase 2 passes adversarial r2. F5 and F6 are closed. All 123 targeted tests and 3299 project tests pass. The new attacks expose no defect.",
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "evidence": [
+    "The role started at cb7e911ba12bb3cf934815e584ab645fae45517e. The selected production commit is d7ca282ebd6e7602420096055266f527d2f9ff7f.",
+    "Only unrelated Chibi Sprouts commits follow the selected production commit before this role starts.",
+    "Read the accumulated phase diff, the 2b29c067 remediation delta, current AC2, phase plan, strategy, and both r3 reviews.",
+    "F5 withdrawn: the two relative-PATH cases now pass. scripts/sound-set.mjs:90-94 rejects each non-absolute PATH entry.",
+    "F6 withdrawn: the directory and empty EARSHOT_BIN cases now pass and preserve both old files. scripts/sound-set.mjs:79-82 checks before preparation.",
+    "AC2 quote: `FFMPEG_BIN` sets the binary, and `ffmpeg` on `PATH` is the default.",
+    "AC2 specifies PATH lookup only for ffmpeg. EARSHOT_BIN remains an explicit path, including a basename resolved against cwd.",
+    "This behavior is acceptable. The default earshot path is absolute, and an explicit override selects the caller's file.",
+    "The new tests ensure that spawn uses the checked absolute earshot path, not a different PATH shadow.",
+    "New attacks cover a PATH directory with a symlink loop and a directory whose basename equals the sound entry.",
+    "Positive and negative loop cases prove both fallback and closed failure. The directory collision preserves its sentinel.",
+    "The bare-earshot cases prove cwd selection and rejection of a PATH-only candidate. The default-path control uses a different cwd.",
+    "The targeted command passed all six files and 123 tests. This includes the five existing files and six new cases.",
+    "Commit ca68e6c8a315f55b6cae0f62a6cd9e85c98e8c1b adds only tests/sound-set.adversarial-p2-r2.test.ts.",
+    "The temporary T4b marker was removed after the test commit. The plan has no final delta.",
+    "The wrapper, sounds, five existing tests, and audio plan remain byte-identical to d7ca282e.",
+    "Prettier and git diff --check pass. The generator reports four current files. The structural doctor reports no errors.",
+    "A4: an all-[~] fixture returns INCOMPLETE with zero completed tasks and two incomplete tasks.",
+    "A7: the existing filter-word binary case passes with exact diagnostic equality.",
+    "build-graph exists, but graph.db is absent. The changed production file is MJS, outside the tool's TypeScript scope.",
+    "The project gate ran once and exited 0: 217 files and 3299 tests passed.",
+    "The isolated native mutation control passed all six new tests.",
+    "The unresolved-earshot mutation passed five tests and failed the checked-cwd-file test. It runs a different PATH executable after checking the cwd file.",
+    "The mutation proves the new executable-identity test detects the regression. The mutation changes only a disposable wrapper copy.",
+    "A5: the original 117 targeted cases still pass. The plan's F5/F6 closure claim matches the rerun.",
+    "No CONTEST item reached this role. Green fixed both routed findings; no finding remains open.",
+    "HEAD advanced to 82a53be2454664b7fb66db3ea594a102d7582af9 during the run. Only unrelated Chibi Sprouts files changed after the test commit.",
+    "All audited audio paths remain identical to the test commit. No audio implementation commit follows the selected production commit.",
+    "The role leaves its JSON and log untracked for the orchestrator. Only the new test file was committed.",
+    "Existing release and shelf-sync worktrees remain unchanged. Existing shelf-sync, wip, and remote branches belong to other work.",
+    "Facts changed: Phase 2 adversarial r2 passes, and executable identity has durable tests. No product fact changed.",
+    "Limits: these fake-binary tests prove process behavior and preservation of files. This role ran no real render and assessed no audible quality."
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "git status --short --untracked-files=no",
+    "git diff 81511930..d7ca282e -- scripts/sound-set.mjs tests/sound-set.adversarial-p2.test.ts measure/tracks/audio_game_integration_20261014/plan.md measure/runs/audio_game_integration_20261014/green-p2.log",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sound-set.test.ts tests/sound-set-mp3.test.ts tests/sound-set.adversarial.test.ts tests/sound-set-lookup.test.ts tests/sound-set.adversarial-p2.test.ts tests/sound-set.adversarial-p2-r2.test.ts' => exit 0; six files and 123 tests passed",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts' => exit 0; 217 files and 3299 tests passed",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node /home/daniebo/.cache/opencode/audio-p2-r2-executable-mutant-cb7e911b.mjs' => exit 0; native control six passed; unresolved-earshot mutation one failed and five passed",
+    "git commit --only tests/sound-set.adversarial-p2-r2.test.ts -m 'test(audio_game_integration): Phase 2 executable identity and path loops' => ca68e6c8a315f55b6cae0f62a6cd9e85c98e8c1b",
+    "node_modules/.bin/prettier --check tests/sound-set.adversarial-p2-r2.test.ts => exit 0",
+    "node measure/tools/generate.mjs --check => exit 0",
+    "./measure/doctor.sh --structural-only => exit 0",
+    "python3 A4 temporary-plan probe => INCOMPLETE",
+    "git diff --exit-code d7ca282e -- scripts/sound-set.mjs sounds tests/sound-set.test.ts tests/sound-set-mp3.test.ts tests/sound-set.adversarial.test.ts tests/sound-set-lookup.test.ts tests/sound-set.adversarial-p2.test.ts measure/tracks/audio_game_integration_20261014/plan.md => exit 0",
+    "git worktree list; git branch -a => existing branches and worktrees remain unchanged",
+    "git rev-parse HEAD => 82a53be2454664b7fb66db3ea594a102d7582af9",
+    "git diff --name-status ca68e6c8..HEAD => only assets/sprout-tom.ts and the Chibi Sprouts plan and log"
+  ],
+  "changed_files": [
+    "tests/sound-set.adversarial-p2-r2.test.ts",
+    "measure/runs/audio_game_integration_20261014/adversarial-p2-d7ca282.json",
+    "measure/runs/audio_game_integration_20261014/adversarial-p2-d7ca282.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "openai/gpt-6.1-sol#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "All 123 targeted tests pass, including the four former F5 and F6 failures."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 5,
+      "evidence": "The unresolved-earshot mutation fails the new executable-identity test while the native control passes all six cases."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "Commit ca68e6c8 adds only tests/sound-set.adversarial-p2-r2.test.ts."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "The project gate exits 0 with 217 files and 3299 tests passed, and scoped source comparisons remain clean."
+    }
+  ]
+}

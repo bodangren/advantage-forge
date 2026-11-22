@@ -1,0 +1,111 @@
+{
+  "schema_version": 1,
+  "role": "review-a",
+  "track": "audio_game_integration_20261014",
+  "phase": "## Phase 2: MP3 copies in the wrapper",
+  "baseline_sha": "16b398b595354f5da275268f1b32c8e864b9312a",
+  "phase_base_sha": "16b398b595354f5da275268f1b32c8e864b9312a",
+  "role_base_sha": "a1b67c77ad77650bab5fafea8304abeb1b141d60",
+  "audited_head_sha": "a1b67c77ad77650bab5fafea8304abeb1b141d60",
+  "status": "pass",
+  "summary": "Phase 2 passes. F1-F4 are closed. All 98 targeted tests and 3274 project tests pass. One historical count typo remains nonblocking.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F5 [Nit] Green: measure/runs/audio_game_integration_20261014/green-p2.log:114 records 1 failed and 93 passed out of 98. The independent pre-fix replay returns 5 failed and 93 passed. The next two lines already list five failures. Change the failed-test count to 5. The final Green gate correctly reports 98 passes."
+  ],
+  "evidence": [
+    "git rev-parse HEAD returned a1b67c77ad77650bab5fafea8304abeb1b141d60 at role start. role_base_sha equals audited_head_sha.",
+    "Reviewed the exact 16b398b595354f5da275268f1b32c8e864b9312a..a1b67c77ad77650bab5fafea8304abeb1b141d60 range and the remediation delta from 6804d082.",
+    "Excluded unrelated commits 2d6202e3 and 34f1f89f, as the brief directs. They change the video prompt template and the Chibi Sprouts plan.",
+    "HEAD advanced during the audit to 18cc25dfa5df0448208dd0926b6e90acbe3ef39b. That commit changes only the Chibi Sprouts plan.",
+    "git diff --exit-code a1b67c77 confirms that the wrapper, four targeted files, sounds, audio track files, and implementation logs remain identical to the audited commit.",
+    "Read the current AC2 and AC3 text, the Phase 2 plan, test-strategy.md, routing evidence, config.json, gates.json, and both implementation logs.",
+    "measure_status reports another globally active track. The brief explicitly selects this audio track. No audit task or implementation marker changed.",
+    "F1 withdrawn: the three original boundary fixtures now satisfy AC2. Directory overrides and unresolved defaults fail before target creation or earshot. PATH directories no longer mask executable files.",
+    "F2 withdrawn: removing PATH lookup now fails three tests. Delaying MP3 preparation until after Ogg now fails the blocked-target test. Both mutations passed all 91 tests in the first audit.",
+    "F3 withdrawn: plan.md:151-155 and green-p2.log:87-93 now state the observed per-file counts. They match the first audit's independent render: 32 bytes for right and level-end, and 24 for the other files.",
+    "F4 withdrawn: Red corrected the three mistyped provenance fields in commit 0b23f646. Every phase_base_sha field now names 16b398b595354f5da275268f1b32c8e864b9312a.",
+    "Required wrapped gate: exit 0; four test files passed; 98 tests passed; duration 3.61 seconds.",
+    "Independent F1 directory fixture: exit 1, exact missing-binary line, empty stdout, zero earshot calls, and no output directory.",
+    "Independent F1 default fixture: PATH contains no ffmpeg, while CWD contains an executable ffmpeg. Exit 1 occurs before earshot with the exact missing-binary line.",
+    "Independent F1 shadow fixture: PATH holds a directory named ffmpeg before a valid executable. The wrapper selects the executable and succeeds.",
+    "Pinned mutation control: four unchanged test files and the wrapper from a1b67c77 pass all 98 native tests in an isolated copy.",
+    "PATH-lookup mutation: replacing findFfmpeg(ffmpegInput) with ffmpegInput exits 1, with three failed tests and 95 passed tests.",
+    "Preparation-order mutation: delaying all MP3 preparation until after Ogg exits 1, with one failed test and 97 passed tests.",
+    "Missing-deliverable fixture: removing the isolated tap.mp3 makes AC3 case 5 fail with ENOENT. Exit 1; four tests pass and one fails.",
+    "New Red replay: the four current test files against the 6804d082 wrapper exit 1 with five failed and 93 passed tests. No syntax or import error occurs.",
+    "The replay confirms Red's five failing-first cases and supports F5's correction of Green's pre-fix count.",
+    "scripts/sound-set.mjs:78-97 accepts regular executable files, skips directory candidates, and returns null on failed lookup before output preparation.",
+    "scripts/sound-set.mjs:114-132 checks both target types before removal. The blocked-MP3 test requires zero earshot calls and preserves the stale Ogg.",
+    "scripts/sound-set.mjs:145-178 retains the exact pinned AC2 argv. It passes separate arguments through spawnSync and adds no shell.",
+    "The existing MP3 tests verify the exact nonzero-exit and missing-file lines, their exit codes, stdout order, and the final labeled count.",
+    "All audio files, README rows, original MP3 tests, and adversarial tests are unchanged from 6804d082. The first audit's decode and MP3 byte-reproduction evidence remains applicable.",
+    "A3: count assertions capture integers with the sounds -> label or compare log lengths directly. No count uses a bare-digit match.",
+    "A4: the independent missing-MP3 fixture fails. The new binary-failure tests require zero calls and no output directory.",
+    "A5: the current targeted exit agrees with the plan's 98-pass claim. F5 concerns a historical failure count, not a false pass claim.",
+    "build-graph exists, but graph.db remains absent and graph_mode remains not_enabled. No exported TypeScript symbol changes in this phase.",
+    "The CLI dependency scope remains unchanged. No game caller, runtime API, package dependency, orchestration script, or registry implementation changes.",
+    "The audit creates no worktree, branch, render output, or commit. Temporary fixtures use disposable copies and leave production files unchanged.",
+    "The shared runner initially queued the supplementary checks behind another project's dashboard suite. All queued checks subsequently completed.",
+    "Project gate: exit 0; 215 files passed; 3274 tests passed; duration 80.13 seconds. This confirms plan.md:168-170.",
+    "Prettier passes on the wrapper, README, four targeted test files, and the audio plan. generate.mjs --check reports four current files. The structural doctor reports no errors.",
+    "Independent static comparison parses the pinned wrapper's MP3 argv and compares each token with spec AC2. Every token matches in the required order.",
+    "Independent provenance checks resolve every Red role_base_sha and phase_base_sha to a commit. Every Red phase_base_sha equals the supplied valid base.",
+    "Independent Ogg parsing confirms three pages for tap, wrong, star, pop, and whoosh, and four pages for right and level-end.",
+    "An independent non-executable regular-file fixture exits 1 with the exact AC2 missing-binary line, empty stdout, and no output preparation.",
+    "Final provenance check: HEAD remains 18cc25dfa5df0448208dd0926b6e90acbe3ef39b. Its only commit after the audited SHA changes an unrelated plan.",
+    "The final relevant-path diff against a1b67c77 remains empty. Unrelated sprout-lily and Chibi Sprouts plan edits remain untouched."
+  ],
+  "commands": [
+    "git rev-parse HEAD; git status --short --untracked-files=no",
+    "git log --format='%h %s' 6804d082..HEAD",
+    "git diff --stat 16b398b595354f5da275268f1b32c8e864b9312a..a1b67c77ad77650bab5fafea8304abeb1b141d60",
+    "git diff 6804d082..a1b67c77 -- scripts/sound-set.mjs tests/sound-set-lookup.test.ts measure/tracks/audio_game_integration_20261014/plan.md measure/runs/audio_game_integration_20261014/red-p2.log measure/runs/audio_game_integration_20261014/green-p2.log",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sound-set.test.ts tests/sound-set-mp3.test.ts tests/sound-set.adversarial.test.ts tests/sound-set-lookup.test.ts' => exit 0; 98 passed",
+    "Wrapped Python boundary probes: directory override, unresolved default with executable CWD ffmpeg, and PATH directory shadow => all three satisfy AC2",
+    "Wrapped Python pinned native Vitest copies: control 98 passed; removed PATH lookup 3 failed; delayed preparation 1 failed; missing MP3 1 failed; pre-fix Red replay 5 failed",
+    "git diff --exit-code 6804d082..a1b67c77 -- sounds tests/sound-set.test.ts tests/sound-set-mp3.test.ts tests/sound-set.adversarial.test.ts measure/tracks/audio_game_integration_20261014/spec.md measure/tracks/audio_game_integration_20261014/test-strategy.md => exit 0",
+    "git diff --exit-code a1b67c77 -- scripts/sound-set.mjs 'tests/sound-set*.test.ts' sounds measure/tracks/audio_game_integration_20261014 measure/runs/audio_game_integration_20261014/red-p2.log measure/runs/audio_game_integration_20261014/green-p2.log => exit 0",
+    "git log --format='%h %s' --name-only a1b67c77..HEAD",
+    "git cat-file -t 16b398b595354f5da275268f1b32c8e864b9312a => commit",
+    "command -v build-graph; ls graph.db => tool exists; database absent",
+    "git worktree list; git branch -a",
+    "bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh --status => another project's dashboard suite held the shared lock",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts' => exit 0; 215 files, 3274 passed",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/prettier --check scripts/sound-set.mjs sounds/README.md tests/sound-set.test.ts tests/sound-set-mp3.test.ts tests/sound-set.adversarial.test.ts tests/sound-set-lookup.test.ts measure/tracks/audio_game_integration_20261014/plan.md && node measure/tools/generate.mjs --check && ./measure/doctor.sh --structural-only' => exit 0",
+    "Wrapped Python static checks: pinned argv token equality, Red provenance object resolution, seven Ogg page counts, and a non-executable ffmpeg fixture => exit 0"
+  ],
+  "changed_files": [
+    "measure/runs/audio_game_integration_20261014/review-a-a1b67c7.json",
+    "measure/runs/audio_game_integration_20261014/review-a-a1b67c7.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "openai/gpt-6.1-sol#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "The three original F1 fixtures and the non-executable-file fixture satisfy AC2, and the independent argv comparison matches every pinned token."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 5,
+      "evidence": "The pre-fix wrapper fails five tests; both original F2 mutations now fail; the current wrapper passes all 98 targeted tests."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The remediation changes only binary lookup, target preparation, seven regression tests, and the assigned evidence records."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 4,
+      "evidence": "Independent gates confirm 98 targeted passes and 3274 project passes, but green-p2.log:114 contains the nonblocking pre-fix count typo."
+    }
+  ]
+}

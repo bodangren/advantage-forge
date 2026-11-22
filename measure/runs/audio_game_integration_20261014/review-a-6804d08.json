@@ -1,0 +1,131 @@
+{
+  "schema_version": 1,
+  "role": "review-a",
+  "track": "audio_game_integration_20261014",
+  "phase": "## Phase 2: MP3 copies in the wrapper",
+  "baseline_sha": "16b398b595354f5da275268f1b32c8e864b9312a",
+  "phase_base_sha": "16b398b595354f5da275268f1b32c8e864b9312a",
+  "role_base_sha": "6804d082dae31b1532b9251dddc974d089fd4895",
+  "audited_head_sha": "6804d082dae31b1532b9251dddc974d089fd4895",
+  "status": "fail",
+  "summary": "Phase 2 fails the audit because binary lookup can bypass the fail-fast check. All 91 targeted tests pass. All committed audio files decode.",
+  "blocking_findings": [
+    "F1 [Major] Green: scripts/sound-set.mjs:75-92 accepts directories as binaries and checks unresolved basenames against the working directory. With FFMPEG_BIN=<directory>, the wrapper renders alpha.ogg before reporting ffmpeg failed with exit null. An executable ./ffmpeg outside PATH produces the same result when the default binary is absent from PATH. A directory named ffmpeg in an earlier PATH entry also masks a later executable. These cases violate AC2's missing-binary line and the strategy's zero-render fail-fast rule. Resolve only executable files from PATH. Reject failed lookup before target preparation or rendering. Add failing-first fixtures for these cases."
+  ],
+  "nonblocking_findings": [
+    "F2 [Minor] Red: tests/sound-set-mp3.test.ts:98-104 and 148-233 always supply an absolute FFMPEG_BIN. The suite also lacks an MP3 target obstruction fixture. Two independent wrapper mutations each pass all 91 tests: removing PATH lookup and delaying MP3 preparation until after the Ogg render. Add default-PATH, basename-override, and blocked-MP3 fixtures. Require zero earshot calls when MP3 preparation fails.",
+    "F3 [Minor] Green: measure/tracks/audio_game_integration_20261014/plan.md:142-145 and green-p2.log:87-91 claim that every Ogg changes 24 bytes. The independent render changes 32 bytes in right.ogg and level-end.ogg, and 24 bytes in the other files. The two longer files have four pages; the others have three. Every changed byte belongs to a stream serial or page CRC. Replace the fixed count with the observed per-file counts or a page-based description. The existing plan note is sufficient for this container nondeterminism; a new debt row is unnecessary.",
+    "F4 [Minor] Red: measure/runs/audio_game_integration_20261014/red-p2.log:6-7,41 records phase_base_sha 16b398b595354f5da754268f1b32c8e864b9312a. That object does not exist. The supplied phase base is 16b398b595354f5da275268f1b32c8e864b9312a. Correct the immutable provenance fields. Independent historical test runs reproduce the reported Red counts with the supplied base."
+  ],
+  "evidence": [
+    "Provenance: git rev-parse HEAD returned 6804d082dae31b1532b9251dddc974d089fd4895 at role start. role_base_sha equals audited_head_sha.",
+    "Reviewed the exact 16b398b595354f5da275268f1b32c8e864b9312a..6804d082dae31b1532b9251dddc974d089fd4895 diff and its ten commits.",
+    "Commit 2d6202e3 contains the unrelated video prompt template identified in the brief. It changes no audio implementation or contract.",
+    "Read measure/index.md, config.json, gates.json, tech-debt.md, lessons-learned.md, the track spec, the current phase, and test-strategy.md.",
+    "Read strategy-6dc8114.json, spec-review-1bbdbec.json, red-p2.log, and both blocks of green-p2.log. The earlier blocked Green block remains historical evidence.",
+    "The routing brief selects OpenAI. Red uses Muse, and Green uses Hunyuan. Review A remains independent from both implementation families.",
+    "measure_status reports another globally active track. The brief explicitly selects this audio track. The audit changed no task marker.",
+    "Accepted the strategy's fail-fast settlement: check ffmpeg once before the first entry. AC2's per-entry preparation and rendering order then applies.",
+    "scripts/sound-set.mjs:137-170 passes the exact AC2 argv as separate spawnSync arguments. The implementation adds no shell or dependency.",
+    "scripts/sound-set.mjs:105-135 prepares both targets before earshot, removes stale files without recursive deletion, and preserves the existing Ogg output order.",
+    "scripts/sound-set.mjs:171-179 implements the nonzero-exit and missing-output failures, the MP3 success line, and the unchanged final summary.",
+    "The repaired MP3 fake takes its output from the final positional argument. All three fixture files now inject a fake ffmpeg. Their successful stdout expectations follow AC2.",
+    "Required targeted gate: exit 0; three files passed; 91 tests passed; duration 3.24 seconds.",
+    "Independent binary probes use a temporary SOUNDS_ROOT and absolute Node shebangs. They do not depend on PATH to start the fake earshot.",
+    "F1 directory fixture: FFMPEG_BIN points to an existing directory. Exit 1; one earshot call; stdout contains sound-set: alpha.ogg <- tap/soft; stderr reports sound-set: ffmpeg failed for alpha (tap/soft) with exit null.",
+    "F1 unresolved-default fixture: PATH contains an empty directory, and CWD contains an executable ffmpeg. Exit 1 follows one earshot call, with the same incorrect failure class.",
+    "F1 shadow fixture: PATH contains a directory named ffmpeg before a valid executable ffmpeg. The wrapper selects the directory and fails after one earshot call.",
+    "Control probes: a non-executable regular file fails before earshot with the exact missing-binary line. A valid default PATH executable and a basename override each succeed.",
+    "An MP3 target directory currently fails before earshot with the exact preparation line. Its keep file remains unchanged. F2 concerns missing regression coverage, not current preparation behavior.",
+    "Native mutation control in an isolated repository copy: exit 0; all 91 tests passed. The copy contains the unchanged current tests and wrapper.",
+    "Missing-deliverable fixture: removing tap.mp3 from the isolated copy makes MP3 case 5 fail with ENOENT. Exit 1; four passed and one failed. The deliverable check is not vacuous.",
+    "Wrong-bitrate mutation: replacing 96k with 128k fails MP3 cases 1 and 3 on exact call equality. Exit 1; two failed and three passed.",
+    "PATH-lookup mutation: replacing const ffmpeg = findOnPath(ffmpegInput) with const ffmpeg = ffmpegInput passes all 91 native tests.",
+    "Preparation-order mutation: preparing the MP3 target after the successful Ogg render passes all 91 native tests. This violates AC2's explicit preparation order.",
+    "All mutation tests run on disposable copies. The audit changed no committed test or implementation file.",
+    "Historical initial Red replay uses tests from 6fbb39bd and the phase-base wrapper without MP3 files. Exit 1; six failed and 18 passed, matching plan.md:107-116.",
+    "Historical repaired Red replay uses tests from efdb0314 and the phase-base wrapper without MP3 files. Exit 1; 17 failed and 74 passed, matching red-p2.log:50-62.",
+    "Neither historical replay reports a syntax or import error. Green's fixture-block explanation matches the original fake and the repaired fake.",
+    "Independent live render: the existing pinned earshot binary runs through the wrapper with a temporary SOUNDS_ROOT. Exit 0; seven entries produce exactly 14 files.",
+    "The audit does not run sound-setup.sh because it replaces the shared venv. The live render uses the existing pinned installation.",
+    "ffprobe identifies all committed Ogg files as Vorbis and all committed MP3 files as MP3. Every stream has two channels at 48000 Hz.",
+    "ffmpeg -v error -xerror decodes every committed audio file to nonempty PCM with exit 0.",
+    "Committed MP3 sizes in set order: tap 2016, right 22464, wrong 7488, star 8640, pop 4320, whoosh 5184, level-end 21024 bytes.",
+    "All 14 README byte values equal file sizes. All listed durations equal ffprobe durations within 0.000501 seconds.",
+    "MP3 minus Ogg duration differences range from 0.025583 to 0.044583 seconds. Every pair satisfies the independent 0.060-second tolerance.",
+    "Format totals equal the plan: Ogg 90468 bytes; MP3 71136 bytes. Both remain below the later 100000-byte budget.",
+    "The fresh Ogg render changes only serial and CRC fields. Clearing those fields makes each fresh file byte-identical to its committed counterpart.",
+    "Fresh and committed Ogg files decode to identical PCM. right.ogg and level-end.ogg each have four pages and 32 changed bytes; the others have three pages and 24 changed bytes.",
+    "Re-encoding every committed Ogg with the exact AC2 argv produces byte-identical committed MP3 files. Fresh wrapper MP3 files also match those bytes.",
+    "The host reports ffmpeg version 8.0.1-3ubuntu2, matching sounds/README.md:6. Reproduction is proven on this host, not across arbitrary dependency versions.",
+    "The committed Ogg bytes and chibi.json are unchanged across the audited range. Green's restore-and-re-encode procedure preserves a reproducible committed MP3 state.",
+    "TD-41 already records unpinned transitive dependencies and explicitly states that byte-level reproducibility is not required. Serial-number variation needs an accurate plan note, not new implementation scope.",
+    "Project gate: exit 0; 214 files passed; 3267 tests passed; duration 76.99 seconds. This confirms plan.md:149-150.",
+    "Prettier passes on the wrapper, README, three targeted test files, and the plan. generate.mjs --check reports four current files. The structural doctor reports no errors.",
+    "A3: the count regex captures an integer followed by the label sounds ->. Other assertions use exact log arrays and file counts, not bare-digit matching.",
+    "A5: current targeted and project test exits match the plan's pass claims. F3 concerns an inaccurate byte-change claim, not a false test-pass claim.",
+    "The strategy retains inherited errors about -o and 14 files for two fake entries. The repaired fixtures follow AC2, and plan.md:117-119 explicitly corrects the fake count to four.",
+    "No production TypeScript export, game caller, package dependency, or runtime API changes in this phase. The changed contract is the CLI output and ffmpeg invocation.",
+    "build-graph exists on PATH, but graph.db is absent and config.json sets graph_mode to not_enabled. The tool supports TypeScript, not this changed MJS script. Read-only reference searches establish the CLI dependency scope.",
+    "Generated status changes only this track's closed count from 2/11 to 4/11, matching the T3 and T4 markers. No orchestration script or registry implementation changes.",
+    "git cat-file cannot resolve the Red log's mistyped base object. This audit uses the supplied valid immutable SHA.",
+    "Existing unrelated untracked files remain untouched. Existing worktrees and non-master branches belong to other work. The audit creates no worktree, branch, or commit.",
+    "Final provenance check: HEAD remains 6804d082dae31b1532b9251dddc974d089fd4895. git diff --exit-code confirms no implementation, audio, test, or track-plan change. Both result artifacts validate."
+  ],
+  "commands": [
+    "git rev-parse HEAD; git status --short",
+    "git diff --stat 16b398b595354f5da275268f1b32c8e864b9312a..6804d082dae31b1532b9251dddc974d089fd4895",
+    "git log --format='%h %s' 16b398b5..6804d082",
+    "git diff 16b398b5..6804d082 -- scripts/sound-set.mjs tests/sound-set.test.ts tests/sound-set-mp3.test.ts tests/sound-set.adversarial.test.ts sounds/README.md measure/tracks/audio_game_integration_20261014/plan.md measure/generated/status.md",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sound-set.test.ts tests/sound-set-mp3.test.ts tests/sound-set.adversarial.test.ts' => exit 0; 91 passed",
+    "Wrapped Python boundary probes with temporary SOUNDS_ROOT: directory binary, non-executable file, unresolved default, PATH directory shadow, valid PATH, basename override, and MP3 target directory",
+    "Wrapped Python native Vitest mutations on disposable copies: control 91 passed; missing MP3 failed; wrong bitrate failed; removed PATH lookup 91 passed; delayed MP3 preparation 91 passed",
+    "Wrapped Python historical native Vitest replays: initial Red exit 1 with 6 failed/18 passed; repaired Red exit 1 with 17 failed/74 passed",
+    "Wrapped Python live-render and media audit: temporary SOUNDS_ROOT; exact wrapper render; ffprobe on 14 files; ffmpeg PCM decode; Ogg page normalization; exact AC2 re-encode; all assertions passed",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts' => exit 0; 214 files, 3267 passed",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/prettier --check scripts/sound-set.mjs sounds/README.md tests/sound-set.test.ts tests/sound-set-mp3.test.ts tests/sound-set.adversarial.test.ts measure/tracks/audio_game_integration_20261014/plan.md && node measure/tools/generate.mjs --check && ./measure/doctor.sh --structural-only' => exit 0",
+    "git diff --exit-code 16b398b595354f5da275268f1b32c8e864b9312a HEAD -- sounds/sets/chibi.json 'sounds/chibi/*.ogg' => exit 0",
+    "git diff --exit-code HEAD -- scripts/sound-set.mjs sounds tests/sound-set.test.ts tests/sound-set-mp3.test.ts tests/sound-set.adversarial.test.ts measure/tracks/audio_game_integration_20261014 => exit 0",
+    "git cat-file -t 16b398b595354f5da754268f1b32c8e864b9312a => exit 128; object unavailable",
+    "command -v build-graph; ls graph.db => tool exists; database absent",
+    "git worktree list; git branch -a"
+  ],
+  "changed_files": [
+    "measure/runs/audio_game_integration_20261014/review-a-6804d08.json",
+    "measure/runs/audio_game_integration_20261014/review-a-6804d08.log"
+  ],
+  "test_strategy_violations": [
+    "F1: test-strategy.md:156-160 requires zero renders when ffmpeg lookup fails. Three independent fixtures render an Ogg before failure.",
+    "F2: the native suites accept removed PATH lookup and delayed MP3 preparation, despite AC2's lookup and preparation requirements."
+  ],
+  "live_contract_violations": [
+    "F1: invalid binary selection emits the nonzero-child failure line after rendering, instead of the missing-binary line before rendering."
+  ],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "retry_implementation",
+  "confidence": "high",
+  "route": "openai/gpt-6.1-sol#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 3,
+      "evidence": "The wrapped boundary probes reproduce three fail-fast violations at scripts/sound-set.mjs:75-92; all 14 committed audio files decode correctly."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 3,
+      "evidence": "Missing-MP3 and wrong-bitrate fixtures fail, but removed PATH lookup and delayed MP3 preparation each pass all 91 native tests."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The phase diff changes only its planned CLI, fixtures, files, and records, apart from the unrelated orchestrator commit identified in the brief."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "Wrapped native gates reproduce 91 targeted passes and 3267 project passes; independent decode, re-encode, historical Red, and boundary probes support the findings."
+    }
+  ]
+}

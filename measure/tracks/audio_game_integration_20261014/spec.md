@@ -94,7 +94,11 @@ this command, with the values substituted:
 <ffmpeg> -nostdin -hide_banner -loglevel error -y -i <in.ogg> -map_metadata -1 -c:a libmp3lame -b:a 96k -ar 48000 -ac 2 -write_xing 0 -id3v2_version 0 -write_id3v1 0 -fflags +bitexact -flags:a +bitexact <out.mp3>
 ```
 
-`FFMPEG_BIN` sets the binary, and `ffmpeg` on `PATH` is the default. A successful MP3 call prints
+`FFMPEG_BIN` sets the binary, and `ffmpeg` on `PATH` is the default. The wrapper applies three
+lookup rules. An empty `FFMPEG_BIN` counts as unset, so the `PATH` lookup runs. Only absolute `PATH`
+entries are searched, so the working directory never supplies ffmpeg. Only a regular executable file
+qualifies. `EARSHOT_BIN` sets the earshot path; an empty value or a directory fails the earshot check
+before target preparation. A successful MP3 call prints
 `sound-set: <name>.mp3 <- <design>` after the Ogg line. The final line stays
 `sound-set: <n> sounds -> sounds/<set>`. The check order per entry is: prepare the two targets,
 render the Ogg, render the MP3. A failure stops the run, and no later entry starts.
