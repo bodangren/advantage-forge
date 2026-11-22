@@ -489,7 +489,7 @@ Files this track touches:
 - Late finding F1: tech-debt (TD-44; no current host rewires before unlock, so no wrong current result; PM decision 2026-11-22)
 - Late finding F2: tech-debt (TD-44; no host reuses a disposed bus, so no wrong current result; PM decision 2026-11-22)
 - Late finding F3: tech-debt (TD-44; guard added in 1b7312f4; no host passes inherited names; PM decision 2026-11-22)
-- [~] T6j Red: old-browser and inherited-remap pins, unpolyfilled built-in scan
+- [x] T6j Red (b913e55d): old-browser and inherited-remap pins, unpolyfilled built-in scan
   - Old-browser pin: already in 0750febc. `withoutNativeHasOwn` deletes `Object.hasOwn`
     for the case and restores it in `finally` via the saved descriptor
     (`tests/apk3d/audio-files.adversarial-r3.test.ts:27-35`).
@@ -557,7 +557,34 @@ Files this track touches:
     `Object.groupBy`, `Map.groupBy`, `Promise.withResolvers`, `Array.fromAsync`,
     `.intersection(`, `.difference(`, `.symmetricDifference(`, `.isSubsetOf(`,
     `.isSupersetOf(`, `.isDisjointFrom(`.
-- [ ] T6k Green: Object.prototype.hasOwnProperty.call at every event-map read
+  - Red re-run at Green start 2026-11-22: the seven committed files through the heavy runner
+    exit 1 with 3 failed, 57 passed, and 2 skipped (62). The two old-browser cases fail with
+    `TypeError: Object.hasOwn is not a function`; the inherited-remap case installs its stale
+    buffer. The uncommitted scan test is not part of this gate. `node_modules/.bin/prettier
+    --check` exits 0 on `tests/apk3d/audio-files.adversarial-r3.test.ts`.
+  - Green verification 2026-11-22: after fix 0cc7b5c4 the seven-file command exits 0 with 60
+    passed and 2 skipped (62). The two old-browser cases and the inherited-remap case pass.
+- [x] T6k Green (0cc7b5c4): Replace both `Object.hasOwn` calls with one local `hasOwn` helper in
+      `src/apk3d/audio/bus.ts` that calls `Object.prototype.hasOwnProperty.call`. Use the helper
+      at every event-map read: `requestFile`, the mapping comparison in `useSoundFiles`,
+      `isCurrent`, and `chibiPreload`. Keep public shapes, equal-map behavior, the failed set,
+      and the unlock pulse try/catch.
+  - F1 (adversarial r4 F1, Review B r5 F1): the helper runs on the older admitted browsers, so
+    Chibi wiring and direct preload no longer throw when the native static method is absent.
+  - F2 (adversarial r4 F2, Review A r5 F1): a key that loses its own entry counts as changed in
+    `useSoundFiles`, and `isCurrent` rejects a name the current map does not own. A pending load
+    under an own-to-inherited remap now installs nothing and starts no follow-up fetch.
+  - Scan hits outside `src/apk3d/audio/` stay out of scope (49 hits in `src/games/**`,
+    `src/host/`, and `src/storytime/`); this task changes no file there.
+  - Green evidence 2026-11-22: implementation commit
+    `0cc7b5c493d488deec2f7e4341c94ef78d48b46a` changes only `src/apk3d/audio/bus.ts` and
+    `src/apk3d/audio/chibi.ts`. Targeted command through the heavy runner
+    `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-files.test.ts tests/apk3d/audio-files.adversarial.test.ts tests/apk3d/audio-files.adversarial-r2.test.ts tests/apk3d/audio-wiring.test.ts tests/apk3d/audio-wiring.adversarial.test.ts tests/apk3d/imports.test.ts tests/apk3d/audio-files.adversarial-r3.test.ts'`
+    exits 0 with 7 files and 60 passed, 2 skipped (62). `grep -rn 'Object.hasOwn'
+    src/apk3d/audio/` finds no match. `node_modules/.bin/prettier --check` on both changed
+    files exits 0. `tsc --noEmit` through the heavy runner exits 2 with 51 baseline errors,
+    none in either changed file. `git diff --check` exits 0.
+  - dispositions: F1=FIX; F2=FIX
 
 ## Phase 4: Preload budget
 
