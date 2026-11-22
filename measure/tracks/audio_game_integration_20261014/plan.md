@@ -401,7 +401,7 @@ Files this track touches:
       with "completed track has an unchecked task"; the marker check is not vacuous. A5 re-run:
       the three original files still pass 21 of 21.
 
-- [~] T6e Red: adversarial F3, wiring parser ignores comments and strings (097231b2). New shared
+- [x] T6e Red: adversarial F3, wiring parser ignores comments and strings (097231b2). New shared
       helper `tests/apk3d/audio-wiring-parser.ts` exports `stripComments` and `playedEventsOf`;
       case 6 of `tests/apk3d/audio-wiring.test.ts` and the adversarial file both use it, so the
       two files cannot drift. The extraction strips comments, then matches `audio.play(` only
@@ -415,6 +415,7 @@ Files this track touches:
       `["ghost","specter","tap","wisp"]` where `["tap"]` is required, so the fixture fails
       without the fix. `prettier --check` exits 0 on all three test files. No production file
       changed.
+  - Green verified at 9d03b6bd: 5 files, 45 of 45 tests.
 
 - [x] T6f Green: adversarial F1/F2 (9d03b6bd). Commit
       `9d03b6bdeeaf5f7ac353bc8754d206b39a586c86` changes only `src/apk3d/audio/bus.ts`; no test
