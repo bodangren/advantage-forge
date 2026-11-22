@@ -326,6 +326,26 @@ Workbooks does not wait for it.
     1024x1200; cutout-check flags only the known reach tiptoe (lily row 1176, foot 1184).
     The three sprout vitest files pass 15/15. typecheck-asset reports 0 errors. The preset
     pin is unchanged. Log green-p5-adult-base.log.
+  - Mom face r2 8749d9fe (2026-11-22, Faces r2 Step 1): `assets/sprout-mom.ts` only,
+    matched to `docs/sprout-mockups/mom.jpg`. The hairline is flowing geometry: three
+    overlapping curved strands sweep from the side part across the forehead to the
+    right temple (staggered ends, grooves between strands, sideways tips, nothing
+    hanging vertical). Paint-only face through the existing `paintSkin` hook (arm cut
+    kept, then face): dark round iris with one big catchlight, shorter thinner brow
+    over an exact-footprint hard skin cover, a gentle open smile with one rounded
+    white teeth band and tongue, soft nose shade, freckles (their paint lines were
+    missing until this round; now wired). One finding: a red chin dot seen at 5x zoom
+    persists with mouth, tongue and teeth paint all off, so it predates this pass (a
+    shared-smile vertex artifact, invisible at sheet scale); the open smile is kept.
+    `./forge all sprout-mom` exits 0 with no warning lines (34,846 textured tris,
+    0.544 x 1.552 x 0.37 m, GLB 4274244). `./forge check sprout-mom` output
+    byte-identical to the pre-pass baseline. Mom's 25 cut-outs were re-rendered at
+    1760x1856; cutout-check flags only the four known reach tiptoes (mom row 1833,
+    foot 1840). The three sprout vitest files pass 15/15. typecheck-asset reports 0
+    errors. The shared kind is untouched: sprout-sam and teacher GLBs keep
+    byte-identical hashes (3b6c6796, ec71c3d8); the preset pin is unchanged. The
+    sleeve fix ef5be6c4 and the waist/hem fixes a73bc9a7 and 99fe921a stand. Log
+    green-p5-adult-base.log.
   - Tom face r2 e8625666 (2026-11-22, Faces r2 Step 1): `assets/sprout-tom.ts` only,
     matched to `docs/sprout-mockups/tom.jpg`. The hairline is geometry, not paint:
     five separate tapered locks swept from his-right part to his-left temple (0.008

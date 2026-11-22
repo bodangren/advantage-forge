@@ -899,3 +899,58 @@ with no slab or halo, one white teeth band with no fang corners. The maker does 
 rate its own work: an independent judge still owes the 7.5-bar face rating. Next
 runs repeat Step 1 for Mom, Dad, Grandma, Grandpa, and the adult base.
 END_MEASURE_AGENT_RESULT
+
+MEASURE_AGENT_RESULT
+phase: Phase 5: The rest of the inventory (after the look check)
+task: Faces r2 and the Muse likeness test (Daniel 2026-11-22), Step 1, character Mom
+role: Green (maker)
+role_base_sha: 82a53be2454664b7fb66db3ea594a102d7582af9
+phase_base_sha: 82a53be2454664b7fb66db3ea594a102d7582af9
+green_head: 8749d9fef4652e22367b1d80676e5de0fd0caec0
+
+summary: Mom face detail r2, matched to docs/sprout-mockups/mom.jpg. The hairline is
+flowing geometry per the orchestrator's Tom note (no vertical drips): three
+overlapping curved strands sweep from the side part across the forehead to the right
+temple with staggered ends, grooves between strands, and sideways tips. Paint-only
+face through the existing paintSkin hook (the ef5be6c4 arm cut runs first, then the
+face): dark round iris with one big catchlight, shorter thinner brow over an
+exact-footprint hard skin cover, a gentle open smile with one rounded white teeth
+band and tongue (the reference shows teeth; the band sits fully inside the mouth per
+the Tom lesson), soft nose shade, freckles. One finding: a red chin dot seen at 5x
+zoom persists with mouth, tongue and teeth paint all off, so it predates this pass
+(a shared-smile vertex artifact, invisible at sheet scale); the open smile is kept.
+Three fixed differences vs mom.jpg: (1) smooth helmet fringe to three flowing
+strands with a side part; (2) amber iris to dark iris with big catchlight, lashes
+kept for her; (3) closed thin smile to a gentle open smile with one teeth band.
+Brows thinned, nose shaded with freckles.
+
+gates:
+1. ./forge all sprout-mom (heavy-run.sh): exit 0, 0 warning lines, 34,846 textured
+   tris, 0.544 x 1.552 x 0.37 m, GLB 4274244 bytes.
+2. ./forge check sprout-mom (heavy-run.sh): output byte-identical to the pre-pass
+   baseline (empty diff); the new fringe and face paint move no clearance number.
+3. bench/sonnet/sprouts/cutout-gestures-cast.sh mom (heavy-run.sh): all 25 frames
+   re-rendered at 1760x1856; cutout-check on
+   out/chibi-sprouts/r1/week2-7/gestures-adult/ flags only the four known reach
+   tiptoes (dad 1834, grandma 1833, grandpa 1834, mom 1833; foot row 1840).
+4. Vitest tests/sprout-base.test.ts tests/sprout-gestures.test.ts
+   tests/sprout-gesture-offset.test.ts: 3 files pass, 15/15 tests.
+5. node scripts/typecheck-asset.mjs sprout-mom: 0 errors.
+6. Untouched-asset proof: only assets/sprout-mom.ts changed, so no other rebuilds;
+   sprout-sam GLB sha256 3b6c6796...0324c and teacher GLB sha256 ec71c3d8...b354
+   match the pre-pass hashes; the preset pin is unchanged. The sleeve fix ef5be6c4
+   and the waist/hem fixes a73bc9a7 and 99fe921a stand ( untouched code paths).
+
+new_files_for_reviewer_scope: none (tracked change is assets/sprout-mom.ts only; the
+25 re-rendered mom cut-out PNGs and out/sprout-mom/* are delivery files). No Red
+test edited. Faces r2 task stays [~]; Mom is the third of seven, one per run.
+implementation_commit: 8749d9fef4652e22367b1d80676e5de0fd0caec0
+handoff: Review roles should audit assets/sprout-mom.ts at 8749d9fe (the three
+fringe strands and momFace paint) against docs/sprout-mockups/mom.jpg and the
+textured out/sprout-mom/render.png sheet: flowing side-part strands with grooves,
+dark iris with big catchlight, short thin brow with no slab or halo, one white
+teeth band with no fang corners, freckles. Note the pre-existing chin dot visible
+only past 5x zoom. The maker does not rate its own work: an independent judge still
+owes the 7.5-bar face rating. Next runs repeat Step 1 for Dad, Grandma, Grandpa,
+and the adult base.
+END_MEASURE_AGENT_RESULT
