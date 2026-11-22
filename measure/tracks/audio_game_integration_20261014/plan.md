@@ -147,8 +147,7 @@ Files this track touches:
     earshot 1.0.0 and `ffmpeg version 8.0.1-3ubuntu2`. The Ogg total is 90,468 bytes and the MP3
     total is 71,136 bytes.
   - Project gate 2026-11-22: `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts'`
-    exited 0 with 214 files and 3267 of 3267 tests. `node measure/tools/generate.mjs --check` exited
-    0. `./measure/doctor.sh --structural-only` exited 0.
+    exited 0 with 214 files and 3267 of 3267 tests. `node measure/tools/generate.mjs --check` exited 0. `./measure/doctor.sh --structural-only` exited 0.
 
 ## Phase 3: File playback in the AudioBus
 
