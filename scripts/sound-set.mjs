@@ -70,6 +70,28 @@ try {
   fail(`sound-set: earshot not found at ${earshot}; run scripts/sound-setup.sh`, 1);
 }
 
+// FFMPEG_BIN names the binary. The default is ffmpeg on PATH. Check once, before the first entry.
+const ffmpegInput = process.env.FFMPEG_BIN ?? 'ffmpeg';
+function findOnPath(bin) {
+  if (bin.includes('/')) return bin;
+  for (const dir of (process.env.PATH ?? '').split(':')) {
+    const candidate = join(dir, bin);
+    try {
+      accessSync(candidate, fsConstants.X_OK);
+      return candidate;
+    } catch {
+      // Try the next PATH entry.
+    }
+  }
+  return bin;
+}
+const ffmpeg = findOnPath(ffmpegInput);
+try {
+  accessSync(ffmpeg, fsConstants.X_OK);
+} catch {
+  fail(`sound-set: ffmpeg not found at ${ffmpegInput}; install ffmpeg`, 1);
+}
+
 const outDir = resolve(ROOT, 'sounds', set);
 try {
   mkdirSync(outDir, { recursive: true });
@@ -82,20 +104,25 @@ try {
 
 for (const { name, design } of sounds) {
   const out = join(outDir, `${name}.ogg`);
-  let blocked = false;
-  try {
-    const target = lstatSync(out, { throwIfNoEntry: false });
-    if (target?.isDirectory()) {
-      blocked = true;
-    } else {
-      // Remove any earlier file so a stale target cannot satisfy the post-render check.
-      // This call never uses recursive mode, so a directory and its contents stay intact.
-      rmSync(out, { force: true });
+  const mp3 = join(outDir, `${name}.mp3`);
+  // Prepare both targets. A stale file must not satisfy either post-render check.
+  let blockedPath;
+  for (const target of [out, mp3]) {
+    try {
+      const existing = lstatSync(target, { throwIfNoEntry: false });
+      if (existing?.isDirectory()) {
+        blockedPath = target;
+      } else {
+        // This call never uses recursive mode, so a directory and its contents stay intact.
+        rmSync(target, { force: true });
+      }
+    } catch {
+      blockedPath = target;
     }
-  } catch {
-    blocked = true;
+    if (blockedPath) break;
   }
-  if (blocked) fail(`sound-set: cannot prepare output for ${name} (${design}): ${out}`, 1);
+  if (blockedPath) fail(`sound-set: cannot prepare output for ${name} (${design}): ${blockedPath}`, 1);
+
   const child = spawnSync(earshot, ['make', '--sound', design, '-o', out], { encoding: 'utf8' });
   if (child.status !== 0) {
     fail(`sound-set: earshot failed for ${name} (${design}) with exit ${child.status}`, 1);
@@ -106,5 +133,47 @@ for (const { name, design } of sounds) {
   if (child.stdout) process.stdout.write(child.stdout);
   if (child.stderr) process.stdout.write(child.stderr);
   process.stdout.write(`sound-set: ${name}.ogg <- ${design}\n`);
+
+  const mp3Child = spawnSync(
+    ffmpeg,
+    [
+      '-nostdin',
+      '-hide_banner',
+      '-loglevel',
+      'error',
+      '-y',
+      '-i',
+      out,
+      '-map_metadata',
+      '-1',
+      '-c:a',
+      'libmp3lame',
+      '-b:a',
+      '96k',
+      '-ar',
+      '48000',
+      '-ac',
+      '2',
+      '-write_xing',
+      '0',
+      '-id3v2_version',
+      '0',
+      '-write_id3v1',
+      '0',
+      '-fflags',
+      '+bitexact',
+      '-flags:a',
+      '+bitexact',
+      mp3,
+    ],
+    { encoding: 'utf8' },
+  );
+  if (mp3Child.status !== 0) {
+    fail(`sound-set: ffmpeg failed for ${name} (${design}) with exit ${mp3Child.status}`, 1);
+  }
+  if (!existsSync(mp3)) {
+    fail(`sound-set: ffmpeg wrote no file for ${name} (${design}): ${mp3}`, 1);
+  }
+  process.stdout.write(`sound-set: ${name}.mp3 <- ${design}\n`);
 }
 process.stdout.write(`sound-set: ${sounds.length} sounds -> sounds/${set}\n`);
