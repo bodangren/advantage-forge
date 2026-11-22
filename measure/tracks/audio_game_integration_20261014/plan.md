@@ -325,6 +325,29 @@ Files this track touches:
     says no formatting track owns that work, so this task adds no unrelated reformatting. The
     committed Red tests were not edited.
 
+- [~] T6c Red: Review A F1/F2 test fixes (e481628d)
+  - F1: `tests/apk3d/audio-files.test.ts` counts game sounds as buffer sources whose buffer is
+    a decoded file (`gameSourceStarts`); the harness records every `decodeAudioData` buffer, so
+    the unlock pulse and the synth recipes never count. Cases 5, 8, and 10 keep their meaning
+    through the new counter. New case 11 asserts `unlock()` starts exactly one silent buffer
+    source and resumes the context.
+  - F2: `tests/apk3d/audio-wiring.test.ts` gains a sixth case. For each of the 29 hosts it parses
+    the `wireChibiSounds` event list and requires every event the host plays: the literals of its
+    `audio.play` calls (ternary branch names only, never the compared value) and its SFX values.
+    Sprite animation `.play` calls never count. The failure names the host path and the names.
+  - Red evidence: `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-files.test.ts tests/apk3d/audio-wiring.test.ts'`
+  - Red done-when: the command exits 1, failing only on the new unlock-pulse case and the new
+    per-host event-list case; every earlier case still passes. `prettier --check` on the two
+    test files exits 0.
+  - Red result 2026-11-22: test commit e481628da5b2effcc9353f53d79b7e342c23a20c. The Red command
+    exited 1 with 2 failed and 15 passed (17). Case 11 fails on `expected 0 to be 1` for the pulse
+    source: no silent source exists at HEAD. Case 6 fails naming 7 hosts: dragon-flight and
+    dragon-rider miss `correct, wrong`; griffin-riders-escape and gryphon-patrol miss `correct`;
+    monster-encounters, rpg-battle, and rune-match miss `roar, spawn`. `prettier --check` on both
+    test files exits 0.
+- [ ] T6d Green: restore the unlock pulse, complete the host event lists, record the audio path
+      and soundBase contract in `docs/apk-port.md` (Review C F1)
+
 ## Phase 4: Preload budget
 
 - [ ] T7 Measure: Add `scripts/audio-budget.mjs`. It serves the demo with vite, opens one game in

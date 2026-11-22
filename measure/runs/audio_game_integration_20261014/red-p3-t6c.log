@@ -1,0 +1,29 @@
+MEASURE_AGENT_RESULT
+track: audio_game_integration_20261014
+phase: Phase 3: File playback in the AudioBus
+role: measure-mid-red
+baseline_sha: af4e57aff730b1cf8ee9c716802920699f1eaaac
+role_base_sha: ac6946a5e642464c18c6252e4e2e15ecf9fd55bb
+head_sha: e481628da5b2effcc9353f53d79b7e342c23a20c
+commits:
+  - e481628da5b2effcc9353f53d79b7e342c23a20c test(audio_game_integration): T6c Review A F1/F2 cases
+tests:
+  - tests/apk3d/audio-files.test.ts
+  - tests/apk3d/audio-wiring.test.ts
+files:
+  - tests/apk3d/audio-files.test.ts
+  - tests/apk3d/audio-wiring.test.ts
+  - measure/tracks/audio_game_integration_20261014/plan.md
+red_command: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-files.test.ts tests/apk3d/audio-wiring.test.ts'
+red_exit: 1
+red_result: 2 failed, 15 passed (17); failures only in the new unlock-pulse case and the new per-host event-list case
+remaining_failures:
+  - tests/apk3d/audio-files.test.ts: new case 'starts one silent buffer source and resumes the context on unlock' fails with expected 0 to be 1 (no silent pulse source at HEAD)
+  - tests/apk3d/audio-wiring.test.ts: new case 'passes every event the host plays in its wireChibiSounds list' fails naming 7 hosts (dragon-flight, dragon-rider, griffin-riders-escape, gryphon-patrol, monster-encounters, rpg-battle, rune-match) and their missing events
+prettier: node_modules/.bin/prettier --check tests/apk3d/audio-files.test.ts tests/apk3d/audio-wiring.test.ts exits 0
+scope_notes:
+  - Dirty paths at start were unrelated user work (sprout face files, bench outputs, other tracks' run logs); left untouched.
+  - Staged and committed explicit paths only; no production files edited.
+handoff:
+  - T6d Green restores the unlock pulse in src/apk3d/audio/bus.ts, completes the 7 host event lists, and records the audio path and soundBase contract in docs/apk-port.md (Review C F1). Green model: opencode-go/hy4-flash-free#high.
+END_MEASURE_AGENT_RESULT
