@@ -1,0 +1,65 @@
+MEASURE_AGENT_RESULT
+track: asset_chibi_sprouts_r1_20261022
+phase: Faces r2 Step 1 judge fix (Green)
+character: grandpa
+phase_base_sha: e43ccce0
+role_base_sha: c5b06ab7944e2d58cfffda1c3b171da0928fb21f
+judge_report: measure/runs/asset_chibi_sprouts_r1_20261022/ux-browser-review-faces-grandpa-c5b06ab.json (7.0/10, FAIL; phase_base e43ccce0 is an ancestor of HEAD, verified)
+implementation_commit: 8b35d7c18e4937b23cd00a015331e6036c6585aa
+files_changed: assets/sprout-grandpa.ts only (111 insertions, 47 deletions).
+  assets/parts/humanoid-kind.ts untouched. Committed Red tests untouched.
+
+faults_fixed (judge items 1-3 plus nose/smile/brows):
+  1. Back-of-head white band: it was the nape hair bar (smooth chain across the
+     nape at mouth/jaw height), not the mustache (all mustache cords sit at
+     z 0.12..0.16, front only). The bar is deleted; two swept strand tufts per
+     side now cross the upper nape at hair height with a bald centre. The
+     mustache wings additionally gain a hard front clip (z above the face
+     plane) so no silk can ever read at the back.
+  2. Mustache volume: thicker cords, wider sweep (tips to x 0.125), a centre
+     bridge knot under the nose, smaller fillets for strand grooves.
+  3. Eyes and smile: almond eyes (Dad r3 recipe, sized for the frames), smaller
+     dark iris and pupil, lowered thin lid line, one small catchlight, blush
+     re-laid below the eye box. Nose is a larger pink bulb (#da9a86) with soft
+     shading. Smile gains a muted-rose lower lip framing the open mouth. Brow
+     tufts thicker, grown up and out. In-round fix: the unclipped lower-lip box
+     grazed the back-neck skin (red dots at the nape); the lip stencil is now
+     front-clipped.
+
+gates (all pass):
+  - ./forge all sprout-grandpa exits 0, no warning lines: 38,890 textured tris,
+    0.544 x 1.548 x 0.328 m (depth down from 0.355 with the band gone).
+  - ./forge check sprout-grandpa output byte-identical to the role_base_sha
+    baseline (diff empty; exit 1 on the three known waived clips touch-nose,
+    count-fingers, eat; listen closest 0.5 cm; ground ok).
+  - 25 grandpa cut-outs re-rendered at 1760x1856 via
+    bench/sonnet/sprouts/cutout-gestures-cast.sh grandpa; node
+    scripts/cutout-check.mjs on gestures-adult/ flags only the four known reach
+    tiptoes (dad 1834, grandma 1833, grandpa 1834, mom 1833; foot row 1840).
+  - Sprout vitest files pass 15/15. typecheck-asset reports 0 errors.
+  - sprout-sam and teacher GLBs byte-identical: 3b6c6796 / ec71c3d8 (full
+    sha256 verified before and after).
+  - Sprite check: out/sprout-grandpa/sprites/preview.png shows brows, glasses,
+    white mustache, and a dark-red open smile with pink below it at 128 px.
+  - Freshness: textured ./forge render ran after the last source edit;
+    render.png (19:58:57) and the GLB (19:58:56) are newer than
+    assets/sprout-grandpa.ts (19:37:26); all 25 cut-out PNGs are newer than
+    the source. Fresh render.png shows (front): almond brown eyes with one
+    catchlight and lid lines behind the round brown glasses, thicker white
+    brows, a muted pink nose, a full bushy white mustache with a centre bridge
+    and flicked strand tips, and an open smile with a teeth band, tongue, and
+    lower lip below the mustache; (back): bald crown, separated temple strands,
+    small swept nape tufts, no white band.
+
+tasks_flipped: none ([~] Task: Faces r2 and the Muse likeness test stays open;
+  this step adds the "Grandpa face r3 8b35d7c1" line after the Grandpa r2 line;
+  no [b]/deferred items).
+new_files_for_reviewers: none (no new files; out/ artifacts regenerated in
+  place: out/sprout-grandpa/render.png, sprout-grandpa.glb, sprites/,
+  out/chibi-sprouts/r1/week2-7/gestures-adult/grandpa/*.png).
+handoff: ready for the independent look judge re-rating (Step 4 sheet) and the
+  Step 2 element-sheet copy of out/sprout-grandpa/render.png. This round staged
+  and committed only assets/sprout-grandpa.ts and the plan; the tree still
+  holds another session's uncommitted edit in assets/sprout-dad.ts.
+Final HEAD after plan-evidence commit follows in the report.
+END_MEASURE_AGENT_RESULT

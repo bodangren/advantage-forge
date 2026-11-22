@@ -498,6 +498,31 @@ Workbooks does not wait for it.
     untouched: sprout-sam and teacher GLBs keep byte-identical hashes (3b6c6796,
     ec71c3d8); the preset pin is unchanged. The listen fix 10632c67 stands (fresh
     listen.png waist clean). Log green-faces-grandpa.log.
+  - Grandpa face r3 8b35d7c1 (2026-11-22, judge fix): `assets/sprout-grandpa.ts`
+    only. The judge rated r2 7.0: a white nape band read as mustache show-through
+    at the back, big round eyes, a thin-strip mustache, a small dark nose, and a
+    smile that collapsed at 128 px. The nape bar is replaced with two swept strand
+    tufts per side at upper-nape height (bald centre, nothing at mouth height),
+    and the mustache wings gain a hard front clip (z above the face plane) so no
+    silk can ever read at the back. Eyes are almond now (the Dad r3 recipe, sized
+    for the frames): an exact hard skin box cuts an almond opening with fresh
+    white, a smaller dark iris, a dark pupil, one small catchlight, a thin lowered
+    upper lid line, and the blush re-laid below. The nose is a larger pink bulb
+    (#da9a86) with soft shading. The smile gains a muted-rose lower lip framing
+    the open mouth (teeth band, wide tongue); the lip box is front-clipped after
+    the unclipped box grazed the back-neck skin (red dots at the nape). The
+    mustache wings are thicker cords with a centre bridge knot and flicked tips;
+    the brow tufts are thicker, grown up and out over free forehead. Paint only
+    for eyes, nose, and smile: no head clearance moves. `./forge all
+    sprout-grandpa` exits 0 with no warning lines (38,890 textured tris,
+    0.544 x 1.548 x 0.328 m, depth down from 0.355 with the band gone; GLB
+    rebuilt). `./forge check sprout-grandpa` output byte-identical to the
+    role_base_sha baseline (exit 1 on the three known waived clips). Grandpa's 25
+    cut-outs were re-rendered at 1760x1856; cutout-check flags only the four known
+    reach tiptoes (grandpa row 1834, foot 1840). The three sprout vitest files
+    pass 15/15. typecheck-asset reports 0 errors. The shared kind is untouched:
+    sprout-sam and teacher GLBs keep byte-identical hashes (3b6c6796, ec71c3d8);
+    the preset pin is unchanged. Log green-faces-grandpa-r3.log.
   - [x] Mom (young mother, medium height, due 11-21). `assets/sprout-mom.ts` ac97d422
     (ADULT proportions; long wavy medium-brown hair past the shoulders, cream cable-knit
     sweater with collar/cuffs/ribbed hem, blue jeans, brown flats, pearl studs; look target
