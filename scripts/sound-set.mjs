@@ -14,6 +14,7 @@ import {
   mkdirSync,
   readFileSync,
   rmSync,
+  statSync,
 } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -70,27 +71,30 @@ try {
   fail(`sound-set: earshot not found at ${earshot}; run scripts/sound-setup.sh`, 1);
 }
 
-// FFMPEG_BIN names the binary. The default is ffmpeg on PATH. Check once, before the first entry.
-const ffmpegInput = process.env.FFMPEG_BIN ?? 'ffmpeg';
-function findOnPath(bin) {
-  if (bin.includes('/')) return bin;
-  for (const dir of (process.env.PATH ?? '').split(':')) {
-    const candidate = join(dir, bin);
-    try {
-      accessSync(candidate, fsConstants.X_OK);
-      return candidate;
-    } catch {
-      // Try the next PATH entry.
-    }
+// FFMPEG_BIN is an absolute path or a basename searched on PATH. An empty value is unset.
+// Only a regular executable file qualifies. The working directory is never searched.
+// The check runs once, before the first entry and before any target preparation.
+const ffmpegInput = process.env.FFMPEG_BIN || 'ffmpeg';
+function isExecutableFile(path) {
+  try {
+    if (!statSync(path).isFile()) return false;
+    accessSync(path, fsConstants.X_OK);
+    return true;
+  } catch {
+    return false;
   }
-  return bin;
 }
-const ffmpeg = findOnPath(ffmpegInput);
-try {
-  accessSync(ffmpeg, fsConstants.X_OK);
-} catch {
-  fail(`sound-set: ffmpeg not found at ${ffmpegInput}; install ffmpeg`, 1);
+function findFfmpeg(bin) {
+  if (bin.includes('/')) return isExecutableFile(bin) ? bin : null;
+  for (const dir of (process.env.PATH ?? '').split(':')) {
+    if (dir === '') continue;
+    const candidate = join(dir, bin);
+    if (isExecutableFile(candidate)) return candidate;
+  }
+  return null;
 }
+const ffmpeg = findFfmpeg(ffmpegInput);
+if (ffmpeg === null) fail(`sound-set: ffmpeg not found at ${ffmpegInput}; install ffmpeg`, 1);
 
 const outDir = resolve(ROOT, 'sounds', set);
 try {
@@ -105,23 +109,27 @@ try {
 for (const { name, design } of sounds) {
   const out = join(outDir, `${name}.ogg`);
   const mp3 = join(outDir, `${name}.mp3`);
-  // Prepare both targets. A stale file must not satisfy either post-render check.
+  // Check both targets before removing either. A blocked target leaves the other file in place
+  // and stops the run before earshot starts. A stale file must not satisfy either post-render check.
+  const targets = [out, mp3];
   let blockedPath;
-  for (const target of [out, mp3]) {
+  for (const target of targets) {
     try {
-      const existing = lstatSync(target, { throwIfNoEntry: false });
-      if (existing?.isDirectory()) {
-        blockedPath = target;
-      } else {
-        // This call never uses recursive mode, so a directory and its contents stay intact.
-        rmSync(target, { force: true });
-      }
+      if (lstatSync(target, { throwIfNoEntry: false })?.isDirectory()) blockedPath = target;
     } catch {
       blockedPath = target;
     }
     if (blockedPath) break;
   }
   if (blockedPath) fail(`sound-set: cannot prepare output for ${name} (${design}): ${blockedPath}`, 1);
+  for (const target of targets) {
+    try {
+      // This call never uses recursive mode, so a directory and its contents stay intact.
+      rmSync(target, { force: true });
+    } catch {
+      fail(`sound-set: cannot prepare output for ${name} (${design}): ${target}`, 1);
+    }
+  }
 
   const child = spawnSync(earshot, ['make', '--sound', design, '-o', out], { encoding: 'utf8' });
   if (child.status !== 0) {
