@@ -609,7 +609,7 @@ Files this track touches:
 
 ## Phase 4: Preload budget
 
-- [~] T7 Measure: Add `scripts/audio-budget.mjs`. It serves the demo with vite, opens one game in
+- [x] T7 Measure (5343710d): Add `scripts/audio-budget.mjs`. It serves the demo with vite, opens one game in
       headless Chromium with Playwright, and sets the slow-3G profile through CDP
       `Network.emulateNetworkConditions` (1.6 Mbit/s down, 300 ms latency). It plays to the first
       effect, reads the audio rows of `performance.getEntriesByType('resource')`, and writes
@@ -628,6 +628,28 @@ Files this track touches:
     `ENOENT: no such file or directory, open 'out/audio-budget/rune-match.json'`
     with no syntax or import error. `node_modules/.bin/prettier --check tests/audio-budget.test.ts`
     exits 0.
+  - Green evidence 2026-11-23: implementation commit
+    `5343710d6f7c84ac062342718f5767412856c626` adds only `scripts/audio-budget.mjs`. No test,
+    source, host, or audio file changed. The Green command through the heavy runner
+    `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/audio-budget.mjs --game rune-match && node node_modules/vitest/vitest.mjs run tests/audio-budget.test.ts --maxWorkers=1'`
+    exits 0 with 4 of 4 tests in each of two runs.
+    - Run 1: `{"bytes":79319,"files":6,"seconds":0.7048000000715255}`.
+    - Run 2 (closeout repeat): `{"bytes":79319,"files":6,"seconds":0.7216000000238418}`. These
+      later values are the recorded result. `out/audio-budget/rune-match.json` holds only these
+      three fields and stays untracked.
+  - Server note: the script starts `node node_modules/vite/bin/vite.js --config
+    vite.demo.config.ts --base /demo/ --port 5199 --strictPort --host 127.0.0.1` from the repo
+    root. The literal command without the config serves no `demo/public` files, so the page cannot
+    reach ready and the `/demo/audio/chibi/` rows are HTML fallbacks. The demo config with base
+    `/demo/` serves the real Ogg files at the URLs the strategy's row filter names. CDP sets
+    1.6 Mbit/s down and 300 ms latency before navigation. The script gates on `encodedBodySize`
+    and the sum of the six `demo/public/audio/chibi/` `statSync` sizes. `ss -ltnp` finds no
+    listener on port 5199 after either run. `node_modules/.bin/prettier --check
+    scripts/audio-budget.mjs` exits 0. `node measure/tools/generate.mjs --check` and
+    `./measure/doctor.sh --structural-only` exited 0 before this plan edit. After the `[x]` edit
+    both commands report `measure/generated/status.md: stale generated fact`. `measure/generated/`
+    holds uncommitted changes from another track, so this task did not regenerate it; the owner of
+    those changes regenerates the status fact.
 
 ## Phase 5: Hand-off to the PM
 
