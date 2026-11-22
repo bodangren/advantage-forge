@@ -147,18 +147,20 @@ at the track creation.
 ### AC3: The scan
 
 1. `tests/apk3d/no-unpolyfilled-builtins.test.ts` is the one scan, and it stays at that path. It
-   resolves its root from its own URL, with these two lines:
+   resolves its root from its own URL, with these lines:
 
    ```ts
    const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..');
-   const SCAN_ROOT = join(ROOT, 'src');
+   const wide = process.env.SCAN_WIDE === '1';
+   const SCAN_ROOT = wide ? join(ROOT, 'src') : join(ROOT, 'src', 'apk3d', 'audio');
    ```
 
-   The two steps go up from `tests/apk3d/` to the repository root, so the scanned folder is the
-   repository `src/`. A copy of the file elsewhere would resolve another root, so the file never
-   moves.
+   The two steps go up from `tests/apk3d/` to the repository root. During T3 and T4 the default run
+   scans `src/apk3d/audio/` only, so a session that runs the suite without the flag stays green.
+   Task T5 removes the `wide` line and the flag, and `SCAN_ROOT` becomes `join(ROOT, 'src')` without
+   a condition. A copy of the file elsewhere would resolve another root, so the file never moves.
 
-2. The scan walks every `.ts` file under `src/` and skips `*.gen.ts`.
+2. The scan walks every `.ts` file under `SCAN_ROOT` and skips `*.gen.ts`.
 3. The strip is one left-to-right pass with a state for code, a line comment, a block comment, a
    single-quoted string, a double-quoted string, template text, and a template `${...}` expression.
    A string or a comment ends at its own terminator and never at a `//` inside a string. Template
@@ -199,11 +201,13 @@ at the track creation.
    row. A scanner that still misses any of the three fails the test. The two multi-line rows that
    both scanners catch are regression pins: the fixed scanner must keep them. The last row proves
    that a comment and a string never hide a call, and that the strip does not invent a hit. The
-   source of the first two rows is audio review A round 6 F2 and audio adversarial round 5 F1.
+   controls run in both modes, because they do not read `SCAN_ROOT`. The source of the first two rows
+   is audio review A round 6 F2 and audio adversarial round 5 F1.
 
-8. The scan reports 44 hits at Red: 35 `structuredClone`, 8 array `.at(`, and 1 `findLastIndex`. It
-   reports zero at Green. `Object.hasOwn` reports no hit at either point, because task T6k
-   (`0cc7b5c4`) fixed the two audio calls in the baseline.
+8. Red runs with `SCAN_WIDE=1` and reports 44 hits: 35 `structuredClone`, 8 array `.at(`, and 1
+   `findLastIndex`. Without the flag it reports zero hits, because the audio folder holds none. Green
+   holds no flag path, and the scan over `src/` reports zero hits. `Object.hasOwn` reports no hit in
+   every mode, because task T6k (`0cc7b5c4`) fixed the two audio calls in the baseline.
 9. The scan reads `src/` only. `tests/`, `scripts/`, and `demo/` stay out of scope.
 
 ### AC4: Existing tests

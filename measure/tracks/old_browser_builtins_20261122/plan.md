@@ -23,10 +23,9 @@ Files this track touches:
 - `src/host/reader.ts` (1 `findLastIndex` call, line 197)
 - `tests/old-browser/deep-copy.test.ts` (new)
 - `tests/old-browser/index-math.test.ts` (new)
-- `tests/apk3d/no-unpolyfilled-builtins.test.ts` (the root resolve to `src/`, the one-pass strip,
-  the whole-text patterns, the named exclusions, and the control table with its witness; the audio
-  track committed the file at `1f45fcfe`; T3 edits it in place and leaves it uncommitted, T5 commits
-  it)
+- `tests/apk3d/no-unpolyfilled-builtins.test.ts` (the root resolve to `src/`, the `SCAN_WIDE` flag
+  that T3 adds and T5 removes, the one-pass strip, the whole-text patterns, the named exclusions, and
+  the control table with its witness; the audio track committed the file at `1f45fcfe`)
 - `scripts/old-browser-check.mjs` (new)
 - `out/old-browser/` (not in git)
 - `measure/tracks/old_browser_builtins_20261122/*`
@@ -83,35 +82,29 @@ HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/hea
     case. Case 3 fails and names the nine lines. No syntax or import error.
   - Record in this task: the nine lines and the 8 `.at(` count against the 1 `findLastIndex` count.
 
-- [ ] T3 Red: Widen the committed scan `tests/apk3d/no-unpolyfilled-builtins.test.ts` in place, and
-      run it there. The file stays at `tests/apk3d/` from the first edit to the T5 commit, because
-      `SCAN_ROOT` comes from the file's own URL. The changes per AC3: `ROOT` is
-      `path.resolve(dirname(fileURLToPath(import.meta.url)), '..', '..')` and `SCAN_ROOT` is
-      `join(ROOT, 'src')`; the strip is one left-to-right pass that keeps newlines and scans template
-      interpolations; the patterns run over the whole stripped text; the pattern list stays the 19
-      labels; the named exclusion rows join the file with the rot check; the control table and its
-      `stripCommentsFirst` witness join the test.
-  - Red evidence, one command, run from the repository root with the file in `tests/apk3d/`:
-    `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/no-unpolyfilled-builtins.test.ts'`
-  - Write the run output to `measure/runs/old_browser_builtins_20261122/red-scan.log` by appending
-    `> measure/runs/old_browser_builtins_20261122/red-scan.log 2>&1` to that command. The full line
-    is
-    `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/no-unpolyfilled-builtins.test.ts' > measure/runs/old_browser_builtins_20261122/red-scan.log 2>&1`.
-    Write no other file under `measure/runs/`. Nothing is copied and no test file lives under
-    `measure/runs/`.
-  - Red done-when: the run exits 1 with 44 hits: 35 `structuredClone`, 8 array `.at(`, and 1
+- [ ] T3 Red: Widen the committed scan `tests/apk3d/no-unpolyfilled-builtins.test.ts` per AC3, and
+      commit that file here with the root behind the `SCAN_WIDE` flag. The default root stays
+      `src/apk3d/audio/` until T5, so a suite run by any session without the flag stays green. The
+      changes: `ROOT` from the file URL, `wide` from `process.env.SCAN_WIDE === '1'`, and
+      `SCAN_ROOT` per AC3 rule 1; the strip is one left-to-right pass; the patterns run over the
+      whole stripped text; the pattern list stays the 19 labels; the named exclusion rows join the
+      file with the rot check; the control table and its `stripCommentsFirst` witness join the test.
+      The controls run in both modes.
+  - Red evidence, two runs, both from the repository root with the file in `tests/apk3d/`:
+    - Wide run, the failing one:
+      `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'SCAN_WIDE=1 node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/no-unpolyfilled-builtins.test.ts' > measure/runs/old_browser_builtins_20261122/red-scan.log 2>&1`
+    - Default run, the green one:
+      `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/no-unpolyfilled-builtins.test.ts' > measure/runs/old_browser_builtins_20261122/red-scan-default.log 2>&1`
+  - Red done-when: the wide run exits 1 with 44 hits: 35 `structuredClone`, 8 array `.at(`, and 1
     `findLastIndex`. `Object.hasOwn` reports no hit, because task T6k `0cc7b5c4` fixed the two audio
     calls. Each hit line is `<path>:<line>: <label>`, and the line matches the real source line. The
-    control test passes: the URL row, the template row, and the argument row each show 1 fixed hit
-    and 0 witness hits, and the other rows match the AC3 table. No syntax error.
-  - File state: after the run, `git status --short tests/apk3d/no-unpolyfilled-builtins.test.ts`
-    shows ` M`, and the file is not staged. It stays modified and uncommitted through T4 and lands in
-    the T5 commit with the 44 replacements. The T3 evidence records the `git diff --stat` line.
-  - Window: the working tree holds one failing test file from T3 until T5. The orchestrator runs T3
-    and T5 back to back, and no other role runs the shared suite between them. A parallel session
-    that runs the full suite in that window sees this one file fail on the 44 known hits, and on
-    nothing else.
-  - Record in this task: the 44 hits as a list, grouped by label, the log path, and the diff stat.
+    default run exits 0 with 1 file and 0 hits. The control test passes in both runs: the URL row,
+    the template row, and the argument row each show 1 fixed hit and 0 witness hits, and the other
+    rows match the AC3 table. No syntax error.
+  - Commit: the widened test file lands in this task, so no session ever sees an uncommitted failing
+    scan. The default scope stays audio-only through T4, and T5 removes the flag.
+  - Record in this task: the 44 hits as a list, grouped by label, the two log paths, the two exit
+    codes, and the commit.
   - Prerequisite, met: task T6k of `audio_game_integration_20261014` (`0cc7b5c4`) removed both
     `Object.hasOwn` calls from `src/apk3d/audio/`. A scan of `src/` at baseline `a414b406` finds
     none.
@@ -129,28 +122,35 @@ HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/hea
   - Type check: `node node_modules/typescript/bin/tsc --noEmit` reports no error in the two new
     modules. The 38 baseline errors of TD-35 to TD-39 stay open.
 
-- [ ] T5 Green: Replace all 44 uses and commit the widened scan. The 35 `structuredClone` calls
-      become `deepCopy`, with one import per file. The 8 `.at(` calls become `atIndex`, and the
+- [ ] T5 Green: Replace all 44 uses and remove the flag path. The 35 `structuredClone` calls become
+      `deepCopy`, with one import per file. The 8 `.at(` calls become `atIndex`, and the
       `findLastIndex` call of `src/host/reader.ts:197` becomes `lastIndexWhere`. The call order and
-      the expression shape stay the same, because a copy or an index result is equal.
-  - Green done-when: T1 and T2 exit 0. The widened scan, which T3 left modified in
-    `tests/apk3d/no-unpolyfilled-builtins.test.ts`, is committed here and exits 0 with zero hits. The
-    AC4 command exits 0. The 29 snapshots pass the replay tests of their own game.
-  - Gate: `node node_modules/vitest/vitest.mjs run tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts --maxWorkers=1`
+      the expression shape stay the same, because a copy or an index result is equal. In
+      `tests/apk3d/no-unpolyfilled-builtins.test.ts`, delete the `wide` line and the flag, set
+      `SCAN_ROOT = join(ROOT, 'src')` without a condition, and keep the strip, the patterns, the
+      exclusion rows, the controls, and the witness. A `grep -n SCAN_WIDE
+tests/apk3d/no-unpolyfilled-builtins.test.ts` returns nothing.
+  - Green done-when: T1 and T2 exit 0. The scan without the flag exits 0 with zero hits, and its
+    control test still passes. The AC4 command exits 0. The 29 snapshots pass the replay tests of
+    their own game.
+  - Gate, no flag anywhere in the command:
+    `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts'`
   - Record in this task: the 37 changed source files, the 44 replacements, the file count of each
-    label, and the commit that lands the widened scan. The scan lands in the same commit as the
-    replacements, so the committed suite never holds a failing scan. The T3 log stays in
-    `measure/runs/old_browser_builtins_20261122/`.
+    label, and the commit that removes the flag. T3 already committed the scan code, so this task
+    commits the unconditional `src/` root with the replacements. No committed state holds a failing
+    scan. The two T3 logs stay in `measure/runs/old_browser_builtins_20261122/`.
 
 - [ ] T6 Green: Close the scan with its evidence. Record the zero-hit run of
-      `tests/apk3d/no-unpolyfilled-builtins.test.ts` over `src/`, and record the met prerequisite.
-  - Done-when: this task holds the run command, the exit code 0, the date, and the commit. It names
-    task T6k of `audio_game_integration_20261014` at `0cc7b5c4` as the commit that removed the two
-    `Object.hasOwn` calls before the Red baseline `a414b406`, so the scan of AC3 starts at 44 hits
-    and never reports that label.
+      `tests/apk3d/no-unpolyfilled-builtins.test.ts` over `src/` without the flag, and record the met
+      prerequisite.
+  - Done-when: this task holds the run command, the exit code 0, the date, and the commit. A `grep`
+    of the test file finds no `SCAN_WIDE`. It names task T6k of `audio_game_integration_20261014` at
+    `0cc7b5c4` as the commit that removed the two `Object.hasOwn` calls before the Red baseline
+    `a414b406`, so the scan of AC3 starts at 44 hits and never reports that label.
   - Control evidence: the task records the 6 rows of the AC3 control table as they pass at Green,
     and it names the 3 rows where the witness `stripCommentsFirst` misses and the fixed scanner
-    catches: the URL row, the template row, and the argument row.
+    catches: the URL row, the template row, and the argument row. The same rows passed in the T3
+    default run, so the controls hold with and without the flag.
 
 ## Phase 3: Browser check
 

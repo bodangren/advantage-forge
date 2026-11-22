@@ -73,3 +73,16 @@ Author model: opencode-go/deepseek-v4.1-flash
 - Chosen approach: the file is edited and run in place, so no copy exists and no root decision
   remains. The cost is one modified, uncommitted failing test file from T3 to T5. T3 records that
   window, and the orchestrator runs T3 and T5 back to back.
+
+## Amendment after r3 (2026-11-23)
+
+- F7 closed: the default scan keeps its audio-only scope while the track works. `spec.md` AC3 rule 1
+  now holds `const wide = process.env.SCAN_WIDE === '1'` with
+  `SCAN_ROOT = wide ? join(ROOT, 'src') : join(ROOT, 'src', 'apk3d', 'audio')`, and AC3 rule 8 states
+  the two modes. `plan.md` T3 commits the widened scan code with the flag, runs the wide command
+  `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'SCAN_WIDE=1 node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/no-unpolyfilled-builtins.test.ts' > measure/runs/old_browser_builtins_20261122/red-scan.log 2>&1`
+  for 44 hits, and runs the same command without the flag for a green default. T5 Green deletes the
+  `wide` line, sets `SCAN_ROOT = join(ROOT, 'src')` without a condition, and runs the three-file gate
+  without the flag. The controls run in both modes, because the control test does not read
+  `SCAN_ROOT`. The T3-to-T5 uncommitted window left the plan, so a session that runs the suite sees
+  the audio-only scan until T5 and the `src/` scan after T5.
