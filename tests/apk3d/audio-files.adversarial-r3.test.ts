@@ -23,6 +23,14 @@ beforeEach(() => {
   return () => vi.unstubAllGlobals();
 });
 
+// A load that started under an own mapping resolves on microtasks, so three ticks flush
+// the fetch, the array buffer, and the decode.
+const flush = async () => {
+  await new Promise((resolve) => setTimeout(resolve, 0));
+  await new Promise((resolve) => setTimeout(resolve, 0));
+  await new Promise((resolve) => setTimeout(resolve, 0));
+};
+
 // iOS 15.0–15.3 and Chrome WebView 80–92 lack this API. Restore it before Vitest runs assertions.
 function withoutNativeHasOwn<T>(operation: () => T): T {
   const descriptor = Object.getOwnPropertyDescriptor(Object, 'hasOwn')!;
@@ -76,4 +84,57 @@ it('rejects an inherited string entry even when another entry is own', () => {
   bus.useSoundFiles({ base, events });
   bus.preload(['tap', ...names, 'correct']);
   expect(fetchUrls).toEqual([`${base}right.ogg`]);
+});
+
+it('drops a pending load when the event is remapped to an inherited-only entry', async () => {
+  // Spec AC4 rule 6 with the T6i own-property guard: the current map decides the file. A load
+  // that started under an own mapping must not install after a remap leaves only an inherited
+  // entry with the same value. The old file never plays, and no fetch follows for the name.
+  // `custom` has no synth recipe, so a silent test needs no oscillator fake.
+  const started: unknown[] = [];
+  const decoded = {};
+  class FakeCtx {
+    state = 'running';
+    currentTime = 0;
+    destination = {};
+    async decodeAudioData(): Promise<AudioBuffer> {
+      return decoded as AudioBuffer;
+    }
+    createGain() {
+      return { gain: { value: 0 }, connect() {} };
+    }
+    createBufferSource() {
+      return {
+        buffer: null as unknown,
+        connect() {},
+        start() {
+          started.push(this.buffer);
+        },
+      };
+    }
+    createBuffer() {
+      return {};
+    }
+    resume() {}
+    close() {}
+  }
+  vi.stubGlobal('window', { AudioContext: FakeCtx });
+  try {
+    const bus = new AudioBus();
+    bus.useSoundFiles({ base, events: { custom: 'tap' } });
+    bus.preload(['custom']);
+    const inherited = Object.create({ custom: 'tap' }) as Record<string, string>;
+    bus.useSoundFiles({ base, events: inherited });
+    await flush();
+    expect(fetchUrls).toEqual([`${base}tap.ogg`]);
+    bus.unlock();
+    await flush();
+    await bus.play('custom');
+    await flush();
+    const staleStarts = started.filter((buffer) => buffer === decoded);
+    expect(staleStarts, 'the stale load installs nothing to play').toEqual([]);
+    expect(fetchUrls, 'no fetch follows for the inherited name').toEqual([`${base}tap.ogg`]);
+  } finally {
+    vi.unstubAllGlobals();
+  }
 });
