@@ -358,6 +358,9 @@ describe('AudioBus file playback, adversarial', () => {
     await bus.play('correct');
     asFilesBus(bus).useSoundFiles(filesMap({ correct: 'wrong' }));
     resolveFetch!(okResponse());
+    // The remap frees the event for its new file: later fetches resolve at once so the
+    // new file can decode and play.
+    fetchImpl = async () => okResponse();
     await flush();
     const stale = decodedBuffers[0]!;
     expect(gameSourceStarts(), 'the stale decode stores nothing to play').toBe(0);
