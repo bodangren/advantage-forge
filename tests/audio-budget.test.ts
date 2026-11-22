@@ -1,15 +1,22 @@
+import { spawnSync } from 'node:child_process';
 import { readFileSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 
 // Covers spec AC5: the README byte column matches the committed files and the
 // Rune Match budget JSON holds the measured bytes, files, and seconds.
-// Red: cases 1 to 3 pass on the committed README and files, case 4 fails with
-// ENOENT for out/audio-budget/rune-match.json. No script or JSON is written here.
+// Review r1: the JSON case runs only with AUDIO_BUDGET_JSON=1 (A-F1), requires
+// decoded and fileEffect evidence (A-F2, C-F1), and the CLI case pins usage
+// text with no stack trace (C-F4 nit). No script or JSON is written here.
 
 const README_PATH = join('sounds', 'README.md');
 const SETS_PATH = join('sounds', 'sets', 'chibi.json');
 const BUDGET_PATH = join('out', 'audio-budget', 'rune-match.json');
+const SCRIPT_PATH = join('scripts', 'audio-budget.mjs');
+
+// The JSON case needs the ignored browser artifact: run
+// scripts/audio-budget.mjs first, then AUDIO_BUDGET_JSON=1.
+const JSON_ENABLED = process.env.AUDIO_BUDGET_JSON === '1';
 
 // Row-anchored on the Bytes column: | `file` | `design` | <bytes> | <duration> s |
 const ROW_PATTERN = /^\|\s*`([^`]+)`\s*\|\s*`([^`]+)`\s*\|\s*([0-9]+)\s*\|\s*([0-9]+\.[0-9]+)\s*s\s*\|$/;
@@ -51,6 +58,8 @@ function readSetNames(): string[] {
 // victory->level-end, whoosh, spawn->pop.
 const RUNE_MATCH_FILES = ['tap', 'right', 'wrong', 'level-end', 'whoosh', 'pop'];
 
+const jsonIt = JSON_ENABLED ? it : it.skip;
+
 describe('audio preload budget', () => {
   it('lists seven Ogg rows and seven MP3 rows for the seven set entries', () => {
     const setNames = readSetNames();
@@ -88,38 +97,79 @@ describe('audio preload budget', () => {
     expect(mp3Total, `MP3 format total bytes ${mp3Total}`).toBeLessThanOrEqual(100000);
   });
 
-  it('holds the Rune Match measurement of six files within budget', () => {
-    const { oggRows, mp3Rows } = readTables();
-    const oggByFile = new Map(oggRows.map((row) => [row.file, row.bytes]));
-    const mp3ByFile = new Map(mp3Rows.map((row) => [row.file, row.bytes]));
-    const oggSix = RUNE_MATCH_FILES.map((name) => oggByFile.get(`${name}.ogg`) ?? NaN).reduce(
-      (sum, value) => sum + value,
-      0,
-    );
-    const mp3Six = RUNE_MATCH_FILES.map((name) => mp3ByFile.get(`${name}.mp3`) ?? NaN).reduce(
-      (sum, value) => sum + value,
-      0,
-    );
-    expect(Number.isInteger(oggSix), `Ogg six-file README sum ${oggSix}`).toBe(true);
-    expect(Number.isInteger(mp3Six), `MP3 six-file README sum ${mp3Six}`).toBe(true);
-    const raw = readFileSync(BUDGET_PATH, 'utf8');
-    const parsed = JSON.parse(raw) as { bytes?: unknown; files?: unknown; seconds?: unknown };
-    expect(typeof parsed.bytes, 'rune-match bytes is a labeled number').toBe('number');
-    expect(typeof parsed.files, 'rune-match files is a labeled number').toBe('number');
-    expect(typeof parsed.seconds, 'rune-match seconds is a labeled number').toBe('number');
-    const bytes = parsed.bytes as number;
-    const files = parsed.files as number;
-    const seconds = parsed.seconds as number;
-    expect(Number.isInteger(files), `rune-match files count ${String(files)}`).toBe(true);
-    expect(files, `rune-match files count ${String(files)}`).toBe(6);
-    expect(Number.isInteger(bytes), `rune-match bytes ${String(bytes)}`).toBe(true);
-    expect(bytes, `rune-match bytes ${String(bytes)}`).toBeGreaterThan(0);
+  jsonIt(
+    'holds the Rune Match measurement of six decoded files within budget (needs AUDIO_BUDGET_JSON=1: run scripts/audio-budget.mjs, then AUDIO_BUDGET_JSON=1)',
+    () => {
+      const { oggRows, mp3Rows } = readTables();
+      const oggByFile = new Map(oggRows.map((row) => [row.file, row.bytes]));
+      const mp3ByFile = new Map(mp3Rows.map((row) => [row.file, row.bytes]));
+      const oggSix = RUNE_MATCH_FILES.map((name) => oggByFile.get(`${name}.ogg`) ?? NaN).reduce(
+        (sum, value) => sum + value,
+        0,
+      );
+      const mp3Six = RUNE_MATCH_FILES.map((name) => mp3ByFile.get(`${name}.mp3`) ?? NaN).reduce(
+        (sum, value) => sum + value,
+        0,
+      );
+      expect(Number.isInteger(oggSix), `Ogg six-file README sum ${oggSix}`).toBe(true);
+      expect(Number.isInteger(mp3Six), `MP3 six-file README sum ${mp3Six}`).toBe(true);
+      const raw = readFileSync(BUDGET_PATH, 'utf8');
+      const parsed = JSON.parse(raw) as {
+        bytes?: unknown;
+        files?: unknown;
+        seconds?: unknown;
+        decoded?: unknown;
+        fileEffect?: unknown;
+      };
+      expect(typeof parsed.bytes, 'rune-match bytes is a labeled number').toBe('number');
+      expect(typeof parsed.files, 'rune-match files is a labeled number').toBe('number');
+      expect(typeof parsed.seconds, 'rune-match seconds is a labeled number').toBe('number');
+      expect(typeof parsed.decoded, 'rune-match decoded is a labeled number').toBe('number');
+      expect(typeof parsed.fileEffect, 'rune-match fileEffect is a labeled boolean').toBe('boolean');
+      const bytes = parsed.bytes as number;
+      const files = parsed.files as number;
+      const seconds = parsed.seconds as number;
+      const decoded = parsed.decoded as number;
+      const fileEffect = parsed.fileEffect as boolean;
+      expect(Number.isInteger(files), `rune-match files count ${String(files)}`).toBe(true);
+      expect(files, `rune-match files count ${String(files)}`).toBe(6);
+      expect(Number.isInteger(bytes), `rune-match bytes ${String(bytes)}`).toBe(true);
+      expect(bytes, `rune-match bytes ${String(bytes)}`).toBeGreaterThan(0);
+      expect(
+        bytes === oggSix || bytes === mp3Six,
+        `rune-match bytes ${String(bytes)} equals an Ogg (${String(oggSix)}) or MP3 (${String(mp3Six)}) six-file sum`,
+      ).toBe(true);
+      expect(bytes, `rune-match bytes ${String(bytes)}`).toBeLessThanOrEqual(100000);
+      expect(seconds, `rune-match seconds ${String(seconds)}`).toBeGreaterThan(0);
+      expect(seconds, `rune-match seconds ${String(seconds)}`).toBeLessThanOrEqual(1.5);
+      expect(Number.isInteger(decoded), `rune-match decoded count ${String(decoded)}`).toBe(true);
+      expect(decoded, `rune-match decoded count ${String(decoded)}`).toBe(files);
+      expect(fileEffect, 'rune-match fileEffect plays the first effect from a decoded file').toBe(true);
+    },
+  );
+
+  it('prints usage for --help and rejects a bad --game without a stack trace', () => {
+    const help = spawnSync(process.execPath, [SCRIPT_PATH, '--help'], { encoding: 'utf8' });
+    expect(help.status, '--help exits 0').toBe(0);
+    const helpLines = help.stdout
+      .split('\n')
+      .map((line) => line.trim())
+      .filter((line) => line.length > 0);
     expect(
-      bytes === oggSix || bytes === mp3Six,
-      `rune-match bytes ${String(bytes)} equals an Ogg (${String(oggSix)}) or MP3 (${String(mp3Six)}) six-file sum`,
+      helpLines.some((line) => /usage/i.test(line)),
+      '--help prints a usage line on stdout',
     ).toBe(true);
-    expect(bytes, `rune-match bytes ${String(bytes)}`).toBeLessThanOrEqual(100000);
-    expect(seconds, `rune-match seconds ${String(seconds)}`).toBeGreaterThan(0);
-    expect(seconds, `rune-match seconds ${String(seconds)}`).toBeLessThanOrEqual(1.5);
+    const bad = spawnSync(process.execPath, [SCRIPT_PATH, '--game', 'not-a-game'], {
+      encoding: 'utf8',
+    });
+    expect(bad.status, 'bad --game exits 1').toBe(1);
+    const errLines = bad.stderr
+      .split('\n')
+      .map((line) => line.trim())
+      .filter((line) => line.length > 0);
+    expect(errLines.length, `bad --game prints one usage line on stderr`).toBe(1);
+    expect(/usage/i.test(errLines[0]!), 'bad --game usage line names the usage').toBe(true);
+    expect(bad.stderr.includes('at '), 'bad --game prints no stack trace').toBe(false);
+    expect(bad.stdout.includes('at '), 'bad --game stdout holds no stack trace').toBe(false);
   });
 });
