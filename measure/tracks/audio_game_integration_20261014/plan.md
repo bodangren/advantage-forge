@@ -188,7 +188,7 @@ Files this track touches:
 
 ## Phase 3: File playback in the AudioBus
 
-- [ ] T5 Red: Add `tests/apk3d/audio-files.test.ts`. The test installs a fake `window.AudioContext`
+- [~] T5 Red (7b75bd3d): Add `tests/apk3d/audio-files.test.ts`. The test installs a fake `window.AudioContext`
       and a fake `fetch`, so it needs no audio device. The fake context records each oscillator, each
       gain, each buffer source, and each `decodeAudioData` call. The ten cases:
 
@@ -206,6 +206,15 @@ Files this track touches:
   - Red evidence: `node node_modules/vitest/vitest.mjs run tests/apk3d/audio-files.test.ts --maxWorkers=1`
   - Red done-when: the command exits 1. `useSoundFiles` and `preload` are absent from the class, so
     the cases fail on the call and not on a parse error.
+  - Red result 2026-11-22: test commit 7b75bd3dfd9f09d8277b14c79a36c57c167d3b39.
+    Red command `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-files.test.ts'`
+    exited 1 with 10 failed of 10 collected. Every failure is
+    `TypeError: asFilesBus(...).useSoundFiles is not a function`, on the call, with no syntax,
+    import, or reference error. The harness defines `window`, `navigator`, `Audio`, and `fetch`
+    with `Object.defineProperty` (plain assignment fails on Node's getter-only `navigator`) and
+    restores every global after each test. `tests/apk3d/imports.test.ts` still exits 0 with 4 of
+    4 passing, so no existing test breaks. `node_modules/.bin/prettier --check tests/apk3d/audio-files.test.ts`
+    exits 0.
 
 - [ ] T6 Green: Add the file playback to `src/apk3d/audio/bus.ts` per spec AC4. Keep `defineSfx`,
       `defineMood`, `unlock`, `setMuted`, `suspend`, `resume`, `music`, and `dispose` in their

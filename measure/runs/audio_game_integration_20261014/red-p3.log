@@ -1,0 +1,25 @@
+MEASURE_AGENT_RESULT
+track: audio_game_integration_20261014
+phase: "Phase 3: File playback in the AudioBus"
+task: T5 Red
+role: mid-red
+role_base_sha: af4e57aff730b1cf8ee9c716802920699f1eaaac
+phase_base_sha: af4e57aff730b1cf8ee9c716802920699f1eaaac
+head: 7b75bd3dfd9f09d8277b14c79a36c57c167d3b39
+commits:
+  - 7b75bd3dfd9f09d8277b14c79a36c57c167d3b39 test(audio_game_integration): T5 audio file playback cases
+tests:
+  - tests/apk3d/audio-files.test.ts (new, exactly the ten plan cases)
+production_untouched: src/apk3d/audio/bus.ts and src/apk3d/audio/index.ts unchanged
+red_command: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-files.test.ts'
+red_exit: 1
+red_summary: 10 failed of 10 collected; no syntax, import, or reference error
+failures:
+  - all ten cases: TypeError asFilesBus(...).useSoundFiles is not a function, on the call
+other_checks:
+  - tests/apk3d/imports.test.ts exits 0 with 4 of 4 passing; no existing test breaks
+  - prettier --check on the new test file exits 0
+harness_note: globals window, navigator, Audio, and fetch are installed with Object.defineProperty and restored after each test; plain assignment throws on Node's getter-only navigator
+task_state: T5 stays [~]; Green marks [x]
+handoff: Green adds useSoundFiles, preload, and the SoundFiles export to src/apk3d/audio/bus.ts and src/apk3d/audio/index.ts per spec AC4; the T5 Red command must then exit 0
+END_MEASURE_AGENT_RESULT
