@@ -87,7 +87,7 @@ Files this track touches:
 
 ## Phase 2: MP3 copies in the wrapper
 
-- [ ] T3 Red: Add `tests/sound-set-mp3.test.ts`, and change the stdout assertion of case 1 in
+- [~] T3 Red (6fbb39bd): Add `tests/sound-set-mp3.test.ts`, and change the stdout assertion of case 1 in
       `tests/sound-set.test.ts` to the new line order. The test uses `spawnSync` with
       `SOUNDS_ROOT=<temp root>`, a fake earshot binary, and a fake ffmpeg binary. Each fake appends
       `process.argv.slice(2).join(' ')` to its own log, as `tests/sound-set.test.ts` does. The five
@@ -104,6 +104,19 @@ Files this track touches:
   - Red evidence: `node node_modules/vitest/vitest.mjs run tests/sound-set.test.ts tests/sound-set-mp3.test.ts --maxWorkers=1`
   - Red done-when: the command exits 1. Case 1 fails on the absent MP3 line and on the absent ffmpeg
     call. Case 5 fails with ENOENT. The test files raise no syntax or import error.
+  - Red result 2026-11-22: test commit 6fbb39bdfb6920ee6e5895a29f0f9547d9fa9a1e.
+    Red command `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sound-set.test.ts tests/sound-set-mp3.test.ts'`
+    exited 1 with 6 failed and 18 passed (24). `tests/sound-set-mp3.test.ts` case 1 fails on the absent
+    `sound-set: alpha.mp3 <- tap/soft` line (the wrapper never calls ffmpeg, so `ffmpeg-calls.log`
+    is absent too). Cases 2 to 4 fail with status 0 instead of 1: the wrapper has no ffmpeg step,
+    so it succeeds where it must fail. Case 5 fails with
+    `ENOENT: no such file or directory, open 'sounds/chibi/tap.mp3'`. The changed case 1 of
+    `tests/sound-set.test.ts` fails on the two absent `.mp3` lines. The other 18 existing
+    sound-set tests pass. No syntax or import error: all 24 tests collect and run.
+    `node_modules/.bin/prettier --check tests/sound-set-mp3.test.ts tests/sound-set.test.ts` exits 0.
+  - Note for Green: the plan text says case 1 gives "14 files" for two entries. Two entries give
+    four files (two `.ogg`, two `.mp3`); 14 is the seven-entry real-set count. The committed test
+    asserts the four fake files and names this correction here.
 
 - [ ] T4 Green: Add the MP3 step to `scripts/sound-set.mjs` per spec AC2. Add the `FFMPEG_BIN`
       lookup, the target preparation for the `.mp3`, and the three failure lines with their exits.
