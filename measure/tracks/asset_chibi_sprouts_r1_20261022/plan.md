@@ -443,6 +443,32 @@ Workbooks does not wait for it.
     untouched: sprout-sam and teacher GLBs keep byte-identical hashes (3b6c6796,
     ec71c3d8); the preset pin is unchanged. The cuffs fix 4fa91ee8 stands (fresh
     listen.png cuffs and waist clean). Log green-faces-grandma.log.
+  - Grandma face r3 95cadeec (2026-11-22, judge fix): `assets/sprout-grandma.ts` only,
+    matched to `docs/sprout-mockups/grandma.jpg`, answering the 7.0 FAIL (smooth cap
+    with pointy bun, grin collapsing to a dark dash at 128 px, faint age marks, heavy
+    round eyes). Eyes are almond, paint only (Dad r3 recipe): an exact hard skin box
+    cuts an almond opening over the shared round eye, with fresh white, a smaller dark
+    iris that stays inside the opening (the first r3 iris overflowed it and read round
+    again), the pupil, one catchlight, and a thin upper lid line; the shared lash band
+    is covered and the thinner pale-grey brow arcs no longer merge with the lashes. The
+    smile is a gentle near-closed smile with upturned corners: a light lip line frames
+    a small dark red interior with a small white teeth hint at the top center, no
+    tongue; the sprites S view reads as a smile with a light hint at 128 px. Nasolabial
+    and crow's-foot creases are deeper soft curves; freckles are lighter and fewer. The
+    hairline is geometry: four separated tapered locks per side sweep from the center
+    part (standing proud with grooves, staggered depths, fine strand lines combed in
+    paint, sideways tips, inside outerHug above the face opening); the bun is a rounded
+    swirled knot (oblate ball, tilted wrap ring, shallow swirl groove). One in-round
+    fix: the deepened part groove punched a pinhole through the cap top, so its front
+    end keeps the r2 radius and the crown renders closed. `./forge all sprout-grandma`
+    exits 0 with no warning lines (hair 5026 tris, GLB 4394 KB). `./forge check
+    sprout-grandma` output byte-identical to the role_base_sha baseline (sha dc8a1833,
+    exit 1 on the waived touch-nose). Grandma's 25 cut-outs were re-rendered at
+    1760x1856; cutout-check flags only the four known reach tiptoes (grandma row 1833,
+    foot 1840). The three sprout vitest files pass 15/15. typecheck-asset reports 0
+    errors. The shared kind is untouched: sprout-sam and teacher GLBs keep byte-identical
+    hashes (3b6c6796, ec71c3d8); the preset pin is unchanged. The cuffs fix 4fa91ee8
+    stands (fresh listen.png cuffs and waist clean). Log green-faces-grandma-r3.log.
   - Grandpa face r2 8c7f2891 (2026-11-22, Faces r2 Step 1): `assets/sprout-grandpa.ts`
     only, matched to `docs/sprout-mockups/grandpa.jpg`. Paint-only face through the
     existing `paintSkin` hook (arm cut kept, then face): dark round iris with one big
