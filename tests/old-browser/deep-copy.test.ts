@@ -74,10 +74,36 @@ const GAMES: Array<{ name: string; create: () => Snapshot }> = [
 
 const ALLOWED = new Set(['plain-object', 'array', 'string', 'number', 'boolean', 'null', 'undefined']);
 
-/** Every value kind reachable from the root. Anything else reports as `other:<tag>`. */
+/** Every value kind reachable from the root. Anything else reports as `other:<tag>`.
+ *
+ * The walk uses Reflect.ownKeys (PM 2026-11-23): a Symbol-keyed own property records
+ * `symbol-key`, a non-enumerable own property records `non-enumerable`, and an accessor
+ * (getter/setter) property records `accessor` without invoking it. None of these kinds is
+ * allowed, because deepCopy copies neither Symbol keys nor non-enumerable properties and a
+ * getter is not plain data.
+ */
 function kindsOf(value: unknown): Set<string> {
   const kinds = new Set<string>();
   const seen = new Set<object>();
+  /**
+   * Records the kind of one own property and visits its data value. Accessor properties record
+   * `accessor` without invoking the getter or setter. Returns nothing; the kinds set is the
+   * record. `skipIndex` skips canonical array indices, whose values the `for..of` loop covers.
+   */
+  const visitOwnKey = (holder: object, key: string | symbol, skipIndex: boolean): void => {
+    const descriptor = Object.getOwnPropertyDescriptor(holder, key)!;
+    if (typeof key === 'symbol') {
+      kinds.add('symbol-key');
+    } else if (!descriptor.enumerable) {
+      kinds.add('non-enumerable');
+    } else if (typeof descriptor.get === 'function' || typeof descriptor.set === 'function') {
+      kinds.add('accessor');
+      return;
+    } else if (skipIndex && isArrayIndex(key)) {
+      return;
+    }
+    if ('value' in descriptor) visit(descriptor.value);
+  };
   const visit = (node: unknown): void => {
     if (node === null) {
       kinds.add('null');
@@ -93,19 +119,29 @@ function kindsOf(value: unknown): Set<string> {
     if (Array.isArray(node)) {
       kinds.add('array');
       for (const item of node) visit(item);
+      for (const key of Reflect.ownKeys(node)) {
+        if (key === 'length') continue;
+        visitOwnKey(node, key, true);
+      }
       return;
     }
     const proto = Object.getPrototypeOf(node);
     if (proto === Object.prototype || proto === null) {
       kinds.add('plain-object');
-      const record = node as Record<string, unknown>;
-      for (const key of Object.keys(record)) visit(record[key]);
+      const holder = node as object;
+      for (const key of Reflect.ownKeys(holder)) visitOwnKey(holder, key, false);
       return;
     }
     kinds.add(`other:${Object.prototype.toString.call(node)}`);
   };
   visit(value);
   return kinds;
+}
+
+/** A canonical array index below 2**32 - 1; anything else is an extra own key. */
+function isArrayIndex(key: string): boolean {
+  if (!/^(0|[1-9]\d*)$/.test(key)) return false;
+  return Number(key) < 4294967295;
 }
 
 it('state types: every game snapshot holds only the allowed plain-data kinds', () => {
@@ -118,6 +154,36 @@ it('state types: every game snapshot holds only the allowed plain-data kinds', (
     if (extra.length > 0) failures.push(`${game.name}: unexpected kinds ${extra.sort().join(', ')}`);
   }
   expect(failures).toEqual([]);
+});
+
+class ProbeEnemy {
+  hp: number;
+  constructor() {
+    this.hp = 1;
+  }
+}
+
+it('the state-type pin catches the documented copy limits (PM 2026-11-23)', () => {
+  const symbolKey = Symbol('hidden');
+  const withSymbol = { word: 'a' } as Record<string | symbol, unknown>;
+  withSymbol[symbolKey] = 'hidden';
+  expect([...kindsOf(withSymbol)].sort()).toEqual(['plain-object', 'string', 'symbol-key']);
+  const withHidden: Record<string, unknown> = { word: 'a' };
+  Object.defineProperty(withHidden, 'secret', {
+    value: 1,
+    enumerable: false,
+    writable: true,
+    configurable: true,
+  });
+  expect([...kindsOf(withHidden)].sort()).toEqual(['non-enumerable', 'number', 'plain-object', 'string']);
+  const withGetter = {
+    get word(): string {
+      return 'a';
+    },
+  };
+  expect([...kindsOf(withGetter)].sort()).toEqual(['accessor', 'plain-object']);
+  expect([...kindsOf({ re: /word/g })].sort()).toEqual(['other:[object RegExp]', 'plain-object']);
+  expect([...kindsOf({ enemy: new ProbeEnemy() })].sort()).toEqual(['other:[object Object]', 'plain-object']);
 });
 
 it('equal values: a copied snapshot is toEqual its source, for each of the 29 games', async () => {
