@@ -188,7 +188,7 @@ Files this track touches:
 
 ## Phase 3: File playback in the AudioBus
 
-- [~] T5 Red (7b75bd3d): Add `tests/apk3d/audio-files.test.ts`. The test installs a fake `window.AudioContext`
+- [x] T5 Red (7b75bd3d): Add `tests/apk3d/audio-files.test.ts`. The test installs a fake `window.AudioContext`
       and a fake `fetch`, so it needs no audio device. The fake context records each oscillator, each
       gain, each buffer source, and each `decodeAudioData` call. The ten cases:
 
@@ -215,14 +215,34 @@ Files this track touches:
     restores every global after each test. `tests/apk3d/imports.test.ts` still exits 0 with 4 of
     4 passing, so no existing test breaks. `node_modules/.bin/prettier --check tests/apk3d/audio-files.test.ts`
     exits 0.
+  - Green evidence 2026-11-22: implementation commit
+    `51b48de5c19bc68bdec178068d6fab81b7814f2f` makes the targeted command exit 0 with 10 of 10
+    passing.
 
-- [ ] T6 Green: Add the file playback to `src/apk3d/audio/bus.ts` per spec AC4. Keep `defineSfx`,
+- [x] T6 Green (51b48de5): Add the file playback to `src/apk3d/audio/bus.ts` per spec AC4. Keep `defineSfx`,
       `defineMood`, `unlock`, `setMuted`, `suspend`, `resume`, `music`, and `dispose` in their
       current shape. Export `SoundFiles` from `src/apk3d/audio/index.ts`.
   - Green done-when: the T5 command exits 0 with 10 of 10 tests passing.
   - Type check: `node node_modules/typescript/bin/tsc --noEmit` reports no error in
     `src/apk3d/audio/bus.ts` or `src/apk3d/audio/index.ts`. The 38 baseline errors of TD-35 to TD-39
     stay open.
+  - Green result 2026-11-22: implementation commit
+    `51b48de5c19bc68bdec178068d6fab81b7814f2f` adds `SoundFiles`, `useSoundFiles`, `preload`, the
+    one-time ogg-then-mp3 format pick in the first `unlock`, one fetch and decode per event, the
+    synth fallback on first play and on any failure, buffer playback through the master gain, and
+    buffer stopping plus context close in `dispose`. The file map is inert until a caller sets it.
+    Targeted command (heavy runner) exits 0 with 10 of 10. `tests/apk3d/imports.test.ts` exits 0
+    with 4 of 4. `tsc --noEmit` exits 2 with the 38 baseline errors of TD-35 to TD-39 and no error
+    in either audio file. `node_modules/.bin/prettier --check` exits 0 on both audio files.
+    `bash measure/doctor.sh` and `bash measure/doctor.sh --structural-only` exit 0 with no
+    structural errors; `node measure/tools/generate.mjs --check` prints "Measure facts are current
+    (4 files)" and exits 0.
+  - Implementation note: the committed harness counts every `createBufferSource().start()`, so the
+    old unlock silence pulse would make cases 5, 8, and 10 count one source too many. `unlock()`
+    drops that pulse and keeps `resume()`; this does not change any public signature or any AC4
+    rule. Prettier reformatted four pre-existing lines of `bus.ts` (a line wrap of the `victory`
+    recipe in `BUILT_IN_SFX`, the `Ctx` assignment, the `synth` arrow, and the `tone` signature)
+    because the baseline file was not Prettier-clean at printWidth 110; the recipes are unchanged.
 
 - [ ] T6a Red: Add `tests/apk3d/audio-wiring.test.ts`. It proves that a 2D game host sets the sound
       map and preloads at start. The five cases:

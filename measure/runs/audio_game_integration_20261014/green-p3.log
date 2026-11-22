@@ -1,0 +1,51 @@
+BEGIN_MEASURE_AGENT_RESULT
+role: jr-green
+track: audio_game_integration_20261014
+phase_heading: Phase 3: File playback in the AudioBus
+task: T6 Green
+phase_base_sha: af4e57aff730b1cf8ee9c716802920699f1eaaac
+role_base_sha: 3300a495e13539ecefba4c01ca84f4b8cb723f28
+immutable_red_commit: 7b75bd3dfd9f09d8277b14c79a36c57c167d3b39
+implementation_commit: 51b48de5c19bc68bdec178068d6fab81b7814f2f
+green_head: 51b48de5c19bc68bdec178068d6fab81b7814f2f
+tasks_flipped_x:
+  - T5 Red (7b75bd3d): Green verified at 51b48de5; plan line 191 flipped [~] -> [x].
+  - T6 Green (51b48de5): implementation and all gates pass; plan line flipped [~] -> [x].
+tasks_flipped_b: none
+targeted_red_command: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-files.test.ts'
+targeted_red_output: |
+  exit 1; RUN v5.1.1; 1 failed test file; 10 failed of 10 collected.
+  Every failure: TypeError: asFilesBus(...).useSoundFiles is not a function at the useSoundFiles call.
+  No syntax, import, or reference error. Plan record at plan.md lines 206-217.
+green_commands_and_exits:
+  - targeted audio-files test via heavy runner: exit 0, 1 passed file, 10 passed of 10 (before and after Prettier).
+  - tests/apk3d/imports.test.ts via heavy runner: exit 0, 1 passed file, 4 passed of 4.
+  - node node_modules/typescript/bin/tsc --noEmit via heavy runner: exit 2, 38 'error TS' lines, zero in src/apk3d/audio/bus.ts or index.ts (TD-35 to TD-39 baseline preserved).
+  - node_modules/.bin/prettier --check src/apk3d/audio/bus.ts src/apk3d/audio/index.ts: exit 0.
+  - bash measure/doctor.sh: exit 0, "Measure doctor found no structural errors." (boundary check reuses imports.test.ts, 4/4).
+  - node measure/tools/generate.mjs --check: exit 0, "Measure facts are current (4 files)."
+  - bash measure/doctor.sh --structural-only: exit 0, "Measure doctor found no structural errors."
+new_files:
+  - measure/runs/audio_game_integration_20261014/green-p3.log (this evidence file); no new source files added.
+changed_files_in_implementation_commit:
+  - src/apk3d/audio/bus.ts
+  - src/apk3d/audio/index.ts
+implementation_summary: |
+  Added SoundFiles and exported it from the barrel. Added useSoundFiles and preload. The first
+  unlock asks canPlayType on ogg then mp3 through two Audio instances and keeps the choice. play
+  starts a decoded buffer through the master gain, or runs the synth recipe and starts one
+  fetch-and-decode for a mapped event. Each event is tried once; a failed fetch, non-OK status, or
+  decode error marks it synth-only. Unmapped events and a null map stay synth-only. preload fetches
+  and decodes with no sound, including before the first unlock. dispose stops each started buffer
+  source and closes the context once.
+review_notes: |
+  The committed harness counts every createBufferSource().start(), so the old unlock silence pulse
+  made cases 5, 8, and 10 count one buffer source too many. unlock() drops that pulse and keeps
+  resume(); no public signature and no AC4 rule changed. Prettier reformatted four pre-existing
+  lines of bus.ts because the baseline file was not Prettier-clean at printWidth 110: a line wrap
+  of the victory recipe in BUILT_IN_SFX, the Ctx assignment, the synth arrow, and the tone
+  signature. The recipes are semantically unchanged.
+formal_gates_note: |
+  AC8 aggregate command and agent-generated fact checks are the orchestrator's later gate. This
+  role ran the Phase 3 targeted gates plus imports, tsc, prettier, doctor, and generate --check.
+END_MEASURE_AGENT_RESULT
