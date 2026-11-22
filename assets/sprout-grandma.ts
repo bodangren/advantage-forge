@@ -1,4 +1,5 @@
 import { mixRgb, profile, rgb, sdf } from '../src/index.js';
+import type { Rgb } from '../src/index.js';
 import type { HumanoidProportions, HumanoidShape } from './parts/humanoid-kind.js';
 import { ADULT, humanoidAsset } from './parts/humanoid-kind.js';
 import { sproutGestures } from './parts/sprout-gestures.js';
@@ -121,16 +122,19 @@ const GRANDMA_FACE = {
   mouth: '#7e2a2e',
   teeth: '#fbf8f0',
   tongue: '#e88a9a',
-  freckle: '#b06a48',
+  freckle: '#c08a68',
   noseShade: '#d89a78',
   // Fixed pale grey: the shared tint.brow follows the hair color, which is white
   // here, so it would wash out (Dad fixed his for the same reason, dark instead).
   // The reference brows are soft light-grey arcs.
   brow: '#a8a39c',
+  lid: '#1c130f',
+  white: '#f6f1ea',
+  lip: '#d98f8f',
   ageLine: '#c98f6e',
 };
 
-/** Grandma's face over the shared paint: dark round iris, gentle open smile, age marks. */
+/** Grandma's face over the shared paint: almond eyes, gentle near-closed smile, age marks. */
 const grandmaFace = (skin: sdf.Shape, h: HumanoidShape): sdf.Shape => {
   const pair = (s: sdf.Shape) => s.mirror('x', 0);
   const [EX, EY] = h.joints.EYE;
@@ -138,49 +142,93 @@ const grandmaFace = (skin: sdf.Shape, h: HumanoidShape): sdf.Shape => {
   const browY = GRANNY.face.browY;
   const noseY = GRANNY.face.noseY;
 
-  // Dark round iris with a warm low arc, the pupil, and one big catchlight: the
-  // reference eye is deep brown with a single bright spark.
-  const dark = pair(h.onFace(sdf.ellipsoid([0.037, 0.044, 0.07]), EX, EY - 0.006));
-  const low = dark.intersect(sdf.halfSpace([0, 1, 0], EY - 0.008));
-  const pupil = pair(h.onFace(sdf.ellipsoid([0.026, 0.029, 0.07]), EX, EY + 0.004));
-  const big = pair(h.onFace(sdf.sphere(0.012), EX + 0.015, EY + 0.018));
-  const small = pair(h.onFace(sdf.sphere(0.005), EX - 0.013, EY - 0.02));
+  // Almond eyes (Dad r3 recipe): the shared eye is big and round; the reference
+  // eyes are medium almond eyes with brown irises and one catchlight. Cut an
+  // almond opening with an exact hard skin stencil (a box over the whole shared
+  // eye minus the almond solid), lay fresh white in the hole, then a smaller dark
+  // iris, the pupil, one catchlight, and a thin upper lid line. Paint only: no
+  // geometry moves, so the head clearances cannot change.
+  const almond = profile.polygon(
+    [
+      [EX - 0.046, EY + 0.004],
+      [EX - 0.02, EY + 0.022],
+      [EX + 0.005, EY + 0.027],
+      [EX + 0.03, EY + 0.02],
+      [EX + 0.048, EY + 0.002],
+      [EX + 0.025, EY - 0.014],
+      [EX, EY - 0.02],
+      [EX - 0.022, EY - 0.012],
+    ] as [number, number][],
+    { smooth: true },
+  );
+  const almondSolid = sdf.extrude(almond, 0.34).at(0, 0, 0.1);
+  const eyeBox = sdf.box([0.14, 0.125, 0.3], 0.01).at(EX + 0.0075, EY + 0.0025, 0.1);
+  const almondCut = pair(eyeBox.subtract(almondSolid));
+  const white = pair(almondSolid);
+  const dark = pair(h.onFace(sdf.ellipsoid([0.028, 0.02, 0.07]), EX, EY + 0.002));
+  const low = dark.intersect(sdf.halfSpace([0, 1, 0], EY - 0.002));
+  const pupil = pair(h.onFace(sdf.ellipsoid([0.012, 0.013, 0.07]), EX, EY + 0.004));
+  const big = pair(h.onFace(sdf.sphere(0.008), EX + 0.01, EY + 0.008));
+  const lidLine = pair(sdf.extrude(profile.arc(0.05, 0.007, 35, 145), 0.3).at(EX, EY - 0.023, 0.1));
+  // The eye box trims the top of the shared cheek blush; lay it back below the
+  // eye so the cheek keeps its soft color with no seam.
+  const blushBack = pair(
+    h
+      .onFace(sdf.sphere(0.032), 0.135, GRANNY.face.blushY)
+      .intersect(sdf.halfSpace([0, 1, 0], EY - 0.02)),
+  );
 
   // The shared brow band is heavy; cover it with an exact-footprint hard skin
   // stencil (a wider cover left a pale slab in Lily's rounds, a soft edge a halo)
   // and paint a shorter, thinner, softly arched brow in the same place: the
-  // reference brow is short, light, and gentle.
+  // reference brow is short, light, and gentle, and must not merge with the
+  // lashes (thinner than r2 here).
   const cover = pair(sdf.extrude(profile.arc(0.1, 0.024, 58, 122), 0.3).at(0.1, browY - 0.1, 0.1));
-  const brow = pair(sdf.extrude(profile.arc(0.07, 0.014, 62, 118), 0.3).at(0.1, browY - 0.1, 0.1));
+  const brow = pair(sdf.extrude(profile.arc(0.075, 0.011, 66, 114), 0.3).at(0.1, browY - 0.1, 0.1));
 
-  // A gentle open smile, smaller than the parents' (Grandma's reference smile is
-  // soft): one rounded white teeth band clipped inside the mouth, and a tongue.
-  const outline = profile.polygon(
-    (
-      [
-        [-0.052, 0.014],
-        [-0.026, 0.006],
-        [0, 0.004],
-        [0.026, 0.006],
-        [0.052, 0.014],
-        [0.044, -0.012],
-        [0.018, -0.03],
-        [-0.018, -0.03],
-        [-0.044, -0.012],
-      ] as [number, number][]
-    ).map(([x, y]): [number, number] => [x * 0.9, y * 0.9]),
+  // A gentle near-closed smile with clearly upturned corners (judge r3): the r2
+  // grin collapsed to a dark dash at 128 px, and the reference smile is soft and
+  // small. A light lip line frames the mouth, a dark red interior sits inside it,
+  // and a small white teeth hint at the top center keeps the smile readable at
+  // sprite size. No tongue: the mouth is near-closed.
+  const lipOutline = profile.polygon(
+    [
+      [-0.04, 0.011],
+      [-0.02, 0.005],
+      [0, 0.003],
+      [0.02, 0.005],
+      [0.04, 0.011],
+      [0.033, -0.004],
+      [0.013, -0.013],
+      [-0.013, -0.013],
+      [-0.033, -0.004],
+    ] as [number, number][],
     { smooth: true },
   );
-  const mouth = sdf.extrude(outline, 0.3).at(0, smileY, 0.1);
+  const mouthOutline = profile.polygon(
+    [
+      [-0.036, 0.009],
+      [-0.018, 0.004],
+      [0, 0.002],
+      [0.018, 0.004],
+      [0.036, 0.009],
+      [0.03, -0.003],
+      [0.012, -0.011],
+      [-0.012, -0.011],
+      [-0.03, -0.003],
+    ] as [number, number][],
+    { smooth: true },
+  );
+  const lip = sdf.extrude(lipOutline, 0.3).at(0, smileY, 0.1);
+  const mouth = sdf.extrude(mouthOutline, 0.3).at(0, smileY - 0.001, 0.1);
   const teeth = sdf
-    .box([0.055, 0.012, 0.3], 0.006)
-    .at(0, smileY - 0.006, 0.1)
+    .box([0.032, 0.008, 0.3], 0.003)
+    .at(0, smileY + 0.0035, 0.1)
     .intersect(mouth);
-  const tongue = mouth.intersect(sdf.ellipsoid([0.02, 0.01, 0.5]).at(0, smileY - 0.023, 0.1));
 
   // Age marks the reference shows: soft smile (nasolabial) lines from the nose
-  // wings to the mouth corners, and crow's feet at the outer eye corners. Thin
-  // chains sunk 1 mm into the face surface, so they read as soft creases.
+  // wings to the mouth corners, and crow's feet at the outer eye corners (judge
+  // r3: deeper than r2 so they read as smile lines, still soft, never scar-like).
   const crease = (pts: [number, number][], r: number) =>
     sdf.chain(
       pts.map(([x, y]): [number, number, number, number] => [x, y, h.faceZ(x, y) - 0.001, r]),
@@ -191,9 +239,9 @@ const grandmaFace = (skin: sdf.Shape, h: HumanoidShape): sdf.Shape => {
       [
         [0.026, noseY + 0.004],
         [0.037, noseY - 0.012],
-        [0.046, smileY + 0.015],
+        [0.04, smileY + 0.012],
       ],
-      0.0025,
+      0.0032,
     ),
   );
   const crowsfeet = pair(
@@ -203,12 +251,12 @@ const grandmaFace = (skin: sdf.Shape, h: HumanoidShape): sdf.Shape => {
         [EX + 0.05, EY + 0.008],
         [EX + 0.054, EY + 0.016],
       ],
-      0.0022,
+      0.0028,
     ),
   );
 
-  // A soft shade under the small nose and a scatter of freckles over the nose
-  // bridge, as in the reference.
+  // A soft shade under the small nose and a light scatter of freckles over the
+  // nose bridge (judge r3: lighter than r2, so the dots no longer dominate).
   const shade = sdf.ellipsoid([0.02, 0.008, 0.05]).at(0, noseY - 0.018, h.faceZ(0, noseY - 0.018));
   const dots: [number, number][] = [
     [-0.03, 0.012],
@@ -216,21 +264,22 @@ const grandmaFace = (skin: sdf.Shape, h: HumanoidShape): sdf.Shape => {
     [0.004, 0.014],
     [0.022, 0.02],
     [0.038, 0.01],
-    [-0.048, 0.004],
-    [0.052, 0.002],
   ];
-  const freckles = sdf.union(...dots.map(([dx, dy]) => h.onFace(sdf.sphere(0.0026), dx, noseY + dy)));
+  const freckles = sdf.union(...dots.map(([dx, dy]) => h.onFace(sdf.sphere(0.002), dx, noseY + dy)));
 
   return skin
+    .paintWhere(almondCut, h.tint.skin!)
+    .paintWhere(white, GRANDMA_FACE.white)
     .paintWhere(dark, GRANDMA_FACE.irisDark, 0.006)
-    .paintWhere(low, GRANDMA_FACE.irisLow, 0.008)
+    .paintWhere(low, GRANDMA_FACE.irisLow, 0.004)
     .paintWhere(pupil, GRANDMA_FACE.pupil)
     .paintWhere(big, '#ffffff')
-    .paintWhere(small, '#ffffff')
+    .paintWhere(lidLine, GRANDMA_FACE.lid)
+    .paintWhere(blushBack, h.tint.blush!, 0.03)
     .paintWhere(cover, h.tint.skin!)
     .paintWhere(brow, GRANDMA_FACE.brow!)
+    .paintWhere(lip, GRANDMA_FACE.lip, 0.001)
     .paintWhere(mouth, GRANDMA_FACE.mouth, 0.001)
-    .paintWhere(tongue, GRANDMA_FACE.tongue, 0.002)
     .paintWhere(teeth, GRANDMA_FACE.teeth, 0.001)
     .paintWhere(nasolabial, GRANDMA_FACE.ageLine, 0.002)
     .paintWhere(crowsfeet, GRANDMA_FACE.ageLine, 0.002)
@@ -299,14 +348,16 @@ export default humanoidAsset({
       .intersect(sdf.halfSpace([0, 1, 0], 0.06))
       .intersect(sdf.halfSpace([0, 0, -1], -0.02));
     const outerHug = sdf.ellipsoid([H[0] + 0.018, H[1] + 0.018, H[2] + 0.018]).at(0, 0.01, -0.008);
-    // The center part: a shallow narrow groove along the crown, where the cap is thickest,
-    // so no groove end pokes through the hair surface.
+    // The center part: a narrow groove along the crown, where the cap is thickest,
+    // so no groove end pokes through the hair surface (deepened a touch in r3
+    // behind the forehead: the front end keeps its r2 radius, because the
+    // expanded groove ball there just clears the cap top).
     const part = sdf
       .chain(
         [
           [0, 0.155, 0.045, 0.009],
-          [0, 0.15, -0.01, 0.009],
-          [0, 0.14, -0.065, 0.008],
+          [0, 0.148, -0.01, 0.011],
+          [0, 0.14, -0.065, 0.01],
         ],
         0.008,
       )
@@ -334,43 +385,72 @@ export default humanoidAsset({
         ),
       )
       .smoothIntersect(0.02, outerHug);
-    // The bun: a soft round ball on top, slightly back, with a wrap ring at its base. It sits
-    // low on the crown center, where no gesture hand travels (stretch-up and point-up pass wide).
-    const bun = sdf.smoothUnion(
-      0.02,
-      sdf.sphere(0.058).at(0, 0.195, -0.035),
-      sdf.torus(0.05, 0.018).rotateX(90).at(0, 0.16, -0.035),
-    );
-    // Swept strands from the center part: three overlapping cords per side run from
-    // the part over the crown toward the temples, hugging the cap (centers sunk a
-    // few mm into its surface, so they stand proud with grooves between them).
-    // Roots merge at the part but the tips stay distinct with staggered depths;
-    // every tip lands sideways of its root, nothing hanging vertical, and the
+    // (The swirled knot replaces the old top bun; see the locks block above.)
+    // Swept locks from the center part (judge r3: the r2 cords sank into the cap
+    // and read as a smooth helmet). Four separated tapered locks per side run
+    // from the part over the crown toward the temples: each lock is a tapering
+    // chain whose tip lands well sideways of its root, standing proud of the cap
+    // with a small union fillet (0.006) that keeps deep grooves between the
+    // strands and staggered depths like shingles. Nothing hangs vertical, and the
     // whole sweep stays inside outerHug above the face opening, so the forehead
     // reads and no gesture hand reaches it.
-    const cord = (pts: [number, number, number, number][]) => sdf.chain(pts, 0.012);
-    const sweeps = sdf
-      .smoothUnion(
-        0.01,
-        cord([
-          [0.012, 0.15, 0.078, 0.02],
-          [0.07, 0.132, 0.08, 0.019],
-          [0.128, 0.095, 0.062, 0.014],
-        ]),
-        cord([
-          [0.01, 0.146, 0.082, 0.019],
-          [0.064, 0.126, 0.088, 0.018],
-          [0.124, 0.086, 0.074, 0.013],
-        ]),
-        cord([
-          [0.012, 0.14, 0.089, 0.017],
-          [0.058, 0.118, 0.098, 0.016],
-          [0.112, 0.078, 0.091, 0.012],
-        ]),
+    const lock = (
+      rx: number, ry: number, rz: number,
+      mx: number, my: number, mz: number,
+      tx: number, ty: number, tz: number,
+      r: number,
+    ) =>
+      sdf.chain(
+        [
+          [rx, ry, rz, r],
+          [mx, my, mz, r * 0.6],
+          [tx, ty, tz, 0.004],
+        ],
+        0.012,
+      );
+    const locks = sdf.smoothUnion(
+      0.006,
+      lock(0.012, 0.15, 0.098, 0.07, 0.132, 0.1, 0.145, 0.075, 0.068, 0.02),
+      lock(0.01, 0.146, 0.102, 0.064, 0.126, 0.107, 0.14, 0.068, 0.075, 0.019),
+      lock(0.012, 0.14, 0.108, 0.058, 0.118, 0.112, 0.128, 0.066, 0.09, 0.017),
+      lock(0.014, 0.132, 0.112, 0.052, 0.108, 0.115, 0.1, 0.07, 0.108, 0.015),
+    );
+    // The crown joins the cap with a small fillet so the grooves between the
+    // locks survive; the sides and the knot keep the wide mass fillet.
+    const crown = sdf.smoothUnion(0.008, cap, pair(locks));
+    // The bun is a swirled knot now (judge r3: the r2 ball read pointy): an
+    // oblate ball with a tilted wrap ring and a shallow swirl groove across the
+    // top. It sits low on the crown center, where no gesture hand travels.
+    const knot = sdf.smoothUnion(
+      0.015,
+      sdf.sphere(0.062).scale([1, 0.8, 1]).at(0, 0.188, -0.035),
+      sdf.torus(0.05, 0.015).rotateX(90).rotateZ(14).at(0, 0.162, -0.035),
+    );
+    const swirl = sdf
+      .chain(
+        [
+          [-0.032, 0.232, -0.028, 0.007],
+          [0.0, 0.242, -0.042, 0.007],
+          [0.032, 0.232, -0.052, 0.007],
+        ],
+        0.006,
       )
       .smoothIntersect(0.015, outerHug);
-    const mass = sdf.smoothUnion(0.03, cap, pair(sides), bun, pair(sweeps)).smoothSubtract(0.018, part);
-    const hair = mass.smoothSubtract(0.014, faceOpen).bone('head');
+    const bun = knot.smoothSubtract(0.008, swirl);
+    const mass = sdf.smoothUnion(0.03, crown, pair(sides), bun).smoothSubtract(0.018, part);
+    // Fine strand lines combed along the sweep (Dad r3 recipe): subtle grey
+    // streaks parallel to the swept locks, in the upper sweep zone only, so the
+    // crown reads as separated strands and not one smooth cap.
+    const hairPaint = (x: number, y: number, z: number, base: Rgb): Rgb => {
+      let groove = 0;
+      for (const c of [0.055, 0.073, 0.091, 0.109, 0.127, 0.145]) {
+        const t = (y - 0.36 * x - c) / 0.005;
+        groove += Math.exp(-t * t);
+      }
+      const band = Math.min(1, Math.max(0, (y - 0.03) / 0.02)) * (z > -0.05 ? 1 : 0.3);
+      return mixRgb(base, rgb('#8f8c88'), Math.min(1, groove) * band * 0.22);
+    };
+    const hair = mass.smoothSubtract(0.014, faceOpen).paintFn(hairPaint).bone('head');
     k.body('hair', hair.at(0, HEAD_Y, 0), {
       color: k.tint('hair'),
       roughness: 0.65,
