@@ -10,6 +10,7 @@
   "deviation_notes": "Recorded 2026-10-14 as the follow-up of audio_sfx_library_20261013 (its plan task: event mapping, format, preload budget). Amended 2026-11-22 to the PM decisions: the earshot set sounds/chibi/*.ogg is the first source, the wrapper writes an MP3 copy for each sound, the set needs no credits screen, and the files ship with the APK release through a PM hand-off folder. The test strategy of 2026-11-22 named a wiring gap: no task called useSoundFiles or preload. T6a and T6b close it, and estimated_tasks becomes 11.",
   "workstream": "games",
   "retrospective": false,
+  "escalation": "fourth round: the T6i guard throws on older supported browsers",
   "evidence": [
     "src/apk3d/audio/bus.ts",
     "docs/sound-effects-list.tsv",

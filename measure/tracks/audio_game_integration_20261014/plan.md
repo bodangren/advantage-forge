@@ -489,7 +489,75 @@ Files this track touches:
 - Late finding F1: tech-debt (TD-44; no current host rewires before unlock, so no wrong current result; PM decision 2026-11-22)
 - Late finding F2: tech-debt (TD-44; no host reuses a disposed bus, so no wrong current result; PM decision 2026-11-22)
 - Late finding F3: tech-debt (TD-44; guard added in 1b7312f4; no host passes inherited names; PM decision 2026-11-22)
-- [x] T6i Green (1b7312f4): own-property guard for event names (adversarial F3)
+- [~] T6j Red: old-browser and inherited-remap pins, unpolyfilled built-in scan
+  - Old-browser pin: already in 0750febc. `withoutNativeHasOwn` deletes `Object.hasOwn`
+    for the case and restores it in `finally` via the saved descriptor
+    (`tests/apk3d/audio-files.adversarial-r3.test.ts:27-35`).
+  - Inherited-remap pin: 0750febc pins only a preload against an inherited entry, not a
+    pending load across an own-to-inherited remap, so this round adds `drops a pending load
+    when the event is remapped to an inherited-only entry`. A pending `custom -> tap`
+    load, a remap to an inherited-only `custom -> tap` entry with the same value, then
+    unlock and play: the stale buffer must never start and no fetch follows. `custom`
+    has no synth recipe, so the case needs no oscillator fake; the unlock pulse buffer
+    is excluded by identity (`started.filter((b) => b === decoded)`).
+  - Red evidence 2026-11-22: the eight-file command through the heavy runner
+    `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/audio-files.test.ts tests/apk3d/audio-files.adversarial.test.ts tests/apk3d/audio-files.adversarial-r2.test.ts tests/apk3d/audio-wiring.test.ts tests/apk3d/audio-wiring.adversarial.test.ts tests/apk3d/imports.test.ts tests/apk3d/audio-files.adversarial-r3.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts'`
+    exits 1 with 4 failed, 57 passed, and 2 skipped (63) across 8 files. The failures
+    are exactly the two old-browser cases (`TypeError: Object.hasOwn is not a function`
+    at `src/apk3d/audio/chibi.ts:24`), the new inherited-remap case (the stale load
+    installs and starts its buffer), and the scan test. The 2 skips are the TD-44 pins.
+    `node_modules/.bin/prettier --check` exits 0 on the r3 test file.
+  - Scan disposition: the scan test is written and run but NOT committed, by PM order
+    (scope question for the PM). A failing uncommitted scan would break parallel
+    sessions' full-suite runs, so the file was removed after the evidence run; the hit
+    list below re-adds it verbatim. The scan strips block comments, line comments, and
+    quoted strings, skips `*.gen.ts`, and matches `Object.hasOwn`, `structuredClone`,
+    `.findLast(`, `.findLastIndex(`, `.toSorted(`, `.toReversed(`, `.toSpliced(`,
+    `Object.groupBy`, `Map.groupBy`, `Promise.withResolvers`, `Array.fromAsync`,
+    single-argument `.at(` excluding `this.at(` (Board/Board2d tile lookup), and the
+    Set methods `.union(` (excluding `z.union(`), `.intersection(`, `.difference(`,
+    `.symmetricDifference(`, `.isSubsetOf(`, `.isSupersetOf(`, `.isDisjointFrom(`.
+    Line numbers below are raw-file lines (the probe's strip collapses block comments,
+    so its own line numbers shift; verified with raw grep).
+  - Scan hits outside `src/apk3d/audio/` (49 hits total; only the 2 T6i `Object.hasOwn`
+    lines are in audio: `src/apk3d/audio/bus.ts:263`, `src/apk3d/audio/chibi.ts:24`):
+    `structuredClone` in 34 game sim lines: `src/games/abyssal-well/core/sim.ts:221`,
+    `src/games/alchemists-synthesis/core/sim.ts:156`,
+    `src/games/archers-revenge/core/sim.ts:64`, `:153`,
+    `src/games/astral-mage/core/sim.ts:280`, `src/games/castle-defense/core/sim.ts:68`,
+    `:208`, `src/games/devourer-slime/core/sim.ts:378`,
+    `src/games/dragon-flight/core/sim.ts:304`, `src/games/dragon-rider/core/sim.ts:265`,
+    `src/games/dungeon-liberator/core/sim.ts:396`,
+    `src/games/enchanted-library/core/sim.ts:389`,
+    `src/games/griffin-riders-escape/core/sim.ts:265`,
+    `src/games/griffin-sky-joust/core/sim.ts:99`, `:313`,
+    `src/games/gryphon-patrol/core/sim.ts:319`,
+    `src/games/haunted-library/core/sim.ts:352`,
+    `src/games/hero-vs-zombie/core/sim.ts:504`, `src/games/labyrinth/core/mazes.ts:232`,
+    `src/games/labyrinth/core/sim.ts:479`, `src/games/magic-defense/core/sim.ts:112`,
+    `:231`, `src/games/monster-encounters/core/sim.ts:35`,
+    `src/games/paladins-twin-soul/core/sim.ts:150`,
+    `src/games/potion-rush/core/sim.ts:401`, `src/games/realm-carver/core/sim.ts:447`,
+    `src/games/rpg-battle/core/sim.ts:152`, `:214`,
+    `src/games/rune-forge-chamber/core/sim.ts:204`,
+    `src/games/rune-match/core/sim.ts:455`,
+    `src/games/shadow-gate-dungeon/core/sim.ts:313`,
+    `src/games/sorcerer-ziggurat/core/sim.ts:131`,
+    `src/games/spellweavers-run/core/sim.ts:249`,
+    `src/games/storm-castle-tower/core/sim.ts:339`,
+    `src/games/village-guardian/core/sim.ts:423`; genuine `Array.prototype.at` in 8
+    lines: `src/games/dragon-flight/view2d/game.ts:565`,
+    `src/games/dragon-rider/view2d/game.ts:591`,
+    `src/games/spellweavers-run/view/game.ts:216`,
+    `src/games/spellweavers-run/view2d/game.ts:311`, `:429`,
+    `src/storytime/book-pictures.ts:2269`, `:3935`, `:4558`; genuine
+    `Array.prototype.findLastIndex` in `src/host/reader.ts:197`; `THREE.Box3.union`
+    false positives (not `Set.prototype.union`) in `src/render/page.ts:263`, `:440`,
+    `:447`. Zero hits: `.findLast(`, `.toSorted(`, `.toReversed(`, `.toSpliced(`,
+    `Object.groupBy`, `Map.groupBy`, `Promise.withResolvers`, `Array.fromAsync`,
+    `.intersection(`, `.difference(`, `.symmetricDifference(`, `.isSubsetOf(`,
+    `.isSupersetOf(`, `.isDisjointFrom(`.
+- [ ] T6k Green: Object.prototype.hasOwnProperty.call at every event-map read
 
 ## Phase 4: Preload budget
 
