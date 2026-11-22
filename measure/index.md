@@ -8,6 +8,7 @@ Start here for project status, planning, and working memory.
 - [Generated Status](./generated/status.md): track and task counts from plans.
 - [Tracks Registry](./tracks.md): every historical, current, and future track.
 - [Tracks Directory](./tracks/): specifications, plans, metadata, and evidence.
+- [Backlog](./backlog.md): ideas and references for later tracks.
 - [Asset Roadmap](./asset-roadmap.md): production priorities and acceptance gaps.
 - [Game Roadmap](./game-roadmap.md): platform phases and individual game tracks.
 - [Riven Lands Roadmap](./riven-lands-roadmap.md): the second asset pack, its owner decisions, and its 17 tracks.
