@@ -15,6 +15,7 @@
  *   wrong:  answered, monsterStrike, [rest], handShown
  */
 import { createRng, type Rng, type Simulation } from '../../../apk3d/sim/index.js';
+import { deepCopy } from '../../../apk3d/sim/index.js';
 import { damageOf, monstersOf, optionsOf, targetsOf, type RpgBattleInput } from './content.js';
 import {
   HERO_OF,
@@ -149,7 +150,7 @@ export function createRpgBattle(input: RpgBattleInput, options: RpgBattleOptions
     const word = state.targets.find((w) => w.id === cardId && !w.solved);
     if (state.question || !word || !state.hand.some((c) => c.id === cardId)) return [{ type: 'rejected', command: 'play' }];
     state.question = { cardId, term: word.term, options: optionsOf(state.targets, word.id, optionCount, rng) };
-    return [{ type: 'cardPlayed', question: structuredClone(state.question), action: word.action, power: word.power }];
+    return [{ type: 'cardPlayed', question: deepCopy(state.question), action: word.action, power: word.power }];
   };
 
   const cancel = (): RpgBattleEvent[] => {
@@ -211,6 +212,6 @@ export function createRpgBattle(input: RpgBattleInput, options: RpgBattleOptions
       }
     },
     tick: () => [],
-    snapshot: () => structuredClone(state),
+    snapshot: () => deepCopy(state),
   };
 }

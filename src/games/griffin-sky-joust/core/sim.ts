@@ -9,6 +9,7 @@
  * ("the ... the") counts for either rider that carries it.
  */
 import { STEP_MS, createRng, type Rng, type Simulation } from '../../../apk3d/sim/index.js';
+import { deepCopy } from '../../../apk3d/sim/index.js';
 import { joustOf, normWord, type JoustInput } from './content.js';
 import type { Griffin, JoustCommand, JoustEvent, JoustState, Rider } from './types.js';
 
@@ -96,7 +97,7 @@ export function createGriffinSkyJoust(input: JoustInput, options: JoustOptions):
  * look-ahead uses it; the copy never touches the original).
  */
 export function resumeGriffinSkyJoust(from: JoustState, seed: number): JoustSimulation {
-  return build(structuredClone(from), createRng(seed));
+  return build(deepCopy(from), createRng(seed));
 }
 
 function initialState(sentences: JoustState['sentences'], helper: boolean): JoustState {
@@ -310,6 +311,6 @@ function build(state: JoustState, rng: Rng): JoustSimulation {
       collide(events);
       return events;
     },
-    snapshot: () => structuredClone(state),
+    snapshot: () => deepCopy(state),
   };
 }

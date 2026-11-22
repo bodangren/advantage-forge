@@ -8,6 +8,7 @@
  * decides a result and there is no game over.
  */
 import { STEP_MS, createRng, type Rng, type Simulation } from '../../../apk3d/sim/index.js';
+import { deepCopy } from '../../../apk3d/sim/index.js';
 import { visitOf, type LibraryInput } from './content.js';
 import {
   FLOOR_COUNT,
@@ -349,6 +350,6 @@ export function createHauntedLibrary(input: LibraryInput, options: HauntedLibrar
       hazardHits(events);
       return events;
     },
-    snapshot: () => structuredClone(state),
+    snapshot: () => deepCopy(state),
   };
 }

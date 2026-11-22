@@ -15,6 +15,7 @@
  *   miss (including a shut target): missed
  */
 import { createRng, type Rng, type Simulation } from '../../../apk3d/sim/index.js';
+import { deepCopy } from '../../../apk3d/sim/index.js';
 import { distinctTerms, formationOf, roundOf, targetsOf, type ArchersRevengeInput } from './content.js';
 import { layoutOf, shotOf } from './aim.js';
 import { TUNING } from './tuning.js';
@@ -61,7 +62,7 @@ export function createArchersRevenge(input: ArchersRevengeInput, options: Archer
   if (first) state.round = roundOf(state.targets, first.id, state.enemies, rng);
 
   const copyEnemies = (): WaveEnemy[] => state.enemies.map((e) => ({ ...e }));
-  const showRound = (): ArchersRevengeEvent => ({ type: 'roundShown', round: structuredClone(state.round as Round) });
+  const showRound = (): ArchersRevengeEvent => ({ type: 'roundShown', round: deepCopy(state.round as Round) });
 
   const start = (): ArchersRevengeEvent[] => {
     if (state.started) return [{ type: 'rejected', command: 'start' }];
@@ -150,6 +151,6 @@ export function createArchersRevenge(input: ArchersRevengeInput, options: Archer
       }
     },
     tick: () => [],
-    snapshot: () => structuredClone(state),
+    snapshot: () => deepCopy(state),
   };
 }

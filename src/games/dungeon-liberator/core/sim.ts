@@ -27,6 +27,7 @@ import {
   type Simulation,
   type Vec2,
 } from '../../../apk3d/sim/index.js';
+import { deepCopy } from '../../../apk3d/sim/index.js';
 import { shiftOf, villagerKindsOf, type DungeonLiberatorInput } from './content.js';
 import type {
   DungeonLiberatorCommand,
@@ -393,6 +394,6 @@ export function createDungeonLiberator(input: DungeonLiberatorInput, options: Du
       reachGate(events);
       return events;
     },
-    snapshot: () => structuredClone(state),
+    snapshot: () => deepCopy(state),
   };
 }

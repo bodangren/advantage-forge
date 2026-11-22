@@ -7,6 +7,7 @@
  * result but the order of the words.
  */
 import { createRng, type Rng, type Simulation } from '../../../apk3d/sim/index.js';
+import { deepCopy } from '../../../apk3d/sim/index.js';
 import { climbOf, cubesOf, type ZigguratInput } from './content.js';
 import type { Cube, CubeSpawn, Ritual, ZigguratCommand, ZigguratEvent, ZigguratState } from './types.js';
 
@@ -135,6 +136,6 @@ export function createSorcererZiggurat(input: ZigguratInput, options: ZigguratOp
       return events;
     },
     tick: () => [],
-    snapshot: () => structuredClone(state),
+    snapshot: () => deepCopy(state),
   };
 }

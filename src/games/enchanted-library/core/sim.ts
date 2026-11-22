@@ -22,6 +22,7 @@ import {
   type Simulation,
   type Vec2,
 } from '../../../apk3d/sim/index.js';
+import { deepCopy } from '../../../apk3d/sim/index.js';
 import { decoysOf, visitOf, type LibraryInput } from './content.js';
 import type { Book, Hero, LibraryCommand, LibraryEvent, LibraryRound, LibraryState, Spirit } from './types.js';
 
@@ -386,6 +387,6 @@ export function createEnchantedLibrary(input: LibraryInput, options: EnchantedLi
       spiritContacts(events);
       return events;
     },
-    snapshot: () => structuredClone(state),
+    snapshot: () => deepCopy(state),
   };
 }

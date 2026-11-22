@@ -8,6 +8,7 @@
  * opens and the hero walks out. No lives, no defeat, no timer.
  */
 import { STEP_MS, createRng, type Rng, type Simulation } from '../../../apk3d/sim/index.js';
+import { deepCopy } from '../../../apk3d/sim/index.js';
 import { orbWordsOf, shiftOf, type LabyrinthInput } from './content.js';
 import { COINS } from './evidence.js';
 import {
@@ -476,6 +477,6 @@ export function createLabyrinth(input: LabyrinthInput, options: LabyrinthOptions
       }
       return events;
     },
-    snapshot: () => structuredClone(state),
+    snapshot: () => deepCopy(state),
   };
 }

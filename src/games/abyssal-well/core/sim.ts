@@ -15,6 +15,7 @@
  *   fire wrong: [moved], fired, repelled, courageLost, [rest], climbed
  */
 import { createRng, type Rng, type Simulation } from '../../../apk3d/sim/index.js';
+import { deepCopy } from '../../../apk3d/sim/index.js';
 import { descentsOf, echoWordOf, normalWord, type AbyssalWellInput } from './content.js';
 import {
   CREATURES,
@@ -218,6 +219,6 @@ export function createAbyssalWell(input: AbyssalWellInput, options: AbyssalWellO
       }
     },
     tick: () => [],
-    snapshot: () => structuredClone(state),
+    snapshot: () => deepCopy(state),
   };
 }

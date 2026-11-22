@@ -11,6 +11,7 @@ import { z } from 'zod';
 import { inflateSync } from 'node:zlib';
 import { buildTimeline, type Spec, type Stage, type Timeline } from '../song/timeline.js';
 import { LINE_ART_PASS_TECHNIQUE } from './line-art-pass.js';
+import { atIndex } from '../apk3d/sim/index.js';
 
 export const PICTURE_RUBRIC_VERSION = 'storytime-picture-v2';
 export const RENDERER_ID = 'forge-song-timeline-book-still-v1';
@@ -2266,7 +2267,7 @@ export function verifyManifest(
     if (!options.release) continue;
     const selected = job.candidates.find((candidate) => candidate.version === job.selectedVersion);
     if (!selected || selected.status !== 'ready') {
-      const latest = job.candidates.at(-1);
+      const latest = atIndex(job.candidates, -1);
       const reasons = latest?.failures.length ? latest.failures.join('; ') : 'No candidate PNG.';
       failures.push(`${job.id}: no ready release candidate; ${reasons}`);
       continue;
@@ -3932,7 +3933,7 @@ export async function renderCandidates(options: {
   const results: RenderCandidateResult[] = [];
   for (const job of jobs) {
     const existingVersions = await discoverCandidateVersions(options.outputRoot, job);
-    const version = options.version ?? existingVersions.at(-1) ?? 1;
+    const version = options.version ?? atIndex(existingVersions, -1) ?? 1;
     const stage = await readStage({ job, version, repoRoot });
     const timeline = buildBookStillTimeline(stage.source);
     const file = candidateRelativePath(job, version);
@@ -4555,7 +4556,7 @@ export async function createContactSheet(
         candidate.structural.valid &&
         (selection.version === undefined || candidate.version === selection.version),
     );
-    const candidate = candidates.at(-1);
+    const candidate = atIndex(candidates, -1);
     if (candidate) {
       let lineArt: string | undefined;
       if (candidate.lineArt && isReaderJob(job)) {

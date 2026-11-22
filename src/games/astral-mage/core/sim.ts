@@ -20,6 +20,7 @@ import {
   type Simulation,
   type Vec2,
 } from '../../../apk3d/sim/index.js';
+import { deepCopy } from '../../../apk3d/sim/index.js';
 import { castingOf, echoWordOf, normalWord, type AstralMageInput } from './content.js';
 import type {
   AstralMageCommand,
@@ -277,6 +278,6 @@ export function createAstralMage(input: AstralMageInput, options: AstralMageOpti
       moveBolt(events);
       return events;
     },
-    snapshot: () => structuredClone(state),
+    snapshot: () => deepCopy(state),
   };
 }

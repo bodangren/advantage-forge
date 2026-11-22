@@ -25,6 +25,7 @@ import {
   type Simulation,
   type Vec2,
 } from '../../../apk3d/sim/index.js';
+import { deepCopy } from '../../../apk3d/sim/index.js';
 import { guardKindsOf, shiftOf, type DevourerSlimeInput } from './content.js';
 import type { Bubble, DevourerSlimeCommand, DevourerSlimeEvent, DevourerSlimeState, Guard, ShiftSentence } from './types.js';
 
@@ -375,6 +376,6 @@ export function createDevourerSlime(input: DevourerSlimeInput, options: Devourer
       if (state.phase === 'playing') meetGuards(events);
       return events;
     },
-    snapshot: () => structuredClone(state),
+    snapshot: () => deepCopy(state),
   };
 }

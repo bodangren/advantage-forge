@@ -9,6 +9,7 @@
  * hazards stop, and the tower is cleared at the top. No lives, no defeat, no timer.
  */
 import { STEP_MS, createRng, type Rng, type Simulation } from '../../../apk3d/sim/index.js';
+import { deepCopy } from '../../../apk3d/sim/index.js';
 import { bareWord, distractorsOf, sentencesOf, shiftOf, wordKey, type StormCastleTowerInput } from './content.js';
 import type {
   Climber,
@@ -345,6 +346,6 @@ export function createStormCastleTower(input: StormCastleTowerInput, options: St
       fallHazards(events);
       return events;
     },
-    snapshot: () => structuredClone(state),
+    snapshot: () => deepCopy(state),
   };
 }

@@ -6,6 +6,7 @@
  * and the shift ends when every order is served. There is no game over.
  */
 import { STEP_MS, createRng, type Rng, type Simulation } from '../../../apk3d/sim/index.js';
+import { deepCopy } from '../../../apk3d/sim/index.js';
 import { ordersOf, type PotionRushInput } from './content.js';
 import {
   INGREDIENT_KINDS,
@@ -398,6 +399,6 @@ export function createPotionRush(input: PotionRushInput, options: PotionRushOpti
       spawn(events);
       return events;
     },
-    snapshot: () => structuredClone(state),
+    snapshot: () => deepCopy(state),
   };
 }

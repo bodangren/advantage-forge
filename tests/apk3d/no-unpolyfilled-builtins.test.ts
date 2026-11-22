@@ -5,12 +5,10 @@ import { expect, it } from 'vitest';
 
 // Vite leaves these ES2022+ built-ins unpolyfilled, so they throw on the older supported
 // browsers (iOS 15.0-15.3, Chrome WebView 80-97). The scan fails naming file and line.
-// Track old_browser_builtins_20261122 widens this root from the audio folder to src/ behind the
-// SCAN_WIDE flag (T3); T5 removes the flag and scans src/ unconditionally. The file never moves:
-// its URL resolves two steps up to the repository root.
+// Track old_browser_builtins_20261122 widened this root from the audio folder to src/ in T5 and
+// removed the wide-mode flag. The file never moves: its URL resolves two steps up to the root.
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
-const wide = process.env.SCAN_WIDE === '1';
-const SCAN_ROOT = wide ? join(ROOT, 'src') : join(ROOT, 'src', 'apk3d', 'audio');
+const SCAN_ROOT = join(ROOT, 'src');
 
 function walk(dir: string): string[] {
   const out: string[] = [];

@@ -14,6 +14,7 @@
  *          then waveCleared, then [waveAppeared, stepShown] or victory
  */
 import { createRng, type Rng, type Simulation } from '../../../apk3d/sim/index.js';
+import { deepCopy } from '../../../apk3d/sim/index.js';
 import { attackersOf, choicesOf, shiftOf, type CastleDefenseInput } from './content.js';
 import { type Attacker, type CastleDefenseCommand, type CastleDefenseEvent, type CastleDefenseState, type Spot, type ShotSummary, type Step } from './types.js';
 
@@ -79,7 +80,7 @@ export function createCastleDefense(input: CastleDefenseInput, options: CastleDe
 
   const copyAttackers = (): Attacker[] => state.attackers.map((a) => ({ ...a }));
   const copySpots = (): Spot[] => state.spots.map((s) => ({ ...s, covers: [...s.covers] }));
-  const showStep = (): CastleDefenseEvent => ({ type: 'stepShown', step: structuredClone(state.step as Step), built: [...state.built] });
+  const showStep = (): CastleDefenseEvent => ({ type: 'stepShown', step: deepCopy(state.step as Step), built: [...state.built] });
   const living = (): Attacker[] => state.attackers.filter((a) => a.hits > 0);
 
   const start = (): CastleDefenseEvent[] => {
@@ -205,6 +206,6 @@ export function createCastleDefense(input: CastleDefenseInput, options: CastleDe
       }
     },
     tick: () => [],
-    snapshot: () => structuredClone(state),
+    snapshot: () => deepCopy(state),
   };
 }

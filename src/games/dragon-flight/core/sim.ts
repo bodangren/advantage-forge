@@ -14,6 +14,7 @@
  */
 import { MAX_LISTENING_SESSION_ITEMS } from '../../../apk3d/contracts/index.js';
 import { STEP_MS, createRng, type Rng, type Simulation } from '../../../apk3d/sim/index.js';
+import { deepCopy } from '../../../apk3d/sim/index.js';
 import { flightWordsOf, gatesFor, type DragonFlightInput } from './content.js';
 import type {
   DragonFlightCommand,
@@ -301,6 +302,6 @@ export function createDragonFlight(input: DragonFlightInput, options: DragonFlig
       else tickBoss(events);
       return events;
     },
-    snapshot: () => structuredClone(state),
+    snapshot: () => deepCopy(state),
   };
 }

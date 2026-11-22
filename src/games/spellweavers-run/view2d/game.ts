@@ -21,6 +21,7 @@ import { nextChoice } from '../qc/bot.js';
 import strings from '../strings.en.js';
 import { CHUNK, FOREST, kindOf, laneX, MEADOW, ORB_COLORS, rng } from '../view/land-plan.js';
 import { PromptPanel2D } from './prompt.js';
+import { atIndex } from '../../../apk3d/sim/index.js';
 
 const PPM = 64;
 const ELEVATION = 45;
@@ -308,7 +309,7 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
           break;
         }
         case 'wordCollected': {
-          const list = [...rows.values()].at(-1) ?? [];
+          const list = atIndex([...rows.values()], -1) ?? [];
           const orb = list.find((o) => Math.abs(o.x - steerX) < 0.1);
           if (orb) {
             burst(orb.ball.x, orb.ball.y, 0xffe27a, 14);
@@ -426,7 +427,7 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
         return !!command;
       },
       /** Game-pixel points of the current orbs' tags (for real taps). */
-      points: () => ({ gates: [...rows.values()].at(-1)?.map((o) => ({ x: o.tag.x, y: o.tag.y })) ?? [] }),
+      points: () => ({ gates: atIndex([...rows.values()], -1)?.map((o) => ({ x: o.tag.x, y: o.tag.y })) ?? [] }),
       size: () => ({ width: W, height: H }),
     };
     const qc = window as unknown as { __apk3dView2d?: typeof hook };

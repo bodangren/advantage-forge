@@ -8,6 +8,7 @@
  * the words. (The legacy game had forge health and a 12 s timer per sentence; both are gone.)
  */
 import { STEP_MS, createRng, type Rng, type Simulation } from '../../../apk3d/sim/index.js';
+import { deepCopy } from '../../../apk3d/sim/index.js';
 import { forgeOf, normalWord, waveWordsOf, type RuneForgeChamberInput } from './content.js';
 import type {
   ForgeSentence,
@@ -201,6 +202,6 @@ export function createRuneForgeChamber(input: RuneForgeChamberInput, options: Ru
       }
       return events;
     },
-    snapshot: () => structuredClone(state),
+    snapshot: () => deepCopy(state),
   };
 }

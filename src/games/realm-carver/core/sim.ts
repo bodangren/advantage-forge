@@ -10,6 +10,7 @@
  * timer decides a result.
  */
 import { STEP_MS, createRng, type Rng, type Simulation } from '../../../apk3d/sim/index.js';
+import { deepCopy } from '../../../apk3d/sim/index.js';
 import { campaignOf, monsterKindsOf, type RealmCarverInput } from './content.js';
 import {
   BOARD_SIZE,
@@ -458,6 +459,6 @@ export function createRealmCarver(input: RealmCarverInput, options: RealmCarverO
       if (state.phase === 'playing') stepMonsters(events);
       return events;
     },
-    snapshot: () => structuredClone(state),
+    snapshot: () => deepCopy(state),
   };
 }

@@ -6,6 +6,7 @@
 import type { StoryInput, Translate } from '../apk3d/contracts/index.js';
 import { canSpeak, ClipPlayer, speak, stopSpeaking } from '../apk3d/audio/index.js';
 import { esc } from '../apk3d/hud/index.js';
+import { lastIndexWhere } from '../apk3d/sim/index.js';
 
 type Word = StoryInput['vocabulary'][number];
 
@@ -194,7 +195,7 @@ export class Reader {
     this.stopReading();
     if (stopping) return;
     const first = audio.sentences.findIndex((s) => s.paragraph >= from && s.paragraph <= to);
-    const last = audio.sentences.findLastIndex((s) => s.paragraph >= from && s.paragraph <= to);
+    const last = lastIndexWhere(audio.sentences, (s) => s.paragraph >= from && s.paragraph <= to);
     if (first < 0) return;
     this.playing = button;
     button.classList.add('playing');

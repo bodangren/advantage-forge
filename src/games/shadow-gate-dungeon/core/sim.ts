@@ -22,6 +22,7 @@ import {
   type Simulation,
   type Vec2,
 } from '../../../apk3d/sim/index.js';
+import { deepCopy } from '../../../apk3d/sim/index.js';
 import { bareWord, distractorsOf, sentencesOf, shiftOf, wordKey, type ShadowGateInput } from './content.js';
 import type {
   Crystal,
@@ -318,6 +319,6 @@ export function createShadowGate(input: ShadowGateInput, options: ShadowGateOpti
       reachGate(events);
       return events;
     },
-    snapshot: () => structuredClone(state),
+    snapshot: () => deepCopy(state),
   };
 }

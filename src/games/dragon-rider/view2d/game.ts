@@ -25,6 +25,7 @@ import { manifest, FILES_2D, HEROES_2D } from '../manifest.js';
 import { nextChoice } from '../qc/bot.js';
 import strings from '../strings.en.js';
 import { CHUNK, GATE_X, HIGHLAND, rng } from '../view/land-plan.js';
+import { atIndex } from '../../../apk3d/sim/index.js';
 
 const PPM = 64;
 const ELEVATION = 45;
@@ -588,7 +589,7 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
         return !!command;
       },
       /** Game-pixel points of the current gates' tags (for real taps). */
-      points: () => ({ gates: [...gates.values()].at(-1)?.map((g) => ({ x: g.tag.x, y: g.tag.y })) ?? [] }),
+      points: () => ({ gates: atIndex([...gates.values()], -1)?.map((g) => ({ x: g.tag.x, y: g.tag.y })) ?? [] }),
       size: () => ({ width: W, height: H }),
     };
     const qc = window as unknown as { __apk3dView2d?: typeof hook };

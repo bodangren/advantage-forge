@@ -8,6 +8,7 @@
  * missed wave only repeats.
  */
 import { STEP_MS, createRng, type Rng, type Simulation } from '../../../apk3d/sim/index.js';
+import { deepCopy } from '../../../apk3d/sim/index.js';
 import { LANES, escapeOf, gatesFor, laneX, nearestLane, stormLanesFor, wordPoolOf, type EscapeInput } from './content.js';
 import type { EscapeCommand, EscapeEvent, EscapeState, Wave } from './types.js';
 
@@ -262,6 +263,6 @@ export function createGriffinRidersEscape(input: EscapeInput, options: EscapeOpt
       else tickFinale(events);
       return events;
     },
-    snapshot: () => structuredClone(state),
+    snapshot: () => deepCopy(state),
   };
 }

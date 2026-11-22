@@ -12,6 +12,7 @@
  *           then [waveShown, captured] or victory
  */
 import { createRng, type Rng, type Simulation } from '../../../apk3d/sim/index.js';
+import { deepCopy } from '../../../apk3d/sim/index.js';
 import { shadesOf, targetsOf, type TwinSoulInput } from './content.js';
 import type { TargetWord, TwinSoulCommand, TwinSoulEvent, TwinSoulState } from './types.js';
 
@@ -147,6 +148,6 @@ export function createTwinSoul(input: TwinSoulInput, options: TwinSoulOptions): 
       }
     },
     tick: () => [],
-    snapshot: () => structuredClone(state),
+    snapshot: () => deepCopy(state),
   };
 }

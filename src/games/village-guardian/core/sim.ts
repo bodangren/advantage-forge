@@ -28,6 +28,7 @@ import {
   type Simulation,
   type Vec2,
 } from '../../../apk3d/sim/index.js';
+import { deepCopy } from '../../../apk3d/sim/index.js';
 import { watchOf, villagerKindsOf, type VillageGuardianInput } from './content.js';
 import type {
   ScareCause,
@@ -433,6 +434,6 @@ export function createVillageGuardian(input: VillageGuardianInput, options: Vill
       reachBarn(events);
       return events;
     },
-    snapshot: () => structuredClone(state),
+    snapshot: () => deepCopy(state),
   };
 }

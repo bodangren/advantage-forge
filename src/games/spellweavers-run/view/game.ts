@@ -15,6 +15,7 @@ import { nextChoice } from '../qc/bot.js';
 import { buildLand, RUN_MODELS } from './land.js';
 import { laneX, ORB_COLORS } from './land-plan.js';
 import './spellweavers-run.css';
+import { atIndex } from '../../../apk3d/sim/index.js';
 
 const ARCH_SCALE = 1.25;
 const ORB_Y = 1.15;
@@ -213,7 +214,7 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
         break;
       }
       case 'wordCollected': {
-        const list = [...rows.values()].at(-1) ?? [];
+        const list = atIndex([...rows.values()], -1) ?? [];
         const orb = list.find((o) => Math.abs(o.x - steerX) < 0.1);
         if (orb) {
           void burst(stage, new THREE.Vector3(orb.x, ORB_Y, orb.z), 0xffe27a, 14, 1.0);

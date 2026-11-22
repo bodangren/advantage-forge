@@ -5,6 +5,7 @@
  * the outer wall next to the gate cell. Every cell is floor; only the edges carry walls.
  */
 import type { Cell, CellWalls, Dir, Maze, Mover, WallEdge } from './types.js';
+import { deepCopy } from '../../../apk3d/sim/index.js';
 
 export const MAZE_COLS = 9;
 export const MAZE_ROWS = 7;
@@ -229,4 +230,4 @@ export function mazeById(id: string): Maze {
 }
 
 /** A deep copy of a maze (the state carries its own). */
-export const cloneMaze = (maze: Maze): Maze => structuredClone(maze);
+export const cloneMaze = (maze: Maze): Maze => deepCopy(maze);

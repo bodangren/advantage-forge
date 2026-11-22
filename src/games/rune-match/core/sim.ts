@@ -13,6 +13,7 @@
  *             then [runesFell (placed)] or victory
  */
 import { createRng, type Rng, type Simulation } from '../../../apk3d/sim/index.js';
+import { deepCopy } from '../../../apk3d/sim/index.js';
 import { monstersOf, paletteOf, targetsOf, type RuneMatchInput } from './content.js';
 import {
   HEROES,
@@ -468,6 +469,6 @@ export function createRuneMatch(input: RuneMatchInput, options: RuneMatchOptions
       }
     },
     tick: () => [],
-    snapshot: () => structuredClone(state),
+    snapshot: () => deepCopy(state),
   };
 }

@@ -7,6 +7,7 @@
  * the answers.
  */
 import { STEP_MS, createRng, type Rng, type Simulation } from '../../../apk3d/sim/index.js';
+import { deepCopy } from '../../../apk3d/sim/index.js';
 import { formulasOf, jarsFor, type AlchemistsSynthesisInput } from './content.js';
 import type {
   AlchemistsSynthesisCommand,
@@ -153,6 +154,6 @@ export function createAlchemistsSynthesis(input: AlchemistsSynthesisInput, optio
       }
       return events;
     },
-    snapshot: () => structuredClone(state),
+    snapshot: () => deepCopy(state),
   };
 }

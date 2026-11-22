@@ -7,6 +7,7 @@
  * opens. No timer decides anything and there is no game over.
  */
 import { STEP_MS, createRng, type Rng, type Simulation } from '../../../apk3d/sim/index.js';
+import { deepCopy } from '../../../apk3d/sim/index.js';
 import { orbsFor, runOf, wordPoolOf, type SpellweaversInput } from './content.js';
 import type { Round, SpellweaversCommand, SpellweaversEvent, SpellweaversState } from './types.js';
 
@@ -253,6 +254,6 @@ export function createSpellweaversRun(input: SpellweaversInput, options: Spellwe
       else tickFinale(events);
       return events;
     },
-    snapshot: () => structuredClone(state),
+    snapshot: () => deepCopy(state),
   };
 }

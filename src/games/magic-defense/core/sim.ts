@@ -14,6 +14,7 @@
  *   storm: stormCast, [missileThrown x n], roundShown
  */
 import { createRng, type Rng, type Simulation } from '../../../apk3d/sim/index.js';
+import { deepCopy } from '../../../apk3d/sim/index.js';
 import { distinctTerms, formationOf, roundOf, targetsOf, type MagicDefenseInput } from './content.js';
 import type { HeldMissile, MagicDefenseCommand, MagicDefenseEvent, MagicDefenseState, Round, TargetWord, WaveEnemy } from './types.js';
 
@@ -123,7 +124,7 @@ export function createMagicDefense(input: MagicDefenseInput, options: MagicDefen
   if (state.missiles.length) pickActive();
 
   const copyEnemies = (): WaveEnemy[] => state.enemies.map((e) => ({ ...e }));
-  const showRound = (): MagicDefenseEvent => ({ type: 'roundShown', round: structuredClone(state.round as Round) });
+  const showRound = (): MagicDefenseEvent => ({ type: 'roundShown', round: deepCopy(state.round as Round) });
 
   const start = (): MagicDefenseEvent[] => {
     if (state.started) return [{ type: 'rejected', command: 'start' }];
@@ -228,6 +229,6 @@ export function createMagicDefense(input: MagicDefenseInput, options: MagicDefen
       }
     },
     tick: () => [],
-    snapshot: () => structuredClone(state),
+    snapshot: () => deepCopy(state),
   };
 }

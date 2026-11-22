@@ -5,6 +5,7 @@
  * challenge and animates the returned events in order (the order is documented in quest.ts).
  */
 import type { Simulation } from '../../../apk3d/sim/index.js';
+import { deepCopy } from '../../../apk3d/sim/index.js';
 import type { StoryInput } from '../../../apk3d/contracts/index.js';
 import { createQuest } from './quest.js';
 import type { GameEvent, QuestOptions, QuestResults, QuestState, Response } from './types.js';
@@ -32,7 +33,7 @@ export function createMonsterEncounters(story: StoryInput, options: QuestOptions
       }
     },
     tick: () => [],
-    snapshot: () => structuredClone(quest.state),
+    snapshot: () => deepCopy(quest.state),
     results: () => quest.results(),
   };
 }
