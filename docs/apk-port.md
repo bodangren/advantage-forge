@@ -237,6 +237,14 @@ decides those merges.
 | story packs | `demo/public/stories/` | served by the app (`apps/advantage-games/public/stories/` first) | |
 | model packs | `demo/public/packs/` | `apps/advantage-games/public/packs/` | |
 | sprite packs | `demo/public/assets/apk/<pack>/` | `apps/advantage-games/public/assets/apk/<pack>/` | the APK root rule |
+| Chibi audio | `demo/public/audio/chibi/` | proposed: `apps/advantage-games/public/audio/chibi/` | |
+
+The 14 Chibi sound files move with the games. The monorepo target is a proposal. The PM or
+Monorepo session confirms or replaces it at hand-off.
+
+`soundBase` is a launch-context field. It holds the site base with a trailing slash, such as
+`/demo/`. `wireChibiSounds` appends `audio/chibi/` once. The page fetches
+`/demo/audio/chibi/tap.ogg`. A host with no `soundBase` keeps every event on the synth recipe.
 
 Why two new packages and not folders in `advantage-play-kit` and `game-cartridges`: the kit
 imports `three` (not a dependency of `advantage-play-kit`, which is imported by server code

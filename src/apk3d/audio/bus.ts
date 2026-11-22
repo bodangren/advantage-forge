@@ -152,6 +152,11 @@ export class AudioBus {
       this.pendingDecode.delete(name);
       void this.decodeData(name, data);
     }
+    // Older iPhones start the context only when a sound starts inside the gesture.
+    const silence = this.ctx.createBufferSource();
+    silence.buffer = this.ctx.createBuffer(1, 1, 22050);
+    silence.connect(this.ctx.destination);
+    silence.start(0);
     void this.ctx.resume();
     if (this.mood !== 'none') this.music(this.mood);
   }

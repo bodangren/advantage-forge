@@ -67,7 +67,7 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
   }).filter((id) => edition.bindings[id]);
   const [width, height] = fitGameSize();
   const audio = ctx.audio ?? new AudioBus();
-  wireChibiSounds(audio, ctx.soundBase, ['cast', 'collect', 'fizzle', 'victory', 'whoosh']);
+  wireChibiSounds(audio, ctx.soundBase, ['cast', 'collect', 'correct', 'fizzle', 'victory', 'whoosh']);
   const unlock = ctx.audio ? null : installAudioUnlock(audio);
   let frame: ((time: number) => void) | null = null;
 
