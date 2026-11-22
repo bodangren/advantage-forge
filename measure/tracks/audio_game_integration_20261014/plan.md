@@ -35,8 +35,8 @@ Files this track touches:
 
 ## Phase 1: Event map
 
-- [x] T1 Red: Add `tests/audio-event-map.test.ts`. It reads `docs/sound-event-map.tsv` with
-      `readFileSync` and splits each line on the tab. The eight cases:
+- [~] T1 Red: Add `tests/audio-event-map.test.ts`. It reads `docs/sound-event-map.tsv` with
+  `readFileSync` and splits each line on the tab. The eight cases:
 
   1. The file exists. Line 1 is exactly `event\tsource\tnote`, and the file holds 58 data rows and
      no other line.

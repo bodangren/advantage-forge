@@ -33,6 +33,5 @@ remaining_failures:
   - case 6 fails: ENOENT for docs/sound-event-map.tsv (expected Red)
   - case 7 fails: ENOENT for docs/sound-event-map.tsv (expected Red)
   - case 8 fails: ENOENT for docs/sound-event-map.tsv (expected Red)
-red_kind: failing-first (not gap-closing)
 notes: T2 Green (docs/sound-event-map.tsv) not started. No production source edited. No monorepo writes. Background duplicate Red run (sh_200eb4b0c001ZqyBFVntNJNNU7) was left running; Red evidence above comes from the completed foreground run with exit 1.
 END_MEASURE_AGENT_RESULT
