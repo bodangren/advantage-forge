@@ -57,3 +57,62 @@ Author model: opencode-go/deepseek-v4.1-flash
 - The `--ortho` and `--flat` options touch `src/cli/forge.ts` and `src/render/page.ts`, which other
   tracks also edit. T2 keeps the change to the two named views, the two flags, the camera choice, and
   the `flat/` folder, so a merge stays small.
+
+## Amendment after r1 (2026-11-23)
+
+Source: `measure/runs/chibi_sprouts_redesign_20261123/spec-review-61db4f1.json` (11 blockers, 4
+majors, baseline `61db4f1`). Scope: `spec.md`, `plan.md`, and this file. No implementation and no
+test change.
+
+- F1 closed: the plan splits the renderer work. T2 Red pins the options with
+  `tests/render-options.test.ts` and the pin asset `assets/flat-render-pin.ts`. T3 Green implements
+  the options in `src/cli/forge.ts` and `src/render/page.ts`, and names `ORTHO_MARGIN`, `orthoFrame`,
+  `useFlatMaterials`, `ViewsRequest.ortho`, `ViewsRequest.flat`, `NAMED_VIEWS['front-level']`, and
+  `NAMED_VIEWS['side-level']`. T4 Red then adds the proportion check. The tasks run T1 to T12, and
+  each SHA line stays empty.
+- F2 closed: `tests/sprout-base.test.ts` and `tests/sprout-gestures.test.ts` skip wholly, and their
+  test names are listed in AC1. `tests/sprout-gesture-offset.test.ts` keeps the hero assertions of
+  lines 209-210, 220, and 243-244 in a new active describe `hero clip contracts (not scrapped)`, with
+  three named tests. The other two describes skip nine named tests. The three files then hold 18
+  tests: 3 pass and 15 skip.
+- F3 closed: the spec names the export `KIM_CHIN_Y` in `assets/parts/humanoid-kim.ts`, its data shape
+  and its import path from the proportion script. It fixes the face and eye rules: the skin and eye
+  colours, the skin and dark pixel tests, the face window and component, the 8-connected rule, the
+  face centre fallback, the face area and width, the eye band, the qualifying test, the exact count
+  of two, the mean widths and heights, the bounding-box pupil centre, the row and spacing rules, and
+  the named failure for an empty, extra, or edge-touching component.
+- F4 closed: AC3 and "The hand rules" take the vertices of each side in world space (x > 0 and
+  x < 0), state the unweighted covariance, the degenerate test, the sign that orients each normal
+  toward the body, and the signed pass: left `n·x̂ ≤ −0.906`, right `n·x̂ ≥ 0.906`. The test covers
+  both hands and a mirrored cloud.
+- F5 closed: "The hand rules" fix the band rows with the 10 % cut, the body run, the hand run on each
+  side, the widest-run choice, the 80 % row floor, the 2 px gap, the median front width, and the
+  0.60 depth factor. The hand depth comes from the model, with the reason that the side mask and the
+  forearm row cannot separate the hand.
+- F6 closed: the spec holds the flat pixel contract: the material swap and its fields, the hidden
+  ground, the sRGB output and `toneMapped: false`, the 1 of 255 base-colour and 24 of 255 paint
+  tolerance, the alpha 128 mask and alpha 250 colour rule, the `--fast` and `--bg none`
+  requirement, the named error, and the material restore. T2 counts seven renderer cases.
+- F7 closed: decision (j) and the projection table set the side column to `u = (cz − z)·ppm + W/2`,
+  because `Studio.aim` puts the azimuth-90 camera at +X with image right at −Z. AC2 adds a guard and
+  T2 a case: the frontmost mask column in the head band sits left of `W/2`.
+- F8 closed: decision (k) and AC4 give the judge `mom-panel.png`, which holds Mom's lit front and
+  side renders and Mom's drawing. The Kim sheet stays local to the PM sheet. AC4 rule 7 and the
+  standing rules stop the task when a route would send Kim art.
+- F9 closed: T11 and T12 stay `deferred:pm`. AC6 says an amendment adds the walk clip source as its
+  own Red and Green task pair. T12 asks for an idle sprite sample only, and AC6 rule 2 forbids a
+  cut-out or a sprite before the approval only.
+- F10 closed: T6 Red adds `tests/mom-kim-sheet.test.ts` with seven layout cases, and T7 Green writes
+  `scripts/mom-kim-sheet.mjs`. T8 is the judge task only, and it writes `judge.json` alone.
+- F11 closed: AC2 rule 7 lists five synthetic figures with independent mutations and expected rows:
+  the pass figure, a higher crown for `heightInHeads`, a lower sole for `legShare`, a wider head for
+  `headToShoulders`, and merged eyes for the named eye-component failure.
+- F12 closed: T5 compares the parsed pin with the role baseline and requires one new key and no
+  changed value, per decision (g). The diff-line check is gone.
+- F13 closed: the derived table solves `0.045² + (T + 0.133)² = (1.33 T)²` for an explicit 0.045 m
+  horizontal reach. The torso height becomes 0.409 m, the shoulder 0.994 m, and the arm 0.544 m.
+- F14 closed: T9 hands off and writes nothing. T10 records the handoff date, the PM answer, and the
+  next task. T9 no longer requires a plan update.
+- F15 closed: decision (l) and AC5 name the lit views, the `rows.lit` source in `measure.json`, the
+  page's reference rows for both panels of each reference, and the 4 px check of each side figure's
+  rows.
