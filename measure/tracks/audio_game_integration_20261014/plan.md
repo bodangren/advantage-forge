@@ -827,6 +827,14 @@ Files this track touches:
     `audio-handoff: symlink in ...: tap.ogg` and creates no `out/` folder. The adversarial name
     check passes in both gates through `tests/audio-handoff.adversarial.test.ts`.
   - dispositions: A-F1=FIX; A-F2=FIX; A-F3=FIX; C-F1=FIX; C-F2=FIX; C-F3=FIX; ADV-P5-1=FIX; B-N1=FIX
+  - B-N1 (symlink follow in `scripts/audio-handoff.mjs`) is closed by Green `a0cdaf4f`: `lstatSync` rejects a symlink in either input folder before any write.
+- Late finding A5-F4: tech-debt (the hand-off test reads the manifest byte cell with `Number.parseInt`, so a decimal prefix followed by text passes; the generator writes a valid decimal cell; no user reaches a wrong result)
+- Late finding A5-F6: tech-debt (the hand-off script does not check output ancestors for a symlink; the audited output uses real directories; no user reaches a wrong result)
+- Late finding A5-F7: tech-debt (the adversarial inventory test accepts a failed process launch as a rejection; the live CLI still rejects a bad inventory; no user reaches a wrong result)
+- Late finding A5-F8: tech-debt (`test-strategy.md:418-458` names the old gate counts and case layout; the plan and live gates use the new layout; no user reaches a wrong result)
+- Late finding C5-F4: tech-debt (README `/demo/` wording: label it an example; the copy steps change no host configuration; no user reaches a wrong result)
+- Late finding ADV-P5-2: tech-debt (zero-byte sound accepted by the hand-off script; shipped sources are non-empty; fix = reject size 0; test pinned and skipped with TD-48; PM rule 2026-11-23; no user reaches a wrong result)
+- The review records of 2026-11-23 are `review-a-p5-df7f01b.json`, `review-b-p5-6230bdb.json`, `review-c-p5-df7f01b.json`, and `adversarial-p5-df7f01b.json` in `measure/runs/audio_game_integration_20261014/`.
 
 ## Phase 6: Deferred work
 
