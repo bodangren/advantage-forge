@@ -466,7 +466,7 @@ tests/apk3d/no-unpolyfilled-builtins.test.ts'` exits 0: 1 file passed, 2 tests p
 
 ## Phase 4: Gates
 
-- [ ] T8 Gates (d282495b): Run every gate of AC6 and record each exit code in this plan. Every
+- [x] T8 Gates (d282495b): Run every gate of AC6 and record each exit code in this plan. Every
       command below ran on 2026-11-23 against HEAD `9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4`.
       The gate record commit is `d282495b999af9e1bcb56ab24e1bb86138fa3f46`.
   - Amendment 2026-11-23 (orchestrator; the PM was informed): the AC6 Prettier line is a
@@ -475,15 +475,60 @@ tests/apk3d/no-unpolyfilled-builtins.test.ts'` exits 0: 1 file passed, 2 tests p
     record must name each baseline-failing file as pre-existing debt. Reason: the full command
     already exits 1 for 35 files at the track start, and a clean exit 0 would reformat unrelated
     lines of 30 sim files (Review A Phase 4 F1).
-  - Status under the amendment: rules 1 and 2 hold as recorded below for the files that the record
-    lists. Rule 3 does not hold, because this record names no baseline-failing file. T8 stays open
-    until the record lists the 35 pre-existing files by name. A subset is never the AC6 pass.
+  - Status under the amendment, re-recorded 2026-11-23 at tested commit
+    `9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4`: rule 1 holds because every file this track creates
+    passes `prettier --check` (exit 0 on the seven created or widened files). Rule 2 holds because
+    the per-file table below shows 0 files that pass at `3f6a1921` and fail now. Rule 3 holds because
+    the table names all 35 baseline-failing files as pre-existing debt. All rules of the amended AC6
+    hold, so T8 is complete. Exit code 1 of the full Prettier command is the baseline debt of those
+    35 named files and is never counted as an AC6 pass for them.
   - Three-file command: `node node_modules/vitest/vitest.mjs run tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts --maxWorkers=1` through the heavy runner exits 0. Reporter: `Test Files 3 passed (3)`, `Tests 23 passed (23)`. The scan reports zero hits over `src/`.
   - Witness files: `node node_modules/vitest/vitest.mjs run tests/old-browser/adversarial-check.test.ts tests/old-browser/adversarial-check-r2.test.ts --maxWorkers=1` through the heavy runner exits 0. Reporter: `Test Files 1 passed | 1 skipped (2)`, `Tests 1 passed | 1 skipped (2)`. The skipped file is the TD-49 deferred case.
   - Project command: `node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts` through the heavy runner exits 0. Reporter: `Test Files 231 passed | 2 skipped (233)`, `Tests 3397 passed | 10 skipped (3407)`. Tested commit: `9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4`. No TD-35 to TD-40 failure occurs in this run.
   - `node measure/tools/generate.mjs --check` exits 0: `Measure facts are current (4 files).`
   - `./measure/doctor.sh --structural-only` exits 0: `Measure doctor found no structural errors.`
-  - `node_modules/.bin/prettier --check` on the AC6 file list exits 1 with `Code style issues found in 35 files`. The split: the seven files this track created or widened (`scripts/old-browser-check.mjs`, `tests/old-browser/deep-copy.test.ts`, `tests/old-browser/index-math.test.ts`, `tests/apk3d/no-unpolyfilled-builtins.test.ts`, `src/apk3d/sim/copy.ts`, `src/apk3d/sim/index-math.ts`, `measure/tracks/old_browser_builtins_20261122/test-strategy.md`) pass with exit 0. All 35 failing files are pre-existing baseline debt: each fails when its version at track start `3f6a19214994e7ac05a79a8fa7faeded684267b7` is piped to the same check, and none is reformatted here. Under the amendment rule 1 the seven created files pass. Under rule 2 each older changed file fails only where its baseline version also fails. Under rule 3 this record fails, because it names none of the 35 files. This is not a pass for those files.
+  - `node_modules/.bin/prettier --check` on the AC6 file list exits 1 with `Code style issues found in 35 files`. The split: the seven files this track created or widened (`scripts/old-browser-check.mjs`, `tests/old-browser/deep-copy.test.ts`, `tests/old-browser/index-math.test.ts`, `tests/apk3d/no-unpolyfilled-builtins.test.ts`, `src/apk3d/sim/copy.ts`, `src/apk3d/sim/index-math.ts`, `measure/tracks/old_browser_builtins_20261122/test-strategy.md`) pass with exit 0. All 35 failing files are pre-existing baseline debt: each fails when its version at track start `3f6a19214994e7ac05a79a8fa7faeded684267b7` is piped to the same check, and none is reformatted here. Under the amendment rule 1 the seven created files pass. Under rule 2 each older changed file fails only where its baseline version also fails. Under rule 3 the 35 files are named in the table below. AC6 Prettier: rules 1 to 3 hold; exit code 1 is the baseline debt of 35 named files (2026-11-23, tested commit `9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4`).
+  - Per-file Prettier check (path | now | at 3f6a1921), each failing file checked with
+    `git show 3f6a1921:<path> | node_modules/.bin/prettier --stdin-filepath <path> --check`:
+    | path                                                                                           | now  | at 3f6a1921 |
+    | ---------------------------------------------------------------------------------------------- | ---- | ----------- |
+    | `src/games/abyssal-well/core/sim.ts`                                                           | fail | fail        |
+    | `src/games/alchemists-synthesis/core/sim.ts`                                                   | fail | fail        |
+    | `src/games/archers-revenge/core/sim.ts`                                                        | fail | fail        |
+    | `src/games/astral-mage/core/sim.ts`                                                            | fail | fail        |
+    | `src/games/castle-defense/core/sim.ts`                                                         | fail | fail        |
+    | `src/games/devourer-slime/core/sim.ts`                                                         | fail | fail        |
+    | `src/games/dragon-flight/core/sim.ts`                                                          | fail | fail        |
+    | `src/games/dragon-flight/view2d/game.ts`                                                       | fail | fail        |
+    | `src/games/dragon-rider/core/sim.ts`                                                           | fail | fail        |
+    | `src/games/dragon-rider/view2d/game.ts`                                                        | fail | fail        |
+    | `src/games/dungeon-liberator/core/sim.ts`                                                      | fail | fail        |
+    | `src/games/enchanted-library/core/sim.ts`                                                      | fail | fail        |
+    | `src/games/griffin-riders-escape/core/sim.ts`                                                  | fail | fail        |
+    | `src/games/griffin-sky-joust/core/sim.ts`                                                      | fail | fail        |
+    | `src/games/gryphon-patrol/core/sim.ts`                                                         | fail | fail        |
+    | `src/games/haunted-library/core/sim.ts`                                                        | fail | fail        |
+    | `src/games/hero-vs-zombie/core/sim.ts`                                                         | fail | fail        |
+    | `src/games/labyrinth/core/mazes.ts`                                                            | fail | fail        |
+    | `src/games/labyrinth/core/sim.ts`                                                              | fail | fail        |
+    | `src/games/magic-defense/core/sim.ts`                                                          | fail | fail        |
+    | `src/games/paladins-twin-soul/core/sim.ts`                                                     | fail | fail        |
+    | `src/games/potion-rush/core/sim.ts`                                                            | fail | fail        |
+    | `src/games/realm-carver/core/sim.ts`                                                           | fail | fail        |
+    | `src/games/rpg-battle/core/sim.ts`                                                             | fail | fail        |
+    | `src/games/rune-forge-chamber/core/sim.ts`                                                     | fail | fail        |
+    | `src/games/rune-match/core/sim.ts`                                                             | fail | fail        |
+    | `src/games/shadow-gate-dungeon/core/sim.ts`                                                    | fail | fail        |
+    | `src/games/sorcerer-ziggurat/core/sim.ts`                                                      | fail | fail        |
+    | `src/games/spellweavers-run/core/sim.ts`                                                       | fail | fail        |
+    | `src/games/spellweavers-run/view2d/game.ts`                                                    | fail | fail        |
+    | `src/games/spellweavers-run/view/game.ts`                                                      | fail | fail        |
+    | `src/games/storm-castle-tower/core/sim.ts`                                                     | fail | fail        |
+    | `src/games/village-guardian/core/sim.ts`                                                       | fail | fail        |
+    | `src/host/reader.ts`                                                                           | fail | fail        |
+    | `src/storytime/book-pictures.ts`                                                               | fail | fail        |
+    | Rule 2 proof: 0 files pass at 3f6a1921 and fail now. None of the 35 failing files is absent at |
+    | the baseline. Rule 1 proof: the seven created or widened files listed above all exit 0.        |
   - Standalone scan: `node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/no-unpolyfilled-builtins.test.ts` through the heavy runner exits 0: `Test Files 1 passed (1)`, `Tests 11 passed (11)`, zero reported hits.
   - Phase 3 check: `node scripts/old-browser-check.mjs --game spellweavers-run` through the heavy runner exits 0: `started: true`, `moves: 3`, `negative_control.changed: false`, `errors: []`, all four deleted names `undefined`. `ss -ltn` shows no listener on 5199 and `ps` shows no owned vite or chrome process.
   - Commands, each run through the heavy runner where it starts tests:
