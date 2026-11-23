@@ -429,6 +429,29 @@ tests/apk3d/no-unpolyfilled-builtins.test.ts'` exits 0: 1 file passed, 2 tests p
     `node_modules/.bin/prettier --check scripts/old-browser-check.mjs` exits 0. `ss -ltn` and `ps`
     show no listener on 5199 and no owned vite or chrome process after every run.
 
+- T7 browser check evidence: check.json (game spellweavers-run, the four deleted names, accepted moves,
+  negative_control, errors []), screenshots out/old-browser/spellweavers-run-start.png and
+  spellweavers-run-move.png; Phase 3 prerequisites: ux-browser-review-p3-1eefa25,
+  review-a/b/c-p3-1eefa25 and adversarial-p3-1eefa25
+- PM-informed orchestrator ruling 2026-11-23: Phase 3 rounds 1 and 2 (T7r c3f48a52, T7r2 c9f6bba1)
+  fixed the startup race, the cleanup and the no-input false PASS; the round 3 findings go to tech
+  debt TD-49 under the PM rule for measurement-script findings; the PM may veto
+- Late finding A3-F6 and ADV3-F2: tech-debt (input causality can be faked by a harness that blocks
+  the game handlers after the page-side counter or calls the game's auto hook; contrived; AC5's
+  claims about the four built-ins and a running game are intact; fix = verify the game processed the
+  input with an input-processed counter from the game; the e8312fc1 witness stays live and the
+  387a7032 witness is skipped with TD-49; no user reaches a wrong result) — source
+  measure/runs/old_browser_builtins_20261122/review-a-p3-1eefa25.json and
+  measure/runs/old_browser_builtins_20261122/adversarial-p3-1eefa25.json
+- Late finding C3-F6: tech-debt (the quiet-control field defaults to false before measurement;
+  startup failures still exit 1; no user reaches a wrong result) — source
+  measure/runs/old_browser_builtins_20261122/review-c-p3-1eefa25.json
+- Late finding A3-F5 and C3-F4/F5: tech-debt (the CLI accepts a repeated valid `--game` pair, an
+  invalid value prints only the usage line, and a runtime error string can keep a stack; the same
+  game is checked and no run gives a false PASS; no user reaches a wrong result) — source
+  measure/runs/old_browser_builtins_20261122/review-a-p3-1eefa25.json and
+  measure/runs/old_browser_builtins_20261122/review-c-p3-1eefa25.json
+
 ## Phase 4: Gates
 
 - [ ] T8 Gates: Run every gate of AC6 and record each exit code in this plan.
