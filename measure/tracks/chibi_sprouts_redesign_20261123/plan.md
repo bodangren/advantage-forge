@@ -673,6 +673,36 @@ scripts/proportion-check.mjs` exits 0.
     - `prettier --check` exits 0 on the new file.
   - Record: the two paths, their sizes, the measured Kim rows, and the full-suite reporter line.
 
+- [x] T8r Green (src 976144e8): fixed F1 to F3 in `scripts/mom-kim-sheet.mjs`.
+  - Evidence 2026-11-24 (Green model `opencode-go/hy4-flash-free`, family hy4; the Red model of the
+    track is `opencode-go/muse-spark-1.3-contributor`, family muse). The adversarial audit at
+    `measure/runs/chibi_sprouts_redesign_20261123/adversarial-p5-2451d2c.json` found F1, F2 and F3.
+    Every command ran through
+    `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '<cmd>'`.
+  - F1: the Kim sheet is scanned with an opaque-reference rule. A sheet whose opaque pixel count
+    is under ten percent is refused with one line `mom-kim-sheet: Kim sheet is transparent, not a
+    usable reference`, before any scan or write. The real Kim sheet is fully opaque. The 5 px
+    shifted-row case still fails with the named `Kim side rows ... not within 4 px` line.
+  - F2: `rows.lit` in `measure.json` is validated before any image work: it must be an object with
+    no unknown keys, and any present row must hold finite numbers. A missing record, a stale record
+    older than either lit render, an unknown row, or a string row exits 1 with one named line and
+    writes no PNG. The measurement script may have rewritten the record in its legacy `front` /
+    `side` form; the view-keyed `front-level` / `side-level` pairs are derived from those finite
+    `crown` and `sole` numbers, never from image masks. No stale-regeneration was needed: the
+    current `measure.json` is newer than both lit views.
+  - F3: `lstatSync` checks `out/chibi-sprouts` and `out/chibi-sprouts/redesign` before any read or
+    write. A symbolic link exits 1 with one line `output folder is a link: <path>`; the link is
+    never followed, so neither `measure.json` nor a PNG lands in its target.
+  - Gates: `node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/mom-kim-sheet.adversarial.test.ts`
+    exits 0 with 5 passed; the Red sheet test exits 0 with 8 passed; the whole project gate
+    `node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts`
+    exits 0 with `Test Files 239 passed | 4 skipped (243)` and
+    `Tests 3467 passed | 27 skipped (3494)`. `tsc --noEmit` exits 2 with the 51 baseline errors and
+    none in the script. `prettier --check` exits 0.
+  - The two PNGs were regenerated and are byte-identical to T8: `mom-kim-review.png` sha256
+    `54e11c762a4d08f61172b57583d7dce10c4466a9438234bf4616c6670eb4ece0` and `mom-panel.png` sha256
+    `b6cba32ac4515dc23dc3332d21cfd5f950289b01567574603076377af5d5135f`.
+
 ## Phase 6: LATO.2 GPU trial (Daniel 2026-11-23, USD 5 cap)
 
 - [ ] T9 Measure: Run one LATO.2 image-to-mesh trial on our own VM. Files:
