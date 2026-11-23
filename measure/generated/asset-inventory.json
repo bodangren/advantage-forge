@@ -9625,9 +9625,9 @@
     }
   ],
   "asset_source_coverage": {
-    "listed": 1079,
+    "listed": 1081,
     "catalog_matched": 809,
-    "off_catalog": 270
+    "off_catalog": 272
   },
   "asset_sources": [
     {
@@ -14007,6 +14007,11 @@
       "catalog_source_ids": []
     },
     {
+      "id": "humanoid-kim",
+      "source_path": "assets/parts/humanoid-kim.ts",
+      "catalog_source_ids": []
+    },
+    {
       "id": "humanoid-kind",
       "source_path": "assets/parts/humanoid-kind.ts",
       "catalog_source_ids": []
@@ -15518,6 +15523,11 @@
     {
       "id": "sprout-mia",
       "source_path": "assets/sprout-mia.ts",
+      "catalog_source_ids": []
+    },
+    {
+      "id": "sprout-mom-kim",
+      "source_path": "assets/sprout-mom-kim.ts",
       "catalog_source_ids": []
     },
     {
