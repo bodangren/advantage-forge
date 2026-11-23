@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "role": "adversarial-testing",
+  "track": "audio_game_integration_20261014",
+  "phase": "Phase 5: Hand-off to the PM",
+  "baseline_sha": "5470e45243bed1a1f26e81063d92f5bdf729de3b",
+  "phase_base_sha": "5470e45243bed1a1f26e81063d92f5bdf729de3b",
+  "role_base_sha": "6230bdb0a95062e0ab0b499e755ea0440c0ed2e1",
+  "pre_adversarial_head_sha": "6230bdb0a95062e0ab0b499e755ea0440c0ed2e1",
+  "audited_head_sha": "6230bdb0a95062e0ab0b499e755ea0440c0ed2e1",
+  "status": "fail",
+  "summary": "The Green hand-off command passes, but a new adversarial test exposes an invalid inventory false PASS. Identically renaming a sound in both input folders makes the script produce a hand-off missing the required filename. The committed test fails against the audited implementation.",
+  "blocking_findings": [
+    "ADV-P5-1 [Blocker] adversarial-testing: scripts/audio-handoff.mjs:17-33 checks only inventory counts and source/demo name equality. In an isolated fixture, renaming tap.ogg to tap-renamed.ogg in both folders makes the script exit 0 and write tap-renamed.ogg instead of tap.ogg. This can deliver a wrong file set to the PM. Require the exact 14 supported names before writing."
+  ],
+  "nonblocking_findings": [],
+  "evidence": [
+    "The exact Green command exited 0: the hand-off generator ran, 8 tests passed, sha256sum verified 14 files, and the before/after monorepo status lists were identical.",
+    "The copied-fixture rename probe exited 0 and created tap-renamed.ogg in the hand-off output, while the required tap.ogg was absent.",
+    "The committed adversarial test fails first against the audited script: expected a nonzero status for the unsupported inventory, received exit 0.",
+    "The project gate ran once and exited 1: 1 failed, 3,386 passed, and 8 skipped across 230 files. The only failure was the new adversarial inventory test.",
+    "In copied folders, a flipped source byte, a deleted file, and an extra file each made the script exit 1.",
+    "The script ran twice over a dirty copied output folder, removed the stale file, and produced exactly 17 files each time. It also succeeded when the sibling monorepo path was absent.",
+    "Recomputed SHA-256 values, byte sizes, and target values matched all 14 manifest rows. Swapping a checksum filename made sha256sum -c exit 1.",
+    "The original hand-off test failed when the copied documentation row named example.invalid/audio/ instead of the proposed target.",
+    "The Phase 5 plan has no A5 false-claim phrase. The reviewed script and tests have no A7-style English-word exclusion filter."
+  ],
+  "commands": [
+    "git rev-parse HEAD at role start => 6230bdb0a95062e0ab0b499e755ea0440c0ed2e1",
+    "node measure/runs/audio_game_integration_20261014/.audio-handoff-probe/project/scripts/audio-handoff.mjs with tap.ogg renamed to tap-renamed.ogg in both copied inputs => exit 0; hand-off contains tap-renamed.ogg",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run tests/audio-handoff.adversarial.test.ts --maxWorkers=1' => exit 1; 1 adversarial test fails as expected",
+    "node_modules/.bin/prettier --check tests/audio-handoff.adversarial.test.ts => exit 0",
+    "git commit 098decd4030643142b2002585744483996342ee7 => committed tests/audio-handoff.adversarial.test.ts only",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'echo MONOREPO-BEFORE && git -C ../reading-advantage-monorepo status --short && node scripts/audio-handoff.mjs && AUDIO_HANDOFF_ARTIFACTS=1 node node_modules/vitest/vitest.mjs run tests/audio-handoff.test.ts --maxWorkers=1 && (cd out/apk-audio-handoff/chibi && sha256sum -c MANIFEST.sha256) && echo MONOREPO-AFTER && git -C ../reading-advantage-monorepo status --short' => exit 0; 8 passed; 14 checksum lines OK; monorepo lists identical before and after",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts' => exit 1; 230 files, 1 failed, 3386 passed, 8 skipped; sole failure is tests/audio-handoff.adversarial.test.ts",
+    "Copied-fixture byte flip, deletion, and extra-file probes => each script run exits 1",
+    "Copied dirty-output double run with no sibling monorepo => both runs exit 0; exactly 17 files; stale output removed",
+    "Copied manifest validation => 14 SHA-256, byte, and target rows recomputed successfully; swapped checksum filename makes sha256sum -c exit 1",
+    "Copied docs target mutation to example.invalid/audio/ and default audio-handoff tests => exit 1; 1 failed, 2 passed, 5 skipped",
+    "rg scan of Phase 5 plan for A5 claims and of target script/tests for A7 filters => no matches"
+  ],
+  "changed_files": [
+    "tests/audio-handoff.adversarial.test.ts",
+    "measure/runs/audio_game_integration_20261014/adversarial-p5-6230bdb.json",
+    "measure/runs/audio_game_integration_20261014/adversarial-p5-6230bdb.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [
+    "ADV-P5-1: the hand-off script can emit a bundle with a missing required sound filename and a substituted unsupported filename."
+  ],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "retry_implementation",
+  "confidence": "high",
+  "route": "openai/gpt-6-luna#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 2,
+      "evidence": "scripts/audio-handoff.mjs:17-33 accepts matching input names outside the required set and writes them into the hand-off."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "tests/audio-handoff.adversarial.test.ts fails first on the unsupported-name mutation."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "Commit 098decd4 changes only the new adversarial test."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "The renamed-input false PASS, expected adversarial failure, Green gate, and project gate all have recorded results."
+    }
+  ]
+}

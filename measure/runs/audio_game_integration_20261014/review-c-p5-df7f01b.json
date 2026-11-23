@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "role": "review-c",
+  "track": "audio_game_integration_20261014",
+  "phase": "Phase 5: Hand-off to the PM",
+  "phase_base_sha": "5470e45243bed1a1f26e81063d92f5bdf729de3b",
+  "role_base_sha": "df7f01bfb02094005b514b62003f1343c1dfe16c",
+  "audited_head_sha": "df7f01bfb02094005b514b62003f1343c1dfe16c",
+  "status": "pass",
+  "summary": "The rebuilt README corrects the load rule and explains verification and copying. The help command exits 0 without changing the output.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "C-F4 [Nit] review-c: README.md:11 presents /demo/ as the site base without identifying it as the Forge example. Route this wording to tech-debt. The copy steps do not change host configuration, and docs/apk-port.md:245-247 identifies the value as an example."
+  ],
+  "evidence": [
+    "C-F1 withdrawn: The rebuilt README:8-10 states one format choice, Ogg preference, and preload before unlock. This matches AC9 and AudioBus.",
+    "C-F2 withdrawn: The rebuilt README:14-16 gives the checksum working directory and tells recipients to copy only the 14 sounds after target confirmation. plan.md:761,817-818 runs the checksum inside the bundle.",
+    "C-F3 withdrawn: The wrapped --help command prints exactly one usage line and exits 0. All out/ entry metadata and the hand-off file hashes match before and after.",
+    "The Phase 5 strategy and exact phase diff cover the CLI and recipient contract. No production audio path or existing port row changed.",
+    "C-F4 is a late wording finding. It does not change the actual site base or the confirmed copy destination, and no current user flow reaches a wrong result."
+  ],
+  "commands": [
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '<read-only output snapshots before and after node scripts/audio-handoff.mjs --help>' — exit 0, one usage line; out/ metadata and bundle file hashes unchanged.",
+    "git diff --check 6230bdb0..df7f01bf — exit 0.",
+    "git rev-parse HEAD — df7f01bfb02094005b514b62003f1343c1dfe16c, equal to the audited commit."
+  ],
+  "changed_files": [
+    "scripts/audio-handoff.mjs",
+    "tests/audio-handoff.test.ts",
+    "tests/audio-handoff.adversarial.test.ts",
+    "measure/tracks/audio_game_integration_20261014/plan.md",
+    "measure/generated/status.md"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "contract_applicability": "applicable",
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "unknown",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 4,
+      "evidence": "The rebuilt README:8-16 fixes all three findings but does not label /demo/ as an example."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "tests/audio-handoff.test.ts:139-165 checks the help exit status, usage line, and unchanged hand-off directory."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The exact phase diff changes the generator, its tests, and Measure records without changing production audio paths."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "The wrapped help command passed, and both output snapshots matched."
+    }
+  ]
+}

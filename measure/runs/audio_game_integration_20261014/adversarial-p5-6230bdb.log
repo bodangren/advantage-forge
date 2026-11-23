@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: adversarial-testing
+status: partial
+track: audio_game_integration_20261014
+phase: Phase 5: Hand-off to the PM
+commits: 098decd4030643142b2002585744483996342ee7
+tests_run: The adversarial test fails as expected against the current script. The Green command passed 8 tests and verified 14 checksums. The project gate exited 1 with 1 failed, 3386 passed, and 8 skipped.
+files_changed: tests/audio-handoff.adversarial.test.ts; measure/runs/audio_game_integration_20261014/adversarial-p5-6230bdb.json; measure/runs/audio_game_integration_20261014/adversarial-p5-6230bdb.log
+plan_updates: None.
+known_failures: ADV-P5-1: the script accepts matching source and demo inventories with an unsupported filename and produces a hand-off missing the required sound.
+handoff: Route ADV-P5-1 to Green. The test-only commit pins the false PASS. Do not fix production behavior in this role.
+END_MEASURE_AGENT_RESULT

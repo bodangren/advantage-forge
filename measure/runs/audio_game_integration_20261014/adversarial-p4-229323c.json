@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "role": "adversarial-testing",
+  "track": "audio_game_integration_20261014",
+  "phase": "Phase 4: Preload budget",
+  "baseline_sha": "53ae856842ae14a63fb1b65a96edd1c8d6ce22e4",
+  "phase_base_sha": "53ae856842ae14a63fb1b65a96edd1c8d6ce22e4",
+  "role_base_sha": "229323c5d822f1dcb480b8e5ccf767c98a6f0c75",
+  "pre_adversarial_head_sha": "229323c5d822f1dcb480b8e5ccf767c98a6f0c75",
+  "audited_head_sha": "229323c5d822f1dcb480b8e5ccf767c98a6f0c75",
+  "status": "pass",
+  "summary": "The result is rebound to HEAD 229323c5. The intervening non-Measure diff is empty, and the required default budget test passes. C4-F4 remains recorded tech debt.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "C4-F4 [Nit] adversarial-testing: tech-debt (PM-decided). The final fileEffect check at scripts/audio-budget.mjs:358-360 ignores the qualifying before-launch file event and checks only the first event after unlock. A probe with pop.ogg before unlock and synth after unlock reports fileEffect=false. This can reject a valid measurement, but it cannot create a false PASS or change sound in a shipped game."
+  ],
+  "evidence": [
+    "git rev-parse HEAD => 229323c5d822f1dcb480b8e5ccf767c98a6f0c75.",
+    "git diff --stat 5a1da5011f31008102f8563b1f03f2891c23f99b 229323c5d822f1dcb480b8e5ccf767c98a6f0c75 -- . ':!measure' ':!docs/chibi-sprouts' printed no output.",
+    "The default audio budget gate passed 4 tests and skipped the measurement-dependent JSON case.",
+    "The prior live browser gate measured 79,319 bytes across 6 files and passed all 5 JSON-mode tests.",
+    "The prior heavier decode probe failed as expected at 2.410899999976158 s, above the 1.5 s limit.",
+    "C4-F4 is retained as measurement-only tech debt. It can reject valid playback, but it cannot create a false PASS or change shipped game sound."
+  ],
+  "commands": [
+    "git rev-parse HEAD => 229323c5d822f1dcb480b8e5ccf767c98a6f0c75",
+    "git diff --stat 5a1da5011f31008102f8563b1f03f2891c23f99b 229323c5d822f1dcb480b8e5ccf767c98a6f0c75 -- . ':!measure' ':!docs/chibi-sprouts' => empty output",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run tests/audio-budget.test.ts --maxWorkers=1' => exit 0; 4 passed, 1 skipped"
+  ],
+  "changed_files": [
+    "measure/runs/audio_game_integration_20261014/adversarial-p4-229323c.json",
+    "measure/runs/audio_game_integration_20261014/adversarial-p4-229323c.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "unknown",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 4,
+      "evidence": "The required default gate passes; C4-F4 is a false rejection in measurement tooling."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "tests/audio-budget.test.ts passed 4 tests; its measurement-dependent JSON test is skipped in the default run."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "Only the new provenance-bound JSON and log were created."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "The new HEAD, scoped diff, and heavy-run gate result are recorded with exact commands."
+    }
+  ]
+}

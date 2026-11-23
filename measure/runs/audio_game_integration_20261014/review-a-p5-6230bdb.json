@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "role": "review-a",
+  "track": "audio_game_integration_20261014",
+  "phase": "Phase 5: Hand-off to the PM",
+  "baseline_sha": "5470e45243bed1a1f26e81063d92f5bdf729de3b",
+  "phase_base_sha": "5470e45243bed1a1f26e81063d92f5bdf729de3b",
+  "role_base_sha": "6230bdb0a95062e0ab0b499e755ea0440c0ed2e1",
+  "audited_head_sha": "6230bdb0a95062e0ab0b499e755ea0440c0ed2e1",
+  "status": "fail",
+  "summary": "Both requested gates pass here, and all 14 shipped files and manifest rows verify. The default suite requires a sibling checkout, the generator accepts an invalid file set, and the README misstates format selection.",
+  "blocking_findings": [
+    "F1 [Blocker] review-a: tests/audio-handoff.test.ts:79-88 unconditionally requires the sibling monorepo in the default suite. The standalone checkout fixture fails at the git status check. Skip that check with a reason when the sibling is absent in default mode. Keep the check mandatory in the explicit hand-off gate.",
+    "F2 [Blocker] review-a: scripts/audio-handoff.mjs:17-33,38-50 validates the counts and compares the two lists but never validates the expected names. A fixture with tap.ogg renamed to tap.wav in both folders exited 0 and labeled tap.wav as mp3. Check the approved seven names in both formats before replacing the output folder.",
+    "F3 [Blocker] review-a: scripts/audio-handoff.mjs:70-73 generates a README that says the bus chooses the format in the first unlock. Spec AC9 and src/apk3d/audio/bus.ts:258-269 allow preload to choose it earlier. State that preload can choose the format and the first unlock reuses that choice. Make the README test assert the preload exception."
+  ],
+  "nonblocking_findings": [
+    "F4 [Nit] review-a: tests/audio-handoff.test.ts:167-169 accepts a numeric prefix followed by text. The flagged suite passed with junk appended to one manifest bytes cell. Compare the complete cell to the decimal file size.",
+    "F5 [Nit] review-a: plan.md:761 gives a checksum command that fails from the repo root. The checksum lists basenames, which sha256sum resolves against the current directory. Use the strategy's command that runs inside the hand-off folder.",
+    "F6 [Nit] review-a: scripts/audio-handoff.mjs:13,35-40 assumes the output ancestors are real directories. The audited checkout uses directories, but a symlink in an output ancestor can redirect writes outside the hand-off folder. Check the output directory ancestry before deleting or writing."
+  ],
+  "evidence": [
+    "HEAD equaled 6230bdb0a95062e0ab0b499e755ea0440c0ed2e1 at review start and after testing. The exact phase range added the CLI and test and changed the plan and generated status.",
+    "The requested Green command exited 0 with eight tests passing and 14 checksum OK lines. The monorepo status lists before and after were identical and contained no track path.",
+    "The default gate exited 0 with three tests passing and five artifact cases skipped. A fixture without the sibling checkout failed in the default mode.",
+    "An independent check required exact six-column TSV rows, recomputed every byte count and SHA-256, compared each shipped file to both originals, and checked each proposed target.",
+    "The real rerun against an existing folder produced the same 17 paths and SHA-256 values. In-memory missing-source and changed-byte fixtures exited 1 before any write and preserved the previous bundle.",
+    "The in-memory filesystem check saw only output paths under the hand-off folder. Replacement removed the stale file and produced 17 entries. The rename fixture exposed an invalid release manifest.",
+    "The flagged check without a hand-off folder failed all five artifact cases. Changing one shipped byte failed both equality and hash cases. Changing one demo byte failed the default byte comparison.",
+    "docs/apk-port.md:238,240 contains the model-pack pattern and exactly one proposed Chibi audio row. The README names the same proposed target and model-pack path. Its first-unlock wording conflicts with the documented preload exception.",
+    "The generated manifest, docs row, and plan do not claim the PM confirmed the target. The output stays ignored.",
+    "The audio phase changes no orchestration scripts, framework contract tests, or registry. No production TypeScript export changed, so build-graph has no changed symbol to trace.",
+    "Prettier, the audio diff check, and generated-fact check passed. The doctor first found a broken link in another untracked review fixture. The doctor passed after the fixture disappeared.",
+    "During final artifact validation HEAD advanced to 098decd4, which only adds tests/audio-handoff.adversarial.test.ts. The requested gates and independent probes ran against the earlier audited tree."
+  ],
+  "commands": [
+    "git rev-parse HEAD; git merge-base --is-ancestor 5470e45243bed1a1f26e81063d92f5bdf729de3b 6230bdb0a95062e0ab0b499e755ea0440c0ed2e1; git diff --name-status 5470e45243bed1a1f26e81063d92f5bdf729de3b..6230bdb0a95062e0ab0b499e755ea0440c0ed2e1 => verified audit provenance and the exact phase paths.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'echo MONOREPO-BEFORE && git -C ../reading-advantage-monorepo status --short && node scripts/audio-handoff.mjs && AUDIO_HANDOFF_ARTIFACTS=1 node node_modules/vitest/vitest.mjs run tests/audio-handoff.test.ts --maxWorkers=1 && (cd out/apk-audio-handoff/chibi && sha256sum -c MANIFEST.sha256) && echo MONOREPO-AFTER && git -C ../reading-advantage-monorepo status --short' => exit 0, eight tests passed, 14 checksum OK lines.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run tests/audio-handoff.test.ts --maxWorkers=1' => exit 0, three passed and five skipped.",
+    "Heavy-run independent manifest verification and repeat generation => 14 rows independently verified, seven Ogg and seven MP3; all 17 output hashes stable.",
+    "Heavy-run in-memory generator fixtures => missing source and changed byte exit 1 with zero writes; existing output rebuilt with no stale file; invalid tap.wav accepted and labeled mp3.",
+    "Heavy-run in-memory Vitest fixtures => default fails without sibling; opt-in without deliverable fails five cases; a changed shipped byte fails two cases; a changed demo byte fails one; malformed bytes cell passes all eight.",
+    "sha256sum -c out/apk-audio-handoff/chibi/MANIFEST.sha256 from repo root => exit 1, all 14 basenames unresolved.",
+    "git diff --check on the phase range; node_modules/.bin/prettier --check scripts/audio-handoff.mjs tests/audio-handoff.test.ts; node measure/tools/generate.mjs --check => pass."
+  ],
+  "changed_files": [
+    "measure/runs/audio_game_integration_20261014/review-a-p5-6230bdb.json",
+    "measure/runs/audio_game_integration_20261014/review-a-p5-6230bdb.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "retry_implementation",
+  "confidence": "high",
+  "route": "openai/gpt-6.2-sol#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 3,
+      "evidence": "All 14 shipped files verify, but the CLI accepted tap.wav as mp3 and the README omits the preload exception."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 3,
+      "evidence": "Byte changes and missing output fail, but the malformed bytes cell passes and the default run fails without a sibling checkout."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The exact phase diff adds the planned generator and test and updates only the phase plan and generated status."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "Both gates, independent checksum calculations, and isolated negative fixtures produced direct results."
+    }
+  ]
+}

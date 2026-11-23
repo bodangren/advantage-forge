@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: adversarial-testing
+status: complete
+track: audio_game_integration_20261014
+phase: Phase 5: Hand-off to the PM
+commits: 09c4289c8111f77d14c1248eff571aa034614ea8
+tests_run: The r2 file passed with 1 TD-48 skip. The combined hand-off gate passed 11 tests with 1 skip. The project gate passed 230 files and 3389 tests with 1 file skip and 9 test skips. Prettier passed.
+files_changed: tests/audio-handoff.adversarial-r2.test.ts; measure/runs/audio_game_integration_20261014/adversarial-p5-df7f01b.json; measure/runs/audio_game_integration_20261014/adversarial-p5-df7f01b.log
+plan_updates: None.
+known_failures: ADV-P5-2 remains nonblocking late tech debt as TD-48. The test body remains intact and is skipped with the owner-approved reason.
+handoff: Result rebound to HEAD 09c4289c8111f77d14c1248eff571aa034614ea8. The diff from df7f01bf over src and scripts is empty. No production files changed.
+END_MEASURE_AGENT_RESULT

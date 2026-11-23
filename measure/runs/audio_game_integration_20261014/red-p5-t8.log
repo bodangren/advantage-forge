@@ -1,0 +1,24 @@
+MEASURE_AGENT_RESULT
+role: measure-mid-red
+track: audio_game_integration_20261014
+phase: Phase 5: Hand-off to the PM
+task: T8
+phase_base_sha: 5470e45243bed1a1f26e81063d92f5bdf729de3b
+role_base_sha: 5470e45243bed1a1f26e81063d92f5bdf729de3b
+resulting_head_sha: 79a8d5c4ebc96cf6695e05bbf9dbe3f41f7a2d88
+commits:
+- a97e88c862c4ec88569920a558fc0dd73c6250c8: measure(audio_game_integration): Phase 5 Red handoff test (tests/audio-handoff.test.ts only)
+- 79a8d5c4ebc96cf6695e05bbf9dbe3f41f7a2d88: measure(audio_game_integration): Phase 5 Red mark T8 in progress (plan.md only)
+tests:
+- red: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'rm -rf out/apk-audio-handoff/chibi && AUDIO_HANDOFF_ARTIFACTS=1 node node_modules/vitest/vitest.mjs run tests/audio-handoff.test.ts --maxWorkers=1' => exit 1, 8 collected, 5 failed, 3 passed. Cases 1-3 pass (14 demo files byte-identical; one docs row to the proposed target; monorepo status clean of track paths). Cases 4-8 fail with ENOENT for the missing folder (scandir out/apk-audio-handoff/chibi, shipped file, MANIFEST.sha256 x2, README.md). No syntax or import error.
+- default: same heavy wrapper without the flag => exit 0, 8 collected, 3 passed, 5 skipped (artifact cases skip with the run-scripts/audio-handoff.mjs reason)
+failing_cases:
+- holds exactly the 14 sounds plus the manifest, checksum, and README (ENOENT scandir out/apk-audio-handoff/chibi)
+- ships each hand-off file byte-identical to its source (ENOENT level-end.mp3)
+- verifies every checksum line and passes sha256sum -c (ENOENT MANIFEST.sha256)
+- holds a six-column manifest with matching bytes, hashes, and proposed targets (ENOENT MANIFEST.sha256)
+- names the proposed target, the load rule, and the model-pack row in the README (ENOENT README.md)
+prettier: node_modules/.bin/prettier --check tests/audio-handoff.test.ts exits 0
+notes: no src/, scripts/, or docs/ file edited; nothing written in ../reading-advantage-monorepo (read-only git status); out/apk-audio-handoff/chibi absent; neighboring dirty paths untouched
+status: red_complete
+END_MEASURE_AGENT_RESULT

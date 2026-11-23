@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "role": "review-a",
+  "track": "audio_game_integration_20261014",
+  "phase": "Phase 5: Hand-off to the PM",
+  "baseline_sha": "5470e45243bed1a1f26e81063d92f5bdf729de3b",
+  "phase_base_sha": "5470e45243bed1a1f26e81063d92f5bdf729de3b",
+  "role_base_sha": "df7f01bfb02094005b514b62003f1343c1dfe16c",
+  "audited_head_sha": "df7f01bfb02094005b514b62003f1343c1dfe16c",
+  "status": "pass",
+  "summary": "F1, F2, and F3 are closed. The explicit and default gates pass. The earlier manifest and output-directory notes remain nonblocking.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F4 [Nit] review-a: tests/audio-handoff.test.ts still parses the manifest byte cell with Number.parseInt. This accepts a valid decimal prefix followed by text. The generator emits a valid decimal cell.",
+    "F6 [Nit] review-a: scripts/audio-handoff.mjs still assumes the output ancestors are real directories. The new input symlink guard does not check the output ancestors. The audited output uses real directories.",
+    "F7 [Nit] review-a: tests/audio-handoff.adversarial.test.ts:32-39 accepts a failed process launch as an inventory rejection. An audit fixture returned status null and the test passed. Require exit 1, the inventory diagnostic, and no output. This late finding is test debt; it does not change the CLI result.",
+    "F8 [Nit] review-a: test-strategy.md:418-458 still describes the original gate counts and case layout. The T8g plan and live gates use the new layout. This late finding is record debt; it does not change the CLI result."
+  ],
+  "evidence": [
+    "HEAD matched df7f01bfb02094005b514b62003f1343c1dfe16c. The phase base is an ancestor. The exact audio phase range adds the CLI and both tests and changes the plan and generated status.",
+    "F1 withdrawn: the same missing-sibling fixture now passes the default suite with four passes and six skips. The explicit mode still fails only the required sibling status check.",
+    "F2 withdrawn: the same tap.ogg to tap.wav rename in both folders exits 1 with the inventory diagnostic. The probe observed no output writes.",
+    "F3 withdrawn: the generated README:8-10 states that preload can choose the format before the first unlock and that unlock reuses the choice. It also includes the recipient verify and copy steps.",
+    "F5 withdrawn: plan.md now checks MANIFEST.sha256 from inside the hand-off folder. The strategy Green command produced all 14 OK lines.",
+    "The strategy's exact Green subcommand passed all ten tests in the main file. Its before and after monorepo status outputs matched and contained no track path. The main file's default gate passed five and skipped five.",
+    "Both files together reproduce the Phase 5 plan: the default gate passed six and skipped five, and the explicit gate passed all eleven.",
+    "The adversarial test passed under an in-memory spawn failure; the independent tap.wav fixture still confirmed the real CLI rejection.",
+    "The hand-off target remains proposed. Prettier, the exact phase diff check, the generated-fact check, and the structural doctor passed.",
+    "Full tsc ran only through heavy-run. It exited 2 with the baseline diagnostics and no error in a hand-off file. No production TypeScript export changed, so build-graph has no changed symbol to trace.",
+    "After testing, HEAD advanced to 1c4a28be. It only adds tests/audio-handoff.adversarial-r2.test.ts, which is outside this immutable audit."
+  ],
+  "commands": [
+    "git rev-parse HEAD; git merge-base --is-ancestor 5470e45243bed1a1f26e81063d92f5bdf729de3b df7f01bfb02094005b514b62003f1343c1dfe16c; git diff --name-status 5470e45243bed1a1f26e81063d92f5bdf729de3b..df7f01bfb02094005b514b62003f1343c1dfe16c => verified the exact phase range.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'echo MONOREPO-BEFORE && git -C ../reading-advantage-monorepo status --short && node scripts/audio-handoff.mjs && AUDIO_HANDOFF_ARTIFACTS=1 node node_modules/vitest/vitest.mjs run tests/audio-handoff.test.ts --maxWorkers=1 && (cd out/apk-audio-handoff/chibi && sha256sum -c MANIFEST.sha256) && echo MONOREPO-AFTER && git -C ../reading-advantage-monorepo status --short && node node_modules/vitest/vitest.mjs run tests/audio-handoff.test.ts --maxWorkers=1' => exit 0; explicit 10 passed, default five passed and five skipped; 14 checksum OK lines.",
+    "Heavy-run in-memory fixtures: tap.wav in both sources => exit 1 and zero writes; absent sibling => default exit 0 and explicit exit 1 on the required status check.",
+    "Heavy-run Vitest for both hand-off files => default six passed and five skipped; flagged eleven passed.",
+    "Heavy-run adversarial Vitest with simulated generator launch failure => exit 0; confirms the test weakness.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/typescript/bin/tsc --noEmit' => exit 2; no hand-off diagnostics.",
+    "git diff --check on the exact phase range; Prettier on the three changed code and test files; node measure/tools/generate.mjs --check; ./measure/doctor.sh --structural-only => pass."
+  ],
+  "changed_files": [
+    "measure/runs/audio_game_integration_20261014/review-a-p5-df7f01b.json",
+    "measure/runs/audio_game_integration_20261014/review-a-p5-df7f01b.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "unknown",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 4,
+      "evidence": "The live generator passes 14 checksums and the invalid inventory fixture exits 1 before any output write."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "The explicit gate passed eleven tests, but the adversarial inventory test also passes when its generator process does not start."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The phase limits code changes to the hand-off CLI and its two tests."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "Both gates and the exact rename and missing-sibling probes produced direct results."
+    }
+  ]
+}

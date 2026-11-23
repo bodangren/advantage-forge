@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "role": "measure-review-b-security",
+  "track": "audio_game_integration_20261014",
+  "phase": "Phase 5: Hand-off to the PM",
+  "phase_base_sha": "5470e45243bed1a1f26e81063d92f5bdf729de3b",
+  "baseline_sha": "5470e45243bed1a1f26e81063d92f5bdf729de3b",
+  "role_base_sha": "6230bdb0a95062e0ab0b499e755ea0440c0ed2e1",
+  "audited_head_sha": "df7f01bfb02094005b514b62003f1343c1dfe16c",
+  "security_applicability": "applicable",
+  "route": "kimi-code-plan-cn/kimi-for-coding",
+  "status": "pass",
+  "summary": "Pass on Phase 5 re-review r2 with no blocking and no nonblocking finding; the round-1 nit N1 is withdrawn. The audio delta 6230bdb0..df7f01bf is the Red r1 cases 91ad6b8a and 098decd4, the Green remediation a0cdaf4f (scripts/audio-handoff.mjs, allowlist + lstat symlink rejection + --help + README load-rule fix), and the plan evidence df7f01bf. N1 closure is empirical, not just by construction: my probe builds fixture copies of both sound folders under measure/runs/audio_game_integration_20261014/, patches a copy of the script to point at the fixtures, and shows that a symlink to /etc/hostname in both folders (scenario A) or in the demo folder only (scenario B) exits 1 with 'symlink in <dir>: tap.ogg' and creates no output folder; an extra 15th name (C) and a case-changed TAP.ogg (D) both exit 1 on the inventory allowlist with no output folder; a clean fixture run (E) exits 0 with 17 entries and sha256sum -c passing, proving the patched copy is faithful. No live edit of demo/public or sounds/ occurred, and the fixture was deleted afterwards. On the real folders: the allowlist cannot be bypassed by a path separator (readdirSync returns bare names and the sorted join-compare rejects anything outside APPROVED) or a case change (verified in scenario D); rm -rf scope is unchanged (constant HANDOFF, and every pre-write die happens before rmSync); --help exits 0 and any argument exits 1 with one usage line; the regenerated folder holds the 14 files plus the three metadata files with no /home/ path and no user name (both greps exit 1); and the monorepo status is unchanged. The committed gates pass: 5 default cases, 10 of 10 with AUDIO_HANDOFF_ARTIFACTS=1, and the adversarial allowlist pin passes 1 of 1; tsc stays at the 51-error baseline through the heavy runner.",
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "evidence": [
+    "N1 withdrawn: checked the round-1 nit against a0cdaf4f. inventory() runs readdirSync and rejects any entry whose lstatSync isSymbolicLink() before any read or copy, and die() exits before any write. Fixture probe (measure/runs/audio_game_integration_20261014/review-b-p5-r2-probe.mjs, run through the heavy runner): scenario A (symlink in both fixture folders to /etc/hostname) exits 1 with 'symlink in .../handoff-fixture/demo: tap.ogg' and out-exists=false; scenario B (symlink in the demo folder only) exits 1 the same way; scenario C (zz-extra.ogg in both) and scenario D (TAP.ogg for tap.ogg in both) exit 1 with the 'unsupported sound inventory' allowlist message and no output folder; scenario E (clean fixtures) exits 0, writes 17 entries, and sha256sum -c passes. The probe cleans its fixture and left demo/public/audio/chibi and sounds/chibi untouched (git status clean on both paths).",
+    "Provenance: `git cat-file -t df7f01bfb02094005b514b62003f1343c1dfe16c` printed commit. `git merge-base --is-ancestor df7f01bf HEAD` exited 0 and `git diff df7f01bf -- scripts/audio-handoff.mjs` is empty, so the tested script equals the audited script. `git merge-base --is-ancestor 6230bdb0 df7f01bf` exited 0, so the round-1 head is the delta base, and phase_base_sha 5470e452 is ancestral. role_base_sha is the round-1 head 6230bdb0a95062e0ab0b499e755ea0440c0ed2e1. The delta holds 91ad6b8a and 098decd4 (Red r1 cases), 5b60488e (Red r1 record), a0cdaf4f (Green), and df7f01bf (plan evidence).",
+    "Allowlist strength: APPROVED is a constant of 14 lowercase names; both folders must list exactly it after sorting, so a path-separator name cannot reach a join (readdirSync yields bare names and any such name would fail the compare anyway), a case change fails (scenario D), and a 15th file fails (scenario C). The format check inside the copy loop is now unreachable defense in depth because only .ogg and .mp3 names can pass the allowlist.",
+    "Write scope and failure atomicity: every die before rmSync(HANDOFF) — unreadable dir, symlink, bad inventory, byte mismatch — leaves any previous hand-off untouched, and the fixture probe confirms failing runs create no output folder at all; rmSync targets only the constant HANDOFF under out/; the manifests are written only after all 14 copies and hashes.",
+    "Real-folder hygiene: the regenerated out/apk-audio-handoff/chibi holds 14 audio files plus MANIFEST.tsv, MANIFEST.sha256, and README.md; `grep -r '/home/'` and `grep -r 'daniebo'` on the folder both exit 1; `git -C ../reading-advantage-monorepo status --short` shows the same three pre-existing next-env.d.ts modifications as before the run, so the hand-off added nothing there; CLI: --help exits 0, any argument exits 1 with one usage line.",
+    "Gates at this head: `node scripts/audio-handoff.mjs` exits 0; `node node_modules/vitest/vitest.mjs run tests/audio-handoff.test.ts --maxWorkers=1` passes 5 with 5 skips of 10; `AUDIO_HANDOFF_ARTIFACTS=1` rerun passes 10 of 10; `tests/audio-handoff.adversarial.test.ts` passes 1 of 1; `node node_modules/typescript/bin/tsc --noEmit` through the heavy runner reports the 51-error baseline, unchanged.",
+    "A2: the delta grep for published, draft, consent, and anonymi found no match, and the secret-surface grep found no match. A6: the plan records Red r1 91ad6b8a with the review finding cases and Green a0cdaf4f with gate evidence, so no registry claim outruns the implementation.",
+    "Late-finding rule: round 2 raises no new finding; the withdrawn N1 leaves nothing for tech-debt. Re-review handling: no CONTEST item reached Review B beyond my own N1, which is withdrawn with the fixture evidence above."
+  ],
+  "commands": [
+    "git cat-file -t df7f01bfb02094005b514b62003f1343c1dfe16c -> commit; git merge-base --is-ancestor df7f01bf HEAD -> exit 0; git diff df7f01bf -- scripts/audio-handoff.mjs -> empty; git merge-base --is-ancestor 6230bdb0 df7f01bf -> exit 0",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node measure/runs/audio_game_integration_20261014/review-b-p5-r2-probe.mjs' -> A-symlink-both exit=1 out-exists=false; B-symlink-demo-only exit=1 out-exists=false; C-extra-name exit=1 out-exists=false; D-case-change exit=1 out-exists=false; E-clean-fixture exit=0 entries=17 sha256sum -c exit=0; probe-verdict:PASS; fixture removed",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/audio-handoff.mjs --help; node scripts/audio-handoff.mjs unexpected-arg; node scripts/audio-handoff.mjs && node node_modules/vitest/vitest.mjs run tests/audio-handoff.test.ts --maxWorkers=1 && AUDIO_HANDOFF_ARTIFACTS=1 node node_modules/vitest/vitest.mjs run tests/audio-handoff.test.ts --maxWorkers=1 && node node_modules/vitest/vitest.mjs run tests/audio-handoff.adversarial.test.ts --maxWorkers=1' -> exit-help:0, exit-arg:1, script exit 0, 5 passed 5 skipped of 10, 10 passed of 10, adversarial 1 of 1",
+    "grep -r '/home/' out/apk-audio-handoff/chibi/ -> exit 1; grep -r 'daniebo' out/apk-audio-handoff/chibi/ -> exit 1; git -C ../reading-advantage-monorepo status --short -> same three pre-existing modifications; ls handoff-fixture -> gone (exit 2); git status --short -- sounds/chibi demo/public/audio/chibi -> clean",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/typescript/bin/tsc --noEmit' -> exit 2, 51 baseline errors, unchanged"
+  ],
+  "changed_files": [
+    "measure/runs/audio_game_integration_20261014/review-b-p5-df7f01b.json",
+    "measure/runs/audio_game_integration_20261014/review-b-p5-df7f01b.log",
+    "measure/runs/audio_game_integration_20261014/review-b-p5-r2-probe.mjs"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "The fixture probe shows symlinks in either or both folders, an extra name, and a case change all exit 1 with no output folder, and the clean fixture reproduces the 17-entry manifest with passing checksums."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 5,
+      "evidence": "The Red r1 cases and the committed adversarial allowlist pin failed first and now pass 10 of 10 artifact cases plus the adversarial case, alongside the fixture evidence for the symlink rejection."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "Green a0cdaf4f changed only scripts/audio-handoff.mjs; the probe fixtures lived and died under measure/runs; demo/public and sounds/ stayed untouched and clean."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "Every claim carries a command result, including the five fixture scenarios with exit codes and stderr lines, the hygiene greps, the before/after monorepo status, and the gated suites."
+    }
+  ]
+}

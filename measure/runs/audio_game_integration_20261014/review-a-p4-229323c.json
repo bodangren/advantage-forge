@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "role": "review-a",
+  "track": "audio_game_integration_20261014",
+  "phase": "Phase 4: Preload budget",
+  "baseline_sha": "53ae856842ae14a63fb1b65a96edd1c8d6ce22e4",
+  "phase_base_sha": "53ae856842ae14a63fb1b65a96edd1c8d6ce22e4",
+  "role_base_sha": "229323c5d822f1dcb480b8e5ccf767c98a6f0c75",
+  "audited_head_sha": "229323c5d822f1dcb480b8e5ccf767c98a6f0c75",
+  "status": "pass",
+  "summary": "The Phase 4 PASS remains valid at 229323c. No code or tests changed since 5a1da501. The default gate passed, and A3-F5 remains recorded as nonblocking debt.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "A3-F5 [Nit] review-a: test-strategy.md:286-303,344-346 still prescribes an unflagged JSON test and exactly three result fields. T7g and T7g2 change both. The Phase 4 plan and TD-46 record this late finding as tech debt. It does not change the CLI result."
+  ],
+  "evidence": [
+    "HEAD matched 229323c5d822f1dcb480b8e5ccf767c98a6f0c75 before and after the default gate. The supplied phase base is an ancestor.",
+    "git diff --stat 5a1da501 229323c5 -- . ':!measure' ':!docs/chibi-sprouts' printed nothing. The full name-status diff contains Measure records and one Chibi Sprouts document.",
+    "The exact phase range retains the audio budget script, its test, and the Phase 4 plan. The new audio plan lines record late findings without changing the implementation.",
+    "F4 withdrawn at 5a1da501: the live gate passed with six decodes in 0.7091 s. The 1.7 s injected delay caused exit 1 and no JSON. This browser evidence is carried forward because the implementation and tests are unchanged; it was not rerun at 229323c.",
+    "The default gate at 229323c exited 0 with four tests passed and the one opt-in JSON test skipped.",
+    "The Phase 4 plan and measure/tech-debt.md TD-46 retain A3-F5 with no implementation retry."
+  ],
+  "commands": [
+    "git rev-parse HEAD; git merge-base --is-ancestor 53ae856842ae14a63fb1b65a96edd1c8d6ce22e4 229323c5d822f1dcb480b8e5ccf767c98a6f0c75 => HEAD matched; ancestry check passed.",
+    "git diff --stat 5a1da501 229323c5 -- . ':!measure' ':!docs/chibi-sprouts' => no output.",
+    "git diff --name-status 5a1da501..229323c5 => Measure records and one Chibi Sprouts document only.",
+    "git diff --stat 53ae856842ae14a63fb1b65a96edd1c8d6ce22e4..229323c5d822f1dcb480b8e5ccf767c98a6f0c75 -- scripts/audio-budget.mjs tests/audio-budget.test.ts measure/tracks/audio_game_integration_20261014 => three audio phase paths.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run tests/audio-budget.test.ts --maxWorkers=1' => exit 0; four passed, one skipped."
+  ],
+  "changed_files": [
+    "measure/runs/audio_game_integration_20261014/review-a-p4-229323c.json",
+    "measure/runs/audio_game_integration_20261014/review-a-p4-229323c.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "unknown",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "The live and slow-decode results in review-a-p4-5a1da50.json apply to the unchanged budget script."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "The default gate passed four tests at 229323c; the opt-in JSON case remains covered by the prior live gate."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The requested diff outside the two excluded record directories is empty."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "The HEAD check, exact diff command, and default gate bind the result to 229323c."
+    }
+  ]
+}

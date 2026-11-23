@@ -1,0 +1,22 @@
+MEASURE_AGENT_RESULT
+status: complete
+verdict: PASS
+role: measure-strategy for audio_game_integration_20261014, Phase 5 (T8)
+role_base_sha: 229323c5d822f1dcb480b8e5ccf767c98a6f0c75
+phase4_accepted_sha: 229323c5d822f1dcb480b8e5ccf767c98a6f0c75
+strategy_commit_sha: 5470e45243bed1a1f26e81063d92f5bdf729de3b
+strategy_commit_subject: measure(audio_game_integration): Phase 5 test strategy
+strategy_path: measure/tracks/audio_game_integration_20261014/test-strategy.md
+phase_base_sha_capture_point: Run `git rev-parse HEAD` as the first command after the strategy commit 5470e45243bed1a1f26e81063d92f5bdf729de3b lands. Capture before any Red command. At that point HEAD was 5470e45243bed1a1f26e81063d92f5bdf729de3b; parallel commits may move HEAD, so the orchestrator must capture at the point, not from this note. No predated SHA is embedded as phase_base_sha in the strategy.
+red_command: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'rm -rf out/apk-audio-handoff/chibi && AUDIO_HANDOFF_ARTIFACTS=1 node node_modules/vitest/vitest.mjs run tests/audio-handoff.test.ts --maxWorkers=1'
+green_command: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'echo MONOREPO-BEFORE && git -C ../reading-advantage-monorepo status --short && node scripts/audio-handoff.mjs && AUDIO_HANDOFF_ARTIFACTS=1 node node_modules/vitest/vitest.mjs run tests/audio-handoff.test.ts --maxWorkers=1 && (cd out/apk-audio-handoff/chibi && sha256sum -c MANIFEST.sha256) && echo MONOREPO-AFTER && git -C ../reading-advantage-monorepo status --short'
+default_command: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run tests/audio-handoff.test.ts --maxWorkers=1' exits 0 with 3 passed and 5 skipped in a checkout without out/. The opt-in flag is AUDIO_HANDOFF_ARTIFACTS=1, fixed by this strategy.
+red_expectation: Exit 1 with 8 cases. Cases 1 to 3 pass: the 14 demo files already match the 14 sound sources byte for byte, the docs row already exists at docs/apk-port.md line 240 from commit 19ecca62, and no monorepo path named by this track appears. Cases 4 to 8 fail on the absent out/apk-audio-handoff/chibi folder. A green flagged Red is a broken Red.
+docs_settlement: Do not add a second docs row. The Chibi audio row is already committed at line 240. The test asserts exactly one row with from-cell demo/public/audio/chibi/ and to-cell proposed: apps/advantage-games/public/audio/chibi/.
+manifest_settlement: MANIFEST.sha256 has 14 anchored lines of 64 lowercase hex characters, two spaces, and the file name. MANIFEST.tsv has the six AC6 columns and 14 rows; source is sounds/chibi/<file>, target is proposed: apps/advantage-games/public/audio/chibi/<file>. The folder holds exactly 17 files. sha256sum -c is the independent reader.
+monorepo_rule: git -C ../reading-advantage-monorepo status --short runs before and after the script. Other paths may appear. A path named by this track fails case 3. No Forge command writes in the monorepo. The PM routes the folder and confirms or replaces the proposed path.
+checks: node measure/tools/generate.mjs --check exited 0 with 'Measure facts are current (4 files)'. ./measure/doctor.sh --structural-only exited 0 with 'Measure doctor found no structural errors'. node_modules/.bin/prettier --check on the strategy exited 0. git diff --check on the strategy exited 0. The commit contains only the explicitly named strategy path.
+refresh_note: The Phase 4 section was brought to its accepted shape at 229323c5: five test cases, default and live gates, AUDIO_BUDGET_JSON=1, and the eight-field JSON. This clears late finding A3-F5 (stale Phase 4 strategy text). Risks, review applicability, gates, and the aggregate-suite skip rules were refreshed for Phase 5.
+anti_pattern_coverage: Phase 5 defends against A3 with labeled counts and anchored hex, A4 with an exact 17-name set and a real checksum verification, A5 with plan-to-output matching, A6 with proposed-only target text, A7 with exact cell and anchored prefix matching, A9 with live-path reads, A10 with generated-fact checks and untracked out/, A11 with truthful review status, and A1/A8/A2 as explicitly not applicable. Every entry has a falsification condition.
+handoff: The orchestrator must capture phase_base_sha now, before any parallel commit. Red and Green commands above leave no decision to the Red and Green agents.
+END_MEASURE_AGENT_RESULT

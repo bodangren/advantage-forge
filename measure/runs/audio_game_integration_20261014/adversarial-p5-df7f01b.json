@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "role": "adversarial-testing",
+  "track": "audio_game_integration_20261014",
+  "phase": "Phase 5: Hand-off to the PM",
+  "baseline_sha": "5470e45243bed1a1f26e81063d92f5bdf729de3b",
+  "phase_base_sha": "5470e45243bed1a1f26e81063d92f5bdf729de3b",
+  "role_base_sha": "1c4a28be6d660ca19845b9fe1824e5a126e6868f",
+  "pre_adversarial_head_sha": "1c4a28be6d660ca19845b9fe1824e5a126e6868f",
+  "audited_head_sha": "09c4289c8111f77d14c1248eff571aa034614ea8",
+  "status": "pass",
+  "summary": "The required tests pass after recording ADV-P5-2 as TD-48. The skip keeps the regression pin in the file. The production script and source tree are unchanged from df7f01bf.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "ADV-P5-2 [Nit] adversarial-testing: late finding recorded as TD-48. A matching zero-byte source and demo file passes the script and the former test. The current shipped sources are non-empty; all 14 checksums verify against their manifest bytes, and Reviews A/B/C passed on df7f01bf. The PM rule classifies this unreachable condition as tech debt, not a Green finding. TD-48 names the fix (reject size 0) and reopen trigger (a zero-byte file enters sounds/chibi/ or demo/public/audio/chibi/)."
+  ],
+  "evidence": [
+    "Role started at 1c4a28be6d660ca19845b9fe1824e5a126e6868f. The original implementation audit was bound to df7f01bfb02094005b514b62003f1343c1dfe16c. The final audited HEAD is 09c4289c8111f77d14c1248eff571aa034614ea8.",
+    "git diff --stat df7f01bfb02094005b514b62003f1343c1dfe16c HEAD -- src scripts printed no output; implementation sources remain byte-identical to df7f01bf.",
+    "The TD-48 test is skipped with the exact recorded reason, and its body remains intact.",
+    "The standalone round-2 adversarial file passed with 1 expected skip.",
+    "The hand-off command and all three hand-off test files passed: 11 passed, 1 TD-48 skip.",
+    "The project gate passed 230 files and 3,389 tests, with 9 skips: the existing TD-44 skips and the TD-48 skip.",
+    "The hand-off command verified all 14 checksum lines. The current shipped sound files are non-empty."
+  ],
+  "commands": [
+    "git rev-parse at role start => 1c4a28be6d660ca19845b9fe1824e5a126e6868f",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'AUDIO_HANDOFF_ARTIFACTS=1 node node_modules/vitest/vitest.mjs run tests/audio-handoff.adversarial-r2.test.ts --maxWorkers=1' => exit 0; 1 skipped (TD-48)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/audio-handoff.mjs && AUDIO_HANDOFF_ARTIFACTS=1 node node_modules/vitest/vitest.mjs run tests/audio-handoff.test.ts tests/audio-handoff.adversarial.test.ts tests/audio-handoff.adversarial-r2.test.ts --maxWorkers=1' => exit 0; 3 files, 11 passed, 1 skipped",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts' => exit 0; 230 files passed, 1 skipped; 3389 passed, 9 skipped",
+    "node_modules/.bin/prettier --check tests/audio-handoff.adversarial-r2.test.ts => exit 0",
+    "git commit 09c4289c8111f77d14c1248eff571aa034614ea8 => test file only",
+    "git diff --stat df7f01bfb02094005b514b62003f1343c1dfe16c HEAD -- src scripts => empty output"
+  ],
+  "changed_files": [
+    "tests/audio-handoff.adversarial-r2.test.ts",
+    "measure/runs/audio_game_integration_20261014/adversarial-p5-df7f01b.json",
+    "measure/runs/audio_game_integration_20261014/adversarial-p5-df7f01b.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "openai/gpt-6-luna#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 4,
+      "evidence": "scripts/audio-handoff.mjs is unchanged from df7f01bf; TD-48 is explicitly retained as nonblocking debt under the PM reachability decision."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "The hand-off tests pass 11 cases, and the zero-byte test body remains ready to run when TD-48 closes."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "Commit 09c4289c changes only the round-2 adversarial test file."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "The exact test gates, project gate, Prettier check, commit, and source/script diff are recorded."
+    }
+  ]
+}

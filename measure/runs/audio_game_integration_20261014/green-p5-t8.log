@@ -1,0 +1,43 @@
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+track: audio_game_integration_20261014
+phase: Phase 5: Hand-off to the PM
+task: T8 Green
+status: pass
+phase_base_sha: 5470e45243bed1a1f26e81063d92f5bdf729de3b (immutable; verified ancestor of final HEAD)
+role_base_sha: 79a8d5c4ebc96cf6695e05bbf9dbe3f41f7a2d88 (HEAD at Green start; the Red plan mark)
+red_commit: a97e88c862c4ec88569920a558fc0dd73c6250c8 (tests/audio-handoff.test.ts; verified inside phase_base_sha..HEAD)
+final_green_head: 6230bdb0a95062e0ab0b499e755ea0440c0ed2e1
+
+tasks_flipped_to_x:
+  T8 Hand-off -> [x] in plan.md with implementation SHA 18cd0516ed5e23f9dbb8e3dd3de076e7158d280c, the folder path, the file count, and the checksum result.
+tasks_flipped_to_b: none; no deferred owner.
+
+dispositions: none
+
+handoff_folder: out/apk-audio-handoff/chibi/
+file_count: 17 (14 sounds, MANIFEST.tsv, MANIFEST.sha256, README.md)
+checksum_result: (cd out/apk-audio-handoff/chibi && sha256sum -c MANIFEST.sha256) exits 0 and prints 14 OK lines: level-end.mp3, level-end.ogg, pop.mp3, pop.ogg, right.mp3, right.ogg, star.mp3, star.ogg, tap.mp3, tap.ogg, whoosh.mp3, whoosh.ogg, wrong.mp3, wrong.ogg.
+target_status: proposed. No dated PM answer has landed in the plan. The PM or the Monorepo session confirms or replaces the target.
+
+gates:
+  Green command: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'echo MONOREPO-BEFORE && git -C ../reading-advantage-monorepo status --short && node scripts/audio-handoff.mjs && AUDIO_HANDOFF_ARTIFACTS=1 node node_modules/vitest/vitest.mjs run tests/audio-handoff.test.ts --maxWorkers=1 && (cd out/apk-audio-handoff/chibi && sha256sum -c MANIFEST.sha256) && echo MONOREPO-AFTER && git -C ../reading-advantage-monorepo status --short' => exit 0; 8 passed (8).
+  MONOREPO-BEFORE output: 3 modified next-env.d.ts files and 21 untracked paths from other sessions, including apps/advantage-games/test-results/. No line names apps/advantage-games/public/audio/chibi/ or any of the 14 sound file names.
+  MONOREPO-AFTER output: the same 24 paths, byte for byte. No track-named path appears. Forge wrote nothing in the monorepo.
+  Default command: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run tests/audio-handoff.test.ts --maxWorkers=1' => exit 0; 3 passed, 5 skipped (8). The five skips are the opt-in artifact cases, reported as skips.
+  node --check scripts/audio-handoff.mjs => exit 0. node_modules/.bin/prettier --check scripts/audio-handoff.mjs => exit 0.
+  node measure/tools/generate.mjs --check was stale after the plan edit; regenerated because measure/generated/ held no foreign change; then exit 0 with "Measure facts are current (4 files)."
+  ./measure/doctor.sh --structural-only after the plan-evidence commit => exit 0; "Measure doctor found no structural errors."
+
+implementation:
+  scripts/audio-handoff.mjs verifies the 14 demo files against the 14 sounds/chibi files byte for byte, then removes any stale hand-off folder and copies the 14 demo files into out/apk-audio-handoff/chibi/. It writes MANIFEST.sha256 with 14 anchored sha256sum lines, MANIFEST.tsv with the six required columns and 14 rows, and README.md with the proposed target, the AC4 load rule, and the model-pack citation. It writes no file outside out/ and makes no network or cross-repository call.
+  docs/apk-port.md already holds the one audio row at line 240 with the proposed target, and the model pack row at line 238. No docs edit was needed and no second row was added.
+
+commits:
+  implementation_commit: 18cd0516ed5e23f9dbb8e3dd3de076e7158d280c feat(audio_game_integration): T8 PM audio hand-off folder and manifests (explicit path: scripts/audio-handoff.mjs)
+  plan_evidence_commit: 6230bdb0a95062e0ab0b499e755ea0440c0ed2e1 docs(audio_game_integration): T8 hand-off evidence (18cd0516) (explicit paths: measure/tracks/audio_game_integration_20261014/plan.md, measure/generated/status.md)
+
+new_files: scripts/audio-handoff.mjs entered the implementation commit. The generated hand-off folder and this result log stay untracked. No committed test, source, game, audio file, or docs file changed. This role did not touch src/, tests/old-browser/, or ../reading-advantage-monorepo.
+
+handoff: Give the folder path out/apk-audio-handoff/chibi/ to the PM. The target stays proposed until a dated PM answer lands in the plan. The checksums prove file integrity, not audible quality or monorepo acceptance. No product decision was needed.
+END_MEASURE_AGENT_RESULT

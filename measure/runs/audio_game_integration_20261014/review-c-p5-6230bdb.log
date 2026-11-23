@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: review-c
+status: complete
+track: audio_game_integration_20261014
+phase: Phase 5: Hand-off to the PM
+commits: none
+tests_run: Heavy-run audio-handoff.test.ts — exit 0, 3 passed and 5 expected artifact skips
+files_changed: measure/runs/audio_game_integration_20261014/review-c-p5-6230bdb.json and review-c-p5-6230bdb.log
+plan_updates: none
+known_failures: F1: Incorrect format-selection rule in the generated README. F2: Missing recipient steps and wrong checksum working directory in the plan. F3: Missing CLI usage handling.
+handoff: Route F1 to Green. Correct the generated load rule and add recipient verification and copy steps without writing to the monorepo. Review ran only the default test.
+END_MEASURE_AGENT_RESULT

@@ -1,0 +1,111 @@
+{
+  "schema_version": 1,
+  "role": "phase-acceptance",
+  "track": "audio_game_integration_20261014",
+  "phase": "Phase 4: Preload budget",
+  "baseline_sha": "229323c5d822f1dcb480b8e5ccf767c98a6f0c75",
+  "phase_base_sha": "53ae856842ae14a63fb1b65a96edd1c8d6ce22e4",
+  "role_base_sha": "229323c5d822f1dcb480b8e5ccf767c98a6f0c75",
+  "audited_head_sha": "229323c5d822f1dcb480b8e5ccf767c98a6f0c75",
+  "status": "pass",
+  "summary": "Phase 4 passes at 229323c. The live Rune Match measurement meets AC5, and all required gates pass. TD-46 remains open.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "C4-F4 [Nit] review-c: TD-46 records a measurement-only false failure. The final fileEffect check can reject a valid opening file effect if the first event after the canvas click is synth.",
+    "A3-F5 [Nit] review-a: TD-46 records stale test-strategy text. The JSON case now needs AUDIO_BUDGET_JSON=1 and the result has eight fields.",
+    "PA-N1 [Nit] phase-acceptance: Both late-finding lines have one clear disposition. Move the source citations inside the parentheses to match the literal contract form."
+  ],
+  "evidence": [
+    "The start HEAD was 229323c5d822f1dcb480b8e5ccf767c98a6f0c75. The phase base is an ancestor. No tracked worktree changes were present.",
+    "Review A/B/C and adversarial testing all report pass at the exact audited HEAD and phase base. Acceptance used no HEAD exception.",
+    "The audio phase commits change only scripts/audio-budget.mjs and tests/audio-budget.test.ts outside Measure records. Other tracks account for the product-file changes in the full range.",
+    "A separate UX browser review does not apply. Phase 4 changes no shipped UI. The live Chromium measurement verifies the user flow and served files, not audible quality.",
+    "T7 and AC5: seven Ogg files total 90468 bytes and seven MP3 files total 71136 bytes. The default gate checks all 14 README values against the files.",
+    "The live measurement returned 79319 bytes across six files. It recorded 0.7035 s for transfer and 0.7077000000476837 s through the last decode, with six successful decodes.",
+    "The live result records effectMarker before-launch and firstEffect pop.ogg. The flagged JSON test and all four other tests passed.",
+    "The script launches loopback Vite and applies the CDP profile before navigation. It observes real fetches and decodes and removes stale output before the measurement.",
+    "T7r/T7g add the explicit JSON gate, successful decode and file-effect checks, CLI validation, and cleanup. The Red log records CLI and JSON assertion failures.",
+    "T7r2/T7g2 add the decode deadline and before-launch marker. The Red log isolates the two assertions, and the prior slow-decode probe failed above 1.5 s.",
+    "Port 5199 had no listener before or after the live run. The default gate skips only the opt-in case, and the live gate runs that case.",
+    "The aggregate suite skips the two TD-44 cases and the opt-in budget JSON case. All three skips are accounted for. The separate live gate passed the budget JSON case.",
+    "All five Phase 4 completion SHAs resolve in range. C4-F4 and A3-F5 each have one tech-debt disposition under TD-46.",
+    "The plan records 79319 bytes, 0.7056000000238418 s for transfer, and 0.7101000000238419 s through decode at line 723. These measurements are below the AC5 limits.",
+    "A5: the current plan's default and flagged gate verdicts match the acceptance runs. Older test counts and timings name historical runs.",
+    "The phase changes no Measure framework contract tests or banned-term filter. The registry changes only the unrelated compatibility track marker to in progress, with no claim of resolution.",
+    "The audio budget test parses the labeled README bytes column and checks exact values. It validates the JSON numbers by key and rejects zero or out-of-budget values.",
+    "The route substitution is recorded in the brief. Red used Muse, a different family from acceptance.",
+    "Leave the release worktree, the shelf-sync worktree and branch, and wip/oct-skill-docs-20261023 to their owners. This audit changed none of them."
+  ],
+  "commands": [
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run tests/audio-budget.test.ts --maxWorkers=1' — exit 0; four passed and one opt-in skip.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/audio-budget.mjs --game rune-match && AUDIO_BUDGET_JSON=1 node node_modules/vitest/vitest.mjs run tests/audio-budget.test.ts --maxWorkers=1' — exit 0; five passed.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts' — exit 0; 228 files passed, 3383 tests passed, three documented skips.",
+    "ss -H -ltn 'sport = :5199' — no listener before or after the live gate.",
+    "./measure/doctor.sh --structural-only — exit 0. node measure/tools/generate.mjs --check — exit 0; four facts files current.",
+    "node_modules/.bin/prettier --check scripts/audio-budget.mjs tests/audio-budget.test.ts — exit 0.",
+    "Static checks — verified all four same-HEAD prerequisites, five in-range task SHAs, two unique late-finding dispositions, and the recorded and freshly measured AC5 values."
+  ],
+  "changed_files": [
+    "measure/runs/audio_game_integration_20261014/phase-acceptance-p4-229323c.json",
+    "measure/runs/audio_game_integration_20261014/phase-acceptance-p4-229323c.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "openai/gpt-6.2-sol#high (substitution: ra-quota pick phase-acceptance exited 3; same route as the earlier audio acceptances)",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 4,
+      "evidence": "The live run meets all three limits, but audio-budget.mjs:358-365 still has the TD-46 false rejection."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "The chained browser and JSON gate proves the live measurement, but port cleanup relies on a separate check."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The audio phase changes only the planned script, test, and Measure records."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "The live gate prints exact transfer and decode times and confirms that port 5199 is free."
+    }
+  ],
+  "reviewer_ratings": [
+    {
+      "reviewer_role": "review-a",
+      "reviewer_route": "unknown",
+      "agreed": true,
+      "score": 5,
+      "evidence": "The live gate confirms the eight fields, while test-strategy.md:286-303 still names the earlier unflagged gate."
+    },
+    {
+      "reviewer_role": "review-b",
+      "reviewer_route": "kimi-code-plan-cn/kimi-for-coding",
+      "agreed": true,
+      "score": 5,
+      "evidence": "The server binds to loopback at audio-budget.mjs:75-90 and leaves no listener after the live run."
+    },
+    {
+      "reviewer_role": "review-c",
+      "reviewer_route": "unknown",
+      "agreed": true,
+      "score": 5,
+      "evidence": "The code at audio-budget.mjs:346-365 confirms the separate before-launch marker and the stricter after-unlock check."
+    },
+    {
+      "reviewer_role": "adversarial",
+      "reviewer_route": "unknown",
+      "agreed": true,
+      "score": 5,
+      "evidence": "The live run confirms the passing case, and audio-budget.mjs:358-365 confirms the documented false rejection."
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+MEASURE_AGENT_RESULT
+role: measure-review-b-security
+track: audio_game_integration_20261014
+phase: Phase 5: Hand-off to the PM
+round: 1
+phase_base_sha: 5470e45243bed1a1f26e81063d92f5bdf729de3b
+role_base_sha: 5470e45243bed1a1f26e81063d92f5bdf729de3b
+audited_head_sha: 6230bdb0a95062e0ab0b499e755ea0440c0ed2e1
+security_applicability: applicable
+route: kimi-code-plan-cn/kimi-for-coding
+status: pass
+summary: Pass on Phase 5 T8, round 1, no blocking finding, one nonblocking nit N1. scripts/audio-handoff.mjs takes no arguments, reads only the two sound folders, and writes only under the constant out/apk-audio-handoff/chibi/, so path traversal is impossible and the rmSync scope is fixed. It verifies count, names, and byte equality before any write, copies each file, and hashes the copied bytes (sha256sum -c passes 14 of 14; hand-off hashes equal source hashes). The folder holds exactly the 14 expected files plus MANIFEST.tsv, MANIFEST.sha256, and README.md, with no /home/ path, no user name, no network use, and no write in ../reading-advantage-monorepo (status identical before and after). N1: the script follows symlinks with no lstat guard, so a symlink committed into both sound dirs with identical outside target bytes would be copied in; no symlink exists today (find -type l counts 0), the byte-equality pre-check and full git tracking bound it, a live swap probe was denied by the session permission layer, and the PM rule keeps it as tech-debt. The committed gate passes 8 of 8 with AUDIO_HANDOFF_ARTIFACTS=1 after the Red failed first with ENOENT.
+blocking_findings: none
+nonblocking_findings:
+- N1 [Nit] review-b: scripts/audio-handoff.mjs follows symlinks with no lstat/realpath guard; latent only, unreachable today, recommend isSymbolicLink() rejection on both listings.
+evidence:
+- Provenance: audited head is a commit and equals the working HEAD; phase_base_sha is ancestral; the delta is the Red test a97e88c8, the script 18cd0516, and the plan evidence.
+- Write scope and traversal: no argv, bare readdirSync names, fixed joins, 'proposed: ' string target, constant rmSync folder.
+- Hygiene: 17 entries (14 audio + 3 metadata), exact set match with sounds/sets/chibi.json, grep for /home/ and user name both exit 1, modes 664, monorepo status unchanged.
+- N1 basis: zero symlinks in both dirs, no lstat/realpath in the imports, copyFileSync/readFileSync follow links by Node semantics; swap probe denied by the permission layer (recorded); manifest hashes the copied bytes so it cannot misstate them.
+retry_recommendation: none
+confidence: high
+paths:
+- measure/runs/audio_game_integration_20261014/review-b-p5-6230bdb.json
+- measure/runs/audio_game_integration_20261014/review-b-p5-6230bdb.log
+END_MEASURE_AGENT_RESULT

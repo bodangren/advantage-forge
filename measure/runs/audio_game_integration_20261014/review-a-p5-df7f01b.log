@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: review-a
+status: complete
+track: audio_game_integration_20261014
+phase: Phase 5: Hand-off to the PM
+commits: none
+tests_run: Heavy-run Green: ten passed and 14 checksum OK lines. Default: five passed and five skipped. Both files: eleven passed with opt-in; six passed and five skipped by default. The exact rename failed before writes. The missing-sibling default passed.
+files_changed: measure/runs/audio_game_integration_20261014/review-a-p5-df7f01b.json; measure/runs/audio_game_integration_20261014/review-a-p5-df7f01b.log
+plan_updates: none
+known_failures: F4 and F6 remain nonblocking. F7 and F8 are late test and record debt. Full tsc exited 2 on baseline diagnostics, with no hand-off errors.
+handoff: F1, F2, F3, and F5 are withdrawn. Record late F7 and F8 as tech debt only; neither changes the hand-off result. The target remains proposed. The later adversarial test at 1c4a28be is outside this audit.
+END_MEASURE_AGENT_RESULT

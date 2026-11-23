@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "role": "review-c",
+  "track": "audio_game_integration_20261014",
+  "phase": "Phase 5: Hand-off to the PM",
+  "phase_base_sha": "5470e45243bed1a1f26e81063d92f5bdf729de3b",
+  "role_base_sha": "6230bdb0a95062e0ab0b499e755ea0440c0ed2e1",
+  "audited_head_sha": "6230bdb0a95062e0ab0b499e755ea0440c0ed2e1",
+  "status": "fail",
+  "summary": "The manifest and proposed target match the contract. The generated README gives the recipient an incorrect format-selection rule and omits verification and copy instructions.",
+  "blocking_findings": [
+    "F1 [Blocker] review-c: scripts/audio-handoff.mjs:70-73 tells recipients that the bus calls canPlayType once, on first unlock. AudioBus probes both formats and can choose during preload, as AC9 states. Document the one-time choice, Ogg preference, and pre-unlock preload so the Monorepo session uses the actual load rule."
+  ],
+  "nonblocking_findings": [
+    "F2 [Major] review-c: The generated README does not tell recipients how to verify or copy the files. plan.md:761 gives a repo-root checksum command, but the checksum manifest uses bare names. Document verification from inside the bundle, then copying only the 14 sounds to the confirmed target.",
+    "F3 [Nit] review-c: scripts/audio-handoff.mjs:17-36 has no usage text or argument check. Passing --help or an unsupported argument takes the normal build path and can replace the existing bundle. Print zero-argument usage and reject unsupported arguments before writing."
+  ],
+  "evidence": [
+    "The Phase 5 strategy and the exact phase diff cover the consumer-facing CLI and generated hand-off contract. No old_browser commit appears in the audited range.",
+    "out/apk-audio-handoff/chibi contains 17 entries: 14 sounds, two manifests, and a README. MANIFEST.tsv:1-15 shows integer byte counts, lowercase hashes, format labels, source paths, and proposed targets.",
+    "out/apk-audio-handoff/chibi/MANIFEST.sha256:1-14 uses bare filenames. tests/audio-handoff.test.ts:128-132 sets the command working directory to the bundle. The Green log records 14 OK lines from that working directory.",
+    "The README:3-6 states the bundle contents and leaves target approval to the PM or Monorepo session. docs/apk-port.md:238-247 matches the proposal and correctly labels /demo/ as a site-base example.",
+    "spec.md:232-234 allows format selection during preload. src/apk3d/audio/bus.ts:257-269 probes both formats once per bus and prefers Ogg. src/apk3d/audio/chibi.ts:41-43 starts preload during wiring.",
+    "scripts/audio-handoff.mjs:19-32 throws on source mismatches, which gives Node exit 1. The script reaches line 79 on success, with normal exit 0. The audit did not run the generator.",
+    "plan.md:768-788 records Green's checksum result, the unchanged existing documentation row, and the pending target decision."
+  ],
+  "commands": [
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run tests/audio-handoff.test.ts --maxWorkers=1' — exit 0, 3 passed and 5 expected artifact skips.",
+    "git diff --check 5470e45243bed1a1f26e81063d92f5bdf729de3b..6230bdb0a95062e0ab0b499e755ea0440c0ed2e1 — exit 0.",
+    "git rev-parse HEAD — 6230bdb0a95062e0ab0b499e755ea0440c0ed2e1. The tracked working tree matches the audited commit."
+  ],
+  "changed_files": [
+    "scripts/audio-handoff.mjs",
+    "tests/audio-handoff.test.ts",
+    "measure/tracks/audio_game_integration_20261014/plan.md",
+    "measure/generated/status.md"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [
+    "F1: The generated README describes a different load rule from AC9 and the shipped AudioBus."
+  ],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "contract_applicability": "applicable",
+  "retry_recommendation": "retry_implementation",
+  "confidence": "high",
+  "route": "openai/gpt-6.2-sol#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 3,
+      "evidence": "The generated README:9 contradicts the pre-unlock format selection in spec.md:232-234."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 3,
+      "evidence": "tests/audio-handoff.test.ts:178-192 checks expected words, not the accuracy of the load rule or the recipient steps."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The exact phase diff adds the generator and its test and updates only Measure records."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "The default test passes, and the generated README and manifest support the findings directly."
+    }
+  ]
+}

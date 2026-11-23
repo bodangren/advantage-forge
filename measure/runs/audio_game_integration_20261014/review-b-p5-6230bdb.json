@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "role": "measure-review-b-security",
+  "track": "audio_game_integration_20261014",
+  "phase": "Phase 5: Hand-off to the PM",
+  "phase_base_sha": "5470e45243bed1a1f26e81063d92f5bdf729de3b",
+  "baseline_sha": "5470e45243bed1a1f26e81063d92f5bdf729de3b",
+  "role_base_sha": "5470e45243bed1a1f26e81063d92f5bdf729de3b",
+  "audited_head_sha": "6230bdb0a95062e0ab0b499e755ea0440c0ed2e1",
+  "security_applicability": "applicable",
+  "route": "kimi-code-plan-cn/kimi-for-coding",
+  "status": "pass",
+  "summary": "Pass on Phase 5 T8, round 1, with no blocking finding and one nonblocking nit. The delta on audited paths is the Red hand-off test a97e88c8 and the Green script 18cd0516 (scripts/audio-handoff.mjs, +79) plus the plan evidence 6230bdb0; old_browser_builtins commits in the range are out of scope. scripts/audio-handoff.mjs takes no arguments, reads only sounds/chibi/ and demo/public/audio/chibi/, and writes only under the constant out/apk-audio-handoff/chibi/: path traversal is impossible because file names come from readdirSync as bare names and every join uses fixed roots, the TARGET stays a 'proposed: ' string, and the rmSync target is the constant HANDOFF folder. It verifies count, name sets, and byte equality of demo against source before any write, copies each file, and hashes the copied bytes — sha256sum -c passes 14 of 14 and the hand-off hashes equal the source hashes. The hand-off folder holds exactly the 14 expected files (matching sounds/sets/chibi.json) plus MANIFEST.tsv, MANIFEST.sha256, and README.md, with no /home/ path and no user name inside, no network use (imports are node:fs, node:crypto, node:path, node:url only), and the monorepo status is identical before and after the run. The one nit: copyFileSync and readFileSync follow symlinks and the script has no lstat guard, so a symlink committed into both sound dirs with identical outside target bytes would be copied into the hand-off; no symlink exists today (find -type l counts 0 in both dirs), the demo-vs-source byte-equality pre-check requires a deliberate two-dir change, both dirs are fully git-tracked so any future symlink is review-visible, and the manifest would faithfully hash whatever bytes landed, so this is latent hardening, not a reachable wrong result.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "N1 [Nit] review-b: scripts/audio-handoff.mjs follows symlinks with no lstat/realpath guard: copyFileSync and readFileSync resolve links, so a symlink committed into both sounds/chibi/ and demo/public/audio/chibi/ pointing at the same outside file would pass the byte-equality pre-check and copy outside content into out/apk-audio-handoff/chibi/. Not reachable today: find -type l counts 0 in both dirs, the pre-check reads through links so a one-dir symlink fails the run, both dirs are fully git-tracked (a symlink would appear as mode 120000 in review), and the manifest hashes the copied bytes so it cannot misstate them. A live swap probe was denied by the session permission layer, so this is evidence by construction. Recommend rejecting isSymbolicLink() on both listings; PM rule keeps this as tech-debt because no current user can reach it."
+  ],
+  "evidence": [
+    "Provenance: `git cat-file -t 6230bdb0a95062e0ab0b499e755ea0440c0ed2e1` printed commit. `git merge-base --is-ancestor 6230bdb0 HEAD` exited 0 and `git rev-parse HEAD` equals 6230bdb0a95062e0ab0b499e755ea0440c0ed2e1, so the working tree is the audited head. `git merge-base --is-ancestor 5470e452 6230bdb0` exited 0, so phase_base_sha is ancestral; it equals role_base_sha because this is round 1 of the phase. The delta holds a97e88c8 (tests/audio-handoff.test.ts), 79a8d5c4 (Red mark), 18cd0516 (the script), and 6230bdb0 (plan evidence).",
+    "Path traversal and write scope: the script imports no process.argv handling and no network modules; names come from readdirSync(DEMO) and readdirSync(SOURCE) as bare directory names; every join uses the constants ROOT, SOURCE, DEMO, HANDOFF, or the fixed TARGET string prefixed with 'proposed: ' for manifest text only. rmSync(HANDOFF, {recursive: true, force: true}) targets the constant folder under out/. No code path builds a path from an argument or a manifest value.",
+    "Verification order and partial output: the count check (14 and 14), the name-set equality check, and the per-file byte-equality check all run before rmSync and mkdirSync, so a bad source leaves any previous hand-off untouched; the manifests and README are written only after all 14 copies and hashes succeed, so a mid-copy failure leaves a partial folder with no checksum file, which `sha256sum -c` cannot pass, and the next run rebuilds from empty after the same pre-checks.",
+    "Hashes from copied bytes: for each name the script copies and then reads join(HANDOFF, name) for the sha256 input; `sha256sum -c MANIFEST.sha256` inside the folder prints 14 ': OK' lines, and the tap.ogg entry 98d078ca... equals both the hand-off file and sounds/chibi/tap.ogg, so the manifest states the copied bytes exactly.",
+    "Hand-off contents and hygiene: the folder holds 17 entries — the 14 audio files plus MANIFEST.tsv, MANIFEST.sha256, README.md; a node check maps the 14 audio names against sounds/sets/chibi.json (14 expected, exact equality). `grep -r '/home/'` and `grep -r 'daniebo'` on the folder both exit 1, so no local absolute path or user name ships; the README names only the relative proposed target and the spec AC4 load rule; file modes are 664 (umask), no executable bits.",
+    "No monorepo write and no network: the script never references ../reading-advantage-monorepo; `git -C ../reading-advantage-monorepo status --short` shows the same three pre-existing next-env.d.ts modifications and foreign untracked dirs before and after the run, so the hand-off added nothing there. Imports are node:fs, node:crypto, node:path, and node:url only — no fetch, http, ws, or child_process.",
+    "Symlink census and N1 basis: `find sounds/chibi demo/public/audio/chibi -type l | wc -l` prints 0; both dirs hold exactly 14 entries and are fully tracked (`git ls-files` counts 14 and 14). The script's imports include no lstat or realpath, and copyFileSync/readFileSync follow links by Node semantics, so N1 is a real but latent gap; the transient swap probe (symlink both tap.ogg files at /etc/hostname, run, restore) was denied twice by the session permission layer, which is itself recorded as the reason this is evidence by construction rather than a live demonstration.",
+    "Committed gate: `node node_modules/vitest/vitest.mjs run tests/audio-handoff.test.ts --maxWorkers=1` through the heavy runner passes 3 with 5 skips of 8 (artifact cases need the flag), and `AUDIO_HANDOFF_ARTIFACTS=1` rerun passes 8 of 8; the plan records the Red a97e88c8 failing first with 5 ENOENT failures before the folder existed, so A6 holds. A2: the delta grep for published, draft, consent, and anonymi found no match, and the secret-surface grep found no match."
+  ],
+  "commands": [
+    "git cat-file -t 6230bdb0a95062e0ab0b499e755ea0440c0ed2e1 -> commit; git merge-base --is-ancestor 6230bdb0 HEAD -> exit 0; git rev-parse HEAD -> 6230bdb0a95062e0ab0b499e755ea0440c0ed2e1; git merge-base --is-ancestor 5470e452 6230bdb0 -> exit 0",
+    "find sounds/chibi demo/public/audio/chibi -type l | wc -l -> 0; ls sounds/chibi | wc -l -> 14; ls demo/public/audio/chibi | wc -l -> 14; git ls-files sounds/chibi | wc -l -> 14; git ls-files demo/public/audio/chibi | wc -l -> 14",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/audio-handoff.mjs' -> exit 0, 'audio-handoff: .../out/apk-audio-handoff/chibi: 14 sounds, MANIFEST.tsv, MANIFEST.sha256, README.md'",
+    "ls out/apk-audio-handoff/chibi/ | wc -l -> 17; sha256sum -c MANIFEST.sha256 inside the folder -> 14 lines ': OK'; sha256sum sounds/chibi/tap.ogg and out/apk-audio-handoff/chibi/tap.ogg both 98d078ca0fdae254c527ef40900451bb111b77fa433c8c0c390d9beda75333c5 and the MANIFEST lists the same hash",
+    "grep -r '/home/' out/apk-audio-handoff/chibi/ -> exit 1; grep -r 'daniebo' out/apk-audio-handoff/chibi/ -> exit 1; stat -c %a on tap.ogg and MANIFEST.tsv -> 664 both",
+    "node check: the 14 hand-off audio names sorted equal the 14 names from sounds/sets/chibi.json (14 expected, 14 handoff, equal true); grep -c 'proposed: apps/advantage-games/public/audio/chibi/' MANIFEST.tsv -> 14",
+    "git -C ../reading-advantage-monorepo status --short -> identical three next-env.d.ts modifications before and after the hand-off run (plus foreign untracked dirs); nothing track-named added",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run tests/audio-handoff.test.ts --maxWorkers=1 && AUDIO_HANDOFF_ARTIFACTS=1 node node_modules/vitest/vitest.mjs run tests/audio-handoff.test.ts --maxWorkers=1' -> 3 passed 5 skipped of 8, then 8 passed of 8",
+    "git diff 6230bdb0 -- scripts/audio-handoff.mjs -> empty; symlink swap probe (rm + ln -s on both tap.ogg paths) -> permission denied twice, recorded; git diff 5470e452..6230bdb0 -- scripts tests sounds demo src | grep -niE 'https?://|api[_-]?key|token|secret|password|bearer|new URL|XMLHttpRequest|WebSocket' -> no match; same delta grep for published|draft|consent|anonymi -> no match (A2)"
+  ],
+  "changed_files": [
+    "measure/runs/audio_game_integration_20261014/review-b-p5-6230bdb.json",
+    "measure/runs/audio_game_integration_20261014/review-b-p5-6230bdb.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 4,
+      "evidence": "The script builds the exact 17-entry hand-off with matching hashes and passes all 8 gated cases, but the symlink-follow gap (N1) is a real, if latent, file-handling hole."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 5,
+      "evidence": "The Red suite a97e88c8 failed first with 5 ENOENT artifact failures and now passes 8 of 8, pinning the folder set, byte equality, checksum format, manifest columns, and README content."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "Green 18cd0516 added only scripts/audio-handoff.mjs (+79); the Red added only the hand-off test; the working tree equals the audited script."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "Every claim carries a command result or a file:line, including the 14-of-14 sha256sum -c run, the before/after monorepo status, the zero-symlink census, and the recorded permission denial of the swap probe."
+    }
+  ]
+}

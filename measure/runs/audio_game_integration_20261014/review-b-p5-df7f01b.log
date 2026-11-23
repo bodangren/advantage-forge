@@ -1,0 +1,25 @@
+MEASURE_AGENT_RESULT
+role: measure-review-b-security
+track: audio_game_integration_20261014
+phase: Phase 5: Hand-off to the PM
+round: 2
+phase_base_sha: 5470e45243bed1a1f26e81063d92f5bdf729de3b
+role_base_sha: 6230bdb0a95062e0ab0b499e755ea0440c0ed2e1
+audited_head_sha: df7f01bfb02094005b514b62003f1343c1dfe16c
+security_applicability: applicable
+route: kimi-code-plan-cn/kimi-for-coding
+status: pass
+summary: Pass on Phase 5 re-review r2, no blocking and no nonblocking finding; the round-1 nit N1 is withdrawn. Green a0cdaf4f adds an inventory allowlist, an lstat symlink rejection, --help, and a corrected README. Fixture probe under measure/runs/ (no live edit of demo/public or sounds/): symlinks to /etc/hostname in both folders or in the demo folder only exit 1 with 'symlink in <dir>: tap.ogg' and no output folder; an extra 15th name and a case-changed TAP.ogg both exit 1 on the allowlist with no output folder; a clean fixture run exits 0 with 17 entries and passing sha256sum -c. Real run: rm -rf scope unchanged (constant HANDOFF, all pre-write dies before it), --help exits 0 and any argument exits 1, the folder has no /home/ path and no user name, the monorepo is untouched, and the gates pass (5 default, 10 of 10 with AUDIO_HANDOFF_ARTIFACTS=1, adversarial pin 1 of 1; tsc baseline 51 unchanged through the heavy runner).
+blocking_findings: none
+nonblocking_findings: none
+evidence:
+- N1 withdrawn: fixture scenarios A (symlink both) and B (symlink demo only) exit 1 before any write; C (extra name) and D (case change) exit 1 on the allowlist; E (clean) proves the probe harness faithful with 17 entries and sha256sum -c passing; fixtures deleted; sound dirs untouched and git-clean.
+- Provenance: audited head is a commit, ancestral to the working head; the tested script equals the audited script (empty git diff); phase_base_sha is ancestral.
+- Write scope: allowlist of 14 constant names, bare readdirSync names, sorted join-compare, constant rmSync folder, manifests after all copies.
+- Hygiene: greps for /home/ and user name exit 1; monorepo status identical before and after.
+retry_recommendation: none
+confidence: high
+paths:
+- measure/runs/audio_game_integration_20261014/review-b-p5-df7f01b.json
+- measure/runs/audio_game_integration_20261014/review-b-p5-df7f01b.log
+END_MEASURE_AGENT_RESULT

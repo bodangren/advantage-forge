@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "role": "measure-review-b-security",
+  "track": "audio_game_integration_20261014",
+  "phase": "Phase 4: Preload budget",
+  "phase_base_sha": "53ae856842ae14a63fb1b65a96edd1c8d6ce22e4",
+  "baseline_sha": "53ae856842ae14a63fb1b65a96edd1c8d6ce22e4",
+  "role_base_sha": "5a1da5011f31008102f8563b1f03f2891c23f99b",
+  "audited_head_sha": "229323c5d822f1dcb480b8e5ccf767c98a6f0c75",
+  "security_applicability": "applicable",
+  "route": "kimi-code-plan-cn/kimi-for-coding",
+  "status": "pass",
+  "summary": "Pass, re-bind of the Phase 4 r3 result to HEAD 229323c5, with no blocking and no nonblocking finding. No code, test, or docs file outside the chibi-sprouts folder changed between the r3 audited head 5a1da50 and this head: `git diff --stat 5a1da501 229323c5d822f1dcb480b8e5ccf767c98a6f0c75 -- . ':!measure' ':!docs/chibi-sprouts'` prints nothing, the three intervening commits touch only measure paths (chibi-sprouts record, late findings TD-46 and TD-47, and run records), and the working tree sits exactly at the audited head. The default gate re-runs green at this head: `node node_modules/vitest/vitest.mjs run tests/audio-budget.test.ts --maxWorkers=1` through the heavy runner passes 4 with 1 skip of 5, the skip being the JSON case that needs the AUDIO_BUDGET_JSON=1 flag, exactly as the plan records. The two audio late findings recorded at 5a1da50 (C4-F4 false-fail direction of the fileEffect gate, A3-F5 test-strategy JSON shape drift) are measurement-tooling and doc items that cannot produce a false PASS or change shipped sound, and the PM rule already routes them to TD-46 Low Open, so the r3 security verdict binds unchanged: loopback-only server, one-second port-collision fail, signal cleanup with exit 130 and 143, unchanged --game handling, page-confined init script, and a single hardcoded write under out/audio-budget/.",
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "evidence": [
+    "Provenance: `git cat-file -t 229323c5d822f1dcb480b8e5ccf767c98a6f0c75` printed commit. `git merge-base --is-ancestor 229323c5 HEAD` exited 0 and `git rev-parse HEAD` equals 229323c5d822f1dcb480b8e5ccf767c98a6f0c75, so the working tree is the audited head. `git merge-base --is-ancestor 5a1da50 229323c5` exited 0, so the r3 head is the delta base, and phase_base_sha 53ae8568 is ancestral. role_base_sha is the r3 head 5a1da5011f31008102f8563b1f03f2891c23f99b.",
+    "No-code-change record: `git diff --stat 5a1da501 229323c5d822f1dcb480b8e5ccf767c98a6f0c75 -- . ':!measure' ':!docs/chibi-sprouts'` printed nothing (0 lines). `git log --oneline 5a1da50..229323c5` lists 03544592 (asset_chibi_sprouts record), 2bec4ca1 (measure: late findings audio P4 and old_browser P2, TD-46 TD-47), and 229323c5 (measure: run records), each touching only measure paths and docs/chibi-sprouts.",
+    "Late-finding cross-check: the audio P4 late findings recorded at 5a1da50 are C4-F4 (the final fileEffect gate can reject a valid opening file effect, a false fail; it cannot give a false PASS or change shipped sound) and A3-F5 (test-strategy.md Phase 4 names the old JSON shape); both sit in TD-46 Low Open per the PM rule that a new finding no current user can reach is tech-debt, and neither contradicts the r3 security properties.",
+    "Gate rerun at this head: `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run tests/audio-budget.test.ts --maxWorkers=1'` exits 0 with 1 file passed, 4 passed and 1 skipped of 5; the skip is the JSON case that requires the AUDIO_BUDGET_JSON=1 flag, matching the plan Gate 1 record. No server is needed and `ss -ltn | grep 5199` finds nothing (exit 1).",
+    "Artifact state: out/audio-budget/rune-match.json still holds the r3 measurement ({bytes: 79319, files: 6, ...} with the T7g2 evidence fields), and `git status --short -- scripts tests/audio-budget.test.ts out` is clean, so the tested script and test equal the audited versions byte for byte.",
+    "A2: the re-bind range contains no publish, draft, consent, or anonymization surface. A6: the plan and debt edits are records and late-finding dispositions; no security state claim changed, and the r3 verdict required no registry claim beyond what the reruns prove.",
+    "Re-review handling: no CONTEST item reached Review B; no finding is kept or opened."
+  ],
+  "commands": [
+    "git cat-file -t 229323c5d822f1dcb480b8e5ccf767c98a6f0c75 -> commit; git merge-base --is-ancestor 229323c5 HEAD -> exit 0; git rev-parse HEAD -> 229323c5d822f1dcb480b8e5ccf767c98a6f0c75; git merge-base --is-ancestor 5a1da50 229323c5 -> exit 0",
+    "git diff --stat 5a1da501 229323c5d822f1dcb480b8e5ccf767c98a6f0c75 -- . ':!measure' ':!docs/chibi-sprouts' -> prints nothing (0 lines); git log --oneline 5a1da50..229323c5 -> 03544592, 2bec4ca1, 229323c5, all measure or chibi-docs only",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run tests/audio-budget.test.ts --maxWorkers=1' -> 1 file passed, 4 passed and 1 skipped of 5",
+    "ss -ltn | grep 5199 -> exit 1 (nothing listens); git status --short -- scripts tests/audio-budget.test.ts out -> clean"
+  ],
+  "changed_files": [
+    "measure/runs/audio_game_integration_20261014/review-b-p4-229323c.json",
+    "measure/runs/audio_game_integration_20261014/review-b-p4-229323c.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "The re-bind diff outside measure and chibi-docs is empty, so the verified r3 behaviour binds byte-identical, and the default gate reruns green at this head (4 passed, 1 flagged skip of 5)."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "The committed gate pins the budget cases with failing-first history, but process hygiene still rests on my ad hoc probes rather than committed tests."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The three intervening commits touch only measure paths and docs/chibi-sprouts, and this review wrote only its two run artifacts."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "Every claim carries a command result, including the empty `git diff --stat ... ':!measure' ':!docs/chibi-sprouts'` record and the rerun exit at the audited head."
+    }
+  ]
+}

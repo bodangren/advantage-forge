@@ -1,0 +1,46 @@
+MEASURE_AGENT_RESULT
+role: measure-jr-green
+track: audio_game_integration_20261014
+phase: Phase 5: Hand-off to the PM
+task: T8g remediation round 1 Green
+status: pass
+phase_base_sha: 5470e45243bed1a1f26e81063d92f5bdf729de3b (immutable; verified ancestor of final HEAD)
+role_base_sha: 5b60488edc6476246da459cdea0d62d8584d1c10 (HEAD at Green start; the Red plan mark)
+red_commits: 91ad6b8a8b4bc931433d26c3578583b66b43ee91 (tests/audio-handoff.test.ts), 098decd4030643142b2002585744483996342ee7 (tests/audio-handoff.adversarial.test.ts); both verified inside phase_base_sha..HEAD
+final_green_head: df7f01bfb02094005b514b62003f1343c1dfe16c
+
+tasks_flipped_to_x:
+  T8g Green remediation -> [x] in plan.md with implementation SHA a0cdaf4f42beaef56397d643f1ed6a949d9ccb1c, both gate counts, the folder path, and the checksum result.
+  T8 Done-when checksum command corrected in plan.md to run inside the folder: (cd out/apk-audio-handoff/chibi && sha256sum -c MANIFEST.sha256).
+
+tasks_flipped_to_b: none; no deferred owner.
+
+dispositions: A-F1=FIX; A-F2=FIX; A-F3=FIX; C-F1=FIX; C-F2=FIX; C-F3=FIX; ADV-P5-1=FIX; B-N1=FIX
+
+counts_and_results:
+  Default gate: 2 test files, 6 passed, 5 skipped (11). The five skips are the opt-in artifact cases, reported as skips.
+  Green gate: 2 test files, 11 passed (11).
+  Hand-off folder: out/apk-audio-handoff/chibi/ with 17 files: 14 sounds, MANIFEST.tsv, MANIFEST.sha256, README.md.
+  Checksum: (cd out/apk-audio-handoff/chibi && sha256sum -c MANIFEST.sha256) exits 0 and prints 14 OK lines, one per sound file.
+  Monorepo: MONOREPO-BEFORE and MONOREPO-AFTER print the same 24 unrelated paths from other sessions. No line names apps/advantage-games/public/audio/chibi/ or any of the 14 sound names. Forge wrote nothing in the monorepo.
+
+implementation:
+  scripts/audio-handoff.mjs now requires the exact approved 14 names (seven set entries in .ogg and .mp3) in both input folders before it removes or writes anything. A bad inventory produces one stderr line and exit 1 with out/ untouched. lstatSync rejects a symlink in either input folder. Format labels come only from the file extension. --help prints one usage line on stdout and exits 0; an unsupported argument prints usage on stderr and exits 1. Both paths return before any write.
+  The generated README states the one-time format choice with canPlayType and an Ogg preference, that preload can choose before the first unlock and the first unlock reuses the choice, and that two empty answers keep every event on synth. It tells the recipient to verify from inside the folder with sha256sum -c MANIFEST.sha256, then to copy the 14 sound files to the target that the PM or Monorepo session confirms.
+
+gates:
+  Default: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run tests/audio-handoff.test.ts tests/audio-handoff.adversarial.test.ts --maxWorkers=1' => exit 0.
+  Green: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'echo MONOREPO-BEFORE && git -C ../reading-advantage-monorepo status --short && node scripts/audio-handoff.mjs && AUDIO_HANDOFF_ARTIFACTS=1 node node_modules/vitest/vitest.mjs run tests/audio-handoff.test.ts tests/audio-handoff.adversarial.test.ts --maxWorkers=1 && (cd out/apk-audio-handoff/chibi && sha256sum -c MANIFEST.sha256) && echo MONOREPO-AFTER && git -C ../reading-advantage-monorepo status --short' => exit 0.
+  Symlink proof: an isolated copy with a symlink at sounds/chibi/tap.ogg exits 1, prints "audio-handoff: symlink in ...: tap.ogg", and creates no out/ folder.
+  node --check scripts/audio-handoff.mjs => exit 0. node_modules/.bin/prettier --check scripts/audio-handoff.mjs => exit 0.
+  node measure/tools/generate.mjs --check was stale after the plan edit; regenerated because measure/generated/ held no foreign change; then exit 0 with "Measure facts are current (4 files)."
+  ./measure/doctor.sh --structural-only after the plan-evidence commit => exit 0; "Measure doctor found no structural errors."
+
+commits:
+  implementation_commit: a0cdaf4f42beaef56397d643f1ed6a949d9ccb1c fix(audio_game_integration): T8g handoff allowlist, README load rule, CLI and symlink guard (explicit path: scripts/audio-handoff.mjs)
+  plan_evidence_commit: df7f01bfb02094005b514b62003f1343c1dfe16c docs(audio_game_integration): T8g remediation evidence (a0cdaf4f) (explicit paths: measure/tracks/audio_game_integration_20261014/plan.md, measure/generated/status.md)
+
+new_files: no new file entered either commit. The generated hand-off folder and this result log stay untracked. No committed test, source, game, audio file, or docs file changed. This role did not touch src/, tests/old-browser/, or ../reading-advantage-monorepo.
+
+handoff: Give the folder path out/apk-audio-handoff/chibi/ to the PM. The target stays proposed until a dated PM answer lands in the plan. Checksums prove file integrity, not audible quality or monorepo acceptance. No product decision was needed.
+END_MEASURE_AGENT_RESULT
