@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "role": "measure-closeout",
+  "track": "old_browser_builtins_20261122",
+  "phase": "closeout",
+  "baseline_sha": "20a2ecc2c0904edd36faf9f22dc93d5ab3460037",
+  "audited_head_sha": "f2afb03f73dfe678792793f60a30e2918f150af9",
+  "role_base_sha": "f2afb03f73dfe678792793f60a30e2918f150af9",
+  "status": "pass",
+  "summary": "Closeout passed. The track is archived with metadata status done and completion date 2026-11-23. The plan holds 17 [x] tasks with SHA evidence, 0 [~], 1 [ ] deferred T9 with SHA fc8e728e, and 0 [b]. The closeout checker, generator check, doctor structural-only, and A9 project test gate all exit 0. TD-45 moved to the tech-debt archive as Resolved with the Forge-only scope; TD-47 and TD-49 stay open with archive links. measure/tech-debt.md holds 49 lines.",
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "evidence": [
+    "Final acceptance PASS in final-acceptance-6dc919b.json, audited HEAD 6dc919b5; only record commits followed, and the non-measure diff is empty.",
+    "All phase acceptances passed: Phase 1 and Phase 2 at 80ff5717, Phase 3 at 9e406e8c, Phase 4 at 6dc919b5.",
+    "plan_closeout_feedback on the archived plan returns [].",
+    "A5 scan of plan.md, spec.md, and test-strategy.md: no hits. A6 scan of tracks.md: one hit owned by another archived track. A9 scan: no test or script cites the active track path; project test gate passed after the move.",
+    "TD-45 row removed from measure/tech-debt.md and appended to measure/tech-debt-archive.md as Resolved with the required caveat. TD-47 and TD-49 links repointed to the archive and both rows kept open.",
+    "The archived registry note carries the exact caveat: every game core and the host run without the four built-ins on iOS 15.0+ and WebView 80+; three 3D views use Element.replaceChildren (Chrome 86): WebView 80 to 85 would fail there; recorded as TD-50. TD-50 was not added by this closeout."
+  ],
+  "commands": [
+    "python3 -I measure_interphase_checks.py closeout --repo . --track old_browser_builtins_20261122 => exit 0, PASS",
+    "node measure/tools/generate.mjs --check => exit 0, 4 files current",
+    "./measure/doctor.sh --structural-only => exit 0, no structural errors",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '<PROJECT_TESTS>' => exit 0, 3397 passed, 10 skipped",
+    "wc -l < measure/tech-debt.md => 49"
+  ],
+  "changed_files": [
+    "measure/archive/old_browser_builtins_20261122/",
+    "measure/tracks.md",
+    "measure/generated/status.md",
+    "measure/tech-debt.md",
+    "measure/tech-debt-archive.md",
+    "measure/runs/old_browser_builtins_20261122/closeout.log",
+    "measure/runs/old_browser_builtins_20261122/closeout-f2afb03.json"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high"
+}

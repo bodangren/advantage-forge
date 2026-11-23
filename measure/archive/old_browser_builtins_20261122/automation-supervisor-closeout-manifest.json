@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "track": "old_browser_builtins_20261122",
+  "archived_at": "2026-11-23",
+  "track_base_sha": "20a2ecc2c0904edd36faf9f22dc93d5ab3460037",
+  "role_base_sha": "f2afb03f73dfe678792793f60a30e2918f150af9",
+  "pre_closeout_head_sha": "f2afb03f73dfe678792793f60a30e2918f150af9",
+  "audited_head_sha": "6dc919b5bac3be9e7dcca3d999bbc26041407551",
+  "audited_head_is_pre_closeout_head": false,
+  "audited_head_is_ancestor_of_pre_closeout_head": true,
+  "audited_head_provenance_note": "Final acceptance bound to 6dc919b5 and printed audited_head_is_current true. The commits after it (7c1562fe, 0849215a, c0eb4949, c4b5e7e2, 99ae0bd7, 6dc919b5 record batches, 368fbc63, f2afb03f) are record commits. `git diff --stat 6dc919b5 HEAD -- . ':!measure'` prints nothing. No product path changed after the audit, so the verdict stays valid.",
+  "lane": "light: one phase per plan block, with the full audit role set per the orchestrator brief",
+  "final_acceptance": {
+    "file": "measure/runs/old_browser_builtins_20261122/final-acceptance-6dc919b.json",
+    "log": "measure/runs/old_browser_builtins_20261122/final-acceptance-6dc919b.log",
+    "status": "pass",
+    "audited_head_sha": "6dc919b5bac3be9e7dcca3d999bbc26041407551",
+    "role_gate": "exits 0"
+  },
+  "phase_acceptance_results": [
+    { "phase": "Phase 1: Red", "status": "pass", "audited_head_sha": "80ff5717", "note": "supersedes 229323c and 61db4f1" },
+    { "phase": "Phase 2: Green", "status": "pass", "audited_head_sha": "80ff5717", "note": "supersedes 229323c and 61db4f1" },
+    { "phase": "Phase 3: Browser check", "status": "pass", "audited_head_sha": "9e406e8c" },
+    { "phase": "Phase 4: Gates", "status": "pass", "audited_head_sha": "6dc919b5", "note": "supersedes fc8e728 and 0849215; PM approved the AC6 Prettier amendment before acceptance" }
+  ],
+  "completed_phases": [
+    { "id": "Phase 1", "checkpoint": "80ff5717" },
+    { "id": "Phase 2", "checkpoint": "80ff5717" },
+    { "id": "Phase 3", "checkpoint": "9e406e8c" },
+    { "id": "Phase 4", "checkpoint": "6dc919b5" },
+    { "id": "Closeout", "checkpoint": "fc8e728e", "note": "T9 deferred placeholder; the SHA on the plan line records the deferral" }
+  ],
+  "task_markers": "pass: the archived plan holds 17 [x] tasks with commit SHA evidence, 0 [~], 1 [ ] (T9 Closeout, deferred:closeout-steward, with SHA fc8e728e), and 0 [b]. plan_closeout_feedback returns []. No plan task marker was edited in closeout.",
+  "gates": {
+    "closeout_checker": "python3 -I measure_interphase_checks.py closeout --repo . --track old_browser_builtins_20261122 => exit 0 after archive",
+    "generated_facts": "node measure/tools/generate.mjs => exit 0, 4 facts generated; node measure/tools/generate.mjs --check => exit 0, 4 files current",
+    "doctor_structural": "./measure/doctor.sh --structural-only => exit 0, no structural errors after the archive",
+    "project_test_gate_a9": "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts' => exit 0; 231 passed files + 2 skipped (233); 3397 passed tests + 10 skipped (3407); 79.06 s"
+  },
+  "antipatterns_clean": [
+    "A5 false claim: no PASS=N, FAIL=0, or all-checks-pass claim appears in the archived plan, spec, or test strategy. Each recorded count points to a run record.",
+    "A6 registry overstatement: the archived registry note carries the scope caveat about Element.replaceChildren and WebView 80 to 85, and it makes no full-browser-support claim. The only A6 grep hit in tracks.md belongs to the archived chore_earshot_sounds_20261121 track.",
+    "A9 archived-track path: no tests/*.sh hardcodes measure/tracks/old_browser_builtins_20261122/plan.md, and no test or script cites the active track path. The project test gate passed after the move."
+  ],
+  "fixed_path_hits_before_move": [
+    "measure/tracks.md:199 (active registry link, removed and replaced by an archive entry)",
+    "measure/tech-debt.md:44 (TD-45 link, row moved to the tech-debt archive)",
+    "measure/tech-debt.md:46 (TD-47 link, repointed to the archive)",
+    "measure/tech-debt.md:48 (TD-49 link, repointed to the archive)",
+    "measure/generated/status.md:67 (regenerated after the move)",
+    "tests/apk3d/no-unpolyfilled-builtins.test.ts:8 and tests/old-browser/deep-copy.test.ts:1 (track id in comments only, no path)"
+  ],
+  "a9_fix": "Not needed: no test or script referenced the active track path. The project test gate passed through heavy-run after the move.",
+  "archive_notes": [
+    "every game core and the host run without the four built-ins on iOS 15.0+ and WebView 80+; three 3D views use Element.replaceChildren (Chrome 86): WebView 80 to 85 would fail there; recorded as TD-50",
+    "TD-45 is fixed in Forge only; the monorepo keeps the old calls until the next sync (apps and packages there copy src/ from Forge); 35 structuredClone, 8 .at(, 1 findLastIndex replaced by src/apk3d/sim/copy.ts and index-math.ts.",
+    "TD-50 is not added by this closeout. The orchestrator adds it after this closeout frees a line in measure/tech-debt.md (now 49 lines).",
+    "T9 Closeout stays recorded as the deferred closeout placeholder with SHA fc8e728e; records 368fbc63 and f2afb03f."
+  ],
+  "deferred": [
+    "T9 Closeout: deferred to the closeout steward, deferral recorded in fc8e728e; the plan line keeps [ ] and the marker deferred:closeout-steward with a done SHA token",
+    "TD-47: old-browser scanner and test tool limits; kept open, link repointed to the archive",
+    "TD-49: old-browser check input causality; kept open, link repointed to the archive, reopen trigger 'a browser check passes while a real input fails' retained",
+    "TD-50: Element.replaceChildren gap on WebView 80 to 85; recorded here for the orchestrator, not added as a row by this closeout",
+    "Monorepo sync: the four built-ins stay in the monorepo copy until the next release sync; no monorepo file was changed by the track"
+  ],
+  "deferred_note": "No plan task stays in progress. The deferred items are a decided closeout placeholder and open debt with owners, not incomplete automatable work of this track.",
+  "tech_debt": [
+    "TD-45 moved from measure/tech-debt.md to measure/tech-debt-archive.md with Status Resolved, date 2026-11-23, the Forge-only scope, and the required caveat",
+    "TD-47 kept open in measure/tech-debt.md with the link repointed to the archive",
+    "TD-49 kept open in measure/tech-debt.md with the link repointed to the archive and the PM reopen trigger intact"
+  ],
+  "tech_debt_note": "measure/tech-debt.md went from 50 to 49 lines when the resolved TD-45 row moved out. No row was added. TD-50 belongs to the orchestrator after closeout.",
+  "lessons_learned": "No new lesson is warranted. The built-in replacement and scanner work produced no reusable rule beyond rules already in lessons-learned.md.",
+  "generated_facts": "regenerated after the move: node measure/tools/generate.mjs exited 0 and generated 4 facts; generate --check exits 0; generated/status.md no longer lists this track as active",
+  "artifact_cleanup": "No bulky run artifact was deleted. The orchestrator identified none. Every log, JSON, probe, and result under measure/runs/old_browser_builtins_20261122/ is retained, including the final acceptance and closeout evidence. Runtime outputs under out/ are git-ignored and stay in place.",
+  "retained_evidence": [
+    "measure/runs/old_browser_builtins_20261122/final-acceptance-6dc919b.json",
+    "measure/runs/old_browser_builtins_20261122/final-acceptance-6dc919b.log",
+    "measure/runs/old_browser_builtins_20261122/phase-acceptance-p1-80ff571.json",
+    "measure/runs/old_browser_builtins_20261122/phase-acceptance-p2-80ff571.json",
+    "measure/runs/old_browser_builtins_20261122/phase-acceptance-p3-9e406e8.json",
+    "measure/runs/old_browser_builtins_20261122/phase-acceptance-p4-6dc919b.json",
+    "measure/runs/old_browser_builtins_20261122/closeout.log",
+    "measure/runs/old_browser_builtins_20261122/closeout-f2afb03.json"
+  ],
+  "commands": [
+    "git rev-parse HEAD => f2afb03f73dfe678792793f60a30e2918f150af9 (role_base_sha and pre-closeout HEAD, equal to the expected value)",
+    "git diff --stat 6dc919b5 HEAD -- . ':!measure' => empty (record commits only)",
+    "python3 -I measure_interphase_checks.py closeout --help => usage read before the run",
+    "python3 -I -c 'plan_closeout_feedback(...)' on the archived plan => []",
+    "grep -nE 'PASS=[0-9]+.*FAIL=0|all checks pass' on archived plan.md/spec.md/test-strategy.md => no hits (A5)",
+    "grep -nE '...all (checks |tests )?pass' measure/tracks.md => one hit, archived chore_earshot_sounds_20261121, none for this track (A6)",
+    "grep -rn 'measure/tracks/old_browser_builtins_20261122' tests scripts measure/tests => no hits (A9)",
+    "node measure/tools/generate.mjs => exit 0; 4 facts generated",
+    "node measure/tools/generate.mjs --check => exit 0; 4 files current",
+    "./measure/doctor.sh --structural-only => exit 0, no structural errors",
+    "wc -l < measure/tech-debt.md => 49",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '<PROJECT_TESTS>' => exit 0; 3397 passed, 10 skipped"
+  ],
+  "closeout_commit": "reported in the MEASURE_AGENT_RESULT block and by git log -1; a commit cannot record its own SHA",
+  "evidence_classes": {
+    "person_reviewed": "No person review is recorded for this closeout. Daniel owns product acceptance; no model rating is owner acceptance.",
+    "model_evidence_not_acceptance": "Review and acceptance JSON files are model evidence, not owner acceptance. The PM approved the AC6 amendment, recorded in spec.md and plan.md."
+  },
+  "model_routes": "This closeout ran on opencode-go/hy4-flash-free#high. Final acceptance ran on Anthropic; the eight UX review results record openai/gpt-6-luna#high and Review B records kimi-code-plan-cn/kimi-for-coding, which differs from the brief's family statement (FA-4). The orchestrator corrects that statement in the final report."
+}

@@ -1,0 +1,30 @@
+{
+  "track_id": "old_browser_builtins_20261122",
+  "type": "bug",
+  "status": "done",
+  "created_at": "2026-11-22T00:00:00Z",
+  "updated_at": "2026-11-23T00:00:00Z",
+  "completed": "2026-11-23",
+  "due": "2026-11-27",
+  "description": "Every game and the host run on iOS 15.0+ and WebView 80+: one local deep-copy helper replaces structuredClone, index math replaces Array.prototype.at and findLastIndex, and the committed scan of tests/apk3d/no-unpolyfilled-builtins.test.ts widens to src/ and fails on any ES2022+ built-in that the demo build does not polyfill",
+  "estimated_tasks": 8,
+  "actual_tasks": 18,
+  "deviation_notes": "Created 2026-11-22 from the ES2022+ built-in scan of src/ on 2026-11-22: 44 hits at baseline a414b406 (35 structuredClone, 8 array .at(, 1 findLastIndex). The device gate stays as it is (PM decision 2026-11-22): old Android phones with WebView 80 to 97 are the audience. Due 2026-11-27, before the Storytime launch of 2026-11-30. Amended 2026-11-23 after spec review r1 (report spec-review-af00767): the 8 array .at( sites are listed by line, the track widens the committed scanner tests/apk3d/no-unpolyfilled-builtins.test.ts instead of adding a second one, audio task T6k 0cc7b5c4 is recorded as a met prerequisite for the Object.hasOwn deletion, and the stale 217-file/3,299-test pin left AC4. Closeout 2026-11-23: four phases accepted (P1 and P2 at 80ff571, P3 at 9e406e8, P4 at 6dc919b) and final acceptance PASS at 6dc919b. The plan holds 17 completed tasks and one deferred closeout placeholder (T9, deferral SHA fc8e728e); actual_tasks counts all 18 lines. The AC6 Prettier line ran as a PM-approved non-regression check (amendment 7dbc1806). The replacement helpers changed 35 structuredClone calls, 8 array .at( calls, and 1 findLastIndex call. The scan now roots at src/ with no flag. Three 3D views use Element.replaceChildren (Chrome 86), so WebView 80 to 85 would fail there; the orchestrator records that gap as TD-50 after closeout.",
+  "workstream": "games",
+  "retrospective": false,
+  "escalation": "third round: the Box3 exclusion matches a substring, so a renamed Set receiver hides a union call (acceptance rule A7); fourth round: the Box3 exclusion regex boundary still hides holder.box.union(b) and a non-ASCII receiver; bind it to the exact line (acceptance rule A7). Closeout 2026-11-23: both A7 escalations closed by the exact-line exclusion (9459687d) and Phase 2 acceptance at 80ff571; no escalation stays open.",
+  "evidence": [
+    "vite.demo.config.ts",
+    "src/apk3d/device/gate.ts",
+    "src/apk3d/contracts/manifest.ts",
+    "src/apk3d/sim/index.ts",
+    "src/games/abyssal-well/core/sim.ts",
+    "src/games/labyrinth/core/mazes.ts",
+    "src/games/spellweavers-run/view2d/game.ts",
+    "src/storytime/book-pictures.ts",
+    "src/host/reader.ts",
+    "tests/apk3d/no-unpolyfilled-builtins.test.ts",
+    "scripts/apk3d-shot.ts"
+  ],
+  "dependencies": ["audio_game_integration_20261014"]
+}

@@ -195,9 +195,6 @@ This registry gives each historical, current, and planned work item one Measure 
 - [ ] **Track: Typing Duel: a typing game for saved words and sentences (keyboard and touch)**
   *Link: [./tracks/game_typing_duel_20261009/](./tracks/game_typing_duel_20261009/)*
 
-- [~] **Track: Old-browser built-ins: every game and the host run on iOS 15.0+ and WebView 80+**
-  *Link: [./tracks/old_browser_builtins_20261122/](./tracks/old_browser_builtins_20261122/)*
-
 ## Riven Lands pack
 
 Execution order. The overview, the decisions, and the dependencies are in [riven-lands-roadmap.md](./riven-lands-roadmap.md).
@@ -255,7 +252,11 @@ Execution order. The overview, the decisions, and the dependencies are in [riven
 
 ## Archived Tracks
 
-- [x] Sound in the games: library takes for the game events, completed 2026-11-23; 31 game events map to the earshot Chibi set, with Ogg and MP3 per-browser choice, a synth fallback, preload wiring in 29 hosts, and a 17-file PM hand-off folder. Final acceptance PASS at 4aea1282; its audited_head_sha is an ancestor of the pre-closeout HEAD and no audio product path changed after the audit. adversarial-p5-4aea128 PASS; earlier adversarial rounds are superseded. The 20-file audio suite (231 tests) and the 14 hand-off checksums pass. Phase 6 T9 credits stays deferred by decision with deferral SHA 03bdf3e5. Open items carried to the PM: TD-44, TD-45 (linked to old_browser_builtins_20261122, Phases 1 and 2 accepted 2026-11-23 and Phase 3 pending), TD-46, TD-48, and the hand-off folder awaiting a dated PM answer. No owner-acceptance or full-suite claim is made.
+- [x] Old-browser built-ins: every game and the host run on iOS 15.0+ and WebView 80+, completed 2026-11-23; 35 structuredClone calls, 8 array .at( calls, and 1 findLastIndex call replaced by local helpers, the committed scanner widened to src/, and a browser check with four built-ins deleted. Final acceptance PASS at 6dc919b5 with audited_head_sha equal to the pre-closeout HEAD; Phase 1 and Phase 2 accepted at 80ff5717, Phase 3 at 9e406e8c, and Phase 4 at 6dc919b5. The three-file gate (23 tests), the project gate (3397 passed, 10 skipped), and the browser check pass. Scope caveat: every game core and the host run without the four built-ins on iOS 15.0+ and WebView 80+; three 3D views use Element.replaceChildren (Chrome 86): WebView 80 to 85 would fail there; recorded as TD-50. TD-45 is fixed in Forge only and moved to the tech-debt archive; TD-47 and TD-49 stay open. T9 closeout stays deferred with SHA fc8e728e. No owner-acceptance or monorepo-sync claim is made.
+  *Link: [./archive/old_browser_builtins_20261122/](./archive/old_browser_builtins_20261122/)*
+  *Every game and the host run on iOS 15.0+ and WebView 80+: one local deep-copy helper replaces structuredClone, index math replaces Array.prototype.at and findLastIndex, and the committed scan of tests/apk3d/no-unpolyfilled-builtins.test.ts widens to src/ and fails on any ES2022+ built-in that the demo build does not polyfill*
+
+- [x] Sound in the games: library takes for the game events, completed 2026-11-23; 31 game events map to the earshot Chibi set, with Ogg and MP3 per-browser choice, a synth fallback, preload wiring in 29 hosts, and a 17-file PM hand-off folder. Final acceptance PASS at 4aea1282; its audited_head_sha is an ancestor of the pre-closeout HEAD and no audio product path changed after the audit. adversarial-p5-4aea128 PASS; earlier adversarial rounds are superseded. The 20-file audio suite (231 tests) and the 14 hand-off checksums pass. Phase 6 T9 credits stays deferred by decision with deferral SHA 03bdf3e5. Open items carried to the PM: TD-44, TD-45 (fixed in Forge by old_browser_builtins_20261122, archived 2026-11-23; Forge only until the next sync), TD-46, TD-48, and the hand-off folder awaiting a dated PM answer. No owner-acceptance or full-suite claim is made.
   *Link: [./archive/audio_game_integration_20261014/](./archive/audio_game_integration_20261014/)*
   *Sound in the games: play the earshot Chibi sound set first for the game events, with an MP3 copy and a per-browser format choice, and the synthesized sounds as the fallback; approved library takes replace set files later*
 

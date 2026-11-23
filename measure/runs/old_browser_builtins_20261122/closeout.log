@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: closeout
+status: complete
+track: old_browser_builtins_20261122
+phase: closeout
+commits: closeout commit is this commit, reported by git log -1; final acceptance audited 6dc919b5, record fixes 368fbc63 and f2afb03f
+tests_run: closeout checker exit 0 after archive; generate --check exit 0 (4 facts current); doctor --structural-only exit 0; A9 project test gate through heavy-run exit 0 (231 passed files + 2 skipped, 3397 passed tests + 10 skipped, 79.06 s); A5/A6/A9 scans clean; tech-debt.md holds 49 lines
+files_changed: moved the track to measure/archive/old_browser_builtins_20261122; metadata status done with completed 2026-11-23; measure/tracks.md active entry removed and archived entry added with the scope caveat; TD-45 moved to measure/tech-debt-archive.md as Resolved; TD-47 and TD-49 links repointed to the archive; the stale audio registry note corrected; generated facts regenerated; closeout.log, closeout-f2afb03.json, and automation-supervisor-closeout-manifest.json added
+plan_updates: none to task markers; T9 stays [ ] with deferred:closeout-steward and SHA fc8e728e; no plan text changed to force a gate
+known_failures: none blocking; T9 deferred closeout placeholder; TD-47 and TD-49 stay open; TD-50 recorded for the orchestrator and not added here; monorepo keeps the old built-ins until the next sync; tsc keeps the recorded baseline diagnostics and the AC6 Prettier line keeps the PM-approved baseline debt
+handoff: final acceptance PASS bound to 6dc919b5 with an empty non-measure diff after the audit; all four phase acceptances passed; every game core and the host run without the four built-ins on iOS 15.0+ and WebView 80+; three 3D views use Element.replaceChildren (Chrome 86): WebView 80 to 85 would fail there; recorded as TD-50; the orchestrator adds TD-50 after closeout and owns the monorepo sync; no bulky artifact deleted
+END_MEASURE_AGENT_RESULT
