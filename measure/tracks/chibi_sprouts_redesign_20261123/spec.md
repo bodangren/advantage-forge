@@ -110,18 +110,18 @@ These rules hold for every role of this track. The PM approved them on 2026-11-2
 
 The page leaves seven rules open. This track fixes them here, so Red and Green decide nothing.
 
-| #   | Decision                                                | Rule                                                                                                                                                                                                                                                                               | Why                                                                                                                              |
-| --- | ------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| d   | Level orthographic renders need two new render options  | Add the named views `front-level` and `side-level` (azimuth 0 and 90, elevation 0), a `--ortho` flag, and a `--flat` flag.                                                                                                                                                         | The page demands level orthographic views. The camera today is perspective and tilted.                                           |
-| e   | The measurement render is the flat vertex-colour render | `--flat` draws each mesh unlit in its own colour, with no tone mapping, no environment light, and no ground. It writes `out/<name>/flat/<view>.png`.                                                                                                                               | A lit, tone-mapped render moves the skin, hair, and eye colours by 30 % or more. A colour rule over it is not reliable.          |
-| f   | The orthographic frame is fixed for the whole run       | World height `H = max(size.x, size.y, size.z) × 1.10`, a square frame, centred on the bounds centre. `ppm = imageSize / H`.                                                                                                                                                        | The page compares heights and widths in one image. One scale for both views lets a width compare with a depth.                   |
-| g   | The new asset needs a preset pin row                    | The new asset declares `variants` and `presets`. Green compares the parsed pin with the role baseline and requires one new key and no changed value.                                                                                                                               | `tests/preset-colour.test.ts` fails on an asset that is not in the pin. The PM forbids skipping that test.                       |
-| h   | The new base imports no scrapped module                 | `assets/parts/humanoid-kim.ts` imports only `src/index.js`. It does not import `assets/parts/humanoid-kind.ts`.                                                                                                                                                                    | The scrapped base holds the hero torso and the palm-forward hand code. A new base must not inherit either.                       |
-| i   | Role families                                           | Green is not the Red family. Red is muse. The orchestrator picks Green with `ra-quota` at dispatch and records its model id in the plan. The AC4 judge comes from a family other than Green's and Red's.                                                                           | The judge must not share the builder's blind spots, and the builder must not review its own Red. This rule names no fixed model. |
-| j   | The side projection sign                                | At azimuth 90 the camera sits at +X and looks toward −X, so image right is −Z: `u = (cz − z)·ppm + W/2`. A front landmark (larger z) lands left of centre.                                                                                                                         | `Studio.aim` places the camera on +X. The first draft used `z − cz`, which mirrors the side landmarks.                           |
-| k   | The judge input holds no Kim art                        | The judge sees `mom-panel.png`, Mom's lit front and side render beside Mom's drawing, and the numeric Kim ratios. The Kim panel exists only on the local PM sheet.                                                                                                                 | Decision 1 forbids Kim art to a third party. Mom's render may use the established look-judge routes.                             |
-| l   | The sheet uses the lit render                           | The sheet panels come from `views/front-level.png` and `views/side-level.png`. The flat render feeds the numbers only.                                                                                                                                                             | The sheet shows a person beside two drawings. An unlit vertex-colour figure does not compare with them.                          |
-| m   | The LATO.2 trial runs on our own VM                     | One Spot L4 in `asia-southeast1` on project `reading-advantage`, with a 3 hour VM cap and no hosted API and no public demo. One standard L4 is the fallback, as an orchestrator decision inside Daniel's USD 5 cap, with the PM informed 2026-11-23. The PM may veto the fallback. | PM decision L caps the spend at USD 5, and decision 1 keeps Kim art off third-party services.                                    |
+| #   | Decision                                                | Rule                                                                                                                                                                                                                                                  | Why                                                                                                                                                                           |
+| --- | ------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| d   | Level orthographic renders need two new render options  | Add the named views `front-level` and `side-level` (azimuth 0 and 90, elevation 0), a `--ortho` flag, and a `--flat` flag.                                                                                                                            | The page demands level orthographic views. The camera today is perspective and tilted.                                                                                        |
+| e   | The measurement render is the flat vertex-colour render | `--flat` draws each mesh unlit in its own colour, with no tone mapping, no environment light, and no ground. It writes `out/<name>/flat/<view>.png`.                                                                                                  | A lit, tone-mapped render moves the skin, hair, and eye colours by 30 % or more. A colour rule over it is not reliable.                                                       |
+| f   | The orthographic frame is fixed for the whole run       | World height `H = max(size.x, size.y, size.z) × 1.10`, a square frame, centred on the bounds centre. `ppm = imageSize / H`.                                                                                                                           | The page compares heights and widths in one image. One scale for both views lets a width compare with a depth.                                                                |
+| g   | The new asset needs a preset pin row                    | The new asset declares `variants` and `presets`. Green compares the parsed pin with the role baseline and requires one new key and no changed value.                                                                                                  | `tests/preset-colour.test.ts` fails on an asset that is not in the pin. The PM forbids skipping that test.                                                                    |
+| h   | The new base imports no scrapped module                 | `assets/parts/humanoid-kim.ts` imports only `src/index.js`. It does not import `assets/parts/humanoid-kind.ts`.                                                                                                                                       | The scrapped base holds the hero torso and the palm-forward hand code. A new base must not inherit either.                                                                    |
+| i   | Role families                                           | Green is not the Red family. Red is muse. The orchestrator picks Green with `ra-quota` at dispatch and records its model id in the plan. The AC4 judge comes from a family other than Green's and Red's.                                              | The judge must not share the builder's blind spots, and the builder must not review its own Red. This rule names no fixed model.                                              |
+| j   | The side projection sign                                | At azimuth 90 the camera sits at +X and looks toward −X, so image right is −Z: `u = (cz − z)·ppm + W/2`. A front landmark (larger z) lands left of centre.                                                                                            | `Studio.aim` places the camera on +X. The first draft used `z − cz`, which mirrors the side landmarks.                                                                        |
+| k   | The judge input holds no Kim art                        | The judge sees `mom-panel.png`, Mom's lit front and side render beside Mom's drawing, and the numeric Kim ratios. The Kim panel exists only on the local PM sheet.                                                                                    | Decision 1 forbids Kim art to a third party. Mom's render may use the established look-judge routes.                                                                          |
+| l   | The sheet uses the lit render                           | The sheet panels come from `views/front-level.png` and `views/side-level.png`. The flat render feeds the numbers only.                                                                                                                                | The sheet shows a person beside two drawings. An unlit vertex-colour figure does not compare with them.                                                                       |
+| m   | The LATO.2 trial runs on our own VM                     | One Spot L4 in `asia-southeast1` on project `reading-advantage`, with a 3 hour VM cap and no hosted API and no public demo. The trial uses no fallback compute. If the Spot create fails, the task stops, cleans up, and reports, and the PM decides. | PM decision L caps the spend at USD 5, and decision 1 keeps Kim art off third-party services. The orchestrator withdrew a standard L4 fallback on 2026-11-23 after review r4. |
 
 ## Scope
 
@@ -346,23 +346,40 @@ fixed order, and the first failure returns:
 The script calls the function once per side and fails the figure with the returned name. The real
 hand passes all seven checks. The hand depth is `max z − min z` of the side's vertices, in meters.
 
-### The three palm mutations
+### The palm fixture and the three mutations
 
-AC3 rule 6 builds each mutation from the real left hand of
-`out/sprout-mom-kim/sprout-mom-kim.glb`, in memory, and passes it to `palmCheck('L', mesh, landmarks)`.
-Each mutation produces exactly one named failure:
+The palm cases use a synthetic left hand, built inside the test, at the pass geometry. The real hand
+adds one case at T7 only, because the real hand needs the GLB.
 
-1. Flipped winding: reverse the index order of every palm-patch triangle, and change nothing else.
-   The patch set and its area do not move, and the normal sum flips sign, so `agreement = −1` and
-   the call returns `hand L: palm surface faces away from the declared normal` (check 4).
-2. Mirrored hand: mirror `positions` and all three landmarks about x, and keep `side = 'L'`. The
-   patch set, the area, the contact distances, `thumbOut` and `thumbForward` do not change, and the
-   reflected winding makes the mirrored normals the true outward normals, so checks 3 to 6 pass.
-   `sideDot` becomes `+1`, and the call returns `hand L: palm faces away from the body` (check 7).
-3. Turned hand: rotate `positions` and the landmarks 180 degrees about the axis through `palmCentre`
-   along `fingerTip − palmCentre`. The palm direction and the surface turn together, so checks 3 to
-   5 pass and `sideDot` stays negative. The thumb then points backward, `thumbForward` is about
-   `−0.02`, and the call returns `hand L: thumb not on the radial front edge` (check 6).
+The fixture is three boxes: a palm from x 0.150 to 0.190, y 0.450 to 0.520, z 0.030 to 0.090; a
+thumb from x 0.170 to 0.190, y 0.495 to 0.505, z 0.090 to 0.115; and fingers from x 0.155 to 0.185,
+y 0.430 to 0.450, z 0.035 to 0.085. Each box face is split into 16 × 16 quads with outward winding,
+so the palm face has a vertex spacing of 0.0025 m and the fixture holds over 200 vertices. The
+landmarks are `palmCentre = [0.150, ȳ, z̄]`, `thumbTip = [0.190, 0.500, 0.115]`, and
+`fingerTip = [0.170, 0.430, 0.060]`, where `ȳ` and `z̄` are the vertex centroid's y and z. The x of
+`palmCentre` sits on the palm face, so `d = normalise(palmCentre − centroid) = (−1, 0, 0)` exactly,
+and the landmark contact is at most 1.8 mm.
+
+The base fixture passes all seven checks: `sideDot = −1`, `agreement = +1`, `palmContact ≤ 1.8 mm`,
+`thumbContact = 0`, `thumbOut = 0.040`, and `thumbForward = 0.115 − z̄ ≥ 0.025`, because `z̄` lies
+between 0.030 and 0.090.
+
+Each mutation passes that base to `palmCheck('L', mesh, landmarks)`. The table gives the first
+failure in the check order of "The palm check API", with the arithmetic on the fixture:
+
+| Mutation        | Change                                                                                                                                    | Check 4                                                      | Check 6                                            | Check 7                                  | First failure                                               |
+| --------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------ | -------------------------------------------------- | ---------------------------------------- | ----------------------------------------------------------- |
+| Flipped winding | reverse the index order of every palm-patch triangle                                                                                      | `agreement = −1`                                             | unchanged, passes                                  | unchanged, passes                        | check 4, `palm surface faces away from the declared normal` |
+| Mirrored hand   | mirror `positions` and the landmarks about x, and reverse the index order of every mirrored triangle                                      | `+1`, because the reversed winding keeps the outward normals | `thumbOut = 0.040`, `thumbForward ≥ 0.025`, passes | `d = (+1, 0, 0)`, `sideDot = +1 > −0.90` | check 7, `palm faces away from the body`                    |
+| Turned hand     | rotate `positions` and the landmarks 180 degrees about the axis through `palmCentre` along `fingerTip − palmCentre`, and keep the indices | `+1`, a rotation keeps the winding                           | `thumbForward = z̄ − 0.115 ≤ −0.025 < 0.010`        | reached only after check 6               | check 6, `thumb not on the radial front edge`               |
+
+Checks 1 to 3 and 5 pass in all three rows: the vertex count, the spread, the patch set, and the
+contact distances do not change. Check 5 holds because the landmarks move with the geometry. Each
+row therefore has one named failure, and no earlier check fires by accident.
+
+Why the mirrored row reverses the indices: a reflection flips the geometric normal of a triangle
+that keeps its index order, and check 4 would then fire before check 7. Reversing the mirrored
+triangles restores the outward normals, so only the palm direction fails.
 
 ### The front hand edge
 
@@ -429,9 +446,10 @@ The first command writes `out/sprout-mom-kim/flat/`. The second writes
 Phase 6 holds the trial. It runs alongside the SDF shape work, and its result feeds the PM decision.
 It does not replace the SDF base, and the pass table of this track stays the SDF acceptance.
 
-1. One Spot L4 in `asia-southeast1` on project `reading-advantage`. One standard L4 is the fallback,
-   as an orchestrator decision inside Daniel's USD 5 cap, with the PM informed on 2026-11-23. The PM
-   may veto the fallback, and the trial then stops. VM time has a hard cap of 3 hours.
+1. One Spot L4 in `asia-southeast1` on project `reading-advantage`. The trial uses no fallback
+   compute: a failed Spot create stops the task, cleans up, and reports, and the PM decides. The
+   orchestrator withdrew a standard L4 fallback on 2026-11-23 after review r4. VM time has a hard
+   cap of 3 hours.
 2. One Kim full-body front crop. It runs on our own VM only. The weights download to the VM, and the
    trial calls no hosted API and no public demo.
 3. The five steps are: create one VM and one temporary boot disk; set up the pinned dependencies and
@@ -531,19 +549,23 @@ It does not replace the SDF base, and the pass table of this track stays the SDF
    `KIM_HANDS` with `palmCentre`, `thumbTip`, and `fingerTip` for each side.
 2. `scripts/proportion-check.mjs` exports `palmCheck(side, mesh, landmarks)` per "The palm check
    API", and calls it once per side on the GLB's `hands` triangles and the `KIM_HANDS` landmarks.
-3. The real left hand and the real right hand pass all seven checks. A side with too few vertices, a
-   degenerate cloud, an empty palm patch, a landmark off the surface, or a wrong thumb or palm
-   direction fails with its named error, in the order of "The palm check API".
+3. The real left hand and the real right hand pass all seven checks at T7, when the GLB exists. The
+   palm cases of T6 run on the synthetic fixture of "The palm fixture and the three mutations". A
+   side with too few vertices, a degenerate cloud, an empty palm patch, a landmark off the surface,
+   or a wrong thumb or palm direction fails with its named error, in the order of "The palm check
+   API".
 4. The front flat view shows each hand as a separate run with a 2 px gap over 80 % of the band rows,
    and the hand front width is 0.60 of the hand depth times `ppm` or less, per "The front hand edge".
    A row without a run is named in the record and does not fail the figure on its own.
 5. The side view shows the thumbs forward and the backs of the hands out. The review sheet records
    both, and the look judge of AC4 rates the palms.
-6. The three mutations of "The three palm mutations" each produce exactly one named failure:
-   - flipped winding gives `hand L: palm surface faces away from the declared normal`,
-   - a mirrored hand with mirrored landmarks gives `hand L: palm faces away from the body`,
+6. The three mutations of "The palm fixture and the three mutations" run on the synthetic fixture and
+   each produce exactly one named failure:
+   - flipped winding gives `hand L: palm surface faces away from the declared normal` (check 4),
+   - a mirrored hand with mirrored landmarks and reversed mirrored indices gives
+     `hand L: palm faces away from the body` (check 7),
    - a hand turned 180 degrees about its finger axis gives
-     `hand L: thumb not on the radial front edge`.
+     `hand L: thumb not on the radial front edge` (check 6).
      The test asserts that name and no other.
 
 ### AC4: the independent look judge

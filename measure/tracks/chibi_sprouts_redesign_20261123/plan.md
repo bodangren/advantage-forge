@@ -31,22 +31,22 @@ this plan commits `tests/` paths only. Assets, scripts, and `src/` files land in
 No done-when runs the full suite before T8. Each earlier task gates its own test file, and the table
 names every test that still fails at that point.
 
-| Task | Gate command                                                                                                                                           | Earlier tests that still fail                               |
-| ---- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------- |
-| T1   | `vitest run` on the three scrapped files; expect 3 passed and 15 skipped                                                                               | none                                                        |
-| T2   | `vitest run tests/render-options.test.ts`; expect exit 1 on the absent options                                                                         | none                                                        |
-| T3   | `vitest run tests/render-options.test.ts`; expect exit 0                                                                                               | none                                                        |
-| T4   | `vitest run tests/sprout-mom-kim.test.ts`; expect exit 1 on the absent script                                                                          | none                                                        |
-| T5   | `vitest run tests/mom-kim-sheet.test.ts`; expect exit 1 on the absent script                                                                           | none                                                        |
-| T6   | `tsx scripts/proportion-check.mjs` with the named missing-asset error; `vitest run tests/sprout-mom-kim.test.ts` with only the end-to-end case failing | the sheet test of T5, and the measurement's end-to-end case |
-| T7   | `vitest run tests/sprout-mom-kim.test.ts tests/preset-colour.test.ts tests/render-options.test.ts`; expect exit 0                                      | the sheet test of T5 only                                   |
-| T8   | `vitest run tests/mom-kim-sheet.test.ts`; then the full suite; expect exit 0 on both                                                                   | none                                                        |
-| T9   | the trial log, the verify row, and the result note                                                                                                     | none                                                        |
-| T10  | `judge.json` with both scores                                                                                                                          | none                                                        |
-| T11  | the handoff, no command                                                                                                                                | none                                                        |
-| T12  | the plan record                                                                                                                                        | none                                                        |
-| T13  | deferred; starts by amendment                                                                                                                          | none                                                        |
-| T14  | deferred; starts by amendment                                                                                                                          | none                                                        |
+| Task | Gate command                                                                                                                                                                  | Earlier tests that still fail                                                             |
+| ---- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| T1   | `vitest run` on the three scrapped files; expect 3 passed and 15 skipped                                                                                                      | none                                                                                      |
+| T2   | `vitest run tests/render-options.test.ts`; expect exit 1 on the absent options                                                                                                | none                                                                                      |
+| T3   | `vitest run tests/render-options.test.ts`; expect exit 0                                                                                                                      | none                                                                                      |
+| T4   | `vitest run tests/sprout-mom-kim.test.ts`; expect exit 1 on the absent script                                                                                                 | none                                                                                      |
+| T5   | `vitest run tests/mom-kim-sheet.test.ts`; expect exit 1 on the absent script                                                                                                  | none                                                                                      |
+| T6   | `tsx scripts/proportion-check.mjs` with the named missing-asset error; `vitest run tests/sprout-mom-kim.test.ts` with only the end-to-end case and the real-hand case failing | the sheet test of T5, the measurement end-to-end case, and the measurement real-hand case |
+| T7   | `vitest run tests/sprout-mom-kim.test.ts tests/preset-colour.test.ts tests/render-options.test.ts`; expect exit 0                                                             | the sheet test of T5 only                                                                 |
+| T8   | `vitest run tests/mom-kim-sheet.test.ts`; then the full suite; expect exit 0 on both                                                                                          | none                                                                                      |
+| T9   | the trial log, the verify row, and the result note                                                                                                                            | none                                                                                      |
+| T10  | `judge.json` with both scores                                                                                                                                                 | none                                                                                      |
+| T11  | the handoff, no command                                                                                                                                                       | none                                                                                      |
+| T12  | the plan record                                                                                                                                                               | none                                                                                      |
+| T13  | deferred; starts by amendment                                                                                                                                                 | none                                                                                      |
+| T14  | deferred; starts by amendment                                                                                                                                                 | none                                                                                      |
 
 Files this track touches:
 
@@ -133,9 +133,10 @@ Every task brief in this plan carries these lines:
 - [ ] T2 Red: Pin the renderer options with a behaviour test. File: `tests/render-options.test.ts`.
   - The test writes a pin asset to a unique per-run path, `assets/_flat-render-pin-<pid>.ts`, where
     `<pid>` is the process id of the test run. It creates the file with the exclusive flag `wx`, so
-    it never overwrites an existing file. When the file exists, the test fails with
-    `fixture path exists: <path>` and changes nothing. The `finally` block removes that one path with
-    `fs.rmSync(path, { force: true })`, and it removes no other file.
+    it never overwrites an existing file. The test sets an ownership flag `created = true` only after
+    the `wx` create succeeds. A failed `wx` leaves the existing file untouched, sets `created` to
+    false, and fails the test with `fixture path exists: <path>`. The `finally` block removes the
+    path only when `created` is true, and it removes no other file.
   - The asset is one box 0.40 × 1.00 × 0.20 m with its bottom on y = 0, a 0.05 m block at +Z near the
     top, and two colours for the body and the block.
   - The test runs
@@ -149,7 +150,9 @@ Every task brief in this plan carries these lines:
     6. on the side view, the block's column is left of `W/2` by 0.02 m·`ppm` or more (decision j),
     7. `--views front-level` without `--ortho` still writes the named view, and `--flat` without
        `--fast` fails with `--flat needs --fast and --bg none`.
-  - The test also asserts that its own fixture path is absent at the end.
+  - The test also asserts that its own fixture path is absent at the end, and that the fixture
+    helper, called with a pre-created path, fails with `fixture path exists: <path>` and leaves that
+    file in place.
   - Done-when: the test exits 1, and each case fails on the absent option or the absent output file,
     not on a syntax or import error. `git status --porcelain tests/ assets/` shows the test file
     alone. `prettier --check` exits 0 on the test file.
@@ -186,16 +189,18 @@ Every task brief in this plan carries these lines:
     or runs it through `tsx`, so the fail-first run reports a missing module or a missing asset
     inside the case.
   - Cases: the AC1 skip guard, the level and orthographic proof, the pass table, the eleven doctored
-    rows, the five synthetic figures (with the merged-eye numbers of AC2 rule 7), the palm check on
-    both real hands, the three palm mutations against `palmCheck('L', mesh, landmarks)` with their
-    exact named failures, the hand-edge cases with a named absent row, and the side sign guard.
-  - The palm cases load the real left hand from `out/sprout-mom-kim/sprout-mom-kim.glb` and mutate
-    the data in memory, per "The three palm mutations".
+    rows, the five synthetic figures (with the merged-eye numbers of AC2 rule 7), the palm cases on
+    the synthetic hand fixture of "The palm fixture and the three mutations" (the base pass and the
+    three mutations with their exact named failures), the real-hand case on both hands, the
+    hand-edge cases with a named absent row, and the side sign guard.
+  - The palm cases split in two groups. The synthetic group runs on a hand mesh built inside the
+    test, so it needs no GLB, and it passes at T6. The real-hand group loads
+    `out/sprout-mom-kim/sprout-mom-kim.glb`, so it passes only at T7.
   - Done-when:
     `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-mom-kim.test.ts'`
     exits 1. The skip guard passes. Each other case fails inside the case with the absent script or
     the absent asset. `prettier --check` exits 0 on the file.
-  - Record: the case names and the failure text.
+  - Record: the case names, the synthetic fixture body, and the failure text.
 
 - [ ] T5 Red: Pin the sheet layout. File: `tests/mom-kim-sheet.test.ts`.
   - Cases per AC5: the sheet size, the two rows and the `no side drawing` cell, one baseline and the
@@ -217,12 +222,12 @@ Every task brief in this plan carries these lines:
     - `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './node_modules/.bin/tsx scripts/proportion-check.mjs --asset sprout-mom-kim'`
       exits 1 with `asset sprout-mom-kim: not built` and no module-resolution error.
     - `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-mom-kim.test.ts'`
-      exits 1 with only the end-to-end case failing on the absent asset. The table, synthetic, palm,
-      hand-edge, and side-sign cases pass.
+      exits 1 with only the end-to-end case and the real-hand case failing on the absent asset. The
+      table, synthetic-figure, synthetic-palm, hand-edge, and side-sign cases pass.
     - `prettier --check` exits 0 on the script.
-  - Record: the missing-asset text, the five synthetic results, and the three palm mutation results
-    with their exact failure names. The palm mutations need the real hand, so their evidence lands in
-    T7; this task records the two synthetic and table results that need no asset.
+  - Record: the missing-asset text, the five synthetic results, and the synthetic palm results with
+    their exact failure names. The real-hand evidence lands in T7; this task records the fixture
+    results that need no asset.
   - Note: T6 creates the script only. The base module and the asset arrive in T7.
 
 - [ ] T7 Green: Build the new base and Mom. Files: `assets/parts/humanoid-kim.ts` (new),
@@ -245,7 +250,8 @@ Every task brief in this plan carries these lines:
   - Done-when:
     - The two renders of the spec exit 0, and the script prints eleven rows, each a pass.
     - `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-mom-kim.test.ts tests/preset-colour.test.ts tests/render-options.test.ts'`
-      exits 0, including the palm cases on the real hands and the three palm mutations.
+      exits 0, including the real-hand case on both hands. The synthetic palm cases already passed
+      at T6.
     - `./forge check sprout-mom-kim` ends with `result ok`, through the runner.
     - `tsc --noEmit` through the runner reports no error in the changed files. The plan records the
       baseline count of TD-35 to TD-39 and the new count.
@@ -283,8 +289,9 @@ Every task brief in this plan carries these lines:
   - The trial runs in an orchestrator build session titled
     `Build · chibi redesign · LATO.2 GPU trial (Daniel USD 5)`. It runs alongside the SDF work. It
     uses one Spot L4 in `asia-southeast1` on project `reading-advantage`, with a 3 hour VM cap.
-    One standard L4 is the fallback: an orchestrator decision inside Daniel's USD 5 cap, with the PM
-    informed on 2026-11-23. The PM may veto the fallback, and the trial then stops before step 1.
+    The trial uses no fallback compute: a failed Spot create stops the task, cleans up, and reports,
+    and the PM decides. The orchestrator withdrew a standard L4 fallback on 2026-11-23 after review
+    r4.
   - One Kim full-body front crop runs on our own VM. The weights download to the VM. The trial calls
     no hosted API and no public demo. It uses no image tool.
   - Steps 1 to 5: create one VM and one temporary boot disk; set up the pinned dependencies and the
@@ -368,7 +375,8 @@ builds their output (AC6).
 - The preset pin is a shared file. T7 requires one new key and no changed value, and it compares
   parsed JSON, not a diff line count.
 - The renderer pin creates `assets/_flat-render-pin-<pid>.ts` at run time with the exclusive flag
-  `wx`, and removes only its own path. A crashed run can leave one. The `_` prefix hides it from
-  `listAssets`, the preset scan skips it, and a later run uses another path.
+  `wx`. It removes the path only when its own create succeeded. A collision leaves the existing file
+  untouched and fails the test. A crashed run can leave one fixture file; the `_` prefix hides it
+  from `listAssets`, the preset scan skips it, and a later run uses another path.
 - The LATO.2 trial spends real money under the USD 5 cap. A failed run still spends, and the log
   holds its estimate.
