@@ -620,6 +620,11 @@ scripts/proportion-check.mjs` exits 0.
 
 ## Phase 5: Green
 
+- [x] T5r Red (tests e10890f9): fixed the right-cell index at about line 258 and re-checked every cell index against the spec
+  - Recorded: the `baseline` case measured [c3, c4] (the second all-white separator band) as the right cell, so with the toHaveLength(2) assertion it could never pass for any layout. The right cell is [seps[1][1], r.width] (spec AC5 rule 2: row one is Kim panel, render, drawing). Row two's right cell holds the `no side drawing` text (spec AC5 rule 2), not a figure, so the 700 px figure assertion applies to row one only; row two's text cell stays pinned by the `no side drawing` case. Bounds unchanged ([698,700], sole ±2). Re-checked every other index (left cell, middle cell, row two render, mom-panel cells): correct as written.
+  - Synthetic proof (/tmp/sheet-proof.mjs, uncommitted; PNGs under /tmp): the old logic rejects a correct sheet (right height -699 on an all-white band); the corrected logic accepts it and rejects a separator-bleed layout and a two-cell layout. No new case added: the T5 count stays fixed at 8.
+  - Red run vs the uncommitted draft script: exit 0, 8 passed of 8. The draft already emits the spec layout (two 700 px rows, three segments each, text cell, caption strip, two-cell panel), and the old code could never pass, so the passing run validates the fix.
+- [~] T8 Green retry
 - [ ] T8 Green: Write the sheet script. File: `scripts/mom-kim-sheet.mjs`.
   - It reads the lit views, `measure.json` `rows.lit`, Kim's sheet, and Mom's drawing. It finds Kim's
     two figure bands with a background scan and requires Kim's side rows within 4 px of 102 and 1195.
