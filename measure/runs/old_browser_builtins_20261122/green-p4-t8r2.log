@@ -1,0 +1,63 @@
+MEASURE_AGENT_RESULT
+status: PASS
+phase: Phase 4: Gates (AC6 Prettier re-record)
+track: old_browser_builtins_20261122
+phase_base_sha: 9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4
+role_base_sha: 99ae0bd750d215bcd9f7cda159b5e2b151590bca
+final_green_head: 0849215adb238a78c67b274aae0a0efcb497f3a8
+dispositions: A4-F1=FIX
+tasks_flipped_to_x: T8@c4b5e7e2772e47d15162b19d634ccd10692b1188
+plan_commits: c4b5e7e2772e47d15162b19d634ccd10692b1188 (amended AC6 re-record), c0eb49494a9639dbf534bb779408665ec479c677 (SHA reference), 0849215adb238a78c67b274aae0a0efcb497f3a8 (regenerated status, final HEAD)
+source_test_script_change: none
+
+Command: node_modules/.bin/prettier --check on the test-strategy.md section 7 list with the globs expanded. Date 2026-11-23, tested commit 9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4. Exit code 1 with "Code style issues found in 35 files".
+
+Counts:
+- files checked: 44
+- failing now: 35
+- failing at baseline 3f6a19214994e7ac05a79a8fa7faeded684267b7: 35
+- absent at baseline: 0
+- passing at baseline but failing now (rule 2 violation): 0
+- track-created files checked: 7, all pass now (exit 0 on a separate check)
+
+Baseline-failing files named as pre-existing debt (35):
+src/games/abyssal-well/core/sim.ts
+src/games/alchemists-synthesis/core/sim.ts
+src/games/archers-revenge/core/sim.ts
+src/games/astral-mage/core/sim.ts
+src/games/castle-defense/core/sim.ts
+src/games/devourer-slime/core/sim.ts
+src/games/dragon-flight/core/sim.ts
+src/games/dragon-flight/view2d/game.ts
+src/games/dragon-rider/core/sim.ts
+src/games/dragon-rider/view2d/game.ts
+src/games/dungeon-liberator/core/sim.ts
+src/games/enchanted-library/core/sim.ts
+src/games/griffin-riders-escape/core/sim.ts
+src/games/griffin-sky-joust/core/sim.ts
+src/games/gryphon-patrol/core/sim.ts
+src/games/haunted-library/core/sim.ts
+src/games/hero-vs-zombie/core/sim.ts
+src/games/labyrinth/core/mazes.ts
+src/games/labyrinth/core/sim.ts
+src/games/magic-defense/core/sim.ts
+src/games/paladins-twin-soul/core/sim.ts
+src/games/potion-rush/core/sim.ts
+src/games/realm-carver/core/sim.ts
+src/games/rpg-battle/core/sim.ts
+src/games/rune-forge-chamber/core/sim.ts
+src/games/rune-match/core/sim.ts
+src/games/shadow-gate-dungeon/core/sim.ts
+src/games/sorcerer-ziggurat/core/sim.ts
+src/games/spellweavers-run/core/sim.ts
+src/games/spellweavers-run/view2d/game.ts
+src/games/spellweavers-run/view/game.ts
+src/games/storm-castle-tower/core/sim.ts
+src/games/village-guardian/core/sim.ts
+src/host/reader.ts
+src/storytime/book-pictures.ts
+
+Amended verdict: AC6 Prettier rules 1 to 3 hold; exit code 1 is the baseline debt of 35 named files. The per-file table (path | now | at 3f6a1921) is in plan.md T8. No file was reformatted. The other T8 gate lines are unchanged.
+
+Gates after the record commits: node measure/tools/generate.mjs --check exit 0; ./measure/doctor.sh --structural-only exit 0. T8 is [x]. T9 remains the unchecked deferred closeout placeholder.
+END_MEASURE_AGENT_RESULT
