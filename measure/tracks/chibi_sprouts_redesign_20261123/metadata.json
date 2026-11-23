@@ -1,0 +1,23 @@
+{
+  "track_id": "chibi_sprouts_redesign_20261123",
+  "type": "feature",
+  "status": "new",
+  "created_at": "2026-11-23T00:00:00Z",
+  "updated_at": "2026-11-23T00:00:00Z",
+  "description": "Chibi Sprouts redesign: one new SDF adult base on Teacher Kim's measured proportions, with Mom as the first trial, a numeric proportion check over a level orthographic render, an independent look judge, and a PM stop before the song cut-out and the 128 px sprite",
+  "estimated_tasks": 7,
+  "actual_tasks": null,
+  "deviation_notes": "Created 2026-11-23 from the PM decisions of 2026-11-23 and docs/chibi-sprouts/redesign-2026-11-23.md (approved). The owner scrapped the sprout base on 2026-11-23; the scrapped sources and outputs stay in the repository and no file is deleted. The track starts with Mom only and stops for PM review after the shape passes. No paid generation call runs in this track.",
+  "workstream": "assets",
+  "retrospective": false,
+  "evidence": [
+    "docs/chibi-sprouts/redesign-2026-11-23.md",
+    "docs/chibi-sprouts/scrapped-base-users-2026-11-23.md",
+    "docs/sprout-mockups/mom.jpg",
+    "out/storytime-review/muse-cast/teacher-kim-sheet.png",
+    "out/sprout-mom-kim/sprout-mom-kim.glb",
+    "out/chibi-sprouts/redesign/mom-kim-review.png",
+    "out/chibi-sprouts/redesign/measure.json"
+  ],
+  "dependencies": ["asset_chibi_sprouts_r1_20261022"]
+}

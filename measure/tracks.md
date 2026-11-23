@@ -73,6 +73,9 @@ This registry gives each historical, current, and planned work item one Measure 
 - [~] **Track: Chibi Sprouts, release 1 art**
   *Link: [./tracks/asset_chibi_sprouts_r1_20261022/](./tracks/asset_chibi_sprouts_r1_20261022/)*
 
+- [ ] **Track: Chibi Sprouts: new adult base on Teacher Kim, with Mom as the first trial**
+  *Link: [./tracks/chibi_sprouts_redesign_20261123/](./tracks/chibi_sprouts_redesign_20261123/)*
+
 ## Games
 
 - [~] **Track: Remove the legacy games from the monorepo**
