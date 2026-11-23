@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "role": "measure-adversarial-testing",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 2: Green",
+  "baseline_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "phase_base_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "role_base_sha": "61db4f13740a523e00d10b085cd71bdbbc7199fb",
+  "audited_head_sha": "61db4f13740a523e00d10b085cd71bdbbc7199fb",
+  "status": "pass",
+  "summary": "The Phase 2 result is rebound to HEAD 61db4f13740a523e00d10b085cd71bdbbc7199fb. The non-measure, non-exempt diff from dda92e79 is empty, and the targeted three-file gate passes.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "ADV-R5-1 [Nit] adversarial-testing: Late finding, tech-debt; the text scanner does not detect computed property access such as box['union'](b). No such call exists in src/, so current shipped code produces no wrong result. Rationale: this is a scanner coverage limit, not a false PASS on real src/ code. The orchestrator recorded this finding in TD-47."
+  ],
+  "evidence": [
+    "git rev-parse HEAD returned the full SHA 61db4f13740a523e00d10b085cd71bdbbc7199fb.",
+    "git diff --stat dda92e79d80bcb6ad77881913b81a91a891495fc HEAD -- . ':!measure' ':!docs/chibi-sprouts' printed nothing; the corresponding name-status diff also printed nothing.",
+    "The three-file heavy-run command exited 0 with 3 files and 19 tests passed.",
+    "ADV-R5-1 remains recorded tech debt in TD-47. No source or test changed since the prior audit; the prior probes remain applicable."
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "git diff --stat dda92e79d80bcb6ad77881913b81a91a891495fc HEAD -- . ':!measure' ':!docs/chibi-sprouts' (printed nothing)",
+    "git diff --name-status dda92e79d80bcb6ad77881913b81a91a891495fc HEAD -- . ':!measure' ':!docs/chibi-sprouts' (printed nothing)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts' (exit 0; 3 files, 19 tests)"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/adversarial-p2-61db4f1.json",
+    "measure/runs/old_browser_builtins_20261122/adversarial-p2-61db4f1.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "openai/gpt-6-luna#high",
+  "ratings": [
+    {"axis": "correctness", "score": 5, "evidence": "The prior full src scan left zero residual hits after the three exact Box3 exclusions, and the intervening non-exempt diff is empty."},
+    {"axis": "test_meaning", "score": 5, "evidence": "The re-run targeted gate passed all 19 tests across the three required files."},
+    {"axis": "scope_discipline", "score": 5, "evidence": "Only the required audit JSON and log were written during this rebind."},
+    {"axis": "evidence_quality", "score": 5, "evidence": "The scoped diff was empty and the targeted gate passed with its reporter counts recorded."}
+  ]
+}

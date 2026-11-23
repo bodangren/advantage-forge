@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: measure-adversarial-testing
+status: complete
+track: old_browser_builtins_20261122
+phase: Phase 2: Green
+commits: none
+tests_run: non-exempt diff stat and name-status diff from dda92e79 to 61db4f13740a523e00d10b085cd71bdbbc7199fb printed nothing; targeted heavy-run passed (3 files, 19 tests)
+files_changed: measure/runs/old_browser_builtins_20261122/adversarial-p2-61db4f1.json; measure/runs/old_browser_builtins_20261122/adversarial-p2-61db4f1.log
+plan_updates: none
+known_failures: ADV-R5-1 remains recorded tech debt; no computed property access call exists in src/
+handoff: Rebound to audited HEAD 61db4f13740a523e00d10b085cd71bdbbc7199fb. The non-exempt diff was empty, and the three-file gate passed. The project gate was not rerun.
+END_MEASURE_AGENT_RESULT

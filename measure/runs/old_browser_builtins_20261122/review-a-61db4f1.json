@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "role": "review-a",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 2: Green",
+  "baseline_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "phase_base_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "role_base_sha": "61db4f13740a523e00d10b085cd71bdbbc7199fb",
+  "audited_head_sha": "61db4f13740a523e00d10b085cd71bdbbc7199fb",
+  "status": "pass",
+  "summary": "Review A remains PASS. The intervening commits change only records, and the three-file gate passed on the new audited HEAD.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F8 [Nit] review-a: The historical TS2769 attribution at plan.md:173-177,206-209 remains unchanged. Red introduced the diagnostic, and the original Green run retained it. This record issue does not affect the current product.",
+    "F9 [Nit] review-a: The routed `otherbox.union(b)` case is fixed. The prior late findings for `math.if() / structuredClone(v) / 2` and `rows.at(one(two(three(four()))))` remain in TD-47. No current source call reaches those cases.",
+    "F10 [Nit] review-a: Late finding, tech-debt; not user-reachable. tests/old-browser/index-math.test.ts:314-317 accepts `notatIndex(existingVersions, -1)` at the Storytime version site because it checks a substring. The current site uses the correct helper.",
+    "F11 [Nit] review-a: Late finding, tech-debt; not user-reachable. tests/old-browser/deep-copy.test.ts:119-124 invokes an array index getter before the descriptor walk reports it. An in-memory fixture recorded one call, contrary to the no-invocation claim in plan.md:323-325. The current 29 start states pass the pin. Do not reopen the accepted deepCopy contract.",
+    "F12 [Nit] review-a: Late finding, tech-debt; not user-reachable. The new control at tests/apk3d/no-unpolyfilled-builtins.test.ts:436-454 passes on 229323c5. It preserves existing rot detection and the real Box3 exclusion. Count it as a regression pin, not a failing-first control.",
+    "F13 [Nit] review-a: Late finding, tech-debt; not user-reachable. The ASCII boundary at tests/apk3d/no-unpolyfilled-builtins.test.ts:346-348 still excludes `holder.box.union(b)` and `ébox.union(b)` in place of `box.union(b)`. The independent fixtures passed the full scan after each replacement. The shipped line uses the permitted Box3 call.",
+    "F14 [Nit] review-a: Historical late finding, not user-reachable. At dda92e79 the generated status named an untracked redesign track. Commit 6b41e907 added its records, and the generator check now passes with those records tracked."
+  ],
+  "evidence": [
+    "git rev-parse HEAD matched 61db4f13740a523e00d10b085cd71bdbbc7199fb at role start and after the tests.",
+    "The requested filtered stat exited 0 and printed nothing. The intervening commits are 17ee504a, 6b41e907, and 61db4f13.",
+    "The source, scripts, tests, dependencies, test configuration, track spec, and test strategy are identical to the prior audited HEAD.",
+    "The prior audit at measure/runs/old_browser_builtins_20261122/review-a-dda92e7.json records the A7 fixture results. The scanner and its controls did not change.",
+    "The three-file heavy-run command exited 0 at 61db4f13 with three files and 19 tests passed.",
+    "AC4 exited 0 at dda92e79 with 230 files passed, one file skipped, 3392 tests passed, and nine skipped. TypeScript reported 51 baseline diagnostics there. This re-bind did not rerun those commands.",
+    "The phase plan retains the late findings and PM approvals. TD-47 records the A7 receiver fix and the remaining scanner and test limits.",
+    "The redesign track records are present in the committed tree. The generator, structural doctor, and track-plan Prettier checks exited 0.",
+    "The release and shelf-sync worktrees, the wip/oct-skill-docs-20261023 branch, and origin refs remain untouched."
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "git diff --stat 3f6a19214994e7ac05a79a8fa7faeded684267b7..61db4f13740a523e00d10b085cd71bdbbc7199fb -- src tests scripts measure/tracks/old_browser_builtins_20261122",
+    "git diff --stat dda92e79 HEAD -- . ':!measure' ':!docs/chibi-sprouts'",
+    "git diff --exit-code dda92e79..61db4f13 -- src tests scripts package.json pnpm-lock.yaml vitest.config.ts vite.demo.config.ts measure/tracks/old_browser_builtins_20261122/spec.md measure/tracks/old_browser_builtins_20261122/test-strategy.md",
+    "git diff dda92e79..61db4f13 -- measure/tracks/old_browser_builtins_20261122/plan.md measure/tech-debt.md",
+    "git ls-tree -r --name-only HEAD -- measure/tracks/chibi_sprouts_redesign_20261123",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts --maxWorkers=1'",
+    "node measure/tools/generate.mjs --check; ./measure/doctor.sh --structural-only; node_modules/.bin/prettier --check measure/tracks/old_browser_builtins_20261122/plan.md"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/review-a-61db4f1.json",
+    "measure/runs/old_browser_builtins_20261122/review-a-61db4f1.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "unknown",
+  "ratings": [
+    {"axis": "correctness", "score": 4, "evidence": "The source and scanner have no diff since the A7 review at dda92e79."},
+    {"axis": "test_meaning", "score": 4, "evidence": "The three-file gate passed all 19 tests, and the prior audit identifies the box2 case as a regression pin."},
+    {"axis": "scope_discipline", "score": 5, "evidence": "The intervening diff contains Measure records and one Chibi Sprouts design document."},
+    {"axis": "evidence_quality", "score": 4, "evidence": "The fresh Vitest reporter confirms 19 passing tests, and the artifact identifies the earlier SHA for AC4 and TypeScript."}
+  ]
+}

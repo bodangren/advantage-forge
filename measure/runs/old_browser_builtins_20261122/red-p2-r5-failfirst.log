@@ -1,0 +1,105 @@
+
+ RUN  v5.1.1 /home/daniebo/Desktop/advantage-forge/measure/runs/old_browser_builtins_20261122
+
+ ❯ failfirst-a7-scan.test.ts (8 tests | 4 failed) 163ms
+   × fail-first: holder receiver hides behind the substring exclusion 6ms
+   × fail-first: lambda-letter receiver hides behind the substring exclusion 1ms
+   × fail-first: otherbox hides behind the substring exclusion 1ms
+   × fail-first: mybox hides behind the substring exclusion 0ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  failfirst-a7-scan.test.ts > fail-first: holder receiver hides behind the substring exclusion
+AssertionError: expected [] to deeply equal [ …(2) ]
+
+- Expected
++ Received
+
+- [
+-   "stale exclusion <fixture>:1: test bind",
+-   "<fixture>:1: Set .union(",
+- ]
++ []
+
+ ❯ failfirst-a7-scan.test.ts:612:5
+    610|   expect(
+    611|     applyExclusions(raw, bound, (path, line) => (path === '<fixture>' …
+    612|   ).toEqual(['stale exclusion <fixture>:1: test bind', '<fixture>:1: S…
+       |     ^
+    613| });
+    614|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  failfirst-a7-scan.test.ts > fail-first: lambda-letter receiver hides behind the substring exclusion
+AssertionError: expected [] to deeply equal [ …(2) ]
+
+- Expected
++ Received
+
+- [
+-   "stale exclusion <fixture>:1: test bind",
+-   "<fixture>:1: Set .union(",
+- ]
++ []
+
+ ❯ failfirst-a7-scan.test.ts:623:5
+    621|   expect(
+    622|     applyExclusions(raw, bound, (path, line) => (path === '<fixture>' …
+    623|   ).toEqual(['stale exclusion <fixture>:1: test bind', '<fixture>:1: S…
+       |     ^
+    624| });
+    625|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  failfirst-a7-scan.test.ts > fail-first: otherbox hides behind the substring exclusion
+AssertionError: expected [] to deeply equal [ …(2) ]
+
+- Expected
++ Received
+
+- [
+-   "stale exclusion <fixture>:1: test bind",
+-   "<fixture>:1: Set .union(",
+- ]
++ []
+
+ ❯ failfirst-a7-scan.test.ts:634:5
+    632|   expect(
+    633|     applyExclusions(raw, bound, (path, line) => (path === '<fixture>' …
+    634|   ).toEqual(['stale exclusion <fixture>:1: test bind', '<fixture>:1: S…
+       |     ^
+    635| });
+    636|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  failfirst-a7-scan.test.ts > fail-first: mybox hides behind the substring exclusion
+AssertionError: expected [] to deeply equal [ …(2) ]
+
+- Expected
++ Received
+
+- [
+-   "stale exclusion <fixture>:1: test bind",
+-   "<fixture>:1: Set .union(",
+- ]
++ []
+
+ ❯ failfirst-a7-scan.test.ts:645:5
+    643|   expect(
+    644|     applyExclusions(raw, bound, (path, line) => (path === '<fixture>' …
+    645|   ).toEqual(['stale exclusion <fixture>:1: test bind', '<fixture>:1: S…
+       |     ^
+    646| });
+    647|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  4 failed | 4 passed (8)
+   Start at  08:44:02
+   Duration  306ms (tests 77%, transform 17%, import 4%, worker 1%)
+

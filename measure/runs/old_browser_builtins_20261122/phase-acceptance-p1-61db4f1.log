@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: phase-acceptance
+status: blocked
+track: old_browser_builtins_20261122
+phase: Phase 1: Red
+commits: none
+tests_run: Targeted Vitest PASS (4 files, 23 tests); original otherbox probe PASS; qualified and non-ASCII receiver probes FAIL A7; structural checks PASS.
+files_changed: phase-acceptance-p1-61db4f1.json and .log
+plan_updates: none
+known_failures: The Box3 exclusion hides Set.union hits for holder.box and λbox.
+handoff: Ask the owner: How should the remaining A7 blocker be resolved? Options: authorize an owner-led exact-receiver correction and regression tests, then rerun acceptance; leave both phases blocked.
+END_MEASURE_AGENT_RESULT

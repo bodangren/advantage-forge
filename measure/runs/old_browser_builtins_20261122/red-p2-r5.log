@@ -1,0 +1,24 @@
+MEASURE_AGENT_RESULT
+role: measure-mid-red
+track: old_browser_builtins_20261122
+phase: Phase 2: Green (remediation round 4, test-only, PM approval for A7 2026-11-23, last allowed round)
+tasks: T3r5 Red (done)
+phase_base_sha: 3f6a19214994e7ac05a79a8fa7faeded684267b7
+role_base_sha: 61db4f13740a523e00d10b085cd71dbbbc7199fb
+reviewed_head_sha: 61db4f13740a523e00d10b085cd71dbbbc7199fb
+resulting_head_sha: 48c087423ae6cad955744997eac693db327c54a5
+commits:
+- 9459687ddc8875afbca922206ef6f979da8e5c66 measure(old_browser_builtins): Phase 2 remediation Red T3r5 exact-line exclusion (tests/apk3d/no-unpolyfilled-builtins.test.ts)
+- 48c087423ae6cad955744997eac693db327c54a5 measure(old_browser_builtins): Phase 2 remediation Red T3r5 plan record and escalation (plan.md T3r5 Red line; metadata.json escalation; measure/generated/status.md regenerate)
+production_source_edits: none (src/ untouched)
+red_kind: gap_closing
+gaps: Box3 exclusion binds the exact source line (file, 1-based line, full trimmed line text of src/render/page.ts:263,440,447 as string constants); a raw hit is excluded only when all three plus the label match; holder.box.union(b), a non-ASCII receiver, otherbox, mybox, box2, a second same-label call, the allowed text on a different line, and changed or moved lines all stay reported with the stale-exclusion rot check.
+breakage_proof: temp copy measure/runs/old_browser_builtins_20261122/failfirst-a7-scan.test.ts runs the r2 substring scanner against the four new fail-first controls, log measure/runs/old_browser_builtins_20261122/red-p2-r5-failfirst.log exits 1 with 4 failed / 4 passed (holder, lambda-letter, otherbox, mybox each hide one raw hit with zero reports); final run measure/runs/old_browser_builtins_20261122/red-p2-r5-final.log exits 0 with 3 files and 23 passed (all new and converted controls pass; real three lines give zero reported hits; no new src hit).
+checks:
+- HEAVY three-file gate: exit 0, 3 passed, 23 passed (final log red-p2-r5-final.log)
+- node_modules/.bin/prettier --check on the test file: exit 0
+- tsc through the heavy-runner wrapper: exit 2 (project baseline), zero lines for tests/apk3d/no-unpolyfilled-builtins.test.ts (log red-p2-r5-tsc.log)
+- node measure/tools/generate.mjs --check: exit 0; ./measure/doctor.sh --structural-only: exit 0
+plan: Phase 2 holds `- [x] T3r5 Red (9459687d): acceptance rule A7 closed by construction, exact-line exclusion (PM approval for A7, 2026-11-23)`.
+escalation: metadata.json escalation extended with 'fourth round: the Box3 exclusion regex boundary still hides holder.box.union(b) and a non-ASCII receiver; bind it to the exact line (acceptance rule A7)' (same shape as the audio track escalation, commit b88cb45d).
+END_MEASURE_AGENT_RESULT

@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: spec-review
+status: blocked
+track: chibi_sprouts_redesign_20261123
+phase: track setup
+commits: none
+tests_run: git rev-parse HEAD: 61db4f13740a523e00d10b085cd71bdbbc7199fb
+files_changed: measure/runs/chibi_sprouts_redesign_20261123/spec-review-6b41e90.json; measure/runs/chibi_sprouts_redesign_20261123/spec-review-6b41e90.log
+plan_updates: none
+known_failures: Requested artifact head 6b41e90 does not match HEAD 61db4f1; no review performed.
+handoff: Supply the audited_head_sha and matching artifact paths, then rerun on that HEAD. The role base SHA at start was 61db4f13740a523e00d10b085cd71bdbbc7199fb.
+END_MEASURE_AGENT_RESULT

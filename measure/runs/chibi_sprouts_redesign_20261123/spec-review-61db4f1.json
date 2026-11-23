@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "role": "spec-review",
+  "track": "chibi_sprouts_redesign_20261123",
+  "phase": "track setup",
+  "baseline_sha": "61db4f13740a523e00d10b085cd71bdbbc7199fb",
+  "audited_head_sha": "61db4f13740a523e00d10b085cd71bdbbc7199fb",
+  "status": "fail",
+  "summary": "The plan needs fixes before Red. The measurement contract, test scope, review boundary, and task ordering leave material gaps.",
+  "blocking_findings": [
+    "F1 [Blocker] plan.md Phase 1 T2: Red implements the production renderer before a failing renderer test exists. Split this into a small Red behavior pin and a Green renderer task, then run the proportion-check Red task. Rationale: The workflow requires a focused failing test before implementation, and the absent asset does not test the renderer.",
+    "F2 [Blocker] spec.md AC1 and plan.md T1: Skipping the entire first describe in tests/sprout-gesture-offset.test.ts also skips hero clip inventory, hero pose digest, and hero clearance assertions at lines 209-210, 220, and 243-244. Preserve those assertions in an active test while marking scrapped contracts skipped. Rationale: The hero is not scrapped, and the existing tests protect its shipped behavior.",
+    "F3 [Blocker] spec.md Measurement method and AC2: The chin landmark has no named export, data shape, or import path, and the face and eye measurements lack exact pixel selection, component connectivity, pupil-center, averaging, and face-area rules. Define these interfaces and algorithms, including empty and extra component behavior. Rationale: Red and Green can otherwise compute different values from the same model and render.",
+    "F4 [Blocker] spec.md AC3: The palm rule samples only x > 0 but requires both hands, and an unsigned PCA axis cannot distinguish inward from outward palms. Define bilateral world-space vertex extraction, covariance weighting, degenerate-cloud handling, and a signed inward-facing test. Rationale: A mirrored or palm-out hand can pass the stated absolute-dot check.",
+    "F5 [Blocker] spec.md AC3 rule 4: The hand band, forearm width, run selection, gap measurement, and behavior for occluded or multiple runs are undefined. Specify exact rows, masks, side selection, and failure conditions for both hands. Rationale: Red cannot write a reproducible hand-edge test from the current rule.",
+    "F6 [Blocker] spec.md Authoring decisions d-f and Measurement method: The flat pass does not fix output color space, vertex-color interpolation, alpha and antialias handling, material replacement, or option combinations. Define the pixel contract and its compatibility behavior, with renderer tests. Rationale: Different valid Three.js flat passes produce different colors and masks, which change eye and skin detection.",
+    "F7 [Blocker] spec.md decision f: The side projection uses positive z toward image right, but Studio.aim at azimuth 90 with Y up places negative z toward image right. Correct the projection or explicitly change the camera convention and test a non-symmetric landmark. Rationale: The current formula mirrors side-view model landmarks against the actual render.",
+    "F8 [Blocker] spec.md AC4-AC5 and plan.md T4: The judge must see the sheet containing Kim, but the plan does not specify a local judge or a transport that prevents third-party upload. Bind the judge to an approved local execution path and define a stop when it is unavailable. Rationale: Passing the image to a remote model can disclose Kim art despite the no-upload rule.",
+    "F9 [Blocker] plan.md Phase 5 and spec.md AC6: T7 requires a walk sprite although T3 builds only idle; AC6 also forbids a cut-out or sprite in this track while T6 and T7 require both after approval. Separate the post-approval scope and specify its walk source. Rationale: The stated completion conditions cannot all hold, and no implementation owns the walk clip.",
+    "F10 [Blocker] plan.md T4: The sheet script is new executable production logic, but the plan assigns it to the judge task without a failing behavior test or a Green implementation task. Add a Red sheet-layout pin and a separate Green task before the independent look. Rationale: The workflow requires a test before code, and the judge must remain independent.",
+    "F11 [Blocker] spec.md AC2 rule 7: The synthetic-figure proof changes only the crown and requires only heightInHeads to fail. Add independent mutations and expected results for sole, head width, and eye detection. Rationale: The stated case cannot prove that those other detectors read pixels."
+  ],
+  "nonblocking_findings": [
+    "F12 [Major] plan.md T3: git diff --stat cannot establish that exactly one preset entry was added and no existing value changed. Compare parsed JSON against the role baseline and require only the new asset key. Rationale: A one-file diff can include unrelated additions or changed preset values.",
+    "F13 [Major] spec.md Measurement method: The derived shoulder and arm targets use a vertical distance, while armToTorso uses the straight image distance from shoulder to fingertip. Label the targets as a vertical approximation or calculate them from an explicit horizontal offset. Rationale: The table otherwise presents 1.33 as an exact derivation.",
+    "F14 [Major] plan.md T5: The task says no file changes, but its done-when requires the plan to record the handoff and PM response. Separate the handoff from the later record update. Rationale: The task currently gives the operator contradictory instructions.",
+    "F15 [Major] spec.md AC5 and plan.md T4: The sheet uses render crown and sole rows from measure.json, but does not identify whether they apply to the flat or lit images, nor define the side reference's crown and sole. Pin each image and each row source. Rationale: Two sheet builders can place the panels at different scales while following the plan."
+  ],
+  "evidence": [
+    "HEAD at start equals audited_head_sha: 61db4f13740a523e00d10b085cd71bdbbc7199fb.",
+    "git diff --stat 6b41e907 61db4f13 -- measure/tracks/chibi_sprouts_redesign_20261123 produced no output.",
+    "The spec pass ranges match docs/chibi-sprouts/redesign-2026-11-23.md lines 109-113.",
+    "tests/song-timeline.test.ts uses sprout-pip as string data and imports no scrapped model.",
+    "The direct import search found the three named scrapped test files. The hero assertions inside one named file remain independently valid.",
+    "measure_interphase_checks.py lines 386-401 recognizes the Phase 5 task lines and excludes incomplete lines containing deferred; no marker-format finding applies.",
+    "The model-family rule requires a judge family distinct from both Red and Green.",
+    "The recorded one-entry preset bound is appropriate; the proposed diff-stat check cannot prove it."
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "git diff --stat 6b41e907 61db4f13 -- measure/tracks/chibi_sprouts_redesign_20261123",
+    "Repository search for scrapped-source references in tests",
+    "Repository search for deferred task parsing"
+  ],
+  "changed_files": ["measure/runs/chibi_sprouts_redesign_20261123/spec-review-61db4f1.json", "measure/runs/chibi_sprouts_redesign_20261123/spec-review-61db4f1.log"],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "escalate_human",
+  "confidence": "high",
+  "paraphrase": {
+    "proposes": "The track builds a new SDF adult base using Kim's ratios and makes Mom the first trial. It measures the shape, requests an independent look, and stops for PM review before any cut-out or sprite.",
+    "current_system": "The scrapped Sprout models use the shared humanoid kind, whose adult hands face forward. Forge currently renders perspective views above level, and the existing test suite includes contracts for scrapped models and the separate hero."
+  }
+}

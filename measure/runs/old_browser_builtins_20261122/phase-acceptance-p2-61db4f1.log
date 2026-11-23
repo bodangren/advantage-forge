@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: phase-acceptance
+status: blocked
+track: old_browser_builtins_20261122
+phase: Phase 2: Green
+commits: none
+tests_run: Targeted Vitest PASS (23 tests); AC4 PASS (3392 tests, 9 skipped); TypeScript exit 2 (51 baseline, none in changed files); UX prerequisite PASS; A7 FAIL; structural checks PASS.
+files_changed: phase-acceptance-p2-61db4f1.json and .log
+plan_updates: none
+known_failures: The Box3 exclusion still hides valid Set.union hits. The prior UX blocker is closed.
+handoff: Use the Phase 1 owner decision for the remaining A7 blocker. Keep Phase 3 AC5 as a separate deliverable.
+END_MEASURE_AGENT_RESULT

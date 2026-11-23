@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "role": "measure-review-c-ux-api",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 2: Green",
+  "baseline_sha": "61db4f13740a523e00d10b085cd71bdbbc7199fb",
+  "role_base_sha": "61db4f13740a523e00d10b085cd71bdbbc7199fb",
+  "phase_base_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "audited_head_sha": "61db4f13740a523e00d10b085cd71bdbbc7199fb",
+  "current_head_sha": "61db4f13740a523e00d10b085cd71bdbbc7199fb",
+  "audited_head_is_current": true,
+  "contract_applicability": "applicable",
+  "applicability_evidence": [
+    "test-strategy.md:35 excludes public API, route, and UI review.",
+    "The phase diff adds the internal API at src/apk3d/sim/index.ts:2-3. This rebind covers its scan gate.",
+    "The rebind changes no source or test files. The applicability decision from review-c-dda92e7.json remains valid."
+  ],
+  "status": "pass",
+  "summary": "The three-file gate passed at the current HEAD. The record-only diff leaves the A7 verdict and the late findings unchanged.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F5 [Nit] review-c: The strategy count at test-strategy.md:169 remains unchanged. The phase plan records this existing finding as tech debt.",
+    "F6 [Nit] review-c: Late finding, tech-debt. src/apk3d/sim/copy.ts:9-12 overstates the result shape for unsupported inputs. This existing finding remains in TD-47 and is not user-reachable.",
+    "F7 [Nit] review-c: Late finding, tech-debt. tests/apk3d/no-unpolyfilled-builtins.test.ts:346-348 checks an ASCII word boundary, not the complete receiver. The exclusion still accepts holder.box.union(b) and λbox.union(b) on a synthetic excluded line. This is a scanner limit, not a user-reachable wrong result. The delivered line still calls Box3.union on box."
+  ],
+  "evidence": [
+    "git rev-parse HEAD returned the full audited SHA before and after the run. No tracked worktree changes were present.",
+    "git diff --stat dda92e79 HEAD -- . ':!measure' ':!docs/chibi-sprouts' printed nothing. git diff --exit-code dda92e79 HEAD -- src tests also printed nothing.",
+    "git log dda92e79..HEAD lists the three record commits 17ee504a, 6b41e907, and 61db4f13.",
+    "The wrapped three-file gate passed at 61db4f13. Vitest reported three files and 19 tests passed.",
+    "review-c-dda92e7.json records the approved A7 receiver probes. The scanner and source are identical at the rebound HEAD.",
+    "The plan records F5 and F6 as tech debt. TD-47 retains F6 and records F7 as C5-F7. None of the findings is a current user-reachable wrong result."
+  ],
+  "commands": [
+    "git rev-parse HEAD; git status --short --untracked-files=no",
+    "git diff --stat dda92e79 HEAD -- . ':!measure' ':!docs/chibi-sprouts'",
+    "git diff --exit-code dda92e79 HEAD -- src tests",
+    "git log --oneline dda92e79..HEAD",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts'"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/review-c-61db4f1.json",
+    "measure/runs/old_browser_builtins_20261122/review-c-61db4f1.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "unknown",
+  "ratings": [
+    {"axis": "correctness", "score": 4, "evidence": "review-c-dda92e7.json records the approved A7 passes and the remaining limit in the unchanged scanner."},
+    {"axis": "test_meaning", "score": 4, "evidence": "The independent three-file run passed the A7 controls in tests/apk3d/no-unpolyfilled-builtins.test.ts."},
+    {"axis": "scope_discipline", "score": 5, "evidence": "The requested filtered diff from dda92e79 to HEAD is empty."},
+    {"axis": "evidence_quality", "score": 5, "evidence": "The wrapped test result and empty source and test diffs bind the audit to 61db4f13."}
+  ]
+}

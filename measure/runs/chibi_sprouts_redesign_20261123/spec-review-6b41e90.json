@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "role": "spec-review",
+  "track": "chibi_sprouts_redesign_20261123",
+  "phase": "track setup",
+  "baseline_sha": "61db4f13740a523e00d10b085cd71bdbbc7199fb",
+  "audited_head_sha": "6b41e907",
+  "status": "inconclusive",
+  "summary": "The requested artifact names identify 6b41e90, but HEAD at start is 61db4f1. The review did not start.",
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "evidence": ["git rev-parse HEAD returned 61db4f13740a523e00d10b085cd71bdbbc7199fb", "The brief names 6b41e907 as the baseline and requests artifacts named for 6b41e90."],
+  "commands": ["git rev-parse HEAD"],
+  "changed_files": ["measure/runs/chibi_sprouts_redesign_20261123/spec-review-6b41e90.json", "measure/runs/chibi_sprouts_redesign_20261123/spec-review-6b41e90.log"],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "infrastructure_retry",
+  "confidence": "low",
+  "paraphrase": {
+    "proposes": "Review did not start because the requested head does not match HEAD.",
+    "current_system": "Review did not start because the requested head does not match HEAD."
+  }
+}

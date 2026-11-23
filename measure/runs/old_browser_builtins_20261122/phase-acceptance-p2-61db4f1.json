@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "role": "phase-acceptance",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 2: Green",
+  "baseline_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "phase_base_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "role_base_sha": "61db4f13740a523e00d10b085cd71bdbbc7199fb",
+  "audited_head_sha": "61db4f13740a523e00d10b085cd71bdbbc7199fb",
+  "status": "fail",
+  "summary": "The UX prerequisite is satisfied and both Vitest gates pass. The scanner still fails A7 on two valid Set receiver forms.",
+  "blocking_findings": [
+    "F3 [Blocker] phase-acceptance: A7 still fails at tests/apk3d/no-unpolyfilled-builtins.test.ts:343-348,366-372. The enabled src scan suppresses holder.box.union(b) and λbox.union(b) when each receiver is a Set. Each probe yields one raw hit and zero reports."
+  ],
+  "nonblocking_findings": [
+    "F4 [Nit] phase-acceptance: The Phaser canvas still yields empty accessibility snapshots. This limitation predates the built-in replacements.",
+    "F5 [Nit] phase-acceptance: TD-47 retains the other scanner and test coverage limits. The recorded PM decision on deepCopy limits remains in force."
+  ],
+  "evidence": [
+    "F1 withdrawn: The original typed otherbox.union(b) fixture reports the Set call and a stale exclusion. The current source still reports zero unsupported calls.",
+    "F2 withdrawn: ux-browser-review-p2-61db4f1.json passes and targets 61db4f1. The probe records eight changed game states and two reader sentence markers, with no errors.",
+    "The browser probe began at a97e88c8 and ended at 79a8d5c4. The served src and demo files, package files and Vite config did not change afterward.",
+    "The new audio hand-off script is not loaded by the browser. The same-HEAD UX result rebinds existing browser evidence, not a fresh browser run.",
+    "The deleted-built-ins pass verifies all four names absent in the page. Ten 1280x800 screenshots exist. This review does not complete Phase 3 AC5.",
+    "Review A, B, C, adversarial and UX results pass and target 61db4f1. No test-only SHA allowance is necessary for those result identities.",
+    "No source or demo code changed since the prior acceptance. The 44 replacements, the three barrel exports and the 29 game replay files still apply.",
+    "The current scanner checks 566 files and 19 labels with zero reports after three intended Box3 exclusions. Two valid Set receiver variants each yield one raw hit and no reports.",
+    "A5-F13, C5-F7 and TD-47 already record the remaining receiver problems. The changed exclusion still drops hits, so the record does not satisfy A7.",
+    "AC4 exited 0 with 230 files and 3392 tests passed, one file and nine tests skipped. The skipped audio artifact check is not live proof.",
+    "Wrapped TypeScript exited 2 with 51 baseline diagnostics and none in a phase-diff file. The targeted suite passed all 23 tests.",
+    "All 12 completed task lines cite reachable commits. Each of the 11 late finding IDs has one plan disposition. The plan stays in progress and the registry makes no resolved claim.",
+    "The role base and end HEAD are 61db4f1. Unrelated in-progress Measure edits do not affect the audited source or test paths."
+  ],
+  "commands": [
+    "git rev-parse HEAD; git status --short --untracked-files=no",
+    "git diff --exit-code dda92e79 HEAD -- src tests scripts demo vite.demo.config.ts package.json pnpm-lock.yaml (exit 0)",
+    "git log --format='%h %s' a97e88c8..HEAD -- src demo vite.demo.config.ts package.json pnpm-lock.yaml (no commits)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts tests/apk3d/imports.test.ts' (exit 0; 4 files, 23 tests)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts' (exit 0; 230 files passed, 1 skipped; 3392 tests passed, 9 skipped)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/typescript/bin/tsc --noEmit --pretty false' (exit 2; 51 labeled diagnostics, none in changed files)",
+    "./measure/doctor.sh --structural-only (exit 0)",
+    "node measure/tools/generate.mjs --check (exit 0)",
+    "In-memory Node probe of committed scanText and applyExclusions at 229323c5 and 61db4f1 and full current src scan",
+    "jq verification of started, moved, sentence_marked and error counts in ux-browser-review-p2-229323c-probe.json"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/phase-acceptance-p2-61db4f1.json",
+    "measure/runs/old_browser_builtins_20261122/phase-acceptance-p2-61db4f1.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "escalate_human",
+  "confidence": "high",
+  "route": "openai/gpt-6.2-sol#high",
+  "ratings": [
+    {"axis":"correctness","score":3,"evidence":"The application code is unchanged, but tests/apk3d/no-unpolyfilled-builtins.test.ts:346-348 still masks two valid Set calls."},
+    {"axis":"test_meaning","score":3,"evidence":"The targeted suite passes all 23 tests but the TypeScript fixtures expose two exclusion misses."},
+    {"axis":"scope_discipline","score":5,"evidence":"git show 72e74de0 lists only the assigned scanner test."},
+    {"axis":"evidence_quality","score":4,"evidence":"The wrapped gates and actual browser probe records distinguish passes, skips and the remaining false negatives."}
+  ],
+  "reviewer_ratings": [
+    {"reviewer_role":"review-a","reviewer_route":"unknown","agreed":false,"score":3,"evidence":"review-a-61db4f1.json identifies the two false negatives in F13 but passes the phase."},
+    {"reviewer_role":"review-b","reviewer_route":"kimi-code-plan-cn/kimi-for-coding","agreed":true,"score":4,"evidence":"The security conclusion holds for the pinned simulation inputs in tests/old-browser/deep-copy.test.ts."},
+    {"reviewer_role":"review-c","reviewer_route":"unknown","agreed":false,"score":3,"evidence":"review-c-61db4f1.json identifies the two false negatives in F7 but passes the phase."},
+    {"reviewer_role":"adversarial","reviewer_route":"openai/gpt-6-luna#high","agreed":true,"score":4,"evidence":"adversarial-p2-61db4f1.json records the separate computed-access limit without claiming that the scan proves browser behavior."}
+  ]
+}

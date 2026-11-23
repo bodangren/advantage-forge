@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "role": "phase-acceptance",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 1: Red",
+  "baseline_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "phase_base_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "role_base_sha": "61db4f13740a523e00d10b085cd71bdbbc7199fb",
+  "audited_head_sha": "61db4f13740a523e00d10b085cd71bdbbc7199fb",
+  "status": "fail",
+  "summary": "The original receiver probe passes, but the scanner still suppresses valid Set calls with qualified or non-ASCII receivers.",
+  "blocking_findings": [
+    "F3 [Blocker] phase-acceptance: A7 still fails at tests/apk3d/no-unpolyfilled-builtins.test.ts:343-348,366-372. The Box3 exclusion suppresses holder.box.union(b) and λbox.union(b) when each receiver is a Set. Each probe yields one raw hit and zero reports."
+  ],
+  "nonblocking_findings": [
+    "F4 [Nit] phase-acceptance: The third T3r4 control passes on the previous scanner. It is a regression pin. The otherbox and mybox controls provide failing-first evidence.",
+    "F5 [Nit] phase-acceptance: red-p2-r4.log records a malformed reviewed_head_sha. The fail-first log and the two-revision probe independently identify the previous scanner."
+  ],
+  "evidence": [
+    "F1 withdrawn: The original typed otherbox.union(b) fixture now reports the Set call and a stale exclusion. The actual Box3 call remains excluded.",
+    "The new matcher accepts the suffix box.union(b) after a dot or a non-ASCII letter. Both replacement fixtures declare their receivers as Set instances.",
+    "A5-F13, C5-F7 and TD-47 already record these receiver forms. The current changed filter still drops the hits, so those records do not satisfy A7.",
+    "The four Review A/B/C and adversarial results cover the Red tests and target 61db4f1. No separate Red review or test-only SHA allowance is necessary.",
+    "The new Red commit 72e74de0 touches only the assigned scanner test. Plan commit dda92e79 records T3r4 and the PM escalation.",
+    "T1 to T3 and the four Red remediation tasks retain reachable SHAs. The historical Red counts and fail-first evidence in the prior acceptance still apply.",
+    "T3r4 fail-first evidence has two failed and 17 passed tests. Its final log reports 19 passed tests. The current four-file gate passed 23 tests.",
+    "The current committed scanner checks 566 source files and 19 labels. It reports zero hits after the three intended Box3 exclusions.",
+    "Each of the 11 late finding IDs has one plan disposition. The phase registry remains in progress. The phase diff has no Measure marker implementation change.",
+    "The role base and end HEAD are 61db4f1. Unrelated in-progress Measure edits did not overlap the audited scanner, source or track records."
+  ],
+  "commands": [
+    "git rev-parse HEAD; git status --short --untracked-files=no",
+    "git show 72e74de0 -- tests/apk3d/no-unpolyfilled-builtins.test.ts",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts tests/apk3d/imports.test.ts' (exit 0; 4 files, 23 tests)",
+    "In-memory Node probe of committed scanText and applyExclusions at 229323c5 and 61db4f1, with typed Set fixtures and the real Box3 line",
+    "In-memory execution of the committed source scan over 566 files, with labeled raw and reported counts",
+    "./measure/doctor.sh --structural-only (exit 0)",
+    "node measure/tools/generate.mjs --check (exit 0)",
+    "node_modules/.bin/prettier --check tests/apk3d/no-unpolyfilled-builtins.test.ts tests/old-browser/index-math.test.ts tests/old-browser/deep-copy.test.ts measure/tracks/old_browser_builtins_20261122/{plan.md,metadata.json} (exit 0)"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/phase-acceptance-p1-61db4f1.json",
+    "measure/runs/old_browser_builtins_20261122/phase-acceptance-p1-61db4f1.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "escalate_human",
+  "confidence": "high",
+  "route": "openai/gpt-6.2-sol#high",
+  "ratings": [
+    {"axis":"correctness","score":3,"evidence":"The matcher at tests/apk3d/no-unpolyfilled-builtins.test.ts:346-348 rejects otherbox but still accepts the two typed Set fixtures."},
+    {"axis":"test_meaning","score":3,"evidence":"red-p2-r4-failfirst.log proves the two ASCII suffix controls fail first but covers neither remaining receiver form."},
+    {"axis":"scope_discipline","score":5,"evidence":"Commit 72e74de0 changes only the assigned scanner test."},
+    {"axis":"evidence_quality","score":4,"evidence":"The two-revision probe distinguishes raw hits from exclusions for each receiver form."}
+  ],
+  "reviewer_ratings": [
+    {"reviewer_role":"review-a","reviewer_route":"unknown","agreed":false,"score":3,"evidence":"review-a-61db4f1.json identifies the two false negatives in F13 but passes the phase."},
+    {"reviewer_role":"review-b","reviewer_route":"kimi-code-plan-cn/kimi-for-coding","agreed":true,"score":4,"evidence":"The security conclusion holds for the pinned simulation inputs in tests/old-browser/deep-copy.test.ts."},
+    {"reviewer_role":"review-c","reviewer_route":"unknown","agreed":false,"score":3,"evidence":"review-c-61db4f1.json identifies the two false negatives in F7 but passes the phase."},
+    {"reviewer_role":"adversarial","reviewer_route":"openai/gpt-6-luna#high","agreed":true,"score":4,"evidence":"adversarial-p2-61db4f1.json records the separate computed-access limit without claiming that the scan proves browser behavior."}
+  ]
+}

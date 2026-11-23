@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "role": "review-b",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 2: Green",
+  "round": "re-bind to HEAD 61db4f13",
+  "baseline_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "phase_base_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "role_base_sha": "61db4f13740a523e00d10b085cd71bdbbc7199fb",
+  "audited_head_sha": "61db4f13740a523e00d10b085cd71bdbbc7199fb",
+  "security_applicability": "applicable",
+  "status": "pass",
+  "summary": "Re-binds the standing PASS to 61db4f13740a523e00d10b085cd71bdbbc7199fb. The binding check confirms nothing outside measure/ and docs/chibi-sprouts changed since dda92e79 (git diff --stat with exclusions prints nothing; only record commits 17ee504a, 6b41e907, 61db4f13 landed). The three-file gate re-run is green with 19 tests. The standing audit object holds unchanged: the four contract limits are documented in the copy.ts doc comment, enforced by the widened Reflect.ownKeys state-type test, and the scanner keeps its exact-call exclusion.",
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "evidence": [
+    "Binding: git diff --stat dda92e79 HEAD -- . ':!measure' ':!docs/chibi-sprouts' prints nothing (0 lines, exit 0); no src/ or test change since the previous binding.",
+    "git rev-parse HEAD = 61db4f13740a523e00d10b085cd71bdbbc7199fb at audit start and end; git log dda92e79..HEAD lists only record commits 17ee504a, 6b41e907, 61db4f13, all measure/ records or docs/chibi-sprouts.",
+    "Three-file gate through heavy-run.sh: node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts -> Test Files 3 passed (3), Tests 19 passed (19), exit 0.",
+    "The standing audit object holds: copy.ts code unchanged since d15af2a2 apart from the doc comment listing the four contract limits; the state-type test walks Reflect.ownKeys and flags symbol-key, non-enumerable, and accessor kinds; the scanner test keeps the exact-call exclusion of 72e74de0.",
+    "A2 not applicable: no draft-to-published path in the audited range. A6: no overstatement; records match the committed tests, all green."
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "git diff --stat dda92e79 HEAD -- . ':!measure' ':!docs/chibi-sprouts'",
+    "git log --oneline dda92e79..HEAD",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts'"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/review-b-61db4f1.json",
+    "measure/runs/old_browser_builtins_20261122/review-b-61db4f1.log",
+    "measure/runs/old_browser_builtins_20261122/review-b-61db4f1-notes.md"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "kimi-code-plan-cn/kimi-for-coding",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "The binding diff is empty outside measure/ and docs/chibi-sprouts, so the standing verified behavior holds at 61db4f13."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 5,
+      "evidence": "Three-file gate re-run at the new HEAD: 3 files, 19 tests passed (exit 0), same as the previous binding."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "git log dda92e79..HEAD lists only record commits (17ee504a, 6b41e907, 61db4f13); no src/ or test change."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "Every claim cites the empty diff command, the commit list, or the gate result (3 files/19 tests passed)."
+    }
+  ]
+}
