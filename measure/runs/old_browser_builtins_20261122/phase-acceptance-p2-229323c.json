@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "role": "phase-acceptance",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 2: Green",
+  "baseline_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "phase_base_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "role_base_sha": "229323c5d822f1dcb480b8e5ccf767c98a6f0c75",
+  "audited_head_sha": "229323c5d822f1dcb480b8e5ccf767c98a6f0c75",
+  "status": "fail",
+  "summary": "The replacement and import tests pass. The scan fails A7, and the required Phase 2 UX browser review is missing.",
+  "blocking_findings": [
+    "F1 [Blocker] phase-acceptance: tests/apk3d/no-unpolyfilled-builtins.test.ts:350-360 suppresses a real Set call named otherbox.union(b) as if it were the Box3 call box.union(b). One raw hit becomes zero reported hits. Phase 2 enables this filter across src/.",
+    "F2 [Blocker] phase-acceptance: Phase 2 changes user-facing files, including src/games/spellweavers-run/view2d/game.ts:311,429 and src/host/reader.ts:198. No UX browser result targets the audited HEAD. The unrun Phase 3 AC5 check does not satisfy the Phase 2 role prerequisite."
+  ],
+  "nonblocking_findings": [
+    "F3 [Nit] phase-acceptance: TD-47 retains the other scanner edge cases, the site match and the array getter limit. No matching unsupported call or state appears in the current source.",
+    "F4 [Nit] phase-acceptance: The accepted deepCopy limits remain in effect. TD-47 records why src/apk3d/sim/copy.ts:9-12 must not promise a result shape for unsupported inputs.",
+    "F5 [Nit] phase-acceptance: The strategy source-file count and historical TS2769 attribution remain recorded in plan.md:332-333. The actual T5 count is 36 source files and one scan test."
+  ],
+  "evidence": [
+    "HEAD is 229323c5 and the strategy base is 3f6a192. Phase 2 review A, B, C and adversarial artifacts have passing results on this exact HEAD.",
+    "No test-only SHA allowance was used. The current results bind to 229323c5, and the implementation, strategy, and relevant test diff from their prior audit at 5a1da501 is empty.",
+    "T4 at c8ddd883 adds two local helper modules without imports and three barrel exports. The T4 log records the expected site-check failure before the callers changed.",
+    "T5 and T6 cite 1dcc1043. An independent AST scan counted 35 deepCopy calls in 30 files, eight atIndex calls in five files, and one lastIndexWhere call. All 44 source replacements retain the input expressions.",
+    "The source diff does not change the device gate, build target, demo or dependencies. None of the pre-existing game replay tests changed.",
+    "The source scan has 19 enabled labels and scans 566 files. It reports zero hits after the three legitimate Box3 exclusions. An independent AST scan found no unsupported call among direct candidates.",
+    "The six AC3 control rows and added controls pass. The typed Set fixture independently proves a false negative at tests/apk3d/no-unpolyfilled-builtins.test.ts:357.",
+    "T6k at 0cc7b5c4 predates the phase base and replaced both Object.hasOwn sites. The current scan uses src/ with no SCAN_WIDE path.",
+    "T5r at 9440c572 fixes array holes and own __proto__ data. The two regressions failed before the fix and pass at HEAD. The commit consolidates the barrel imports.",
+    "T5r2 at 7d5c7129 changes only JSDoc. Review B records the PM decision for B-F2 through B-F5. The current T3r3 test checks the supported state inputs.",
+    "Each assigned Green task cites a reachable commit. Each of the six late findings has one disposition in plan.md:331-336. A3-F9 also remains in TD-47.",
+    "The four-file gate passed all 20 tests, including the import gate. TypeScript exited 2 with 51 labeled diagnostics and none in changed files.",
+    "AC4 exited 0 on 229323c5: 228 files passed, 3383 tests passed and three skipped. The unrelated audio artifact case defaults to skip; this run makes no live audio claim.",
+    "A5 matched the current passing gate exits and the historical evidence. The Prettier comparison found 35 pre-existing format failures and zero new ones across 42 source and test files.",
+    "A4 has no changed framework marker check. The registry moves the track to in progress without a resolved claim, so A6 does not find overstatement. A7 fails on the changed deployed scan filter.",
+    "The UX browser role rule applies when user-facing files change. The ux-paths command lists the renderer and host files. The strategy's Phase 3 AC5 plan is a separate runtime deliverable.",
+    "The audit does not claim browser compatibility from source scanning, Node simulations or a stored artifact. No Phase 2 browser review evidence was supplied.",
+    "Route substitution: ra-quota pick phase-acceptance exited 3 per the brief. The acceptance route is OpenAI sol, independent of Muse Red."
+  ],
+  "commands": [
+    "git rev-parse HEAD; git status --short --untracked-files=no",
+    "git diff 3f6a192 HEAD -- src tests scripts",
+    "git diff --exit-code 5a1da501 HEAD -- src tests scripts package.json pnpm-lock.yaml vitest.config.ts vite.demo.config.ts measure/tracks/old_browser_builtins_20261122/spec.md measure/tracks/old_browser_builtins_20261122/test-strategy.md (exit 0)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts tests/apk3d/imports.test.ts' (exit 0; 4 files, 20 tests)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts' (exit 0; 228 files, 3383 passed, 3 skipped)",
+    "node node_modules/typescript/bin/tsc --noEmit --pretty false (exit 2; 51 diagnostics, none in changed files)",
+    "./measure/doctor.sh --structural-only (exit 0)",
+    "node measure/tools/generate.mjs --check (exit 0)",
+    "grep -n SCAN_WIDE tests/apk3d/no-unpolyfilled-builtins.test.ts (exit 1; no flag)",
+    "In-memory Node and TypeScript probe of the committed src scan and a Set fixture for the exact exclusion; independent TypeScript AST comparison of all 44 replaced calls",
+    "In-memory prettier.check comparison of 42 assigned source and test paths at 3f6a192 and 229323c5 (35 baseline failures; zero new failures)",
+    "python3 /home/daniebo/.agents/skills/measure-orchestrator/scripts/measure_interphase_checks.py ux-paths --repo . --track old_browser_builtins_20261122 --baseline 3f6a19214994e7ac05a79a8fa7faeded684267b7 (lists the changed views and reader)"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/phase-acceptance-p2-229323c.json",
+    "measure/runs/old_browser_builtins_20261122/phase-acceptance-p2-229323c.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "escalate_human",
+  "confidence": "high",
+  "route": "openai/gpt-6.2-sol#high",
+  "ratings": [
+    {"axis":"correctness","score":3,"evidence":"The AST scan confirms all 44 replacements, but the enabled src filter still hides the Set fixture."},
+    {"axis":"test_meaning","score":3,"evidence":"The targeted Vitest run passes 20 tests and lacks a failing control for the suffix collision at tests/apk3d/no-unpolyfilled-builtins.test.ts:357."},
+    {"axis":"scope_discipline","score":5,"evidence":"The track's source diff changes only the helpers, barrel, and 36 planned caller files."},
+    {"axis":"evidence_quality","score":3,"evidence":"The targeted run passes, but no same-HEAD UX browser result covers src/games/spellweavers-run/view2d/game.ts."}
+  ],
+  "reviewer_ratings": [
+    {"reviewer_role":"review-a","reviewer_route":"unknown","agreed":false,"score":3,"evidence":"review-a-229323c.json identifies the suffix miss in F9 but permits a pass despite the A7 acceptance rule."},
+    {"reviewer_role":"review-b","reviewer_route":"kimi-code-plan-cn/kimi-for-coding","agreed":true,"score":4,"evidence":"review-b-229323c.json identifies the same-realm state limits verified by the passing state-type pin."},
+    {"reviewer_role":"review-c","reviewer_route":"unknown","agreed":false,"score":2,"evidence":"review-c-229323c.json closes F3, but the Set fixture is still hidden by the exclusion at line 357."},
+    {"reviewer_role":"adversarial","reviewer_route":"openai/gpt-6-luna#high","agreed":true,"score":4,"evidence":"adversarial-p2-229323c.json binds its simulation probes to unchanged code and the passing targeted tests."},
+    {"reviewer_role":"review-a","reviewer_route":"openai/gpt-6.2-sol#high","agreed":true,"score":5,"evidence":"review-a-0d8fc7d.json blocks the earlier filter; the historical scanner excludes the whole matching line."},
+    {"reviewer_role":"review-b","reviewer_route":"kimi-code-plan-cn/kimi-for-coding","agreed":true,"score":3,"evidence":"review-b-0d8fc7d.json identifies the own __proto__ issue that now has a passing regression test."},
+    {"reviewer_role":"review-c","reviewer_route":"openai/gpt-6.2-sol#high","agreed":true,"score":5,"evidence":"review-c-0d8fc7d.json correctly identifies the original line-only exclusion defect in F3."},
+    {"reviewer_role":"adversarial","reviewer_route":"openai/gpt-6-luna#high","agreed":true,"score":4,"evidence":"adversarial-p2-5a1da50.json records simulation parity and the passing targeted gate, not a browser result."}
+  ]
+}

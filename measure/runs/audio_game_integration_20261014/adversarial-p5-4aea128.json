@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "role": "adversarial-testing",
+  "track": "audio_game_integration_20261014",
+  "phase": "Phase 5: Hand-off to the PM",
+  "baseline_sha": "5470e45243bed1a1f26e81063d92f5bdf729de3b",
+  "phase_base_sha": "5470e45243bed1a1f26e81063d92f5bdf729de3b",
+  "role_base_sha": "09c4289c8111f77d14c1248eff571aa034614ea8",
+  "pre_adversarial_head_sha": "09c4289c8111f77d14c1248eff571aa034614ea8",
+  "audited_head_sha": "4aea12828bbeaea2cd5c8128db09f0afa4038118",
+  "status": "pass",
+  "summary": "The Phase 5 result is rebound to 4aea128. The intervening non-Measure diff is empty, and the hand-off tests pass with the TD-48 skip. ADV-P5-2 remains recorded as TD-48.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "ADV-P5-2 [Nit] adversarial-testing: late finding recorded as TD-48. A matching zero-byte source and demo file passes the script and the former test. The current shipped sources are non-empty; all 14 checksums verify against their manifest bytes, and Reviews A/B/C passed on df7f01bf. The PM rule classifies this unreachable condition as tech debt, not a Green finding. TD-48 names the fix (reject size 0) and reopen trigger (a zero-byte file enters sounds/chibi/ or demo/public/audio/chibi/)."
+  ],
+  "evidence": [
+    "Role started at 09c4289c8111f77d14c1248eff571aa034614ea8. Final audited HEAD is 4aea12828bbeaea2cd5c8128db09f0afa4038118.",
+    "git diff --stat 09c4289c 4aea1282 -- . ':!measure' printed no output.",
+    "The wrapped hand-off test run passed 11 tests and skipped only the TD-48 pin.",
+    "The prior project gate passed 230 files and 3,389 tests with 9 skips. It was not rerun because the scoped non-Measure diff is empty.",
+    "ADV-P5-2 remains late tech debt TD-48 under the PM reachability decision; the production script and delivered sound files did not change."
+  ],
+  "commands": [
+    "git rev-parse at role start => 09c4289c8111f77d14c1248eff571aa034614ea8",
+    "git diff --stat 09c4289c8111f77d14c1248eff571aa034614ea8 4aea12828bbeaea2cd5c8128db09f0afa4038118 -- . ':!measure' => empty output",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'AUDIO_HANDOFF_ARTIFACTS=1 node node_modules/vitest/vitest.mjs run tests/audio-handoff.test.ts tests/audio-handoff.adversarial.test.ts tests/audio-handoff.adversarial-r2.test.ts --maxWorkers=1' => exit 0; 3 files, 11 passed, 1 skipped",
+    "Project gate not rerun per request; non-Measure diff from 09c4289c to 4aea1282 is empty"
+  ],
+  "changed_files": [
+    "measure/runs/audio_game_integration_20261014/adversarial-p5-4aea128.json",
+    "measure/runs/audio_game_integration_20261014/adversarial-p5-4aea128.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "openai/gpt-6-luna#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 4,
+      "evidence": "The hand-off test gate passes; ADV-P5-2 remains documented as unreachable tech debt TD-48."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "The hand-off suite passed 11 cases and kept the TD-48 regression pin skipped with its recorded reason."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "This rebind adds only its JSON and log; no tests or implementation changed."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "The scoped diff and wrapped hand-off gate have recorded commands and results."
+    }
+  ]
+}

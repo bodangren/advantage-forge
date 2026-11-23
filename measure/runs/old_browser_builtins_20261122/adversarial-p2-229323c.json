@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "role": "measure-adversarial-testing",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 2: Green",
+  "baseline_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "phase_base_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "role_base_sha": "aaf678693732984a6adbc78af1157610e8225fd9",
+  "audited_head_sha": "229323c5d822f1dcb480b8e5ccf767c98a6f0c75",
+  "status": "pass",
+  "summary": "The Phase 2 adversarial result is rebound to HEAD 229323c5d822f1dcb480b8e5ccf767c98a6f0c75. No non-measure or non-exempt documentation diff exists since the prior audited HEAD, and the targeted three-file gate passes.",
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "evidence": [
+    "git rev-parse HEAD returned 229323c5d822f1dcb480b8e5ccf767c98a6f0c75.",
+    "git diff --stat 5a1da5011f31008102f8563b1f03f2891c23f99b 229323c5d822f1dcb480b8e5ccf767c98a6f0c75 -- . ':!measure' ':!docs/chibi-sprouts' printed nothing; the corresponding name-status diff also printed nothing.",
+    "The three-file heavy-run gate exited 0 with 3 files and 16 tests passed.",
+    "Prior runtime evidence remains bound to byte-identical code: six seeded sims passed 1,200-tick deepCopy/native equality and independence checks; six sims ran 1,200 ticks each with the four targeted globals deleted; index edge probes passed."
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "git diff --stat 5a1da5011f31008102f8563b1f03f2891c23f99b 229323c5d822f1dcb480b8e5ccf767c98a6f0c75 -- . ':!measure' ':!docs/chibi-sprouts' (printed nothing)",
+    "git diff --name-status 5a1da5011f31008102f8563b1f03f2891c23f99b 229323c5d822f1dcb480b8e5ccf767c98a6f0c75 -- . ':!measure' ':!docs/chibi-sprouts' (printed nothing)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts' (exit 0; 3 files, 16 tests)"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/adversarial-p2-229323c.json",
+    "measure/runs/old_browser_builtins_20261122/adversarial-p2-229323c.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "openai/gpt-6-luna#high",
+  "ratings": [
+    {"axis": "correctness", "score": 5, "evidence": "Six seeded sims remained equal to native structuredClone at every one of 1,200 ticks each in the prior runtime probe; the scoped diff is empty."},
+    {"axis": "test_meaning", "score": 5, "evidence": "The re-run targeted gate passed all 16 tests across the three required files."},
+    {"axis": "scope_discipline", "score": 5, "evidence": "Only the required audit JSON and log were written; no test or production file changed."},
+    {"axis": "evidence_quality", "score": 5, "evidence": "Both the scoped diff and the heavy-run command were executed and their output is recorded here."}
+  ]
+}

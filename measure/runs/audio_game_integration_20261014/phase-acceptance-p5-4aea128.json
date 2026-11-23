@@ -1,0 +1,112 @@
+{
+  "schema_version": 1,
+  "role": "phase-acceptance",
+  "track": "audio_game_integration_20261014",
+  "phase": "Phase 5: Hand-off to the PM",
+  "baseline_sha": "4aea12828bbeaea2cd5c8128db09f0afa4038118",
+  "phase_base_sha": "5470e45243bed1a1f26e81063d92f5bdf729de3b",
+  "role_base_sha": "4aea12828bbeaea2cd5c8128db09f0afa4038118",
+  "audited_head_sha": "4aea12828bbeaea2cd5c8128db09f0afa4038118",
+  "status": "pass",
+  "summary": "Phase 5 passes at 4aea128. The bundle meets AC6. The PM has not confirmed or replaced the proposed monorepo target.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "A5-F4 [Nit] review-a: The manifest test accepts a decimal prefix followed by text. The current manifest passed an independent whole-cell decimal check.",
+    "A5-F6 [Nit] review-a: The script does not reject symlinks in output ancestors. The current output and its ancestors under out/ are real directories.",
+    "A5-F7 [Nit] review-a: The adversarial inventory test can accept a process launch failure as a rejection. The script's explicit inventory check rejects the unsupported name.",
+    "A5-F8 [Nit] review-a: The strategy still names the earlier case layout and gate counts. The current explicit and Green runs passed with the counts recorded here.",
+    "C5-F4 [Nit] review-c: The generated README should identify /demo/ as an example. It does not change the host configuration.",
+    "ADV-P5-2 [Nit] adversarial-testing: TD-48 retains the zero-byte input case as a skipped regression. All 14 delivered sound files are non-empty.",
+    "PA-N1 [Nit] phase-acceptance: The plan records all six late findings. The TD-48 row does not explicitly list A5-F4 or A5-F6. Carry both into the debt follow-up.",
+    "PM-TARGET [Nit] phase-acceptance: The PM still needs to route /home/daniebo/Desktop/advantage-forge/out/apk-audio-handoff/chibi and confirm or replace the proposed target. Record the dated answer in the plan."
+  ],
+  "evidence": [
+    "The role started at 4aea12828bbeaea2cd5c8128db09f0afa4038118. The phase base is an ancestor. No tracked worktree changes were present.",
+    "Review A/B/C and adversarial testing all report pass and name the exact audited HEAD and phase base. Acceptance used no HEAD exception.",
+    "The phase changes scripts/audio-handoff.mjs, three tests, and Measure records. It changes no shipped UI, so a separate UX browser review does not apply.",
+    "T8 and AC6: the generated folder holds 17 regular files, including seven Ogg and seven MP3 files. All 14 sounds match both source folders byte for byte.",
+    "All 14 SHA-256 checks pass. Every manifest row has the exact decimal byte count, hash, format, source, and proposed target.",
+    "The bundle README names the proposed target, the AC4 load rule, the model-pack citation, and the checksum and copy steps. The existing docs/apk-port.md row is unique.",
+    "The before and after monorepo statuses list the same unrelated paths. Neither output names the Chibi target or any of the 14 sound files. Forge made no monorepo write.",
+    "T8r/T8g: the CLI and README tests pass after the Red failures. The script checks the exact inventory and rejects symlink entries before writing output.",
+    "The T8, T8r, and T8g markers cite the correct commits within the phase range. Each of the six late findings has one contract-form tech-debt disposition.",
+    "A5: the current explicit and Green commands exited 0, and the recorded historical counts name their earlier test layouts. The current aggregate gate did not run disabled artifact tests.",
+    "Nine aggregate skips are accounted for: five Phase 5 artifact cases, one Phase 4 JSON case, two TD-44 cases, and one TD-48 case.",
+    "The phase changes no Measure framework contract test, banned-term filter, or track registry. The independent manifest check validates the entire labeled bytes cell.",
+    "The target remains proposed in the plan and all manifest rows. The answer on the final monorepo target is not an AC6 gate.",
+    "The route substitution is recorded in the brief. Red used Muse, a different family from acceptance.",
+    "Leave the release worktree, the shelf-sync worktree and branch, and wip/oct-skill-docs-20261023 to their owners. This audit changed none of them."
+  ],
+  "commands": [
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'AUDIO_HANDOFF_ARTIFACTS=1 node node_modules/vitest/vitest.mjs run tests/audio-handoff.test.ts tests/audio-handoff.adversarial.test.ts tests/audio-handoff.adversarial-r2.test.ts --maxWorkers=1' — exit 0; 11 passed and one TD-48 skip.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'echo MONOREPO-BEFORE && git -C ../reading-advantage-monorepo status --short && node scripts/audio-handoff.mjs && AUDIO_HANDOFF_ARTIFACTS=1 node node_modules/vitest/vitest.mjs run tests/audio-handoff.test.ts --maxWorkers=1 && (cd out/apk-audio-handoff/chibi && sha256sum -c MANIFEST.sha256) && echo MONOREPO-AFTER && git -C ../reading-advantage-monorepo status --short' — exit 0; 10 tests passed, all 14 checksums verified, and no track path in either status.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts' — exit 0; 3389 passed and nine documented skips.",
+    "./measure/doctor.sh --structural-only — exit 0. node measure/tools/generate.mjs --check — exit 0; four facts files current.",
+    "node_modules/.bin/prettier --check scripts/audio-handoff.mjs tests/audio-handoff.test.ts tests/audio-handoff.adversarial.test.ts tests/audio-handoff.adversarial-r2.test.ts — exit 0.",
+    "git diff --check 5470e452 HEAD — exit 0. Static plan check — three in-range SHAs and six unique late-finding dispositions.",
+    "Independent inventory and TSV check — 17 regular files, all 14 sounds non-empty and byte-identical, all 14 targets proposed, and no track-named monorepo paths."
+  ],
+  "changed_files": [
+    "measure/runs/audio_game_integration_20261014/phase-acceptance-p5-4aea128.json",
+    "measure/runs/audio_game_integration_20261014/phase-acceptance-p5-4aea128.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "openai/gpt-6.2-sol#high (same route as the earlier audio acceptances; ra-quota pick phase-acceptance exited 3)",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 4,
+      "evidence": "The full Green command verified the delivered bundle, but the zero-byte case remains open in TD-48."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "The Green command tests freshly generated output, but the adversarial inventory test at lines 32-39 does not distinguish process launch failure."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The phase diff adds one hand-off script and three test files but changes no shipped source."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "The Green run records all 14 checksum results and the before and after monorepo statuses."
+    }
+  ],
+  "reviewer_ratings": [
+    {
+      "reviewer_role": "review-a",
+      "reviewer_route": "unknown",
+      "agreed": true,
+      "score": 5,
+      "evidence": "The current manifest passes a strict whole-cell check despite the weaker parse at audio-handoff.test.ts:246."
+    },
+    {
+      "reviewer_role": "review-b",
+      "reviewer_route": "kimi-code-plan-cn/kimi-for-coding",
+      "agreed": true,
+      "score": 5,
+      "evidence": "The full Green command regenerated the folder and showed no track path in either monorepo status."
+    },
+    {
+      "reviewer_role": "review-c",
+      "reviewer_route": "unknown",
+      "agreed": true,
+      "score": 5,
+      "evidence": "The regenerated README retains the proposed target and uses /demo/ without labeling it a Forge example."
+    },
+    {
+      "reviewer_role": "adversarial",
+      "reviewer_route": "openai/gpt-6-luna#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "The explicit suite shows the documented TD-48 skip, and all 14 delivered files independently pass the non-empty check."
+    }
+  ]
+}

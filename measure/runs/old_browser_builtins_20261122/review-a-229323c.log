@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: review-a
+status: complete
+track: old_browser_builtins_20261122
+phase: Phase 2: Green
+commits: none
+tests_run: Three-file Vitest through heavy-run: exit 0, 3 files, 16 passed. Filtered diff stat: exit 0, no output. Generator, structural doctor, and plan Prettier: exit 0.
+files_changed: measure/runs/old_browser_builtins_20261122/review-a-229323c.json and measure/runs/old_browser_builtins_20261122/review-a-229323c.log
+plan_updates: none
+known_failures: F8 historical plan record. F9-F11 remain nonblocking under TD-47. No current user-reachable wrong result found.
+handoff: Phase 2 Review A remains PASS on 229323c5. F2 and F3 remain closed. Continue to phase acceptance.
+END_MEASURE_AGENT_RESULT

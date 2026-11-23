@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "role": "measure-adversarial-testing",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 2: Green",
+  "baseline_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "phase_base_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "role_base_sha": "dda92e79d80bcb6ad77881913b81a91a891495fc",
+  "audited_head_sha": "dda92e79d80bcb6ad77881913b81a91a891495fc",
+  "status": "pass",
+  "summary": "The revised Box3 exclusion preserves hits for receiver-name, spacing, optional-chain, duplicate, and chained-call probes. The three real Box3 calls are excluded, leaving zero residual src hits. A computed-property scanner gap remains tech debt because no such call exists in src/.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "ADV-R5-1 [Nit] adversarial-testing: Late finding, tech-debt; the text scanner does not detect computed property access such as box['union'](b). No such call exists in src/, so current shipped code produces no wrong result. Rationale: this is a scanner coverage limit, not a false PASS on real src/ code."
+  ],
+  "evidence": [
+    "The audited HEAD is dda92e79d80bcb6ad77881913b81a91a891495fc; phase_base_sha is 3f6a19214994e7ac05a79a8fa7faeded684267b7; role_base_sha is dda92e79d80bcb6ad77881913b81a91a891495fc.",
+    "The probe copied scanner logic from tests/apk3d/no-unpolyfilled-builtins.test.ts into temporary files under measure/runs/old_browser_builtins_20261122/ only.",
+    "The exclusion returned a scanner hit for otherbox, mybox, box2, Box, box_, whitespace before dot, newline before dot, optional chaining, a duplicate same-line call, and a chained call; the exact matching Box3 call was excluded once.",
+    "Comment-only and string-only box.union(b) produced no built-in hit after stripping; the synthetic exclusion was stale. Computed access box['union'](b) produced no literal-pattern hit and is recorded as tech debt.",
+    "The real src/render/page.ts exclusions at lines 263, 440, and 447 each matched exactly one raw Set .union( pattern. The full src scan found 3 raw hits (these three calls) and 0 residual problems after exclusions.",
+    "The targeted heavy-run command exited 0 with 3 files and 19 tests passed.",
+    "The project heavy-run command exited 0 with 230 files passed, 1 skipped; 3392 tests passed, 9 skipped.",
+    "No tests were added because the computed-access gap does not occur in src/ and therefore does not expose a current user-reachable wrong result. The limitation was recorded in plan.md and TD-47.",
+    "build-graph stats measure/graph.db exited 4 because the database has no nodes table; source inspection and runtime tests supplied the dependency evidence instead."
+  ],
+  "commands": [
+    "git rev-parse HEAD; git diff --stat and --name-status 229323c5d822f1dcb480b8e5ccf767c98a6f0c75..dda92e79d80bcb6ad77881913b81a91a891495fc",
+    "node --import tsx measure/runs/old_browser_builtins_20261122/probe-exclusion-r3.mjs (13 scanner probes and full src scan; exit 0)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts' (exit 0; 3 files, 19 tests)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts' (exit 0; 230 files passed, 1 skipped; 3392 passed, 9 skipped)",
+    "./measure/generate.sh (exit 0; generated 4 Measure facts)",
+    "build-graph stats measure/graph.db (exit 4: no such table: nodes)"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/adversarial-p2-dda92e7.json",
+    "measure/runs/old_browser_builtins_20261122/adversarial-p2-dda92e7.log",
+    "measure/runs/old_browser_builtins_20261122/probe-exclusion-r3.mjs",
+    "measure/runs/old_browser_builtins_20261122/probe-exclusion-r3.ts",
+    "measure/tracks/old_browser_builtins_20261122/plan.md",
+    "measure/tech-debt.md"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "openai/gpt-6-luna#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "The full src probe left zero residual hits after the three exact Box3 exclusions."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 5,
+      "evidence": "The targeted gate passed 19 tests, including the revised exclusion cases and controls."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "No production source or test changed; only audit evidence and the required late tech-debt record changed."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "The scanner probes, targeted suite, and project suite passed with counts recorded in this audit."
+    }
+  ]
+}

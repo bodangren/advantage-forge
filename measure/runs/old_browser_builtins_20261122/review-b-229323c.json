@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "role": "review-b",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 2: Green",
+  "round": "re-bind to HEAD 229323c5",
+  "baseline_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "phase_base_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "role_base_sha": "229323c5d822f1dcb480b8e5ccf767c98a6f0c75",
+  "audited_head_sha": "229323c5d822f1dcb480b8e5ccf767c98a6f0c75",
+  "security_applicability": "applicable",
+  "status": "pass",
+  "summary": "Re-binds the r3 PASS to the phase-acceptance HEAD 229323c5. The binding check confirms no code, test, or script changed between 5a1da501 and 229323c5 outside measure/ and docs/chibi-sprouts (git diff --stat with exclusions prints nothing); the three-file gate re-run is green with 16 tests. The r3 audit object stands unchanged: the four contract limits are documented in the copy.ts doc comment and enforced by the widened Reflect.ownKeys state-type test.",
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "evidence": [
+    "Binding: git diff --stat 5a1da501 229323c5d822f1dcb480b8e5ccf767c98a6f0c75 -- . ':!measure' ':!docs/chibi-sprouts' prints nothing (0 lines, exit 0); the only intervening changes are measure/ records (105 files, plan.md, tech-debt.md TD-46 TD-47, measure/runs/ artifacts) and docs/chibi-sprouts/scrapped-base-users-2026-11-23.md, all permitted record/docs files.",
+    "git rev-parse HEAD = 229323c5d822f1dcb480b8e5ccf767c98a6f0c75 at audit start and end; git status --short -- src/ tests/ is empty; no tracked file modified during the audit.",
+    "Three-file gate through heavy-run.sh: node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts -> Test Files 3 passed (3), Tests 16 passed (16), exit 0.",
+    "The r3 audit object (review-b-5a1da50.json) stands: copy.ts code byte-identical apart from the doc comment since d15af2a2; the doc lists the four contract limits (Symbol keys, non-enumerables, RegExp/class instances, cross-realm containers); tests/old-browser/deep-copy.test.ts walks Reflect.ownKeys and flags symbol-key, non-enumerable, and accessor kinds (lines 94-100, 167-184).",
+    "A2 not applicable: no draft-to-published path in the audited range. A6: no overstatement; documented limits match the implementation and the gate is green."
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "git diff --stat 5a1da501 229323c5d822f1dcb480b8e5ccf767c98a6f0c75 -- . ':!measure' ':!docs/chibi-sprouts'",
+    "git diff --stat 5a1da501 229323c5d822f1dcb480b8e5ccf767c98a6f0c75",
+    "git log --oneline 5a1da501..229323c5d822f1dcb480b8e5ccf767c98a6f0c75",
+    "git status --short -- src/ tests/",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts'"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/review-b-229323c.json",
+    "measure/runs/old_browser_builtins_20261122/review-b-229323c.log",
+    "measure/runs/old_browser_builtins_20261122/review-b-229323c-notes.md"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "kimi-code-plan-cn/kimi-for-coding",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "The binding diff is empty outside measure/ and docs/chibi-sprouts, so the r3 verified behavior holds unchanged at 229323c5."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 5,
+      "evidence": "Three-file gate re-run at the new HEAD: 3 files, 16 tests passed (exit 0), same as r3."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "git log 5a1da501..229323c5 lists only record commits (03544592, 2bec4ca1, 229323c5) touching measure/ and docs/chibi-sprouts."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "Every claim cites the empty diff command, the gate result, or a file:line from the standing r3 object."
+    }
+  ]
+}

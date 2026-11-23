@@ -1,0 +1,57 @@
+
+ RUN  v5.1.1 /home/daniebo/Desktop/advantage-forge
+
+ ❯ tests/apk3d/no-unpolyfilled-builtins.test.ts (7 tests | 2 failed) 163ms
+   × an exclusion does not match a renamed receiver (acceptance A7) 5ms
+   × an exclusion does not match a longer receiver name (acceptance A7) 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/apk3d/no-unpolyfilled-builtins.test.ts > an exclusion does not match a renamed receiver (acceptance A7)
+AssertionError: expected [] to deeply equal [ '<fixture>:1: Set .union(' ]
+
+- Expected
++ Received
+
+- [
+-   "<fixture>:1: Set .union(",
+- ]
++ []
+
+ ❯ tests/apk3d/no-unpolyfilled-builtins.test.ts:401:70
+    399|     { file: '<fixture>', line: 1, label: 'Set .union(', call: 'box.uni…
+    400|   ];
+    401|   expect(problemsFor('if (!b.isEmpty()) otherbox.union(b);', bound)).t…
+       |                                                                      ^
+    402|     '<fixture>:1: Set .union(',
+    403|   ]);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/apk3d/no-unpolyfilled-builtins.test.ts > an exclusion does not match a longer receiver name (acceptance A7)
+AssertionError: expected [] to deeply equal [ '<fixture>:1: Set .union(' ]
+
+- Expected
++ Received
+
+- [
+-   "<fixture>:1: Set .union(",
+- ]
++ []
+
+ ❯ tests/apk3d/no-unpolyfilled-builtins.test.ts:417:67
+    415|     { file: '<fixture>', line: 1, label: 'Set .union(', call: 'box.uni…
+    416|   ];
+    417|   expect(problemsFor('if (!b.isEmpty()) mybox.union(b);', bound)).toEq…
+       |                                                                   ^
+    418|     '<fixture>:1: Set .union(',
+    419|   ]);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed | 2 passed (3)
+      Tests  2 failed | 17 passed (19)
+   Start at  08:07:02
+   Duration  925ms (tests 51%, transform 24%, import 24%, worker 1%)
+

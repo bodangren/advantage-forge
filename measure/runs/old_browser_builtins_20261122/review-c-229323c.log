@@ -1,0 +1,28 @@
+Phase base: 3f6a19214994e7ac05a79a8fa7faeded684267b7
+Role base and audited HEAD: 229323c5d822f1dcb480b8e5ccf767c98a6f0c75
+git rev-parse HEAD matched before and after the test run. The tracked worktree was clean.
+
+git diff --stat 5a1da501 229323c5 -- . ':!measure' ':!docs/chibi-sprouts'
+Result: no output. The full diff contains records only. No code or test changed.
+
+HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts'
+Result: three files passed and 16 tests passed.
+
+The unchanged code and tests preserve the F2 and F3 closures in review-c-5a1da50.json.
+The phase plan records F5 and F6 as tech debt. TD-47 also records F6. Neither finding is a current user-reachable wrong result.
+Retain the detached release worktree, shelf-sync worktree and branch, and wip/oct-skill-docs-20261023 for their owners. Leave the origin refs unchanged.
+
+MEASURE_AGENT_RESULT
+role: measure-review-c-ux-api
+status: complete
+track: old_browser_builtins_20261122
+phase: Phase 2: Green
+commits: none
+tests_run: three-file Vitest gate through heavy-run.sh (pass, 16 tests)
+files_changed: review-c-229323c.json, review-c-229323c.log
+plan_updates: none
+known_failures: no blockers; F5 strategy count and F6 doc wording remain nonblocking
+handoff: Use the result bound to 229323c5 for Phase 2 acceptance. Keep the recorded late findings in tech debt.
+END_MEASURE_AGENT_RESULT
+
+RESULT: PASS

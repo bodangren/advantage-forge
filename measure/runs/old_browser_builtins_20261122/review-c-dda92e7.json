@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "role": "measure-review-c-ux-api",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 2: Green",
+  "baseline_sha": "dda92e79d80bcb6ad77881913b81a91a891495fc",
+  "role_base_sha": "dda92e79d80bcb6ad77881913b81a91a891495fc",
+  "phase_base_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "audited_head_sha": "dda92e79d80bcb6ad77881913b81a91a891495fc",
+  "current_head_sha": "dda92e79d80bcb6ad77881913b81a91a891495fc",
+  "audited_head_is_current": true,
+  "contract_applicability": "applicable",
+  "applicability_evidence": [
+    "test-strategy.md:35 excludes public API, route, and UI review.",
+    "The exact phase diff adds the internal API at src/apk3d/sim/index.ts:2-3. This re-review covers its scan gate.",
+    "The track remediation changes tests and records only. git diff --exit-code on src/ is empty between the previous and current heads."
+  ],
+  "status": "pass",
+  "summary": "The approved A7 receiver cases pass. The plan and metadata name the same fix. One remaining scanner limit is late tech debt.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F5 [Nit] review-c: The strategy count at test-strategy.md:169 remains unchanged. The phase plan records this existing finding as tech debt.",
+    "F6 [Nit] review-c: Late finding, tech-debt. src/apk3d/sim/copy.ts:9-12 overstates the result shape for unsupported inputs. This existing finding remains in TD-47 and is not user-reachable.",
+    "F7 [Nit] review-c: Late finding, tech-debt. tests/apk3d/no-unpolyfilled-builtins.test.ts:346-348 checks an ASCII word boundary, not the complete receiver. The exclusion still accepts holder.box.union(b) and λbox.union(b) on a synthetic excluded line. This is a scanner limit, not a user-reachable wrong result. The delivered line still calls Box3.union on box."
+  ],
+  "evidence": [
+    "git rev-parse HEAD matched before and after the test run. The only tracked worktree edit was an unrelated Chibi Sprouts hunk in measure/tracks.md.",
+    "The scoped commits are 72e74de0 for the scanner and dda92e79 for the plan and metadata. Parallel audio changes are outside this track.",
+    "The wrapped three-file gate passed. Vitest reported three files and 19 tests passed.",
+    "The in-memory probe reports both a stale exclusion and a union hit for otherbox, mybox, and box2. It accepts the actual Box3 call and reports a second union call beside it.",
+    "The exclusion list at tests/apk3d/no-unpolyfilled-builtins.test.ts:317-339 names the file, line, label, call text, and reason. The filter explicitly reports stale rows.",
+    "The controls at lines 402-452 test receiver changes and the real allowed call. The first two names overlap but the fixtures identify the exact receivers.",
+    "plan.md:332 and metadata.json:14 both identify A7 and the Box3 receiver exclusion. The prior C3-F5 and C3-F6 entries stay in the plan.",
+    "The probe for F7 returned a raw union hit and no problems for the qualified and non-ASCII cases. src/render/page.ts:263 is unchanged and calls box.union(b).",
+    "No browser inspection or TypeScript project check ran. The phase diff has no new public route or user flow."
+  ],
+  "commands": [
+    "git rev-parse HEAD; git status --short --untracked-files=no",
+    "git diff --exit-code 229323c5 dda92e79 -- src",
+    "git diff --check 229323c5 dda92e79 -- src tests/apk3d/no-unpolyfilled-builtins.test.ts",
+    "git show --format=short 72e74de0; git show --format=short dda92e79",
+    "node --no-warnings --input-type=module: run the scanner and exclusion filter in memory against the approved receivers, live form, same-line control, and F7 cases",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts'"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/review-c-dda92e7.json",
+    "measure/runs/old_browser_builtins_20261122/review-c-dda92e7.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "unknown",
+  "ratings": [
+    {"axis": "correctness", "score": 4, "evidence": "The independent probe verifies the approved receiver cases at tests/apk3d/no-unpolyfilled-builtins.test.ts:346-348 and identifies the remaining receiver limit."},
+    {"axis": "test_meaning", "score": 4, "evidence": "The controls at lines 402-452 require both a stale exclusion and a raw report for the named cases."},
+    {"axis": "scope_discipline", "score": 5, "evidence": "The track commits 72e74de0 and dda92e79 change the scanner test and Measure records only."},
+    {"axis": "evidence_quality", "score": 5, "evidence": "The wrapped gate and the independent scanner probe ran at dda92e79."}
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "role": "review-a",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 2: Green",
+  "baseline_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "phase_base_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "role_base_sha": "dda92e79d80bcb6ad77881913b81a91a891495fc",
+  "audited_head_sha": "dda92e79d80bcb6ad77881913b81a91a891495fc",
+  "status": "pass",
+  "summary": "The PM-approved A7 fix passes on the routed cases. Both Vitest gates passed. Two new controls fail on the old scanner; the third is a regression pin. No new finding yields a user-reachable wrong result.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F8 [Nit] review-a: The historical TS2769 attribution at plan.md:173-177,206-209 remains unchanged. Red introduced the diagnostic, and the original Green run retained it. This record issue does not affect the current product.",
+    "F9 [Nit] review-a: The routed `otherbox.union(b)` case is fixed. The prior late findings for `math.if() / structuredClone(v) / 2` and `rows.at(one(two(three(four()))))` remain in TD-47. No current source call reaches those cases.",
+    "F10 [Nit] review-a: Late finding, tech-debt; not user-reachable. tests/old-browser/index-math.test.ts:314-317 accepts `notatIndex(existingVersions, -1)` at the Storytime version site because it checks a substring. The current site uses the correct helper.",
+    "F11 [Nit] review-a: Late finding, tech-debt; not user-reachable. tests/old-browser/deep-copy.test.ts:119-124 invokes an array index getter before the descriptor walk reports it. An in-memory fixture recorded one call, contrary to the no-invocation claim in plan.md:323-325. The current 29 start states pass the pin. Do not reopen the accepted deepCopy contract.",
+    "F12 [Nit] review-a: New late finding, tech-debt; not user-reachable. The new control at tests/apk3d/no-unpolyfilled-builtins.test.ts:436-454 passes on 229323c5. It preserves existing rot detection and the real Box3 exclusion. Count it as a regression pin, not a failing-first control.",
+    "F13 [Nit] review-a: New late finding, tech-debt; not user-reachable. The ASCII boundary at tests/apk3d/no-unpolyfilled-builtins.test.ts:346-348 still excludes `holder.box.union(b)` and `ébox.union(b)` in place of `box.union(b)`. The independent fixtures passed the full scan after each replacement. The shipped line uses the permitted Box3 call.",
+    "F14 [Nit] review-a: New late finding, tech-debt; not user-reachable. measure/generated/status.md:26 names the untracked redesign track. The working-tree generator passes, but omitting that folder makes status.md stale. A clean checkout lacks that folder."
+  ],
+  "evidence": [
+    "HEAD matched dda92e79d80bcb6ad77881913b81a91a891495fc. The phase base 3f6a19214994e7ac05a79a8fa7faeded684267b7 resolves.",
+    "The exact phase diff contains the previously audited production changes, the scoped scanner fix, Measure records, and unrelated audio and asset work. The remainder diff since 229323c5 is empty after excluding Measure, audio, and the intended scanner.",
+    "The full scan reports zero hits for the unmodified source. The real src/render/page.ts:263 is `if (!b.isEmpty()) box.union(b);`.",
+    "Replacing that line's receiver with otherbox, mybox, or box2 yields a stale exclusion and a live Set .union report. Appending items.union(other) to the real line yields exactly one live report.",
+    "The unmodified 229323c5 scanner was loaded from git show as an in-memory temporary copy. Appending the exact three new controls gave FAIL, FAIL, PASS. The audited scanner gave PASS, PASS, PASS.",
+    "An empty-src fixture fails on stale exclusions. The current scanner does not treat a missing deliverable as a clean result.",
+    "The metadata escalation is `third round: the Box3 exclusion matches a substring, so a renamed Set receiver hides a union call (acceptance rule A7)`. The committed Phase 2 plan names T3r4, 72e74de0, A7, and the PM decision.",
+    "The three-file gate exited 0 with three files and 19 tests passed. AC4 exited 0 with 230 files passed, one file skipped, 3392 tests passed, and nine skipped.",
+    "The wrapped TypeScript run exited 2 with 51 baseline diagnostics. No old-browser diagnostic appeared.",
+    "The working-tree generator, structural doctor, and focused Prettier checks exited 0. F14 records the separate freshness result without the untracked redesign folder.",
+    "The build-graph database has no nodes table. No production import changed since the prior in-memory dependency audit.",
+    "Working-tree changes in the Measure registry and a later plan disposition do not change source, tests, or test configuration. The audit uses the committed plan. The release and shelf-sync worktrees, the wip/oct-skill-docs-20261023 branch, and origin refs remain untouched."
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "git diff --stat 3f6a19214994e7ac05a79a8fa7faeded684267b7..dda92e79d80bcb6ad77881913b81a91a891495fc -- src tests measure/tracks/old_browser_builtins_20261122",
+    "git diff 229323c5..dda92e7 -- tests/apk3d/no-unpolyfilled-builtins.test.ts measure/tracks/old_browser_builtins_20261122 measure/generated/status.md",
+    "git diff --exit-code 229323c5..dda92e7 -- . ':!measure' ':!tests/audio-*' ':!scripts/audio-*' ':!tests/apk3d/no-unpolyfilled-builtins.test.ts'",
+    "git show 229323c5:tests/apk3d/no-unpolyfilled-builtins.test.ts; Node VM rerun of each new control on that scanner and the audited scanner",
+    "Node VM full-scan fixture replaces or extends src/render/page.ts:263 in memory",
+    "git show dda92e7:measure/tracks/old_browser_builtins_20261122/metadata.json",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c with the three-file Vitest command and the AC4 Vitest command",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/typescript/bin/tsc --noEmit --pretty false'",
+    "node measure/tools/generate.mjs --check; ./measure/doctor.sh --structural-only; node_modules/.bin/prettier --check tests/apk3d/no-unpolyfilled-builtins.test.ts measure/tracks/old_browser_builtins_20261122/plan.md measure/tracks/old_browser_builtins_20261122/metadata.json"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/review-a-dda92e7.json",
+    "measure/runs/old_browser_builtins_20261122/review-a-dda92e7.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "unknown",
+  "ratings": [
+    {"axis": "correctness", "score": 4, "evidence": "The full scan rejects the routed receiver fixtures, but tests/apk3d/no-unpolyfilled-builtins.test.ts:348 accepts a member receiver."},
+    {"axis": "test_meaning", "score": 4, "evidence": "The old scanner fails the otherbox and mybox controls, and the box2 regression pin passes on both revisions."},
+    {"axis": "scope_discipline", "score": 4, "evidence": "The filtered source diff contains only the intended test, but measure/generated/status.md:26 includes an untracked track."},
+    {"axis": "evidence_quality", "score": 4, "evidence": "The wrapped Vitest and TypeScript outputs and the exact old scanner probes verify the phase results at dda92e7."}
+  ]
+}

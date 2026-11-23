@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "role": "measure-review-c-ux-api",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 2: Green",
+  "baseline_sha": "229323c5d822f1dcb480b8e5ccf767c98a6f0c75",
+  "role_base_sha": "229323c5d822f1dcb480b8e5ccf767c98a6f0c75",
+  "phase_base_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "audited_head_sha": "229323c5d822f1dcb480b8e5ccf767c98a6f0c75",
+  "current_head_sha": "229323c5d822f1dcb480b8e5ccf767c98a6f0c75",
+  "audited_head_is_current": true,
+  "contract_applicability": "applicable",
+  "applicability_evidence": [
+    "test-strategy.md:35 excludes public API, route, and UI review.",
+    "The phase diff adds the internal API at src/apk3d/sim/index.ts:2-3 and updates game, host, and Storytime consumers.",
+    "The rebind adds no change to those contracts, the code, or the tests."
+  ],
+  "status": "pass",
+  "summary": "Review C passed at the current HEAD. The three-file gate passed. The record-only diff leaves the prior contract verdict and late findings unchanged.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F5 [Nit] review-c: The strategy count at test-strategy.md:169 remains unchanged. plan.md:311-313 records that the strategy count is outside this round. The plan count is correct.",
+    "F6 [Nit] review-c: Late finding, tech-debt. src/apk3d/sim/copy.ts:9-12 says unsupported classes copy as plain objects with no class behavior. The fallback keeps the prototype, and some methods still work. The cross-realm typed-array probe returned an empty typed array, not a plain object. State these as unsupported inputs without promising their result shape. Users cannot reach these unsupported cases through the current game paths."
+  ],
+  "evidence": [
+    "git rev-parse HEAD matched the requested audited SHA before and after the test run. No tracked worktree changes were present.",
+    "git diff --stat 5a1da501 229323c5 -- . ':!measure' ':!docs/chibi-sprouts' printed nothing.",
+    "The full range contains three record commits: 03544592, 2bec4ca1, and 229323c5. They change plans, generated status, debt, run records, and one Chibi Sprouts document.",
+    "The wrapped gate at 229323c5 passed. Vitest reported three files and 16 tests passed.",
+    "review-c-5a1da50.json records the independent F2 and F3 probes. The scanner, helper, and consumers did not change, so those findings remain closed.",
+    "The phase plan records C3-F5 and C3-F6 as tech debt. TD-47 records F6. Neither finding blocks acceptance or causes a current user-reachable wrong result."
+  ],
+  "commands": [
+    "git rev-parse HEAD; git status --short --untracked-files=no",
+    "git diff --stat 5a1da501 229323c5 -- . ':!measure' ':!docs/chibi-sprouts'",
+    "git diff --name-status 5a1da501 229323c5",
+    "git diff 5a1da501 229323c5 -- measure/tracks/old_browser_builtins_20261122/plan.md measure/tech-debt.md",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts'"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/review-c-229323c.json",
+    "measure/runs/old_browser_builtins_20261122/review-c-229323c.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "unknown",
+  "ratings": [
+    {"axis": "correctness", "score": 4, "evidence": "The code is unchanged from review-c-5a1da50.json, which confirms the F2 and F3 fixes and records the doc issue."},
+    {"axis": "test_meaning", "score": 4, "evidence": "The three-file gate passed, including the scanner test for a second same-label call on the excluded line."},
+    {"axis": "scope_discipline", "score": 5, "evidence": "The requested filtered diff stat is empty, and the full diff contains records only."},
+    {"axis": "evidence_quality", "score": 5, "evidence": "The wrapped test output and the exact diff both bind the result to 229323c5."}
+  ]
+}

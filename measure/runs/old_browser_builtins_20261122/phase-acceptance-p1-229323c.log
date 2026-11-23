@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: phase-acceptance
+status: blocked
+track: old_browser_builtins_20261122
+phase: Phase 1: Red
+commits: none
+tests_run: Wrapped targeted Vitest PASS (4 files, 20 tests); historical and current scan counts verified; Set exclusion probe FAIL; scoped Prettier, generator, and doctor PASS.
+files_changed: phase-acceptance-p1-229323c.json and .log
+plan_updates: none
+known_failures: A7: The Box3 exclusion hides a real Set.union call when its receiver is otherbox.
+handoff: Reviews A/B/C and adversarial cover the Red files on 229323c5. No separate Red review or UX browser review is required. Ask the owner: Will you authorize one bounded scanner remediation round? Options: authorize an exact-call fix and a regression test; leave both phases blocked.
+END_MEASURE_AGENT_RESULT

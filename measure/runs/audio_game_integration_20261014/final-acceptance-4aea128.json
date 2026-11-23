@@ -1,0 +1,349 @@
+{
+  "schema_version": 1,
+  "role": "measure-final-acceptance",
+  "track": "audio_game_integration_20261014",
+  "phase": "track",
+  "baseline_sha": "7a5f16600cb26f3f7086dc8e4897e2c8b6e42301",
+  "track_base_sha": "7a5f16600cb26f3f7086dc8e4897e2c8b6e42301",
+  "role_base_sha": "4aea12828bbeaea2cd5c8128db09f0afa4038118",
+  "audited_head_sha": "4aea12828bbeaea2cd5c8128db09f0afa4038118",
+  "current_head_sha": "dda92e79d80bcb6ad77881913b81a91a891495fc",
+  "audited_head_is_current": false,
+  "audited_head_is_ancestor_of_current_head": true,
+  "commits_after_audited_head": [
+    "72e74de0edffbb35da817d8237985b53e20378fd",
+    "dda92e79d80bcb6ad77881913b81a91a891495fc"
+  ],
+  "commits_after_audited_head_touch_track_paths": [
+    "tests/apk3d/no-unpolyfilled-builtins.test.ts",
+    "measure/generated/status.md"
+  ],
+  "status": "pass",
+  "summary": "Final acceptance passes for the immutable HEAD 4aea1282. AC1 to AC9 hold, and each one maps to a test, a run record, or an independent check on this HEAD. The 20 audio test files pass (231 tests, 4 documented skips). The project gate passes (3389 tests, 9 documented skips). Doctor, the generator check, the live Rune Match budget run, and the 14 hand-off checksums pass. Phase 6 (T9) is deferred by decision. The checker counts it as deferred, but the closeout check needs one plan-line edit (FA-1). Fourteen nonblocking findings carry record work, two test gaps, and the open items to closeout and the PM. HEAD moved to dda92e79 during the audit through two commits of another track (FA-5).",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "FA-1 [Major] final-acceptance: The T9 line (plan.md:841) fails the closeout check. `plan_closeout_feedback` reports `deferred closeout task lacks done SHA`, because Phase 6 is the last phase block. The final-acceptance counter and `status` count T9 as deferred, because both test the substring `deferred` in the task text. Before closeout, add a SHA to the T9 line, for example `deferral recorded in 03bdf3e5`, the commit that recorded the deferral and AC7. Keep the marker `[ ]` and the word deferred. Do not mark T9 `[x]`. Do not change it to `[b]`: the checker and the Forge doctor ignore `[b]`, and the doctor then fails an in_progress track with no unchecked task. Spec AC7 also requires `[ ]`. Owner: build session, in a plan-only commit.",
+    "FA-2 [Major] final-acceptance: The plan lost the completed T6i line. Commit `b88cb45d` deleted `- [x] T6i Green (1b7312f4): own-property guard for event names (adversarial F3)`. `metadata.json` still names T6i as the cause of the fourth round, and `measure/runs/audio_game_integration_20261014/green-p3-t6i.log` says Green flipped the line to `[x]`. Restore the line between T6h and T6j. Owner: build session, in a plan-only commit.",
+    "FA-3 [Major] final-acceptance: Four late findings carry the disposition tech-debt and have no row in `measure/tech-debt.md`. They are A5-F4 and A5-F6 (plan.md:831-832) and A6-F2 and ADV5-S1 (plan.md:492-493). Phase 5 acceptance asked to carry A5-F4 and A5-F6 (PA-N1). Add A5-F4 and A5-F6 to TD-48. For A6-F2 and ADV5-S1, record in the closeout note that the scan controls of track old_browser_builtins_20261122 cover the three forms at HEAD: rows `URL before a call on one line`, `call in a template interpolation`, and `argument on the next lines` of the test `controls prove the strip and the whole-text patterns`. Owner: PM or build session.",
+    "FA-4 [Nit] final-acceptance: The debt table breaks at TD-46. `measure/tech-debt.md:45` holds the footer sentence as an eighth cell. Line 46 is blank, so TD-47 and TD-48 sit outside the table. Line 50 repeats the footer. Remove the stray cell and the blank line. TD-47 belongs to track old_browser_builtins_20261122: keep its text.",
+    "FA-5 [Major] final-acceptance: HEAD moved during the audit, and the strict later-commit rule needs an orchestrator decision. HEAD was 4aea1282 for the audio test run (07:39), the project gate (07:45), the full doctor (07:52), the live budget run (08:00), and tsc. HEAD is now dda92e79. This audit re-ran the project gate at dda92e79 (08:21). Two commits of track old_browser_builtins_20261122 follow: 72e74de0 and dda92e79. `git diff --name-only 4aea1282 HEAD` lists four paths: `measure/generated/status.md`, the metadata and plan of that track, and `tests/apk3d/no-unpolyfilled-builtins.test.ts`. The brief's diffstat over `src scripts tests/audio* demo sounds` and the track folder is empty. Two of the four paths (the scan test and status.md) are also paths that commits of this track changed, so the strict role rule does not cover them. The scan test now belongs to the other track in practice, with 5 of its 6 commits. It passes with 7 tests at the later HEAD. The project gate passes at the later HEAD (exit 0, 3392 passed, 9 skipped). This verdict binds to 4aea1282. The orchestrator accepts the brief's pathspec or repeats the audit on a later HEAD.",
+    "FA-6 [Major] final-acceptance: Family independence differs from the brief. The brief says all phase acceptances ran on OpenAI. The Phase 1 and Phase 2 acceptances (`phase-acceptance-p1-79ae99b`, `phase-acceptance-p1-ffbe96a`, `phase-acceptance-p2-ca68e6c`) and Review B of Phase 2 ran on `claude-code/claude-sonnet-5-5#max`, the family of this audit. Phases 3 to 5 and every Review A ran on OpenAI. This audit re-ran each gate at the immutable HEAD and re-checked AC1 to AC3 with its own code, so the overlap does not weaken the evidence. The orchestrator decides whether to repeat the audit on a third family.",
+    "FA-7 [Nit] final-acceptance: Two of 27 mutants survived the committed AudioBus tests (probe `final-acceptance-4aea128-mutants.mjs`). B05: a non-OK status is accepted. The case `marks the event after a rejected fetch, a non-ok status, or a rejected decode` passes through a TypeError, because its fake 404 response has no `arrayBuffer`, and its third mode reuses the 404 response. B09: file sources bypass the master gain, so mute would not silence files. The fake `connect` records nothing, and no test in the repository covers `AudioBus` mute. The live `src/apk3d/audio/bus.ts` is correct: probe `final-acceptance-4aea128-mute-probe.mjs` passes 6 of 6 checks. Record both gaps in one low tech-debt row. Suggested tests: a 404 response with a decodable body never decodes, and a started file source connects to the master gain while `setMuted(true)` drives it to 0. Owner: PM.",
+    "FA-8 [Nit] final-acceptance: The AC8 Prettier bullet is partly met. Of 75 touched text files with a parser, 38 fail `prettier --check`. 37 were already dirty before the track: the 29 hosts, `src/apk3d/factory/mount.ts`, `phaser-factory.ts`, `types.ts`, `src/host/main.ts`, `measure/tracks.md`, `measure/tech-debt.md`, and two generated facts. Plan T6b records the hosts and the four source files. The one failure that this track owns is `plan.md`: list indentation and line wrap only, with no content change. A `prettier --write` of the plan shifts line numbers that run records cite, for example `plan.md:835`. Optional: run it in the plan-only commit, or accept the state.",
+    "FA-9 [Nit] final-acceptance: `docs/sound-library.md:125-129` is out of date. The section `Game use (later)` says the games keep the synthesized sounds until an integration track maps the events, and that MP3 plays in every target browser. This track maps 31 events to the Chibi set and picks Ogg or MP3 for each browser. Update the section in a record commit.",
+    "FA-10 [Nit] final-acceptance: The plan record has small gaps. The file list at the top omits `scripts/audio-handoff.mjs`, the three hand-off tests, six files in `tests/apk3d/` (`audio-files.adversarial.test.ts`, `audio-files.adversarial-r2.test.ts`, `audio-files.adversarial-r3.test.ts`, `audio-wiring.adversarial.test.ts`, `audio-wiring-parser.ts`, `no-unpolyfilled-builtins.test.ts`), and the one-line forwards in `src/apk3d/factory/mount.ts` and `phaser-factory.ts`. The plan says `Lane: light`, but `metadata.json` has no `lane` key, so closeout needs this audit. The plan section `Gates` asks to record each exit code, and the plan holds no such record: cite this result. Spec AC8 and the plan `Gates` list the same first command with different files.",
+    "FA-11 [Nit] final-acceptance: Phase 6 and Phase 1 do not match the rule of exactly one passing phase acceptance for each phase. Phase 6 holds only the deferred T9, so no phase acceptance exists, and none can accept work. AC7 holds by direct check: T9 is `[ ]` and deferred, and `audio/CREDITS.md` has no commit since the track base. Phase 1 holds two passing results. `phase-acceptance-p1-79ae99b.json` (commit time 09:55) is later than `phase-acceptance-p1-ffbe96a.json` (09:07) and governs. Phase 3 also holds two earlier failures: `09b4028` and `82b9c88`.",
+    "FA-12 [Nit] final-acceptance: Evidence files are untracked. The ten Phase 5 records at 4aea128 (Review A, B, C, adversarial, and phase acceptance, each with a json and a log) and the four files of this audit are not in git. Commit them with explicit paths in an evidence-only commit, which counts as covered.",
+    "FA-13 [Nit] final-acceptance: The scan test changed owner. `tests/apk3d/no-unpolyfilled-builtins.test.ts` (T6l) now scans all of `src/` with a stateful lexer. Three hosts (`dragon-flight`, `dragon-rider`, `spellweavers-run`) carry `atIndex(...)` edits. Both come from the unaccepted track old_browser_builtins_20261122 (`1dcc1043`, `9440c572`, `3d7db18f`, `64ddb5e9`, `6b4f8367`). All 20 audio test files pass with them at 4aea1282. The plan text that A6-F2 and ADV5-S1 are fixed by that track holds in the code at HEAD, but that track is not accepted. If it is reverted, T6l and TD-45 reopen.",
+    "FA-14 [Major] final-acceptance: Carry five open items to closeout and the PM. (1) TD-44: AudioBus load races, two skipped pins, low. (2) TD-45: 44 old-browser built-ins; the scan finds none at HEAD through track old_browser_builtins_20261122, which is not accepted, so keep TD-45 open. (3) TD-46: the budget script can reject a valid opening effect, low. (4) TD-48: hand-off script and test gaps, low; add A5-F4 and A5-F6. (5) The PM hand-off: the folder `out/apk-audio-handoff/chibi/` (17 files, 14 checksums verified, targets marked `proposed: apps/advantage-games/public/audio/chibi/<file>`) waits for a dated answer from the PM or the Monorepo session. `out/` is ignored: rebuild the folder with `node scripts/audio-handoff.mjs` if it is lost."
+  ],
+  "evidence": [
+    "Identity: `git rev-parse HEAD` at the start printed 4aea12828bbeaea2cd5c8128db09f0afa4038118. That value is role_base_sha and audited_head_sha. track_base_sha is 7a5f16600cb26f3f7086dc8e4897e2c8b6e42301, the parent of the first track commit 665e79f8 (2026-10-14). Execution began at 03bdf3e5 on 2026-11-22; its parent is a73bc9a7c2733b55b4491a894634987be83a6123.",
+    "Path diff (final check, HEAD dda92e79d80bcb6ad77881913b81a91a891495fc, 2026-11-23 08:23): `git diff --name-only 4aea1282 HEAD` => measure/generated/status.md; measure/tracks/old_browser_builtins_20261122/metadata.json; measure/tracks/old_browser_builtins_20261122/plan.md; tests/apk3d/no-unpolyfilled-builtins.test.ts.",
+    "Path diff (the brief's check): `git diff --stat 4aea1282 HEAD -- src scripts tests/audio* demo sounds measure/tracks/audio_game_integration_20261014` => empty output. No audio path changed.",
+    "Later commits: 72e74de0edffbb35da817d8237985b53e20378fd (08:14, measure(old_browser_builtins): Phase 2 remediation Red T3r4 exact-call exclusion) and dda92e79d80bcb6ad77881913b81a91a891495fc (08:15, measure(old_browser_builtins): Phase 2 remediation Red T3r4 plan record and escalation). Both ran after the audio test run (07:39), the project gate (07:45), and the live budget run (08:00) of this audit. The scan test file was modified at 08:13.",
+    "Track paths: the 101 commits with `audio_game_integration` in the message, from `git log --grep` over `7a5f1660..HEAD`, changed 259 distinct paths. 162 are under measure/runs. 29 are the host files. 14 are demo audio files and 7 are sounds/chibi files. The rest are the planned sources, tests, scripts, docs, and records. Unlisted in the plan file list: see FA-10.",
+    "Phase results (all baselines are ancestors of their audited heads; all audited heads are ancestors of HEAD): P1 pass at 79ae99b5 (latest; ffbe96a8 superseded), P2 pass at ca68e6c8, P3 pass at aaf67869 (earlier fails 09b4028f and 82b9c885), P4 pass at 229323c5, P5 pass at 4aea1282.",
+    "Deliverables unchanged since each pass: `git diff --name-only 79ae99b5 HEAD -- docs/sound-event-map.tsv tests/audio-event-map.test.ts tests/audio-event-map.adversarial.test.ts` => empty. `git diff --name-only ca68e6c8 HEAD -- scripts/sound-set.mjs sounds/chibi tests/sound-set*.test.ts (8 files)` => empty. `git diff --name-only aaf67869 HEAD -- src/apk3d/audio scripts/audio-event-map.mjs src/apk3d/factory src/host/main.ts tests/apk3d/audio-*.test.ts tests/apk3d/audio-wiring-parser.ts demo/public/audio` => empty. `git diff --name-only 229323c5 HEAD -- scripts/audio-budget.mjs tests/audio-budget.test.ts` => empty.",
+    "Cross-track edits after the P3 pass (`git diff --name-only aaf67869 HEAD` on track product paths, taken at HEAD 4aea1282): scripts/audio-budget.mjs and scripts/audio-handoff.mjs and four hand-off and budget test files (P4 and P5 deliverables), plus three hosts and the scan test (track old_browser_builtins_20261122). The three hosts changed only `.at(-1)` to `atIndex(...)`.",
+    "Reviews at the final head of each phase all pass: P1 review-a-ffbe96a and adversarial-p1-ffbe96a; P2 review-a-d7ca282, review-b-d7ca282, adversarial-p2-d7ca282; P3 review-a, review-b, review-c, adversarial, and ux-browser-review at aaf6786; P4 review-a, review-b, review-c, adversarial at 229323c; P5 review-a, review-b, review-c, adversarial at 4aea128. The Phase 5 records at 4aea128 are re-binds of the df7f01b verdicts with an empty non-Measure diff.",
+    "Plan truthfulness: all 70 commit SHAs in plan.md resolve and are ancestors of HEAD (7 other hex tokens are decimal digits of measured seconds). `plan_closeout_feedback` on the current plan returns one item, the T9 line. `track_incomplete` returns 0. `measure_interphase_checks.py status` prints incomplete_phases: 0. metadata.json holds the key `escalation`: \"fourth round: the T6i guard throws on older supported browsers\".",
+    "Anti-pattern audit. A5: `grep -E 'PASS=[0-9]+.*FAIL=0|all checks pass'` finds 0 hits in the track folder. A6: the registry entry of the track at measure/tracks.md:70-71 carries no note; the one regex hit (tracks.md:258) belongs to the archived track chore_earshot_sounds_20261121. A9: tests/*.sh does not exist; no audio test reads measure/tracks or measure/archive; three test comments name measure/runs/audio_game_integration_20261014/.",
+    "Hand-off: `(cd out/apk-audio-handoff/chibi && sha256sum -c MANIFEST.sha256)` printed 14 OK lines and exited 0. The folder holds 17 files. MANIFEST.tsv holds the six columns and 14 rows; every target starts with `proposed: apps/advantage-games/public/audio/chibi/`. The cases of tests/audio-handoff.test.ts that need AUDIO_HANDOFF_ARTIFACTS=1 pass.",
+    "Monorepo: `git -C ../reading-advantage-monorepo status --short` printed 23 lines. `grep -E` for the proposed target or any of the 14 file names found no line. The monorepo holds no apps/advantage-games/public/audio folder.",
+    "Credits: `git log -- audio/CREDITS.md` since the track base returns 0 commits. plan.md:841 keeps T9 as `[ ]` and deferred.",
+    "Type check: `node node_modules/typescript/bin/tsc --noEmit` through the heavy runner exits 2 with 51 errors: 35 in assets (TD-35 to TD-37), 2 in tests/games/castle-defense/rules.adversarial.test.ts (TD-38), 1 in tests/part.test.ts (TD-39), and 13 in tests/storytime-faces-r2-guards.test.ts (another session). No error lies in a file that this track changed.",
+    "Mutation probe: `final-acceptance-4aea128-mutants.mjs` ran the committed AudioBus and wiring tests against 21 mutants of bus.ts and 6 of chibi.ts through a Vitest alias. The baseline was green (56 passed, 2 skipped). 25 mutants were killed, 2 survived (B05, B09), 0 were invalid.",
+    "Live budget run at this HEAD: bytes 79319, files 6, seconds 0.708, decodeSeconds 0.713, decoded 6, fileEffect true, effectMarker before-launch, firstEffect pop.ogg. The flagged test passed 5 of 5. Port 5199 had no listener before or after.",
+    "Independent byte checks: all 7 committed MP3 files equal the ffmpeg 8.0.1-3ubuntu2 re-encode of the committed Ogg with the AC2 argv. All 14 files pass the Ogg and MP3 header steps. ffprobe decodes all 14, and the durations equal the sounds/README.md table. The AC1 table of spec.md equals docs/sound-event-map.tsv in both directions."
+  ],
+  "commands": [
+    "git rev-parse HEAD => 4aea12828bbeaea2cd5c8128db09f0afa4038118 at the start; dda92e79d80bcb6ad77881913b81a91a891495fc at the final check",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'AUDIO_HANDOFF_ARTIFACTS=1 node node_modules/vitest/vitest.mjs run --maxWorkers=1 --reporter=verbose <20 audio test files>' => exit 0; 19 files passed and 1 skipped; 231 tests passed and 4 skipped",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts' => exit 0 at 4aea1282; 230 files passed and 1 skipped; 3389 tests passed and 9 skipped",
+    "The same project gate at dda92e79 => exit 0; 230 files passed and 1 skipped; 3392 tests passed and 9 skipped",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'bash measure/doctor.sh' => exit 0; Measure doctor found no structural errors",
+    "./measure/doctor.sh --structural-only => exit 0 (two runs, the last at 08:19 with the files of this audit present)",
+    "node measure/tools/generate.mjs --check => exit 0; Measure facts are current (4 files)",
+    "node scripts/audio-event-map.mjs --check => exit 0; audio-event-map: 31 events current",
+    "heavy-run.sh -c 'node scripts/audio-budget.mjs --game rune-match && AUDIO_BUDGET_JSON=1 node node_modules/vitest/vitest.mjs run tests/audio-budget.test.ts --maxWorkers=1' => exit 0; JSON bytes 79319, files 6, seconds 0.708, decodeSeconds 0.713; 5 of 5 tests passed",
+    "heavy-run.sh -c 'node node_modules/typescript/bin/tsc --noEmit' => exit 2; 51 known errors, none in a changed file",
+    "heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run tests/audio-event-map.test.ts tests/sound-set.test.ts tests/sound-set-mp3.test.ts tests/apk3d/audio-files.test.ts tests/audio-budget.test.ts --maxWorkers=1' (AC8 bullet 1) => exit 0; 47 passed and 1 opt-in skip",
+    "heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run tests/audio-event-map.test.ts tests/sound-set.test.ts tests/sound-set-mp3.test.ts tests/apk3d/audio-files.test.ts tests/apk3d/audio-wiring.test.ts tests/audio-budget.test.ts --maxWorkers=1' (plan Gates) => exit 0; 53 passed and 1 opt-in skip",
+    "heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run tests/audio-event-map.test.ts tests/audio-event-map.adversarial.test.ts --maxWorkers=1' (AC8 Phase 1) => exit 0; 2 files; 29 of 29 tests",
+    "heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run tests/apk3d/no-unpolyfilled-builtins.test.ts --maxWorkers=1' at dda92e79 => exit 0; 7 of 7 tests",
+    "node_modules/.bin/prettier --check over the 75 touched text files with a parser => exit 1; 38 files fail; 37 were dirty before the track and plan.md is the track-owned failure",
+    "python3 -B measure_interphase_checks.py status --repo . --track audio_game_integration_20261014 => incomplete_phases: 0; closeout_candidates: 0",
+    "plan_closeout_feedback(plan.md) through python3 -B -I => one item: deferred closeout task lacks done SHA (T9, plan.md:841)",
+    "heavy-run.sh -c 'node measure/runs/audio_game_integration_20261014/final-acceptance-4aea128-mutants.mjs' => exit 0; 27 mutants: 25 killed, 2 survived (B05, B09), 0 invalid",
+    "node measure/runs/audio_game_integration_20261014/final-acceptance-4aea128-mute-probe.mjs => exit 0; 6 of 6 checks hold on the live bus.ts",
+    "(cd out/apk-audio-handoff/chibi && sha256sum -c MANIFEST.sha256) => 14 OK; exit 0",
+    "git -C ../reading-advantage-monorepo status --short, filtered for the proposed target and the 14 file names => no match",
+    "git diff --name-only 4aea1282 HEAD => 4 paths (listed in the evidence); git diff --stat 4aea1282 HEAD -- src scripts tests/audio* demo sounds measure/tracks/audio_game_integration_20261014 => empty"
+  ],
+  "changed_files": [
+    "measure/runs/audio_game_integration_20261014/final-acceptance-4aea128.json",
+    "measure/runs/audio_game_integration_20261014/final-acceptance-4aea128.log",
+    "measure/runs/audio_game_integration_20261014/final-acceptance-4aea128-mutants.mjs",
+    "measure/runs/audio_game_integration_20261014/final-acceptance-4aea128-mute-probe.mjs"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "claude-agent/sonnet#max (pick final-acceptance --not-family openai: Review A and the phase acceptances were OpenAI; correction: the Phase 1 and Phase 2 acceptances and Review B of Phase 2 ran on claude-code/claude-sonnet-5-5#max, see FA-6)",
+  "ac_results": [
+    {
+      "ac": "AC1",
+      "result": "pass",
+      "basis": "docs/sound-event-map.tsv holds 59 lines: the exact header and 58 rows with three fields, no blank or comment line, one final newline. An independent parse of the AC1 table in spec.md equals the file in both directions (31 mapped, 27 synth, 0 differences). Notes hold 1 to 3 words. tests/audio-event-map.test.ts (8) and the adversarial file (21) pass 29 of 29, and the src name count is 58."
+    },
+    {
+      "ac": "AC2",
+      "result": "pass",
+      "basis": "tests/sound-set-mp3.test.ts case 1 asserts the exact argv and the stdout order, and cases 2 to 4 assert the three failure lines. Four more test files cover the lookup, earshot, and PATH rules. This audit re-encoded each committed Ogg with the AC2 argv and ffmpeg 8.0.1-3ubuntu2: 7 of 7 MP3 files are byte-identical. The real earshot render ran at phase-acceptance-p2-ca68e6c.json, and scripts/sound-set.mjs, sounds/chibi, and its tests are unchanged since."
+    },
+    {
+      "ac": "AC3",
+      "result": "pass",
+      "basis": "All 14 files pass the byte steps: nine for each Ogg and six for each MP3, by an independent reader here and by tests/sound-set.test.ts and tests/sound-set-mp3.test.ts case 5. ffprobe decodes all 14 (vorbis or mp3, 48000 Hz, stereo). Durations equal the sounds/README.md table to 1 ms, and sizes equal its byte column."
+    },
+    {
+      "ac": "AC4",
+      "result": "pass",
+      "basis": "src/apk3d/audio/bus.ts:30-39, 112-140, 156-194, 212-222, and 238-342 implement the eight rules. tests/apk3d/audio-files.test.ts (11 cases) and three adversarial files pass. The mutation probe kills 25 of 27 mutants (B05 and B09 survive, FA-7). The live-bus probe confirms the master-gain route and mute."
+    },
+    {
+      "ac": "AC5",
+      "result": "pass",
+      "basis": "The live gate at this HEAD gives 79319 bytes, 6 files, 0.708 s transfer, 0.713 s through decode, 6 decodes, and first effect pop.ogg. It exits 0 with 5 of 5 tests under AUDIO_BUDGET_JSON=1, and port 5199 is free before and after. The format totals are 90468 (Ogg) and 71136 (MP3), each at most 100000. The plan records bytes and seconds for Rune Match at T7g2 (79319 bytes, 0.7056 s, 0.7101 s through decode)."
+    },
+    {
+      "ac": "AC6",
+      "result": "pass",
+      "basis": "out/apk-audio-handoff/chibi/ holds 17 files, and sha256sum -c MANIFEST.sha256 prints 14 OK. MANIFEST.tsv holds the six columns and 14 rows, and every target is `proposed: apps/advantage-games/public/audio/chibi/<file>`. README.md names the target, the load rule, and docs/apk-port.md line 238. The artifact cases of tests/audio-handoff.test.ts pass. The monorepo status names no path of this track, and the monorepo holds no public/audio folder. The PM answer on the target is open and is not an AC6 gate."
+    },
+    {
+      "ac": "AC7",
+      "result": "pass",
+      "basis": "plan.md:841 keeps T9 as `[ ]` and deferred. audio/CREDITS.md has 0 commits since the track base. The closeout form of the line needs one edit (FA-1)."
+    },
+    {
+      "ac": "AC8",
+      "result": "pass",
+      "basis": "Bullet 1 exits 0 (47 passed, 1 opt-in skip). The plan Gates command exits 0 (53 passed, 1 skip). The Phase 1 adversarial command exits 0 (29 of 29). generate.mjs --check and doctor --structural-only exit 0. The Prettier bullet is partly met: FA-8."
+    },
+    {
+      "ac": "AC9",
+      "result": "pass",
+      "basis": "All 29 hosts hold one `ctx.audio ?? new AudioBus()`, one `wireChibiSounds(audio, ctx.soundBase, ...)` call, and the import. 27 games name primary-chibi-2d, and dragon-rider and griffin-sky-joust do not, as the spec states. src/host/main.ts:360 sets soundBase: BASE. tests/apk3d/audio-wiring.test.ts (6 cases) and the adversarial file pass. The track commits changed 98 added and 36 removed host lines, all audio wiring."
+    },
+    {
+      "ac": "Phase 6 (T9 credits, deferred)",
+      "result": "pass",
+      "basis": "The checker counts T9 as deferred: `status` prints incomplete_phases: 0 and the final-acceptance counter returns 0, because both test the substring `deferred`. The closeout check does not accept the line as written (FA-1). The track record must hold T9 as `[ ]` and deferred with a SHA token on the line, an unchanged audio/CREDITS.md, and no credits claim in the registry."
+    },
+    {
+      "ac": "Closeout readiness",
+      "result": "pass",
+      "basis": "No non-deferred task remains. Each [x] line carries a SHA or a covered parent. Full doctor and doctor --structural-only exit 0, and the project gate exits 0. Plan edits before closeout are listed in FA-1, FA-2, FA-3, and FA-10."
+    },
+    {
+      "ac": "Anti-patterns A5, A6, A9",
+      "result": "pass",
+      "basis": "A5 finds 0 hits, A6 finds no overstated note for this track, and A9 finds no test that reads an archived track path. See the evidence list."
+    }
+  ],
+  "prerequisite_results": [
+    {
+      "role": "phase-acceptance",
+      "file": "measure/runs/audio_game_integration_20261014/phase-acceptance-p1-79ae99b.json",
+      "status": "pass",
+      "route": "claude-code/claude-sonnet-5-5#max",
+      "audited_head_sha": "79ae99b562acb4050ce710b2a86c81ab23e650c1",
+      "targets_audited_head": false,
+      "covered_by": "Phase 1 deliverables unchanged since this head (empty path diff). The earlier pass phase-acceptance-p1-ffbe96a.json is superseded."
+    },
+    {
+      "role": "phase-acceptance",
+      "file": "measure/runs/audio_game_integration_20261014/phase-acceptance-p2-ca68e6c.json",
+      "status": "pass",
+      "route": "claude-code/claude-sonnet-5-5#max",
+      "audited_head_sha": "ca68e6c8a315f55b6cae0f62a6cd9e85c98e8c1b",
+      "targets_audited_head": false,
+      "covered_by": "Phase 2 deliverables unchanged since this head (empty path diff). sounds/README.md gained a 4-line prose note in ae6364be."
+    },
+    {
+      "role": "phase-acceptance",
+      "file": "measure/runs/audio_game_integration_20261014/phase-acceptance-p3-aaf6786.json",
+      "status": "pass",
+      "route": "openai/gpt-6.2-sol#high",
+      "audited_head_sha": "aaf678693732984a6adbc78af1157610e8225fd9",
+      "targets_audited_head": false,
+      "covered_by": "Phase 3 core unchanged since this head (empty path diff). The three host edits and the scan test belong to track old_browser_builtins_20261122 (FA-13)."
+    },
+    {
+      "role": "phase-acceptance",
+      "file": "measure/runs/audio_game_integration_20261014/phase-acceptance-p4-229323c.json",
+      "status": "pass",
+      "route": "openai/gpt-6.2-sol#high",
+      "audited_head_sha": "229323c5d822f1dcb480b8e5ccf767c98a6f0c75",
+      "targets_audited_head": false,
+      "covered_by": "Phase 4 deliverables unchanged since this head (empty path diff). The live run was repeated at 4aea1282 by this audit."
+    },
+    {
+      "role": "phase-acceptance",
+      "file": "measure/runs/audio_game_integration_20261014/phase-acceptance-p5-4aea128.json",
+      "status": "pass",
+      "route": "openai/gpt-6.2-sol#high",
+      "audited_head_sha": "4aea12828bbeaea2cd5c8128db09f0afa4038118",
+      "targets_audited_head": true,
+      "covered_by": "Audited head equals the audited head of this audit."
+    }
+  ],
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 4,
+      "evidence": "Every AC holds at 4aea1282 (live run 79319 bytes in 0.708 s, sha256sum -c 14 OK), and the known edge gaps are recorded: TD-44 skip pins, TD-46 in scripts/audio-budget.mjs:358-365, and TD-48."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "The mutation probe killed 25 of 27 mutants of src/apk3d/audio/bus.ts and chibi.ts, and the two survivors are the non-OK status case in tests/apk3d/audio-files.test.ts:334-354 and the master-gain route."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 4,
+      "evidence": "The track commits changed 98 added and 36 removed host lines, all audio wiring, with small extras: one-line forwards in src/apk3d/factory/mount.ts and phaser-factory.ts that the plan file list omits."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 4,
+      "evidence": "Each claim has a command or a run record, and every plan SHA resolves, but the plan lost its T6i line in b88cb45d and holds no record of the final gate exit codes."
+    }
+  ],
+  "reviewer_ratings": [
+    {
+      "reviewer_role": "review-a",
+      "reviewer_route": "openai/gpt-6.1-sol#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "review-a-ffbe96a.json F1 (no note-length check in tests/audio-event-map.test.ts) was real, and my independent TSV parse found 0 notes over 3 words after the adversarial tests closed it."
+    },
+    {
+      "reviewer_role": "adversarial",
+      "reviewer_route": "openai/gpt-6.1-sol#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "adversarial-p1-ffbe96a.json added 21 cases that pass here (29 of 29 with the Red file) and found no map defect, which matches my independent AC1 check."
+    },
+    {
+      "reviewer_role": "review-a",
+      "reviewer_route": "openai/gpt-6.1-sol#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "review-a-d7ca282.json closed adversarial F5 and F6 on scripts/sound-set.mjs, and the lookup and earshot test files pass in my run."
+    },
+    {
+      "reviewer_role": "review-b",
+      "reviewer_route": "claude-code/claude-sonnet-5-5#max",
+      "agreed": true,
+      "score": 5,
+      "evidence": "review-b-d7ca282.json killed 28 wrapper mutants, and my re-encode of 7 of 7 MP3 files with the AC2 argv is byte-identical; this reviewer shares the family of this audit (FA-6)."
+    },
+    {
+      "reviewer_role": "adversarial",
+      "reviewer_route": "openai/gpt-6.1-sol#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "adversarial-p2-d7ca282.json withdrew F5 and F6 on tests/sound-set.adversarial-p2.test.ts and p2-r2, which pass here."
+    },
+    {
+      "reviewer_role": "review-a",
+      "reviewer_route": "openai/gpt-6-luna#high",
+      "agreed": true,
+      "score": 4,
+      "evidence": "review-a-aaf6786.json re-bound the Phase 3 pass correctly, but no round flagged the master-gain and non-OK test gaps that mutants B05 and B09 show."
+    },
+    {
+      "reviewer_role": "review-b",
+      "reviewer_route": "kimi-code-plan-cn/kimi-for-coding",
+      "agreed": true,
+      "score": 5,
+      "evidence": "review-b-aaf6786.json re-ran the hasOwn probes and the tsc check, and my tsc run shows the same 51 errors with none in src/apk3d/audio."
+    },
+    {
+      "reviewer_role": "review-c",
+      "reviewer_route": "openai/gpt-6-luna#high",
+      "agreed": true,
+      "score": 4,
+      "evidence": "review-c-aaf6786.json confirmed the helper stays out of the barrel export (src/apk3d/audio/index.ts:1-10 does not export hasOwn), a point my read of index.ts agrees with."
+    },
+    {
+      "reviewer_role": "adversarial",
+      "reviewer_route": "unknown",
+      "agreed": true,
+      "score": 5,
+      "evidence": "adversarial-p3-aaf6786.json reproduced ADV5-S1 with seven scan fixtures, and the HEAD scan test now holds controls for the three forms."
+    },
+    {
+      "reviewer_role": "review-a",
+      "reviewer_route": "unknown",
+      "agreed": true,
+      "score": 4,
+      "evidence": "review-a-p4-229323c.json re-bound Phase 4 and carried the live evidence forward without a rerun; my live run at HEAD gives 79319 bytes, 0.708 s."
+    },
+    {
+      "reviewer_role": "review-b",
+      "reviewer_route": "kimi-code-plan-cn/kimi-for-coding",
+      "agreed": true,
+      "score": 5,
+      "evidence": "review-b-p4-229323c.json found the loopback server and port cleanup sound, and ss showed no listener on 5199 before or after my run."
+    },
+    {
+      "reviewer_role": "review-c",
+      "reviewer_route": "unknown",
+      "agreed": true,
+      "score": 4,
+      "evidence": "review-c-p4-229323c.json recorded C4-F4 as a Nit after the PM routed it to TD-46, while review-c-p4-5a1da50.json had raised it as a Blocker; the defect is real at scripts/audio-budget.mjs:358-365 and cannot give a false pass."
+    },
+    {
+      "reviewer_role": "adversarial",
+      "reviewer_route": "unknown",
+      "agreed": true,
+      "score": 5,
+      "evidence": "adversarial-p4-229323c.json measured the 2.41 s slow-decode failure and the C4-F4 false reject, and the committed script behaves that way."
+    },
+    {
+      "reviewer_role": "review-a",
+      "reviewer_route": "unknown",
+      "agreed": true,
+      "score": 5,
+      "evidence": "review-a-p5-4aea128.json raised A5-F4, A5-F6, A5-F7, and A5-F8 correctly; the registry carries only A5-F7 and A5-F8 (FA-3), so the gap lies after the review."
+    },
+    {
+      "reviewer_role": "review-b",
+      "reviewer_route": "kimi-code-plan-cn/kimi-for-coding",
+      "agreed": true,
+      "score": 5,
+      "evidence": "review-b-p5-4aea128.json bound the allowlist and symlink checks of scripts/audio-handoff.mjs, and the artifact cases pass here with 14 OK checksums."
+    },
+    {
+      "reviewer_role": "review-c",
+      "reviewer_route": "unknown",
+      "agreed": true,
+      "score": 4,
+      "evidence": "review-c-p5-4aea128.json kept C5-F4, and the hand-off README line 11 still presents /demo/ as the site base without the word example."
+    },
+    {
+      "reviewer_role": "adversarial",
+      "reviewer_route": "openai/gpt-6-luna#high",
+      "agreed": true,
+      "score": 5,
+      "evidence": "adversarial-p5-4aea128.json kept ADV-P5-2 (zero-byte sound accepted) as TD-48, and all 14 shipped files are non-empty (minimum 2016 bytes)."
+    }
+  ]
+}

@@ -1,0 +1,883 @@
+{
+  "schema_version": 1,
+  "role": "ux-browser-review",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 2",
+  "baseline_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "audited_head_sha": "229323c5d822f1dcb480b8e5ccf767c98a6f0c75",
+  "head_at_probe_start": "a97e88c862c4ec88569920a558fc0dd73c6250c8",
+  "head_matches_audited": false,
+  "non_measure_diff_audited_to_head": "tests/audio-handoff.test.ts | 195 ++++++++++++++++++++++++++++++++++++++++++++\n 1 file changed, 195 insertions(+)",
+  "non_measure_diff_empty": false,
+  "non_measure_diff_files": "A\ttests/audio-handoff.test.ts",
+  "tracked_changes_outside_measure": "",
+  "base_url": "http://127.0.0.1:5199/demo/index.html?qc=1",
+  "browser": "Chromium headless, Playwright",
+  "viewport": {
+    "width": 1280,
+    "height": 800
+  },
+  "deleted_builtins": [
+    "structuredClone",
+    "Array.prototype.at",
+    "Array.prototype.findLastIndex",
+    "Object.hasOwn"
+  ],
+  "note": "?qc=1 makes the device gate accept the headless software renderer, so the 3D edition can mount.",
+  "passes": [
+    {
+      "id": "A",
+      "name": "normal",
+      "builtins_deleted": false,
+      "init_script_assertion": {
+        "structuredClone": {
+          "type": "function",
+          "absent": false
+        },
+        "Array.prototype.at": {
+          "type": "function",
+          "absent": false
+        },
+        "Array.prototype.findLastIndex": {
+          "type": "function",
+          "absent": false
+        },
+        "Object.hasOwn": {
+          "type": "function",
+          "absent": false
+        }
+      },
+      "cases": [
+        {
+          "pass": "A",
+          "builtins_deleted": false,
+          "game": "dragon-flight",
+          "title": "Dragon Flight",
+          "renderer": "phaser",
+          "reached": true,
+          "started": true,
+          "moves": [
+            {
+              "input": "pointer",
+              "detail": "clicked the 2D canvas center"
+            },
+            {
+              "input": "key",
+              "detail": "ArrowRight"
+            },
+            {
+              "input": "key",
+              "detail": "ArrowLeft"
+            },
+            {
+              "input": "key",
+              "detail": "ArrowUp"
+            },
+            {
+              "input": "key",
+              "detail": "1"
+            },
+            {
+              "input": "key",
+              "detail": "ArrowRight"
+            }
+          ],
+          "errors": [],
+          "console_errors": [],
+          "page_errors": [],
+          "screenshot": "/home/daniebo/Desktop/advantage-forge/measure/runs/old_browser_builtins_20261122/ux-browser-review-p2-229323c-pass-a-dragon-flight-2d.png",
+          "accessibility_snapshot": "",
+          "state_before": {
+            "ok": true,
+            "length": 1762,
+            "sample": "{\"phase\":\"flying\",\"helper\":true,\"answerAudio\":false,\"gates\":2,\"timeMs\":1566.6666666666658,\"distance\":14.100000000000012,\"speed\":9,\"waiting\":false,\"flock\":1,\"coins\":0,\"words\":[{\"id\":\"w-alien\",\"term\":\"alien\",\"translation\":\"มนุษย์ต่างดาว\",\"position\":3,\"attempts\":0,\"solved\":false,\"returned\":false},{\"id\":\"w-hit\",\"term\":\"hit\",\"translation\":\"ตี\",\"position\":8,\"attempts\":0,\"solved\":false,\"returned\":false},{\"id\":\"w-hold\",\"term\":\"hold\",\"translation\":\"ถือ, จับ\",\"position\":7,\"attempts\":0,\"solved\":false,\"returned\":false},{\"id\":\"w-smile\",\"term\":\"smile\",\"translation\":\"ยิ้ม\",\"position\":11,\"attempts\":0,\"solved\""
+          },
+          "state_after": {
+            "ok": true,
+            "length": 1771,
+            "sample": "{\"phase\":\"flying\",\"helper\":true,\"answerAudio\":false,\"gates\":2,\"timeMs\":5499.9999999999945,\"distance\":55.333333333333115,\"speed\":9,\"waiting\":false,\"flock\":2,\"coins\":5,\"words\":[{\"id\":\"w-alien\",\"term\":\"alien\",\"translation\":\"มนุษย์ต่างดาว\",\"position\":3,\"attempts\":1,\"solved\":true,\"returned\":false},{\"id\":\"w-hit\",\"term\":\"hit\",\"translation\":\"ตี\",\"position\":8,\"attempts\":0,\"solved\":false,\"returned\":false},{\"id\":\"w-hold\",\"term\":\"hold\",\"translation\":\"ถือ, จับ\",\"position\":7,\"attempts\":0,\"solved\":false,\"returned\":false},{\"id\":\"w-smile\",\"term\":\"smile\",\"translation\":\"ยิ้ม\",\"position\":11,\"attempts\":0,\"solved\":"
+          },
+          "interactions": [
+            "Opened the selector, chose the story Mia's Balloon Animals, set the phaser renderer, and chose the game card dragon-flight.",
+            "Clicked the reader Next button to open the game briefing.",
+            "Clicked Start with the phaser renderer expected."
+          ],
+          "renderer_actual": "phaser",
+          "moved": true,
+          "accessibility_snapshot_chars": 0,
+          "accessibility_note": "The accessibility tree of the body holds no node. The 2D edition draws its HUD and all content in the Phaser canvas.",
+          "dom": {
+            "canvases": [
+              {
+                "width": 1280,
+                "height": 800,
+                "css": [
+                  1280,
+                  800
+                ]
+              },
+              {
+                "width": 768,
+                "height": 480,
+                "css": [
+                  1280,
+                  800
+                ]
+              }
+            ],
+            "visible_text": ""
+          }
+        },
+        {
+          "pass": "A",
+          "builtins_deleted": false,
+          "game": "dragon-rider",
+          "title": "Dragon Rider",
+          "renderer": "phaser",
+          "reached": true,
+          "started": true,
+          "moves": [
+            {
+              "input": "pointer",
+              "detail": "clicked the 2D canvas center"
+            },
+            {
+              "input": "key",
+              "detail": "ArrowRight"
+            },
+            {
+              "input": "key",
+              "detail": "ArrowLeft"
+            },
+            {
+              "input": "key",
+              "detail": "ArrowUp"
+            },
+            {
+              "input": "key",
+              "detail": "1"
+            },
+            {
+              "input": "key",
+              "detail": "ArrowRight"
+            }
+          ],
+          "errors": [],
+          "console_errors": [],
+          "page_errors": [],
+          "screenshot": "/home/daniebo/Desktop/advantage-forge/measure/runs/old_browser_builtins_20261122/ux-browser-review-p2-229323c-pass-a-dragon-rider-2d.png",
+          "accessibility_snapshot": "",
+          "state_before": {
+            "ok": true,
+            "length": 1491,
+            "sample": "{\"phase\":\"riding\",\"answerAudio\":false,\"timeMs\":1533.3333333333326,\"distance\":12.266666666666678,\"waiting\":false,\"flock\":1,\"coins\":0,\"words\":[{\"id\":\"w-scary\",\"term\":\"scary\",\"translation\":\"น่ากลัว\",\"position\":5,\"attempts\":0,\"solved\":false,\"returned\":false},{\"id\":\"w-smile\",\"term\":\"smile\",\"translation\":\"ยิ้ม\",\"position\":11,\"attempts\":0,\"solved\":false,\"returned\":false},{\"id\":\"w-bear\",\"term\":\"bear\",\"translation\":\"หมี\",\"position\":2,\"attempts\":0,\"solved\":false,\"returned\":false},{\"id\":\"w-balloon\",\"term\":\"balloon\",\"translation\":\"บอลลูน, ลูกโป่ง\",\"position\":4,\"attempts\":0,\"solved\":false,\"returned\":false}"
+          },
+          "state_after": {
+            "ok": true,
+            "length": 1468,
+            "sample": "{\"phase\":\"riding\",\"answerAudio\":false,\"timeMs\":5566.666666666661,\"distance\":71.4666666666666,\"waiting\":false,\"flock\":3,\"coins\":10,\"words\":[{\"id\":\"w-scary\",\"term\":\"scary\",\"translation\":\"น่ากลัว\",\"position\":5,\"attempts\":1,\"solved\":true,\"returned\":false},{\"id\":\"w-smile\",\"term\":\"smile\",\"translation\":\"ยิ้ม\",\"position\":11,\"attempts\":1,\"solved\":true,\"returned\":false},{\"id\":\"w-bear\",\"term\":\"bear\",\"translation\":\"หมี\",\"position\":2,\"attempts\":0,\"solved\":false,\"returned\":false},{\"id\":\"w-balloon\",\"term\":\"balloon\",\"translation\":\"บอลลูน, ลูกโป่ง\",\"position\":4,\"attempts\":0,\"solved\":false,\"returned\":false},{\"i"
+          },
+          "interactions": [
+            "Opened the selector, chose the story Mia's Balloon Animals, set the phaser renderer, and chose the game card dragon-rider.",
+            "Clicked the reader Next button to open the game briefing.",
+            "Clicked Start with the phaser renderer expected."
+          ],
+          "renderer_actual": "phaser",
+          "moved": true,
+          "accessibility_snapshot_chars": 0,
+          "accessibility_note": "The accessibility tree of the body holds no node. The 2D edition draws its HUD and all content in the Phaser canvas.",
+          "dom": {
+            "canvases": [
+              {
+                "width": 1280,
+                "height": 800,
+                "css": [
+                  1280,
+                  800
+                ]
+              },
+              {
+                "width": 768,
+                "height": 480,
+                "css": [
+                  1280,
+                  800
+                ]
+              }
+            ],
+            "visible_text": ""
+          }
+        },
+        {
+          "pass": "A",
+          "builtins_deleted": false,
+          "game": "spellweavers-run",
+          "title": "Spellweavers Run",
+          "renderer": "phaser",
+          "reached": true,
+          "started": true,
+          "moves": [
+            {
+              "input": "pointer",
+              "detail": "clicked the 2D canvas center"
+            },
+            {
+              "input": "key",
+              "detail": "ArrowRight"
+            },
+            {
+              "input": "key",
+              "detail": "ArrowLeft"
+            },
+            {
+              "input": "key",
+              "detail": "ArrowUp"
+            },
+            {
+              "input": "key",
+              "detail": "1"
+            },
+            {
+              "input": "key",
+              "detail": "ArrowRight"
+            }
+          ],
+          "errors": [],
+          "console_errors": [],
+          "page_errors": [],
+          "screenshot": "/home/daniebo/Desktop/advantage-forge/measure/runs/old_browser_builtins_20261122/ux-browser-review-p2-229323c-pass-a-spellweavers-run-2d.png",
+          "accessibility_snapshot": "",
+          "state_before": {
+            "ok": true,
+            "length": 1361,
+            "sample": "{\"phase\":\"running\",\"helper\":true,\"lanes\":2,\"timeMs\":1533.3333333333326,\"distance\":12.266666666666678,\"speed\":8,\"waiting\":false,\"restMs\":0,\"courage\":3,\"score\":0,\"sentences\":[{\"id\":\"s-3\",\"text\":\"Leo comes to the door.\",\"words\":[\"Leo\",\"comes\",\"to\",\"the\",\"door.\"],\"translation\":\"ลีโอมาที่ประตู\",\"paragraph\":1,\"misses\":0,\"started\":false,\"cleared\":false},{\"id\":\"s-2\",\"text\":\"Then she makes a black bat.\",\"words\":[\"Then\",\"she\",\"makes\",\"a\",\"black\",\"bat.\"],\"translation\":\"แล้วเธอก็ทำค้างคาวสีดำ\",\"paragraph\":0,\"misses\":0,\"started\":false,\"cleared\":false},{\"id\":\"s-9\",\"text\":\"Mia makes a small dog balloon.\",\"wo"
+          },
+          "state_after": {
+            "ok": true,
+            "length": 1374,
+            "sample": "{\"phase\":\"running\",\"helper\":true,\"lanes\":2,\"timeMs\":5599.999999999994,\"distance\":52.533333333333225,\"speed\":8,\"waiting\":false,\"restMs\":0,\"courage\":3,\"score\":20,\"sentences\":[{\"id\":\"s-3\",\"text\":\"Leo comes to the door.\",\"words\":[\"Leo\",\"comes\",\"to\",\"the\",\"door.\"],\"translation\":\"ลีโอมาที่ประตู\",\"paragraph\":1,\"misses\":0,\"started\":true,\"cleared\":false},{\"id\":\"s-2\",\"text\":\"Then she makes a black bat.\",\"words\":[\"Then\",\"she\",\"makes\",\"a\",\"black\",\"bat.\"],\"translation\":\"แล้วเธอก็ทำค้างคาวสีดำ\",\"paragraph\":0,\"misses\":0,\"started\":false,\"cleared\":false},{\"id\":\"s-9\",\"text\":\"Mia makes a small dog balloon.\",\"wor"
+          },
+          "interactions": [
+            "Opened the selector, chose the story Mia's Balloon Animals, set the phaser renderer, and chose the game card spellweavers-run.",
+            "Clicked the reader Next button to open the game briefing.",
+            "Clicked Start with the phaser renderer expected."
+          ],
+          "renderer_actual": "phaser",
+          "moved": true,
+          "accessibility_snapshot_chars": 0,
+          "accessibility_note": "The accessibility tree of the body holds no node. The 2D edition draws its HUD and all content in the Phaser canvas.",
+          "dom": {
+            "canvases": [
+              {
+                "width": 1280,
+                "height": 800,
+                "css": [
+                  1280,
+                  800
+                ]
+              },
+              {
+                "width": 768,
+                "height": 480,
+                "css": [
+                  1280,
+                  800
+                ]
+              }
+            ],
+            "visible_text": ""
+          }
+        },
+        {
+          "pass": "A",
+          "builtins_deleted": false,
+          "game": "spellweavers-run",
+          "title": "Spellweavers Run",
+          "renderer": "three",
+          "reached": true,
+          "started": true,
+          "moves": [
+            {
+              "input": "key",
+              "detail": "ArrowRight"
+            },
+            {
+              "input": "key",
+              "detail": "ArrowLeft"
+            },
+            {
+              "input": "key",
+              "detail": "ArrowUp"
+            },
+            {
+              "input": "key",
+              "detail": "1"
+            },
+            {
+              "input": "key",
+              "detail": "ArrowRight"
+            }
+          ],
+          "errors": [],
+          "console_errors": [],
+          "page_errors": [],
+          "screenshot": "/home/daniebo/Desktop/advantage-forge/measure/runs/old_browser_builtins_20261122/ux-browser-review-p2-229323c-pass-a-spellweavers-run-3d.png",
+          "accessibility_snapshot": "- text: Spellweaver's Run Spell 1/5 Courage\n- button \"📖 Story\"\n- button \"Sound\": 🔊\n- status:\n  - heading [level=3]\n  - paragraph\n- text: Which orb is the next word? พวกเขามีความสุข They ___ ______\n- button \"floor.\"\n- button \"They\"\n- button \"big\"\n- button \"are\"",
+          "state_before": {
+            "ok": true,
+            "length": 1346,
+            "sample": "{\"phase\":\"running\",\"helper\":true,\"lanes\":2,\"timeMs\":866.666666666667,\"distance\":6.933333333333333,\"speed\":8,\"waiting\":false,\"restMs\":0,\"courage\":3,\"score\":0,\"sentences\":[{\"id\":\"s-11\",\"text\":\"They are happy.\",\"words\":[\"They\",\"are\",\"happy.\"],\"translation\":\"พวกเขามีความสุข\",\"paragraph\":2,\"misses\":0,\"started\":false,\"cleared\":false},{\"id\":\"s-6\",\"text\":\"Mia gives him the red bear.\",\"words\":[\"Mia\",\"gives\",\"him\",\"the\",\"red\",\"bear.\"],\"translation\":\"เมียให้หมีสีแดงกับเขา\",\"paragraph\":1,\"misses\":0,\"started\":false,\"cleared\":false},{\"id\":\"s-10\",\"text\":\"Pip sits next to Leo.\",\"words\":[\"Pip\",\"sits\",\"next\",\"t"
+          },
+          "state_after": {
+            "ok": true,
+            "length": 1362,
+            "sample": "{\"phase\":\"running\",\"helper\":true,\"lanes\":2,\"timeMs\":2399.9999999999995,\"distance\":23.19999999999998,\"speed\":8,\"waiting\":false,\"restMs\":0,\"courage\":3,\"score\":10,\"sentences\":[{\"id\":\"s-11\",\"text\":\"They are happy.\",\"words\":[\"They\",\"are\",\"happy.\"],\"translation\":\"พวกเขามีความสุข\",\"paragraph\":2,\"misses\":0,\"started\":true,\"cleared\":false},{\"id\":\"s-6\",\"text\":\"Mia gives him the red bear.\",\"words\":[\"Mia\",\"gives\",\"him\",\"the\",\"red\",\"bear.\"],\"translation\":\"เมียให้หมีสีแดงกับเขา\",\"paragraph\":1,\"misses\":0,\"started\":false,\"cleared\":false},{\"id\":\"s-10\",\"text\":\"Pip sits next to Leo.\",\"words\":[\"Pip\",\"sits\",\"next\","
+          },
+          "interactions": [
+            "Opened the selector, chose the story Mia's Balloon Animals, set the three renderer, and chose the game card spellweavers-run.",
+            "Clicked the reader Next button to open the game briefing.",
+            "Clicked Start with the three renderer expected."
+          ],
+          "renderer_actual": "three",
+          "moved": true,
+          "accessibility_snapshot_chars": 262,
+          "accessibility_note": null,
+          "dom": {
+            "canvases": [
+              {
+                "width": 1280,
+                "height": 800,
+                "css": [
+                  1280,
+                  800
+                ]
+              }
+            ],
+            "visible_text": "Spellweaver's Run Spell 1/5 Courage 📖 Story 🔊 Which orb is the next word? พวกเขามีความสุข They ___ ______ floor. They big are"
+          }
+        },
+        {
+          "pass": "A",
+          "builtins_deleted": false,
+          "game": "host-reader",
+          "title": "Host reader (src/host/reader.ts)",
+          "renderer": "dom",
+          "reached": true,
+          "started": true,
+          "moves": [
+            {
+              "input": "click",
+              "detail": "clicked Read; the reader opened at the first paragraph"
+            },
+            {
+              "input": "click",
+              "detail": "clicked a story word; the glossary dialog opened"
+            },
+            {
+              "input": "click",
+              "detail": "toggled the paragraph translation"
+            },
+            {
+              "input": "click",
+              "detail": "started read-aloud on paragraph 1 (the reader lastIndexWhere path)"
+            },
+            {
+              "input": "click",
+              "detail": "stopped read-aloud"
+            }
+          ],
+          "errors": [],
+          "console_errors": [],
+          "page_errors": [],
+          "screenshot": "/home/daniebo/Desktop/advantage-forge/measure/runs/old_browser_builtins_20261122/ux-browser-review-p2-229323c-pass-a-host-reader.png",
+          "accessibility_snapshot": "- button \"Back\": ←\n- heading \"Mia's Balloon Animals\" [level=1]\n- text: A0 Read the story. Tap a yellow word to see what it means.\n- button \"🎧 Listen to the whole story\"\n- paragraph:\n  - text: Mia has a lot of balloons. \"Look, Lily!\" says Mia. \"I make\n  - button \"animal\"\n  - text: balloons.\" Mia makes a red\n  - button \"bear\"\n  - text: . Then she makes a black\n  - button \"bat\"\n  - text: . \"Is it\n  - button \"scary\"\n  - text: \"?\\\" asks Lily. \\\"No, it is\"\n  - button \"funny\"\n  - text: \",\\\" says Mia. Lily smiles.\"\n- text: เมียมีบอลลูนเยอะมาก \"ดูนี่สิ ลิลลี่!\" เมียพูด \"ฉันทำบอลลูนรูปสัตว์\" เมียทำหมีสีแดง แล้วเธอก็ทำค้างคาวสีดำ \"มันน่ากลัวไหม\" ลิลลี่ถาม \"ไม่หรอก มันตลกต่างหาก\" เมียพูด ลิลลี่ยิ้ม\n- button \"🔊 Read to me\"\n- button \"ไทย\"\n- paragraph:\n  - text: Leo comes to the door. He has a green hat. It has two big eyes. \"I am an\n  - button \"alien\"\n  - text: \"!\\\" says Leo. \\\"Hello, Mia! Hello, Lily!\\\" Leo wants a\"\n  - button \"balloon\"\n  - text: . \"A\n  - button \"bear\"\n  - text: \", please,\\\" he says. Mia gives him the red\"\n  - button \"bear\"\n  - text: . Leo holds it and says, \"Thank you!\"\n- button \"🔊 Read to me\"\n- button \"ไทย\"\n- paragraph:\n  - text: Pip runs into the room. \"Woof!\" Pip hits the\n  - button \"bat\"\n  - button \"balloon\"\n  - text: . The black\n  - button \"bat\"\n  - text: is on the\n  - button \"floor\"\n  - text: . \"Is Pip angry?\" asks Lily. \"No, he wants to play,\" says Mia. Mia makes a\n  - button \"small\"\n  - text: dog\n  - button \"balloon\"\n  - text: . Pip sits next to Leo. They are happy.\n- button \"🔊 Read to me\"\n- button \"ไทย\"\n- paragraph: You finished the story! Now use its words in the game.\n- button \"Play Monster Encounters ▶\"",
+          "interactions": [],
+          "reader": {
+            "choice": {
+              "story_title": "Mia's Balloon Animals A0",
+              "game_title": "⚔️ Monster Encounters Use the story’s words to beat the monsters."
+            },
+            "url_after_read": "http://127.0.0.1:5199/demo/index.html?qc=1#/read/mias-balloon-animals",
+            "paragraphs": 3,
+            "vocab_buttons": 15,
+            "read_to_me_buttons": 3,
+            "story_title": "Mia's Balloon Animals"
+          },
+          "gloss_open": true,
+          "translation_shown": true,
+          "sentence_marked": true,
+          "accessibility_snapshot_chars": 1651,
+          "accessibility_note": null,
+          "dom": {
+            "canvases": [
+              {
+                "width": 1280,
+                "height": 800,
+                "css": [
+                  1280,
+                  800
+                ]
+              }
+            ],
+            "visible_text": "← Mia's Balloon Animals A0 Read the story. Tap a yellow word to see what it means. 🎧 Listen to the whole story Mia has a lot of balloons. \"Look, Lily!\" says Mia. \"I make animal balloons.\" Mia makes a red bear. Then she makes a black bat. \"Is it scary?\" asks Lily. \"No, it is funny,\" says Mia. Lily smiles. เมียมีบอลลูนเยอะมาก \"ดูนี่สิ ลิลลี่!\" เมียพูด \"ฉันทำบอลลูนรูปสัตว์\" เมียทำหมีสีแดง แล้วเธอก็ท"
+          }
+        }
+      ],
+      "after_navigation_assertion": {
+        "structuredClone": {
+          "type": "function",
+          "absent": false
+        },
+        "Array.prototype.at": {
+          "type": "function",
+          "absent": false
+        },
+        "Array.prototype.findLastIndex": {
+          "type": "function",
+          "absent": false
+        },
+        "Object.hasOwn": {
+          "type": "function",
+          "absent": false
+        }
+      },
+      "summary": {
+        "cases": 5,
+        "reached": 5,
+        "with_errors": 0
+      }
+    },
+    {
+      "id": "B",
+      "name": "deleted-builtins",
+      "builtins_deleted": true,
+      "init_script_assertion": {
+        "structuredClone": {
+          "type": "undefined",
+          "absent": true
+        },
+        "Array.prototype.at": {
+          "type": "undefined",
+          "absent": true
+        },
+        "Array.prototype.findLastIndex": {
+          "type": "undefined",
+          "absent": true
+        },
+        "Object.hasOwn": {
+          "type": "undefined",
+          "absent": true
+        }
+      },
+      "cases": [
+        {
+          "pass": "B",
+          "builtins_deleted": true,
+          "game": "dragon-flight",
+          "title": "Dragon Flight",
+          "renderer": "phaser",
+          "reached": true,
+          "started": true,
+          "moves": [
+            {
+              "input": "pointer",
+              "detail": "clicked the 2D canvas center"
+            },
+            {
+              "input": "key",
+              "detail": "ArrowRight"
+            },
+            {
+              "input": "key",
+              "detail": "ArrowLeft"
+            },
+            {
+              "input": "key",
+              "detail": "ArrowUp"
+            },
+            {
+              "input": "key",
+              "detail": "1"
+            },
+            {
+              "input": "key",
+              "detail": "ArrowRight"
+            }
+          ],
+          "errors": [],
+          "console_errors": [],
+          "page_errors": [],
+          "screenshot": "/home/daniebo/Desktop/advantage-forge/measure/runs/old_browser_builtins_20261122/ux-browser-review-p2-229323c-pass-b-dragon-flight-2d.png",
+          "accessibility_snapshot": "",
+          "state_before": {
+            "ok": true,
+            "length": 1756,
+            "sample": "{\"phase\":\"flying\",\"helper\":true,\"answerAudio\":false,\"gates\":2,\"timeMs\":1533.3333333333326,\"distance\":13.800000000000011,\"speed\":9,\"waiting\":false,\"flock\":1,\"coins\":0,\"words\":[{\"id\":\"w-hold\",\"term\":\"hold\",\"translation\":\"ถือ, จับ\",\"position\":7,\"attempts\":0,\"solved\":false,\"returned\":false},{\"id\":\"w-floor\",\"term\":\"floor\",\"translation\":\"พื้น\",\"position\":9,\"attempts\":0,\"solved\":false,\"returned\":false},{\"id\":\"w-hit\",\"term\":\"hit\",\"translation\":\"ตี\",\"position\":8,\"attempts\":0,\"solved\":false,\"returned\":false},{\"id\":\"w-balloon\",\"term\":\"balloon\",\"translation\":\"บอลลูน, ลูกโป่ง\",\"position\":4,\"attempts\":0,\"so"
+          },
+          "state_after": {
+            "ok": true,
+            "length": 1758,
+            "sample": "{\"phase\":\"flying\",\"helper\":true,\"answerAudio\":false,\"gates\":2,\"timeMs\":5499.9999999999945,\"distance\":49.499999999999886,\"speed\":9,\"waiting\":false,\"flock\":1,\"coins\":0,\"words\":[{\"id\":\"w-hold\",\"term\":\"hold\",\"translation\":\"ถือ, จับ\",\"position\":7,\"attempts\":1,\"solved\":false,\"returned\":true},{\"id\":\"w-floor\",\"term\":\"floor\",\"translation\":\"พื้น\",\"position\":9,\"attempts\":0,\"solved\":false,\"returned\":false},{\"id\":\"w-hit\",\"term\":\"hit\",\"translation\":\"ตี\",\"position\":8,\"attempts\":0,\"solved\":false,\"returned\":false},{\"id\":\"w-balloon\",\"term\":\"balloon\",\"translation\":\"บอลลูน, ลูกโป่ง\",\"position\":4,\"attempts\":0,\"sol"
+          },
+          "interactions": [
+            "Opened the selector, chose the story Mia's Balloon Animals, set the phaser renderer, and chose the game card dragon-flight.",
+            "Clicked the reader Next button to open the game briefing.",
+            "Clicked Start with the phaser renderer expected."
+          ],
+          "renderer_actual": "phaser",
+          "moved": true,
+          "accessibility_snapshot_chars": 0,
+          "accessibility_note": "The accessibility tree of the body holds no node. The 2D edition draws its HUD and all content in the Phaser canvas.",
+          "dom": {
+            "canvases": [
+              {
+                "width": 1280,
+                "height": 800,
+                "css": [
+                  1280,
+                  800
+                ]
+              },
+              {
+                "width": 768,
+                "height": 480,
+                "css": [
+                  1280,
+                  800
+                ]
+              }
+            ],
+            "visible_text": ""
+          }
+        },
+        {
+          "pass": "B",
+          "builtins_deleted": true,
+          "game": "dragon-rider",
+          "title": "Dragon Rider",
+          "renderer": "phaser",
+          "reached": true,
+          "started": true,
+          "moves": [
+            {
+              "input": "pointer",
+              "detail": "clicked the 2D canvas center"
+            },
+            {
+              "input": "key",
+              "detail": "ArrowRight"
+            },
+            {
+              "input": "key",
+              "detail": "ArrowLeft"
+            },
+            {
+              "input": "key",
+              "detail": "ArrowUp"
+            },
+            {
+              "input": "key",
+              "detail": "1"
+            },
+            {
+              "input": "key",
+              "detail": "ArrowRight"
+            }
+          ],
+          "errors": [],
+          "console_errors": [],
+          "page_errors": [],
+          "screenshot": "/home/daniebo/Desktop/advantage-forge/measure/runs/old_browser_builtins_20261122/ux-browser-review-p2-229323c-pass-b-dragon-rider-2d.png",
+          "accessibility_snapshot": "",
+          "state_before": {
+            "ok": true,
+            "length": 1468,
+            "sample": "{\"phase\":\"riding\",\"answerAudio\":false,\"timeMs\":1566.6666666666658,\"distance\":12.533333333333346,\"waiting\":false,\"flock\":1,\"coins\":0,\"words\":[{\"id\":\"w-small\",\"term\":\"small\",\"translation\":\"เล็ก\",\"position\":10,\"attempts\":0,\"solved\":false,\"returned\":false},{\"id\":\"w-funny\",\"term\":\"funny\",\"translation\":\"ตลก, น่าขัน\",\"position\":6,\"attempts\":0,\"solved\":false,\"returned\":false},{\"id\":\"w-hit\",\"term\":\"hit\",\"translation\":\"ตี\",\"position\":8,\"attempts\":0,\"solved\":false,\"returned\":false},{\"id\":\"w-bat\",\"term\":\"bat\",\"translation\":\"ค้างคาว\",\"position\":1,\"attempts\":0,\"solved\":false,\"returned\":false},{\"id\":\"w-scary"
+          },
+          "state_after": {
+            "ok": true,
+            "length": 1466,
+            "sample": "{\"phase\":\"riding\",\"answerAudio\":false,\"timeMs\":5566.666666666661,\"distance\":71.4666666666666,\"waiting\":false,\"flock\":1,\"coins\":5,\"words\":[{\"id\":\"w-small\",\"term\":\"small\",\"translation\":\"เล็ก\",\"position\":10,\"attempts\":1,\"solved\":true,\"returned\":false},{\"id\":\"w-funny\",\"term\":\"funny\",\"translation\":\"ตลก, น่าขัน\",\"position\":6,\"attempts\":1,\"solved\":false,\"returned\":true},{\"id\":\"w-hit\",\"term\":\"hit\",\"translation\":\"ตี\",\"position\":8,\"attempts\":0,\"solved\":false,\"returned\":false},{\"id\":\"w-bat\",\"term\":\"bat\",\"translation\":\"ค้างคาว\",\"position\":1,\"attempts\":0,\"solved\":false,\"returned\":false},{\"id\":\"w-scary\",\"te"
+          },
+          "interactions": [
+            "Opened the selector, chose the story Mia's Balloon Animals, set the phaser renderer, and chose the game card dragon-rider.",
+            "Clicked the reader Next button to open the game briefing.",
+            "Clicked Start with the phaser renderer expected."
+          ],
+          "renderer_actual": "phaser",
+          "moved": true,
+          "accessibility_snapshot_chars": 0,
+          "accessibility_note": "The accessibility tree of the body holds no node. The 2D edition draws its HUD and all content in the Phaser canvas.",
+          "dom": {
+            "canvases": [
+              {
+                "width": 1280,
+                "height": 800,
+                "css": [
+                  1280,
+                  800
+                ]
+              },
+              {
+                "width": 768,
+                "height": 480,
+                "css": [
+                  1280,
+                  800
+                ]
+              }
+            ],
+            "visible_text": ""
+          }
+        },
+        {
+          "pass": "B",
+          "builtins_deleted": true,
+          "game": "spellweavers-run",
+          "title": "Spellweavers Run",
+          "renderer": "phaser",
+          "reached": true,
+          "started": true,
+          "moves": [
+            {
+              "input": "pointer",
+              "detail": "clicked the 2D canvas center"
+            },
+            {
+              "input": "key",
+              "detail": "ArrowRight"
+            },
+            {
+              "input": "key",
+              "detail": "ArrowLeft"
+            },
+            {
+              "input": "key",
+              "detail": "ArrowUp"
+            },
+            {
+              "input": "key",
+              "detail": "1"
+            },
+            {
+              "input": "key",
+              "detail": "ArrowRight"
+            }
+          ],
+          "errors": [],
+          "console_errors": [],
+          "page_errors": [],
+          "screenshot": "/home/daniebo/Desktop/advantage-forge/measure/runs/old_browser_builtins_20261122/ux-browser-review-p2-229323c-pass-b-spellweavers-run-2d.png",
+          "accessibility_snapshot": "",
+          "state_before": {
+            "ok": true,
+            "length": 1351,
+            "sample": "{\"phase\":\"running\",\"helper\":true,\"lanes\":2,\"timeMs\":1566.6666666666658,\"distance\":12.533333333333346,\"speed\":8,\"waiting\":false,\"restMs\":0,\"courage\":3,\"score\":0,\"sentences\":[{\"id\":\"s-4\",\"text\":\"He has a green hat.\",\"words\":[\"He\",\"has\",\"a\",\"green\",\"hat.\"],\"translation\":\"เขาใส่หมวกสีเขียว\",\"paragraph\":1,\"misses\":0,\"started\":false,\"cleared\":false},{\"id\":\"s-10\",\"text\":\"Pip sits next to Leo.\",\"words\":[\"Pip\",\"sits\",\"next\",\"to\",\"Leo.\"],\"translation\":\"ปิ๊ปนั่งอยู่ข้างลีโอ\",\"paragraph\":2,\"misses\":0,\"started\":false,\"cleared\":false},{\"id\":\"s-8\",\"text\":\"The black bat is on the floor.\",\"words\":[\"The\",\"black"
+          },
+          "state_after": {
+            "ok": true,
+            "length": 1349,
+            "sample": "{\"phase\":\"running\",\"helper\":true,\"lanes\":2,\"timeMs\":5599.999999999994,\"distance\":18.66666666666668,\"speed\":8,\"waiting\":false,\"restMs\":0,\"courage\":1,\"score\":0,\"sentences\":[{\"id\":\"s-4\",\"text\":\"He has a green hat.\",\"words\":[\"He\",\"has\",\"a\",\"green\",\"hat.\"],\"translation\":\"เขาใส่หมวกสีเขียว\",\"paragraph\":1,\"misses\":2,\"started\":true,\"cleared\":false},{\"id\":\"s-10\",\"text\":\"Pip sits next to Leo.\",\"words\":[\"Pip\",\"sits\",\"next\",\"to\",\"Leo.\"],\"translation\":\"ปิ๊ปนั่งอยู่ข้างลีโอ\",\"paragraph\":2,\"misses\":0,\"started\":false,\"cleared\":false},{\"id\":\"s-8\",\"text\":\"The black bat is on the floor.\",\"words\":[\"The\",\"black\",\""
+          },
+          "interactions": [
+            "Opened the selector, chose the story Mia's Balloon Animals, set the phaser renderer, and chose the game card spellweavers-run.",
+            "Clicked the reader Next button to open the game briefing.",
+            "Clicked Start with the phaser renderer expected."
+          ],
+          "renderer_actual": "phaser",
+          "moved": true,
+          "accessibility_snapshot_chars": 0,
+          "accessibility_note": "The accessibility tree of the body holds no node. The 2D edition draws its HUD and all content in the Phaser canvas.",
+          "dom": {
+            "canvases": [
+              {
+                "width": 1280,
+                "height": 800,
+                "css": [
+                  1280,
+                  800
+                ]
+              },
+              {
+                "width": 768,
+                "height": 480,
+                "css": [
+                  1280,
+                  800
+                ]
+              }
+            ],
+            "visible_text": ""
+          }
+        },
+        {
+          "pass": "B",
+          "builtins_deleted": true,
+          "game": "spellweavers-run",
+          "title": "Spellweavers Run",
+          "renderer": "three",
+          "reached": true,
+          "started": true,
+          "moves": [
+            {
+              "input": "key",
+              "detail": "ArrowRight"
+            },
+            {
+              "input": "key",
+              "detail": "ArrowLeft"
+            },
+            {
+              "input": "key",
+              "detail": "ArrowUp"
+            },
+            {
+              "input": "key",
+              "detail": "1"
+            },
+            {
+              "input": "key",
+              "detail": "ArrowRight"
+            }
+          ],
+          "errors": [],
+          "console_errors": [],
+          "page_errors": [],
+          "screenshot": "/home/daniebo/Desktop/advantage-forge/measure/runs/old_browser_builtins_20261122/ux-browser-review-p2-229323c-pass-b-spellweavers-run-3d.png",
+          "accessibility_snapshot": "- text: Spellweaver's Run Spell 1/5 Courage\n- button \"📖 Story\"\n- button \"Sound\": 🔊\n- status:\n  - heading [level=3]\n  - paragraph\n- text: Which orb is the next word? เมียมีบอลลูนเยอะมาก ___ ___ ___ ___ ___ ______\n- button \"Mia\"\n- button \"Then\"",
+          "state_before": {
+            "ok": true,
+            "length": 1353,
+            "sample": "{\"phase\":\"running\",\"helper\":true,\"lanes\":2,\"timeMs\":833.3333333333336,\"distance\":6.666666666666666,\"speed\":8,\"waiting\":false,\"restMs\":0,\"courage\":3,\"score\":0,\"sentences\":[{\"id\":\"s-1\",\"text\":\"Mia has a lot of balloons.\",\"words\":[\"Mia\",\"has\",\"a\",\"lot\",\"of\",\"balloons.\"],\"translation\":\"เมียมีบอลลูนเยอะมาก\",\"paragraph\":0,\"misses\":0,\"started\":false,\"cleared\":false},{\"id\":\"s-2\",\"text\":\"Then she makes a black bat.\",\"words\":[\"Then\",\"she\",\"makes\",\"a\",\"black\",\"bat.\"],\"translation\":\"แล้วเธอก็ทำค้างคาวสีดำ\",\"paragraph\":0,\"misses\":0,\"started\":false,\"cleared\":false},{\"id\":\"s-8\",\"text\":\"The black bat is on th"
+          },
+          "state_after": {
+            "ok": true,
+            "length": 1366,
+            "sample": "{\"phase\":\"running\",\"helper\":true,\"lanes\":2,\"timeMs\":2333.3333333333326,\"distance\":7.199999999999999,\"speed\":0,\"waiting\":false,\"restMs\":166.6666666666675,\"courage\":2,\"score\":0,\"sentences\":[{\"id\":\"s-1\",\"text\":\"Mia has a lot of balloons.\",\"words\":[\"Mia\",\"has\",\"a\",\"lot\",\"of\",\"balloons.\"],\"translation\":\"เมียมีบอลลูนเยอะมาก\",\"paragraph\":0,\"misses\":1,\"started\":true,\"cleared\":false},{\"id\":\"s-2\",\"text\":\"Then she makes a black bat.\",\"words\":[\"Then\",\"she\",\"makes\",\"a\",\"black\",\"bat.\"],\"translation\":\"แล้วเธอก็ทำค้างคาวสีดำ\",\"paragraph\":0,\"misses\":0,\"started\":false,\"cleared\":false},{\"id\":\"s-8\",\"text\":\"The bl"
+          },
+          "interactions": [
+            "Opened the selector, chose the story Mia's Balloon Animals, set the three renderer, and chose the game card spellweavers-run.",
+            "Clicked the reader Next button to open the game briefing.",
+            "Clicked Start with the three renderer expected."
+          ],
+          "renderer_actual": "three",
+          "moved": true,
+          "accessibility_snapshot_chars": 244,
+          "accessibility_note": null,
+          "dom": {
+            "canvases": [
+              {
+                "width": 1280,
+                "height": 800,
+                "css": [
+                  1280,
+                  800
+                ]
+              }
+            ],
+            "visible_text": "Spellweaver's Run Spell 1/5 Courage 📖 Story 🔊 Which orb is the next word? เมียมีบอลลูนเยอะมาก ___ ___ ___ ___ ___ ______ Mia Then"
+          }
+        },
+        {
+          "pass": "B",
+          "builtins_deleted": true,
+          "game": "host-reader",
+          "title": "Host reader (src/host/reader.ts)",
+          "renderer": "dom",
+          "reached": true,
+          "started": true,
+          "moves": [
+            {
+              "input": "click",
+              "detail": "clicked Read; the reader opened at the first paragraph"
+            },
+            {
+              "input": "click",
+              "detail": "clicked a story word; the glossary dialog opened"
+            },
+            {
+              "input": "click",
+              "detail": "toggled the paragraph translation"
+            },
+            {
+              "input": "click",
+              "detail": "started read-aloud on paragraph 1 (the reader lastIndexWhere path)"
+            },
+            {
+              "input": "click",
+              "detail": "stopped read-aloud"
+            }
+          ],
+          "errors": [],
+          "console_errors": [],
+          "page_errors": [],
+          "screenshot": "/home/daniebo/Desktop/advantage-forge/measure/runs/old_browser_builtins_20261122/ux-browser-review-p2-229323c-pass-b-host-reader.png",
+          "accessibility_snapshot": "- button \"Back\": ←\n- heading \"Mia's Balloon Animals\" [level=1]\n- text: A0 Read the story. Tap a yellow word to see what it means.\n- button \"🎧 Listen to the whole story\"\n- paragraph:\n  - text: Mia has a lot of balloons. \"Look, Lily!\" says Mia. \"I make\n  - button \"animal\"\n  - text: balloons.\" Mia makes a red\n  - button \"bear\"\n  - text: . Then she makes a black\n  - button \"bat\"\n  - text: . \"Is it\n  - button \"scary\"\n  - text: \"?\\\" asks Lily. \\\"No, it is\"\n  - button \"funny\"\n  - text: \",\\\" says Mia. Lily smiles.\"\n- text: เมียมีบอลลูนเยอะมาก \"ดูนี่สิ ลิลลี่!\" เมียพูด \"ฉันทำบอลลูนรูปสัตว์\" เมียทำหมีสีแดง แล้วเธอก็ทำค้างคาวสีดำ \"มันน่ากลัวไหม\" ลิลลี่ถาม \"ไม่หรอก มันตลกต่างหาก\" เมียพูด ลิลลี่ยิ้ม\n- button \"🔊 Read to me\"\n- button \"ไทย\"\n- paragraph:\n  - text: Leo comes to the door. He has a green hat. It has two big eyes. \"I am an\n  - button \"alien\"\n  - text: \"!\\\" says Leo. \\\"Hello, Mia! Hello, Lily!\\\" Leo wants a\"\n  - button \"balloon\"\n  - text: . \"A\n  - button \"bear\"\n  - text: \", please,\\\" he says. Mia gives him the red\"\n  - button \"bear\"\n  - text: . Leo holds it and says, \"Thank you!\"\n- button \"🔊 Read to me\"\n- button \"ไทย\"\n- paragraph:\n  - text: Pip runs into the room. \"Woof!\" Pip hits the\n  - button \"bat\"\n  - button \"balloon\"\n  - text: . The black\n  - button \"bat\"\n  - text: is on the\n  - button \"floor\"\n  - text: . \"Is Pip angry?\" asks Lily. \"No, he wants to play,\" says Mia. Mia makes a\n  - button \"small\"\n  - text: dog\n  - button \"balloon\"\n  - text: . Pip sits next to Leo. They are happy.\n- button \"🔊 Read to me\"\n- button \"ไทย\"\n- paragraph: You finished the story! Now use its words in the game.\n- button \"Play Monster Encounters ▶\"",
+          "interactions": [],
+          "reader": {
+            "choice": {
+              "story_title": "Mia's Balloon Animals A0",
+              "game_title": "⚔️ Monster Encounters Use the story’s words to beat the monsters."
+            },
+            "url_after_read": "http://127.0.0.1:5199/demo/index.html?qc=1#/read/mias-balloon-animals",
+            "paragraphs": 3,
+            "vocab_buttons": 15,
+            "read_to_me_buttons": 3,
+            "story_title": "Mia's Balloon Animals"
+          },
+          "gloss_open": true,
+          "translation_shown": true,
+          "sentence_marked": true,
+          "accessibility_snapshot_chars": 1651,
+          "accessibility_note": null,
+          "dom": {
+            "canvases": [
+              {
+                "width": 1280,
+                "height": 800,
+                "css": [
+                  1280,
+                  800
+                ]
+              }
+            ],
+            "visible_text": "← Mia's Balloon Animals A0 Read the story. Tap a yellow word to see what it means. 🎧 Listen to the whole story Mia has a lot of balloons. \"Look, Lily!\" says Mia. \"I make animal balloons.\" Mia makes a red bear. Then she makes a black bat. \"Is it scary?\" asks Lily. \"No, it is funny,\" says Mia. Lily smiles. เมียมีบอลลูนเยอะมาก \"ดูนี่สิ ลิลลี่!\" เมียพูด \"ฉันทำบอลลูนรูปสัตว์\" เมียทำหมีสีแดง แล้วเธอก็ท"
+          }
+        }
+      ],
+      "after_navigation_assertion": {
+        "structuredClone": {
+          "type": "undefined",
+          "absent": true
+        },
+        "Array.prototype.at": {
+          "type": "undefined",
+          "absent": true
+        },
+        "Array.prototype.findLastIndex": {
+          "type": "undefined",
+          "absent": true
+        },
+        "Object.hasOwn": {
+          "type": "undefined",
+          "absent": true
+        }
+      },
+      "summary": {
+        "cases": 5,
+        "reached": 5,
+        "with_errors": 0
+      }
+    }
+  ],
+  "summary": {
+    "passes": 2,
+    "cases": 10,
+    "reached": 10,
+    "with_errors": 0,
+    "all_reached": true,
+    "all_clean": true
+  },
+  "head_at_probe_end": "79a8d5c4ebc96cf6695e05bbf9dbe3f41f7a2d88",
+  "non_measure_diff_audited_to_end_head": "tests/audio-handoff.test.ts | 195 ++++++++++++++++++++++++++++++++++++++++++++\n 1 file changed, 195 insertions(+)"
+}

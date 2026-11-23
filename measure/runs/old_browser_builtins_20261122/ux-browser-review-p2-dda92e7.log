@@ -1,0 +1,14 @@
+MEASURE_AGENT_RESULT
+status: complete
+verdict: PASS
+audited_head: dda92e79d80bcb6ad77881913b81a91a891495fc
+phase_base_sha: 3f6a19214994e7ac05a79a8fa7faeded684267b7
+role_base_sha: 229323c5d822f1dcb480b8e5ccf767c98a6f0c75
+checks: Re-bound the earlier Phase 2 browser evidence to HEAD dda92e79d80bcb6ad77881913b81a91a891495fc. The orchestrator reports that src/ is byte-identical from audited HEAD 229323c5 to dda92e79, and the only non-measure change for this track is tests/apk3d/no-unpolyfilled-builtins.test.ts, which the demo does not serve. The unchanged probe reports ten flows reached in normal and deleted-built-ins modes, with no console or page errors. The screenshots are unchanged; the earlier audit reviewed all ten, and this re-bind viewed the Spellweavers Run 2D and 3D pass B screenshots. The empty Phaser 2D accessibility snapshots remain a nonblocking note. No shell commands were run by this role. Dev URL: http://127.0.0.1:5199/demo/.
+blocking_findings: None.
+nonblocking_findings: The Dragon Flight 2D, Dragon Rider 2D, and Spellweavers Run 2D accessibility snapshots are empty because Phaser draws the interface in a canvas. This is a pre-existing accessibility limitation.
+evidence: Orchestrator-supplied src diff is empty from 229323c5 to dda92e79. The prior probe JSON and output read unchanged: 10 of 10 flows reached and 0 errors. Screenshots remain unchanged. Pass B confirms all four built-ins were undefined before page scripts.
+retry_recommendation: none
+handoff: Phase 2 UX browser result passes at audited HEAD dda92e79d80bcb6ad77881913b81a91a891495fc. Preserve the empty Phaser 2D accessibility snapshots as a nonblocking note.
+result_artifact: measure/runs/old_browser_builtins_20261122/ux-browser-review-p2-dda92e7.json
+END_MEASURE_AGENT_RESULT

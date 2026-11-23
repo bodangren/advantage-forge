@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: phase-acceptance
+status: blocked
+track: old_browser_builtins_20261122
+phase: Phase 2: Green
+commits: none
+tests_run: Wrapped targeted Vitest PASS (4 files, 20 tests); AC4 PASS (228 files, 3383 passed, 3 skipped); scan zero current hits, Set exclusion probe FAIL; tsc exit 2 (51 baseline diagnostics, none in changed files); generator and doctor PASS; no new Prettier failures.
+files_changed: phase-acceptance-p2-229323c.json and .log
+plan_updates: none
+known_failures: A7 hides a Set.union hit at the Box3 exclusion. Phase 2 lacks a same-HEAD UX browser review.
+handoff: Ask the owner: Will you authorize one bounded scanner remediation round? Options: authorize an exact-call fix and a regression test; leave both phases blocked. Run the applicable UX role before Phase 2 re-acceptance. Keep Phase 3 AC5 separate.
+END_MEASURE_AGENT_RESULT

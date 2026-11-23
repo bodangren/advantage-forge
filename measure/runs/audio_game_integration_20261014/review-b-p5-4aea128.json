@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "role": "measure-review-b-security",
+  "track": "audio_game_integration_20261014",
+  "phase": "Phase 5: Hand-off to the PM",
+  "phase_base_sha": "5470e45243bed1a1f26e81063d92f5bdf729de3b",
+  "baseline_sha": "5470e45243bed1a1f26e81063d92f5bdf729de3b",
+  "role_base_sha": "df7f01bfb02094005b514b62003f1343c1dfe16c",
+  "audited_head_sha": "4aea12828bbeaea2cd5c8128db09f0afa4038118",
+  "security_applicability": "applicable",
+  "route": "kimi-code-plan-cn/kimi-for-coding",
+  "status": "pass",
+  "summary": "Pass, re-bind of the Phase 5 r2 result to HEAD 4aea1282, with no blocking and no nonblocking finding. No src, script, demo, or sound file changed between the r2 audited head df7f01bf and this head: `git diff --stat df7f01bf 4aea12828bbeaea2cd5c8128db09f0afa4038118 -- src scripts demo sounds` prints nothing, and the four intervening commits are two test commits (1c4a28be zero-byte rejection pin, 09c4289c deferring that pin as a TD-48 skip) and two record commits (3bf27477 late findings and TD-48, 4aea1282 run records); the working tree sits exactly at the audited head. The artifact gate re-runs green: AUDIO_HANDOFF_ARTIFACTS=1 over the three hand-off test files passes 11 with 1 skip of 12, the skip being the committed TD-48 zero-byte pin. The r2 security verdict therefore binds unchanged: allowlist and symlink rejection verified by the fixture probe, constant rm -rf scope, --help and argument rejection, no /home/ path or user name in the folder, no monorepo write, and hashes computed from the copied bytes. The one open item, TD-48 Low, records that the script still accepts a matching zero-byte source and demo pair; it cannot affect the shipped hand-off (all 14 sources are non-empty and every checksum verifies), the PM rule already routes it to tech-debt, the skip pin names the fix, and the reopen trigger is explicit.",
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "evidence": [
+    "Provenance: `git cat-file -t 4aea12828bbeaea2cd5c8128db09f0afa4038118` printed commit. `git merge-base --is-ancestor 4aea1282 HEAD` exited 0 and `git rev-parse HEAD` equals 4aea12828bbeaea2cd5c8128db09f0afa4038118, so the working tree is the audited head. `git merge-base --is-ancestor df7f01bf 4aea1282` exited 0, so the r2 head is the delta base, and phase_base_sha 5470e452 is ancestral. role_base_sha is the r2 head df7f01bfb02094005b514b62003f1343c1dfe16c.",
+    "No-code-change record: `git diff --stat df7f01bf 4aea12828bbeaea2cd5c8128db09f0afa4038118 -- src scripts demo sounds` printed nothing (0 lines). `git log --oneline df7f01bf..4aea1282` lists 1c4a28be (test: reject zero-byte handoff sound), 09c4289c (test: defer the pin as it.skip), 3bf27477 (measure: Phase 5 late findings and TD-48), and 4aea1282 (measure: Phase 5 run records).",
+    "Gate rerun at this head: `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'AUDIO_HANDOFF_ARTIFACTS=1 node node_modules/vitest/vitest.mjs run tests/audio-handoff.test.ts tests/audio-handoff.adversarial.test.ts tests/audio-handoff.adversarial-r2.test.ts --maxWorkers=1'` exits 0 with 3 files, 11 passed and 1 skipped of 12; the skip is the committed TD-48 pin in tests/audio-handoff.adversarial-r2.test.ts with its fix note, matching the debt record.",
+    "TD-48 cross-check: the debt row records ADV-P5-2 (the script accepts a zero-byte sound when source and demo both match), C5-F4 (README site-base wording), A5-F7 (adversarial inventory test accepts a failed launch as rejection), and A5-F8 (test-strategy names old gate counts); the shipped 14 sources are non-empty and every checksum verifies, the PM rule 2026-11-23 routes them to tech-debt because no user reaches a wrong result, and the reopen trigger names a zero-byte file entering either sound folder. scripts/audio-handoff.mjs is unchanged in this range, so the r2 properties (allowlist, symlink rejection, write scope, hygiene) bind byte-identical.",
+    "A2: the re-bind range contains no publish, draft, consent, or anonymization surface. A6: the record commits are dispositions and run records; no security state claim changed, and the r2 verdict required no registry claim beyond what the reruns prove.",
+    "Re-review handling: no CONTEST item reached Review B; no finding is kept or opened."
+  ],
+  "commands": [
+    "git cat-file -t 4aea12828bbeaea2cd5c8128db09f0afa4038118 -> commit; git merge-base --is-ancestor 4aea1282 HEAD -> exit 0; git rev-parse HEAD -> 4aea12828bbeaea2cd5c8128db09f0afa4038118; git merge-base --is-ancestor df7f01bf 4aea1282 -> exit 0",
+    "git diff --stat df7f01bf 4aea12828bbeaea2cd5c8128db09f0afa4038118 -- src scripts demo sounds -> prints nothing (0 lines); git log --oneline df7f01bf..4aea1282 -> 1c4a28be, 09c4289c, 3bf27477, 4aea1282",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'AUDIO_HANDOFF_ARTIFACTS=1 node node_modules/vitest/vitest.mjs run tests/audio-handoff.test.ts tests/audio-handoff.adversarial.test.ts tests/audio-handoff.adversarial-r2.test.ts --maxWorkers=1' -> 3 files, 11 passed and 1 skipped of 12",
+    "grep -A2 'TD-48' measure/tech-debt.md -> ADV-P5-2 zero-byte acceptance and three review nits, Low Open, PM rule tech-debt, fix and reopen trigger named; git show 1c4a28be and 09c4289c -> zero-byte pin committed then deferred as it.skip with the fix note"
+  ],
+  "changed_files": [
+    "measure/runs/audio_game_integration_20261014/review-b-p5-4aea128.json",
+    "measure/runs/audio_game_integration_20261014/review-b-p5-4aea128.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "The re-bind diff on src, scripts, demo, and sounds is empty, so the verified r2 behaviour binds byte-identical, and the artifact gate reruns green at this head (11 passed, 1 committed TD-48 skip of 12)."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 5,
+      "evidence": "The hand-off suites carry failing-first history from every round, and the TD-48 zero-byte pin is committed with its skip note naming the fix."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The four intervening commits are two test commits and two record commits; this review wrote only its two run artifacts."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "Every claim carries a command result, including the empty `git diff --stat ... -- src scripts demo sounds` record and the gate rerun exit at the audited head."
+    }
+  ]
+}

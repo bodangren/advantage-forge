@@ -1,0 +1,28 @@
+Phase base: 3f6a19214994e7ac05a79a8fa7faeded684267b7
+Role base and audited HEAD: dda92e79d80bcb6ad77881913b81a91a891495fc
+HEAD matched before and after the run. The tracked registry hunk belongs to Chibi Sprouts and is outside this audit.
+git diff --exit-code 229323c5 dda92e79 -- src printed nothing.
+
+HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts'
+Result: three files passed and 19 tests passed.
+
+The exclusion list names the call and its reason. The stale-row message gives the path, line, and reason.
+The new controls and independent probes confirm the approved receiver cases.
+The plan and metadata agree on the A7 fix. F5 and F6 stay in tech debt.
+Late finding F7: tech-debt (the test scanner still accepts qualified and non-ASCII receivers; the delivered Box3 call is unchanged and users cannot reach a wrong result).
+Retain the detached release worktree, shelf-sync worktree and branch, and wip/oct-skill-docs-20261023 for their owners. Leave the origin refs unchanged.
+
+MEASURE_AGENT_RESULT
+role: measure-review-c-ux-api
+status: complete
+track: old_browser_builtins_20261122
+phase: Phase 2: Green
+commits: none
+tests_run: three-file Vitest gate through heavy-run.sh (pass, 19 tests); independent exclusion probes
+files_changed: review-c-dda92e7.json, review-c-dda92e7.log
+plan_updates: none
+known_failures: no blockers; F5 and F6 remain nonblocking; F7 is late scanner tech debt
+handoff: The approved A7 cases pass. Send F7 to tech debt only. No new user-reachable wrong result was found.
+END_MEASURE_AGENT_RESULT
+
+RESULT: PASS

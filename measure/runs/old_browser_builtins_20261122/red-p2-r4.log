@@ -1,0 +1,24 @@
+MEASURE_AGENT_RESULT
+role: measure-mid-red
+track: old_browser_builtins_20261122
+phase: Phase 2: Green (remediation round 4, test-only, PM 2026-11-23, last allowed round)
+tasks: T3r4 Red (done)
+phase_base_sha: 3f6a19214994e7ac05a79a8fa7faeded684267b7
+role_base_sha: 4aea12828bbeaea2cd5c8128db09f0afa4038118
+reviewed_head_sha: 229323c5d822f1dc4f59060466fdd28fc8
+resulting_head_sha: dda92e79d80bcb6ad77881913b81a91a891495fc
+commits:
+- 72e74de0edffbb35da817d8237985b53e20378fd measure(old_browser_builtins): Phase 2 remediation Red T3r4 exact-call exclusion (tests/apk3d/no-unpolyfilled-builtins.test.ts)
+- dda92e79d80bcb6ad77881913b81a91a891495fc measure(old_browser_builtins): Phase 2 remediation Red T3r4 plan record and escalation (plan.md T3r4 Red line; metadata.json escalation; measure/generated/status.md regenerate)
+production_source_edits: none (src/ untouched)
+red_kind: gap_closing
+gaps: exclusion matches its exact call text with a word boundary on the receiver, so box.union(b) does not match otherbox.union(b), mybox.union(b), or box2.union(b); a renamed receiver stays reported (with the stale-exclusion rot check); same-line and real-line pins guard the fix.
+breakage_proof: fail-first run measure/runs/old_browser_builtins_20261122/red-p2-r4-failfirst.log exits 1 with 2 failed / 17 passed: the otherbox and mybox controls fail on the substring scanner at 229323c5 (one raw hit, no reported hit); final run measure/runs/old_browser_builtins_20261122/red-p2-r4-final.log exits 0 with 3 files and 19 passed (all new controls pass; box2/mybox/otherbox pins, pair controls, real page.ts:263 pin, stale rot check, and the full src scan with zero hits).
+checks:
+- HEAVY three-file gate: exit 0, 3 passed, 19 passed (final log red-p2-r4-final.log)
+- node_modules/.bin/prettier --check on the test file: exit 0 (unchanged by --write)
+- tsc through the heavy-runner wrapper: exit 2 (project baseline), zero lines for tests/apk3d/no-unpolyfilled-builtins.test.ts (log red-p2-r4-tsc.log)
+- node measure/tools/generate.mjs --check: exit 0; ./measure/doctor.sh --structural-only: exit 0
+plan: Phase 2 holds `- [x] T3r4 Red (72e74de0): acceptance rule A7, exact-call exclusion (PM 2026-11-23)`.
+escalation: metadata.json escalation = 'third round: the Box3 exclusion matches a substring, so a renamed Set receiver hides a union call (acceptance rule A7)' (shape of the audio track escalation, commit b88cb45d).
+END_MEASURE_AGENT_RESULT

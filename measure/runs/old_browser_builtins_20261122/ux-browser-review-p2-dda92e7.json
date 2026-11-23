@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "role": "ux-browser-review",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 2: Green",
+  "baseline_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "phase_base_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "role_base_sha": "229323c5d822f1dcb480b8e5ccf767c98a6f0c75",
+  "audited_head_sha": "dda92e79d80bcb6ad77881913b81a91a891495fc",
+  "status": "pass",
+  "summary": "The Phase 2 UX result re-binds to HEAD dda92e79. The orchestrator reports that src/ is unchanged from the code exercised by the browser probe, and the only non-measure change for this track is an unserved scanner test.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F1 [Nit] ux-browser-review: The three Phaser 2D flows expose empty accessibility snapshots because the game UI draws in a canvas. Canvas semantics remain unavailable to assistive technology. This is pre-existing and outside the built-in replacements."
+  ],
+  "evidence": [
+    "The orchestrator reports that `git diff --stat 229323c5d822f1dcb480b8e5ccf767c98a6f0c75 dda92e79d80bcb6ad77881913b81a91a891495fc -- src` printed nothing. This is orchestrator-supplied evidence; this role did not run shell commands.",
+    "The orchestrator reports that the only non-measure change for this track in the range is `tests/apk3d/no-unpolyfilled-builtins.test.ts`, a scanner test that the demo does not serve.",
+    "Read the existing probe JSON and output. They report 2 passes, 10 flows reached, all started and moved, and 0 flows with console or page errors.",
+    "The probe deleted `structuredClone`, `Array.prototype.at`, `Array.prototype.findLastIndex`, and `Object.hasOwn` before page scripts in pass B. Its in-page assertions report all four as undefined.",
+    "The host-reader flow exercised the `lastIndexWhere` path and marked a sentence.",
+    "The prior audit reviewed all ten 1280x800 screenshots. The probe and screenshots are unchanged. This re-bind additionally viewed the pass B Spellweavers Run 2D and 3D screenshots.",
+    "The Phaser 2D accessibility snapshots remain empty in both passes. The 3D Spellweavers and reader snapshots expose accessible text and controls.",
+    "No broader visual-quality or audible-quality claim is made. The screenshots show the recorded UI states only.",
+    "The previous probe record states that the server stopped and port 5199 was not listening. That evidence is carried forward; this role did not run shell commands."
+  ],
+  "commands": [
+    "Orchestrator-supplied: git diff --stat 229323c5d822f1dcb480b8e5ccf767c98a6f0c75 dda92e79d80bcb6ad77881913b81a91a891495fc -- src => no output",
+    "Orchestrator-supplied: only non-measure change for this track is tests/apk3d/no-unpolyfilled-builtins.test.ts; the demo does not serve this scanner test",
+    "Read measure/runs/old_browser_builtins_20261122/ux-browser-review-p2-229323c-probe.json and -probe.out => 10 of 10 flows reached; 0 errors",
+    "No shell commands run by this role"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/ux-browser-review-p2-dda92e7.json",
+    "measure/runs/old_browser_builtins_20261122/ux-browser-review-p2-dda92e7.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "openai/gpt-6-luna#high",
+  "webbridge_status": "not_run",
+  "webbridge_evidence": {
+    "screenshots": [
+      "measure/runs/old_browser_builtins_20261122/ux-browser-review-p2-229323c-pass-a-dragon-flight-2d.png: 1280x800 active Dragon Flight 2D play screen.",
+      "measure/runs/old_browser_builtins_20261122/ux-browser-review-p2-229323c-pass-b-dragon-flight-2d.png: 1280x800 active Dragon Flight 2D play screen with built-ins deleted.",
+      "measure/runs/old_browser_builtins_20261122/ux-browser-review-p2-229323c-pass-a-dragon-rider-2d.png: 1280x800 active Dragon Rider 2D play screen.",
+      "measure/runs/old_browser_builtins_20261122/ux-browser-review-p2-229323c-pass-b-dragon-rider-2d.png: 1280x800 active Dragon Rider 2D play screen with built-ins deleted.",
+      "measure/runs/old_browser_builtins_20261122/ux-browser-review-p2-229323c-pass-a-spellweavers-run-2d.png: 1280x800 active Spellweavers Run 2D play screen.",
+      "measure/runs/old_browser_builtins_20261122/ux-browser-review-p2-229323c-pass-b-spellweavers-run-2d.png: 1280x800 active Spellweavers Run 2D play screen with built-ins deleted.",
+      "measure/runs/old_browser_builtins_20261122/ux-browser-review-p2-229323c-pass-a-spellweavers-run-3d.png: 1280x800 active Spellweavers Run 3D play screen.",
+      "measure/runs/old_browser_builtins_20261122/ux-browser-review-p2-229323c-pass-b-spellweavers-run-3d.png: 1280x800 active Spellweavers Run 3D play screen with built-ins deleted.",
+      "measure/runs/old_browser_builtins_20261122/ux-browser-review-p2-229323c-pass-a-host-reader.png: 1280x800 story reader with vocabulary and translation controls.",
+      "measure/runs/old_browser_builtins_20261122/ux-browser-review-p2-229323c-pass-b-host-reader.png: 1280x800 story reader with built-ins deleted."
+    ],
+    "accessibility_snapshots": [
+      "The unchanged probe JSON records snapshots for each flow. Dragon Flight 2D, Dragon Rider 2D, and Spellweavers Run 2D have empty snapshots in both modes because Phaser renders the interface in canvas.",
+      "Spellweavers Run 3D snapshots expose game text, status, and answer buttons in both modes.",
+      "Host-reader snapshots expose the story heading, paragraphs, vocabulary buttons, translation controls, and Read to me controls in both modes."
+    ],
+    "interactions": [
+      "In normal and deleted-built-ins modes, selected Dragon Flight, started its 2D edition, clicked the canvas, and sent five keyboard inputs.",
+      "In normal and deleted-built-ins modes, selected Dragon Rider, started its 2D edition, clicked the canvas, and sent five keyboard inputs.",
+      "In normal and deleted-built-ins modes, selected Spellweavers Run, started its 2D edition, clicked the canvas, and sent five keyboard inputs.",
+      "In normal and deleted-built-ins modes, selected Spellweavers Run, started its 3D edition, and sent five keyboard inputs.",
+      "In normal and deleted-built-ins modes, opened the host reader, opened a glossary entry, toggled translation, started and stopped read-aloud, and confirmed a sentence marker."
+    ],
+    "dev_url": "http://127.0.0.1:5199/demo/"
+  },
+  "ux_applicability": "applicable"
+}

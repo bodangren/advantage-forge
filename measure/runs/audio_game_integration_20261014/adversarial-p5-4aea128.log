@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: adversarial-testing
+status: complete
+track: audio_game_integration_20261014
+phase: Phase 5: Hand-off to the PM
+commits: none
+tests_run: The three hand-off test files passed 11 tests and skipped 1 TD-48 pin with AUDIO_HANDOFF_ARTIFACTS=1 through the heavy-run wrapper. The requested non-Measure diff printed no output. The project gate was not rerun per instruction.
+files_changed: measure/runs/audio_game_integration_20261014/adversarial-p5-4aea128.json; measure/runs/audio_game_integration_20261014/adversarial-p5-4aea128.log
+plan_updates: None.
+known_failures: ADV-P5-2 remains recorded as nonblocking late tech debt TD-48 under the PM reachability decision.
+handoff: Result rebound to HEAD 4aea12828bbeaea2cd5c8128db09f0afa4038118. No tests, production files, or commits changed.
+END_MEASURE_AGENT_RESULT

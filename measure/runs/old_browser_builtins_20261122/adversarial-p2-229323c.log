@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: measure-adversarial-testing
+status: complete
+track: old_browser_builtins_20261122
+phase: Phase 2: Green
+commits: none
+tests_run: targeted heavy-run passed (3 files, 16 tests); non-exempt diff stat and name-status diff from 5a1da501 to 229323c5 printed nothing
+files_changed: measure/runs/old_browser_builtins_20261122/adversarial-p2-229323c.json; measure/runs/old_browser_builtins_20261122/adversarial-p2-229323c.log
+plan_updates: none
+known_failures: none
+handoff: Rebound to audited HEAD 229323c5d822f1dcb480b8e5ccf767c98a6f0c75. The three-file gate passed. No project gate rerun was needed because no code or test changed.
+END_MEASURE_AGENT_RESULT

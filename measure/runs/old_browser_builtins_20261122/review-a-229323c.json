@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "role": "review-a",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 2: Green",
+  "baseline_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "phase_base_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "role_base_sha": "229323c5d822f1dcb480b8e5ccf767c98a6f0c75",
+  "audited_head_sha": "229323c5d822f1dcb480b8e5ccf767c98a6f0c75",
+  "status": "pass",
+  "summary": "The Phase 2 verdict remains PASS. The intervening commits change no source, test, or test configuration. The three-file gate passed on the new audited HEAD.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F8 [Nit] review-a: The historical TS2769 attribution at plan.md:173-177,206-209 remains unchanged. Red introduced the diagnostic, and the original Green run retained it. This record issue does not affect the current product.",
+    "F9 [Nit] review-a: Late finding, tech-debt; not user-reachable. The scanner still misses `math.if() / structuredClone(v) / 2` and `rows.at(one(two(three(four()))))`. It also accepts `otherbox.union(b)` in place of the exact exclusion `box.union(b)`. The scanner uses keyword and substring checks and limits nesting. No such unsupported call exists in the current source.",
+    "F10 [Nit] review-a: Late finding, tech-debt; not user-reachable. tests/old-browser/index-math.test.ts:314-317 accepts `notatIndex(existingVersions, -1)` at the Storytime version site because it checks a substring. The current site uses the correct helper.",
+    "F11 [Nit] review-a: Late finding, tech-debt; not user-reachable. tests/old-browser/deep-copy.test.ts:119-124 invokes an array index getter before the descriptor walk reports it. An in-memory fixture recorded one call, contrary to the no-invocation claim in plan.md:323-325. The current 29 start states pass the pin. Do not reopen the accepted deepCopy contract."
+  ],
+  "evidence": [
+    "git rev-parse HEAD matched audited_head_sha at role start and after the test.",
+    "The requested filtered diff stat exited 0 and printed nothing. The unfiltered diff contains Measure records and one Chibi Sprouts inventory document.",
+    "Source, scripts, tests, dependencies, test configuration, track spec, and test strategy are identical to the reviewed tree at 5a1da501.",
+    "The prior audit at measure/runs/old_browser_builtins_20261122/review-a-5a1da50.json records the exact F2 and F3 breakage probes and their closure. The affected files did not change.",
+    "The three-file heavy-run command exited 0 on 229323c5. Vitest reported three files and 16 tests passed.",
+    "AC4 passed at 5a1da501 with 228 files, 3383 tests passed, and three skipped. TypeScript reported 51 baseline diagnostics there. This re-bind did not rerun those commands.",
+    "The current plan carries the F8-F11 dispositions. TD-47 records F9-F11. The PM accepted the deepCopy contract limits.",
+    "The generator, the structural doctor, and Prettier on the track plan each exited 0 on 229323c5.",
+    "The full whitespace check identifies trailing blank lines in archived run logs. The check passes when it excludes measure/runs/.",
+    "The release and shelf-sync worktrees, the wip/oct-skill-docs-20261023 branch, and origin refs remain untouched."
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "git diff --stat 3f6a19214994e7ac05a79a8fa7faeded684267b7..229323c5d822f1dcb480b8e5ccf767c98a6f0c75",
+    "git diff --stat 5a1da501 229323c5 -- . ':!measure' ':!docs/chibi-sprouts'",
+    "git diff --name-status 5a1da501..229323c5",
+    "git diff --exit-code 5a1da501..229323c5 -- src tests scripts package.json pnpm-lock.yaml vitest.config.ts vite.demo.config.ts measure/tracks/old_browser_builtins_20261122/spec.md measure/tracks/old_browser_builtins_20261122/test-strategy.md",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts --maxWorkers=1'",
+    "node measure/tools/generate.mjs --check; ./measure/doctor.sh --structural-only",
+    "node_modules/.bin/prettier --check measure/tracks/old_browser_builtins_20261122/plan.md"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/review-a-229323c.json",
+    "measure/runs/old_browser_builtins_20261122/review-a-229323c.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "unknown",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 4,
+      "evidence": "The source diff is empty since the passing F2 and F3 re-review at 5a1da501."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 3,
+      "evidence": "The three-file rerun passed all 16 tests, and tests/old-browser/index-math.test.ts:316 retains the recorded substring limit."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The unfiltered diff since 5a1da501 lists Measure records and one unrelated inventory document."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 4,
+      "evidence": "The fresh Vitest reporter confirms 16 passing tests on 229323c5, and the artifact names the earlier SHA for AC4 and TypeScript."
+    }
+  ]
+}

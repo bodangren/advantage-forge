@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: measure-adversarial-testing
+status: complete
+track: old_browser_builtins_20261122
+phase: Phase 2: Green
+commits: none
+tests_run: 13 scanner exclusion probes passed; full src scan had 3 raw Box3 hits and 0 residual findings; targeted heavy-run passed (3 files, 19 tests); project heavy-run passed (230 passed, 1 skipped; 3392 tests passed, 9 skipped)
+files_changed: measure/runs/old_browser_builtins_20261122/adversarial-p2-dda92e7.json; measure/runs/old_browser_builtins_20261122/adversarial-p2-dda92e7.log; measure/runs/old_browser_builtins_20261122/probe-exclusion-r3.mjs; measure/runs/old_browser_builtins_20261122/probe-exclusion-r3.ts; measure/tracks/old_browser_builtins_20261122/plan.md; measure/tech-debt.md
+plan_updates: recorded late finding ADV-R5-1 as tech debt; TD-47 now records computed-property scanner coverage limit
+known_failures: computed access box['union'](b) is not detected by literal-pattern scan; no such call exists in src/ and it does not cause a current user-reachable wrong result
+handoff: The new exclusion preserves all tested hits. All three named Box3 lines are excluded exactly once, and src/ has zero residual hits. No test was added and no commit was made.
+END_MEASURE_AGENT_RESULT

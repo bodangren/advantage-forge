@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "role": "review-a",
+  "track": "audio_game_integration_20261014",
+  "phase": "Phase 5: Hand-off to the PM",
+  "baseline_sha": "5470e45243bed1a1f26e81063d92f5bdf729de3b",
+  "phase_base_sha": "5470e45243bed1a1f26e81063d92f5bdf729de3b",
+  "role_base_sha": "4aea12828bbeaea2cd5c8128db09f0afa4038118",
+  "audited_head_sha": "4aea12828bbeaea2cd5c8128db09f0afa4038118",
+  "status": "pass",
+  "summary": "The Phase 5 PASS remains valid. The default and explicit gates pass. All 14 checksums verify, and the deferred TD-48 case stays skipped.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F4 [Nit] review-a: tests/audio-handoff.test.ts parses the manifest byte cell with Number.parseInt. This accepts a decimal prefix followed by text. The generator emits a valid decimal cell. The plan records A5-F4 as tech debt.",
+    "F6 [Nit] review-a: scripts/audio-handoff.mjs does not check the output ancestors for symlinks. The audited output uses real directories. The plan records A5-F6 as tech debt.",
+    "F7 [Nit] review-a: tests/audio-handoff.adversarial.test.ts:32-39 accepts a failed process launch as an inventory rejection. The independent fixture confirmed that the live CLI rejects the invalid inventory. The plan and TD-48 record A5-F7 as tech debt.",
+    "F8 [Nit] review-a: test-strategy.md:418-458 still describes the original gate counts and case layout. The plan and TD-48 record A5-F8 as tech debt."
+  ],
+  "evidence": [
+    "HEAD matched 4aea12828bbeaea2cd5c8128db09f0afa4038118 before and after verification. The supplied phase base is an ancestor.",
+    "git diff --stat df7f01bf 4aea1282 -- src scripts demo sounds printed nothing. Outside measure/runs, the intervening changes are the added adversarial test, the audio plan, and the debt record.",
+    "F1, F2, F3, and F5 remain withdrawn. The prior rename and missing-sibling probes apply to the unchanged CLI and main test.",
+    "The default gate passed six tests and skipped six. The explicit gate passed eleven and skipped one. Both gates collected twelve tests across three files.",
+    "tests/audio-handoff.adversarial-r2.test.ts:10 explicitly skips the zero-byte case with TD-48. All 14 source, demo, and shipped sound files are non-empty; the minimum size in each folder is 2,016 bytes.",
+    "All 14 checksums verified after the rebuild. The monorepo status lists before and after matched and contained no hand-off paths. The target remains proposed."
+  ],
+  "commands": [
+    "git rev-parse HEAD; git merge-base --is-ancestor 5470e45243bed1a1f26e81063d92f5bdf729de3b 4aea12828bbeaea2cd5c8128db09f0afa4038118; git diff --stat 5470e452..4aea1282 on Phase 5 paths => HEAD matched; verified exact phase scope.",
+    "git diff --stat df7f01bf 4aea1282 -- src scripts demo sounds => no output.",
+    "git diff --name-status df7f01bf 4aea1282 -- . ':!measure/runs' => one added test, the phase plan, and the debt record.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run tests/audio-handoff.test.ts tests/audio-handoff.adversarial.test.ts tests/audio-handoff.adversarial-r2.test.ts --maxWorkers=1 && echo MONOREPO-BEFORE && git -C ../reading-advantage-monorepo status --short && node scripts/audio-handoff.mjs && AUDIO_HANDOFF_ARTIFACTS=1 node node_modules/vitest/vitest.mjs run tests/audio-handoff.test.ts tests/audio-handoff.adversarial.test.ts tests/audio-handoff.adversarial-r2.test.ts --maxWorkers=1 && (cd out/apk-audio-handoff/chibi && sha256sum -c MANIFEST.sha256) && echo MONOREPO-AFTER && git -C ../reading-advantage-monorepo status --short' => exit 0; default six passed and six skipped; explicit eleven passed and one skipped; 14 checksum OK lines.",
+    "Node statSync check for source, demo, and shipped files => 14 sounds per folder, minimum 2,016 bytes in each. git diff --check on the audio phase paths passed."
+  ],
+  "changed_files": [
+    "measure/runs/audio_game_integration_20261014/review-a-p5-4aea128.json",
+    "measure/runs/audio_game_integration_20261014/review-a-p5-4aea128.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "unknown",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 4,
+      "evidence": "The unchanged generator rebuilt the bundle, and sha256sum verified all 14 files."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "The explicit gate passed eleven tests and reported the single TD-48 skip."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The rebind diff under src, scripts, demo, and sounds is empty."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "The exact diff, both test modes, the size check, and all 14 checksum results bind this review to 4aea128."
+    }
+  ]
+}

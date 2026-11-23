@@ -1,0 +1,11 @@
+A dragon-flight/phaser reached=true started=true moves=6 errors=0
+A dragon-rider/phaser reached=true started=true moves=6 errors=0
+A spellweavers-run/phaser reached=true started=true moves=6 errors=0
+A spellweavers-run/three reached=true started=true moves=5 errors=0
+A host-reader/dom reached=true started=true moves=5 errors=0
+B dragon-flight/phaser reached=true started=true moves=6 errors=0
+B dragon-rider/phaser reached=true started=true moves=6 errors=0
+B spellweavers-run/phaser reached=true started=true moves=6 errors=0
+B spellweavers-run/three reached=true started=true moves=5 errors=0
+B host-reader/dom reached=true started=true moves=5 errors=0
+{"passes":2,"cases":10,"reached":10,"with_errors":0,"all_reached":true,"all_clean":true}

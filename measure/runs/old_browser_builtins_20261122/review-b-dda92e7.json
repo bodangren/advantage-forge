@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "role": "review-b",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 2: Green",
+  "round": "re-bind to HEAD dda92e79",
+  "baseline_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "phase_base_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "role_base_sha": "dda92e79d80bcb6ad77881913b81a91a891495fc",
+  "audited_head_sha": "dda92e79d80bcb6ad77881913b81a91a891495fc",
+  "security_applicability": "applicable",
+  "status": "pass",
+  "summary": "Re-binds the standing PASS to dda92e79. src/ is byte-identical since the previous binding (git diff --stat 229323c5 dda92e79 -- src prints nothing). The only non-measure, non-audio change is the scanner test 72e74de0 (+69/-3): it replaces a substring exclusion check with a word-boundary regex so a renamed receiver no longer counts as the excluded Box3.union call, adding three failing-first Red cases. Judged test-only with no security or data-handling gap: it reads source files only, uses no network, writes nothing outside the test process, and can only make the scan report more hits, never fewer. The three-file gate re-run is green with 19 tests.",
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "evidence": [
+    "Binding: git diff --stat 229323c5d822f1dcb480b8e5ccf767c98a6f0c75 dda92e79d80bcb6ad77881913b81a91a891495fc -- src prints nothing (0 lines); src/ is byte-identical since the previous binding.",
+    "Scanner test change noted and judged: commit 72e74de0 changes only tests/apk3d/no-unpolyfilled-builtins.test.ts (+69/-3). It replaces a substring inclusion check with a word-boundary regex (exclusionMatchesLine) so a renamed receiver such as otherbox.union(b) no longer counts as the excluded Box3.union call, and adds three failing-first Red cases. The change is test-only: it reads source files, uses no network, and writes nothing outside the test process; because it can only make exclusions stricter (more hits stay reported), it opens no security or data-handling gap.",
+    "git rev-parse HEAD = dda92e79d80bcb6ad77881913b81a91a891495fc at audit start and end; git status --short -- src/ tests/ is empty; no tracked file modified during the audit.",
+    "Three-file gate through heavy-run.sh: node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts -> Test Files 3 passed (3), Tests 19 passed (19), exit 0 (16 tests at the previous binding; the three A7 exclusion cases are now green).",
+    "The r3 audit object (review-b-5a1da50.json) stands: copy.ts code is unchanged since d15af2a2 apart from the doc comment; the doc lists the four contract limits; the state-type test walks Reflect.ownKeys and flags symbol-key, non-enumerable, and accessor kinds.",
+    "A2 not applicable: no draft-to-published path in the audited range. A6: no overstatement; the T3r4 plan record matches the committed failing-first exclusion tests, all green."
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "git diff --stat 229323c5d822f1dcb480b8e5ccf767c98a6f0c75 dda92e79d80bcb6ad77881913b81a91a891495fc -- src",
+    "git log --oneline 229323c5..dda92e79",
+    "git show 72e74de0 --stat",
+    "git show 72e74de0 -- tests/apk3d/no-unpolyfilled-builtins.test.ts",
+    "git status --short -- src/ tests/",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts'"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/review-b-dda92e7.json",
+    "measure/runs/old_browser_builtins_20261122/review-b-dda92e7.log",
+    "measure/runs/old_browser_builtins_20261122/review-b-dda92e7-notes.md"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "kimi-code-plan-cn/kimi-for-coding",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "src/ is byte-identical since the previous binding and the scanner change is stricter-only, so the standing verified behavior holds at dda92e79."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 5,
+      "evidence": "The three new A7 exclusion cases are failing-first Red cases now green; the three-file gate reports 19 passed tests at the new HEAD."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "git log 229323c5..dda92e79 shows only the planned scanner test change (72e74de0) plus measure/audio record commits outside this track's scope."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "Every claim cites the empty src diff, the 72e74de0 diff, or the gate result (3 files/19 tests passed)."
+    }
+  ]
+}

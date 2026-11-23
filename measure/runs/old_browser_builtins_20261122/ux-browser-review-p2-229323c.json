@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "role": "ux-browser-review",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 2: Green",
+  "baseline_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "phase_base_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "role_base_sha": "229323c5d822f1dcb480b8e5ccf767c98a6f0c75",
+  "audited_head_sha": "229323c5d822f1dcb480b8e5ccf767c98a6f0c75",
+  "status": "pass",
+  "summary": "All ten normal and deleted-built-ins browser flows passed at the audited source state. Each flow started and accepted moves without console or page errors.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F1 [Nit] ux-browser-review: The three Phaser 2D flows expose empty accessibility snapshots because the game UI draws in a canvas. The 2D screenshots show gameplay, but canvas semantics remain unavailable to assistive technology. This is pre-existing and outside the built-in replacements."
+  ],
+  "evidence": [
+    "HEAD at probe end is 79a8d5c4ebc96cf6695e05bbf9dbe3f41f7a2d88. `git diff --stat 229323c5d822f1dcb480b8e5ccf767c98a6f0c75 79a8d5c4ebc96cf6695e05bbf9dbe3f41f7a2d88 -- src` printed nothing. The only non-measure change is tests/audio-handoff.test.ts, which the demo does not serve.",
+    "The probe reports 2 passes, 10 flows reached, and 0 flows with errors. Each flow started and its game state changed after input.",
+    "Pass A used the four built-ins normally. Pass B removed structuredClone, Array.prototype.at, Array.prototype.findLastIndex, and Object.hasOwn before page scripts. In-page checks confirmed all four were undefined before and after navigation.",
+    "Dragon Flight 2D, Dragon Rider 2D, Spellweavers Run 2D, Spellweavers Run 3D, and the host reader each passed in both modes. Each game flow recorded five or six inputs.",
+    "The host-reader flow opened the story reader, opened a glossary entry, toggled translation, started and stopped read-aloud, and marked a sentence. This exercises the lastIndexWhere path.",
+    "Every flow recorded empty console_errors and page_errors arrays. The probe summary reports all_clean: true.",
+    "Reviewed all ten 1280x800 screenshots. The game screenshots show active game HUDs and play states; the reader screenshots show the story page, vocabulary controls, translation, and recorded-audio controls. These screenshots do not establish visual parity or broader visual quality.",
+    "The Phaser 2D accessibility snapshots are empty in both passes. The 3D Spellweavers snapshots contain page text and buttons. The reader snapshots expose headings, story text, vocabulary buttons, and reader controls.",
+    "The build session reports that the server stopped and port 5199 is not listening. The server log is empty.",
+    "The probe ran at HEAD 79a8d5c4 rather than the audited HEAD. The source diff is empty, and the only added non-measure file is a test file that the demo does not serve."
+  ],
+  "commands": [
+    "git diff --stat 229323c5d822f1dcb480b8e5ccf767c98a6f0c75 79a8d5c4ebc96cf6695e05bbf9dbe3f41f7a2d88 -- src => no output",
+    "Probe summary: 2 passes; 10 of 10 flows reached; 0 console or page errors",
+    "Pass B assertions: structuredClone, Array.prototype.at, Array.prototype.findLastIndex, and Object.hasOwn were undefined before page scripts",
+    "Build session server report: stopped; no listener on port 5199"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/ux-browser-review-p2-229323c.json",
+    "measure/runs/old_browser_builtins_20261122/ux-browser-review-p2-229323c.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "openai/gpt-6-luna#high",
+  "webbridge_status": "not_run",
+  "webbridge_evidence": {
+    "screenshots": [
+      "measure/runs/old_browser_builtins_20261122/ux-browser-review-p2-229323c-pass-a-dragon-flight-2d.png: 1280x800 active Dragon Flight 2D play screen.",
+      "measure/runs/old_browser_builtins_20261122/ux-browser-review-p2-229323c-pass-b-dragon-flight-2d.png: 1280x800 active Dragon Flight 2D play screen with built-ins deleted.",
+      "measure/runs/old_browser_builtins_20261122/ux-browser-review-p2-229323c-pass-a-dragon-rider-2d.png: 1280x800 active Dragon Rider 2D play screen.",
+      "measure/runs/old_browser_builtins_20261122/ux-browser-review-p2-229323c-pass-b-dragon-rider-2d.png: 1280x800 active Dragon Rider 2D play screen with built-ins deleted.",
+      "measure/runs/old_browser_builtins_20261122/ux-browser-review-p2-229323c-pass-a-spellweavers-run-2d.png: 1280x800 active Spellweavers Run 2D play screen.",
+      "measure/runs/old_browser_builtins_20261122/ux-browser-review-p2-229323c-pass-b-spellweavers-run-2d.png: 1280x800 active Spellweavers Run 2D play screen with built-ins deleted.",
+      "measure/runs/old_browser_builtins_20261122/ux-browser-review-p2-229323c-pass-a-spellweavers-run-3d.png: 1280x800 active Spellweavers Run 3D play screen.",
+      "measure/runs/old_browser_builtins_20261122/ux-browser-review-p2-229323c-pass-b-spellweavers-run-3d.png: 1280x800 active Spellweavers Run 3D play screen with built-ins deleted.",
+      "measure/runs/old_browser_builtins_20261122/ux-browser-review-p2-229323c-pass-a-host-reader.png: 1280x800 story reader with vocabulary and translation controls.",
+      "measure/runs/old_browser_builtins_20261122/ux-browser-review-p2-229323c-pass-b-host-reader.png: 1280x800 story reader with built-ins deleted."
+    ],
+    "accessibility_snapshots": [
+      "Probe JSON records one accessibility snapshot per flow. The Dragon Flight 2D, Dragon Rider 2D, and Spellweavers Run 2D snapshots are empty in both passes because Phaser renders the interface in canvas.",
+      "Spellweavers Run 3D snapshots expose game text, status, and answer buttons in both passes.",
+      "Host reader snapshots expose the story heading, paragraphs, vocabulary buttons, translation controls, and Read to me controls in both passes."
+    ],
+    "interactions": [
+      "In pass A and pass B, selected Dragon Flight, started its 2D edition, clicked the canvas, and sent five keyboard inputs.",
+      "In pass A and pass B, selected Dragon Rider, started its 2D edition, clicked the canvas, and sent five keyboard inputs.",
+      "In pass A and pass B, selected Spellweavers Run, started its 2D edition, clicked the canvas, and sent five keyboard inputs.",
+      "In pass A and pass B, selected Spellweavers Run, started its 3D edition, and sent five keyboard inputs.",
+      "In pass A and pass B, opened the host reader, opened a vocabulary glossary, toggled translation, started and stopped read-aloud, and confirmed a sentence marker."
+    ],
+    "dev_url": "http://127.0.0.1:5199/demo/"
+  },
+  "ux_applicability": "applicable"
+}

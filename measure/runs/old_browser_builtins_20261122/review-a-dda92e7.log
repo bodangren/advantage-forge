@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: review-a
+status: complete
+track: old_browser_builtins_20261122
+phase: Phase 2: Green
+commits: none
+tests_run: Three-file Vitest: exit 0, 19 passed. AC4: exit 0, 230 files passed, 1 skipped, 3392 tests passed, 9 skipped. TypeScript: exit 2, 51 baseline diagnostics. A7 baseline: 2 failing-first controls and 1 regression pin.
+files_changed: review-a-dda92e7.json and review-a-dda92e7.log
+plan_updates: none
+known_failures: F8-F11 remain nonblocking except the fixed otherbox case. F12-F14 are late test or record findings. No new user-reachable wrong result found.
+handoff: A7 closes for the routed receivers. Send F12-F14 to tech debt, not Green. Continue to Phase 2 acceptance on this HEAD.
+END_MEASURE_AGENT_RESULT

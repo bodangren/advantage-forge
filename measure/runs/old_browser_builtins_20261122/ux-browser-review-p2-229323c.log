@@ -1,0 +1,14 @@
+MEASURE_AGENT_RESULT
+status: complete
+verdict: PASS
+audited_head: 229323c5d822f1dcb480b8e5ccf767c98a6f0c75
+phase_base_sha: 3f6a19214994e7ac05a79a8fa7faeded684267b7
+role_base_sha: 229323c5d822f1dcb480b8e5ccf767c98a6f0c75
+checks: Verified the browser probe at HEAD 79a8d5c4ebc96cf6695e05bbf9dbe3f41f7a2d88. `git diff --stat 229323c5d822f1dcb480b8e5ccf767c98a6f0c75 79a8d5c4ebc96cf6695e05bbf9dbe3f41f7a2d88 -- src` printed nothing. The only non-measure change is tests/audio-handoff.test.ts, which the demo does not serve. The probe reports 10 of 10 flows reached, each started and accepted moves, and no console or page errors. Pass B asserted all four built-ins were undefined before page scripts. The reader flow exercised lastIndexWhere and marked a sentence. Reviewed all ten screenshots; they show active game and reader screens, without a broader visual-quality claim. The three Phaser 2D accessibility snapshots are empty because the interface renders in canvas. The build session reports that the server stopped and port 5199 is closed. Dev URL: http://127.0.0.1:5199/demo/.
+blocking_findings: None.
+nonblocking_findings: The Dragon Flight 2D, Dragon Rider 2D, and Spellweavers Run 2D accessibility snapshots are empty because Phaser draws the interface in a canvas. This is a pre-existing accessibility limitation, not a Phase 2 regression.
+evidence: measure/runs/old_browser_builtins_20261122/ux-browser-review-p2-229323c-probe.json reports 2 passes, 10 reached flows, and zero errors. Probe output reports each case started and moved. Reviewed both passes' screenshots for all five flows. Probe end HEAD 79a8d5c4 differs from audited HEAD only by tests/audio-handoff.test.ts outside src; the demo does not serve it.
+retry_recommendation: none
+handoff: Phase 2 UX browser gate passes at audited HEAD 229323c5d822f1dcb480b8e5ccf767c98a6f0c75. The empty accessibility snapshots for Phaser 2D remain a nonblocking note. The screenshots provide evidence of the displayed states only; no broader visual-quality or audible-quality claim is made.
+result_artifact: measure/runs/old_browser_builtins_20261122/ux-browser-review-p2-229323c.json
+END_MEASURE_AGENT_RESULT

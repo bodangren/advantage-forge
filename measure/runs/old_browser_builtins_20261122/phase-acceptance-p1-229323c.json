@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "role": "phase-acceptance",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 1: Red",
+  "baseline_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "phase_base_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "role_base_sha": "229323c5d822f1dcb480b8e5ccf767c98a6f0c75",
+  "audited_head_sha": "229323c5d822f1dcb480b8e5ccf767c98a6f0c75",
+  "status": "fail",
+  "summary": "The historical Red evidence checks out. The current scan fails A7 because it can suppress a real Set call.",
+  "blocking_findings": [
+    "F1 [Blocker] phase-acceptance: tests/apk3d/no-unpolyfilled-builtins.test.ts:350-360 uses a substring to bind the Box3 exclusion. At src/render/page.ts:263, a Set call to otherbox.union(b) produces one raw hit and no reported hit. The exclusion for box.union(b) must match the exact call instance."
+  ],
+  "nonblocking_findings": [
+    "F2 [Nit] phase-acceptance: TD-47 records the site check substring limit and the array getter limit. The current call sites and 29 start states pass independent checks."
+  ],
+  "evidence": [
+    "The phase base is the strategy commit 3f6a192. The role base and audited HEAD both resolve to 229323c5. The tracked worktree was clean.",
+    "The four prerequisite results pass on 229323c5 and cover the same Red tests and subsequent remediation. No separate Phase 1 label or test-only SHA exception is necessary.",
+    "The Red implementation commits 3d7db18f, 64ddb5e9, 6b4f8367 and 1c6f3831 touch only the three assigned test files. The plan places T3r, T3r2 and T3r3 under Phase 2 as remediation rounds.",
+    "The Red logs show T1 failing three in-case helper imports and passing the 29-state pin. T2 failed two in-case imports and the nine-site check.",
+    "The scan from 3d7db18f reported 44 wide hits on 564 files, 35 structuredClone, eight .at and one .findLastIndex. Default audio scope scanned six files and reported zero.",
+    "T3r ended with two intended failures for sparse arrays and an own __proto__ key. T3r2 and T3r3 pass with separate breakage evidence in red-p2-r2-failfirst.log and red-p2-r3-breakage.log.",
+    "The current Vitest run passed four files and 20 tests. The source scan covered 566 files and all 19 labels, with zero reports after three Box3 exclusions.",
+    "An independent TypeScript AST scan found only eight board tile calls, three Box3 calls, and one zod union among the current candidate calls. None is an unsupported built-in.",
+    "A7 fails independently of the current source count. An in-memory Set receiver named otherbox gave one raw hit and zero reports; renaming it to items gave one hit and one stale-exclusion error.",
+    "A3 used named hit counts. A4 has no changed framework marker check and all six assigned Red tasks cite commits. A5 matched the observed Red and Green exit evidence.",
+    "A6 found only an in-progress marker in the registry diff, not a resolved claim. No user-facing file changed in the Red commits, so the UX browser prerequisite does not apply.",
+    "All six late IDs have one disposition in plan.md:331-336. A3-F9 records the scan defect as debt; that does not satisfy the required A7 check.",
+    "Route substitution: ra-quota pick phase-acceptance exited 3 per the brief. The acceptance route is OpenAI sol, independent of Muse Red."
+  ],
+  "commands": [
+    "git rev-parse HEAD; git status --short --untracked-files=no",
+    "git show --stat for 3d7db18f, 64ddb5e9, 6b4f8367 and 1c6f3831",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts tests/apk3d/imports.test.ts' (exit 0; 4 files, 20 tests)",
+    "In-memory Node and TypeScript probe of the committed scanners at 3d7db18f and HEAD; labeled counts and Set exclusion results appear in the tool output",
+    "In-memory TypeScript AST scan of all committed non-generated src TypeScript files",
+    "./measure/doctor.sh --structural-only (exit 0)",
+    "node measure/tools/generate.mjs --check (exit 0)",
+    "node_modules/.bin/prettier --check tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts src/apk3d/sim/copy.ts src/apk3d/sim/index-math.ts src/apk3d/sim/index.ts measure/tracks/old_browser_builtins_20261122/plan.md (exit 0)"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/phase-acceptance-p1-229323c.json",
+    "measure/runs/old_browser_builtins_20261122/phase-acceptance-p1-229323c.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "escalate_human",
+  "confidence": "high",
+  "route": "openai/gpt-6.2-sol#high",
+  "ratings": [
+    {"axis":"correctness","score":3,"evidence":"The Red scan recovers all 44 historical hits but the current exclusion at tests/apk3d/no-unpolyfilled-builtins.test.ts:357 masks the Set fixture."},
+    {"axis":"test_meaning","score":3,"evidence":"The 20 targeted tests pass, but neither exclusion control at tests/apk3d/no-unpolyfilled-builtins.test.ts:390-430 covers the receiver suffix."},
+    {"axis":"scope_discipline","score":5,"evidence":"The four Red implementation commits touch only the three assigned test files."},
+    {"axis":"evidence_quality","score":4,"evidence":"The historical scan counts and the current Set exclusion result came from in-memory probes of the committed scanners."}
+  ],
+  "reviewer_ratings": [
+    {"reviewer_role":"review-a","reviewer_route":"unknown","agreed":false,"score":3,"evidence":"review-a-229323c.json identifies the suffix miss in F9 but permits a pass despite the A7 acceptance rule."},
+    {"reviewer_role":"review-b","reviewer_route":"kimi-code-plan-cn/kimi-for-coding","agreed":true,"score":4,"evidence":"review-b-229323c.json identifies the same-realm state limits verified by the passing state-type pin."},
+    {"reviewer_role":"review-c","reviewer_route":"unknown","agreed":false,"score":2,"evidence":"review-c-229323c.json closes F3, but the Set fixture is still hidden by the exclusion at line 357."},
+    {"reviewer_role":"adversarial","reviewer_route":"openai/gpt-6-luna#high","agreed":true,"score":4,"evidence":"adversarial-p2-229323c.json binds its simulation probes to unchanged code and the passing targeted tests."},
+    {"reviewer_role":"review-a","reviewer_route":"openai/gpt-6.2-sol#high","agreed":true,"score":5,"evidence":"review-a-0d8fc7d.json blocks the earlier filter; the historical scanner excludes the whole matching line."},
+    {"reviewer_role":"review-b","reviewer_route":"kimi-code-plan-cn/kimi-for-coding","agreed":true,"score":3,"evidence":"review-b-0d8fc7d.json identifies the own __proto__ issue that now has a passing regression test."},
+    {"reviewer_role":"review-c","reviewer_route":"openai/gpt-6.2-sol#high","agreed":true,"score":5,"evidence":"review-c-0d8fc7d.json correctly identifies the original line-only exclusion defect in F3."},
+    {"reviewer_role":"adversarial","reviewer_route":"openai/gpt-6-luna#high","agreed":true,"score":4,"evidence":"adversarial-p2-5a1da50.json records simulation parity and the passing targeted gate, not a browser result."}
+  ]
+}
