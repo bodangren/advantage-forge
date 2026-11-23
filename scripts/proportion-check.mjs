@@ -40,10 +40,36 @@ const PASS_TABLE = [
 
 const fmt = (v) => (Number.isFinite(v) ? Number(v.toFixed(6)).toString() : String(v));
 
-/** One line per failing row, in the order given. An empty array means every row passes. */
+const EXPECTED_ROWS = PASS_TABLE.map((r) => r.name);
+
+/**
+ * Validate the shape of an eleven-row table, then report each failing value. A table-shape error
+ * uses one exact name from the validation contract; a value error uses `FAIL <row>: <reason>`.
+ */
 export function checkRows(rows) {
+  const names = Array.isArray(rows) ? rows.map((r) => r?.name) : [];
+  if (!Array.isArray(rows) || rows.length === 0)
+    return [`checkRows: expected 11 rows, found ${Array.isArray(rows) ? rows.length : 0}`];
+  for (const expected of EXPECTED_ROWS)
+    if (!names.includes(expected)) return [`checkRows: missing row ${expected}`];
+  for (const expected of EXPECTED_ROWS)
+    if (names.filter((n) => n === expected).length > 1) return [`checkRows: duplicate row ${expected}`];
+  for (const name of names) if (!EXPECTED_ROWS.includes(name)) return [`checkRows: unknown row ${name}`];
+  if (rows.length !== 11) return [`checkRows: expected 11 rows, found ${rows.length}`];
   const failures = [];
   for (const r of rows) {
+    if (typeof r.value !== 'number' || Number.isNaN(r.value)) {
+      failures.push(`FAIL ${r.name}: not a number`);
+      continue;
+    }
+    if (!Number.isFinite(r.value)) {
+      failures.push(`FAIL ${r.name}: not finite`);
+      continue;
+    }
+    if (r.lo >= 0 && r.value < 0) {
+      failures.push(`FAIL ${r.name}: negative`);
+      continue;
+    }
     if (!(r.value >= r.lo && r.value <= r.hi))
       failures.push(`FAIL ${r.name}: ${fmt(r.value)} not in ${fmt(r.lo)}..${fmt(r.hi)}`);
   }
@@ -863,15 +889,29 @@ function readModel(glb) {
 function parseArgs(argv) {
   let asset = null;
   for (let i = 0; i < argv.length; i++) {
-    if (argv[i] === '--asset') asset = argv[++i];
+    if (argv[i] === '--asset') asset = argv[++i] ?? '';
   }
   return { asset };
 }
 
+// The asset-name rule of src/pipeline.ts checkAssetName, copied here so a bad name is refused
+// before any import, read or write. Copying keeps the load order of the spec unchanged.
+function checkAssetName(name) {
+  if (name === null || name.trim() === '') throw new Error('An asset name is required.');
+  if (path.isAbsolute(name))
+    throw new Error(`Invalid asset name '${name}': an asset name is not an absolute path.`);
+  if (name.includes('/') || name.includes('\\'))
+    throw new Error(`Invalid asset name '${name}': an asset name has no path separator.`);
+  if (name === '.' || name === '..')
+    throw new Error(`Invalid asset name '${name}': an asset name has no dot-dot segment.`);
+}
+
 async function main() {
   const { asset } = parseArgs(process.argv.slice(2));
-  if (!asset) {
-    console.error('usage: proportion-check.mjs --asset <name>');
+  try {
+    checkAssetName(asset);
+  } catch (e) {
+    console.error(e.message);
     process.exit(1);
   }
 
@@ -888,18 +928,6 @@ async function main() {
       process.exit(1);
     }
   }
-  const flatFront = path.join(ROOT, 'out', asset, 'flat', 'front-level.png');
-  const flatSide = path.join(ROOT, 'out', asset, 'flat', 'side-level.png');
-  const litFront = path.join(ROOT, 'out', asset, 'views', 'front-level.png');
-  const litSide = path.join(ROOT, 'out', asset, 'views', 'side-level.png');
-  for (const p of [flatFront, flatSide, litFront, litSide]) {
-    if (!existsSync(p)) {
-      console.error(`asset ${asset}: not built`);
-      console.error(`missing: ${path.relative(ROOT, p)}`);
-      process.exit(1);
-    }
-  }
-
   // 3. asset variants
   const mod = await import(pathToFileURL(assetPath).href);
   const variants = mod.default?.variants ?? {};
@@ -916,6 +944,18 @@ async function main() {
   const base = await import(pathToFileURL(basePath).href);
   const chinY = base.KIM_CHIN_Y;
   const handsLandmarks = base.KIM_HANDS;
+
+  const flatFront = path.join(ROOT, 'out', asset, 'flat', 'front-level.png');
+  const flatSide = path.join(ROOT, 'out', asset, 'flat', 'side-level.png');
+  const litFront = path.join(ROOT, 'out', asset, 'views', 'front-level.png');
+  const litSide = path.join(ROOT, 'out', asset, 'views', 'side-level.png');
+  for (const p of [flatFront, flatSide, litFront, litSide]) {
+    if (!existsSync(p)) {
+      console.error(`asset ${asset}: not built`);
+      console.error(`missing: ${path.relative(ROOT, p)}`);
+      process.exit(1);
+    }
+  }
 
   // 5. read renders and the model
   const stats = JSON.parse(readFileSync(path.join(ROOT, 'out', asset, 'stats.json'), 'utf8'));
@@ -934,8 +974,17 @@ async function main() {
   const fs_ = await readPng(flatSide);
   const lf = await readPng(litFront);
   const ls = await readPng(litSide);
-  const glb = readGlb(glbPath);
-  const { joints, hands } = readModel(glb);
+  let glb;
+  let model;
+  try {
+    glb = readGlb(glbPath);
+    model = readModel(glb);
+  } catch {
+    // A corrupt or truncated GLB gets one named line: no stack, no measure.json write.
+    console.error(`Invalid GLB: ${path.relative(ROOT, glbPath)}`);
+    process.exit(1);
+  }
+  const { joints, hands } = model;
   const need = ['upperarm.L', 'leg.L', 'shin.L', 'hand.L', 'foot.L'];
   for (const n of need)
     if (!joints[n]) {
