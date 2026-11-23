@@ -308,8 +308,10 @@ function render(hit: Hit): string {
 // not Set.prototype.union. this.at(, multi-argument .at(, and z.union( stay out by pattern.
 // Each exclusion binds the file, the line, the label, and the exact excluded call text, and it
 // filters exactly one hit instance: a different built-in — or a second same-label call such as
-// `items.union(other)` beside `box.union(b)` — on the same line is still reported. An exclusion
-// that matches nothing fails the test, so the list cannot rot.
+// `items.union(other)` beside `box.union(b)` — on the same line is still reported. The call text
+// matches with a word boundary on the receiver, so a renamed receiver such as `otherbox` never
+// counts as the excluded call. An exclusion that matches nothing fails the test, so the list
+// cannot rot.
 type Exclusion = { file: string; line: number; label: string; call: string; reason: string };
 
 const EXCLUSIONS: Exclusion[] = [
@@ -336,6 +338,16 @@ const EXCLUSIONS: Exclusion[] = [
   },
 ];
 
+/** The exclusion call must occur as an exact call instance: the receiver keeps a word
+ * boundary, so `box.union(b)` does not match `otherbox.union(b)`, `mybox.union(b)`, or
+ * `box2.union(b)`, and the closing paren keeps one too, so a longer argument list is not
+ * covered. A renamed receiver stays reported; a different built-in on an excluded line was
+ * already reported by the single-instance filter. */
+function exclusionMatchesLine(strippedLine: string, call: string): boolean {
+  const escaped = call.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return new RegExp(`(?<![\\w$])${escaped}(?![\\w$])`).test(strippedLine);
+}
+
 /** Applies applicable exclusions to raw hits; each exclusion filters exactly one hit instance,
  * so a second same-label call on the same line stays reported. */
 function applyExclusions(
@@ -354,7 +366,7 @@ function applyExclusions(
         hit.line === exclusion.line &&
         hit.label === exclusion.label,
     );
-    if (index === -1 || lineText === null || !lineText.includes(exclusion.call)) {
+    if (index === -1 || lineText === null || !exclusionMatchesLine(lineText, exclusion.call)) {
       problems.push(`stale exclusion ${exclusion.file}:${exclusion.line}: ${exclusion.reason}`);
     } else {
       excluded.add(index);
@@ -385,6 +397,60 @@ it('uses no unpolyfilled ES2022+ built-ins under SCAN_ROOT', () => {
     (path, line) => strippedByFile.get(path)?.[line - 1] ?? null,
   );
   expect(problems, 'unpolyfilled built-ins (file:line:builtin)').toEqual([]);
+});
+
+it('an exclusion does not match a renamed receiver (acceptance A7)', () => {
+  const problemsFor = (fixture: string, exclusions: Exclusion[]): string[] => {
+    const stripped = strip(fixture);
+    const raw = scanText(stripped, '<fixture>');
+    return applyExclusions(raw, exclusions, (path, line) =>
+      path === '<fixture>' && line === 1 ? stripped : null,
+    );
+  };
+  const bound: Exclusion[] = [
+    { file: '<fixture>', line: 1, label: 'Set .union(', call: 'box.union(b)', reason: 'test bind' },
+  ];
+  expect(problemsFor('if (!b.isEmpty()) otherbox.union(b);', bound)).toEqual([
+    'stale exclusion <fixture>:1: test bind',
+    '<fixture>:1: Set .union(',
+  ]);
+});
+
+it('an exclusion does not match a longer receiver name (acceptance A7)', () => {
+  const problemsFor = (fixture: string, exclusions: Exclusion[]): string[] => {
+    const stripped = strip(fixture);
+    const raw = scanText(stripped, '<fixture>');
+    return applyExclusions(raw, exclusions, (path, line) =>
+      path === '<fixture>' && line === 1 ? stripped : null,
+    );
+  };
+  const bound: Exclusion[] = [
+    { file: '<fixture>', line: 1, label: 'Set .union(', call: 'box.union(b)', reason: 'test bind' },
+  ];
+  expect(problemsFor('if (!b.isEmpty()) mybox.union(b);', bound)).toEqual([
+    'stale exclusion <fixture>:1: test bind',
+    '<fixture>:1: Set .union(',
+  ]);
+});
+
+it('a different receiver keeps the stale-exclusion rot check (acceptance A7)', () => {
+  const problemsFor = (fixture: string, exclusions: Exclusion[]): string[] => {
+    const stripped = strip(fixture);
+    const raw = scanText(stripped, '<fixture>');
+    return applyExclusions(raw, exclusions, (path, line) =>
+      path === '<fixture>' && line === 1 ? stripped : null,
+    );
+  };
+  const bound: Exclusion[] = [
+    { file: '<fixture>', line: 1, label: 'Set .union(', call: 'box.union(b)', reason: 'test bind' },
+  ];
+  expect(problemsFor('if (!b.isEmpty()) box2.union(b);', bound)).toEqual([
+    'stale exclusion <fixture>:1: test bind',
+    '<fixture>:1: Set .union(',
+  ]);
+  const real263 = readFileSync(join(ROOT, 'src', 'render', 'page.ts'), 'utf8').split('\n')[262]!;
+  expect(real263).toContain('box.union(b)');
+  expect(problemsFor(real263, bound)).toEqual([]);
 });
 
 it('exclusions bind to their exact call text, not just the line (review r1 C-F3)', () => {
