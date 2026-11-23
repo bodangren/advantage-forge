@@ -5,7 +5,7 @@ Status: in_progress. The plan records execution state. `docs/sound-library.md` r
 Decisions (a) to (d) and the acceptance criteria: `spec.md`, amendment 2026-11-22. The earshot set
 `sounds/chibi/*.ogg` is the first source. The synthesized recipes stay the fallback.
 
-Lane: light. Phases 1 to 6. Source: PM decisions of 2026-11-22. Deadline: none named.
+Lane: light (this plan is the record; `metadata.json` has no `lane` key). Phases 1 to 6. Source: PM decisions of 2026-11-22. Deadline: none named.
 
 Files this track touches:
 
@@ -28,11 +28,23 @@ Files this track touches:
 - `src/apk3d/audio/chibi-events.gen.ts` (new, generated from `docs/sound-event-map.tsv`)
 - `src/apk3d/audio/chibi.ts` (new, the wiring helper)
 - `tests/apk3d/audio-wiring.test.ts` (new)
+- `tests/apk3d/audio-files.adversarial.test.ts` (new)
+- `tests/apk3d/audio-files.adversarial-r2.test.ts` (new)
+- `tests/apk3d/audio-files.adversarial-r3.test.ts` (new)
+- `tests/apk3d/audio-wiring.adversarial.test.ts` (new)
+- `tests/apk3d/audio-wiring-parser.ts` (new)
+- `tests/apk3d/no-unpolyfilled-builtins.test.ts` (the T6l scan test)
+- `src/apk3d/factory/mount.ts` (the one-line forward)
+- `src/apk3d/factory/phaser-factory.ts` (the one-line forward)
 - `src/apk3d/factory/types.ts` (the `soundBase` launch field, the site base)
 - `src/host/main.ts` (the `soundBase` value, `${BASE}`)
 - `src/games/*/view2d/game.ts` (29 hosts, the wiring call)
 - `scripts/audio-budget.mjs` (new)
+- `scripts/audio-handoff.mjs` (new)
 - `tests/audio-budget.test.ts` (new)
+- `tests/audio-handoff.test.ts` (new)
+- `tests/audio-handoff.adversarial.test.ts` (new)
+- `tests/audio-handoff.adversarial-r2.test.ts` (new)
 - `demo/public/audio/chibi/` (the 14 files, copied in T6b)
 - `docs/apk-port.md` (one row for the sound files)
 - `out/apk-audio-handoff/chibi/` (not in git)
@@ -492,6 +504,7 @@ Files this track touches:
 - Late finding A6-F2: tech-debt (scanner gap; fixed by track old_browser_builtins_20261122 AC3 controls; no user reaches it)
 - Late finding ADV5-S1: tech-debt (scanner gap; fixed by track old_browser_builtins_20261122 AC3 controls; no user reaches it)
 - Late finding ADV5-R1: tech-debt (TD-44; no current host remaps or uses non-enumerable keys)
+- [x] T6i Green (1b7312f4): own-property guard for event names (adversarial F3)
 - [x] T6j Red (b913e55d): old-browser and inherited-remap pins, unpolyfilled built-in scan
   - Old-browser pin: already in 0750febc. `withoutNativeHasOwn` deletes `Object.hasOwn`
     for the case and restores it in `finally` via the saved descriptor
@@ -838,7 +851,7 @@ Files this track touches:
 
 ## Phase 6: Deferred work
 
-- [ ] T9 (deferred) Credits: Show the lines of `audio/CREDITS.md` on one screen of the game package.
+- [ ] T9 (deferred) Credits: Show the lines of `audio/CREDITS.md` on one screen of the game package (deferral recorded in 03bdf3e5).
       This task starts when a library take enters a set. The earshot set needs no credits screen
       (PM decision 2026-11-22c).
   - Done-when, when it starts: each credit line of `audio/CREDITS.md` appears on the screen, and the
@@ -855,3 +868,12 @@ Run these commands after the last phase, and record each exit code in this plan:
 - `node_modules/.bin/prettier --check` on each touched text file
 
 Known limits stay known: `tsc --noEmit` keeps the 38 baseline errors of TD-35 to TD-39.
+
+## Final acceptance
+
+- Final acceptance 2026-11-23 on claude-agent/sonnet#max; Phase 1 and Phase 2 acceptances and Phase 2 Review B used claude-code/claude-sonnet-5-5#max (the same family); the final acceptance re-ran every gate and re-checked AC1 to AC3; no other family had quota; accepted by the orchestrator with this record (PM informed 2026-11-23). Audited HEAD 4aea1282; later commits touched no audio path.
+- Gate exit codes at 4aea1282, from `measure/runs/audio_game_integration_20261014/final-acceptance-4aea128.json`: the 20-file audio suite (231 tests), the project gate (3389 tests), `generate.mjs --check`, `doctor --structural-only`, `bash measure/doctor.sh`, the live budget run, the hand-off checksum (14 OK), and the scan test exit 0; `tsc --noEmit` exits 2 with the 51 baseline errors: 38 of TD-35 to TD-39 and 13 of another session in `tests/storytime-faces-r2-guards.test.ts` (FA-10).
+- Phase 6 holds no phase acceptance, because T9 alone is deferred; AC7 holds by direct check (`[ ]` plus deferred, and no `audio/CREDITS.md` commit). The later Phase 1 pass `phase-acceptance-p1-79ae99b.json` governs over `phase-acceptance-p1-ffbe96a.json`; the Phase 3 fails `09b4028` and `82b9c88` stay recorded (FA-11).
+- `tests/apk3d/no-unpolyfilled-builtins.test.ts` (T6l) is now owned in practice by track `old_browser_builtins_20261122`, whose commits `1dcc1043`, `9440c572`, `3d7db18f`, `64ddb5e9`, and `6b4f8367` added the stateful lexer and the three host `atIndex(...)` edits. All 20 audio test files pass with them at 4aea1282. If that track reverts, T6l and TD-45 reopen (FA-13).
+- Prettier: 38 of 75 touched text files fail `prettier --check`; 37 were dirty before the track. This plan is the one track-owned failure (list indentation and line wrap only). A `--write` would move the line numbers that run records cite, so the plan keeps its state (FA-8).
+- `docs/sound-library.md:125-129` is out of date: the section `Game use (later)` says the games keep the synthesized sounds until an integration track maps the events, and that MP3 plays in every target browser. This track maps 31 events and picks Ogg or MP3 per browser. The update is a docs record edit outside this commit's path list (FA-9).
