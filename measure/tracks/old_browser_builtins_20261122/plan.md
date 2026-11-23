@@ -377,6 +377,33 @@ tests/apk3d/no-unpolyfilled-builtins.test.ts'` exits 0: 1 file passed, 2 tests p
     `node_modules/.bin/prettier --check scripts/old-browser-check.mjs` exits 0. `out/old-browser/`
     stays out of git.
 
+- [x] T7r Green (c3f48a52): review r1 F1 accepted-move check, F2 cleanup-safe report, F3 owned-server readiness, home-path scrub, CLI usage
+  - F1: a move now requires a player-action transition in `state.word`, `state.collected`,
+    `state.score`, `state.courage` or the current round `chosen` field. Clock fields such as
+    `timeMs`, `distance` and `rounds` never count. `moves` is the number of accepted actions;
+    `action_inputs` names the inputs that caused them. The Green run reports `moves: 2` with
+    `action_inputs: ["ArrowRight", "1"]`. A pass with no accepted action raises
+    `no player-action transition` and exits 1.
+  - F2: browser close and Vite stop run in a `finally` before the report write. A write failure
+    prints one stderr line without a stack and sets exit 1. The report path and error strings use
+    `<repo>` and `<home>` instead of absolute paths.
+  - F3: the script probes port 5199 before spawn. A foreign listener gives
+    `port 5199 already in use` at once. Readiness also needs the owned child alive and a response
+    with the Vite client marker, not any HTTP 200.
+  - CLI: `--help` prints one stdout line and exits 0. An unknown option, an extra argument or a
+    bad `--game` prints one stderr line and exits 1 without a stack. Header comment names
+    `moves`, `action_inputs`, `state_changed`, `errors` and `absent_in_page`.
+  - Probes 2026-11-23 (all under `measure/runs/old_browser_builtins_20261122/`, none committed):
+    `probe-p3r1-no-input.mjs` blocks keyboard events in the init script and exits 1 with
+    `no player-action transition`, `moves: 0` and `state_changed: true`.
+    `probe-p3r1-write-fail.mjs` makes the report path a directory and exits 1 with one
+    `check: cannot write report: EISDIR ...` line, no stack, and no listener on 5199.
+    `probe-p3r1-collision.mjs` starts a decoy HTTP server inside its heavy-run call; the checked
+    script exits 1 in 242 ms with `port 5199 already in use`. The Green command after these probes
+    exits 0 with `started: true`, `moves: 2`, `errors: []` and two nonempty screenshots.
+    `node_modules/.bin/prettier --check scripts/old-browser-check.mjs` exits 0. `ss -ltn` and `ps`
+    show no listener on 5199 and no owned vite or chrome process after each run.
+
 ## Phase 4: Gates
 
 - [ ] T8 Gates: Run every gate of AC6 and record each exit code in this plan.
