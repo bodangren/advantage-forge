@@ -454,7 +454,16 @@ tests/apk3d/no-unpolyfilled-builtins.test.ts'` exits 0: 1 file passed, 2 tests p
 
 ## Phase 4: Gates
 
-- [ ] T8 Gates: Run every gate of AC6 and record each exit code in this plan.
+- [x] T8 Gates (9e406e8c): Run every gate of AC6 and record each exit code in this plan. Every
+      command below ran on 2026-11-23 against HEAD `9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4`.
+  - Three-file command: `node node_modules/vitest/vitest.mjs run tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts --maxWorkers=1` through the heavy runner exits 0. Reporter: `Test Files 3 passed (3)`, `Tests 23 passed (23)`. The scan reports zero hits over `src/`.
+  - Witness files: `node node_modules/vitest/vitest.mjs run tests/old-browser/adversarial-check.test.ts tests/old-browser/adversarial-check-r2.test.ts --maxWorkers=1` through the heavy runner exits 0. Reporter: `Test Files 1 passed | 1 skipped (2)`, `Tests 1 passed | 1 skipped (2)`. The skipped file is the TD-49 deferred case.
+  - Project command: `node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts` through the heavy runner exits 0. Reporter: `Test Files 231 passed | 2 skipped (233)`, `Tests 3397 passed | 10 skipped (3407)`. Tested commit: `9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4`. No TD-35 to TD-40 failure occurs in this run.
+  - `node measure/tools/generate.mjs --check` exits 0: `Measure facts are current (4 files).`
+  - `./measure/doctor.sh --structural-only` exits 0: `Measure doctor found no structural errors.`
+  - `node_modules/.bin/prettier --check` on the AC6 file list exits 1 with `Code style issues found in 35 files`. The split: the seven files this track created or widened (`scripts/old-browser-check.mjs`, `tests/old-browser/deep-copy.test.ts`, `tests/old-browser/index-math.test.ts`, `tests/apk3d/no-unpolyfilled-builtins.test.ts`, `src/apk3d/sim/copy.ts`, `src/apk3d/sim/index-math.ts`, `measure/tracks/old_browser_builtins_20261122/test-strategy.md`) pass with exit 0. All 35 failing files are pre-existing baseline debt: each fails when its version at track start `3f6a19214994e7ac05a79a8fa7faeded684267b7` is piped to the same check, and none is reformatted here. This is not a pass for those files.
+  - Standalone scan: `node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/no-unpolyfilled-builtins.test.ts` through the heavy runner exits 0: `Test Files 1 passed (1)`, `Tests 11 passed (11)`, zero reported hits.
+  - Phase 3 check: `node scripts/old-browser-check.mjs --game spellweavers-run` through the heavy runner exits 0: `started: true`, `moves: 3`, `negative_control.changed: false`, `errors: []`, all four deleted names `undefined`. `ss -ltn` shows no listener on 5199 and `ps` shows no owned vite or chrome process.
   - Commands, each run through the heavy runner where it starts tests:
     - `node node_modules/vitest/vitest.mjs run tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts --maxWorkers=1`
     - `node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts`
