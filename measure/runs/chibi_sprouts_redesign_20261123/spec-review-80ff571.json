@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "role": "spec-review",
+  "track": "chibi_sprouts_redesign_20261123",
+  "phase": "track setup",
+  "baseline_sha": "80ff5717ba3a9479bedbe3d9e5ef05d7dd7d1a39",
+  "audited_head_sha": "80ff5717ba3a9479bedbe3d9e5ef05d7dd7d1a39",
+  "status": "fail",
+  "summary": "The amendment closes most first-round findings. Four first-round blockers and three defects in amended lines remain.",
+  "blocking_findings": [
+    "F3 [Blocker] spec.md Face and eye rules: The face centre requires the eye row, but the eye row requires qualified eye components, which require the face area and face width. Define an independent seed and evaluation order. Rationale: The definitions form a cycle, so Red and Green cannot compute the first value.",
+    "F4 [Blocker] spec.md The hand rules and AC3: Flipping an unsigned PCA eigenvector toward the body makes its sign independent of the physical palm side. Define an oriented surface or another signed landmark and test a palm-out hand. Rationale: A palm-out hand with the same vertex cloud passes the claimed inward-facing check.",
+    "F5 [Blocker] spec.md The hand rules: Each hand-band row requires a body run containing W/2, but a normal gap between the legs can leave that column transparent. Define the leg run for each side and the absent-run and pixel-gap rules. Rationale: A correctly separated hand can fail, and unrelated outer runs can be selected as hands.",
+    "F8 [Blocker] spec.md AC4 and plan.md T8: The Mom-only panel removes Kim art, but the standing rule also forbids uploading sprout art to a third party before approval. Require a local route for the Mom panel or stop when none exists. Rationale: A remote judge can disclose the new render despite the standing rule.",
+    "F16 [Blocker] plan.md T2 and T4: Red must commit assets/flat-render-pin.ts and scripts/proportion-check.mjs, but the mid-red gate rejects both as non-test files. Move fixtures and implementation to permitted phases and preserve failing behavior tests. Rationale: measure_interphase_checks.py non_test_paths and the mid-red gate reject the planned commits.",
+    "F17 [Blocker] spec.md Measurement method and plan.md T4: The script must statically import KIM_CHIN_Y from a file first created in T5, yet T4 must run before that file exists and report the named missing-asset error. Define a deferred import after the missing-asset check. Rationale: Static module resolution fails before the script can produce the required Red result."
+  ],
+  "nonblocking_findings": [
+    "F15 [Major] spec.md AC5 and plan.md T7: The new background scan requires a side figure for each reference, but Mom has no side drawing. Define the scan only for Kim's side panel and specify the lit-render row scan. Rationale: The sheet builder cannot apply the stated scan to the empty Mom side cell.",
+    "F18 [Nit] spec.md Exclusions and plan.md Scope: The newly approved LATO.2 trial is absent from the track. Record the separate trial in the planned later amendment. Rationale: The orchestrator reports that the trial runs alongside this work under a separate approval."
+  ],
+  "evidence": [
+    "F1 withdrawn: T2 pins renderer behavior and T3 implements it; F16 separately records the Red gate path defect.",
+    "F2 withdrawn: AC1 moves all three hero assertions into an active describe and lists the 15 scrapped tests.",
+    "F6 withdrawn: The flat contract now defines color space, interpolation, alpha, material replacement, restoration, and flag combinations.",
+    "F7 withdrawn: Studio.aim at azimuth 90 places the camera at +X with +Y up; image right is -Z, as the revised formula states.",
+    "F9 withdrawn: AC6 gates outputs behind an amendment and requires separate Red and Green tasks for the later walk clip.",
+    "F10 withdrawn: T6 pins sheet behavior and T7 implements the sheet before T8 judges it.",
+    "F11 withdrawn: AC2 now specifies separate crown, sole, head-width, and merged-eye mutations.",
+    "F12 withdrawn: T5 compares parsed asset keys and baseline values instead of relying on diff stat.",
+    "F13 withdrawn: Solving the stated equation gives T=0.408684711 m, shoulder=0.993684711 m, and arm=0.543550666 m.",
+    "F14 withdrawn: T9 sends the handoff without edits and T10 records the handoff and answer.",
+    "HEAD at start equals audited_head_sha 80ff5717ba3a9479bedbe3d9e5ef05d7dd7d1a39.",
+    "The track diff from 27b21d1b to 80ff5717 is empty.",
+    "The three hero assertions and all 15 named scrapped tests exist in the original test files.",
+    "The Phase 9 deferred task lines remain recognizable by the interphase checker."
+  ],
+  "commands": ["git rev-parse HEAD", "git diff --stat 27b21d1b 80ff5717 -- measure/tracks/chibi_sprouts_redesign_20261123", "git diff 61db4f13 27b21d1b -- measure/tracks/chibi_sprouts_redesign_20261123/spec.md measure/tracks/chibi_sprouts_redesign_20261123/plan.md", "python3: solve the stated quadratic", "rg: inspect test names and role gate"],
+  "changed_files": ["measure/runs/chibi_sprouts_redesign_20261123/spec-review-80ff571.json", "measure/runs/chibi_sprouts_redesign_20261123/spec-review-80ff571.log"],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "escalate_human",
+  "confidence": "high",
+  "paraphrase": {
+    "proposes": "The track builds a new SDF adult base using Kim's ratios and makes Mom the first trial. It measures the shape, requests an independent look, and stops for PM review before any cut-out or sprite.",
+    "current_system": "The scrapped Sprout models use the shared humanoid kind, whose adult hands face forward. Forge currently renders perspective views above level, and the test suite includes contracts for scrapped models and the separate hero."
+  }
+}

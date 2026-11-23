@@ -1,0 +1,28 @@
+Phase base: 3f6a19214994e7ac05a79a8fa7faeded684267b7
+Role base and audited HEAD: 80ff5717ba3a9479bedbe3d9e5ef05d7dd7d1a39
+HEAD matched before and after the test run. The tracked worktree was clean.
+git diff --exit-code 61db4f13 80ff5717 -- src printed nothing.
+
+HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts'
+Result: three files and 23 tests passed.
+
+The allowed entries name the file, line, label, reason, and full trimmed line. The old exclusion regex helper is gone.
+The probe accepts the three live lines. It reports a stale exclusion and an unmatched hit for both C5-F7 cases and for a moved line.
+The plan and metadata agree on the A7 exact-line fix. C5-F7 is closed.
+Late finding F8: tech-debt (TD-47 still lists the closed C5-F7 gap; no user can reach a wrong result).
+Retain the detached release worktree, shelf-sync worktree and branch, and wip/oct-skill-docs-20261023 for their owners. Leave the origin refs unchanged.
+
+MEASURE_AGENT_RESULT
+role: measure-review-c-ux-api
+status: complete
+track: old_browser_builtins_20261122
+phase: Phase 2: Green
+commits: none
+tests_run: three-file Vitest gate through heavy-run.sh (pass, 23 tests); independent exact-line probes
+files_changed: review-c-80ff571.json, review-c-80ff571.log
+plan_updates: none
+known_failures: no blockers; F5 and F6 remain nonblocking; F8 is late record tech debt
+handoff: C5-F7 is closed. Send F8 to tech debt only. No new user-reachable wrong result was found.
+END_MEASURE_AGENT_RESULT
+
+RESULT: PASS

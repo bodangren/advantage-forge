@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: review-a
+status: complete
+track: old_browser_builtins_20261122
+phase: Phase 2: Green
+commits: none
+tests_run: Three-file Vitest: exit 0, 23 passed. AC4: exit 0, 230 files passed, 1 skipped, 3396 tests passed, 9 skipped. A7 baseline: 2 failing-first controls and 2 regression pins. Generator, structural doctor, and focused Prettier: exit 0.
+files_changed: review-a-80ff571.json and review-a-80ff571.log
+plan_updates: none
+known_failures: F8-F12 remain nonblocking. F13 is fixed. F14 is historical. F15-F16 are late test-only findings. No current user-reachable wrong result or source scan false PASS found.
+handoff: A7 is closed for the routed exact-line cases. Record F15-F16 as tech debt. Continue to Phase 2 acceptance on this HEAD.
+END_MEASURE_AGENT_RESULT

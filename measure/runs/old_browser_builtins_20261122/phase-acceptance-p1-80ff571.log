@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: phase-acceptance
+status: complete
+track: old_browser_builtins_20261122
+phase: Phase 1: Red
+commits: none
+tests_run: Targeted Vitest PASS (27 tests); A7 receiver, moved-line and two-call probes PASS; source scan zero reported hits; committed structural evidence PASS.
+files_changed: phase-acceptance-p1-80ff571.json and .log
+plan_updates: none
+known_failures: No Red blocker. Worktree structural checks fail only on concurrent Chibi Sprouts redesign edits.
+handoff: Record A7-F15, A7-F16 and C7-F8 as debt in the next window. Update the closed C5-F7 subitem in TD-47.
+END_MEASURE_AGENT_RESULT

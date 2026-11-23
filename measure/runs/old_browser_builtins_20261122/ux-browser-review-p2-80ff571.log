@@ -1,0 +1,14 @@
+MEASURE_AGENT_RESULT
+status: complete
+verdict: PASS
+audited_head: 80ff5717ba3a9479bedbe3d9e5ef05d7dd7d1a39
+phase_base_sha: 3f6a19214994e7ac05a79a8fa7faeded684267b7
+role_base_sha: 229323c5d822f1dcb480b8e5ccf767c98a6f0c75
+checks: Re-bound the UX result to full HEAD 80ff5717ba3a9479bedbe3d9e5ef05d7dd7d1a39, which the orchestrator reports as current. The orchestrator reports an empty src/ diff from 61db4f13 and only tests/apk3d/no-unpolyfilled-builtins.test.ts outside measure and docs/chibi-sprouts; the demo does not serve that scanner test. The unchanged probe reports ten flows reached in normal and deleted-built-ins modes, with no console or page errors. The empty Phaser 2D accessibility snapshots remain a nonblocking note. No shell commands were run by this role. Dev URL: http://127.0.0.1:5199/demo/.
+blocking_findings: None.
+nonblocking_findings: Dragon Flight 2D, Dragon Rider 2D, and Spellweavers Run 2D accessibility snapshots are empty because Phaser renders the interface in canvas. This is a pre-existing accessibility limitation.
+evidence: The orchestrator supplied the full current HEAD and source-diff evidence. The prior probe and screenshots are unchanged. Probe output reports 10 of 10 flows reached and 0 errors.
+retry_recommendation: none
+handoff: Phase 2 UX result passes at audited HEAD 80ff5717ba3a9479bedbe3d9e5ef05d7dd7d1a39. Keep the empty Phaser 2D accessibility trees as a nonblocking note.
+result_artifact: measure/runs/old_browser_builtins_20261122/ux-browser-review-p2-80ff571.json
+END_MEASURE_AGENT_RESULT

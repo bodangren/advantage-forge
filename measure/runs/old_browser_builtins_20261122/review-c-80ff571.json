@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "role": "measure-review-c-ux-api",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 2: Green",
+  "baseline_sha": "80ff5717ba3a9479bedbe3d9e5ef05d7dd7d1a39",
+  "role_base_sha": "80ff5717ba3a9479bedbe3d9e5ef05d7dd7d1a39",
+  "phase_base_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "audited_head_sha": "80ff5717ba3a9479bedbe3d9e5ef05d7dd7d1a39",
+  "current_head_sha": "80ff5717ba3a9479bedbe3d9e5ef05d7dd7d1a39",
+  "audited_head_is_current": true,
+  "contract_applicability": "applicable",
+  "applicability_evidence": [
+    "test-strategy.md:35 excludes public API, route, and UI review.",
+    "The phase diff adds the internal API at src/apk3d/sim/index.ts:2-3. This re-review covers the scan gate.",
+    "The remediation changes the scan test and records only. The src diff from 61db4f13 is empty."
+  ],
+  "status": "pass",
+  "summary": "The exact-line exclusion closes C5-F7. All 23 targeted tests passed. One stale debt entry remains nonblocking.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F5 [Nit] review-c: The strategy count at test-strategy.md:169 remains unchanged. The phase plan records this existing finding as tech debt.",
+    "F6 [Nit] review-c: src/apk3d/sim/copy.ts:9-12 overstates the result shape for unsupported inputs. This existing finding remains in TD-47 and is not user-reachable.",
+    "F8 [Nit] review-c: Late finding, tech-debt. measure/tech-debt.md:46 still lists the C5-F7 receiver gap as open. The exact-line fix closes that subitem. This record discrepancy is not a user-reachable wrong result."
+  ],
+  "evidence": [
+    "git rev-parse HEAD matched the requested SHA before and after the test run. No tracked worktree changes were present.",
+    "git diff --exit-code 61db4f13 80ff5717 -- src printed nothing. There is no source or test diff from 9459687d to the audited HEAD.",
+    "The wrapped three-file gate passed. Vitest reported three files and 23 tests passed.",
+    "C5-F7 closed: the independent probe rejects holder.box.union(b) and λbox.union(b), with and without the original guard. Each reports the stale exclusion and the union call.",
+    "An allowed entry at tests/apk3d/no-unpolyfilled-builtins.test.ts:317-344 gives the file, pinned line, built-in label, reason, and a constant for the full trimmed line.",
+    "The independent probe accepts all three live rows. On a line move it reports the old line as stale and the union at its new line.",
+    "On a changed line, the stale-exclusion diagnostic gives the pinned file, line, and reason. The unmatched hit is reported separately. The diagnostic does not print expected text.",
+    "The new control names at lines 424, 447, 586, and 619 identify the two receiver cases, the moved line, and the three live entries.",
+    "The old exclusionMatchesLine regex helper is gone. The active filter at lines 355-374 compares the trimmed stripped line directly.",
+    "plan.md:333 cites T3r5 and 9459687d for the A7 exact-line fix. metadata.json:14 names the same fix as the fourth remediation round.",
+    "No browser inspection or TypeScript project check ran. The only new finding concerns a debt record, not a product result."
+  ],
+  "commands": [
+    "git rev-parse HEAD; git status --short --untracked-files=no",
+    "git diff --exit-code 61db4f13 80ff5717 -- src",
+    "git diff --name-status 9459687d 80ff5717 -- src tests",
+    "git diff --check 61db4f13 80ff5717 -- src tests/apk3d/no-unpolyfilled-builtins.test.ts",
+    "git show --format=short 9459687d; git show --format=short 48c08742",
+    "node --no-warnings --input-type=module: run the actual scanner and exclusion filter on the live file, both C5-F7 cases, and moved or changed lines in memory",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts'"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/review-c-80ff571.json",
+    "measure/runs/old_browser_builtins_20261122/review-c-80ff571.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "unknown",
+  "ratings": [
+    {"axis": "correctness", "score": 5, "evidence": "The independent probe accepts all three live rows and rejects both C5-F7 receivers at the pinned line."},
+    {"axis": "test_meaning", "score": 4, "evidence": "Tests at lines 424, 447, 586, and 619 check renamed receivers, a moved line, and all real allowed rows."},
+    {"axis": "scope_discipline", "score": 5, "evidence": "Commits 9459687d and 48c08742 change the scan test and Measure records without changing src/."},
+    {"axis": "evidence_quality", "score": 5, "evidence": "The wrapped gate and independent probe verify the C5-F7 closure at the audited HEAD."}
+  ]
+}

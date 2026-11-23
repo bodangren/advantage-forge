@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: spec-review
+status: complete
+track: chibi_sprouts_redesign_20261123
+phase: track setup
+commits: none
+tests_run: No test suite run. Checked HEAD, track diff, role gate, test names, projection, and target arithmetic.
+files_changed: measure/runs/chibi_sprouts_redesign_20261123/spec-review-80ff571.json; measure/runs/chibi_sprouts_redesign_20261123/spec-review-80ff571.log
+plan_updates: none
+known_failures: Spec review failed with six blockers and one major finding. The JSON also records the separate LATO.2 trial as an open gap.
+handoff: Route the remaining findings to the orchestrator. Preserve all PM decisions. The role base SHA is 80ff5717ba3a9479bedbe3d9e5ef05d7dd7d1a39.
+END_MEASURE_AGENT_RESULT

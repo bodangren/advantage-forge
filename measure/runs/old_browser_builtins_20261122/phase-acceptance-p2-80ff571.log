@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: phase-acceptance
+status: complete
+track: old_browser_builtins_20261122
+phase: Phase 2: Green
+commits: none
+tests_run: Targeted Vitest PASS (27 tests); AC4 PASS (3396 tests, 9 skipped); UX prerequisite PASS; A7 PASS; TypeScript exit 2 (51 baseline, none in changed files); committed structural evidence PASS.
+files_changed: phase-acceptance-p2-80ff571.json and .log
+plan_updates: none
+known_failures: No Green blocker. Worktree structural checks fail only on concurrent Chibi Sprouts redesign edits.
+handoff: Record the three late debt dispositions and update C5-F7. Keep the Phase 3 AC5 check separate from the accepted UX evidence.
+END_MEASURE_AGENT_RESULT

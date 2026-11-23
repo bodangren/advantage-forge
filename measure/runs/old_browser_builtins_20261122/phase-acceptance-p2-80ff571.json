@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "role": "phase-acceptance",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 2: Green",
+  "baseline_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "phase_base_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "role_base_sha": "80ff5717ba3a9479bedbe3d9e5ef05d7dd7d1a39",
+  "audited_head_sha": "80ff5717ba3a9479bedbe3d9e5ef05d7dd7d1a39",
+  "status": "pass",
+  "summary": "The Green work passes at 80ff571. The A7 probes, UX prerequisite, targeted tests and project tests pass.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "A7-F15 [Nit] phase-acceptance: The moved-line and real-line controls are regression pins, not failing-first tests.",
+    "A7-F16 [Nit] phase-acceptance: The same-label control uses a synthetic exclusion. The independent probe with the unchanged production exclusion reports both calls and a stale entry.",
+    "C7-F8 [Nit] phase-acceptance: TD-47 still lists the fixed C5-F7 receiver gap. Update that subitem without closing the other debt.",
+    "F4 [Nit] phase-acceptance: Phaser canvas flows still expose empty accessibility snapshots. This predates the built-in replacements.",
+    "F6 [Nit] phase-acceptance: Worktree structural checks see a stale Chibi Sprouts redesign status row from concurrent edits. The committed row and structural checks are clean."
+  ],
+  "evidence": [
+    "F3 withdrawn: The exact-line exclusion reports the qualified and non-ASCII Set hits. The prior scanner suppressed both.",
+    "The otherbox, mybox, box2, moved-line and wrong-file cases each report one hit and a stale exclusion. Both hits remain visible when an extra call is on the allowed line.",
+    "All five prerequisite results pass and target 80ff571. No test-only SHA allowance is necessary for the result identities.",
+    "The browser role rebinds its earlier probe to unchanged application code. The source, demo, Vite target and dependency files did not change since the previous acceptance.",
+    "The probe records eight game state changes, two reader sentence markers and zero errors. It verifies all four globals absent in the second pass. Phase 3 AC5 remains separate.",
+    "T4 to T6, T5r and T5r2 retain their reachable SHAs. The prior 44 replacement and 29 replay checks remain applicable. No new production caller changed.",
+    "The current source scan covers 566 files and 19 labels. It produces three raw Box3 hits and zero reported hits.",
+    "The four-file gate exited 0 with 27 passing tests. AC4 exited 0 with 230 files and 3396 tests passed, and one file and nine tests skipped.",
+    "TypeScript exited 2 with the 51 baseline diagnostics. None is in a changed file. The project suite makes no live claim from its skipped audio artifact test.",
+    "A3 counts derive from labeled output. A4 has no changed marker implementation. A5 matches the observed gate exits. The registry carries no resolved claim for A6.",
+    "All 13 completed tasks cite reachable SHAs. Eleven late finding IDs each have one plan disposition. A7-F15, A7-F16 and C7-F8 await the next record update.",
+    "The late-finding rule states: \"Test tooling, gate scripts, fixtures, logs, and records do not meet this test.\" These three calls still need plan entries under the same contract.",
+    "Direct doctor and generator checks each exited 1 for a concurrent Chibi Sprouts redesign row change from 12 to 14 tasks. The read-only check using committed inputs reported no errors.",
+    "The accepted deepCopy limits remain in effect. C5-F7 is fixed, and the other TD-47 subitems remain open."
+  ],
+  "commands": [
+    "git rev-parse HEAD; git status --short --untracked-files=no",
+    "git diff --exit-code 61db4f13 HEAD -- src demo package.json pnpm-lock.yaml vite.demo.config.ts (exit 0)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts tests/apk3d/imports.test.ts' (exit 0; 4 files, 27 tests)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts' (exit 0; 230 files passed, 1 skipped; 3396 tests passed, 9 skipped)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/typescript/bin/tsc --noEmit --pretty false' (exit 2; 51 labeled diagnostics, none in changed files)",
+    "./measure/doctor.sh --structural-only (worktree exit 1; unrelated status row only)",
+    "node measure/tools/generate.mjs --check (worktree exit 1; unrelated status row only)",
+    "Read-only freshnessErrors and structural doctor replay with committed bytes for four unrelated dirty track files (exit 0)",
+    "In-memory Node probe of committed scanText and applyExclusions at 61db4f13 and 80ff571, and full current src scan",
+    "jq verification of moved, sentence_marked, error counts and deleted globals in ux-browser-review-p2-229323c-probe.json"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/phase-acceptance-p2-80ff571.json",
+    "measure/runs/old_browser_builtins_20261122/phase-acceptance-p2-80ff571.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "unknown",
+  "ratings": [
+    {"axis":"correctness","score":5,"evidence":"The probe checks the receiver variants, moved line, and two-call line against the actual exclusion at src/render/page.ts:263."},
+    {"axis":"test_meaning","score":4,"evidence":"The 27 targeted tests and the independent two-call fixture verify the fix, but two new controls are regression pins."},
+    {"axis":"scope_discipline","score":5,"evidence":"git diff 61db4f13 HEAD shows no changes to production or demo code."},
+    {"axis":"evidence_quality","score":4,"evidence":"The AC4 reporter, actual browser probe, and committed-input status check support the verdict with recorded limits."}
+  ],
+  "reviewer_ratings": [
+    {"reviewer_role":"review-a","reviewer_route":"unknown","agreed":true,"score":5,"evidence":"review-a-80ff571.json verifies the A7 receiver cases and distinguishes the two regression pins."},
+    {"reviewer_role":"review-b","reviewer_route":"kimi-code-plan-cn/kimi-for-coding","agreed":true,"score":4,"evidence":"The 9459687d diff confirms the test-only scope in review-b-80ff571.json."},
+    {"reviewer_role":"review-c","reviewer_route":"unknown","agreed":true,"score":5,"evidence":"The two independent receiver probes confirm the C5-F7 closure reported in review-c-80ff571.json."},
+    {"reviewer_role":"adversarial","reviewer_route":"openai/gpt-6-luna#high","agreed":true,"score":5,"evidence":"The independent source scan confirms the three intended hits and zero reports in adversarial-p2-80ff571.json."}
+  ]
+}

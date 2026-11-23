@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "role": "phase-acceptance",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 1: Red",
+  "baseline_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "phase_base_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "role_base_sha": "80ff5717ba3a9479bedbe3d9e5ef05d7dd7d1a39",
+  "audited_head_sha": "80ff5717ba3a9479bedbe3d9e5ef05d7dd7d1a39",
+  "status": "pass",
+  "summary": "The Red work passes at 80ff571. The exact-line exclusion reports every routed Set call and preserves the intended Box3 exclusions.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "A7-F15 [Nit] phase-acceptance: The moved-line and real-line controls are regression pins. The qualified and non-ASCII receiver cases have independent failing-first evidence against 61db4f13.",
+    "A7-F16 [Nit] phase-acceptance: The synthetic same-label control does not use the unchanged production exclusion. An independent probe used that exclusion and reported both calls plus the stale entry.",
+    "C7-F8 [Nit] phase-acceptance: TD-47 still lists C5-F7. The exact-line fix closes that receiver defect. The debt record needs an update."
+  ],
+  "evidence": [
+    "F3 withdrawn: At 61db4f13 the qualified and non-ASCII Set calls yielded one raw hit and zero reports. At 80ff571 each yields one report and one stale-exclusion error.",
+    "The otherbox, mybox and box2 Set probes report a hit and a stale exclusion. The allowed text on another line or in another file also reports a hit.",
+    "Adding a second same-label call or structuredClone to the allowed line reports both raw hits and a stale exclusion. The three unchanged Box3 lines are the only raw hits in the current source scan.",
+    "The committed scanner checks 566 non-generated source files and 19 labels. It reports zero hits after the intended exclusions at src/render/page.ts:263,440,447.",
+    "Red commit 9459687d touches only the scanner test. Commit 48c08742 records T3r5 and the PM escalation for round 4.",
+    "The historical T1 to T3 and remediation evidence still applies. The targeted gate now passed 27 tests across four files.",
+    "All 13 completed task lines cite reachable commits. Eleven late finding IDs each have one plan line. Three round-7 IDs remain pending record entries.",
+    "The late-finding rule states: \"Test tooling, gate scripts, fixtures, logs, and records do not meet this test.\" The orchestrator must still record the three pending debt dispositions.",
+    "The worktree generator and doctor each exited 1 only because of concurrent edits to the Chibi Sprouts redesign track. Read-only replay with that track's committed files found no freshness or structural errors.",
+    "All applicable review and adversarial results target 80ff571. No test-only SHA allowance is necessary. No user-facing file changed in the Red work."
+  ],
+  "commands": [
+    "git rev-parse HEAD; git status --short --untracked-files=no",
+    "git show 9459687d -- tests/apk3d/no-unpolyfilled-builtins.test.ts",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts tests/apk3d/imports.test.ts' (exit 0; 4 files, 27 tests)",
+    "In-memory Node probe of committed scanText and applyExclusions at 61db4f13 and 80ff571, and full current src scan",
+    "./measure/doctor.sh --structural-only (worktree exit 1; unrelated status row only)",
+    "node measure/tools/generate.mjs --check (worktree exit 1; unrelated status row only)",
+    "Read-only freshnessErrors and structural doctor replay with committed bytes for four unrelated dirty track files (exit 0)",
+    "node_modules/.bin/prettier --check tests/apk3d/no-unpolyfilled-builtins.test.ts tests/old-browser/index-math.test.ts tests/old-browser/deep-copy.test.ts measure/tracks/old_browser_builtins_20261122/{plan.md,metadata.json} (exit 0)"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/phase-acceptance-p1-80ff571.json",
+    "measure/runs/old_browser_builtins_20261122/phase-acceptance-p1-80ff571.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "unknown",
+  "ratings": [
+    {"axis":"correctness","score":5,"evidence":"The matcher at tests/apk3d/no-unpolyfilled-builtins.test.ts:354-374 reports each routed and additional probe."},
+    {"axis":"test_meaning","score":4,"evidence":"The independent probe fails both receiver cases before the fix, but the committed two-call control uses a synthetic exclusion."},
+    {"axis":"scope_discipline","score":5,"evidence":"Commit 9459687d changes only the assigned scanner test."},
+    {"axis":"evidence_quality","score":4,"evidence":"The two-revision probe verifies both false negatives, and the three pending debt entries are named."}
+  ],
+  "reviewer_ratings": [
+    {"reviewer_role":"review-a","reviewer_route":"unknown","agreed":true,"score":5,"evidence":"review-a-80ff571.json identifies two regression-only controls and verifies the fixed receiver cases."},
+    {"reviewer_role":"review-b","reviewer_route":"kimi-code-plan-cn/kimi-for-coding","agreed":true,"score":4,"evidence":"The diff at 9459687d verifies the test-only verdict in review-b-80ff571.json."},
+    {"reviewer_role":"review-c","reviewer_route":"unknown","agreed":true,"score":5,"evidence":"The independent receiver probes verify the C5-F7 closure reported in review-c-80ff571.json."},
+    {"reviewer_role":"adversarial","reviewer_route":"openai/gpt-6-luna#high","agreed":true,"score":5,"evidence":"The independent source scan confirms the three intended raw hits and zero reports in adversarial-p2-80ff571.json."}
+  ]
+}

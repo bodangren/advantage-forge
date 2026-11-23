@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: measure-adversarial-testing
+status: complete
+track: old_browser_builtins_20261122
+phase: Phase 2: Green
+commits: none
+tests_run: adversarial exclusion probes passed; three real Box3 lines yielded zero residual hits and src/ had zero residual hits; targeted heavy-run passed (3 files, 23 tests); project heavy-run passed (230 passed, 1 skipped; 3396 passed, 9 skipped)
+files_changed: measure/runs/old_browser_builtins_20261122/adversarial-p2-80ff571.json; measure/runs/old_browser_builtins_20261122/adversarial-p2-80ff571.log; measure/runs/old_browser_builtins_20261122/probe-exclusion-r4.mjs; measure/runs/old_browser_builtins_20261122/probe-exclusion-r4.ts
+plan_updates: none
+known_failures: ADV-R5-1 remains recorded tech debt; computed property access is not detected, but no such call exists in src/
+handoff: The exact-line exclusion preserves all tested hits and excludes only the three real Box3 calls. Both required test gates passed. No new user-reachable false PASS was found, so no tests or commits were added.
+END_MEASURE_AGENT_RESULT

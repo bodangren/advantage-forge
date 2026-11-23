@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "role": "review-b",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 2: Green",
+  "round": "re-bind to HEAD 80ff5717",
+  "baseline_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "phase_base_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "role_base_sha": "80ff5717ba3a9479bedbe3d9e5ef05d7dd7d1a39",
+  "audited_head_sha": "80ff5717ba3a9479bedbe3d9e5ef05d7dd7d1a39",
+  "security_applicability": "applicable",
+  "status": "pass",
+  "summary": "Re-binds the standing PASS to 80ff5717ba3a9479bedbe3d9e5ef05d7dd7d1a39. src/ is byte-identical since the previous binding (git diff --stat 61db4f13 80ff5717 -- src prints nothing). The only non-measure, non-docs change is the scanner test 9459687d (+178/-36): each exclusion now binds the exact trimmed source line text of the three real Box3.union calls in src/render/page.ts, replacing the word-boundary regex. Judged test-only with no security or data-handling gap: it reads source files only, uses no network, writes nothing outside the test process, and exact-line equality can only make the scan stricter. The three-file gate re-run is green with 23 tests.",
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "evidence": [
+    "Binding: git diff --stat 61db4f13 80ff5717 -- src prints nothing (0 lines); src/ is byte-identical since the previous binding.",
+    "Scanner test change noted and judged: commit 9459687d changes only tests/apk3d/no-unpolyfilled-builtins.test.ts (+178/-36). Each exclusion now binds the file, the line, the label, and the full trimmed source line text of the three real Box3.union calls in src/render/page.ts (constants PAGE_263, PAGE_440, PAGE_447); a hit is excluded only on exact trimmed-line equality. The change is test-only: it reads source files, uses no network, writes nothing outside the test process, and exact-line equality is stricter than the prior regex, so the scan can report more hits, never fewer. It opens no security or data-handling gap.",
+    "git rev-parse HEAD = 80ff5717ba3a9479bedbe3d9e5ef05d7dd7d1a39 at audit start and end; no tracked file modified during the audit.",
+    "Three-file gate through heavy-run.sh: node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts -> Test Files 3 passed (3), Tests 23 passed (23), exit 0 (19 tests at the previous binding; the T3r5 exact-line exclusion cases are green).",
+    "The standing audit object holds: copy.ts code unchanged since d15af2a2 apart from the doc comment listing the four contract limits; the state-type test walks Reflect.ownKeys and flags symbol-key, non-enumerable, and accessor kinds; the scanner exclusion is now exact-line (9459687d).",
+    "A2 not applicable: no draft-to-published path in the audited range. A6: no overstatement; the T3r5 plan record matches the committed failing-first tests, all green."
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "git diff --stat 61db4f13 80ff5717 -- src",
+    "git log --oneline 61db4f13..80ff5717",
+    "git show 9459687d --stat",
+    "git show 9459687d -- tests/apk3d/no-unpolyfilled-builtins.test.ts",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts'"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/review-b-80ff571.json",
+    "measure/runs/old_browser_builtins_20261122/review-b-80ff571.log",
+    "measure/runs/old_browser_builtins_20261122/review-b-80ff571-notes.md"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "kimi-code-plan-cn/kimi-for-coding",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "src/ is byte-identical since the previous binding and the scanner change is stricter-only, so the standing verified behavior holds at 80ff5717."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 5,
+      "evidence": "The T3r5 exact-line exclusion cases are failing-first Red cases now green; the three-file gate reports 23 passed tests at the new HEAD."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "git log 61db4f13..80ff5717 shows only the planned scanner test change (9459687d) plus measure/audio/chibi record commits outside this track's scope."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "Every claim cites the empty src diff, the 9459687d diff, or the gate result (3 files/23 tests passed)."
+    }
+  ]
+}

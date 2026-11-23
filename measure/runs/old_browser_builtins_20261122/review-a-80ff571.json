@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "role": "review-a",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 2: Green",
+  "baseline_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "phase_base_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "role_base_sha": "80ff5717ba3a9479bedbe3d9e5ef05d7dd7d1a39",
+  "audited_head_sha": "80ff5717ba3a9479bedbe3d9e5ef05d7dd7d1a39",
+  "status": "pass",
+  "summary": "A7 closes on the routed receiver and line cases. Both Vitest gates passed. Two new controls fail on the prior scanner; two preserve existing behavior. I found no user-reachable wrong result or scan false PASS in the committed source.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F8 [Nit] review-a: The historical TS2769 attribution remains in the Phase 2 plan. It does not affect the current product.",
+    "F9 [Nit] review-a: The scanner's division and deeply nested `.at()` limits remain in TD-47. The routed `otherbox.union(b)` case remains fixed. No current source call reaches those limits.",
+    "F10 [Nit] review-a: The index site test can accept `notatIndex` as a substring match. The current site uses the correct helper. The finding remains in TD-47.",
+    "F11 [Nit] review-a: The state pin invokes an array index getter before it records the descriptor. The current game states pass. The finding remains in TD-47.",
+    "F12 [Nit] review-a: The `box2` control was a regression pin, not a failing-first control. This historical test evidence does not affect the current product.",
+    "F14 [Nit] review-a: The redesign track is now committed. The historical generated status issue remains resolved.",
+    "F15 [Nit] review-a: New late test-evidence finding, tech-debt. The moved-line and three-real-lines controls already pass on 61db4f13. Count them as regression pins, not failing-first controls. No user reaches a wrong result, and neither causes a scan false PASS in the current src tree.",
+    "F16 [Nit] review-a: New late test coverage finding, tech-debt. The same-label control supplies an exclusion for the synthetic line that already contains the extra call. It does not exercise invalidation of the unchanged real-line entry. The independent full-scan fixture proves that appending `items.union(other)` to the real line fails. No user-reachable wrong result or current source false PASS was found."
+  ],
+  "evidence": [
+    "HEAD and the role start SHA match 80ff5717ba3a9479bedbe3d9e5ef05d7dd7d1a39. The phase base resolves to 3f6a19214994e7ac05a79a8fa7faeded684267b7.",
+    "The complete phase diff retains the previously audited source changes. Since 61db4f13, the only non-record delta is the scanner test. Source, scripts, dependencies, and test configuration are byte-identical.",
+    "F13 closed: the previously excluded qualified and non-ASCII receiver fixtures now produce a stale exclusion and a live hit. The full-scan fixture also verifies otherbox, mybox, and box2.",
+    "The old scanner from `git show 61db4f13:tests/apk3d/no-unpolyfilled-builtins.test.ts` ran in a virtual temporary copy under the audit path. The adapter maps new exact line entries to old call entries without changing the matcher.",
+    "The baseline controls report FAIL for holder and the non-ASCII receiver, and PASS for the moved line and three real lines. All four pass on 80ff5717. Red's earlier four-failure log used an older substring scanner.",
+    "The full src scan reports zero hits. The real excluded receivers at lines 263, 440, and 447 are Box3 values. Each moved or edited fixture names the stale original entry.",
+    "Appending `items.union(other)` to the real line yields one stale exclusion and two live reports. The empty-src fixture also fails.",
+    "The metadata appends the approved fourth-round exact-line reason to the previous escalation. The plan cites T3r5 and 9459687d.",
+    "The wrapped three-file run exited 0 with three files and 23 tests passed. AC4 exited 0 with 230 files passed, one file skipped, 3396 tests passed, and nine skipped.",
+    "The wrapped Red typecheck records 51 baseline diagnostics and no scanner diagnostic. This review did not rerun the full TypeScript command.",
+    "Generator, structural doctor, and focused Prettier checks exited 0. The graph database had no nodes table. Production imports did not change.",
+    "The release and shelf-sync worktrees, the wip/oct-skill-docs-20261023 branch, and origin refs remain untouched."
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "git diff --stat 3f6a19214994e7ac05a79a8fa7faeded684267b7..80ff5717ba3a9479bedbe3d9e5ef05d7dd7d1a39 -- src tests scripts measure/tracks/old_browser_builtins_20261122",
+    "git diff 61db4f13..80ff5717 -- tests/apk3d/no-unpolyfilled-builtins.test.ts measure/tracks/old_browser_builtins_20261122",
+    "git diff --exit-code 61db4f13..80ff5717 -- src scripts package.json pnpm-lock.yaml vitest.config.ts vite.demo.config.ts measure/tracks/old_browser_builtins_20261122/spec.md measure/tracks/old_browser_builtins_20261122/test-strategy.md",
+    "git show 61db4f13:tests/apk3d/no-unpolyfilled-builtins.test.ts; Node VM runs the four new controls on the prior scanner and the audited scanner",
+    "Node VM full-scan fixtures for live edits at src/render/page.ts:263,440,447 and an empty source tree",
+    "git show 80ff5717:measure/tracks/old_browser_builtins_20261122/metadata.json",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c with the three-file Vitest command and the AC4 Vitest command",
+    "node measure/tools/generate.mjs --check; ./measure/doctor.sh --structural-only; node_modules/.bin/prettier --check tests/apk3d/no-unpolyfilled-builtins.test.ts measure/tracks/old_browser_builtins_20261122/metadata.json measure/tracks/old_browser_builtins_20261122/plan.md"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/review-a-80ff571.json",
+    "measure/runs/old_browser_builtins_20261122/review-a-80ff571.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "unknown",
+  "ratings": [
+    {"axis": "correctness", "score": 5, "evidence": "The full scan rejects semantic edits and moves at all three Box3 entries and reports no hits on the real source."},
+    {"axis": "test_meaning", "score": 4, "evidence": "The qualified and non-ASCII controls fail against 61db4f13, but the two remaining new controls are regression pins."},
+    {"axis": "scope_discipline", "score": 5, "evidence": "The only non-record delta since 61db4f13 is the planned scanner test."},
+    {"axis": "evidence_quality", "score": 5, "evidence": "The exact baseline probe separates the failing-first controls from regression pins, and both wrapped suites report exit 0."}
+  ]
+}

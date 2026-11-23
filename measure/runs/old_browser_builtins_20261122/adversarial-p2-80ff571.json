@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "role": "measure-adversarial-testing",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 2: Green",
+  "baseline_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "phase_base_sha": "3f6a19214994e7ac05a79a8fa7faeded684267b7",
+  "role_base_sha": "80ff5717ba3a9479bedbe3d9e5ef05d7dd7d1a39",
+  "audited_head_sha": "80ff5717ba3a9479bedbe3d9e5ef05d7dd7d1a39",
+  "status": "pass",
+  "summary": "The exact file, line, and trimmed-text exclusions preserved all adversarial hits. The three real Box3 lines were excluded, leaving zero residual hits across src/. Targeted and project test gates passed.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "ADV-R5-1 [Nit] adversarial-testing: Recorded tech debt; the scanner does not detect computed property access such as box['union'](b). No such call exists in src/, so current shipped code produces no wrong result."
+  ],
+  "evidence": [
+    "The audited HEAD is 80ff5717ba3a9479bedbe3d9e5ef05d7dd7d1a39; phase_base_sha is 3f6a19214994e7ac05a79a8fa7faeded684267b7; role_base_sha is 80ff5717ba3a9479bedbe3d9e5ef05d7dd7d1a39.",
+    "The scanner-only source/test delta since 61db4f13740a523e00d10b085cd71bdbbc7199fb is tests/apk3d/no-unpolyfilled-builtins.test.ts; git diff --quiet against src/ exited 0.",
+    "Temporary probes under measure/runs/old_browser_builtins_20261122/ showed hits remain for holder.box, λbox, otherbox, mybox, box2, wrong file or line, trailing code, internal-tab spacing, one-character edits, repeated allowed text, and moved lines. A moved line reported the stale exclusion entry and the new hit line.",
+    "Leading tab indentation, CRLF line endings, and a trailing comment remained acceptable after trimming or comment stripping. Template-literal and comment-only calls produced no hit, and their synthetic exclusion entries were stale rather than silently applied.",
+    "All three real src/render/page.ts exclusion lines still matched their exact trimmed text. The src scanner found three raw hits, all at the named Box3 lines, and zero residual hits after exclusions.",
+    "The targeted heavy-run command exited 0 with 3 files and 23 tests passed.",
+    "The project heavy-run command exited 0 with 230 files passed and 1 skipped; 3396 tests passed and 9 skipped.",
+    "ADV-R5-1 remains recorded tech debt. No new user-reachable false PASS was found, so no tests were added."
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "git diff --stat 61db4f13740a523e00d10b085cd71bdbbc7199fb 80ff5717ba3a9479bedbe3d9e5ef05d7dd7d1a39 -- src tests",
+    "git diff --quiet 61db4f13740a523e00d10b085cd71bdbbc7199fb 80ff5717ba3a9479bedbe3d9e5ef05d7dd7d1a39 -- src (exit 0)",
+    "node --import tsx measure/runs/old_browser_builtins_20261122/probe-exclusion-r4.mjs (adversarial exclusion fixtures and full src scan; exit 0)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts' (exit 0; 3 files, 23 tests)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts' (exit 0; 230 passed, 1 skipped; 3396 tests passed, 9 skipped)",
+    "build-graph stats measure/graph.db (exit 4: no such table: nodes)"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/adversarial-p2-80ff571.json",
+    "measure/runs/old_browser_builtins_20261122/adversarial-p2-80ff571.log",
+    "measure/runs/old_browser_builtins_20261122/probe-exclusion-r4.mjs",
+    "measure/runs/old_browser_builtins_20261122/probe-exclusion-r4.ts"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "openai/gpt-6-luna#high",
+  "ratings": [
+    {"axis": "correctness", "score": 5, "evidence": "The full src probe found no residual hit after the three exact file, line, and text exclusions."},
+    {"axis": "test_meaning", "score": 5, "evidence": "The targeted test gate passed 23 tests, and the project gate passed 3396 tests."},
+    {"axis": "scope_discipline", "score": 5, "evidence": "No source, test, plan, or debt file changed during this audit."},
+    {"axis": "evidence_quality", "score": 5, "evidence": "The exclusion probes and both heavy-run commands passed with their results recorded."}
+  ]
+}
