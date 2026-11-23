@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: final-acceptance
+status: complete
+track: old_browser_builtins_20261122
+phase: track
+commits: none
+tests_run: Three-file command exit 0 (3 files, 23 tests). Witness files exit 0 (1 passed, 1 skipped). Scan test with the imports test exit 0 (15 tests). Project gate exit 0 on 6dc919b5 (231 files passed, 2 skipped; 3397 tests passed, 10 skipped). Browser check exit 0 (2 accepted moves, no errors, four built-ins undefined, port 5199 free). Structural doctor, generator check, and full doctor exit 0. tsc exit 2 with 51 known diagnostics, none in a changed file. Prettier exit 1 for the 35 named baseline files, as the PM-approved AC6 amendment allows. Differential probes gave 0 mismatches over 273, 54, and 4000 cases.
+files_changed: measure/runs/old_browser_builtins_20261122/final-acceptance-6dc919b.json, measure/runs/old_browser_builtins_20261122/final-acceptance-6dc919b.log
+plan_updates: none (gate-only role)
+known_failures: No blocking finding. Ten nonblocking findings. FA-1 T9 needs a SHA token for the closeout check. FA-2 TD-45 closeout wording. FA-3 replaceChildren gap on WebView 80 to 85, outside the spec. FA-4 the recorded UX reviewer route is OpenAI, which contradicts the brief. FA-5 plan.md:560 says 38 tsc errors, and the count is 51. FA-6 old zero-exit wording and an implicit baseline denominator. FA-7 two witness tests are missing from the scope text. FA-8 stale plan header and lane text. FA-9 three view2d files gain 3 fixable Prettier lines each. FA-10 uncommitted run records: the pids-r3.log change and the untracked Phase 4 acceptance and Review A files.
+handoff: PASS bound to 6dc919b5, which equals HEAD with no later commit. Closeout needs the steps in closeout_requirements of the JSON: archive move, archived registry entry with the metadata description, metadata status done with a completed date, a SHA token on the T9 line, the closeout manifest, TD-45 Resolved and moved to the archive with the TD-47 and TD-49 links repointed, regenerated facts, and a passing closeout check. Correct the UX family statement before the final report. Commit the Phase 4 results, my two results, and the pids-r3.log decision in one records commit. Decide a debt row for FA-3. I did not run the role-gate, because it reruns the project gate.
+END_MEASURE_AGENT_RESULT

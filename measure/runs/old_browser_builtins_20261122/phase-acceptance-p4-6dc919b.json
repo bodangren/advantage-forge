@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "role": "phase-acceptance",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 4: Gates",
+  "baseline_sha": "9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4",
+  "phase_base_sha": "9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4",
+  "role_base_sha": "6dc919b5bac3be9e7dcca3d999bbc26041407551",
+  "audited_head_sha": "6dc919b5bac3be9e7dcca3d999bbc26041407551",
+  "status": "pass",
+  "summary": "Phase 4 passes at 6dc919b under the PM-approved AC6 non-regression criterion. All other requested gates exit zero.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F3 [Nit] phase-acceptance: test-strategy.md:263 and plan.md:546 retain the old all-commands-exit-zero wording. The approved AC6 rule controls, and the T8 record correctly states the raw Prettier exit.",
+    "F4 [Nit] phase-acceptance: green-p4-t8r2.log:19 leaves the baseline denominator implicit. Five of the 44 checked files were absent at baseline; none of the 35 failing files was absent."
+  ],
+  "evidence": [
+    "F2 withdrawn: Commit 7c1562fe records the PM approval verbatim in spec.md:252 and plan.md:482. The record names amendment 7dbc1806 and baseline 3f6a1921.",
+    "The finding disposition contract states: \"The owner of a `spec.md` finding or a `plan.md` finding is the user or a build session.\" The recorded PM approval supplies user authority for this amendment.",
+    "HEAD and the role base are 6dc919b5bac3be9e7dcca3d999bbc26041407551. The phase base is 9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4.",
+    "The required Review A passes on 6dc919b. The strategy does not require Review B, C, adversarial testing or UX browser review for this records-only phase.",
+    "The diff from the phase base is empty under src/, scripts/ and tests/. No same-HEAD exception is required for Review A.",
+    "T8 names its original and amended record commits. It records the test date, tested SHA, exits and reporter output. The new gate runs match the applicable historical claims.",
+    "The three-file gate passes 23 tests. The standalone source scanner passes all 11 tests and reports no unsupported hits. Neither the scanner nor the registry changed in Phase 4.",
+    "The active witness passes and the TD-49 witness skips. The project gate passes 3397 tests in 231 files; ten tests and two files skip.",
+    "The full Prettier command exits 1 on exactly the 35 paths named in the T8 plan, out of 44 checked. The same 35 paths fail when checked from 3f6a1921.",
+    "All seven named files pass Prettier. Both witness files and the track plan, spec, metadata and index also pass. All five paths absent at baseline in the 44-file list pass.",
+    "The baseline Prettier failures remain debt, not passing files. TD-35 through TD-39 remain open TypeScript debt. The project command excludes the TD-40 Storytime file.",
+    "The live Phase 3 check exits 0, with three accepted actions, the unchanged quiet control, four undefined built-ins and no errors. Its fresh JSON matches stdout and both screenshots are nonempty.",
+    "The structural doctor and generator exit 0. Both direct checks use the audited worktree.",
+    "All 17 completed task lines cite reachable commits. Every late finding has one disposition line per ID in its own phase. The checker reports zero incomplete tasks for Phase 4.",
+    "T9 is deferred to closeout-steward and is not part of AC6. TD-49 records the PM trigger: \"a browser check passes while a real input fails\".",
+    "A5 matches the rerun exits. The plan's historical clean-exit wording does not override the approved Prettier criterion. The raw exit 1 remains visible."
+  ],
+  "commands": [
+    "git rev-parse HEAD; git status --short --untracked-files=no",
+    "git diff --stat 9e406e8c 6dc919b5 -- src scripts tests (empty)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts --maxWorkers=1' (exit 0; 3 files, 23 tests)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run tests/old-browser/adversarial-check.test.ts tests/old-browser/adversarial-check-r2.test.ts --maxWorkers=1' (exit 0; one test passed, one skipped)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts' (exit 0; 231 files and 3397 tests passed, 2 files and 10 tests skipped)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run tests/apk3d/no-unpolyfilled-builtins.test.ts --maxWorkers=1' (exit 0; 11 tests)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/old-browser-check.mjs --game spellweavers-run' (exit 0; 3 accepted moves, 0 errors)",
+    "./measure/doctor.sh --structural-only (exit 0)",
+    "node measure/tools/generate.mjs --check (exit 0)",
+    "Prettier CLI using the exact AC6 strategy path list (44 files, raw exit 1, 35 named failures); read-only prettier.check on baseline blobs (same 35 failures)",
+    "Prettier CLI on the seven named files and on the two witness files and four track record files (exit 0 on both runs)",
+    "Read-only checks of reachable task SHAs, per-phase disposition IDs, deferred T9, and the PM reopen trigger",
+    "ss -H -ltnp 'sport = :5199' (empty after browser run)"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/phase-acceptance-p4-6dc919b.json",
+    "measure/runs/old_browser_builtins_20261122/phase-acceptance-p4-6dc919b.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "unknown",
+  "ratings": [
+    {"axis":"correctness","score":5,"evidence":"The current, baseline and plan-named sets of 35 Prettier failures are equal."},
+    {"axis":"test_meaning","score":5,"evidence":"The rerun checks all 44 Prettier paths and the live browser command instead of treating a passing subset as full proof."},
+    {"axis":"scope_discipline","score":5,"evidence":"git diff 9e406e8c 6dc919b5 -- src scripts tests is empty."},
+    {"axis":"evidence_quality","score":4,"evidence":"The rerun matches the recorded exits, but plan.md:546 still uses the original clean-exit wording."}
+  ],
+  "reviewer_ratings": [
+    {"reviewer_role":"review-a","reviewer_route":"unknown","agreed":true,"score":5,"evidence":"review-a-p4-6dc919b.json verifies the PM approval and all 35 baseline failures, which the independent check confirms."}
+  ]
+}

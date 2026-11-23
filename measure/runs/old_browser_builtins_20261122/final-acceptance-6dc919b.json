@@ -1,0 +1,231 @@
+{
+  "schema_version": 1,
+  "role": "measure-final-acceptance",
+  "track": "old_browser_builtins_20261122",
+  "phase": "track",
+  "baseline_sha": "20a2ecc2c0904edd36faf9f22dc93d5ab3460037",
+  "track_base_sha": "20a2ecc2c0904edd36faf9f22dc93d5ab3460037",
+  "role_base_sha": "6dc919b5bac3be9e7dcca3d999bbc26041407551",
+  "audited_head_sha": "6dc919b5bac3be9e7dcca3d999bbc26041407551",
+  "current_head_sha": "6dc919b5bac3be9e7dcca3d999bbc26041407551",
+  "audited_head_is_current": true,
+  "audited_head_is_ancestor_of_current_head": true,
+  "commits_after_audited_head": [],
+  "commits_after_audited_head_touch_track_paths": [],
+  "commits_after_audited_head_touch_evidence_files": [],
+  "status": "pass",
+  "summary": "Final acceptance passes for the immutable HEAD 6dc919b5. AC1 to AC6 hold on this HEAD, and ac_results maps each AC to a run or a check. The three-file gate, the project gate, the browser check, both doctor runs, and the generator check exit 0. Prettier follows the PM-approved AC6 amendment: 35 named files fail as at the baseline, and no file fails anew. Ten nonblocking findings remain, and four are Major: FA-1 (T9 SHA token), FA-2 (TD-45 wording), FA-3 (WebView gap), and FA-4 (UX family). T9 stays deferred to the closeout steward.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "FA-1 [Major] final-acceptance: The T9 line (plan.md:552) holds no SHA token. The final-acceptance counter and the status scan count T9 as deferred, so no non-deferred task remains. The closeout check is stricter, because T9 is deferred, sits in the last phase block, and names closeout. `plan_closeout_feedback` reports `deferred closeout task lacks done SHA`. The closeout steward must add a SHA token of 7 to 40 hex digits to the T9 line. Use the closeout commit, or the commit that records the closeout.",
+    "FA-2 [Major] final-acceptance: Closeout must word TD-45 with care (anti-pattern A6). The scan condition of TD-45 holds in Forge `src/` on this HEAD. The monorepo copy keeps the 44 old uses until the next release sync. The steward marks TD-45 Resolved, adds the date and the Forge scope, and moves the row to `measure/tech-debt-archive.md`. The steward repoints the `./tracks/old_browser_builtins_20261122/` links of TD-47 and TD-49 to `./archive/old_browser_builtins_20261122/`, and keeps `measure/tech-debt.md` within 50 lines. The audio entry at `measure/tracks.md:258` still says that Phase 3 is pending, so the steward updates that note too.",
+    "FA-3 [Major] final-acceptance: One same-class gap lies outside the spec. `Element.prototype.replaceChildren` first ships in Chrome 86, so it fails on WebView 80 to 85, and iOS 15.0 and later support it. Five calls run in the round flow of three 3D views: `src/games/dragon-flight/view/game.ts:198` and `:295`, `src/games/dragon-rider/view/game.ts:216` and `:303`, and `src/games/hero-vs-zombie/view/game.ts:126`. The gate admits any WebGL2 device, so such a phone can reach these views, and neither the 19 labels nor AC5 sees the call. A targeted grep found only this call, and it is not exhaustive. The orchestrator should record a debt row, and the closeout text must not claim WebView 80+ for every view.",
+    "FA-4 [Major] final-acceptance: The recorded routes contradict item 7 of the brief. All eight `ux-browser-review-*.json` results record `openai/gpt-6-luna#high`, so the UX reviewer ran on the OpenAI family. Review B ran on Kimi (`kimi-code-plan-cn/kimi-for-coding`, 11 results), and this final acceptance runs on Anthropic. The records of strategy, Red, Green, and spec review hold no route. The orchestrator must correct the family statement in the final report. The Model Selection rule for final acceptance holds, because Anthropic differs from the OpenAI family of Review A and the phase acceptances.",
+    "FA-5 [Nit] final-acceptance: `plan.md:560` says that `tsc --noEmit` reports 38 baseline errors. The command reports 51 on this HEAD. TD-35 to TD-39 hold 38 of them. The other 13 sit in `tests/storytime-faces-r2-guards.test.ts` (commit 33655cec, Chibi Sprouts, before this track) and have no debt row. The T4 and T5 lines already state 51. No file that this track changed holds an error.",
+    "FA-6 [Nit] final-acceptance: Old wording stays in the record. `plan.md:546` and `test-strategy.md:263` still say that every AC6 command exits 0. The amended AC6 governs the Prettier line, and T8 states the raw exit 1 correctly. `green-p4-t8r2.log:19` says `absent at baseline: 0` with no denominator. This run counts 5 absent files among the 44 checked files and 0 among the 35 failing files.",
+    "FA-7 [Nit] final-acceptance: The scope text omits the two witness tests. `tests/old-browser/adversarial-check.test.ts` and `tests/old-browser/adversarial-check-r2.test.ts` are new files of Phase 3. The spec (AC4 and Scope control) says that the track adds two test files, and `plan.md:11-31` lists neither witness. The track adds 4 test files and changes 1 existing test file, the scan test.",
+    "FA-8 [Nit] final-acceptance: `plan.md:3` still says `Status: new`. `plan.md:8` and `test-strategy.md:3` say `Lane: light`, but `metadata.json` holds no `lane` key. The closeout check therefore requires this final acceptance, which is the intended path. The steward should update the header and the metadata (`actual_tasks`, `deviation_notes`, `status`, `completed`).",
+    "FA-9 [Nit] final-acceptance: At hunk level, three `view2d` files gain 3 Prettier-fixable lines each. They are `src/games/dragon-flight/view2d/game.ts` (143 to 146), `src/games/dragon-rider/view2d/game.ts` (168 to 171), and `src/games/spellweavers-run/view2d/game.ts` (107 to 110). The call `atIndex(..., -1)` lengthens one line past the print width in each file. The three files also fail at the baseline, so the amended file-level rule 2 holds. The total of fixable lines stays 1599 against 1599.",
+    "FA-10 [Nit] final-acceptance: The working tree holds uncommitted run records. One is a change to the tracked file `measure/runs/old_browser_builtins_20261122/pids-r3.log` (2 PID lines appended at 12:12 on 2026-11-23). Four more are untracked: the Phase 4 acceptance (`phase-acceptance-p4-6dc919b.json` and `.log`), which this record cites, and Review A (`review-a-p4-6dc919b.json` and `.log`). No product or plan file is affected, and HEAD and every gate result here do not depend on them. The orchestrator should commit these files and my two results in one records commit, and restore or commit `pids-r3.log`. That commit touches only `measure/runs/old_browser_builtins_20261122/`, so it needs no extra coverage."
+  ],
+  "evidence": [
+    "Identity: `git rev-parse HEAD` printed 6dc919b5bac3be9e7dcca3d999bbc26041407551 at the start and at the end. That value is `role_base_sha` and `audited_head_sha`. `track_base_sha` is 20a2ecc2c0904edd36faf9f22dc93d5ab3460037, the parent of the first track commit af007671 (2026-11-22).",
+    "Path diff after the audited head: `git diff --name-only 6dc919b5 HEAD` printed nothing. `git diff --stat 6dc919b5 HEAD -- src scripts tests demo measure/tracks/old_browser_builtins_20261122` printed nothing. No commit follows the audited head, so no later commit needs coverage.",
+    "Phase results: exactly one passing phase-acceptance result exists for each of the four phases. They are p1-80ff571, p2-80ff571, p3-9e406e8, and p4-6dc919b. Six earlier results fail and are superseded: p1-229323c, p1-61db4f1, p2-229323c, p2-61db4f1, p4-fc8e728, and p4-0849215.",
+    "Ancestry: `git merge-base --is-ancestor` returned true for each baseline against its audited head, and for each audited head against HEAD. The baselines are 3f6a1921 (Phases 1 and 2), 31af7544 (Phase 3), and 9e406e8c (Phase 4). The audited heads are 80ff5717, 9e406e8c, and 6dc919b5.",
+    "Earlier heads: `git diff --name-only 9e406e8c HEAD` lists 27 paths. They are `measure/generated/status.md`, `measure/tech-debt.md`, the track `plan.md` and `spec.md`, and 23 files under `measure/runs/old_browser_builtins_20261122/`. The list holds no `src`, `scripts`, `tests`, or `demo` path.",
+    "`git diff --name-only 80ff5717 HEAD` lists 233 paths and no `src` or `demo` path. It holds `scripts/old-browser-check.mjs` and two `tests/old-browser` witness files. Those are Phase 3 deliverables, which the Phase 3 acceptance audited at 9e406e8c. The rest are records of this track and of two other tracks.",
+    "Spec review: four results exist. The first three fail with `escalate_human` and led to spec revisions. The last, `spec-review-aaf6786.json`, passes at aaf67869. The strategy commit is 3f6a1921.",
+    "Commit scope: no commit in 20a2ecc2..HEAD carries a `track_id` tag, so the Track scope rule counts all 95 commits as track commits. The 47 commits that name the track in the subject change 45 non-record paths: 1 script, 5 tests, and 39 source files. These paths equal the plan file list plus the two witness tests.",
+    "Source diff: against 3f6a1921, `git diff` over `src` shows 39 files. Each of the 35 `structuredClone(` lines changed to `deepCopy(` one for one. The 8 `.at(-1)` calls became `atIndex(..., -1)`, and the `findLastIndex` call became `lastIndexWhere`. The other changed lines are import lines. Commits 72e74de0, 9459687d, and 1c6f3831 touch one test file each, and 7d5c7129 changes comment lines only.",
+    "Counts on HEAD: `src` holds 35 `deepCopy(` calls in 30 files, 8 `atIndex(` calls, and 1 `lastIndexWhere(` call. `structuredClone` and `findLastIndex` appear once each, in the doc comments of `copy.ts:1` and `index-math.ts:1`. `Object.hasOwn` appears 0 times. An independent grep of the labels over every `src` file, `*.gen.ts` included, finds only the three `Box3.union` lines of `src/render/page.ts` and one `z.union(` in `src/storytime/muse-delivery-u2.ts`. The variables `box` and `restBox` are `THREE.Box3` (`src/render/page.ts:204,257,436`).",
+    "AC4 file scope: the own commits of this track add 4 test files (`deep-copy`, `index-math`, and two witnesses) and modify 1 existing test file, `tests/apk3d/no-unpolyfilled-builtins.test.ts`. They add `scripts/old-browser-check.mjs` and the two modules `copy.ts` and `index-math.ts`, and they delete nothing.",
+    "Decisions: `git diff --stat 3f6a1921 HEAD` over `package.json`, `pnpm-lock.yaml`, `vite.demo.config.ts`, `vite.config.ts`, `src/apk3d/device/gate.ts`, and `src/apk3d/contracts/manifest.ts` printed nothing. The gate values stay 15 and 80, and the demo target stays `es2020`. Only one scan file exists. A grep for `SCAN_WIDE` over `tests`, `scripts`, and `src` finds nothing.",
+    "Red evidence: `red-scan.log` shows the wide scan at the baseline with 44 hits (35 `structuredClone`, 8 `.at(`, 1 `.findLastIndex(`, 0 `Object.hasOwn`). `red-scan-default.log` shows 2 tests passed. `red-deep-copy.log` shows 3 failed and 1 passed, on the absent module inside the case. `red-index-math.log` shows 3 failed.",
+    "Gate runs on HEAD 6dc919b5 went through `heavy-run.sh` with `HEAVY_MIN_AVAIL_MB=1500`, and none returned 75. Three-file command: exit 0, `Test Files 3 passed (3)`, `Tests 23 passed (23)`. Witness files: exit 0, `Test Files 1 passed | 1 skipped (2)`, `Tests 1 passed | 1 skipped (2)`. Scan test with `imports.test.ts`: exit 0, 15 tests passed.",
+    "Project gate (AC4): exit 0, `Test Files 231 passed | 2 skipped (233)`, `Tests 3397 passed | 10 skipped (3407)`, tested commit 6dc919b5. The T8 record states the same counts for 9e406e8c, and no `src`, `scripts`, or `tests` path changed between the two commits.",
+    "Browser check (AC5): `node scripts/old-browser-check.mjs --game spellweavers-run` exit 0. `check.json` holds `started: true`, `moves: 2`, `action_inputs: [ArrowRight, 1]`, `negative_control.changed: false`, `errors: []`, and four `undefined` built-ins in the page. The two PNG files measure 1280 by 800 (520213 and 521375 bytes). I viewed both: the courage dots fall from 3 to 1 and the answer orbs change. Port 5199 had no listener before or after the run, and no vite or chrome process remained. Git ignores `out/`.",
+    "Scan (AC3): the scan test exits 0 with 11 tests, so it reports zero hits over `src`. The control test passes all rows. The URL row, the template row, and the argument row each show 1 fixed hit and 0 witness hits. `ROOT` comes from `import.meta.url`, and `SCAN_ROOT` is `join(ROOT, 'src')` with no condition. The scan source and the helper tests are byte-identical to 80ff5717, the head that Phases 1 and 2 audited.",
+    "Prettier (AC6 as amended): the AC6 list holds 44 files. The command exits 1 and reports 35 files, which equal the 35 named files of the T8 table. Each of the 35 files also fails when its blob at 3f6a1921 is checked, and no file passes at the baseline and fails now. The 5 files absent at the baseline all pass, and so do the 7 created or widened files. The T8 record names every failing file as baseline debt.",
+    "TypeScript: `tsc --noEmit --pretty false` through the wrapper exits 2 with 51 diagnostics. The count is 35 in `assets` (TD-35 to TD-37), 2 in `tests/games/castle-defense/rules.adversarial.test.ts` (TD-38), 1 in `tests/part.test.ts` (TD-39), and 13 in `tests/storytime-faces-r2-guards.test.ts`. No diagnostic lies in a file that this track changed. The audio final acceptance (FA-10) records the same 38 plus 13.",
+    "Structural gates: `./measure/doctor.sh --structural-only` exit 0 with `Measure doctor found no structural errors.` `node measure/tools/generate.mjs --check` exit 0 with `Measure facts are current (4 files).` `bash measure/doctor.sh` through the wrapper exit 0, and the boundary test passed 4 tests. The generated status shows 17/18 tasks for this track.",
+    "Plan checks: all 17 `[x]` lines carry a SHA that resolves and is an ancestor of HEAD. All 39 distinct hex tokens of `plan.md` resolve to commits. The incomplete-task counter finds 0 non-deferred tasks. The T9 line is `[ ]` with `deferred:closeout-steward` and holds no SHA token.",
+    "Anti-pattern audit: A5: `plan.md`, `spec.md`, and `test-strategy.md` hold no `PASS=N, FAIL=0` or `all checks pass` claim, and each recorded count matches my reruns. A6: `measure/tracks.md` lists the track as `[~]` with title and link only, and it makes no resolved claim. A9: no test or script cites `measure/tracks/old_browser_builtins_20261122/`, and no `tests/*.sh` file exists.",
+    "Independent probes: `atIndex` against `Array.prototype.at` over 273 cases and `lastIndexWhere` against `findLastIndex` over 54 cases gave 0 mismatches. `deepCopy` against `structuredClone` over 4000 random graphs (Map, Set, Date, typed array, cycle, shared reference, NaN, -0) gave 4000 equal results with no shared reference. On synthetic states `deepCopy` costs about 3.5 times the native call (0.1 to 1.3 ms). `snapshot()` runs only in replay and tests, so no frame path is affected.",
+    "Contract limits: `copy.ts:8-13` lists the four PM-approved limits (Symbol keys, non-enumerable keys, RegExp and class instances, other realms). The 29 sim cores hold no Symbol key, accessor, class instance, null-prototype object, or RegExp in their state. The state-type pin walks `Reflect.ownKeys` and fails on such a value. The CONTEST dispositions B-F2 to B-F5 sit in `green-p2-r2.log:8`.",
+    "PM approvals: `spec.md:252` and `plan.md:482` quote the PM approval of the AC6 amendment 7dbc1806, and commit 7c1562fe records it. I did not see the PM message itself. `metadata.json:14` holds a non-empty `escalation` text for the third and fourth scanner rounds. The plan records the PM approval for A7 at `plan.md:333` and `:345`.",
+    "Closeout checker, read-only: `measure_interphase_checks.py closeout --repo . --track old_browser_builtins_20261122` printed 8 FAIL lines before archive. They name the active folder, the missing archive folder, and the active registry entry. They also name the missing archived plan, the missing archived metadata, and the missing registry entry. Two more name the missing final acceptance (this file supplies it) and the missing closeout manifest.",
+    "Dependency: `1f45fcfe` (scan file) and `0cc7b5c4` (T6k) are ancestors of HEAD. `measure/archive/audio_game_integration_20261014/metadata.json` holds status done and completed 2026-11-23. The audio final acceptance passed at 4aea1282. This track needs the scan file only.",
+    "Families, part 1: the `route` fields of the 67 result files show these counts. Spec-review: 4 results with no route key. Review-a: 13 unknown and 1 `openai/gpt-6.2-sol#high`. Review-b: 11 `kimi-code-plan-cn/kimi-for-coding`. Review-c: 10 unknown and 1 `openai/gpt-6.2-sol#high`.",
+    "Families, part 2: adversarial testing has 6 `openai/gpt-6-luna#high` and 3 unknown. UX browser review has 8 `openai/gpt-6-luna#high`. Phase acceptance has 4 `openai/gpt-6.2-sol#high` and 6 unknown. The spec author is `opencode-go/deepseek-v4.1-flash`.",
+    "Runtime outputs of my browser run are `out/old-browser/check.json` and two PNG files. Git ignores them, and they are not part of the record."
+  ],
+  "commands": [
+    "git rev-parse HEAD => 6dc919b5bac3be9e7dcca3d999bbc26041407551 at the start and at the end",
+    "git merge-base --is-ancestor <baseline> <audited head> and <audited head> HEAD, for the four passing phase results => true for all",
+    "git diff --name-only 6dc919b5 HEAD => empty",
+    "git diff --stat 6dc919b5 HEAD -- src scripts tests demo measure/tracks/old_browser_builtins_20261122 => empty",
+    "git diff --name-only 9e406e8c HEAD => 27 record paths, none under src, scripts, tests, or demo",
+    "git diff --name-only 80ff5717 HEAD => 233 paths, none under src or demo",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts --maxWorkers=1' => exit 0; 3 files; 23 tests",
+    "HEAVY_MIN_AVAIL_MB=1500 bash .../heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run tests/old-browser/adversarial-check.test.ts tests/old-browser/adversarial-check-r2.test.ts --maxWorkers=1' => exit 0; 1 passed, 1 skipped",
+    "HEAVY_MIN_AVAIL_MB=1500 bash .../heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run tests/apk3d/no-unpolyfilled-builtins.test.ts tests/apk3d/imports.test.ts --maxWorkers=1 --reporter=verbose' => exit 0; 15 tests",
+    "HEAVY_MIN_AVAIL_MB=1500 bash .../heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts' => exit 0; Test Files 231 passed | 2 skipped (233); Tests 3397 passed | 10 skipped (3407)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash .../heavy-run.sh -c 'node scripts/old-browser-check.mjs --game spellweavers-run' => exit 0; started true; moves 2; errors empty; four built-ins undefined",
+    "HEAVY_MIN_AVAIL_MB=1500 bash .../heavy-run.sh -c 'node node_modules/typescript/bin/tsc --noEmit --pretty false' => exit 2; 51 diagnostics; none in a changed file",
+    "node_modules/.bin/prettier --check <the 44 AC6 files> => exit 1; 35 files; equal to the T8 table and to the baseline blobs at 3f6a1921",
+    "./measure/doctor.sh --structural-only => exit 0",
+    "node measure/tools/generate.mjs --check => exit 0",
+    "HEAVY_MIN_AVAIL_MB=1500 bash .../heavy-run.sh -c 'bash measure/doctor.sh' => exit 0",
+    "HEAVY_MIN_AVAIL_MB=1500 bash .../heavy-run.sh -c 'node --input-type=module -e <differential probe of atIndex, lastIndexWhere, and deepCopy>' => exit 0; 273, 54, and 4000 cases; 0 mismatches",
+    "HEAVY_MIN_AVAIL_MB=1500 bash .../heavy-run.sh -c 'node --input-type=module -e <timing of deepCopy against structuredClone>' => exit 0; ratio 3.4 to 3.7",
+    "python3 /home/daniebo/.agents/skills/measure-orchestrator/scripts/measure_interphase_checks.py closeout --repo . --track old_browser_builtins_20261122 => 8 FAIL lines, all expected before archive",
+    "grep, git show, git log, and python3 read-only checks of the plan SHAs, the escalation key, the routes, the call sites, and the remediation commit scopes => no discrepancy beyond FA-1 to FA-10",
+    "python3 /home/daniebo/.agents/skills/measure-orchestrator/scripts/measure_interphase_checks.py audit-result --role final-acceptance --file measure/runs/old_browser_builtins_20261122/final-acceptance-6dc919b.json => PASS: audit result is valid",
+    "HEAVY_MIN_AVAIL_MB=1500 python3 .../measure_interphase_checks.py role-gate --repo . --role measure-final-acceptance --track old_browser_builtins_20261122 --phase track --baseline 20a2ecc2c0904edd36faf9f22dc93d5ab3460037 --result-file <json> --log-file <log> --runner .../heavy-run.sh => PASS: final-acceptance gate passed; exit 0"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/final-acceptance-6dc919b.json",
+    "measure/runs/old_browser_builtins_20261122/final-acceptance-6dc919b.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "claude-agent/sonnet#max (pick final-acceptance --not-family openai: Review A and every phase acceptance of this track were OpenAI; the picker marks a 'critical overflow' of the Claude weekly window and still returns it; no other family has quota)",
+  "ac_results": [
+    {
+      "ac": "AC1",
+      "result": "pass",
+      "basis": "`src/apk3d/sim/copy.ts` exports `deepCopy`, and `index.ts` re-exports it. `src` holds 35 `deepCopy(` calls and no `structuredClone` call. `deep-copy.test.ts` passes all 7 tests, including the 29 real start snapshots. The independent probe copied 4000 random graphs equal to the native clone, with no shared reference."
+    },
+    {
+      "ac": "AC2",
+      "result": "pass",
+      "basis": "`index-math.ts` exports `atIndex` and `lastIndexWhere`, and `index.ts` re-exports both. `index-math.test.ts` passes 5 tests, including the nine site checks with breakage proofs. The independent probe gave 0 mismatches over 273 `atIndex` cases and 54 `lastIndexWhere` cases. `src` holds no array `.at(` call and no `.findLastIndex(` call."
+    },
+    {
+      "ac": "AC3",
+      "result": "pass",
+      "basis": "`tests/apk3d/no-unpolyfilled-builtins.test.ts` is the one scan. It resolves `ROOT` from `import.meta.url`, scans `src` with no flag, and holds 19 labels and 3 exact-line exclusions with a rot check. The control test passes all rows, including the URL, template, and argument rows. The scan reports zero hits, and an independent grep agrees."
+    },
+    {
+      "ac": "AC4",
+      "result": "pass",
+      "basis": "The project gate exits 0 on this HEAD with 231 files and 3397 tests passed, and 2 files and 10 tests skipped. The track modified one existing test file only, the scan test. The record in T8 holds the reporter output, the exit code, and the tested commit."
+    },
+    {
+      "ac": "AC5",
+      "result": "pass",
+      "basis": "The browser check exits 0 on this HEAD with `started: true`, 2 accepted moves, an empty error list, and four absent built-ins. It deletes `structuredClone`, `Array.prototype.at`, `Array.prototype.findLastIndex`, and `Object.hasOwn` before any page script. Both screenshots show a running game. TD-49 limits the proof of input attribution under a hostile harness."
+    },
+    {
+      "ac": "AC6",
+      "result": "pass",
+      "basis": "The five AC6 commands ran on this HEAD. The three-file command, the project command, the generator check, and the structural doctor exit 0. Prettier exits 1 for 35 named baseline files, and the PM-approved amendment treats it as a non-regression check. Rules 1 to 4 hold: the 7 created files pass, no file regresses, and T8 names all 35 files."
+    }
+  ],
+  "prerequisite_results": [
+    {"role": "spec-review", "file": "measure/runs/old_browser_builtins_20261122/spec-review-aaf6786.json", "status": "pass", "route": "none recorded", "audited_head_sha": "aaf678693732984a6adbc78af1157610e8225fd9", "targets_audited_head": false, "covered_by": "The spec review gates the setup only. Later spec changes are the AC6 amendment (PM approved) and record edits."},
+    {"role": "phase-acceptance", "file": "measure/runs/old_browser_builtins_20261122/phase-acceptance-p1-80ff571.json", "status": "pass", "route": "unknown", "audited_head_sha": "80ff5717ba3a9479bedbe3d9e5ef05d7dd7d1a39", "targets_audited_head": false, "covered_by": "Empty path diff for src, demo, and the scan and helper tests since 80ff5717. I reran every gate on 6dc919b5."},
+    {"role": "phase-acceptance", "file": "measure/runs/old_browser_builtins_20261122/phase-acceptance-p2-80ff571.json", "status": "pass", "route": "unknown", "audited_head_sha": "80ff5717ba3a9479bedbe3d9e5ef05d7dd7d1a39", "targets_audited_head": false, "covered_by": "Empty path diff for src, demo, and the scan and helper tests since 80ff5717. I reran every gate on 6dc919b5."},
+    {"role": "phase-acceptance", "file": "measure/runs/old_browser_builtins_20261122/phase-acceptance-p3-9e406e8.json", "status": "pass", "route": "unknown", "audited_head_sha": "9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4", "targets_audited_head": false, "covered_by": "No src, scripts, tests, or demo path changed since 9e406e8c. I reran the browser check on 6dc919b5."},
+    {"role": "phase-acceptance", "file": "measure/runs/old_browser_builtins_20261122/phase-acceptance-p4-6dc919b.json", "status": "pass", "route": "unknown", "audited_head_sha": "6dc919b5bac3be9e7dcca3d999bbc26041407551", "targets_audited_head": true, "covered_by": "The result targets the audited head of this acceptance."},
+    {"role": "review-a", "file": "measure/runs/old_browser_builtins_20261122/review-a-80ff571.json", "status": "pass", "route": "unknown", "audited_head_sha": "80ff5717ba3a9479bedbe3d9e5ef05d7dd7d1a39", "targets_audited_head": false, "covered_by": "Empty path diff for src and the scan and helper tests since 80ff5717."},
+    {"role": "review-b", "file": "measure/runs/old_browser_builtins_20261122/review-b-80ff571.json", "status": "pass", "route": "kimi-code-plan-cn/kimi-for-coding", "audited_head_sha": "80ff5717ba3a9479bedbe3d9e5ef05d7dd7d1a39", "targets_audited_head": false, "covered_by": "Empty path diff for src and the scan and helper tests since 80ff5717."},
+    {"role": "review-c", "file": "measure/runs/old_browser_builtins_20261122/review-c-80ff571.json", "status": "pass", "route": "unknown", "audited_head_sha": "80ff5717ba3a9479bedbe3d9e5ef05d7dd7d1a39", "targets_audited_head": false, "covered_by": "Empty path diff for src and the scan and helper tests since 80ff5717."},
+    {"role": "adversarial-testing", "file": "measure/runs/old_browser_builtins_20261122/adversarial-p2-80ff571.json", "status": "pass", "route": "openai/gpt-6-luna#high", "audited_head_sha": "80ff5717ba3a9479bedbe3d9e5ef05d7dd7d1a39", "targets_audited_head": false, "covered_by": "Empty path diff for src and the scan test since 80ff5717."},
+    {"role": "ux-browser-review", "file": "measure/runs/old_browser_builtins_20261122/ux-browser-review-p2-80ff571.json", "status": "pass", "route": "openai/gpt-6-luna#high", "audited_head_sha": "80ff5717ba3a9479bedbe3d9e5ef05d7dd7d1a39", "targets_audited_head": false, "covered_by": "Empty path diff for src and demo since 80ff5717."},
+    {"role": "review-a", "file": "measure/runs/old_browser_builtins_20261122/review-a-p3-9e406e8.json", "status": "pass", "route": "unknown", "audited_head_sha": "9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4", "targets_audited_head": false, "covered_by": "No script or test change since 9e406e8c."},
+    {"role": "review-b", "file": "measure/runs/old_browser_builtins_20261122/review-b-p3-9e406e8.json", "status": "pass", "route": "kimi-code-plan-cn/kimi-for-coding", "audited_head_sha": "9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4", "targets_audited_head": false, "covered_by": "No script or test change since 9e406e8c."},
+    {"role": "review-c", "file": "measure/runs/old_browser_builtins_20261122/review-c-p3-9e406e8.json", "status": "pass", "route": "unknown", "audited_head_sha": "9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4", "targets_audited_head": false, "covered_by": "No script or test change since 9e406e8c."},
+    {"role": "adversarial-testing", "file": "measure/runs/old_browser_builtins_20261122/adversarial-p3-9e406e8.json", "status": "pass", "route": "unknown", "audited_head_sha": "9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4", "targets_audited_head": false, "covered_by": "No script or test change since 9e406e8c. The result keeps retry escalate_human for TD-49, which the PM ruled as tech debt."},
+    {"role": "ux-browser-review", "file": "measure/runs/old_browser_builtins_20261122/ux-browser-review-p3-9e406e8.json", "status": "pass", "route": "openai/gpt-6-luna#high", "audited_head_sha": "9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4", "targets_audited_head": false, "covered_by": "No script, test, or src change since 9e406e8c. I reran the browser check and viewed both screenshots."},
+    {"role": "review-a", "file": "measure/runs/old_browser_builtins_20261122/review-a-p4-6dc919b.json", "status": "pass", "route": "unknown", "audited_head_sha": "6dc919b5bac3be9e7dcca3d999bbc26041407551", "targets_audited_head": true, "covered_by": "The result targets the audited head of this acceptance."}
+  ],
+  "judgement_results": [
+    {
+      "item": "1 deepCopy contract limits",
+      "result": "recorded, nonblocking",
+      "basis": "The PM accepted Review B findings F2 to F5 as contract limits. `copy.ts:8-13` documents them (commit 7d5c7129, comment lines only). `green-p2-r2.log:8` holds the four CONTEST dispositions. The state-type pin walks `Reflect.ownKeys`, so a state with a Symbol key, an accessor, a RegExp, or a class instance fails the pin. TD-47 keeps the wording gap of the comment."
+    },
+    {
+      "item": "2 escalation keys",
+      "result": "recorded, nonblocking",
+      "basis": "`metadata.json:14` holds a non-empty `escalation` text for the third and fourth scanner rounds. The plan records the PM approval for A7 at `plan.md:333` and `:345`. Both rounds changed the scan test only (72e74de0, 9459687d). Phase 3 had two remediation rounds (c3f48a52, c9f6bba1), and its later findings went to TD-49 by PM rule. The steward keeps the key text or folds it into `deviation_notes`."
+    },
+    {
+      "item": "3 TD-49, TD-47, and the AC6 Prettier amendment",
+      "result": "recorded, nonblocking",
+      "basis": "TD-49 (input causality, PM trigger: a browser check passes while a real input fails) and TD-47 (scanner and test tool limits) stay Open and Low. The TD-49 witness is `it.skip` with its ID. The amendment quote sits at `spec.md:252` and `plan.md:482`. The T8 record names the 35 baseline files and never counts them as a pass. My run gives the same 35 files, and the baseline blobs fail the same way."
+    },
+    {
+      "item": "4 T9 closeout placeholder",
+      "result": "recorded, FA-1",
+      "basis": "T9 is `[ ]` with `deferred:closeout-steward`, so the counters treat it as deferred. The closeout check needs a SHA token on the T9 line, because T9 is deferred, sits in the last phase, and names closeout. See closeout_requirements for the full list."
+    },
+    {
+      "item": "5 TD-45",
+      "result": "recorded, FA-2",
+      "basis": "This track fixes TD-45 in Forge: the scan finds zero hits and the browser check passes with four built-ins deleted. The closeout marks the row Resolved with its date and scope, and moves it to the archive. The monorepo carries the fix at its next sync. FA-3 shows one gap outside the TD-45 scope."
+    },
+    {
+      "item": "6 old zero-exit wording and baseline count wording",
+      "result": "recorded, FA-6, nonblocking",
+      "basis": "`plan.md:546` and `test-strategy.md:263` keep the old wording that every AC6 command exits 0. `green-p4-t8r2.log:19` leaves the baseline denominator implicit. The amended AC6 governs, and T8 states the raw exit 1. Neither point changes a result."
+    },
+    {
+      "item": "7 family independence",
+      "result": "record discrepancy, FA-4",
+      "basis": "Review B is Kimi and this final acceptance is Anthropic. All eight UX results record the OpenAI route `openai/gpt-6-luna#high`, which contradicts the brief. Review A and the phase acceptances are OpenAI by the brief and by the routes that exist. No contract rule bars an OpenAI UX reviewer, and the final-acceptance rule holds."
+    }
+  ],
+  "role_families": [
+    {"role": "spec author", "recorded_route": "opencode-go/deepseek-v4.1-flash", "family": "DeepSeek", "note": "from spec-review.md line 1"},
+    {"role": "spec-review", "recorded_route": "none", "family": "not recorded", "note": "the four result files hold no route key"},
+    {"role": "strategy, Red, Green", "recorded_route": "none", "family": "not recorded", "note": "no route in the commits or role logs"},
+    {"role": "review-a", "recorded_route": "13 unknown, 1 openai/gpt-6.2-sol#high", "family": "OpenAI by the brief and by the one recorded route", "note": ""},
+    {"role": "review-b", "recorded_route": "11 kimi-code-plan-cn/kimi-for-coding", "family": "Kimi (not OpenAI)", "note": ""},
+    {"role": "review-c", "recorded_route": "10 unknown, 1 openai/gpt-6.2-sol#high", "family": "OpenAI where recorded", "note": ""},
+    {"role": "adversarial-testing", "recorded_route": "6 openai/gpt-6-luna#high, 3 unknown", "family": "OpenAI where recorded", "note": ""},
+    {"role": "ux-browser-review", "recorded_route": "8 openai/gpt-6-luna#high", "family": "OpenAI", "note": "contradicts item 7 of the brief (FA-4)"},
+    {"role": "phase-acceptance", "recorded_route": "4 openai/gpt-6.2-sol#high, 6 unknown", "family": "OpenAI by the brief and by the routes that exist", "note": ""},
+    {"role": "final-acceptance", "recorded_route": "claude-agent/sonnet#max", "family": "Anthropic (not OpenAI)", "note": "differs from Review A and the phase acceptances"}
+  ],
+  "closeout_requirements": [
+    "Move `measure/tracks/old_browser_builtins_20261122` to `measure/archive/old_browser_builtins_20261122`, and remove the id from the active section of `measure/tracks.md`.",
+    "Add the archived entry under `## Archived Tracks`. Use one line with `./archive/old_browser_builtins_20261122/`. Then add a line `  *<description>*` that equals the `metadata.json` description after whitespace collapse.",
+    "Set `metadata.json` to `status: done` with a non-empty `completed` date. Update `actual_tasks`, `deviation_notes`, and the `escalation` text.",
+    "Put a SHA token of 7 to 40 hex digits on the T9 line of the archived plan. The checker demands it for a deferred closeout task in the last phase. Cite the closeout commit, or the commit that records it.",
+    "Write `automation-supervisor-closeout-manifest.json` in the archive folder.",
+    "Mark TD-45 Resolved with the date and the Forge scope, and move its row to `measure/tech-debt-archive.md`. Repoint the links of TD-47 and TD-49 to the archive. Keep `measure/tech-debt.md` at 50 lines or fewer. Add a row for FA-3 if the orchestrator agrees.",
+    "Run `node measure/tools/generate.mjs`, then `--check`. Run `bash measure/doctor.sh` through the heavy-run wrapper. Repair each local Markdown link that the move breaks.",
+    "Run `measure_interphase_checks.py closeout --repo . --track old_browser_builtins_20261122`. It needs this final acceptance file and a passing result."
+  ],
+  "ratings": [
+    {"axis": "correctness", "score": 4, "evidence": "All six ACs hold, with 0 differential mismatches; TD-47 and TD-49 keep documented scanner and browser-check limits."},
+    {"axis": "test_meaning", "score": 4, "evidence": "tests/old-browser/deep-copy.test.ts pins 29 real start states; two scan controls are regression pins and the TD-49 witness is skipped."},
+    {"axis": "scope_discipline", "score": 4, "evidence": "The src diff is a one-for-one substitution plus imports; only two unlisted witness tests and the PM-approved AC6 amendment exceed the plan (FA-7)."},
+    {"axis": "evidence_quality", "score": 4, "evidence": "Every claim has a command result or a file:line and my reruns match the T8 record, except stale wording at plan.md:560 and plan.md:546."}
+  ],
+  "reviewer_ratings": [
+    {"reviewer_role": "review-a", "reviewer_route": "openai/gpt-6.2-sol#high", "agreed": true, "score": 5, "evidence": "F1 was real and src/apk3d/sim/copy.ts:74-90 now fixes it, because it keeps array length and defines own keys (review-a-0d8fc7d.json)."},
+    {"reviewer_role": "review-a", "reviewer_route": "unknown", "agreed": true, "score": 5, "evidence": "The F2 and F3 blockers were real scan and site-check gaps; the controls at tests/apk3d/no-unpolyfilled-builtins.test.ts:768-797 now cover them (review-a-d15af2a.json)."},
+    {"reviewer_role": "review-a", "reviewer_route": "unknown", "agreed": true, "score": 5, "evidence": "The A7 receiver cases close at 9459687d; my scan run (11 tests, exit 0) and my independent grep agree (review-a-80ff571.json)."},
+    {"reviewer_role": "review-a", "reviewer_route": "unknown", "agreed": true, "score": 5, "evidence": "F1 was right: the raw Prettier exit was 1 under the original AC6, and my run reports the same 35 files (review-a-p4-fc8e728.json)."},
+    {"reviewer_role": "review-a", "reviewer_route": "unknown", "agreed": true, "score": 4, "evidence": "The pass under the amended AC6 was right; the authority gap was closed by the PM quote at spec.md:252 (review-a-p4-0849215.json)."},
+    {"reviewer_role": "review-a", "reviewer_route": "unknown", "agreed": true, "score": 5, "evidence": "The 35 baseline failures equal my independent list, and F2 and F3 stay Nits at plan.md:546 and green-p4-t8r2.log:19 (review-a-p4-6dc919b.json)."},
+    {"reviewer_role": "review-a", "reviewer_route": "unknown", "agreed": true, "score": 4, "evidence": "F6 is a real TD-49 gap and correctly nonblocking; my live run shows normal game behavior (review-a-p3-9e406e8.json)."},
+    {"reviewer_role": "review-b", "reviewer_route": "kimi-code-plan-cn/kimi-for-coding", "agreed": true, "score": 4, "evidence": "The four kept CONTEST items F2 to F5 are real limits; copy.ts:8-13 documents them and the Reflect.ownKeys pin guards them (review-b-d15af2a.json)."},
+    {"reviewer_role": "review-b", "reviewer_route": "kimi-code-plan-cn/kimi-for-coding", "agreed": true, "score": 4, "evidence": "The test-only claim holds: git show --stat 9459687d lists tests/apk3d/no-unpolyfilled-builtins.test.ts alone (review-b-80ff571.json)."},
+    {"reviewer_role": "review-b", "reviewer_route": "kimi-code-plan-cn/kimi-for-coding", "agreed": true, "score": 5, "evidence": "The cleanup claim holds: my browser run left no listener on 5199 and no vite or chrome process (review-b-p3-9e406e8.json)."},
+    {"reviewer_role": "review-c", "reviewer_route": "openai/gpt-6.2-sol#high", "agreed": true, "score": 5, "evidence": "F1 to F3 were real (array holes, regex-division misses, path-and-line exclusions); each has a fix or a control on HEAD (review-c-0d8fc7d.json)."},
+    {"reviewer_role": "review-c", "reviewer_route": "unknown", "agreed": true, "score": 5, "evidence": "F2 and F3 were real remaining scan gaps; the one-instance exclusion at tests/apk3d/no-unpolyfilled-builtins.test.ts:345-378 closes F3 (review-c-d15af2a.json)."},
+    {"reviewer_role": "review-c", "reviewer_route": "unknown", "agreed": true, "score": 5, "evidence": "C5-F7 is closed; the holder.box and non-ASCII receiver controls at tests/apk3d/no-unpolyfilled-builtins.test.ts:424-468 pass on HEAD (review-c-80ff571.json)."},
+    {"reviewer_role": "review-c", "reviewer_route": "unknown", "agreed": true, "score": 4, "evidence": "The CLI and quiet-control limits sit at scripts/old-browser-check.mjs:44-50, 61-65, and 311 as stated (review-c-p3-9e406e8.json)."},
+    {"reviewer_role": "adversarial", "reviewer_route": "openai/gpt-6-luna#high", "agreed": true, "score": 5, "evidence": "The three raw Box3.union hits and zero reports match my independent grep; box and restBox are THREE.Box3 at src/render/page.ts:204,257,436 (adversarial-p2-80ff571.json)."},
+    {"reviewer_role": "adversarial", "reviewer_route": "unknown", "agreed": true, "score": 4, "evidence": "The witness pair passes (1 passed, 1 skipped) in my run, and TD-49 records the residual gap (adversarial-p3-9e406e8.json)."}
+  ]
+}

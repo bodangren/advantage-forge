@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "role": "review-a",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 4: Gates",
+  "baseline_sha": "9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4",
+  "phase_base_sha": "9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4",
+  "role_base_sha": "6dc919b5bac3be9e7dcca3d999bbc26041407551",
+  "audited_head_sha": "6dc919b5bac3be9e7dcca3d999bbc26041407551",
+  "status": "pass",
+  "summary": "Phase 4 passes at 6dc919b. The plan and spec record the exact PM approval. The formatter has no new failures, and the targeted tests and structural checks pass.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F2 [Nit] review-a: test-strategy.md:263 and plan.md:546 still say every AC6 command exits 0. The approved amendment governs Prettier, and T8 correctly reports its raw exit 1.",
+    "F3 [Nit] review-a: green-p4-t8r2.log:19 omits the denominator for its baseline-absent count. Five of the 44 checked paths were absent. None of the 35 failing paths was absent."
+  ],
+  "evidence": [
+    "git rev-parse HEAD returned 6dc919b5bac3be9e7dcca3d999bbc26041407551. The exact phase range contains only Measure records.",
+    "git diff --stat 0849215a 6dc919b5 -- . ':!measure' ':!docs/chibi-sprouts' printed nothing. The direct rebind diff contains only the approval record and run records.",
+    "plan.md:482 and spec.md:252 each contain one copy of the supplied PM statement. A byte comparison matched each quotation after removal of the Markdown blockquote prefix.",
+    "plan.md:473 and spec.md:244 name the PM as approver. The approval text names amendment 7dbc1806, its date, and baseline 3f6a1921.",
+    "F1 remains withdrawn. Prettier exited 1 on the 44-file gate list, and the 35 warning paths matched the 35 plan rows exactly.",
+    "The audit checked all 39 baseline-present paths at 3f6a1921. The same 35 paths failed, and all five baseline-absent paths passed at HEAD. No new formatter failure occurred.",
+    "Prettier exited 0 on the seven named files and the two approval documents.",
+    "The wrapped three-file command passed 3 files and 23 tests. The generator and structural doctor both exited 0.",
+    "The full project suite passed at 0849215a with 3397 passes and 10 skips. The suite inputs are unchanged. The rebind did not rerun the full suite.",
+    "T9 remains pending for closeout. The final ss and ps checks found no listener on port 5199 and no audit-owned process."
+  ],
+  "commands": [
+    "git rev-parse HEAD; git diff --stat 9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4..6dc919b5bac3be9e7dcca3d999bbc26041407551",
+    "git diff --stat 0849215a 6dc919b5 -- . ':!measure' ':!docs/chibi-sprouts'",
+    "Node byte comparisons of the plan.md and spec.md quotation lines from git show 6dc919b:<path> against the supplied PM statement",
+    "node_modules/.bin/prettier --check on the expanded AC6 list; compare the warning set with the plan rows and with baseline versions via git show 3f6a1921:<path> and prettier --stdin-filepath <path> --check",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts --maxWorkers=1'",
+    "node measure/tools/generate.mjs --check; ./measure/doctor.sh --structural-only",
+    "ss -ltn 'sport = :5199'; ps -eo pid,ppid,stat,comm,args"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/review-a-p4-6dc919b.json",
+    "measure/runs/old_browser_builtins_20261122/review-a-p4-6dc919b.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "unknown",
+  "ratings": [
+    {"axis": "correctness", "score": 5, "evidence": "Both PM quotations match the supplied text exactly, and no formatter failure is new."},
+    {"axis": "test_meaning", "score": 5, "evidence": "The audit compared exact formatter path sets and independently passed the 23 targeted tests."},
+    {"axis": "scope_discipline", "score": 5, "evidence": "The requested rebind diff outside Measure and docs/chibi-sprouts printed nothing."},
+    {"axis": "evidence_quality", "score": 4, "evidence": "The formatter paths match the plan exactly, but green-p4-t8r2.log:19 still omits its denominator."}
+  ]
+}

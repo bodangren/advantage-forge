@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: review-a
+status: complete
+track: old_browser_builtins_20261122
+phase: Phase 4: Gates
+commits: none
+tests_run: Both PM quotations match exactly. Prettier exits 1 with the same 35 named baseline failures and zero new failures. Seven-file check exits 0. Wrapped targeted: 23 passed. Generator and doctor exit 0. Port 5199 clear.
+files_changed: review-a-p4-6dc919b.json and review-a-p4-6dc919b.log
+plan_updates: none
+known_failures: F1 remains withdrawn. All 35 formatter failures remain baseline debt. F2 and F3 remain nonblocking record clarifications.
+handoff: Phase 4 passes at 6dc919b5bac3be9e7dcca3d999bbc26041407551. Use this rebind for phase acceptance. T9 remains pending for closeout.
+END_MEASURE_AGENT_RESULT

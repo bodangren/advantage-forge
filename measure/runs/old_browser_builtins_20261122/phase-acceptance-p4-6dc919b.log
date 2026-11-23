@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: phase-acceptance
+status: complete
+track: old_browser_builtins_20261122
+phase: Phase 4: Gates
+commits: none
+tests_run: Three-file, witness, project, standalone scan, live browser, doctor and generator PASS. Prettier raw exit 1 on the same 35 named baseline files; approved non-regression PASS.
+files_changed: phase-acceptance-p4-6dc919b.json and .log
+plan_updates: none
+known_failures: No blockers. The formatter baseline failures and two record clarifications remain. Port 5199 is free.
+handoff: Proceed to final acceptance. Leave T9 to closeout-steward and preserve the TD-49 PM trigger.
+END_MEASURE_AGENT_RESULT
