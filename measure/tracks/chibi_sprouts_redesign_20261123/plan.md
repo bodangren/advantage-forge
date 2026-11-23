@@ -394,7 +394,13 @@ tests/apk3d/no-unpolyfilled-builtins.test.ts` exits 0.
 
 ## Phase 3: Red
 
-- [ ] T4 Red: Pin the measurement. File: `tests/sprout-mom-kim.test.ts`.
+- [x] T4 Red (tests ba884846): Pin the measurement. File: `tests/sprout-mom-kim.test.ts`.
+  - Evidence: `vitest run tests/sprout-mom-kim.test.ts` exits 1 with 28 failed
+    and 1 passed of 29 cases. The AC1 skip guard passes. Every other case
+    fails inside the case: the pure cases on
+    `Cannot find module '.../scripts/proportion-check.mjs'`, the tsx cases on
+    the missing script file. No collection or file-scope error.
+    `prettier --check` exits 0. `tsc --noEmit` names no new file (51 errors stay).
   - Each case imports the script inside the case with `await import('../scripts/proportion-check.mjs')`
     or runs it through `tsx`, so the fail-first run reports a missing module or a missing asset
     inside the case.
@@ -411,13 +417,44 @@ tests/apk3d/no-unpolyfilled-builtins.test.ts` exits 0.
     exits 1. The skip guard passes. Each other case fails inside the case with the absent script or
     the absent asset. `prettier --check` exits 0 on the file.
   - Record: the case names, the synthetic fixture body, and the failure text.
+  - Recorded: 29 cases — the AC1 skip guard; the level and orthographic proof
+    (missing asset fails before any import); the pass table; eleven doctored
+    rows (one per pass-table row, each named in its own `FAIL <row>:` error);
+    five synthetic figures (pass, crown-high, sole-low, wide-head,
+    merged-eyes with `eye components: found 1, expected 2`); the synthetic
+    palm group (base pass with sideDot −1, agreement +1, palmContact ≤ 1.8 mm,
+    thumbContact 0, thumbOut 0.040, thumbForward ≥ 0.025; flipped, mirrored,
+    and turned with their exact check 4, 7, and 6 failures); three hand-edge
+    cases (2 px gap over 80 % of rows, front width within 0.60 of depth times
+    ppm, a named `row <v>: no leg run` record entry); the side sign guard;
+    the real-hand case on both hands; the end-to-end case. Fixture: palm box
+    x 0.150-0.190, y 0.450-0.520, z 0.030-0.090; thumb box x 0.170-0.190,
+    y 0.495-0.505, z 0.090-0.115; fingers box x 0.155-0.185, y 0.430-0.450,
+    z 0.035-0.085; 16x16 quads per face, outward winding, over 200 vertices;
+    palmCentre [0.150, centroid y, centroid z], thumbTip [0.190, 0.500,
+    0.115], fingerTip [0.170, 0.430, 0.060]. Failure text at Red: the absent
+    module or the absent script file inside each case; no other failure.
 
-- [ ] T5 Red: Pin the sheet layout. File: `tests/mom-kim-sheet.test.ts`.
+- [x] T5 Red (tests ba884846): Pin the sheet layout. File: `tests/mom-kim-sheet.test.ts`.
+  - Evidence: `vitest run tests/mom-kim-sheet.test.ts` exits 1 with 8 failed
+    of 8 cases. Every case fails inside the case on
+    `Cannot find module '.../scripts/mom-kim-sheet.mjs'` from the tsx spawn.
+    `prettier --check` exits 0. `tsc --noEmit` names no new file.
   - Cases per AC5: the sheet size, the two rows and the `no side drawing` cell, one baseline and the
     700 px body scale, the lit row sources, the caption strip, and the two-cell `mom-panel.png`.
   - Done-when: the test exits 1 inside the cases on the absent script. No syntax or import error.
     `prettier --check` exits 0 on the file.
   - Record: the case names and the failure text.
+  - Recorded: 8 cases — writes the review sheet and the judge panel; sheet
+    size holds two 700 px rows and a caption strip (review 1568 px tall,
+    panel 748 px tall); two rows split into three segments each; the no side
+    drawing cell holds text, not a figure (dark bbox under 200 px); one
+    baseline and the 700 px body scale (figure masks 698-700 px, soles on the
+    row baseline); lit row sources feed the render cells (cell widths match
+    the 700 px scale of the lit masks and rows.lit); caption strip holds
+    content; two-cell mom-panel holds both renders. Layout contract: PAD 24,
+    caption 96, white background, column order Kim, render, drawing or text.
+    Failure text at Red: the absent script file inside each case.
 
 ## Phase 4: Green
 
