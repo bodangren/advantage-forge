@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "role": "phase-acceptance",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 3: Browser check",
+  "baseline_sha": "31af75444583c9236f342c908128c91da9f4f7e3",
+  "phase_base_sha": "31af75444583c9236f342c908128c91da9f4f7e3",
+  "role_base_sha": "9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4",
+  "audited_head_sha": "9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4",
+  "status": "pass",
+  "summary": "Phase 3 passes at 9e406e8. The live AC5 check, prerequisites and project tests pass. TD-49 remains nonblocking.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F1 [Major] phase-acceptance: TD-49 remains open. An instrumented harness can block game handlers and cause an action-state change after the page counter sees input. The check cannot prove attribution under that interference.",
+    "F2 [Nit] phase-acceptance: The CLI and quiet-control reporting limits remain in TD-49. Neither gives a false pass on the committed script's normal invocation.",
+    "F3 [Nit] phase-acceptance: plan.md:439-451 assigns all six Phase 3 late finding IDs to debt but groups them on three lines. The contract asks for one line per finding.",
+    "F4 [Nit] phase-acceptance: The 2D canvas has no accessibility snapshot. The same-HEAD UX review records that existing limitation."
+  ],
+  "evidence": [
+    "HEAD and role base are 9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4. The phase base is 31af75444583c9236f342c908128c91da9f4f7e3.",
+    "Review A, B, C, adversarial and UX results all pass and target the exact audited SHA. No test-only SHA allowance is necessary for their identities.",
+    "The source and script diff since 1eefa25d is empty. Commits 387a7032 and 437bcb2d add and skip the second witness. Commits f9cacede and 9e406e8c change records.",
+    "The three completed Phase 3 lines cite reachable commits: T7 d1be84d2, T7r c3f48a52 and T7r2 c9f6bba1. The metadata escalation text applies to Phase 2 only.",
+    "Phase 3 has two remediation commits. It does not need a third-round escalation key because the later findings did not start another remediation round.",
+    "Plan lines 354-378 and 407-435 record the game, all four deleted built-ins, the actions, report path and both screenshot paths. The T6k prerequisite remains in the phase base.",
+    "The live Green command exited 0. The committed script started an owned Vite server, removed the four built-ins before page scripts, and mounted the Phaser game.",
+    "The freshly written out/old-browser/check.json matches this run's stdout. It reports two accepted actions, ArrowRight and 1, a 1500 ms quiet control with changed false, and no errors.",
+    "All four absent_in_page values are undefined. The start and move PNGs are distinct 1280x800 files of 509585 and 549852 bytes.",
+    "The screenshots show a changed answer set and courage dropping from three to one in the real game. The simulation only decrements courage on an accepted wrong choice.",
+    "The port check after the wrapped run returned no listener on 5199. The report and screenshots remain ignored runtime outputs.",
+    "The active witness passed and the TD-49 witness skipped. The active witness executes the production predicate; it is not browser proof. The live Green run supplies the browser proof.",
+    "The project gate exited 0 with 231 files and 3397 tests passed; two files and ten tests skipped. The TD-49 witness explains the extra skip since T7r2.",
+    "Wrapped TypeScript exited 2 with 51 baseline diagnostics and none in a path changed since the phase base.",
+    "The unchanged source scanner checks 566 files and 19 labels. It reports zero hits after the three Box3 exclusions. No Phase 3 diff changes the scanner or the tracks registry.",
+    "A5 matched the current gate results and the historical T7r2 evidence. The structural doctor, generator and scoped Prettier checks exited 0.",
+    "The contract states: \"The item must be a product file that the plan lists for the phase. Test tooling, gate scripts, fixtures, logs, and records do not meet this test.\"",
+    "The TD-49 case affects a gate script under harness interference. It does not change what the real game delivers and does not meet the wrong-result exception.",
+    "The PM confirmed tech-debt and gave this reopen trigger: \"a browser check passes while a real input fails\". The orchestrator will record the trigger after this acceptance.",
+    "The Phase 3 plan gives each late finding one substantive disposition. Splitting the grouped lines into one row per ID is a record correction."
+  ],
+  "commands": [
+    "git rev-parse HEAD; git status --short --untracked-files=no",
+    "git diff --exit-code 1eefa25d HEAD -- src scripts (exit 0)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/old-browser-check.mjs --game spellweavers-run' (exit 0; two accepted moves, no errors)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/old-browser/adversarial-check.test.ts tests/old-browser/adversarial-check-r2.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts' (exit 0; 12 passed, one skipped)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts' (exit 0; 3397 passed, ten skipped)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/typescript/bin/tsc --noEmit --pretty false' (exit 2; 51 baseline diagnostics, none in changed files)",
+    "./measure/doctor.sh --structural-only (exit 0)",
+    "node measure/tools/generate.mjs --check (exit 0)",
+    "node_modules/.bin/prettier --check scripts/old-browser-check.mjs tests/old-browser/adversarial-check.test.ts tests/old-browser/adversarial-check-r2.test.ts measure/tracks/old_browser_builtins_20261122/plan.md (exit 0)",
+    "Read-only comparison of the fresh JSON against live stdout, PNG metadata and hashes, and the two screenshots",
+    "In-memory execution of the committed scanner over src/ (566 files, 19 labels, three raw hits, zero reports)",
+    "ss -H -ltnp 'sport = :5199' (no listener after the browser run)"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/phase-acceptance-p3-9e406e8.json",
+    "measure/runs/old_browser_builtins_20261122/phase-acceptance-p3-9e406e8.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "unknown",
+  "ratings": [
+    {"axis":"correctness","score":4,"evidence":"The live check reports two actions with no errors, while scripts/old-browser-check.mjs:409-419 retains the TD-49 attribution limit."},
+    {"axis":"test_meaning","score":4,"evidence":"The active witness tests no-input handling, and the real browser run proves startup and play independently of the skipped TD-49 witness."},
+    {"axis":"scope_discipline","score":5,"evidence":"The production diff for this track adds only scripts/old-browser-check.mjs and changes no game caller."},
+    {"axis":"evidence_quality","score":4,"evidence":"The fresh out/old-browser/check.json matches the wrapped command output and records the exact accepted actions."}
+  ],
+  "reviewer_ratings": [
+    {"reviewer_role":"review-a","reviewer_route":"unknown","agreed":true,"score":5,"evidence":"review-a-p3-9e406e8.json identifies the harness limit, and the live run verifies normal game behavior."},
+    {"reviewer_role":"review-b","reviewer_route":"kimi-code-plan-cn/kimi-for-coding","agreed":true,"score":5,"evidence":"The live command and empty post-run ss output confirm the ownership and cleanup conclusion in review-b-p3-9e406e8.json."},
+    {"reviewer_role":"review-c","reviewer_route":"unknown","agreed":true,"score":5,"evidence":"scripts/old-browser-check.mjs:42-49,61-65,311 confirm the recorded CLI and reporting limitations."},
+    {"reviewer_role":"adversarial","reviewer_route":"unknown","agreed":true,"score":5,"evidence":"The wrapped witness command confirms the active pass and labeled TD-49 skip reported in adversarial-p3-9e406e8.json."}
+  ]
+}

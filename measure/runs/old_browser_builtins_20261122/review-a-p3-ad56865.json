@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "role": "review-a",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 3: Browser check",
+  "baseline_sha": "31af75444583c9236f342c908128c91da9f4f7e3",
+  "phase_base_sha": "31af75444583c9236f342c908128c91da9f4f7e3",
+  "role_base_sha": "ad56865ba45daf5cf9d9c2557497a49f20c733ba",
+  "audited_head_sha": "ad56865ba45daf5cf9d9c2557497a49f20c733ba",
+  "status": "fail",
+  "summary": "The original F1-F3 probes now pass their expected checks. A startup race still lets a foreign page produce a false PASS without running Spellweavers Run.",
+  "blocking_findings": [
+    "F4 [Blocker] review-a: New late finding; it produces a false PASS of the browser check. At scripts/old-browser-check.mjs:145-161,239-244, a process can bind port 5199 after the TCP check. Its Vite marker satisfies readiness while the script's own Vite child has not exited yet. A wrapped race fixture served a foreign page and the script exited 0 with five moves. That page never loaded the game. Require readiness from the successfully bound child, and fail on child exit before accepting the browser result."
+  ],
+  "nonblocking_findings": [
+    "F5 [Nit] review-a: New late CLI finding, tech-debt. scripts/old-browser-check.mjs:41-49 accepts a repeated `--game` pair despite the plan's extra-argument claim. An isolated parser probe accepted two valid pairs. The script still checks the same game; this does not yield a user-reachable wrong result or false PASS."
+  ],
+  "evidence": [
+    "git rev-parse HEAD matches audited_head_sha at role start. The phase base resolves.",
+    "The phase diff adds the browser gate and its records. The remediation changes only the script and its records. Source, tests, Vite configuration, spec, and strategy do not change.",
+    "The sim sets chosen, adds word, collected and score, or decreases courage only in choose at src/games/spellweavers-run/core/sim.ts:142-170. Tick only resets word downward, recovers courage upward, and replaces rounds with chosen null.",
+    "The move predicate requires both marks. Clock fields, new round IDs alone, and missing state cannot satisfy it.",
+    "F1 closed for the original probe: the browser blocked every move input. Time advanced from 1666.67 to 6066.67 ms while score, collected words, courage, and chosen stayed unchanged. The script reported moves: 0 and exit 1.",
+    "Removing the state hook after mount also yielded moves: 0, state_changed: false, and exit 1.",
+    "F2 closed: the report write threw injected ENOSPC after a real browser run. The script exited 1 with one stderr line. The owned Vite and Chrome processes and listener were gone.",
+    "F3 closed for the original pre-bound probe: a foreign HTTP 200 responder was rejected in 251 ms with `port 5199 already in use`. The runner started and stopped that responder inside the same heavy-run call.",
+    "The race fixture pauses only after the successful free-port probe and before spawn. It binds a foreign fixture at that point. The original readiness and verdict logic accepted the foreign page despite no actual game mount.",
+    "The wrapped unmodified Green command exited 0 with two accepted actions, no browser errors, and four absent built-ins. It left a JSON report and two nonempty screenshots.",
+    "The wrapped harness checked port and process ownership after every probe. The final independent ss -ltn check showed no listener on 5199. The ps check found no Vite or Chrome process with the audit owner tag.",
+    "Syntax, focused Prettier, generator, and structural doctor passed. The build-graph database has no nodes table.",
+    "Unrelated Chibi redesign records were dirty at role start. The release and shelf-sync worktrees, the wip/oct-skill-docs-20261023 branch, and origin refs remain untouched."
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "git diff --stat 31af75444583c9236f342c908128c91da9f4f7e3..ad56865ba45daf5cf9d9c2557497a49f20c733ba",
+    "git diff 29ad3aa3..ad56865b -- scripts/old-browser-check.mjs measure/tracks/old_browser_builtins_20261122/plan.md",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c with the no-input, missing-state, report-write, collision, and startup-race probes and the unmodified Green command",
+    "node --check scripts/old-browser-check.mjs; node_modules/.bin/prettier --check scripts/old-browser-check.mjs measure/tracks/old_browser_builtins_20261122/plan.md; node measure/tools/generate.mjs --check; ./measure/doctor.sh --structural-only",
+    "Node VM of argument parsing only; no server or browser started",
+    "ss -ltnp 'sport = :5199'; ps -eo pid,ppid,stat,args"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/review-a-p3-ad56865.json",
+    "measure/runs/old_browser_builtins_20261122/review-a-p3-ad56865.log"
+  ],
+  "test_strategy_violations": [
+    "A foreign page can pass the browser gate without the Vite server or the actual game required by test-strategy.md section 6."
+  ],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "retry_implementation",
+  "confidence": "high",
+  "route": "unknown",
+  "ratings": [
+    {"axis": "correctness", "score": 3, "evidence": "The real game produces two accepted moves, but the startup race fixture returns a false PASS."},
+    {"axis": "test_meaning", "score": 3, "evidence": "The no-input and missing-state browser probes both fail, but the gate accepts a race fixture served by a foreign process."},
+    {"axis": "scope_discipline", "score": 5, "evidence": "The remediation changes only scripts/old-browser-check.mjs and its Measure records."},
+    {"axis": "evidence_quality", "score": 4, "evidence": "The wrapped probes confirm the three original cases and distinguish the remaining ownership race."}
+  ]
+}

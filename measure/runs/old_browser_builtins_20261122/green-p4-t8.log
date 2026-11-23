@@ -1,0 +1,33 @@
+MEASURE_AGENT_RESULT
+status: PASS
+phase: Phase 4: Gates
+track: old_browser_builtins_20261122
+phase_base_sha: 9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4
+role_base_sha: 9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4
+final_green_head: fc8e728e1f03b4be119084a8109d74d16f8cddc1
+dispositions: none
+tasks_flipped_to_x: T8@d282495b999af9e1bcb56ab24e1bb86138fa3f46
+tasks_flipped_to_b: none
+plan_commits: d282495b999af9e1bcb56ab24e1bb86138fa3f46 (gate record), a563e3ee8bc8904ed1160bcfcef64cb9cd4ad8bb (record SHA reference), fc8e728e1f03b4be119084a8109d74d16f8cddc1 (closeout placeholder and generated status)
+no_source_test_script_change: true
+
+Commands, run one at a time on 2026-11-23 against tested HEAD 9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4:
+1. Three-file command through the heavy runner: exit 0. Test Files 3 passed (3); Tests 23 passed (23). The scan reports zero hits over src/.
+2. Witness files through the heavy runner: node node_modules/vitest/vitest.mjs run tests/old-browser/adversarial-check.test.ts tests/old-browser/adversarial-check-r2.test.ts --maxWorkers=1 -> exit 0. Test Files 1 passed | 1 skipped (2); Tests 1 passed | 1 skipped (2). The skipped file is the TD-49 deferred case.
+3. Project command through the heavy runner: exit 0. Test Files 231 passed | 2 skipped (233); Tests 3397 passed | 10 skipped (3407). Tested commit 9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4. No TD-35 to TD-40 failure occurred.
+4. node measure/tools/generate.mjs --check: exit 0. Measure facts are current (4 files).
+5. ./measure/doctor.sh --structural-only: exit 0. Measure doctor found no structural errors.
+6. node_modules/.bin/prettier --check on the AC6 file list: exit 1 with Code style issues found in 35 files. Split below.
+7. Standalone scan through the heavy runner: exit 0. Test Files 1 passed (1); Tests 11 passed (11); zero reported hits.
+8. Phase 3 check through the heavy runner: node scripts/old-browser-check.mjs --game spellweavers-run -> exit 0. started true, moves 3, negative_control.changed false, errors [], all four names undefined. Port 5199 free and no owned vite or chrome process afterwards.
+
+Prettier split:
+- Files this track created or widened pass with exit 0: scripts/old-browser-check.mjs, tests/old-browser/deep-copy.test.ts, tests/old-browser/index-math.test.ts, tests/apk3d/no-unpolyfilled-builtins.test.ts, src/apk3d/sim/copy.ts, src/apk3d/sim/index-math.ts, measure/tracks/old_browser_builtins_20261122/test-strategy.md.
+- All 35 other failing files are pre-existing baseline debt. Each one fails the same check when its content at track start 3f6a19214994e7ac05a79a8fa7faeded684267b7 is piped to prettier --stdin-filepath --check. None was reformatted. The AC6 Prettier exit 1 is not claimed as a pass.
+
+Doctor note:
+With T8 checked, the in_progress track had no unchecked task, so the structural doctor failed. A deferred closeout placeholder task T9 (deferred:closeout-steward) was added to plan.md, and generated status.md was regenerated. No archive move, registry status change, or metadata edit was made. After that record-only change, generate --check and doctor --structural-only both exit 0.
+
+Handoff:
+- No task is deferred to Green. T9 stays unchecked for the closeout role. Do not archive the track from this role.
+END_MEASURE_AGENT_RESULT

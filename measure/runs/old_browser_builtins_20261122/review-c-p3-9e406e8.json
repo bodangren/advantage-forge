@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "role": "measure-review-c-ux-api",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 3: Browser check",
+  "baseline_sha": "9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4",
+  "role_base_sha": "9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4",
+  "phase_base_sha": "31af75444583c9236f342c908128c91da9f4f7e3",
+  "audited_head_sha": "9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4",
+  "current_head_sha": "9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4",
+  "audited_head_is_current": true,
+  "contract_applicability": "applicable",
+  "applicability_evidence": [
+    "The phase adds scripts/old-browser-check.mjs and its T7 output contract.",
+    "The source and scripts are unchanged from review-c-p3-1eefa25.json. The applicability decision and F3 closure carry forward."
+  ],
+  "status": "pass",
+  "summary": "Review C is bound to the current HEAD. Help passed, the source and scripts are unchanged, and the Phase 3 rulings agree with TD-49.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F4 [Nit] review-c: The help path exits 0. scripts/old-browser-check.mjs:44-50 still permits duplicate --game options and does not name the invalid value. The plan and TD-49 record this existing finding.",
+    "F5 [Nit] review-c: scripts/old-browser-check.mjs:61-65 still appends trimmed stacks despite its no-stack comment. The plan and TD-49 record this existing finding.",
+    "F6 [Nit] review-c: C3-F6 remains late tech debt. scripts/old-browser-check.mjs:311 initializes negative_control.changed to false before the control runs. A startup failure can look like a measured quiet window in that field alone. The command still exits 1. The plan and TD-49 record this limit."
+  ],
+  "evidence": [
+    "git rev-parse HEAD matched the full audited SHA before and after the help check.",
+    "git diff --stat 1eefa25d 9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4 -- src scripts printed nothing.",
+    "The exact range includes the test-only commits 387a7032 and 437bcb2d, the record commit f9cacede, and the run-record commit 9e406e8c.",
+    "The wrapped help check exited 0 and printed one usage line. It did not start a browser or server.",
+    "plan.md:433-435 gives the JSON evidence, both screenshot names, and the prior prerequisite results. The earlier T7 record gives the full artifact paths.",
+    "plan.md:436-451 distinguishes the fixes already made from the measurement-script debt ruling. It names the affected behavior and gives the source reviews.",
+    "TD-49 at measure/tech-debt.md:48 keeps the harness-only witness live and identifies the deferred witness. tests/old-browser/adversarial-check-r2.test.ts:24 is skipped with TD-49.",
+    "The C3-F6 and CLI entries agree with the prior Review C result. They do not change the F3 closure or acceptance of the T7 browser evidence.",
+    "A concurrent job briefly held port 5199. This role started no listener or browser. The final ss check showed the port free, and the observed headless process had exited.",
+    "Concurrent work modified pids-r3.log after role start. The audit did not edit it or use it as evidence."
+  ],
+  "commands": [
+    "git rev-parse HEAD; git status --short --untracked-files=no",
+    "git diff --stat 1eefa25d 9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4 -- src scripts",
+    "git log --oneline 1eefa25d..9e406e8c",
+    "git show --format=short f9cacede",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/old-browser-check.mjs --help'",
+    "ss -ltnp '( sport = :5199 )'; ps -p 390018,390342 -o pid,ppid,lstart,comm,args"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/review-c-p3-9e406e8.json",
+    "measure/runs/old_browser_builtins_20261122/review-c-p3-9e406e8.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "unknown",
+  "ratings": [
+    {"axis": "correctness", "score": 4, "evidence": "The empty source and scripts diff preserves the F3 closure and the known report limits in review-c-p3-1eefa25.json."},
+    {"axis": "test_meaning", "score": 4, "evidence": "TD-49 and tests/old-browser/adversarial-check-r2.test.ts:24 distinguish the deferred pin from the live witness."},
+    {"axis": "scope_discipline", "score": 5, "evidence": "The exact range contains only test and record changes."},
+    {"axis": "evidence_quality", "score": 5, "evidence": "The exact diff, wrapped help result, and committed records bind the result to 9e406e8c."}
+  ]
+}

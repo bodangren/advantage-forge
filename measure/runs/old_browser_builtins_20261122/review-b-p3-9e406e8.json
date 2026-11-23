@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "role": "review-b",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 3: Browser check",
+  "round": "re-bind to HEAD 9e406e8c",
+  "baseline_sha": "31af75444583c9236f342c908128c91da9f4f7e3",
+  "phase_base_sha": "31af75444583c9236f342c908128c91da9f4f7e3",
+  "role_base_sha": "9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4",
+  "audited_head_sha": "9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4",
+  "security_applicability": "applicable",
+  "status": "pass",
+  "summary": "Re-binds the Round 3 PASS to 9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4. src/ and scripts/ are byte-identical to the Round 3 audited HEAD (git diff --stat 1eefa25d 9e406e8 -- src scripts prints nothing); the commits since are test-only causality pins (387a7032, 437bcb2d) or records (f9cacede, 9e406e8c). The Green command ran once through heavy-run.sh with exit 0 (moves=3, negative_control.changed=false, all four built-ins absent), and within 20 s nothing listened on 5199 and no vite or chromium process remained. The standing audit object holds unchanged.",
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "evidence": [
+    "Binding: git diff --stat 1eefa25d 9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4 -- src scripts prints nothing (0 lines); src/ and scripts/ are byte-identical to the Round 3 audited HEAD; commits since are test-only (387a7032, 437bcb2d) or records (f9cacede, 9e406e8c).",
+    "Green command through heavy-run.sh: node scripts/old-browser-check.mjs --game spellweavers-run -> exit 0; started=true, moves=3 (action_inputs ['ArrowRight','1','ArrowRight']), negative_control.changed=false, state_changed=true, errors=[], all four built-ins absent in page.",
+    "Cleanup: within 20 s of the Green run no listener row remained; ss -ltn shows nothing on 5199 and ps shows no vite.js or chrome-headless-shell process; nothing needed killing.",
+    "The standing Round 3 audit object holds: listener-owner verification is safe and fails closed, input causality and the negative control work (moves=3 with page-side event counting), the report is scrubbed, and loopback/signal/args/write properties are verified.",
+    "A2 not applicable: no draft-to-published path. A6: the test-only commits match their plan record and the Green output matches the doc comment fields."
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "git diff --stat 1eefa25d 9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4 -- src scripts",
+    "git log --oneline 1eefa25d..9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/old-browser-check.mjs --game spellweavers-run'",
+    "ss -ltn | grep 5199; ps -eo pid,args | grep -E 'vite.js|chrome-headless' | grep -v grep"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/review-b-p3-9e406e8.json",
+    "measure/runs/old_browser_builtins_20261122/review-b-p3-9e406e8.log",
+    "measure/runs/old_browser_builtins_20261122/review-b-p3-9e406e8-notes.md"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "kimi-code-plan-cn/kimi-for-coding",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "src/ and scripts/ are byte-identical to the Round 3 audited HEAD and the Green command exits 0 with the expected artifact fields."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 5,
+      "evidence": "The two test-only commits since Round 3 are causality pins that match their plan record (f9cacede, TD-49)."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "git log 1eefa25d..9e406e8 lists only the test pins and record commits; no code or script change."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "Every claim cites the empty diff, the Green run output, or the post-run ss/ps verification."
+    }
+  ]
+}

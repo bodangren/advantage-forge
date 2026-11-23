@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "role": "ux-browser-review",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 3: Browser check",
+  "baseline_sha": "31af75444583c9236f342c908128c91da9f4f7e3",
+  "phase_base_sha": "31af75444583c9236f342c908128c91da9f4f7e3",
+  "role_base_sha": "ad56865ba45daf5cf9d9c2557497a49f20c733ba",
+  "audited_head_sha": "ad56865ba45daf5cf9d9c2557497a49f20c733ba",
+  "status": "pass",
+  "summary": "The remediated browser check shows Spellweavers Run 2D started and accepted two player actions with all four built-ins absent. The screenshots show an input-driven game change, and the no-input probe rejects clock-only changes.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F1 [Nit] ux-browser-review: The Phaser 2D game has an empty accessibility snapshot because the interface renders in a canvas. The screenshots show game content, but the canvas does not expose that content to assistive technology. This remains a nonblocking limitation."
+  ],
+  "evidence": [
+    "The audited HEAD is ad56865ba45daf5cf9d9c2557497a49f20c733ba, which green-p3-t7r.log records as the final Green HEAD after remediation c3f48a52.",
+    "Read out/old-browser/check.json: game is spellweavers-run; started is true; moves is 2; action_inputs are ArrowRight and 1; state_changed is true; errors is empty; all four built-ins are undefined in the page.",
+    "Read scripts/old-browser-check.mjs. It deletes the four built-ins before navigation, asserts their absence, selects the game, starts the Phaser renderer, and requires a mounted game.",
+    "The remediated acceptedAction rule compares player-action state fields: word, collected, score, courage, roundId, and chosen. Clock fields do not contribute to the move count. At least one accepted transition is required.",
+    "Read probe-p3r1-no-input.mjs. It blocks keyboard events and exercises the check without player key actions. green-p3-t7r.log records its expected failure: zero accepted moves even though the general state digest changed with time. This shows clock-only change cannot satisfy the move gate.",
+    "Read probe-p3r1-write-fail.mjs and probe-p3r1-collision.mjs. They exercise report-write failure and an occupied-port collision; green-p3-t7r.log records expected failures and cleanup.",
+    "Opened the start and move screenshots. The start image shows the Spellweavers Run question, choices, HUD, scene, and player. The move image shows a word marked in the sentence and a changed progress state.",
+    "The script URL is http://127.0.0.1:5199/demo/index.html?qc=1&renderer=phaser and the selected game id is spellweavers-run.",
+    "green-p3-t7r.log reports exit 0, empty errors, and no listener on port 5199 after the run.",
+    "The Phaser accessibility tree remains empty. The screenshots establish the shown game states only; no broader visual-quality or audible-quality claim is made."
+  ],
+  "commands": [
+    "Read out/old-browser/check.json => spellweavers-run, started true, moves 2, accepted inputs ArrowRight and 1, state_changed true, errors [], four built-ins undefined",
+    "Read scripts/old-browser-check.mjs => acceptedAction uses player-action state fields; clock fields do not count; at least one accepted transition is required",
+    "Read measure/runs/old_browser_builtins_20261122/green-p3-t7r.log => final Green exit 0; no listener on port 5199",
+    "Read probe-p3r1-no-input.mjs, probe-p3r1-collision.mjs, and probe-p3r1-write-fail.mjs",
+    "Opened out/old-browser/spellweavers-run-start.png and out/old-browser/spellweavers-run-move.png"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/ux-browser-review-p3-ad56865.json",
+    "measure/runs/old_browser_builtins_20261122/ux-browser-review-p3-ad56865.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "openai/gpt-6-luna#high",
+  "webbridge_status": "not_run",
+  "webbridge_evidence": {
+    "screenshots": [
+      "out/old-browser/spellweavers-run-start.png: 1280x800 Spellweavers Run start state with question, choices, HUD, forest scene, and player.",
+      "out/old-browser/spellweavers-run-move.png: 1280x800 changed game state with the word Then marked in the sentence and updated progress."
+    ],
+    "accessibility_snapshots": [
+      "The Phaser 2D accessibility tree is empty because game content renders in canvas. This remains a nonblocking limitation."
+    ],
+    "interactions": [
+      "Opened http://127.0.0.1:5199/demo/index.html?qc=1&renderer=phaser and selected spellweavers-run.",
+      "Advanced through the story reader and briefing, then started the Phaser game with all four built-ins deleted.",
+      "Pressed ArrowRight and 1. The check recorded both as accepted player actions, and the screenshot shows an input-driven state change.",
+      "The no-input control blocks keyboard events and fails with zero accepted moves despite a clock-driven state digest change."
+    ],
+    "dev_url": "http://127.0.0.1:5199/demo/"
+  },
+  "ux_applicability": "applicable"
+}

@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "role": "review-a",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 4: Gates",
+  "baseline_sha": "9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4",
+  "phase_base_sha": "9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4",
+  "role_base_sha": "0849215adb238a78c67b274aae0a0efcb497f3a8",
+  "audited_head_sha": "0849215adb238a78c67b274aae0a0efcb497f3a8",
+  "status": "pass",
+  "summary": "Phase 4 passes under amended AC6. The 35 formatter failures match the baseline and the plan exactly. All other AC6 gates pass.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F2 [Nit] review-a: test-strategy.md:263 and plan.md:541 still say every AC6 command exits 0. The dated amendment governs Prettier, and T8 correctly reports its raw exit 1. Align the old wording with the amended rule.",
+    "F3 [Nit] review-a: green-p4-t8r2.log:19 says zero files were absent at baseline without naming the denominator. Five of the 44 checked paths were absent. Zero of the 35 failing paths were absent, as plan.md:531 states."
+  ],
+  "evidence": [
+    "F1 withdrawn: the dated AC6 amendment changes the Prettier gate to file-level non-regression. The audit found no new formatter failure, and the plan does not count existing failures as passes.",
+    "spec.md:244-266 and plan.md:473-485 give the date, reason, baseline, and scope. The rule checks new files and keeps the old failures visible. It avoids unrelated formatting without changing any other AC6 gate.",
+    "git rev-parse HEAD returned 0849215adb238a78c67b274aae0a0efcb497f3a8. The exact phase diff contains Measure records. git diff --stat 9e406e8c 0849215a -- src scripts tests printed nothing.",
+    "The exact AC6 list expands to 44 paths. Prettier exited 1 and warned on exactly the 35 paths in the plan table. The audit compared sorted path sets, not only counts.",
+    "The audit checked all 39 paths present at baseline 3f6a1921. Their 35 baseline failures match the current set exactly. Five paths were absent at baseline and pass now.",
+    "The named seven-file command exited 0. A separate check also passed both witness files and the track plan, spec, metadata, and index.",
+    "The wrapped three-file gate exited 0 with 3 files and 23 tests passed. The wrapped project gate exited 0 with 231 files passed and 2 skipped. It reported 3397 tests passed and 10 skipped.",
+    "The generator and structural doctor exited 0 and printed the recorded success text. T9 stays pending for closeout.",
+    "The final HEAD check matched the audit SHA. ss and ps found no listener on port 5199 and no audit-owned process."
+  ],
+  "commands": [
+    "git rev-parse HEAD; git diff --stat 9e406e8c 0849215a -- src scripts tests; git diff 9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4..0849215adb238a78c67b274aae0a0efcb497f3a8",
+    "node_modules/.bin/prettier --check on the expanded test-strategy.md section 7 list; compare exact warning paths to the 35 plan table rows",
+    "git show 3f6a1921:<path> | node_modules/.bin/prettier --stdin-filepath <path> --check for every baseline-present path in the AC6 list",
+    "node_modules/.bin/prettier --check on the named seven-file set, both witness files, and the track plan, spec, metadata, and index",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c with the AC6 three-file command and project command",
+    "node measure/tools/generate.mjs --check; ./measure/doctor.sh --structural-only",
+    "ss -ltn 'sport = :5199'; ps -eo pid,ppid,stat,comm,args"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/review-a-p4-0849215.json",
+    "measure/runs/old_browser_builtins_20261122/review-a-p4-0849215.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "unknown",
+  "ratings": [
+    {"axis": "correctness", "score": 5, "evidence": "Exact file-set comparison found no baseline-pass file that now fails."},
+    {"axis": "test_meaning", "score": 5, "evidence": "The independent wrapped targeted and project tests both exited 0 with the recorded counts."},
+    {"axis": "scope_discipline", "score": 5, "evidence": "The phase range has no change under src, scripts, or tests."},
+    {"axis": "evidence_quality", "score": 4, "evidence": "The plan lists the exact 35 failing paths, but green-p4-t8r2.log:19 omits the denominator for its absent count."}
+  ]
+}

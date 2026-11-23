@@ -1,0 +1,14 @@
+MEASURE_AGENT_RESULT
+status: complete
+verdict: PASS
+audited_head: 9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4
+phase_base_sha: 31af75444583c9236f342c908128c91da9f4f7e3
+role_base_sha: 1eefa25d9d286a80d4f2a1576664f1894aeb755d
+checks: Re-bound the Phase 3 UX result to orchestrator-confirmed current HEAD 9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4. The orchestrator reports no changes to src/ or scripts since the prior audit. Read the current check and opened both current screenshots. The check records a started Spellweavers Run game, two accepted inputs, an unchanged 1500 ms negative control, no errors, and all four built-ins undefined. The screenshots show the start and a visibly progressed game state. The script verifies the mounted game and owned Vite server, so a blank page or foreign server cannot satisfy its checks. TD-49 notes that a contrived harness could block game handlers or call an auto hook; the orchestrator classified this as tech debt. This audit does not claim proof that the game itself processed the inputs. The Phaser accessibility tree remains empty and nonblocking.
+blocking_findings: None.
+nonblocking_findings: The Phaser 2D accessibility tree is empty because the game renders in canvas. TD-49 also limits the script's input-causality proof; the orchestrator classified the issue as tech debt.
+evidence: Orchestrator-supplied full current HEAD and src/scripts diff evidence; out/old-browser/check.json; scripts/old-browser-check.mjs; measure/runs/old_browser_builtins_20261122/green-p3-t7r2.log; round 2 probe files; current start and move screenshots.
+retry_recommendation: none
+handoff: Phase 3 browser UX result passes at audited HEAD 9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4. The current artifacts show a running game with all four built-ins absent and visible gameplay progress. TD-49 remains a known limit on input-causality proof.
+result_artifact: measure/runs/old_browser_builtins_20261122/ux-browser-review-p3-9e406e8.json
+END_MEASURE_AGENT_RESULT

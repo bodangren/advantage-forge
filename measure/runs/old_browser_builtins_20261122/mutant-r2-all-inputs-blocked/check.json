@@ -1,0 +1,16 @@
+{
+  "game": "spellweavers-run",
+  "deleted": [
+    "structuredClone",
+    "Array.prototype.at",
+    "Array.prototype.findLastIndex",
+    "Object.hasOwn"
+  ],
+  "started": false,
+  "moves": 0,
+  "action_inputs": [],
+  "state_changed": false,
+  "errors": [
+    "port 5199 already in use | Error: port 5199 already in use at file://<repo>/measure/runs/old_browser_builtins_20261122/mutant-r2-all-inputs-blocked.mjs:240:36 at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+  ]
+}

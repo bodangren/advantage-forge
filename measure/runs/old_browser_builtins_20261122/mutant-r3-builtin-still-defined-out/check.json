@@ -1,0 +1,20 @@
+{
+  "game": "spellweavers-run",
+  "deleted": [
+    "structuredClone",
+    "Array.prototype.at",
+    "Array.prototype.findLastIndex",
+    "Object.hasOwn"
+  ],
+  "started": false,
+  "moves": 0,
+  "action_inputs": [],
+  "negative_control": {
+    "window_ms": 1500,
+    "changed": false
+  },
+  "state_changed": false,
+  "errors": [
+    "structuredClone is present in the page: function | Error: structuredClone is present in the page: function at assertDeleted (file://<repo>/measure/runs/old_browser_builtins_20261122/mutant-r3-builtin-still-defined.mjs:257:44) at runNextTicks (node:internal/process/task_queues:65:5) at process.processImmediate (node:internal/timers:502:9) at async fi"
+  ]
+}

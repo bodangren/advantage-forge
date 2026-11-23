@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "role": "phase-acceptance",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 4: Gates",
+  "baseline_sha": "9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4",
+  "phase_base_sha": "9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4",
+  "role_base_sha": "0849215adb238a78c67b274aae0a0efcb497f3a8",
+  "audited_head_sha": "0849215adb238a78c67b274aae0a0efcb497f3a8",
+  "status": "fail",
+  "summary": "Phase 4 acceptance is blocked pending an authorized decision on the AC6 amendment. The previous Review A prerequisite is satisfied.",
+  "blocking_findings": [
+    "F2 [Blocker] phase-acceptance: spec.md:244-266 changes AC6 from a clean Prettier exit to file-level non-regression. The amendment credits the orchestrator and records PM notification only. No user approval or owning build session is recorded."
+  ],
+  "nonblocking_findings": [
+    "F3 [Nit] phase-acceptance: Review A reports old zero-exit wording in test-strategy.md:263 and plan.md:541. It also reports an ambiguous baseline denominator in green-p4-t8r2.log:19. These findings remain record clarifications."
+  ],
+  "evidence": [
+    "F1 withdrawn: review-a-p4-0849215.json passes and targets 0849215adb238a78c67b274aae0a0efcb497f3a8 with phase base 9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4.",
+    "The role base and audited HEAD match. The Phase 4 range changes only Measure records. The source, script and test diff is empty.",
+    "The contract states: \"The orchestrator routes an audit finding to the role that owns the fix.\" It also states: \"The owner of a `spec.md` finding or a `plan.md` finding is the user or a build session.\"",
+    "The contract permits an amendment by the user or an owning build session. It does not require separate PM approval for every build-owned amendment.",
+    "Commit 7dbc1806 changes the pass condition after Review A found the original gate red. The dated prose and the passing re-review establish the new rule and evidence, not authority to amend it.",
+    "Commit c4b5e7e2 changes the plan only. The Green re-record does not establish Build ownership of the spec amendment.",
+    "The source review and same-HEAD Review A do not require Review B, C, adversarial testing or UX browser review to repeat for this records-only phase.",
+    "The Phase 3 per-ID debt entries and the PM's TD-49 reopen trigger are present. This preflight does not issue a T8 gate verdict.",
+    "This role did not rerun tests or start a browser or server. Port 5199 had no listener."
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "git diff --exit-code 9e406e8c 0849215a -- src scripts tests (exit 0)",
+    "git show --name-only --format='%h %s' 7dbc1806 c4b5e7e2",
+    "jq inspection of the Phase 4 Review A status and SHA fields",
+    "ss -H -ltnp 'sport = :5199' (empty)"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/phase-acceptance-p4-0849215.json",
+    "measure/runs/old_browser_builtins_20261122/phase-acceptance-p4-0849215.log"
+  ],
+  "test_strategy_violations": [
+    "The AC6 amendment changes the gate without recorded approval or ownership from either role named in the finding disposition contract."
+  ],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "escalate_human",
+  "confidence": "high",
+  "route": "unknown",
+  "reviewer_ratings": [
+    {"reviewer_role":"review-a","reviewer_route":"unknown","agreed":false,"score":3,"evidence":"review-a-p4-0849215.json verifies Prettier against the amended criterion but does not establish the amendment owner's authority."}
+  ]
+}

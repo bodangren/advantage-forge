@@ -1,0 +1,40 @@
+MEASURE_AGENT_RESULT
+status: PASS
+phase: Phase 3: Browser check (remediation round 2, final)
+track: old_browser_builtins_20261122
+phase_base_sha: 31af75444583c9236f342c908128c91da9f4f7e3
+role_base_sha: e8312fc1ee1724db0b88078baf10e289634c50a1
+final_green_head: 1eefa25d9d286a80d4f2a1576664f1894aeb755d
+dispositions: A-F4=FIX; C-F3=FIX; ADV-F1=FIX
+tasks_flipped_to_x: T7r2@c9f6bba15d3aac01871f2113ce9b0da39f3245fb
+tasks_flipped_to_b: none
+script_commit: c9f6bba15d3aac01871f2113ce9b0da39f3245fb (scripts/old-browser-check.mjs only)
+plan_evidence_commit: 1eefa25d9d286a80d4f2a1576664f1894aeb755d (plan.md, generated status.md)
+
+Fixes:
+- A-F4 and C-F3: after the preflight the script spawns Vite and polls listener state from ss -ltnp. Readiness requires the listener PID to be the spawned child or a descendant, plus a Vite client marker in the response. A child exit before readiness or before the result is accepted fails the run. Ownership is re-checked before browser evidence is accepted and again before the report write.
+- ADV-F1: a 1500 ms quiet window before any input requires the player-action fields to stay unchanged; a change raises 'action field changed without input'. Each input is counted only when an input event reached the page and the action mark changed after that input. acceptedAction(before, after, inputWasSent) returns false when inputWasSent is false, so the committed regression witness passes. check.json records negative_control: {window_ms: 1500, changed: false}.
+
+Probes (files under measure/runs/old_browser_builtins_20261122/, none committed; every server or browser run through the heavy runner):
+1. make-p3r2-probes.mjs generator: writes the two probe copies from the final script; no server.
+2. probe-p3r2-harness-score.mjs: neutralizes input.play() and raises state.score from the harness.
+   command: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node measure/runs/old_browser_builtins_20261122/probe-p3r2-harness-score.mjs --game spellweavers-run'
+   script exit 1; expected-failure line: "no player-action transition"; moves 0, negative_control.changed false, no browser errors; port 5199 free afterwards.
+3. probe-p3r2-startup-race.mjs: binds a foreign Vite-marker HTTP server after the preflight, inside the same heavy-run call.
+   command: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node measure/runs/old_browser_builtins_20261122/probe-p3r2-startup-race.mjs --game spellweavers-run'
+   script exit 1; expected-failure line: "port 5199 listener owner mismatch: not the spawned dev server"; started false, moves 0; port 5199 free afterwards.
+4. diag-owner-p3r2.mjs: temporary ownership diagnostic used during implementation; no committed change.
+
+Gates:
+- Green command through the heavy runner: exit 0. started true, moves 3, action_inputs ["ArrowRight","ArrowLeft","ArrowRight"], negative_control.changed false, errors [], four deleted names undefined.
+- Witness test through the heavy runner: node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/old-browser/adversarial-check.test.ts -> exit 0, 1 file passed, 1 test passed.
+- Project gate through the heavy runner: node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts -> exit 0, Test Files 231 passed | 1 skipped (232), Tests 3397 passed | 9 skipped (3406).
+- node_modules/.bin/prettier --check scripts/old-browser-check.mjs: exit 0.
+- node measure/tools/generate.mjs --check: exit 0 after regeneration. measure/generated was clean before regeneration.
+- ./measure/doctor.sh --structural-only: exit 0.
+- ss -ltn shows no listener on 5199 and ps shows no owned vite.js or chrome-headless-shell after every run.
+
+Handoff:
+- No task is deferred to a human. Do not archive the track. T8 gates remain open.
+- Do not commit anything under measure/runs; the probes are local evidence only.
+END_MEASURE_AGENT_RESULT

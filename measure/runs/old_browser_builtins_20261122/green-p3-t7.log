@@ -1,0 +1,38 @@
+MEASURE_AGENT_RESULT
+status: PASS
+phase: Phase 3: Browser check
+track: old_browser_builtins_20261122
+phase_base_sha: 31af75444583c9236f342c908128c91da9f4f7e3
+role_base_sha: 31af75444583c9236f342c908128c91da9f4f7e3
+final_green_head: 29ad3aa3783be9f39411f14213e626280f278ab0
+dispositions: none
+tasks_flipped_to_x: T7@d1be84d2dc5ff4d16f290a505f154925e7a0fdd7
+tasks_flipped_to_b: none
+script_commit: d1be84d2dc5ff4d16f290a505f154925e7a0fdd7 (scripts/old-browser-check.mjs only)
+plan_evidence_commit: 29ad3aa3783be9f39411f14213e626280f278ab0 (plan.md, generated status.md)
+
+Red evidence (before the script existed):
+HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/old-browser-check.mjs --game spellweavers-run'
+Exit 1 with Error: Cannot find module '/home/daniebo/Desktop/advantage-forge/scripts/old-browser-check.mjs' (MODULE_NOT_FOUND). No check.json and no screenshots were written.
+
+Green evidence (same command through the heavy runner):
+Exit 0. The JSON printed by the script:
+{"game":"spellweavers-run","deleted":["structuredClone","Array.prototype.at","Array.prototype.findLastIndex","Object.hasOwn"],"started":true,"moves":6,"errors":[],"absent_in_page":{"structuredClone":"undefined","Array.prototype.at":"undefined","Array.prototype.findLastIndex":"undefined","Object.hasOwn":"undefined"},"state_changed":true}
+The init script deletes the four built-ins before navigation. The page assertion reports all four as undefined. The move is one click at the center of the .game-layer canvas followed by ArrowRight, ArrowLeft, ArrowUp, 1 and ArrowRight. The state digest changed. Every pageerror and console error is empty. Port 5199 is free after the run. No other --game value exits 0; 'other-game' prints one usage line and exits 1.
+
+Artifacts:
+- out/old-browser/check.json
+- out/old-browser/spellweavers-run-start.png (526116 bytes)
+- out/old-browser/spellweavers-run-move.png (547915 bytes)
+out/old-browser/ stays out of git.
+
+Gates:
+- node_modules/.bin/prettier --check scripts/old-browser-check.mjs: exit 0.
+- node measure/tools/generate.mjs --check: exit 0 after regeneration. measure/generated was clean before regeneration.
+- ./measure/doctor.sh --structural-only: exit 0.
+- A full tsc is not needed for an .mjs file.
+
+Handoff:
+- Audio task T6k (0cc7b5c4) stays named as the met prerequisite that removed the two Object.hasOwn calls.
+- No task is deferred to a human. Do not archive the track. T8 gates stay open.
+END_MEASURE_AGENT_RESULT

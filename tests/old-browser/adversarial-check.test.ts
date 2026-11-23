@@ -11,11 +11,7 @@ type ActionMark = {
   chosen: number | null;
 };
 
-type AcceptedAction = (
-  before: ActionMark,
-  after: ActionMark,
-  inputWasSent: boolean,
-) => boolean;
+type AcceptedAction = (before: ActionMark, after: ActionMark, inputWasSent: boolean) => boolean;
 
 function loadAcceptedAction(): AcceptedAction {
   const source = readFileSync(new URL('../../scripts/old-browser-check.mjs', import.meta.url), 'utf8');

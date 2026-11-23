@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "role": "measure-review-c-ux-api",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 3: Browser check",
+  "baseline_sha": "29ad3aa3783be9f39411f14213e626280f278ab0",
+  "role_base_sha": "29ad3aa3783be9f39411f14213e626280f278ab0",
+  "phase_base_sha": "31af75444583c9236f342c908128c91da9f4f7e3",
+  "audited_head_sha": "29ad3aa3783be9f39411f14213e626280f278ab0",
+  "current_head_sha": "29ad3aa3783be9f39411f14213e626280f278ab0",
+  "audited_head_is_current": true,
+  "contract_applicability": "applicable",
+  "applicability_evidence": [
+    "The phase diff adds a CLI and its artifact contract in scripts/old-browser-check.mjs.",
+    "spec.md:222-240 and test-strategy.md:212-248 require a real 2D move, error capture, two screenshots, and a derived exit status."
+  ],
+  "status": "fail",
+  "summary": "The supplied screenshots show real word progress. The script can pass without a move or use a server it did not start.",
+  "blocking_findings": [
+    "F1 [Blocker] review-c: scripts/old-browser-check.mjs:130-139,202-232 counts input attempts as moves and treats any change in serialized state as a move. The simulation increments timeMs without input, so the gate can exit 0 when the game ignores every input. Require a player-action state transition and count accepted moves.",
+    "F2 [Blocker] review-c: scripts/old-browser-check.mjs:34,226-230 performs output I/O without a cleanup guarantee. If writing check.json throws, it skips browser and server cleanup. Keep cleanup independent of artifact writes and report filesystem failures without a stack.",
+    "F3 [Blocker] review-c: scripts/old-browser-check.mjs:95-105 accepts any successful response at the fixed URL before the strict-port child reports exit. An existing demo can answer before the spawned server binds. Verify that the responding server belongs to this run before accepting browser evidence."
+  ],
+  "nonblocking_findings": [
+    "F4 [Nit] review-c: scripts/old-browser-check.mjs:26-32 prints the same usage line and exits 1 for both --help and an invalid game. Support explicit help with exit 0 and name the invalid value in the error. The parser also ignores extra arguments if the first --game value is valid.",
+    "F5 [Nit] review-c: scripts/old-browser-check.mjs:142,221,225 omits state_changed in failure JSON and inserts stack traces into the errors array that it prints to stdout. Initialize the field to false and emit concise error messages."
+  ],
+  "evidence": [
+    "git rev-parse HEAD matched the requested SHA before and after both CLI calls. The only tracked worktree edits were unrelated Chibi Sprouts records.",
+    "The exact phase range contains parallel Chibi Sprouts records. d1be84d2 adds the script, and 29ad3aa3 records T7.",
+    "Both wrapped CLI calls printed one usage line and exited 1. Neither printed a stack trace or reached the code that creates the output directory or starts the server.",
+    "check.json contains the expected game, four deleted names, started true, moves 6, errors [], state_changed true, and an absent_in_page map whose four values are undefined strings.",
+    "The read tool shows the first active Spell 1/5 prompt with no words selected in the start PNG. It is not the pre-launch Start button.",
+    "The move PNG shows Leo comes filled and choices to and him. These changes demonstrate accepted word picks in the supplied images, not just movement of the background.",
+    "The plan at lines 367-378 records the game, all four names, the click and key sequence, and the three output paths. green-p3-t7.log:18-26 corroborates the historical run.",
+    "The current PNG sizes were 525287 and 565280 bytes at inspection. They differ from the Green log sizes, so the files are not treated as the original Green captures.",
+    "src/host/main.ts:426 exposes the Phaser hook. src/games/spellweavers-run/view2d/game.ts:418 and :447 expose live state and start its loop.",
+    "src/games/spellweavers-run/core/sim.ts:248-252 updates timeMs every tick. Lines 148-159 record an accepted lane and advance the word counter on a correct choice.",
+    "The source separates server, state, and deletion helpers. The port-collision comment overstates the readiness check because it does not verify the listener.",
+    "No browser or dev server was started by this role. The runtime findings follow from source inspection."
+  ],
+  "commands": [
+    "git rev-parse HEAD; git status --short --untracked-files=no",
+    "git diff --name-status 31af75444583c9236f342c908128c91da9f4f7e3 29ad3aa3783be9f39411f14213e626280f278ab0",
+    "git diff --check 31af7544 29ad3aa3 -- scripts/old-browser-check.mjs measure/tracks/old_browser_builtins_20261122/plan.md",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/old-browser-check.mjs --help'",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/old-browser-check.mjs --game invalid-review-game'",
+    "stat -c '%s %n' out/old-browser/spellweavers-run-start.png out/old-browser/spellweavers-run-move.png",
+    "git check-ignore out/old-browser/check.json out/old-browser/spellweavers-run-start.png out/old-browser/spellweavers-run-move.png"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/review-c-p3-29ad3aa.json",
+    "measure/runs/old_browser_builtins_20261122/review-c-p3-29ad3aa.log"
+  ],
+  "test_strategy_violations": [
+    "F1: The move predicate accepts elapsed time as proof of a player action.",
+    "F2: The dev server can outlive the script if an artifact write skips cleanup."
+  ],
+  "live_contract_violations": [
+    "F3: The readiness check can accept a responding server that the script did not start."
+  ],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "retry_implementation",
+  "confidence": "high",
+  "route": "unknown",
+  "ratings": [
+    {"axis": "correctness", "score": 2, "evidence": "The screenshots show word progress, but scripts/old-browser-check.mjs:202-232 can pass on elapsed time alone."},
+    {"axis": "test_meaning", "score": 2, "evidence": "src/games/spellweavers-run/core/sim.ts:251 defeats the full-state comparison as a move check."},
+    {"axis": "scope_discipline", "score": 5, "evidence": "d1be84d2 adds only the planned browser-check script."},
+    {"axis": "evidence_quality", "score": 4, "evidence": "The CLI result, source lines, and both PNGs support the audit without a new browser run."}
+  ]
+}

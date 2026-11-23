@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "role": "measure-adversarial-testing",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 3: Browser check",
+  "baseline_sha": "9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4",
+  "phase_base_sha": "31af75444583c9236f342c908128c91da9f4f7e3",
+  "role_base_sha": "9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4",
+  "audited_head_sha": "9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4",
+  "status": "pass",
+  "summary": "Phase 3 is rebound to HEAD 9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4. F2 remains recorded as TD-49, a nonblocking late finding. Both witness tests and the Green browser command pass; no listener uses port 5199.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F2 [Nit] adversarial-testing: tests/old-browser/adversarial-check-r2.test.ts:24-35 records the residual input-causality gap as TD-49. A harness can block game handlers after the audit counter, then change score or collected state so the check counts a move. This requires contrived harness interference; no user can reach the wrong result. The PM ruling dated 2026-11-23 records it as tech debt, not Green, because it is a measurement-script finding in round 3 after the second remediation. A fix would verify that the game processed input, such as with a game-owned input-processed counter. The PM may veto this ruling."
+  ],
+  "evidence": [
+    "`git rev-parse HEAD` returned 9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4.",
+    "Since test-only commit 437bcb2d6533ef2bc23d38b37b5821b403283014, record commits are f9cacede88c4d511628c128c7f7382c1501633ed and 9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4.",
+    "`git diff --stat 437bcb2d6533ef2bc23d38b37b5821b403283014 9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4 -- . ':!measure' ':!docs/chibi-sprouts'` printed no output.",
+    "Both witness files passed through the heavy-run wrapper: one active test passed and the TD-49 regression test was skipped.",
+    "The Green browser command exited 0. It started the spellweavers-run game, recorded two moves (ArrowRight and ArrowLeft), found no errors, and reported all four built-ins as undefined.",
+    "The final listener check found no process listening on port 5199.",
+    "The previous adversarial run tested 19 required mutants: 17 exited 1 and 2 showed the F2 harness-only false pass. The PM ruling keeps F2 as TD-49, with no user-reachable wrong result.",
+    "F1 withdrawn: the earlier harness-score-before-input finding was checked against fix c9f6bba1. The e8312fc1 witness passed, and its related mutant exited 1."
+  ],
+  "commands": [
+    "git rev-parse HEAD (9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4)",
+    "git rev-parse f9cacede 9e406e8c (full SHAs recorded in evidence)",
+    "git diff --stat 437bcb2d6533ef2bc23d38b37b5821b403283014 9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4 -- . ':!measure' ':!docs/chibi-sprouts' (no output)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/old-browser/adversarial-check.test.ts tests/old-browser/adversarial-check-r2.test.ts' (exit 0; 1 passed, 1 skipped)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'NODE_OPTIONS=--import=/home/daniebo/Desktop/advantage-forge/measure/runs/old_browser_builtins_20261122/pid-recorder-r3.mjs node scripts/old-browser-check.mjs --game spellweavers-run' (exit 0; 2 moves, no errors, four built-ins undefined)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'if ss -ltn | grep -q \":5199\"; then echo listener; exit 1; else echo no-listener; fi' (no listener on 5199)"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/adversarial-p3-9e406e8.json",
+    "measure/runs/old_browser_builtins_20261122/adversarial-p3-9e406e8.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "escalate_human",
+  "confidence": "high",
+  "route": "unknown",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 3,
+      "evidence": "The Green browser command passed, while the contrived harness-only input-causality gap remains tracked as TD-49."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "Both witness tests ran: the existing witness passed and the TD-49 case remained skipped."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The diff from 437bcb2 to 9e406e8 outside measure and docs/chibi-sprouts printed no output."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "HEAD, diff, witness tests, Green browser output, and port check have recorded command results."
+    }
+  ]
+}

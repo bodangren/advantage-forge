@@ -1,0 +1,28 @@
+MEASURE_AGENT_RESULT
+role: measure-review-b-security
+track: old_browser_builtins_20261122
+phase: Phase 3: Browser check
+round: 1
+phase_base_sha: 31af75444583c9236f342c908128c91da9f4f7e3
+role_base_sha: 29ad3aa3783be9f39411f14213e626280f278ab0
+audited_head_sha: 29ad3aa3783be9f39411f14213e626280f278ab0
+security_applicability: applicable
+status: pass
+blocking_findings: none
+nonblocking_findings:
+  - "Port-collision detection is bypassable by any listener on 5199 (scripts/old-browser-check.mjs:95-111): waitForServer returns as soon as fetch(BASE) answers OK, before checking whether the spawned vite child exited. Probe probe-p3-collision.mjs: with a decoy server on 127.0.0.1:5199 the script drove a browser against the decoy for 90 s instead of failing fast (exit 1, started=false); on this shared machine a stale or foreign listener can make the check test the wrong server or even false-pass against old code. Fix: re-check serverExit after the fetch succeeds or require a vite-specific response marker."
+  - "check.json embeds absolute home paths on failure (scripts/old-browser-check.mjs:225): the catch branch appends error.stack, which contains /home/daniebo/Desktop/advantage-forge/... paths; grep-confirmed after the collision probe. Successful runs leak nothing (errors=[]); the artifact stays local. Fix: strip the cwd prefix or log error.message only."
+  - "Teardown lags parent exit by seconds: after a natural successful exit the vite child and chromium tree were still alive moments later and died shortly after (stopServer's 5 s SIGKILL fallback; playwright reaps chromium asynchronously); the signal paths freed the port in ~2 s. Not an orphan leak, but a fast follow-up run can briefly hit the lingering listener on the shared port."
+evidence:
+  - "Loopback only: vite.demo.config.ts:49 pins server.host 127.0.0.1; ss -ltn during runs showed LISTEN 127.0.0.1:5199 and nothing else; the only fetch target is the BASE constant http://127.0.0.1:5199/demo/index.html (script lines 18, 103); chromium launches with --remote-debugging-pipe and --mute-audio (lines 150-153), no TCP debug port."
+  - "Writes confined: mkdirSync/writeFileSync/screenshot all target ROOT/out/old-browser (lines 16, 22-24, 34, 200, 222, 227); a successful run produced exactly check.json and two PNGs there; check.json holds no secret and no absolute home path on success."
+  - "Init script confined to the page: context.addInitScript on a fresh context (lines 154-165); the runtime absent_in_page report shows all four built-ins 'undefined' in the page."
+  - "Full run green through heavy-run.sh: started=true, moves=6, state_changed=true, errors=[], exit 0."
+  - "Argument handling (probe-p3-args.mjs): bad path value, missing value, no arguments, injection attempt, and unknown game all exit 1 with the usage line before any mkdir or spawn; no injection file created; the accepted --game value is a constant used only in a CSS attribute selector, so no path injection is possible."
+  - "Orphans on signal (probe-p3-signal.mjs, PID-set diffing): SIGTERM and SIGINT sent to the Node parent only; parent exits 1, its vite child frees 5199 within ~2 s, no chromium outlives the run, no baseline process harmed; the collision error path also left no vite or chromium orphan."
+  - "Port 5199 shared-machine caveat: other audit sessions bind 5199 between probes (verified by PPID inspection); each of my runs freed it afterwards, measured directly whenever the port was otherwise free."
+  - "A2 not applicable: no draft-to-published path. A6: the 'fail fast on a port collision' doc claim is corrected by finding 1; all other doc and plan claims match observed behavior."
+retry_recommendation: none
+result_path: measure/runs/old_browser_builtins_20261122/review-b-p3-29ad3aa.json
+log_path: measure/runs/old_browser_builtins_20261122/review-b-p3-29ad3aa.log
+END_MEASURE_AGENT_RESULT

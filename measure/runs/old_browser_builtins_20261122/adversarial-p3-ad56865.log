@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: measure-adversarial-testing
+status: fail
+track: old_browser_builtins_20261122
+phase: Phase 3: Browser check
+commits: e8312fc1ee1724db0b88078baf10e289634c50a1 (test-only regression witness)
+tests_run: Green browser check passed through heavy-run (started=true, moves=2, errors=[]; start and move screenshots are 522580 and 541089 bytes); eight of nine browser mutants exited 1; harness-mutates-score-no-input exited 0 and exposed a false PASS; pre-bound stale-demo child exited 1; project gate ran once through heavy-run and exited 1 with 230 files passed, 1 skipped, 1 failed; 3396 tests passed, 9 skipped, 1 failed; regression witness failed as expected
+files_changed: measure/runs/old_browser_builtins_20261122/adversarial-p3-ad56865.json; measure/runs/old_browser_builtins_20261122/adversarial-p3-ad56865.log; temporary mutants, outputs, and PID log under measure/runs/old_browser_builtins_20261122/; tests/old-browser/adversarial-check.test.ts committed as e8312fc1
+plan_updates: none; no plan or tech-debt file changed
+known_failures: F1 is a round-2 late finding that meets the false-PASS exception: the browser check credits a harness-only score change as six accepted player actions; the committed regression witness fails against the audited implementation. Existing server-ownership findings remain in review-a-p3-ad56865.json F4 and review-c-p3-ad56865.json F3; my pre-bound stale-demo test failed as required, while the attempted post-preflight race fixture exited before browser navigation. The full project gate therefore failed on the new regression test.
+handoff: Route F1 to Green for the one permitted fix round because the delivered browser check can report success with all player inputs blocked. Do not accept Phase 3 until the check ties each accepted move to a real player input. The audited implementation is ad56865ba45daf5cf9d9c2557497a49f20c733ba; the only commit from this role is the test-only witness e8312fc1ee1724db0b88078baf10e289634c50a1. The final ss/ps checks found no listener on 5199 and no vite.js or chrome-headless-shell process. Started browser and Vite PIDs are recorded in pids-ad56865.log.
+END_MEASURE_AGENT_RESULT

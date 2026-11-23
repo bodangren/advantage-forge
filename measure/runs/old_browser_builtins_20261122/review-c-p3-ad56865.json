@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "role": "measure-review-c-ux-api",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 3: Browser check",
+  "baseline_sha": "ad56865ba45daf5cf9d9c2557497a49f20c733ba",
+  "role_base_sha": "ad56865ba45daf5cf9d9c2557497a49f20c733ba",
+  "phase_base_sha": "31af75444583c9236f342c908128c91da9f4f7e3",
+  "audited_head_sha": "ad56865ba45daf5cf9d9c2557497a49f20c733ba",
+  "current_head_sha": "ad56865ba45daf5cf9d9c2557497a49f20c733ba",
+  "audited_head_is_current": true,
+  "contract_applicability": "applicable",
+  "applicability_evidence": [
+    "The exact phase diff adds scripts/old-browser-check.mjs and the T7 artifact contract.",
+    "spec.md:222-240 and test-strategy.md:212-248 define the 2D play, output, and dev-server contract."
+  ],
+  "status": "fail",
+  "summary": "F1 and F2 are closed. The pre-bound collision is rejected, but F3 remains because the readiness response is not tied to the spawned server.",
+  "blocking_findings": [
+    "F3 [Blocker] review-c: scripts/old-browser-check.mjs:145-162,239-244 still does not tie the response to the spawned server. The preflight rejects an existing listener. If another Vite server binds after preflight and before the child binds, its response can pass while the child is still alive. The CLI can then report success for the wrong checkout. This is the unresolved server-ownership finding, not a new late finding."
+  ],
+  "nonblocking_findings": [
+    "F4 [Nit] review-c: --help now exits 0 with one usage line. An invalid game still gives only the usage line, and scripts/old-browser-check.mjs:43-49 permits duplicate --game options. The diagnostic and strict argument validation remain incomplete.",
+    "F5 [Nit] review-c: The field documentation and state_changed default fix the shape issue. scripts/old-browser-check.mjs:60-64 still includes a stack in runtime errors despite the no-stack comment. The no-input report confirms a stack frame in errors. The home and repository scrub does not remove stack frames."
+  ],
+  "evidence": [
+    "git rev-parse HEAD matched before and after the CLI checks. The tracked edits belong to parallel Chibi Sprouts work.",
+    "The two CLI calls ran through the specified wrapper. Help printed one usage line and exited 0. The invalid game printed one usage line and exited 1. Neither emitted a stack or reached server startup.",
+    "F1 closed: scripts/old-browser-check.mjs:200-223,296-327 counts accepted actions and keeps the generic state digest out of the gate. The selected state fields do not count clock-only changes.",
+    "The Green no-input probe blocked keyboard events. Its saved JSON shows started true, moves 0, action_inputs [], state_changed true, and no player-action transition. Green records exit 1 in green-p3-t7r.log:20-23.",
+    "F2 closed: scripts/old-browser-check.mjs:329-344 cleans up before writing the report and returns exit 1 on a write failure. The Green write-failure probe records one scrubbed EISDIR message and no leftover process.",
+    "F3 partial: probe-p3r1-collision.mjs:12-15 binds the decoy before it launches the CLI. The Green log records exit 1 in 242 ms. The probe does not cover a bind after preflight.",
+    "F3 remains: response.ok, the Vite client marker, and a living child do not prove that the child owns the responding socket. The source does not recheck child exit when it computes success.",
+    "The current check.json reports moves 2 and action_inputs ArrowRight and 1. It has state_changed true, errors [], and all four names marked undefined.",
+    "The start PNG shows the first prompt with empty slots. The move PNG shows Then filled, new word choices, and one fewer courage marker. The change is visible player progress.",
+    "The current PNG sizes differ from the Green log. This role inspected the files at the requested paths and did not claim they were the original Green captures.",
+    "The header describes the artifact fields and distinguishes accepted actions from a digest change. scrub replaces the repository prefix and HOME, flattens whitespace, and bounds length.",
+    "No new late finding is reported. The remaining F3 issue can give a CLI operator a false success result. F4 and F5 are carried nonblocking findings.",
+    "No server, browser, mutant, decoy, watcher, or TypeScript project check ran in this role. ss found no listener on 5199. ps found no Vite or Chrome process owned by this role."
+  ],
+  "commands": [
+    "git rev-parse HEAD; git status --short --untracked-files=no",
+    "git diff --name-status 29ad3aa3 ad56865b",
+    "git diff --check 29ad3aa3 ad56865b -- scripts/old-browser-check.mjs",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/old-browser-check.mjs --help'",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/old-browser-check.mjs --game invalid-review-game'",
+    "ss -ltn '( sport = :5199 )'; ps -eo pid,ppid,stat,comm,args",
+    "stat -c '%s %n' out/old-browser/spellweavers-run-start.png out/old-browser/spellweavers-run-move.png"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/review-c-p3-ad56865.json",
+    "measure/runs/old_browser_builtins_20261122/review-c-p3-ad56865.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": ["F3: The readiness check can accept a foreign Vite response after the preflight check."],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "retry_implementation",
+  "confidence": "high",
+  "route": "unknown",
+  "ratings": [
+    {"axis": "correctness", "score": 3, "evidence": "The move and cleanup fixes hold, but scripts/old-browser-check.mjs:145-162 does not establish listener ownership."},
+    {"axis": "test_meaning", "score": 4, "evidence": "green-p3-t7r.log:20-29 records meaningful failure probes but tests only a listener that binds before preflight."},
+    {"axis": "scope_discipline", "score": 5, "evidence": "c3f48a52 updates only the old-browser script, and ad56865b updates the T7 record and generated status."},
+    {"axis": "evidence_quality", "score": 4, "evidence": "The audit records the two CLI exits, the source race, and the Green probe evidence without claiming a new browser run."}
+  ]
+}

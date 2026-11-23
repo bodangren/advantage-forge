@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "role": "review-a",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 3: Browser check",
+  "baseline_sha": "31af75444583c9236f342c908128c91da9f4f7e3",
+  "phase_base_sha": "31af75444583c9236f342c908128c91da9f4f7e3",
+  "role_base_sha": "9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4",
+  "audited_head_sha": "9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4",
+  "status": "pass",
+  "summary": "Phase 3 passes at 9e406e8. F4 remains closed. F6 and F5 remain nonblocking TD-49 items. The browser check and original witness pass.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F5 [Nit] review-a: Nonblocking CLI debt. scripts/old-browser-check.mjs:42-49 accepts a repeated valid --game pair but still checks the same game. The plan records A3-F5 as tech debt, and TD-49 includes it.",
+    "F6 [Major] review-a: Nonblocking late finding. A harness blocked the game handlers and called the auto hook after the quiet window. The script credited the timed action to the blocked canvas click and exited 0. Under the 2026-11-23 PM rule, the orchestrator grouped A3-F6 and ADV3-F2 in TD-49. This is a measurement-script gap with no user-reachable wrong result. The proposed fix is a game counter for processed input. The PM may veto."
+  ],
+  "evidence": [
+    "git rev-parse HEAD returned 9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4. The exact phase diff contains code, tests, and records. The rebind delta contains the skipped witness and Measure records.",
+    "git diff --stat 1eefa25d 9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4 -- src scripts printed nothing. The spec and test strategy are also unchanged.",
+    "F4 remains closed. At 1eefa25d the wrapped startup-race probe exited 1 with an owner mismatch and no browser launch. The owner check is unchanged.",
+    "The plan has one disposition line for A3-F6 at line 439 and one for A3-F5 at line 449. measure/tech-debt.md:48 records TD-49 and the proposed counter.",
+    "The wrapped Green run exited 0. Spellweavers Run started, reported three moves and no errors, and showed all four built-ins as undefined. The negative control reported changed false. The JSON report and both screenshots were nonempty.",
+    "The wrapped witness command exited 0. tests/old-browser/adversarial-check.test.ts passed. tests/old-browser/adversarial-check-r2.test.ts was skipped with the TD-49 label.",
+    "The T7r2 project-suite counts refer to the historical Green log. The rebind did not rerun the project suite.",
+    "The generator and structural doctor passed. The script exports no symbols. The build-graph database lacks the nodes table, and the game callers are unchanged.",
+    "Port 5199 had no listener immediately after the wrapped Green run. Later ss and ps found a listener without the audit tag. No audit-owned process remained."
+  ],
+  "commands": [
+    "git rev-parse HEAD; git diff --name-status 31af75444583c9236f342c908128c91da9f4f7e3..9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4",
+    "git diff --stat 1eefa25d 9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4 -- src scripts",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c with node scripts/old-browser-check.mjs --game spellweavers-run and node node_modules/vitest/vitest.mjs run tests/old-browser/adversarial-check.test.ts tests/old-browser/adversarial-check-r2.test.ts --maxWorkers=1 --reporter=verbose",
+    "rg checks for A3-F6, A3-F5, and TD-49; node measure/tools/generate.mjs --check; ./measure/doctor.sh --structural-only",
+    "ss -ltn 'sport = :5199'; ss -ltnp 'sport = :5199'; ps -eo pid,ppid,stat,comm,args"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/review-a-p3-9e406e8.json",
+    "measure/runs/old_browser_builtins_20261122/review-a-p3-9e406e8.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "unknown",
+  "ratings": [
+    {"axis": "correctness", "score": 3, "evidence": "The wrapped browser run exited 0 with all four names absent, but TD-49 limits proof of input causality."},
+    {"axis": "test_meaning", "score": 3, "evidence": "The original adversarial-check test passed and the TD-49 witness was skipped."},
+    {"axis": "scope_discipline", "score": 5, "evidence": "git diff --stat 1eefa25d 9e406e8c -- src scripts printed nothing."},
+    {"axis": "evidence_quality", "score": 4, "evidence": "The wrapped Green run and the disposition entries at plan.md:439 and plan.md:449 support the rebind."}
+  ]
+}

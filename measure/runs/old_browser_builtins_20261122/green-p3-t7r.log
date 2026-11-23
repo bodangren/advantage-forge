@@ -1,0 +1,39 @@
+MEASURE_AGENT_RESULT
+status: PASS
+phase: Phase 3: Browser check (remediation round 1)
+track: old_browser_builtins_20261122
+phase_base_sha: 31af75444583c9236f342c908128c91da9f4f7e3
+role_base_sha: 29ad3aa3783be9f39411f14213e626280f278ab0
+final_green_head: ad56865ba45daf5cf9d9c2557497a49f20c733ba
+dispositions: A-F1=FIX; A-F2=FIX; A-F3=FIX; C-F1=FIX; C-F2=FIX; C-F3=FIX; C-F4=FIX; C-F5=FIX; B-N1=FIX; B-N2=FIX
+tasks_flipped_to_x: T7r@c3f48a52b7d38c99759a3f13809a8a5e25f06f87
+tasks_flipped_to_b: none
+script_commit: c3f48a52b7d38c99759a3f13809a8a5e25f06f87 (scripts/old-browser-check.mjs only)
+plan_evidence_commit: ad56865ba45daf5cf9d9c2557497a49f20c733ba (plan.md, generated status.md)
+
+Fixes:
+- F1: moves now count accepted player-action transitions in state.word, state.collected, state.score, state.courage or the current round chosen field. Clock fields do not count. action_inputs names the accepted inputs. The gate requires moves >= 1 and raises 'no player-action transition' otherwise.
+- F2: browser close and Vite stop run in finally before the report write; Vite is awaited to exit on every path. A report write failure prints one stderr line with no stack and exits 1.
+- F3: a pre-flight TCP probe rejects a pre-bound port with 'port 5199 already in use'. Readiness also needs the owned child alive and a Vite client marker in the response, not any HTTP 200.
+- B path scrub and C CLI: absolute cwd and home paths become <repo> and <home> in check.json and stderr; --help exits 0 with one stdout usage line; unknown options, extra arguments and bad --game exit 1 with one stderr usage line and no stack; the header comment names all report fields.
+
+Probes (all under measure/runs/old_browser_builtins_20261122/, none committed, all server/browser commands through the heavy runner):
+1. probe-p3r1-no-input.mjs (keyboard events blocked in the init script)
+   command: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node measure/runs/old_browser_builtins_20261122/probe-p3r1-no-input.mjs --game spellweavers-run'
+   script exit 1; expected-failure line: "no player-action transition"; moves 0, state_changed true.
+2. probe-p3r1-write-fail.mjs (report path replaced by a directory)
+   command: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node measure/runs/old_browser_builtins_20261122/probe-p3r1-write-fail.mjs --game spellweavers-run'
+   script exit 1; expected-failure line: "check: cannot write report: EISDIR: illegal operation on a directory, open '<repo>measure/runs/old_browser_builtins_20261122/probe-p3r1-write-fail-out/check.json-dir'"; one stderr line, no stack; port 5199 free and no vite or chrome process afterwards.
+3. probe-p3r1-collision.mjs (decoy HTTP server inside the same heavy-run call)
+   command: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node measure/runs/old_browser_builtins_20261122/probe-p3r1-collision.mjs'
+   checked script exit 1 in 242 ms; expected-failure line: "port 5199 already in use"; verdict EXPECTED_FAIL_collision; probe exit 0; port 5199 free afterwards.
+
+Green command (final):
+HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/old-browser-check.mjs --game spellweavers-run'
+Exit 0. started true, moves 2, action_inputs ["ArrowRight","1"], errors [], all four deleted names undefined, state_changed true. check.json: out/old-browser/check.json. Screenshots: out/old-browser/spellweavers-run-start.png (516048 bytes), out/old-browser/spellweavers-run-move.png (520598 bytes). ss -ltn shows no listener on 5199 and ps shows no owned vite.js or chrome-headless process after the run.
+
+Gates: node_modules/.bin/prettier --check scripts/old-browser-check.mjs exit 0; node measure/tools/generate.mjs --check exit 0 after regeneration; ./measure/doctor.sh --structural-only exit 0. out/old-browser/ and all probes stay out of git.
+
+Handoff:
+- No task is deferred to a human. Do not archive the track. T8 gates stay open.
+END_MEASURE_AGENT_RESULT

@@ -1,0 +1,25 @@
+MEASURE_AGENT_RESULT
+role: measure-review-b-security
+track: old_browser_builtins_20261122
+phase: Phase 3: Browser check
+round: 2
+phase_base_sha: 31af75444583c9236f342c908128c91da9f4f7e3
+role_base_sha: ad56865ba45daf5cf9d9c2557497a49f20c733ba
+audited_head_sha: ad56865ba45daf5cf9d9c2557497a49f20c733ba
+security_applicability: applicable
+status: pass
+blocking_findings: none
+nonblocking_findings: none
+evidence:
+  - "F1 withdrawn (collision bypass): the script now refuses to start when anything answers on 5199 (portAnswering pre-spawn check, scripts/old-browser-check.mjs:240) and after spawn requires the owned child alive plus the /@vite/client marker (lines 145-169). Probe probe-p3-r2-collision.mjs: decoy on 127.0.0.1:5199 inside one heavy-run call; the script failed in 267 ms with 'port 5199 already in use', exit 1, no vite or chromium spawned, port free afterwards."
+  - "F2 withdrawn (home path in check.json): scrub() (lines 52-58) replaces the repo root with <repo> and $HOME with <home>; describe() feeds scrubbed messages and trimmed stacks. The collision failure grep-verified: check.json and stdout/stderr hold no '/home/' and no user name; the stack reads file://<repo>scripts/old-browser-check.mjs:240. The full run's check.json is likewise clean."
+  - "F3 withdrawn (teardown lag): stopServer re-awaits the child exit (lines 120-122). Probe probe-p3-r2-full.mjs: at parent exit the port was already free (freed after ~0 ms); the r1 lingering-listener behavior is gone."
+  - "r1 properties hold: loopback only (config host 127.0.0.1, single BASE fetch target, --remote-debugging-pipe); SIGTERM and SIGINT to the Node parent only freed the port within ~2 s with no chromium orphan and no baseline process harmed (probe-p3-signal.mjs); --game cases all exit 1 with usage, --help exits 0, no injection file (probe-p3-r2-args.mjs); writes only under out/old-browser/ with a wrapped report write (lines 24, 31-33, 241, 294, 327, 334-338)."
+  - "Full run green: exit 0, started=true, moves=2 with accepted-move rule (action_inputs ['ArrowRight','1']), state_changed=true, errors=0, all four built-ins absent in page."
+  - "PM load rule compliance: every decoy, signal, and full run went through heavy-run.sh with HEAVY_MIN_AVAIL_MB=1500; final ss/ps shows nothing of mine on 5199 and no vite.js or chrome-headless-shell process; nothing needed killing."
+  - "Observation (not a finding): the SIGINT path exits 130 instead of 1; cleanup is identical and complete."
+  - "A2 not applicable: no draft-to-published path. A6: the script doc comment matches observed behavior including accepted-move semantics and the scrubbed report."
+retry_recommendation: none
+result_path: measure/runs/old_browser_builtins_20261122/review-b-p3-ad56865.json
+log_path: measure/runs/old_browser_builtins_20261122/review-b-p3-ad56865.log
+END_MEASURE_AGENT_RESULT

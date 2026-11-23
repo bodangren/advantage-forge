@@ -1,0 +1,21 @@
+{
+  "game": "spellweavers-run",
+  "deleted": [
+    "structuredClone",
+    "Array.prototype.at",
+    "Array.prototype.findLastIndex",
+    "Object.hasOwn"
+  ],
+  "started": false,
+  "moves": 0,
+  "action_inputs": [],
+  "negative_control": {
+    "window_ms": 1500,
+    "changed": false
+  },
+  "state_changed": false,
+  "errors": [
+    "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5199/demo/index.html?qc=1&renderer=phaser Call log: - navigating to \"http://127.0.0.1:5199/demo/index.html?qc=1&renderer=phaser\", waiting until \"domcontentloaded\" | page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5199/demo/index.html?qc=1&renderer=phaser Call log: - navigating to \"http://127.0.0.1:5199/demo/index.html?qc=1&renderer=phaser\", waiting until \"domcontentloaded\" at <repo>/measure/runs/old_browser_builtins_20261122/mutant-r3-child-exits-aft",
+    "dev server child exited before the result was accepted: {\"code\":143,\"signal\":null,\"log\":\"\\u001b[32m\\u001b[1mVITE\\u001b[22m v8.3.8\\u001b[39m \\u001b[2mready in \\u001b[0m\\u001b[1m107\\u001b[22m\\u001b[2m\\u001b[0m ms\\u001b[22m \\u001b[32m➜\\u001b[39m \\u001b[1mLocal\\u001b[22m: \\u001b[36mhttp://127.0.0.1:\\u001b[1m5199\\u001b[22m/demo/\\u001b[39m\"} | Error: dev server child exited before the result was accepted: {\"code\":143,\"signal\":null,\"log\":\"\\u001b[32m\\u001b[1mVITE\\u001b[22m v8.3.8\\u001b[39m \\u001b[2mready in \\u001b[0m\\u001b[1m107\\u001b[22m\\u001b[2m\\u001b[0m ms\\u001b[22m \\u001b[32m➜\\u001b[39m \\u001b[1mLocal\\u001b[22m: \\u001b[36mhttp://127.0.0"
+  ]
+}

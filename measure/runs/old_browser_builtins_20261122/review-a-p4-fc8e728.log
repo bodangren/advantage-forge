@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: review-a
+status: complete
+track: old_browser_builtins_20261122
+phase: Phase 4: Gates
+commits: none
+tests_run: Wrapped exits 0: three-file 23 passed; witnesses 1 passed, 1 skipped; scan 11 passed; project 231 files passed, 2 skipped, 3397 tests passed, 10 skipped. Generator and doctor exit 0. Required Prettier exit 1; seven-file subset exit 0. All 35 failures reproduce at baseline. Port 5199 is clear.
+files_changed: review-a-p4-fc8e728.json and review-a-p4-fc8e728.log
+plan_updates: none
+known_failures: F1: T8 is marked complete even though the required AC6 Prettier command exits 1. T9 remains pending for closeout.
+handoff: Route F1 to Green. Keep the baseline failures visible. Do not count the seven-file subset as an AC6 pass.
+END_MEASURE_AGENT_RESULT

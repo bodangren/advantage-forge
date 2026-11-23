@@ -1,0 +1,14 @@
+MEASURE_AGENT_RESULT
+status: complete
+verdict: PASS
+audited_head: ad56865ba45daf5cf9d9c2557497a49f20c733ba
+phase_base_sha: 31af75444583c9236f342c908128c91da9f4f7e3
+role_base_sha: ad56865ba45daf5cf9d9c2557497a49f20c733ba
+checks: Read check.json, the remediated browser script, the Green log, the probe files, and both screenshots. check.json records spellweavers-run, started true, two accepted actions (ArrowRight and 1), state_changed true, no errors, and all four built-ins undefined. The screenshots show the start state and an input-driven move state. acceptedAction checks player-action state fields and excludes clock fields. The no-input probe blocks keyboard input and fails with zero accepted moves despite a clock-driven digest change. The script requires a mounted Phaser game and at least one accepted transition, so a blank page or clock-only change cannot pass. The empty Phaser accessibility tree remains nonblocking. Page URL: http://127.0.0.1:5199/demo/index.html?qc=1&renderer=phaser. Game id: spellweavers-run.
+blocking_findings: None.
+nonblocking_findings: The Phaser 2D accessibility tree is empty because the game renders in canvas. This remains a nonblocking limitation.
+evidence: out/old-browser/check.json; scripts/old-browser-check.mjs; measure/runs/old_browser_builtins_20261122/green-p3-t7r.log; probe-p3r1-no-input.mjs; probe-p3r1-collision.mjs; probe-p3r1-write-fail.mjs; out/old-browser/spellweavers-run-start.png; out/old-browser/spellweavers-run-move.png.
+retry_recommendation: none
+handoff: Phase 3 browser check passes at audited HEAD ad56865ba45daf5cf9d9c2557497a49f20c733ba. Evidence shows a playable Spellweavers Run page without the four built-ins and a player-action state change.
+result_artifact: measure/runs/old_browser_builtins_20261122/ux-browser-review-p3-ad56865.json
+END_MEASURE_AGENT_RESULT

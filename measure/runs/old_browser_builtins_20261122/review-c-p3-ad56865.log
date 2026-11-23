@@ -1,0 +1,32 @@
+Phase base: 31af75444583c9236f342c908128c91da9f4f7e3
+Role base and audited HEAD: ad56865ba45daf5cf9d9c2557497a49f20c733ba
+HEAD matched before and after the CLI checks. The tracked edits belong to parallel Chibi Sprouts work.
+
+HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/old-browser-check.mjs --help'
+Exit 0. One usage line. No stack.
+HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/old-browser-check.mjs --game invalid-review-game'
+Exit 1. One usage line. No stack. Neither command reached server startup.
+
+F1 closes the clock-only pass. F2 closes the teardown skip on output-write failure. Green recorded both failure probes.
+F3 remains. The recorded collision probe binds before preflight. An unrelated Vite response can still pass if the port changes owners after preflight.
+F4 help now passes. Invalid game diagnostics remain generic. F5 field documentation is present, but runtime errors still include trimmed stacks.
+The start PNG shows empty word slots. The move PNG shows Then filled, new choices, and one fewer courage marker.
+No new late finding was raised. F3 can give the CLI operator a false success result.
+
+ss -ltn showed no listener on 5199. ps showed no Vite or Chrome process owned by this audit. No browser or server ran in this role.
+Retain the detached release worktree, shelf-sync worktree and branch, and wip/oct-skill-docs-20261023 for their owners. Leave the origin refs unchanged.
+
+MEASURE_AGENT_RESULT
+role: measure-review-c-ux-api
+status: complete
+track: old_browser_builtins_20261122
+phase: Phase 3: Browser check
+commits: none
+tests_run: wrapped --help (exit 0) and invalid --game (exit 1); inspected PNGs and Green probe evidence; no browser run
+files_changed: review-c-p3-ad56865.json, review-c-p3-ad56865.log
+plan_updates: none
+known_failures: F3 readiness does not establish listener ownership; F4 and F5 remain nonblocking
+handoff: Route remaining F3 to Green. F1 and F2 are closed. No new late finding was raised.
+END_MEASURE_AGENT_RESULT
+
+RESULT: FAIL

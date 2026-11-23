@@ -1,0 +1,14 @@
+{
+  "game": "spellweavers-run",
+  "deleted": [
+    "structuredClone",
+    "Array.prototype.at",
+    "Array.prototype.findLastIndex",
+    "Object.hasOwn"
+  ],
+  "started": false,
+  "moves": 0,
+  "errors": [
+    "Error: structuredClone is present in the page: function\n    at assertDeleted (file:///home/daniebo/Desktop/advantage-forge/measure/runs/old_browser_builtins_20261122/mutant-init-fails-silently.mjs:125:44)\n    at runNextTicks (node:internal/process/task_queues:65:5)\n    at process.processImmediate (node:internal/timers:502:9)\n    at async file:///home/daniebo/Desktop/advantage-forge/measure/runs/old_browser_builtins_20261122/mutant-init-fails-silently.mjs:174:27"
+  ]
+}

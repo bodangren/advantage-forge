@@ -332,11 +332,11 @@ tests/apk3d/no-unpolyfilled-builtins.test.ts'` exits 0: 1 file passed, 2 tests p
 - [x] T3r4 Red (72e74de0): acceptance rule A7, exact-call exclusion (PM 2026-11-23)
 - [x] T3r5 Red (9459687d): acceptance rule A7 closed by construction, exact-line exclusion (PM approval for A7, 2026-11-23)
 - Late finding C3-F6: tech-debt (the copy.ts:9-12 doc wording overstates the behavior of unsupported inputs; the fallback keeps the prototype; no user reaches a wrong result) — source measure/runs/old_browser_builtins_20261122/review-c-5a1da50.json
-- Late finding C3-F5: tech-debt (test-strategy.md:169 counts the changed source files wrong; the plan count is correct; no user reaches a wrong result)
+- Late finding C3-F5: tech-debt (test-strategy.md:169 counts the changed source files wrong; the plan count is correct; no user reaches a wrong result) — source measure/runs/old_browser_builtins_20261122/review-c-5a1da50.json
 - Late finding A3-F8: tech-debt (the plan keeps the historical TS2769 attribution at plan.md:173-177 and 206-209; a record error only; no user reaches a wrong result) — source measure/runs/old_browser_builtins_20261122/review-a-5a1da50.json
-- Late finding A3-F9: tech-debt (the scanner misses `math.if() / structuredClone(v) / 2` and `rows.at(one(two(three(four()))))`, and it accepts `otherbox.union(b)` for the exclusion `box.union(b)`; no such call exists in `src/`; no user reaches a wrong result)
-- Late finding A3-F10: tech-debt (tests/old-browser/index-math.test.ts:314-317 matches on a substring, so it also accepts `notatIndex`; the current site uses the correct helper; no user reaches a wrong result)
-- Late finding A3-F11: tech-debt (tests/old-browser/deep-copy.test.ts:119-124 reads an array index before the descriptor walk reports it; the test record overstates the check; no user reaches a wrong result)
+- Late finding A3-F9: tech-debt (the scanner misses `math.if() / structuredClone(v) / 2` and `rows.at(one(two(three(four()))))`, and it accepts `otherbox.union(b)` for the exclusion `box.union(b)`; no such call exists in `src/`; no user reaches a wrong result) — source measure/runs/old_browser_builtins_20261122/review-a-5a1da50.json
+- Late finding A3-F10: tech-debt (tests/old-browser/index-math.test.ts:314-317 matches on a substring, so it also accepts `notatIndex`; the current site uses the correct helper; no user reaches a wrong result) — source measure/runs/old_browser_builtins_20261122/review-a-5a1da50.json
+- Late finding A3-F11: tech-debt (tests/old-browser/deep-copy.test.ts:119-124 reads an array index before the descriptor walk reports it; the test record overstates the check; no user reaches a wrong result) — source measure/runs/old_browser_builtins_20261122/review-a-5a1da50.json
 - Late finding ADV-R5-1: tech-debt (the scanner does not detect computed property access such as `box['union']` with an argument `b`; no such call exists in `src/`, so no current user receives a wrong result) — source measure/runs/old_browser_builtins_20261122/adversarial-p2-dda92e7.json
 - Late finding A5-F12: tech-debt (the new control at tests/apk3d/no-unpolyfilled-builtins.test.ts:436-454 passes on 229323c5, so it is a regression pin, not a failing-first control; no user reaches a wrong result) — source measure/runs/old_browser_builtins_20261122/review-a-dda92e7.json
 - Late finding A5-F13: tech-debt (the ASCII boundary at tests/apk3d/no-unpolyfilled-builtins.test.ts:346-348 still excludes `holder.box.union(b)` and `\u00e9box.union(b)` in place of `box.union(b)`; the shipped line uses the permitted Box3 call; no user reaches a wrong result) — source measure/runs/old_browser_builtins_20261122/review-a-dda92e7.json
@@ -404,9 +404,139 @@ tests/apk3d/no-unpolyfilled-builtins.test.ts'` exits 0: 1 file passed, 2 tests p
     `node_modules/.bin/prettier --check scripts/old-browser-check.mjs` exits 0. `ss -ltn` and `ps`
     show no listener on 5199 and no owned vite or chrome process after each run.
 
+- [x] T7r2 Green (c9f6bba1): startup race closed by owner verification, F1 input causality with a negative control
+  - Owner verification: after the preflight, the script spawns Vite and polls the listening state.
+    It reads `ss -ltnp` for the PID on 127.0.0.1:5199 and requires that PID to be the spawned child
+    or a descendant. A child exit before readiness or before the result is accepted fails the run.
+    Ownership is re-checked before browser evidence is accepted and again before the report write.
+  - Input causality: a 1500 ms quiet window before any input requires the player-action fields to
+    stay unchanged. A change there raises `action field changed without input`. Each input is
+    counted only when an input event reached the page and the action mark changed after that input.
+    `negative_control: {window_ms: 1500, changed: false}` is written to `check.json`.
+    `acceptedAction(before, after, inputWasSent)` returns false when no input was sent; the committed
+    witness `tests/old-browser/adversarial-check.test.ts` passes.
+  - Probes 2026-11-23 (files under `measure/runs/old_browser_builtins_20261122/`, not committed):
+    `make-p3r2-probes.mjs` writes both probe copies from the final script.
+    `probe-p3r2-harness-score.mjs` neutralizes `input.play()` and raises the score from the harness;
+    it exits 1 with `no player-action transition`, `moves: 0` and `negative_control.changed: false`.
+    `probe-p3r2-startup-race.mjs` binds a foreign Vite-marker server after the preflight; the check
+    exits 1 with `port 5199 listener owner mismatch: not the spawned dev server` and never opens a
+    browser. Both runs leave port 5199 free.
+  - Gates 2026-11-23: the Green command exits 0 with `started: true`, `moves: 3`,
+    `action_inputs: ["ArrowRight", "ArrowLeft", "ArrowRight"]`, `negative_control.changed: false`
+    and `errors: []`. The witness test exits 0 with 1 file and 1 test. The project gate exits 0
+    with `Test Files 231 passed | 1 skipped (232)` and `Tests 3397 passed | 9 skipped (3406)`.
+    `node_modules/.bin/prettier --check scripts/old-browser-check.mjs` exits 0. `ss -ltn` and `ps`
+    show no listener on 5199 and no owned vite or chrome process after every run.
+
+- T7 browser check evidence: check.json (game spellweavers-run, the four deleted names, accepted moves,
+  negative_control, errors []), screenshots out/old-browser/spellweavers-run-start.png and
+  spellweavers-run-move.png; Phase 3 prerequisites: ux-browser-review-p3-1eefa25,
+  review-a/b/c-p3-1eefa25 and adversarial-p3-1eefa25
+- PM-informed orchestrator ruling 2026-11-23: Phase 3 rounds 1 and 2 (T7r c3f48a52, T7r2 c9f6bba1)
+  fixed the startup race, the cleanup and the no-input false PASS; the round 3 findings go to tech
+  debt TD-49 under the PM rule for measurement-script findings; the PM may veto
+- Late finding A3-F6: tech-debt (input causality can be faked by a harness that blocks the game
+  handlers after the page-side counter, or by a call to the game's auto hook; contrived; AC5's
+  claims about the four built-ins and a running game are intact; fix = verify that the game
+  processed the input, with an input-processed counter from the game; the e8312fc1 witness stays
+  live and the 387a7032 witness is skipped with TD-49; no user reaches a wrong result) — source
+  measure/runs/old_browser_builtins_20261122/review-a-p3-1eefa25.json
+- Late finding ADV3-F2: tech-debt (the witness records the residual input-causality gap of A3-F6: a
+  harness can block the game handlers after the audit counter, then change the score or the
+  collected state, so the check counts a move; contrived; users cannot reach a wrong result; the
+  same fix applies and TD-49 holds the item) — source
+  measure/runs/old_browser_builtins_20261122/adversarial-p3-1eefa25.json
+- Late finding C3-F6: tech-debt (scripts/old-browser-check.mjs:311 sets `negative_control.changed`
+  to false before the control runs, so a startup failure can look like a measured quiet window in
+  that field alone; `started` false and `errors` still hold, and the command exits 1; no user
+  reaches a wrong result) — source
+  measure/runs/old_browser_builtins_20261122/review-c-p3-1eefa25.json
+- Late finding A3-F5: tech-debt (scripts/old-browser-check.mjs:42-49 accepts a repeated valid
+  `--game` pair; it checks the same game, so no run gives a false PASS; no user reaches a wrong
+  result) — source measure/runs/old_browser_builtins_20261122/review-a-p3-1eefa25.json
+- Late finding C3-F4: tech-debt (scripts/old-browser-check.mjs:44-50 permits duplicate `--game`
+  options and does not name the invalid value; an invalid value prints only the usage line; the help
+  path exits 0; this is a carried finding; no user reaches a wrong result) — source
+  measure/runs/old_browser_builtins_20261122/review-c-p3-1eefa25.json
+- Late finding C3-F5: tech-debt (scripts/old-browser-check.mjs:61-65 appends trimmed stacks despite
+  its no-stack comment; this is a carried finding; no run gives a false PASS; no user reaches a
+  wrong result) — source measure/runs/old_browser_builtins_20261122/review-c-p3-1eefa25.json
+- Phase 3 accepted 2026-11-23 at 9e406e8c (phase-acceptance-p3-9e406e8.json); TD-49 ruled tech-debt by the PM 2026-11-23 (reopen trigger recorded)
+
 ## Phase 4: Gates
 
-- [ ] T8 Gates: Run every gate of AC6 and record each exit code in this plan.
+- [x] T8 Gates (d282495b): Run every gate of AC6 and record each exit code in this plan. Every
+      command below ran on 2026-11-23 against HEAD `9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4`.
+      The gate record commit is `d282495b999af9e1bcb56ab24e1bb86138fa3f46`. The amended AC6
+      re-record commit is `c4b5e7e2772e47d15162b19d634ccd10692b1188`.
+  - Amendment 2026-11-23 (orchestrator; the PM approved (quotation below)): the AC6 Prettier line is a
+    non-regression check, per the four rules of `spec.md` AC6. Every file this track creates must
+    pass. An older changed file may fail now only if it failed at the baseline `3f6a1921`. The
+    record must name each baseline-failing file as pre-existing debt. Reason: the full command
+    already exits 1 for 35 files at the track start, and a clean exit 0 would reformat unrelated
+    lines of 30 sim files (Review A Phase 4 F1).
+
+    PM approval, recorded by the orchestrator 2026-11-23:
+
+    > PM approves the AC6 Prettier non-regression amendment 7dbc1806 (2026-11-23): new files pass prettier --check; the 35 named older files may fail only where they failed at baseline 3f6a1921; no reformat of unrelated sim lines.
+
+  - Status under the amendment, re-recorded 2026-11-23 at tested commit
+    `9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4`: rule 1 holds because every file this track creates
+    passes `prettier --check` (exit 0 on the seven created or widened files). Rule 2 holds because
+    the per-file table below shows 0 files that pass at `3f6a1921` and fail now. Rule 3 holds because
+    the table names all 35 baseline-failing files as pre-existing debt. All rules of the amended AC6
+    hold, so T8 is complete. Exit code 1 of the full Prettier command is the baseline debt of those
+    35 named files and is never counted as an AC6 pass for them.
+  - Three-file command: `node node_modules/vitest/vitest.mjs run tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts --maxWorkers=1` through the heavy runner exits 0. Reporter: `Test Files 3 passed (3)`, `Tests 23 passed (23)`. The scan reports zero hits over `src/`.
+  - Witness files: `node node_modules/vitest/vitest.mjs run tests/old-browser/adversarial-check.test.ts tests/old-browser/adversarial-check-r2.test.ts --maxWorkers=1` through the heavy runner exits 0. Reporter: `Test Files 1 passed | 1 skipped (2)`, `Tests 1 passed | 1 skipped (2)`. The skipped file is the TD-49 deferred case.
+  - Project command: `node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts` through the heavy runner exits 0. Reporter: `Test Files 231 passed | 2 skipped (233)`, `Tests 3397 passed | 10 skipped (3407)`. Tested commit: `9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4`. No TD-35 to TD-40 failure occurs in this run.
+  - `node measure/tools/generate.mjs --check` exits 0: `Measure facts are current (4 files).`
+  - `./measure/doctor.sh --structural-only` exits 0: `Measure doctor found no structural errors.`
+  - `node_modules/.bin/prettier --check` on the AC6 file list exits 1 with `Code style issues found in 35 files`. The split: the seven files this track created or widened (`scripts/old-browser-check.mjs`, `tests/old-browser/deep-copy.test.ts`, `tests/old-browser/index-math.test.ts`, `tests/apk3d/no-unpolyfilled-builtins.test.ts`, `src/apk3d/sim/copy.ts`, `src/apk3d/sim/index-math.ts`, `measure/tracks/old_browser_builtins_20261122/test-strategy.md`) pass with exit 0. All 35 failing files are pre-existing baseline debt: each fails when its version at track start `3f6a19214994e7ac05a79a8fa7faeded684267b7` is piped to the same check, and none is reformatted here. Under the amendment rule 1 the seven created files pass. Under rule 2 each older changed file fails only where its baseline version also fails. Under rule 3 the 35 files are named in the table below. AC6 Prettier: rules 1 to 3 hold; exit code 1 is the baseline debt of 35 named files (2026-11-23, tested commit `9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4`).
+  - Per-file Prettier check (path | now | at 3f6a1921), each failing file checked with
+    `git show 3f6a1921:<path> | node_modules/.bin/prettier --stdin-filepath <path> --check`:
+    | path                                                                                           | now  | at 3f6a1921 |
+    | ---------------------------------------------------------------------------------------------- | ---- | ----------- |
+    | `src/games/abyssal-well/core/sim.ts`                                                           | fail | fail        |
+    | `src/games/alchemists-synthesis/core/sim.ts`                                                   | fail | fail        |
+    | `src/games/archers-revenge/core/sim.ts`                                                        | fail | fail        |
+    | `src/games/astral-mage/core/sim.ts`                                                            | fail | fail        |
+    | `src/games/castle-defense/core/sim.ts`                                                         | fail | fail        |
+    | `src/games/devourer-slime/core/sim.ts`                                                         | fail | fail        |
+    | `src/games/dragon-flight/core/sim.ts`                                                          | fail | fail        |
+    | `src/games/dragon-flight/view2d/game.ts`                                                       | fail | fail        |
+    | `src/games/dragon-rider/core/sim.ts`                                                           | fail | fail        |
+    | `src/games/dragon-rider/view2d/game.ts`                                                        | fail | fail        |
+    | `src/games/dungeon-liberator/core/sim.ts`                                                      | fail | fail        |
+    | `src/games/enchanted-library/core/sim.ts`                                                      | fail | fail        |
+    | `src/games/griffin-riders-escape/core/sim.ts`                                                  | fail | fail        |
+    | `src/games/griffin-sky-joust/core/sim.ts`                                                      | fail | fail        |
+    | `src/games/gryphon-patrol/core/sim.ts`                                                         | fail | fail        |
+    | `src/games/haunted-library/core/sim.ts`                                                        | fail | fail        |
+    | `src/games/hero-vs-zombie/core/sim.ts`                                                         | fail | fail        |
+    | `src/games/labyrinth/core/mazes.ts`                                                            | fail | fail        |
+    | `src/games/labyrinth/core/sim.ts`                                                              | fail | fail        |
+    | `src/games/magic-defense/core/sim.ts`                                                          | fail | fail        |
+    | `src/games/paladins-twin-soul/core/sim.ts`                                                     | fail | fail        |
+    | `src/games/potion-rush/core/sim.ts`                                                            | fail | fail        |
+    | `src/games/realm-carver/core/sim.ts`                                                           | fail | fail        |
+    | `src/games/rpg-battle/core/sim.ts`                                                             | fail | fail        |
+    | `src/games/rune-forge-chamber/core/sim.ts`                                                     | fail | fail        |
+    | `src/games/rune-match/core/sim.ts`                                                             | fail | fail        |
+    | `src/games/shadow-gate-dungeon/core/sim.ts`                                                    | fail | fail        |
+    | `src/games/sorcerer-ziggurat/core/sim.ts`                                                      | fail | fail        |
+    | `src/games/spellweavers-run/core/sim.ts`                                                       | fail | fail        |
+    | `src/games/spellweavers-run/view2d/game.ts`                                                    | fail | fail        |
+    | `src/games/spellweavers-run/view/game.ts`                                                      | fail | fail        |
+    | `src/games/storm-castle-tower/core/sim.ts`                                                     | fail | fail        |
+    | `src/games/village-guardian/core/sim.ts`                                                       | fail | fail        |
+    | `src/host/reader.ts`                                                                           | fail | fail        |
+    | `src/storytime/book-pictures.ts`                                                               | fail | fail        |
+    | Rule 2 proof: 0 files pass at 3f6a1921 and fail now. None of the 35 failing files is absent at |
+    | the baseline. Rule 1 proof: the seven created or widened files listed above all exit 0.        |
+  - Standalone scan: `node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/no-unpolyfilled-builtins.test.ts` through the heavy runner exits 0: `Test Files 1 passed (1)`, `Tests 11 passed (11)`, zero reported hits.
+  - Phase 3 check: `node scripts/old-browser-check.mjs --game spellweavers-run` through the heavy runner exits 0: `started: true`, `moves: 3`, `negative_control.changed: false`, `errors: []`, all four deleted names `undefined`. `ss -ltn` shows no listener on 5199 and `ps` shows no owned vite or chrome process.
   - Commands, each run through the heavy runner where it starts tests:
     - `node node_modules/vitest/vitest.mjs run tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts --maxWorkers=1`
     - `node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts`
@@ -418,6 +548,12 @@ tests/apk3d/no-unpolyfilled-builtins.test.ts'` exits 0: 1 file passed, 2 tests p
     the file count, the passed test count, and the skipped count, and the line names the commit that
     the run tested. A pinned count from an earlier track is not part of the record.
   - A failure that belongs to TD-35 to TD-40 stays named as that debt and does not count as a pass.
+
+- [ ] T9 Closeout (deferred:closeout-steward): move this track to archive, update `measure/tracks.md`
+      and `metadata.json`, and record final closeout. This task stays unchecked until the closeout role
+      acts. It is not part of AC6 and no closeout metadata changes in T8.
+
+- Phase 4 Review A r1 (review-a-p4-fc8e728.json) failed on F1 (the AC6 Prettier command); closed by the AC6 amendment above
 
 ## Known limits
 

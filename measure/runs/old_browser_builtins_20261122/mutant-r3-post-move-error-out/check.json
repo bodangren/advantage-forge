@@ -1,0 +1,34 @@
+{
+  "game": "spellweavers-run",
+  "deleted": [
+    "structuredClone",
+    "Array.prototype.at",
+    "Array.prototype.findLastIndex",
+    "Object.hasOwn"
+  ],
+  "started": true,
+  "moves": 2,
+  "action_inputs": [
+    "ArrowRight",
+    "ArrowLeft"
+  ],
+  "negative_control": {
+    "window_ms": 1500,
+    "changed": false
+  },
+  "state_changed": true,
+  "errors": [
+    "post-move injected | Error: post-move injected at eval (eval at evaluate (:370:30), <anonymous>:1:32)",
+    "post-move injected | Error: post-move injected at eval (eval at evaluate (:370:30), <anonymous>:1:32)",
+    "post-move injected | Error: post-move injected at eval (eval at evaluate (:370:30), <anonymous>:1:32)",
+    "post-move injected | Error: post-move injected at eval (eval at evaluate (:370:30), <anonymous>:1:32)",
+    "post-move injected | Error: post-move injected at eval (eval at evaluate (:370:30), <anonymous>:1:32)",
+    "post-move injected | Error: post-move injected at eval (eval at evaluate (:370:30), <anonymous>:1:32)"
+  ],
+  "absent_in_page": {
+    "structuredClone": "undefined",
+    "Array.prototype.at": "undefined",
+    "Array.prototype.findLastIndex": "undefined",
+    "Object.hasOwn": "undefined"
+  }
+}

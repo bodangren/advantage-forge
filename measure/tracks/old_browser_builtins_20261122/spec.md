@@ -241,13 +241,33 @@ test file changes. A pinned count from an earlier track is not evidence for this
 
 ### AC6: Gates
 
+**Amendment 2026-11-23** (orchestrator; the PM approved (quotation below)). Rule: the Prettier line of AC6 is a
+non-regression check. Reason: the full Prettier command already exits 1 for 35 files at the track
+start `3f6a1921`. A clean exit 0 would reformat unrelated lines of 30 sim files. That change is
+large and risky, and it has no user benefit. Review A Phase 4 F1 found that T8 was marked complete
+while the AC6 Prettier command still exits 1.
+
+PM approval, recorded by the orchestrator 2026-11-23:
+
+> PM approves the AC6 Prettier non-regression amendment 7dbc1806 (2026-11-23): new files pass prettier --check; the 35 named older files may fail only where they failed at baseline 3f6a1921; no reformat of unrelated sim lines.
+
+The Prettier line of AC6 passes when four rules hold:
+
+1. Every text file that this track creates passes `prettier --check`.
+2. For each older file that this track changed, the check is a non-regression check. The file may
+   fail now only if it failed at the baseline commit `3f6a1921`. A file that passed at the baseline
+   must still pass.
+3. The T8 record lists each baseline-failing file by name as pre-existing debt. The record never
+   counts a subset as the AC6 pass.
+4. Rules 1 to 3 hold.
+
 These commands pass, and the plan records each exit code:
 
 - `node node_modules/vitest/vitest.mjs run tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts --maxWorkers=1`
 - `node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts`
 - `node measure/tools/generate.mjs --check`
 - `./measure/doctor.sh --structural-only`
-- `node_modules/.bin/prettier --check` on each new or changed text file
+- `node_modules/.bin/prettier --check` on each new or changed text file, under rules 1 to 4 above
 
 ## Sources
 

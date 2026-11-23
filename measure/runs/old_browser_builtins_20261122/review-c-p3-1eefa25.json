@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "role": "measure-review-c-ux-api",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 3: Browser check",
+  "baseline_sha": "1eefa25d9d286a80d4f2a1576664f1894aeb755d",
+  "role_base_sha": "1eefa25d9d286a80d4f2a1576664f1894aeb755d",
+  "phase_base_sha": "31af75444583c9236f342c908128c91da9f4f7e3",
+  "audited_head_sha": "1eefa25d9d286a80d4f2a1576664f1894aeb755d",
+  "current_head_sha": "1eefa25d9d286a80d4f2a1576664f1894aeb755d",
+  "audited_head_is_current": true,
+  "contract_applicability": "applicable",
+  "applicability_evidence": [
+    "The exact phase diff adds scripts/old-browser-check.mjs and its T7 output contract.",
+    "spec.md:222-240 defines the 2D browser check. The remediation changes how it verifies the listener and counts accepted actions."
+  ],
+  "status": "pass",
+  "summary": "F3 is closed. The browser report comes from a check that verifies listener ownership. One late report clarity issue remains nonblocking.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F4 [Nit] review-c: The help path exits 0. scripts/old-browser-check.mjs:44-50 still permits duplicate --game options and does not name the invalid value. This is a carried finding.",
+    "F5 [Nit] review-c: scripts/old-browser-check.mjs:61-65 still appends trimmed stacks despite its no-stack comment. This is a carried finding.",
+    "F6 [Nit] review-c: Late finding, tech-debt. scripts/old-browser-check.mjs:311 initializes negative_control.changed to false before the control runs. A startup failure can therefore look like a measured quiet window in that field alone. The startup-race report still has started false and errors, and the command exits 1. This does not cause a false acceptance result. Distinguish an unrun control from a measured one."
+  ],
+  "evidence": [
+    "HEAD matched the requested full SHA at role start and after the CLI checks. No tracked worktree edits were present.",
+    "F3 closed: scripts/old-browser-check.mjs:146-205 collects listener PIDs for 127.0.0.1:5199. Every reported PID must belong to the spawned Vite child tree.",
+    "No visible listener PID is pending, not ready. A foreign owner or child exit fails. A successful Vite response triggers another ownership check at scripts/old-browser-check.mjs:215-242.",
+    "scripts/old-browser-check.mjs:422,432 checks ownership before the move screenshot and again before teardown and writing the report. An ownership error prevents a success exit.",
+    "green-p3-t7r2.log:23-25 records exit 1 for a foreign listener that bound after preflight. The saved probe report shows started false, moves 0, and an owner mismatch.",
+    "The report shows moves 3 and the accepted inputs ArrowRight, ArrowLeft, ArrowRight. negative_control.window_ms is 1500 milliseconds, and changed is false.",
+    "The header at scripts/old-browser-check.mjs:7-12 documents the quiet-window purpose. The nested key window_ms states the unit, but the header does not name the two nested fields.",
+    "The stored harness-score probe rejects a score change without input. The witness at tests/old-browser/adversarial-check.test.ts:25-38 isolates acceptedAction.",
+    "The start PNG shows Spell 1/5 with empty slots. The move PNG shows Mia has filled and a lost courage marker. The screenshots show a player-action change.",
+    "Both CLI calls ran through the heavy runner. Help printed one usage line and exited 0. The invalid game printed one usage line and exited 1. Neither printed a stack.",
+    "Owner failures report an owner mismatch or child exit. A pending listener eventually reports the 60-second timeout. The saved failure JSON includes the expected owner mismatch.",
+    "No browser or server ran in this role. ss showed no listener on 5199. ps showed no Vite or Chrome process owned by this audit."
+  ],
+  "commands": [
+    "git rev-parse HEAD; git status --short --untracked-files=no",
+    "git diff --name-status ad56865b 1eefa25d",
+    "git diff --check ad56865b 1eefa25d -- scripts/old-browser-check.mjs tests/old-browser",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/old-browser-check.mjs --help'",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/old-browser-check.mjs --game invalid-review-game'",
+    "ss -ltn '( sport = :5199 )'; ps -eo pid,ppid,stat,comm,args"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/review-c-p3-1eefa25.json",
+    "measure/runs/old_browser_builtins_20261122/review-c-p3-1eefa25.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "unknown",
+  "ratings": [
+    {"axis": "correctness", "score": 4, "evidence": "scripts/old-browser-check.mjs:198-242 verifies the listener, and the saved startup-race report rejects the wrong owner."},
+    {"axis": "test_meaning", "score": 4, "evidence": "green-p3-t7r2.log:18-30 records the wrong-owner and no-input failures and the passing accepted-action witness."},
+    {"axis": "scope_discipline", "score": 5, "evidence": "The remediation diff updates only the script, its witness test, and T7 records."},
+    {"axis": "evidence_quality", "score": 5, "evidence": "The audit records the CLI outcomes, both images, and the Green probe output separately."}
+  ]
+}

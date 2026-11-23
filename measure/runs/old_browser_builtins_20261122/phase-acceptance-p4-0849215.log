@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: phase-acceptance
+status: blocked
+track: old_browser_builtins_20261122
+phase: Phase 4: Gates
+commits: none
+tests_run: None. Stopped at the amendment authority check. The source, script and test diff is empty. Port 5199 is free.
+files_changed: phase-acceptance-p4-0849215.json and .log
+plan_updates: none
+known_failures: The prior Review A prerequisite is satisfied. The orchestrator's AC6 amendment lacks recorded user approval or Build ownership.
+handoff: Ask the PM: Do you approve the AC6 Prettier non-regression amendment in 7dbc1806? Options: approve the amendment and rerun acceptance; do not approve it and retain the original clean-exit criterion unless an owning Build session revises it.
+END_MEASURE_AGENT_RESULT

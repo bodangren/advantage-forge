@@ -1,0 +1,31 @@
+Audited implementation: 1eefa25d9d286a80d4f2a1576664f1894aeb755d
+Mutant copies came from scripts/old-browser-check.mjs at that HEAD.
+
+Earlier nine mutants:
+all-inputs-blocked: exit 1
+clock-only-change: exit 1
+time-field-only: exit 1
+post-move-error: exit 1
+builtin-still-defined: exit 1
+console-error: exit 1
+blank-200-page: exit 1
+wrong-game-card: exit 1
+harness-score-before-input: exit 1
+
+New cases:
+score-during-window: exit 0 FALSE PASS. The event counter runs first. stopImmediatePropagation blocks the game handlers. The harness increments state.score after input. The report claims six moves and six input labels.
+time-jump-after-input: exit 1. timeMs changed, but no player-action field changed.
+ignored-input-score-change: exit 0 FALSE PASS. The event counter runs first. stopImmediatePropagation blocks the game handlers. The harness increments state.collected after input. The report claims six moves and six input labels.
+foreign-before-preflight: exit 1. Preflight reports port 5199 already in use.
+foreign-after-preflight: exit 1. The owner check rejects the foreign listener before browser navigation.
+child-exits-after-readiness: exit 1. The child exit is detected before acceptance.
+pid-reuse: exit 1. The probe replaced the recorded PID with a live sibling PID. The owner check rejected it. This simulates stale PID identity, not kernel PID reuse.
+descendant-not-dev-server: exit 1. The owned descendant serves a Vite marker, but not the game page.
+foreign-server-child-wrapper: exit 1. The owner check accepts the server as a wrapper descendant. The fake page then fails game readiness.
+shorter-than-game-tick: exit 1. A zero-millisecond window misses score changes delayed by 1500 ms.
+
+The first zero-wait-only probe exited 0 because ArrowRight changed the real game synchronously. This was not a false PASS. The delayed-window mutant then exited 1.
+
+An initial mutant batch used a wrong ROOT and failed before application startup. We discarded those results. The final 19 required cases used the absolute repository root.
+
+Total: 19 required cases. Seventeen exited 1. Two exited 0 with false-PASS reports.

@@ -1,0 +1,30 @@
+{
+  "game": "spellweavers-run",
+  "deleted": [
+    "structuredClone",
+    "Array.prototype.at",
+    "Array.prototype.findLastIndex",
+    "Object.hasOwn"
+  ],
+  "started": true,
+  "moves": 3,
+  "action_inputs": [
+    "ArrowRight",
+    "ArrowLeft",
+    "ArrowRight"
+  ],
+  "negative_control": {
+    "window_ms": 1500,
+    "changed": false
+  },
+  "state_changed": true,
+  "errors": [
+    "injected console error"
+  ],
+  "absent_in_page": {
+    "structuredClone": "undefined",
+    "Array.prototype.at": "undefined",
+    "Array.prototype.findLastIndex": "undefined",
+    "Object.hasOwn": "undefined"
+  }
+}
