@@ -194,7 +194,7 @@ async function main(): Promise<void> {
   if (wear.length > 0 && command === 'check')
     throw new Error('check takes no --wear: run `forge check <piece>` for each piece.');
   // The view names are checked before the build: an unknown view costs no build and prints one line.
-  if (VIEW_COMMANDS.includes(command)) checkViewNames(viewNamesOf(command, values));
+  if (VIEW_COMMANDS.includes(command)) checkViewNames(viewNamesOf(command, values), command === 'cutout');
   // A base in equipment (or the capped hair) writes beside the base, never over its outputs.
   const outName = [
     name,
@@ -203,6 +203,8 @@ async function main(): Promise<void> {
     ...(values.tucked ? ['tucked'] : []),
     ...(values.reduced ? ['reduced'] : []),
   ].join('+');
+  // A linked output folder is never written through: the check runs before the build.
+  if (values.flat) checkOutputFolder(join(OUT_DIR, outName));
 
   const server = await createServer({
     root: ROOT,
@@ -459,15 +461,14 @@ async function main(): Promise<void> {
           throw new Error('--clip takes one clip name for a cut-out.');
         const at = num(values.at, 0);
         const stem = values.stem ?? (clipName ? `${clipName}-${at}` : undefined);
-        const viewNames = (values.views ?? (stem ? 'front' : 'front,three-quarter,side'))
-          .split(',')
-          .map((v) => v.trim())
-          .filter(Boolean);
+        const viewNames = parseViewList(
+          String(values.views ?? (stem ? 'front' : 'front,three-quarter,side')),
+        );
         // Elevation 0 (or --el): the feet stay on the foot row; a look-down shifts the near edge
         // below it, so the folder records its elevation for the compositor and for the checker.
         const elevation = values.el !== undefined ? num(values.el, 0) : 0;
         const views = viewNames.map((v) => {
-          const spec = NAMED_VIEWS[v];
+          const spec = isNamedView(v) ? NAMED_VIEWS[v] : undefined;
           if (!spec) throw new Error(`Unknown view '${v}'. Views: ${Object.keys(NAMED_VIEWS).join(', ')}.`);
           return { name: v, azimuth: spec.azimuth, elevation };
         });
@@ -738,31 +739,62 @@ async function runSafely(run: () => Promise<void>): Promise<void> {
 }
 
 /**
- * The named views a command renders: the --views list, or the command default. The list follows
- * the same rule as the command that renders it, so the early check and the render agree.
+ * The members of a --views list: split on the comma, each member trimmed, and the empty members
+ * dropped. A trailing or doubled comma names the same views as the list without it.
  */
-function viewNamesOf(command: string, values: Record<string, unknown>): string[] {
-  if (command === 'animate')
-    return values.views ? String(values.views).split(',') : ['three-quarter', 'side'];
-  if (command === 'inspect')
-    return values.views ? String(values.views).split(',') : ['front', 'three-quarter', 'side', 'back', 'top'];
+function parseViewList(list: string): string[] {
+  return list
+    .split(',')
+    .map((v) => v.trim())
+    .filter(Boolean);
+}
+
+/**
+ * The view list of a command: the --views list, or the command default. Every command reads its
+ * list from here, so the preflight and the render agree.
+ */
+function viewListSource(command: string, values: Record<string, unknown>): string {
+  if (command === 'animate') return values.views ? String(values.views) : 'three-quarter,side';
+  if (command === 'inspect') return values.views ? String(values.views) : 'front,three-quarter,side,back,top';
   if (command === 'cutout') {
     const clipName = values.clip && values.clip !== 'all' ? String(values.clip) : undefined;
     const stem = values.stem ?? (clipName ? 'cutout' : undefined);
-    const given = values.views ?? (stem ? 'front' : 'front,three-quarter,side');
-    return String(given).split(',');
+    return String(values.views ?? (stem ? 'front' : 'front,three-quarter,side'));
   }
-  return typeof values.views === 'string'
-    ? values.views.split(',')
-    : ['front', 'three-quarter', 'side', 'back'];
+  return typeof values.views === 'string' ? values.views : 'front,three-quarter,side,back';
 }
 
-/** The known view names, or one error line that names the unknown view and the known list. */
-function checkViewNames(names: readonly string[]): void {
-  for (const raw of names) {
-    const name = raw.trim();
-    if (!NAMED_VIEWS[name])
+/** The named views of a command, with the empty members dropped. */
+function viewNamesOf(command: string, values: Record<string, unknown>): string[] {
+  return parseViewList(viewListSource(command, values));
+}
+
+/** A view of the table itself: an inherited member such as `constructor` is no view. */
+function isNamedView(name: string): boolean {
+  return Object.prototype.hasOwnProperty.call(NAMED_VIEWS, name);
+}
+
+/**
+ * The known view names, or one error line that names the unknown view and the known list. A
+ * command that accepts an empty list (the cut-out) keeps it; the others refuse it.
+ */
+function checkViewNames(names: readonly string[], allowEmpty: boolean): void {
+  for (const name of names) {
+    if (!isNamedView(name))
       throw new Error(`Unknown view '${name}'. Known: ${Object.keys(NAMED_VIEWS).join(', ')}`);
+  }
+  if (names.length === 0 && !allowEmpty)
+    throw new Error(`Unknown view ''. Known: ${Object.keys(NAMED_VIEWS).join(', ')}`);
+}
+
+/**
+ * A linked output folder is never written through. The check runs before the build, and it never
+ * follows a link.
+ */
+function checkOutputFolder(out: string): void {
+  for (const path of [out, join(out, 'flat')]) {
+    const st = lstatSync(path, { throwIfNoEntry: false });
+    if (st?.isSymbolicLink()) throw new Error(`output folder is a link: ${rel(path)}`);
   }
 }
 
@@ -785,8 +817,7 @@ function removeFlatFolder(flatDir: string, outRoot: string): void {
 }
 
 function viewList(values: Record<string, unknown>): ViewSpec[] {
-  const names =
-    typeof values.views === 'string' ? values.views.split(',') : ['front', 'three-quarter', 'side', 'back'];
+  const names = parseViewList(viewListSource('render', values));
   let focus: ViewSpec['focus'];
   if (typeof values.focus === 'string') {
     const f = values.focus.split(',').map(Number);
@@ -794,9 +825,9 @@ function viewList(values: Record<string, unknown>): ViewSpec[] {
     focus = { center: [f[0]!, f[1]!, f[2]!], radius: f[3]! };
   }
   const views: ViewSpec[] = names.map((n) => {
-    const v = NAMED_VIEWS[n.trim()];
+    const v = isNamedView(n) ? NAMED_VIEWS[n] : undefined;
     if (!v) throw new Error(`Unknown view '${n}'. Known: ${Object.keys(NAMED_VIEWS).join(', ')}`);
-    return { name: n.trim(), ...v, ...(focus ? { focus } : {}) };
+    return { name: n, ...v, ...(focus ? { focus } : {}) };
   });
   if (typeof values.az === 'string' || typeof values.el === 'string') {
     const azimuth = num(values.az as string | undefined, 0);
