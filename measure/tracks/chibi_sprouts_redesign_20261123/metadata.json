@@ -5,9 +5,9 @@
   "created_at": "2026-11-23T00:00:00Z",
   "updated_at": "2026-11-23T00:00:00Z",
   "description": "Chibi Sprouts redesign: one new SDF adult base on Teacher Kim's measured proportions, with Mom as the first trial, a numeric proportion check over a level orthographic render, an independent look judge, and a PM stop before the song cut-out and the 128 px sprite",
-  "estimated_tasks": 12,
+  "estimated_tasks": 14,
   "actual_tasks": null,
-  "deviation_notes": "Created 2026-11-23 from the PM decisions of 2026-11-23 and docs/chibi-sprouts/redesign-2026-11-23.md (approved). The owner scrapped the sprout base on 2026-11-23; the scrapped sources and outputs stay in the repository and no file is deleted. The track starts with Mom only and stops for PM review after the shape passes. No paid generation call runs in this track. Amended 2026-11-23 after spec review r1 (11 blockers, 4 majors): the renderer pin is its own Red task before a Green renderer task, the proportion and sheet Red tasks follow, the hero assertions stay active, the measurement contract names every rule, the judge sees a Mom-only panel, and the plan holds 12 tasks.",
+  "deviation_notes": "Created 2026-11-23 from the PM decisions of 2026-11-23 and docs/chibi-sprouts/redesign-2026-11-23.md (approved). The owner scrapped the sprout base on 2026-11-23; the scrapped sources and outputs stay in the repository and no file is deleted. The track starts with Mom only and stops for PM review after the shape passes. Amended 2026-11-23 after spec review r1 (11 blockers, 4 majors): the renderer pin is its own Red task before a Green renderer task, the hero assertions stay active, and the measurement contract names every rule. Amended 2026-11-23 after spec review r2 (6 blockers, 1 major, 1 nit): Red commits tests only, the loading order defers the asset import, the face and eye rules run in an acyclic order, the palm test reads the oriented surface, the leg run comes from the leg landmarks, the judge rule matches the PM wording, the sheet scan covers Kim only, and Phase 6 holds the approved LATO.2 trial. The plan holds 14 tasks.",
   "workstream": "assets",
   "retrospective": false,
   "evidence": [

@@ -8,7 +8,9 @@ for Teacher Kim's proportions as the base.
 
 This track starts one new SDF base. The base uses Kim's measured ratios. Mom is the first character
 on it. The track proves the shape with numbers and with an independent look. Then it stops for PM
-review, before any song cut-out or sprite.
+review, before any song cut-out or sprite. A second, separate trial runs a LATO.2 image-to-mesh test
+on our own VM under a USD 5 cap (Phase 6). It feeds the PM decision and does not replace the SDF
+base.
 
 ## Context
 
@@ -55,11 +57,13 @@ review, before any song cut-out or sprite.
   own rows on 2026-11-23.
 - Mom's drawing is 1600 × 1600 px. The page's rows are crown 71 and sole 1528. The scan finds the
   figure from row 68 to row 1551, because row 1551 holds the cast shadow. The sheet script uses the
-  page's rows and drops the shadow.
+  page's rows and drops the shadow. Mom has one drawing and no side drawing.
 - The Forge render command uses a perspective camera. The front view sits 8 degrees above level and
   the side view 6 degrees above level. The command has no orthographic view and no flat view.
 - `/home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh` guards machine load. Every render
   and test run of this track uses it.
+- The mid-red gate of `measure_interphase_checks.py` (`non_test_paths`) accepts only `measure/`
+  paths, `tests/` paths, and test files. A Red commit of this track holds tests only.
 
 ## PM decisions, 2026-11-23
 
@@ -79,7 +83,12 @@ Decision 3: "The scrapped sources (`assets/sprout-*.ts`, `assets/parts/sprout-ge
 `assets/parts/humanoid-kind.ts` ADULT set) stay in the repo, untouched; their contract tests are
 marked skipped with the scrap reason; delete nothing."
 
-Item 4 (the old_browser A7 scanner fix) is a different track. This track does not own it.
+Decision L, later on 2026-11-23: "Approve $5 for testing the process. If it works well, the cost is
+quite low for better results." It narrows the LATO.2 clause of decision 2 for one trial under the
+USD 5 cap. Phase 6 holds the trial.
+
+Separate item: the old_browser A7 scanner fix belongs to a different track. This track does not own
+it.
 
 ## Standing rules
 
@@ -87,16 +96,18 @@ These rules hold for every role of this track. The PM approved them on 2026-11-2
 
 - No role calls the `openchamber_image` tool. That tool generates or edits images, and it costs
   money. To look at an image, a role uses the `read` tool.
-- A paid call, or an upload of Kim or sprout art to a third party, before the PM approves the shape,
-  is a stop-and-report event. The role stops, keeps every file, and reports to the PM.
-- No route sends Kim's sheet or Kim's panel to a model or to a third party. A route that would do so
-  stops the task and reports to the PM.
+- Kim art goes to no remote model, no demo, and no third party. Our own VM is allowed (decision m).
+- Mom's render and Daniel's drawing may go to the established look-judge routes, as in the earlier
+  sprout looks.
+- The Kim review sheet is built and kept locally for the PM. No route sends it out.
+- A paid call, or a forbidden upload, is a stop-and-report event. The role stops, keeps every file,
+  and reports to the PM.
 - A paid call is recorded in `out/chibi-sprouts/redesign/costs.tsv`, with the header and the row
   shape of `out/chibi-sprouts/faces-r2/muse/costs.tsv`.
 
 ## Authoring decisions
 
-The page leaves six rules open. This track fixes them here, so Red and Green decide nothing.
+The page leaves seven rules open. This track fixes them here, so Red and Green decide nothing.
 
 | #   | Decision                                                | Rule                                                                                                                                                                                                     | Why                                                                                                                              |
 | --- | ------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
@@ -107,29 +118,32 @@ The page leaves six rules open. This track fixes them here, so Red and Green dec
 | h   | The new base imports no scrapped module                 | `assets/parts/humanoid-kim.ts` imports only `src/index.js`. It does not import `assets/parts/humanoid-kind.ts`.                                                                                          | The scrapped base holds the hero torso and the palm-forward hand code. A new base must not inherit either.                       |
 | i   | Role families                                           | Green is not the Red family. Red is muse. The orchestrator picks Green with `ra-quota` at dispatch and records its model id in the plan. The AC4 judge comes from a family other than Green's and Red's. | The judge must not share the builder's blind spots, and the builder must not review its own Red. This rule names no fixed model. |
 | j   | The side projection sign                                | At azimuth 90 the camera sits at +X and looks toward −X, so image right is −Z: `u = (cz − z)·ppm + W/2`. A front landmark (larger z) lands left of centre.                                               | `Studio.aim` places the camera on +X. The first draft used `z − cz`, which mirrors the side landmarks.                           |
-| k   | The judge input holds no Kim art                        | The judge sees a Mom-only panel. The Kim panel exists only on the local PM sheet.                                                                                                                        | Decision 1 forbids Kim art to a third party, and a remote judge is a third party.                                                |
+| k   | The judge input holds no Kim art                        | The judge sees `mom-panel.png`, Mom's lit front and side render beside Mom's drawing, and the numeric Kim ratios. The Kim panel exists only on the local PM sheet.                                       | Decision 1 forbids Kim art to a third party. Mom's render may use the established look-judge routes.                             |
 | l   | The sheet uses the lit render                           | The sheet panels come from `views/front-level.png` and `views/side-level.png`. The flat render feeds the numbers only.                                                                                   | The sheet shows a person beside two drawings. An unlit vertex-colour figure does not compare with them.                          |
+| m   | The LATO.2 trial runs on our own VM                     | One Spot L4 (fallback one standard L4) in `asia-southeast1` on project `reading-advantage`, with a 3 hour VM cap and no hosted API and no public demo.                                                   | PM decision L caps the spend at USD 5, and decision 1 keeps Kim art off third-party services.                                    |
 
 ## Scope
 
 - One new base module for Kim's adult proportions. It builds the skeleton, the head and face, the
   torso, the arms, the open hands with the palms toward the legs, the legs, and the feet. It holds
-  Mom's rest pose and one `idle` clip. It exports the chin height.
+  Mom's rest pose and one `idle` clip. It exports the chin height and both hand landmarks.
 - One new asset for Mom. It adds her identity: long brown waves, a knit sweater, jeans, brown flats,
   and small pearl studs.
-- Two render options in the Forge CLI and the render page, with their behaviour pin and a pin asset.
+- Two render options in the Forge CLI and the render page, with a behaviour pin.
 - One measurement script, one measurement test, and one sheet-layout test.
 - One review sheet script for the local sheet and the Mom-only judge panel.
 - One independent look judge and its record.
 - The skip marker on the scrapped contract tests, with the hero assertions kept active.
 - One preset pin entry for the new asset.
+- One LATO.2 GPU trial on our own VM, with its log and its result note.
 
 ## Exclusions
 
 - No other character. Lily, Dad, Grandma, Grandpa, Tom, and the children stay untested on this base.
 - No 900 px song cut-out and no idle or walk sprite. Phase 9 holds them behind the PM approval.
-- No paid generation call. This track runs no Muse call, no mmx call, no cloud call, and no LATO.2
-  run. It sends no Kim art to any demo, model, or third party.
+- No paid generation call, except the LATO.2 GPU trial of Phase 6 under the USD 5 cap (decision L).
+  The track runs no Muse call, no mmx call, no hosted API call, and no public demo call, and it sends
+  no Kim art to any demo, model, or third party.
 - No edit of a scrapped source: `assets/sprout-*.ts`, `assets/parts/sprout-gestures.ts`, and the
   ADULT and AGE5 sets of `assets/parts/humanoid-kind.ts` stay byte for byte.
 - No deletion. The scrapped outputs under `out/sprout-*/` stay.
@@ -137,6 +151,7 @@ The page leaves six rules open. This track fixes them here, so Red and Green dec
 - No change to a game, a song page, the monorepo, or a shipped delivery folder.
 - No skip of `tests/preset-colour.test.ts`, `tests/song-timeline.test.ts`, or the two Storytime spec
   tests that read the Pat render fixture.
+- No Red commit of an asset, a script, or a `src/` file. A Red task holds `tests/` paths only.
 
 ## Measurement method
 
@@ -149,14 +164,32 @@ This section is the one definition of every measured value. AC2 and AC3 hold the
 2. `out/<asset>/views/front-level.png` and `out/<asset>/views/side-level.png`: 1024 × 1024 px, RGBA,
    transparent background, the normal lit render. The sheet uses these (decision l).
 3. `out/<asset>/stats.json`: the model bounds.
-4. `out/<asset>/<asset>.glb`: the skeleton joint nodes and the hand body vertices in the rest pose.
+4. `out/<asset>/<asset>.glb`: the skeleton joint nodes, the hand body vertices, and the hand body
+   triangles in the rest pose.
 5. `assets/<asset>.ts`: the `variants` table, for the skin and eye colours.
-6. `assets/parts/humanoid-kim.ts`: the export `KIM_CHIN_Y: number`. It holds the chin bottom in
-   meters on the character's centre plane, in the rest pose. The script imports it as
-   `import { KIM_CHIN_Y } from '../assets/parts/humanoid-kim.ts';`, the same way
-   `scripts/make-preset-pin.mjs` imports `../src/variants.ts`. The value is a finite number and
-   greater than the hip height. Why an export: the chin is the bottom of a blended chin shape, and a
-   vertex minimum would pick the neck or the hair.
+6. `assets/parts/humanoid-kim.ts`: the export `KIM_CHIN_Y: number` and the export
+   `KIM_HANDS: { L: KimHand; R: KimHand }` with
+   `KimHand = { palmCentre: readonly [number, number, number]; thumbTip: readonly [number, number, number]; fingerTip: readonly [number, number, number] }`.
+   The points are in rest-pose world meters. `KIM_CHIN_Y` is the chin bottom on the centre plane,
+   above the hip height.
+   Why exports: the chin is the bottom of a blended chin shape, so a vertex minimum would pick the
+   neck or the hair. The hand landmarks name the palm face and the thumb on a shape that has no
+   bone for either.
+
+### How the script loads its inputs
+
+The script never imports the asset statically. The order is:
+
+1. Parse the arguments.
+2. Check that `assets/<name>.ts` and `out/<name>/<name>.glb` exist. A missing file exits 1 with
+   `asset <name>: not built`, and names the missing path.
+3. `await import('../assets/<name>.ts')` and read `variants` from its default export.
+4. Check the asset module of the base (`assets/parts/humanoid-kim.ts`) and
+   `await import('../assets/parts/humanoid-kim.ts')` for `KIM_CHIN_Y` and `KIM_HANDS`.
+5. Read the two flat renders and the two lit renders, then measure.
+
+Why: a static import of the base module fails to resolve before the module exists. The Red run must
+report the named missing-asset error, not a module-resolution error.
 
 ### The flat pixel contract
 
@@ -182,66 +215,62 @@ The flat render is a contract, not a style choice. `src/render/page.ts` meets it
 8. The camera is the orthographic camera when `--ortho` is set, and the perspective camera
    otherwise.
 
+### Evaluation order
+
+The face and eye measures form a chain, never a cycle. Each step uses only the values of the earlier
+steps. The script prints this order and each value in `measure.json` under `order`.
+
+1. Read the flat front and side masks. A mask pixel has alpha 128 or more.
+2. `crownRow` is the top row of the front mask, and `soleRow` is its bottom row.
+3. `chinRow` is the projected `KIM_CHIN_Y`. `headHeight = chinRow − crownRow`. Fail
+   `chin: not on the head` when the projected chin is not on the mask, or when its row is above
+   `crownRow + 0.80·headHeight`.
+4. `headWidth` is the widest front-mask row span over the rows from `crownRow` to
+   `crownRow + 0.70·headHeight`. Why 0.70: the temples sit above the eye line at 0.62, and this band
+   needs no eye value.
+5. `eyeWindow`: the rows from `crownRow + 0.55·headHeight` to `crownRow + 0.80·headHeight`, and the
+   columns from `W/2 − 0.5·headWidth` to `W/2 + 0.5·headWidth`.
+6. The eye pixels are the dark pixels of the window. A dark pixel has alpha 250 or more, a
+   largest-channel distance from the skin colour above 60 of 255, and a relative luminance under
+   0.45. The skin colour is the first option of `variants.skin`, and the eye colour is the first
+   option of `variants.eyes`.
+7. An eye component is an 8-connected group of eye pixels inside the window. It qualifies when its
+   width is 0.4 of its height or more, its width is 0.40 of `headWidth` or less, its area is 0.02 of
+   the window area or more, and its centre column is within 0.35·`headWidth` of `W/2`. Why 0.02 of
+   the window and not of the face: a face area would need the eyes.
+8. Exactly two components must qualify. Another count fails with
+   `eye components: found <n>, expected 2`. A component that touches the window edge fails with
+   `eye component touches the window`. The left eye has the smaller centre column.
+9. `eyeWidth` is the mean of the two bounding-box widths, `eyeHeight` the mean of the two
+   bounding-box heights, `pupilRow` the mean of the two bounding-box centre rows, and `pupilSpacing`
+   the distance between the two centre columns. `eyeRow = pupilRow`.
+10. `faceSeed` is the point at the mean eye centre column and the row
+    `eyeRow + 0.5·(chinRow − eyeRow)`.
+11. `face` is the 8-connected skin component that holds the skin pixel nearest to the seed, searched
+    down first and then up within `0.10·headHeight`. A skin pixel is a pixel with alpha 250 or more
+    within 24 of 255 of the skin colour on every channel. A missing component fails with
+    `face: no skin component near the seed`.
+12. `faceArea` is the pixel count of the face component. `faceWidth` is its widest row span over the
+    rows from `chinRow − 0.75·(chinRow − eyeRow)` to `chinRow`. A band with no face row fails with
+    `face: empty width band`.
+
 ### Landmark sources
 
-The page measured a drawing. A silhouette cannot show a joint, so the source of each landmark is
-fixed:
-
-| Landmark                              | Source            | Rule                                                                                                 |
-| ------------------------------------- | ----------------- | ---------------------------------------------------------------------------------------------------- |
-| crown                                 | flat front pixels | the top row of the mask                                                                              |
-| sole                                  | flat front pixels | the bottom row of the mask                                                                           |
-| head width                            | flat front pixels | the widest mask width over the rows from the crown to the eye row                                    |
-| face                                  | flat front pixels | the skin component of the face, per "Face and eye rules"                                             |
-| face width                            | flat front pixels | the widest row span of the face component between the chin row and 75 % of the way up to the eye row |
-| eye opening, pupil row, pupil spacing | flat front pixels | the two eye components, per "Face and eye rules"                                                     |
-| chin                                  | model             | `KIM_CHIN_Y`, projected onto the front view                                                          |
-| shoulder, hip, knee, wrist            | model             | the joint nodes `upperarm.L`, `leg.L`, `shin.L`, and `hand.L` of the GLB, in the rest pose           |
-| fingertip                             | model             | the lowest vertex of the `hands` body on the left side (x > 0)                                       |
+| Landmark                   | Source            | Rule                                                                                       |
+| -------------------------- | ----------------- | ------------------------------------------------------------------------------------------ |
+| crown, sole                | flat front pixels | the mask's top and bottom rows                                                             |
+| chin                       | model             | `KIM_CHIN_Y`, projected                                                                    |
+| head width                 | flat front pixels | step 4 of the evaluation order                                                             |
+| eye marks                  | flat front pixels | steps 5 to 9                                                                               |
+| face area, face width      | flat front pixels | steps 11 and 12                                                                            |
+| shoulder, hip, knee, wrist | model             | the joint nodes `upperarm.L`, `leg.L`, `shin.L`, and `hand.L` of the GLB, in the rest pose |
+| fingertip                  | model             | the lowest vertex of the `hands` body on the left side (x > 0)                             |
 
 The page measures in image pixels with y down. This track keeps that sign. A point above the hip has
 a negative reach value.
 
-Why the chin comes from the model: a front render of the model shows the jaw as a shading edge, not
-as a silhouette edge, because the neck continues below it. Long hair also fills the mask beside the
-neck. The page measured the chin by hand on a drawing. The base declares the chin, and the check
-projects it.
-
 Head width includes the hair, as the page's rule does. Mom's waves stay close to the head at the eye
 line for that reason. They flare below it.
-
-### Face and eye rules
-
-1. The skin colour is the first option of the asset's `variants.skin`. The eye colour is the first
-   option of `variants.eyes`.
-2. A skin pixel is a pixel with alpha 250 or more whose colour is within 24 of 255 of the skin colour
-   on every channel. A dark pixel is a pixel with alpha 250 or more whose colour differs from the
-   skin colour by more than 60 of 255 on its largest channel and whose relative luminance is under
-   0.45.
-3. The face window is the mask's bounding box on the front view, from the crown row to the projected
-   chin row.
-4. The face component is the 8-connected group of skin pixels that holds the face centre. The face
-   centre is the pixel at column `W/2` and the row 25 % of the way from the eye row down to the chin
-   row. If that pixel is not skin (the mouth paint can cover it), the search moves up the centre
-   column to the nearest skin pixel. An absent component fails with `face: no skin component`.
-   Why 8-connected: a painted lash or a hair strand can split a 4-connected group.
-5. The face area is the pixel count of the face component. The face width is the widest row span of
-   that component over the rows from the chin row up to `chinRow − 0.75·(chinRow − eyeRow)`.
-6. The eye band is the rows from `crownRow + 0.55·headHeight` to `crownRow + 0.80·headHeight`, where
-   `headHeight = chinRow − crownRow`. The eye pixels are the dark pixels of the face window inside
-   that band.
-7. An eye component is an 8-connected group of eye pixels. It qualifies when its area is 0.0004 of
-   the face area or more, when its width is 0.40 of the face width or less, when its width is 0.4 of
-   its height or more, and when its centre column is within 0.35 of the face width from `W/2`.
-8. Exactly two components must qualify. Fewer or more fails with
-   `eye components: found <n>, expected 2`. The two components are the eyes; the left one has the
-   smaller centre column.
-9. The eye opening width is the mean of the two bounding-box widths, and the eye opening height is
-   the mean of the two bounding-box heights. The page averages the visible openings.
-10. The pupil centre of an eye is the centre of its bounding box. The pupil row is the mean of the
-    two centre rows. The pupil spacing is the distance between the two centre columns.
-11. The eye row is the pupil row. A component that touches the window edge fails with
-    `eye component touches the window`.
 
 ### Projection
 
@@ -254,8 +283,8 @@ With the frame of decision (f), `ppm = size / H`, `W = H_px = size`, and the bou
 | `side-level` (azimuth 90) | `u = (cz − z)·ppm + W/2` | `v = (cy − y)·ppm + H/2` |
 
 `Studio.aim` puts the azimuth-90 camera at +X. It looks toward −X with +Y up, so image right is −Z.
-Decision (j) records the sign. The test pins it: on the side view, the frontmost mask column in the
-head band is at least `0.02·ppm` left of `W/2`.
+Decision (j) records the sign. The guard is: on the side view, the frontmost mask column in the head
+band is at least `0.02·ppm` left of `W/2`.
 
 ### The pass table
 
@@ -275,39 +304,51 @@ head band is at least `0.02·ppm` left of `W/2`.
 
 ### The hand rules
 
-The hand checks read the `hands` body of the GLB and the flat front view.
+The hand checks read the `hands` body of the GLB, the `KIM_HANDS` export, and the flat front view.
 
-1. The hand vertices of a side are the vertices of the `hands` body with x > 0 (left) or x < 0
-   (right). A vertex with |x| below 1e-6 belongs to neither side. A side with fewer than 200 vertices
-   fails with `hand <side>: too few vertices`.
-2. The palm normal of a side is the eigenvector of the smallest eigenvalue of the unweighted
-   covariance matrix of its vertices about their centroid. Why unweighted: the mesher samples by
-   surface area, so each vertex already carries its own area weight.
-3. A degenerate cloud fails with `hand <side>: degenerate cloud`. The cloud is degenerate when the
-   smallest eigenvalue is below `1e-8` of the largest, or when the ratio of the largest to the
-   smallest is below 100.
-4. The palm normal is oriented toward the body: the left normal is flipped until `n·x̂ < 0`, and the
-   right normal until `n·x̂ > 0`. The signed pass is `n·x̂ ≤ −0.906` for the left hand and
-   `n·x̂ ≥ 0.906` for the right hand, which is 25 degrees from the X axis. The test covers both
-   hands, so a mirrored or palm-out hand fails.
-5. The hand depth is `max z − min z` of the side's vertices, in meters.
-6. The hand band covers the front rows from `v_wrist + 0.1·(v_tip − v_wrist)` to
+1. Vertices and triangles: the `hands` body of the GLB, positions and indices, per side. The left
+   side holds x > 0, the right side x < 0, and a vertex with |x| at or below 1e-6 belongs to
+   neither. A side with fewer than 200 vertices fails with `hand <side>: too few vertices`.
+2. The palm direction `d` is `normalise(palmCentre − centroid of the side's vertices)`. Pass:
+   `d·x̂ ≤ −0.90` for the left hand and `d·x̂ ≥ 0.90` for the right hand.
+3. The palm patch is the set of triangles whose centre is within 1.5 mm of the plane through
+   `palmCentre` with normal `d` and within 0.02 m of `palmCentre`. The area-weighted sum of the
+   triangles' geometric normals, taken from the index winding, must satisfy
+   `dot(sum, d) ≥ 0.90 · sum(area)`. A failure is `hand <side>: palm surface faces away from the
+declared normal`. Why this test: a flipped winding cannot pass it, and an unsigned axis test
+   cannot catch a flipped winding.
+4. Landmark contact: the nearest vertex to `palmCentre` is 3 mm or closer, and the nearest vertex to
+   `thumbTip` is 5 mm or closer. A failure is `hand <side>: landmark off the surface`.
+5. The thumb sits on the radial front edge: `|thumbTip.x| ≥ |palmCentre.x| + 0.005` and
+   `thumbTip.z ≥ palmCentre.z + 0.010`. The right hand mirrors the x rule. A failure is
+   `hand <side>: thumb not on the radial front edge`. A mirrored cloud fails here.
+6. A degenerate cloud fails with `hand <side>: degenerate cloud`. The cloud is degenerate when the
+   largest eigenvalue of its covariance is below `1e-8` of the side's squared extent.
+7. The hand depth is `max z − min z` of the side's vertices, in meters.
+
+### The front hand edge
+
+1. The hand band covers the front rows from `v_wrist + 0.1·(v_tip − v_wrist)` to
    `v_tip − 0.1·(v_tip − v_wrist)`, where `v_wrist` and `v_tip` are the projected wrist row and the
    projected fingertip row. The 10 % cut keeps the sleeve and the fingertip out of the band.
-7. In a band row, the runs are the horizontal runs of the mask. The body run holds the centre column
-   `W/2`. A hand run on the left side is a run whose start is right of the body run's end and whose
-   end is right of `W/2`. The mirror rule holds on the right side.
-8. A row holds a hand run when at least one hand run exists. When several exist, the widest one
-   counts. A row that holds none is left out. If under 80 % of the band rows hold a hand run, the
-   check fails with `hand <side>: not separated from the leg`.
-9. The gap of a row is the hand run's start minus the body run's end. The smallest gap over the band
-   rows must be 2 px or more, or the check fails with `hand <side>: gap under 2 px`.
-10. The hand front width is the median of the hand run widths over the band rows. The pass is
-    `handFrontWidth ≤ 0.60 · handDepth · ppm`. A palm that faces forward shows about the full palm
-    width in front and fails.
-11. Why the depth comes from the model and not from the side render: a hanging hand overlaps the
-    thigh in the side view, so the side mask cannot separate it. The forearm row is no better,
-    because the sleeve touches the torso.
+2. The leg column window of a side spans `[min(u_hip, u_ankle) − 0.03·ppm, max(u_hip, u_ankle) + 0.03·ppm]`,
+   where `u_hip` and `u_ankle` are the projected hip and ankle columns of that side. The legs have a
+   gap at the centre column, so the centre column never names a leg.
+3. In a band row, the runs are the horizontal runs of the mask. The leg run is the run that holds
+   the centre column of the leg window. A row with no such run is recorded as `row <v>: no leg run`.
+4. The hand run on the left is the widest run whose start is right of the leg run's end and whose
+   centre is right of `u_hip + 0.02·ppm`. The right side mirrors the rule. A row with no such run is
+   recorded as `row <v>: no hand run`.
+5. A row counts when it holds both runs. The figure fails when under 80 % of the band rows count,
+   with `hand <side>: separated rows under 80 % (<n> of <m>)`. A single row never fails the figure by
+   itself; it is named in the record.
+6. The gap of a counted row is the hand run's start minus the leg run's end. The smallest gap must be
+   2 px or more, or the check fails with `hand <side>: gap <g> px under 2 px at row <v>`.
+7. The front width is the median of the hand run widths over the counted rows. The pass is
+   `frontWidth ≤ 0.60 · handDepth · ppm`, and a failure is
+   `hand <side>: front width <w> px over <limit> px`.
+8. Why the depth comes from the model: a hanging hand overlaps the thigh in the side view, and the
+   forearm row touches the sleeve, so no pixel row separates either.
 
 ### Derived targets
 
@@ -315,28 +356,24 @@ The table fixes the shape. These targets follow from a height of 1.500 m, Kim's 
 explicit horizontal reach of 0.045 m (the page's 33 px at the 1.5 m scale). Green starts from them,
 and the check decides the result.
 
-| Item                          | Target                                                   |
-| ----------------------------- | -------------------------------------------------------- |
-| head height                   | 0.412 m (1.500 / 3.64)                                   |
-| crown, chin                   | 1.500 m, 1.088 m                                         |
-| hip                           | 0.585 m (leg share .39)                                  |
-| knee                          | 0.324 m (hip-to-knee 0.261 m, the page's 190 / 1093)     |
-| wrist                         | 0.569 m (hip − .06 · 0.261)                              |
-| fingertip                     | 0.452 m (hip − .51 · 0.261)                              |
-| horizontal reach, fingertip x | 0.045 m, 0.188 m (shoulder x + 0.045)                    |
-| torso height, shoulder        | 0.409 m, 0.994 m (from d² + (T + r)² = (1.33·T)²)        |
-| arm                           | 0.544 m (1.33 · 0.409)                                   |
-| head width, half width        | 0.341 m, 0.170 m (the page's 248/300 of the head height) |
-| shoulder half width           | 0.143 m (head width / 1.19)                              |
-| face width                    | 0.278 m (the page's 202/248 of the head width)           |
-| eye width                     | 0.064 m (.23 · face width)                               |
-| eye spacing                   | 0.130 m (.38 · head width and .47 · face width agree)    |
-| eye height                    | 0.045 m (.11 · head height)                              |
-| eye line                      | 1.245 m (crown − .62 · head height)                      |
-
-The torso height and the shoulder come from the arm ratio with the horizontal reach held in the arm
-length, not from a vertical approximation. `T` solves `0.045² + (T + 0.133)² = (1.33 T)²` and gives
-`T = 0.409`.
+| Item                          | Target                                                      |
+| ----------------------------- | ----------------------------------------------------------- |
+| head height                   | 0.412 m (1.500 / 3.64)                                      |
+| crown, chin                   | 1.500 m, 1.088 m                                            |
+| hip                           | 0.585 m (leg share .39)                                     |
+| knee                          | 0.324 m (hip-to-knee 0.261 m, the page's 190 / 1093)        |
+| wrist                         | 0.569 m (hip − .06 · 0.261)                                 |
+| fingertip                     | 0.452 m (hip − .51 · 0.261)                                 |
+| horizontal reach, fingertip x | 0.045 m, 0.188 m (shoulder x + 0.045)                       |
+| torso height, shoulder        | 0.4087 m, 0.9937 m (from 0.045² + (T + 0.133)² = (1.33·T)²) |
+| arm                           | 0.5436 m (1.33 · 0.4087)                                    |
+| head width, half width        | 0.341 m, 0.170 m (the page's 248/300 of the head height)    |
+| shoulder half width           | 0.143 m (head width / 1.19)                                 |
+| face width                    | 0.278 m (the page's 202/248 of the head width)              |
+| eye width                     | 0.064 m (.23 · face width)                                  |
+| eye spacing                   | 0.130 m (.38 · head width and .47 · face width agree)       |
+| eye height                    | 0.045 m (.11 · head height)                                 |
+| eye line                      | 1.245 m (crown − .62 · head height)                         |
 
 ### Render commands
 
@@ -348,6 +385,29 @@ length, not from a vertical approximation. `T` solves `0.045² + (T + 0.133)² =
 The first command writes `out/sprout-mom-kim/flat/`. The second writes
 `out/sprout-mom-kim/views/`. The two output folders are separate, because a render run clears
 `views/`.
+
+## The LATO.2 GPU trial
+
+Phase 6 holds the trial. It runs alongside the SDF shape work, and its result feeds the PM decision.
+It does not replace the SDF base, and the pass table of this track stays the SDF acceptance.
+
+1. One Spot L4, with one standard L4 as the fallback, in `asia-southeast1` on project
+   `reading-advantage`. VM time has a hard cap of 3 hours.
+2. One Kim full-body front crop. It runs on our own VM only. The weights download to the VM, and the
+   trial calls no hosted API and no public demo.
+3. The five steps are: create one VM and one temporary boot disk; set up the pinned dependencies and
+   the weights; run one image-to-mesh inference on the crop; copy the mesh out and confirm the copy
+   opens; delete the VM and the disk in the same session, then verify both are gone.
+4. Steps 3 to 5 run even after a failure. The delete and the verify run in the same session as the
+   create.
+5. Each step writes its start time, its end time, and a bill estimate in USD to
+   `out/chibi-sprouts/redesign/lato2-gpu/trial-log.tsv`, with the header
+   `step\tstart\tend\tminutes\testimate_usd\tnote`.
+6. The outputs are the mesh, a front render and a side render beside Kim, the body rows of the pass
+   table, and `measure/runs/chibi_sprouts_redesign_20261123/lato2-gpu/trial-result.md`. The face rows
+   are not measurable, because the mesh has no texture, and the note says so.
+7. The trial writes no file in the monorepo, in the scrapped sources, or in a delivery folder.
+8. No image tool runs in this phase.
 
 ## Acceptance criteria
 
@@ -385,19 +445,19 @@ The first command writes `out/sprout-mom-kim/flat/`. The second writes
    `node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts`.
    The plan records the reporter line with the file count, the test count, and the skipped count.
 9. A guard case reads the three files and requires the active hero describe, the three hero test
-   names, the four skipped titles, and the three reason comments. The guard fails when an edit
-   unskips a scrap test or drops a reason.
+   names, the four skipped titles, and the three reason comments.
 
 ### AC2: the proportion check
 
 1. `scripts/proportion-check.mjs` measures one asset from the inputs of the measurement method and
-   writes `out/chibi-sprouts/redesign/measure.json`. The record holds each landmark with its pixel
-   position, each row with its value and its range, the image size, `ppm`, both render paths, the
-   SHA-256 of each render, and the rows of the lit views under `rows.lit`. The script exports
-   `checkRows(rows)`, `palmNormal(vertices, side)`, and `measurePixels()` for the tests.
+   writes `out/chibi-sprouts/redesign/measure.json`. The record holds the loading order, each value
+   of the evaluation order, each row with its value and its range, the image size, `ppm`, both render
+   paths, the SHA-256 of each render, and the lit rows under `rows.lit`. The script exports
+   `checkRows(rows)`, `palmNormal(vertices, side)`, and `measurePixels()`.
 2. The script prints one line per row: `row value target±tolerance pass`. It exits 0 when every row
    passes and every guard holds. It exits 1 and prints `FAIL <row>: <value> not in <lo>..<hi>` for
-   each failing row, and `GUARD <name>: <detail>` for each failing guard.
+   each failing row, and `GUARD <name>: <detail>` for each failing guard. A missing asset exits 1
+   with `asset <name>: not built`, before any import of the asset or the base module.
 3. The guards:
    - the two flat views give equal crown-to-sole heights within 2 px,
    - the projected sole and the projected model top sit on the mask's bottom and top row within 2 px,
@@ -410,7 +470,7 @@ The first command writes `out/sprout-mom-kim/flat/`. The second writes
 5. `tests/sprout-mom-kim.test.ts` runs the script and requires exit 0, the eleven row names, and each
    value inside its range read from `measure.json`.
 6. Breakage proof one, the table: `checkRows(rows)` fails with the row name when one row moves just
-   outside its range, for each of the eleven rows. A doctored row that passes fails the case.
+   outside its range, for each of the eleven rows.
 7. Breakage proof two, the pixels: `measurePixels()` runs five synthetic figures in a temporary
    folder, with independent mutations:
    - the pass figure holds the pass geometry and must pass every row,
@@ -418,22 +478,28 @@ The first command writes `out/sprout-mom-kim/flat/`. The second writes
    - a sole 10 % lower, with the same model landmarks, fails `legShare`,
    - a head 12 % wider at the temples, with the same shoulder span, fails `headToShoulders`,
    - two eyes drawn as one merged dark shape fail with `eye components: found 1, expected 2`.
-     Each case names its own expected failure.
 8. The check needs no paid call and no network. It reads local files only.
 
 ### AC3: the palms face the legs
 
-1. The new base builds both hands as one body named `hands`, with a left half at x > 0.
-2. `scripts/proportion-check.mjs` tests both hands with the signed rule of "The hand rules": left
-   `n·x̂ ≤ −0.906`, right `n·x̂ ≥ 0.906`.
+1. The new base builds both hands as one body named `hands`, with a left half at x > 0, and exports
+   `KIM_HANDS` with `palmCentre`, `thumbTip`, and `fingerTip` for each side.
+2. The script tests both hands with the signed rules of "The hand rules": the palm direction
+   (`d·x̂ ≤ −0.90` left, `d·x̂ ≥ 0.90` right), the oriented palm surface, the landmark contact, and
+   the thumb position.
 3. A side with too few vertices or a degenerate cloud fails with its named error.
-4. The front flat view must show each hand as a separate run, with a gap of 2 px or more, and the
-   hand front width must be 0.60 of the hand depth times `ppm` or less, per "The hand rules".
+4. The front flat view shows each hand as a separate run with a 2 px gap over 80 % of the band rows,
+   and the hand front width is 0.60 of the hand depth times `ppm` or less, per "The front hand edge".
+   A row without a run is named in the record and does not fail the figure on its own.
 5. The side view shows the thumbs forward and the backs of the hands out. The review sheet records
    both, and the look judge of AC4 rates the palms.
-6. `tests/sprout-mom-kim.test.ts` holds a breakage case: `palmNormal` on a vertex cloud turned 90
-   degrees about Y gives a signed value that fails rule 2, and a cloud mirrored to x < 0 with the
-   left-side rule fails too.
+6. Three breakage cases:
+   - the same hand cloud with flipped triangle winding fails `palm surface faces away from the
+declared normal`,
+   - a cloud mirrored about x, with the left landmarks unchanged, fails
+     `thumb not on the radial front edge`,
+   - a cloud turned 180 degrees about the finger axis, with its palm landmark moved with it, fails
+     the palm direction rule.
 
 ### AC4: the independent look judge
 
@@ -450,34 +516,54 @@ The first command writes `out/sprout-mom-kim/flat/`. The second writes
    one comment per score, and a verdict.
 6. A score under 7.5 returns the track to Green with the comment as the work list. A second judge
    family is not a remedy for a failed score.
-7. When no judge route can run without sending Kim's sheet or Kim's panel, the task stops and
-   reports to the PM. The track does not fall back to a Kim-containing input.
+7. The judge route is an established look-judge route, as in the earlier sprout looks. Mom's render
+   and Daniel's drawing may use it. A Kim image may not. If the PM later demands a local-only judge,
+   T10 stops and reports.
 
 ### AC5: the review sheet
 
 1. `scripts/mom-kim-sheet.mjs` writes `out/chibi-sprouts/redesign/mom-kim-review.png` and
    `out/chibi-sprouts/redesign/mom-panel.png`.
 2. The sheet has two rows. Row one is Kim's front panel, the Mom front render, and Mom's drawing.
-   Row two is Kim's side panel, the Mom side render, and a cell that says `no side drawing`.
+   Row two is Kim's side panel, the Mom side render, and the text `no side drawing`.
 3. Both renders are the lit views `views/front-level.png` and `views/side-level.png` (decision l).
-4. The render rows come from `measure.json` under `rows.lit`. The reference rows are the page's Kim
-   rows (crown 102, sole 1195) and Mom rows (crown 71, sole 1528). The script measures each side
-   figure with its background scan and requires the result within 4 px of those rows, so both
-   panels of a reference use the row pair of that reference.
+4. Row sources, pinned:
+   - the two render rows come from the lit masks (alpha 128 or more) of the two lit views, written in
+     `measure.json` under `rows.lit`,
+   - Kim's reference rows are the page's 102 and 1195. The script scans Kim's side panel with the
+     background scan and requires its measured rows within 4 px of those. Both Kim panels then use
+     the page's pair,
+   - Mom's reference rows are the page's 71 and 1528, from her one drawing. The script runs no
+     background scan on a Mom side drawing, because there is none. The Mom side cell holds the side
+     render only, and the third cell holds the text.
 5. Every panel is scaled so the crown-to-sole height is 700 px, and every sole sits on the same
    baseline.
 6. The caption strip holds the asset name, the date, the pass table result, and the Green model id.
-7. The sheet is local. No route sends it to a model or a third party. T9 hands the path to the PM,
-   and the upload to Daniel waits for the PM's word.
+7. The sheet and the panel are local. No route sends them to a model that is not an approved
+   look-judge route, and no route sends the Kim panels anywhere. T11 hands the path to the PM, and
+   the upload to Daniel waits for the PM's word.
 
 ### AC6: the stop
 
 1. Phase 9 holds the cut-out and the sprite as `deferred:pm` tasks. They start only after the PM
-   approves the shape at T10.
+   approves the shape at T12.
 2. Before the approval, no cut-out exists for the new base and no sprite exists for the new base.
 3. Those tasks start only by an amendment. The amendment adds the walk clip source as its own Red
-   task and its own Green task, because T5 builds the `idle` clip only. The idle sprite sample does
+   task and its own Green task, because T7 builds the `idle` clip only. The idle sprite sample does
    not need the walk clip.
+
+### AC7: the LATO.2 GPU trial
+
+1. The trial follows the eight rules of "The LATO.2 GPU trial" and holds the USD 5 approval of
+   decision L.
+2. `out/chibi-sprouts/redesign/lato2-gpu/trial-log.tsv` holds the header
+   `step\tstart\tend\tminutes\testimate_usd\tnote` and one row per step.
+3. The delete and the verify are recorded, and the log shows the VM and disk absent.
+4. `measure/runs/chibi_sprouts_redesign_20261123/lato2-gpu/trial-result.md` holds the mesh result,
+   the front and side render paths, the body rows of the pass table, and the note that the face rows
+   are not measurable.
+5. The result feeds the PM decision at T12. It does not replace the SDF base, and it changes no row
+   of the SDF pass table.
 
 ## Sources
 
@@ -493,11 +579,13 @@ The first command writes `out/sprout-mom-kim/flat/`. The second writes
 - [The render page](../../../src/render/page.ts)
 - [The Forge CLI](../../../src/cli/forge.ts)
 - [The spec review of r1](../../runs/chibi_sprouts_redesign_20261123/spec-review-61db4f1.json)
+- [The spec review of r2](../../runs/chibi_sprouts_redesign_20261123/spec-review-80ff571.json)
+- [The LATO.2 README](https://github.com/LoHhhha/LATO.2)
 
 ## Scope control
 
-This track adds two asset modules, one pin asset, one measurement script, one sheet script, three
-test files, and two render options. It changes the three scrapped test files, the preset pin, the
+This track adds two asset modules, one measurement script, one sheet script, three test files, two
+render options, and one GPU trial. It changes the three scrapped test files, the preset pin, the
 Forge CLI, and the render page. It changes no scrapped source, no shipped asset, no game, no song
-page, no monorepo file, and no delivery folder. It runs no paid call, it sends no Kim art to a model,
-and it deletes nothing.
+page, no monorepo file, and no delivery folder. It sends no Kim art to a model or a third party, and
+it deletes nothing.

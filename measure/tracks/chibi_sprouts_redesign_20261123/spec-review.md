@@ -116,3 +116,46 @@ test change.
 - F15 closed: decision (l) and AC5 name the lit views, the `rows.lit` source in `measure.json`, the
   page's reference rows for both panels of each reference, and the 4 px check of each side figure's
   rows.
+
+## Amendment after r2 (2026-11-23)
+
+Source: `measure/runs/chibi_sprouts_redesign_20261123/spec-review-80ff571.json` (blockers F3, F4, F5,
+F8, F16, F17; major F15; nit F18; baseline `80ff571`). Scope: `spec.md`, `plan.md`, and this file. No
+implementation and no test change.
+
+- F3 closed: the spec adds "Evaluation order" with twelve numbered steps. Step 4 takes the head width
+  over the rows to `crown + 0.70·headHeight`, so it needs no eye value. Step 7 sizes the eye
+  components by the window area, not the face area. Step 10 builds the face seed from the two eye
+  centres. Step 11 finds the face component, and step 12 takes its area and width. Every step names
+  its empty, extra, or edge failure.
+- F4 closed: the base exports `KIM_HANDS` with `palmCentre`, `thumbTip`, and `fingerTip` per side. The
+  palm direction `d` is signed, the palm patch is the triangles near the palm plane, and the
+  area-weighted sum of their winding normals must agree with `d` by 0.90. Landmark contact and the
+  radial-front thumb rule follow. AC3 adds three breakage cases: flipped winding, a mirrored cloud,
+  and a 180 degree turn about the finger axis.
+- F5 closed: "The front hand edge" builds the leg column window from the projected hip and ankle of
+  each side, names the leg run, the hand run, and every row without one, counts rows, and fails the
+  figure only under 80 % of the band rows. The gap is per row with a named row, and the front width is
+  a median.
+- F8 closed: the standing rules and decision (k) now follow the PM wording. Kim art goes to no remote
+  model, no demo, and no third party, and our own VM is allowed. Mom's render and Daniel's drawing may
+  use an established look-judge route. The judge sees `mom-panel.png` and the numeric rows, and the
+  Kim sheet stays local. AC4 rule 7 stops the task when the PM demands a local-only judge.
+- F15 closed: AC5 fixes the row sources. The render rows come from the two lit masks under
+  `rows.lit`. Kim's side panel rows come from the background scan, held within 4 px of 102 and 1195.
+  Mom has no side drawing, so no scan runs on one; the Mom side cell holds the render only and the
+  third cell holds the text `no side drawing`.
+- F16 closed: every Red task commits `tests/` paths only, and the plan states the gate rule. The
+  renderer pin writes `assets/_flat-render-pin.ts` at run time and removes it in a `finally` block.
+  The measurement script is Green (T6). The tasks run T1 to T14: T1 and T2 Red, T3 Green, T4 and T5
+  Red, T6 and T7 Green, T8 Green, T9 the LATO.2 trial, T10 the judge, T11 and T12 the PM stop, and
+  T13 and T14 deferred.
+- F17 closed: the spec adds "How the script loads its inputs". The script parses the arguments,
+  checks `assets/<name>.ts` and the GLB, exits 1 with `asset <name>: not built`, and only then runs
+  `await import()` on the asset and the base module. AC2 rule 2 and T4 expect that named error before
+  the asset exists.
+- F18 closed: Phase 6 holds T9, the LATO.2 GPU trial under the USD 5 cap, with the approval quote in
+  decision L and in the Exclusions. The task fixes the Spot L4 and the fallback, the region, the
+  project, the 3 hour cap, the five steps, the delete and verify rule, the log header, and the result
+  note. AC7 holds its acceptance, and the spec says the trial feeds the PM decision and does not
+  replace the SDF base.
