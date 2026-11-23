@@ -264,7 +264,7 @@ These commands pass, and the plan records each exit code:
 - [Audio review A round 6](../../runs/audio_game_integration_20261014/review-a-a414b40.json)
 - [Audio adversarial round 5](../../runs/audio_game_integration_20261014/adversarial-p3-a414b40.json)
 - [Browser check pattern](../../../scripts/apk3d-shot.ts)
-- [Audio track plan](../audio_game_integration_20261014/plan.md)
+- [Audio track plan](../../archive/audio_game_integration_20261014/plan.md)
 
 ## Scope control
 

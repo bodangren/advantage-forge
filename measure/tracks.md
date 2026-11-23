@@ -67,9 +67,6 @@ This registry gives each historical, current, and planned work item one Measure 
 - [~] **Track: Sound library sources: ElvGames packs, CC-BY sites, and credits**
   *Link: [./tracks/audio_sources_expand_20261014/](./tracks/audio_sources_expand_20261014/)*
 
-- [~] **Track: Sound in the games: library takes for the game events**
-  *Link: [./tracks/audio_game_integration_20261014/](./tracks/audio_game_integration_20261014/)*
-
 - [~] **Track: Chibi Sprouts, release 1 art**
   *Link: [./tracks/asset_chibi_sprouts_r1_20261022/](./tracks/asset_chibi_sprouts_r1_20261022/)*
 
@@ -257,6 +254,10 @@ Execution order. The overview, the decisions, and the dependencies are in [riven
   *Link: [./tracks/riven_fx_geometry_20261009/](./tracks/riven_fx_geometry_20261009/)*
 
 ## Archived Tracks
+
+- [x] Sound in the games: library takes for the game events, completed 2026-11-23; 31 game events map to the earshot Chibi set, with Ogg and MP3 per-browser choice, a synth fallback, preload wiring in 29 hosts, and a 17-file PM hand-off folder. Final acceptance PASS at 4aea1282; its audited_head_sha is an ancestor of the pre-closeout HEAD and no audio product path changed after the audit. adversarial-p5-4aea128 PASS; earlier adversarial rounds are superseded. The 20-file audio suite (231 tests) and the 14 hand-off checksums pass. Phase 6 T9 credits stays deferred by decision with deferral SHA 03bdf3e5. Open items carried to the PM: TD-44, TD-45 (linked to old_browser_builtins_20261122, Phases 1 and 2 accepted 2026-11-23 and Phase 3 pending), TD-46, TD-48, and the hand-off folder awaiting a dated PM answer. No owner-acceptance or full-suite claim is made.
+  *Link: [./archive/audio_game_integration_20261014/](./archive/audio_game_integration_20261014/)*
+  *Sound in the games: play the earshot Chibi sound set first for the game events, with an MP3 copy and a per-browser format choice, and the synthesized sounds as the fallback; approved library takes replace set files later*
 
 - [x] Author game sound sets with earshot, completed 2026-11-21; pinned earshot at commit 7a7f7c5c and delivered seven 48 kHz Ogg files for the chibi set with a wrapper and tests. Final acceptance PASS at 5e6c7780 with audited_head_sha equal to the pre-closeout HEAD. The combined sound-set suite passed 86 of 86 tests at closeout; adversarial-abffa89 PASS and the earlier adversarial-7fbf58b fail was superseded. No full-suite or owner-acceptance claim is made. The venv, scratch render, doctor, and generated-facts checks all pass at closeout. Carried nits TD-41 (unpinned transitive pip dependencies) and TD-42 (venv removed before each interpreter attempt) stay open; the PROJECT_* and test gate commands were supplied per run by the orchestrator because gates.json holds only GENERATED_CHECK_COMMAND.
   *Link: [./archive/chore_earshot_sounds_20261121/](./archive/chore_earshot_sounds_20261121/)*

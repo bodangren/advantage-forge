@@ -1,8 +1,8 @@
 # Measure status
 
-Tracks: 79.
-Tracks by status: new: 28; in_progress: 50; completed: 1.
-Tracks by workstream: assets: 34; games: 42; foundation: 3.
+Tracks: 78.
+Tracks by status: new: 28; in_progress: 49; completed: 1.
+Tracks by workstream: assets: 34; games: 41; foundation: 3.
 
 | Track | Status | Workstream | Plan tasks | Estimate | Actual |
 | --- | --- | --- | ---: | ---: | ---: |
@@ -20,7 +20,6 @@ Tracks by workstream: assets: 34; games: 42; foundation: 3.
 | [asset_scenes_adventure_20260928](../tracks/asset_scenes_adventure_20260928/) | new | assets | 0/9 | 9 | — |
 | [asset_scenes_settlements_20260928](../tracks/asset_scenes_settlements_20260928/) | in_progress | assets | 0/9 | 9 | — |
 | [asset_scenes_wilderness_20260928](../tracks/asset_scenes_wilderness_20260928/) | in_progress | assets | 0/9 | 9 | — |
-| [audio_game_integration_20261014](../tracks/audio_game_integration_20261014/) | in_progress | games | 26/27 | 11 | — |
 | [audio_sfx_library_20261013](../tracks/audio_sfx_library_20261013/) | in_progress | assets | 18/19 | 12 | — |
 | [audio_sources_expand_20261014](../tracks/audio_sources_expand_20261014/) | in_progress | assets | 7/11 | 10 | — |
 | [chibi_sprouts_redesign_20261123](../tracks/chibi_sprouts_redesign_20261123/) | new | assets | 0/14 | 14 | — |

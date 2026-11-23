@@ -132,7 +132,7 @@ D8. Render route. Every render runs through
 - [audio bus](../../../src/apk3d/audio/bus.ts)
 - [sound library tool](../../../scripts/sfx-library.mjs)
 - [sound library design](../../../docs/sound-library.md)
-- [consumer track](../../tracks/audio_game_integration_20261014/spec.md)
+- [consumer track](../audio_game_integration_20261014/spec.md)
 - Trial notes: `/var/tmp/earshot-trial/out/README.md`
 - Trial source: `/var/tmp/earshot-trial/src` at `7a7f7c5c70d4a763a1eca4b3666af7c77e313f97`
 

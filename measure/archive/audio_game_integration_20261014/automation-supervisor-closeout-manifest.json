@@ -1,0 +1,111 @@
+{
+  "schema_version": 1,
+  "track": "audio_game_integration_20261014",
+  "archived_at": "2026-11-23",
+  "track_base_sha": "7a5f16600cb26f3f7086dc8e4897e2c8b6e42301",
+  "role_base_sha": "de232c05c098aa942343092ab94ee4c480420a78",
+  "pre_closeout_head_sha": "de232c05c098aa942343092ab94ee4c480420a78",
+  "audited_head_sha": "4aea12828bbeaea2cd5c8128db09f0afa4038118",
+  "audited_head_is_pre_closeout_head": false,
+  "audited_head_is_ancestor_of_pre_closeout_head": true,
+  "audited_head_provenance_note": "Final acceptance bound to 4aea12828; the current pre-closeout HEAD is de232c05. The commits in between are parallel tracks plus the audio record-fix commit 39ec5cfa, which changed only measure/generated/status.md, measure/tech-debt.md, and the track plan.md. No audio product path changed after the audit, so the verdict remains valid. The closeout checker binds on a passing final-acceptance JSON, not on HEAD equality.",
+  "lane": "full: five phase acceptances plus final acceptance; Phase 6 holds only a deferred task",
+  "final_acceptance": {
+    "file": "measure/runs/audio_game_integration_20261014/final-acceptance-4aea128.json",
+    "log": "measure/runs/audio_game_integration_20261014/final-acceptance-4aea128.log",
+    "status": "pass",
+    "audited_head_sha": "4aea12828bbeaea2cd5c8128db09f0afa4038118",
+    "role_gate": "exits 0"
+  },
+  "phase_acceptance_results": [
+    { "phase": "Phase 1: Event map", "status": "pass", "audited_head_sha": "79ae99b5", "note": "governs over the earlier ffbe96a8 pass" },
+    { "phase": "Phase 2: MP3 wrapper and committed files", "status": "pass", "audited_head_sha": "ca68e6c8" },
+    { "phase": "Phase 3: File playback and wiring", "status": "pass", "audited_head_sha": "aaf67869", "note": "earlier 09b4028f and 82b9c885 fails stay recorded" },
+    { "phase": "Phase 4: Preload budget", "status": "pass", "audited_head_sha": "229323c5" },
+    { "phase": "Phase 5: PM hand-off", "status": "pass", "audited_head_sha": "4aea1282" }
+  ],
+  "completed_phases": [
+    { "id": "Phase 1", "checkpoint": "79ae99b5" },
+    { "id": "Phase 2", "checkpoint": "ca68e6c8" },
+    { "id": "Phase 3", "checkpoint": "aaf67869" },
+    { "id": "Phase 4", "checkpoint": "229323c5" },
+    { "id": "Phase 5", "checkpoint": "4aea1282" },
+    { "id": "Phase 6", "checkpoint": "03bdf3e5", "note": "T9 deferred by decision; the SHA on the plan line records the deferral" }
+  ],
+  "task_markers": "pass: the archived plan holds 26 [x] tasks with commit SHA evidence, 0 [~], 1 [ ] (T9, deferred with SHA 03bdf3e5), and 0 [b]. plan_closeout_feedback returns []. The final-acceptance FA-1 and FA-2 fixes (T9 SHA, restored T6i line at 1b7312f4) are present in commit 39ec5cfa and the current plan.",
+  "gates": {
+    "closeout_checker": "python3 -I measure_interphase_checks.py closeout --repo . --track audio_game_integration_20261014 => exit 0 after archive",
+    "generated_facts": "node measure/tools/generate.mjs --check => exit 0, 4 files current; ./measure/generate.sh regenerated 4 facts after the move",
+    "doctor_structural": "./measure/doctor.sh --structural-only => exit 0, no structural errors after the link repairs",
+    "project_test_gate_a9": "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts' => exit 0; 230 passed files + 1 skipped (231); 3396 passed tests + 9 skipped (3405); 79.75 s",
+    "handoff_checksums": "(cd out/apk-audio-handoff/chibi && sha256sum -c MANIFEST.sha256) => 14 OK, exit 0 (from final acceptance; retained)"
+  },
+  "antipatterns_clean": [
+    "A5 false claim: no PASS=N, FAIL=0, or all-checks-pass claim appears in the archived plan. Historical pass claims cite the final-acceptance JSON.",
+    "A6 registry overstatement: the registry note for this track states the final-acceptance PASS, the adversarial-p5 PASS, the superseded earlier rounds, and the open debt. It makes no owner-acceptance or full-suite claim. The only other grep hit in tracks.md belongs to the archived chore_earshot_sounds_20261121 track.",
+    "A9 archived-track path: no tests/*.sh hardcodes measure/tracks/audio_game_integration_20261014/plan.md. Three audio test files reference measure/runs/audio_game_integration_20261014/, which the archive does not move. The project test gate passed after the move."
+  ],
+  "fixed_path_hits_before_move": [
+    "measure/tracks/audio_game_integration_20261014/plan.md:51 (moved with the track)",
+    "measure/tracks/audio_game_integration_20261014/test-strategy.md:393 (moved with the track)",
+    "tests/audio-handoff.adversarial-r2.test.ts:7 (measure/runs/ path, unchanged by the move)",
+    "tests/apk3d/audio-files.adversarial.test.ts:11 (comment, measure/runs/ path, unchanged)",
+    "tests/apk3d/audio-wiring.adversarial.test.ts:15 (comment, measure/runs/ path, unchanged)"
+  ],
+  "a9_fix": "Not needed: no test or script referenced the active track path. The project test gate passed through heavy-run after the move.",
+  "link_repairs_after_move": [
+    "measure/archive/chore_earshot_sounds_20261121/spec.md:135: ../../tracks/audio_game_integration_20261014/spec.md -> ../audio_game_integration_20261014/spec.md",
+    "measure/tech-debt.md:43,45,47: ./tracks/audio_game_integration_20261014/ -> ./archive/audio_game_integration_20261014/ (3 rows TD-44, TD-46, TD-48)",
+    "measure/tracks/old_browser_builtins_20261122/spec.md:267: ../audio_game_integration_20261014/plan.md -> ../../archive/audio_game_integration_20261014/plan.md"
+  ],
+  "link_repair_note": "These five Markdown links broke when the track moved. They are path references in the same closeout scope, not test changes. No task of another track was marked in progress. After the repairs doctor --structural-only exits 0.",
+  "deferred": [
+    "T9 (Phase 6): credits screen, deferred by decision (PM 2026-11-22c), deferral recorded in 03bdf3e5; the plan line keeps [ ] and the word deferred with a done SHA token",
+    "TD-44: AudioBus load lifecycle late findings; open, owning track",
+    "TD-45: 44 old-browser built-ins; open, linked to track old_browser_builtins_20261122 (Phases 1 and 2 accepted 2026-11-23, Phase 3 pending); stays open until that track is accepted",
+    "TD-46: budget script can reject a valid opening effect; open, owning track",
+    "TD-48: hand-off script and test gaps, including A5-F4 and A5-F6; open, owning track",
+    "PM hand-off: out/apk-audio-handoff/chibi/ (17 files, 14 checksums verified, targets marked proposed: apps/advantage-games/public/audio/chibi/<file>) awaits a dated answer from the PM or the Monorepo session"
+  ],
+  "deferred_note": "No plan task stays in progress. The deferred items are a decided track task, open debt rows, and a PM hand-off, not incomplete automatable work of this track.",
+  "tech_debt": [
+    "TD-44 kept open: AudioBus load lifecycle late findings",
+    "TD-45 kept open: old-browser built-ins, linked to old_browser_builtins_20261122",
+    "TD-46 kept open: budget script opening-effect false fail",
+    "TD-48 kept open: hand-off script and test gaps, with A5-F4 and A5-F6 added to the row"
+  ],
+  "tech_debt_note": "No tech-debt row was added or resolved in closeout. All four rows were already open after the final-acceptance record fixes. The row links were repointed from tracks/ to archive/ to keep the doctor gate green.",
+  "lessons_learned": "No new lesson is warranted. The track produced no reusable rule beyond the heavy-run and explicit-path rules already in lessons-learned.md.",
+  "generated_facts": "regenerated after the move: ./measure/generate.sh exited 0 and generated 4 facts; generate --check exits 0; generated/status.md no longer lists this track as active",
+  "artifact_cleanup": "No bulky run artifact was deleted. The orchestrator identified none. Every log, JSON, probe, and result under measure/runs/audio_game_integration_20261014/ is retained, including the final acceptance and closeout evidence. The hand-off folder out/apk-audio-handoff/chibi/ is retained for the PM.",
+  "retained_evidence": [
+    "measure/runs/audio_game_integration_20261014/final-acceptance-4aea128.json",
+    "measure/runs/audio_game_integration_20261014/final-acceptance-4aea128.log",
+    "measure/runs/audio_game_integration_20261014/phase-acceptance-p1-79ae99b.json",
+    "measure/runs/audio_game_integration_20261014/phase-acceptance-p2-ca68e6c.json",
+    "measure/runs/audio_game_integration_20261014/phase-acceptance-p3-aaf6786.json",
+    "measure/runs/audio_game_integration_20261014/phase-acceptance-p4-229323c.json",
+    "measure/runs/audio_game_integration_20261014/phase-acceptance-p5-4aea128.json",
+    "measure/runs/audio_game_integration_20261014/adversarial-p5-4aea128.json",
+    "measure/runs/audio_game_integration_20261014/closeout.log"
+  ],
+  "commands": [
+    "git rev-parse HEAD => de232c05c098aa942343092ab94ee4c480420a78 (role_base_sha and pre-closeout HEAD)",
+    "git merge-base --is-ancestor 4aea12828bbeaea2cd5c8128db09f0afa4038118 HEAD => 0 (audited HEAD is an ancestor)",
+    "python3 -I measure_interphase_checks.py closeout --help => usage read before the run",
+    "python3 -I -c 'plan_closeout_feedback(...)\' on the archived plan => []",
+    "grep -nE 'PASS=[0-9]+.*FAIL=0|all checks pass' on archived plan.md => no hits (A5)",
+    "grep -nE '...all (checks |tests )?pass' measure/tracks.md => one hit, archived chore_earshot_sounds_20261121, none for this track (A6)",
+    "grep -rnE 'measure/tracks/audio_game_integration_20261014/plan\\.md' tests/*.sh => no hits (A9)",
+    "./measure/generate.sh => exit 0; 4 facts generated",
+    "node measure/tools/generate.mjs --check => exit 0; 4 files current",
+    "./measure/doctor.sh --structural-only => exit 0 after five link repairs",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '<PROJECT_TESTS>' => exit 0; 3396 passed, 9 skipped"
+  ],
+  "closeout_commit": "reported in the MEASURE_AGENT_RESULT block and by git log -1; a commit cannot record its own SHA",
+  "evidence_classes": {
+    "person_reviewed": "No person review is recorded for this closeout. Daniel owns product acceptance; no model rating is owner acceptance.",
+    "model_evidence_not_acceptance": "Review and acceptance JSON files are model evidence, not owner acceptance. The PM hand-off folder awaits a dated answer."
+  },
+  "model_routes": "This closeout ran on opencode-go/hy4-flash-free#high. Final acceptance ran on claude-agent/sonnet#max; Phase 1 and Phase 2 acceptances and Phase 2 Review B ran on claude-code/claude-sonnet-5-5#max (recorded in the final-acceptance JSON and accepted by the orchestrator)."
+}

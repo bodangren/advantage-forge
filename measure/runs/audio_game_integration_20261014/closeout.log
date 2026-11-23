@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: closeout
+status: complete
+track: audio_game_integration_20261014
+phase: closeout
+commits: 39ec5cfa (final-acceptance record fixes); closeout commit is this commit, reported by git log -1
+tests_run: closeout checker exit 0 after archive; generate --check exit 0 (4 facts current); doctor --structural-only exit 0 after five link repairs; A9 project test gate through heavy-run exit 0 (230 passed files + 1 skipped, 3396 passed tests + 9 skipped, 79.75 s); A5/A6/A9 scans clean; hand-off sha256sum -c retained from final acceptance (14 OK)
+files_changed: moved measure/tracks/audio_game_integration_20261014 to measure/archive/audio_game_integration_20261014; metadata status done with completed 2026-11-23; measure/tracks.md active entry removed and archived entry added; generated facts regenerated; five broken Markdown links repointed to the archive; this closeout.log and automation-supervisor-closeout-manifest.json added
+plan_updates: none to task markers; T9 stays [ ] and deferred with deferral SHA 03bdf3e5; T6i restored line and T9 SHA from 39ec5cfa retained; no plan text changed to force the gate
+known_failures: none blocking; T9 deferred by decision; TD-44, TD-45 (linked to old_browser_builtins_20261122, Phases 1 and 2 accepted 2026-11-23, Phase 3 pending), TD-46, TD-48 stay open; PM hand-off folder awaits a dated answer; tsc keeps the recorded baseline errors and plan.md keeps the accepted Prettier state from final acceptance
+handoff: track archived with final acceptance PASS bound to 4aea1282, an ancestor of the pre-closeout HEAD de232c05 with no audio product path changed after the audit; all phase acceptances P1-P5 passed; the PM owns TD-44, TD-45, TD-46, TD-48, and the hand-off folder out/apk-audio-handoff/chibi/; no bulky artifact deleted; the audit subagent can re-run the closeout checker and the three anti-pattern scans to confirm A5/A6/A9 clean
+END_MEASURE_AGENT_RESULT

@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "role": "measure-closeout",
+  "track": "audio_game_integration_20261014",
+  "phase": "closeout",
+  "baseline_sha": "7a5f16600cb26f3f7086dc8e4897e2c8b6e42301",
+  "audited_head_sha": "de232c05c098aa942343092ab94ee4c480420a78",
+  "role_base_sha": "de232c05c098aa942343092ab94ee4c480420a78",
+  "status": "pass",
+  "summary": "Closeout passed. The track is archived with metadata status done and completion date 2026-11-23. The plan holds 26 [x] tasks with SHA evidence, 0 [~], 1 [ ] deferred T9 with deferral SHA 03bdf3e5, and 0 [b]. The closeout checker, generator check, doctor structural-only, and the A9 project test gate all exit 0. Five broken Markdown links were repointed to the archive path.",
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "evidence": [
+    "Final acceptance PASS in final-acceptance-4aea128.json, audited HEAD 4aea12828, an ancestor of the pre-closeout HEAD de232c05; no audio product path changed after the audit.",
+    "All phase acceptances passed: P1 79ae99b5, P2 ca68e6c8, P3 aaf67869, P4 229323c5, P5 4aea1282.",
+    "plan_closeout_feedback on the archived plan returns [].",
+    "A5 scan of plan.md: no hits. A6 scan of tracks.md: one hit owned by another archived track. A9 scan of tests/*.sh: no hits; project test gate passed after the move.",
+    "Final-acceptance FA-1 and FA-2 fixes present: T9 carries deferral SHA 03bdf3e5, and T6i line restored at 1b7312f4.",
+    "Five Markdown links broken by the move were repaired: chore_earshot_sounds spec, three tech-debt rows, and old_browser_builtins spec."
+  ],
+  "commands": [
+    "python3 -I measure_interphase_checks.py closeout --repo . --track audio_game_integration_20261014 => exit 0, PASS",
+    "node measure/tools/generate.mjs --check => exit 0, 4 files current",
+    "./measure/doctor.sh --structural-only => exit 0, no structural errors",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '<PROJECT_TESTS>' => exit 0, 3396 passed, 9 skipped"
+  ],
+  "changed_files": [
+    "measure/archive/audio_game_integration_20261014/",
+    "measure/tracks.md",
+    "measure/generated/status.md",
+    "measure/tech-debt.md",
+    "measure/archive/chore_earshot_sounds_20261121/spec.md",
+    "measure/tracks/old_browser_builtins_20261122/spec.md",
+    "measure/runs/audio_game_integration_20261014/closeout.log",
+    "measure/runs/audio_game_integration_20261014/closeout-de232c0.json"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high"
+}
