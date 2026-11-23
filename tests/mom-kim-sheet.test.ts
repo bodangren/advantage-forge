@@ -253,10 +253,18 @@ describe('mom-kim sheet layout (Red pin)', () => {
       expect(render.max - render.min + 1, `${label} render height`).toBeLessThanOrEqual(BODY_H);
       expect(Math.abs(render.min - top), `${label} render top`).toBeLessThanOrEqual(2);
       expect(Math.abs(render.max - (top + BODY_H - 1)), `${label} render sole`).toBeLessThanOrEqual(2);
-      for (const [a, b, cell] of [
-        [c0, c1, 'left'],
-        [c3, c4, 'right'],
-      ] as const) {
+      // Row one's right cell holds Mom's drawing; row two's right cell holds
+      // the `no side drawing` text (spec AC5 rule 2), so only row one has a
+      // right figure cell. The right cell runs from the end of the second
+      // separator band to the row's right edge.
+      const figureCells: Array<readonly [number, number, string]> =
+        label === 'row one'
+          ? [
+              [c0, c1, 'left'],
+              [c4, r.width, 'right'],
+            ]
+          : [[c0, c1, 'left']];
+      for (const [a, b, cell] of figureCells) {
         const fig = figureExtent(r, a, b, top, top + BODY_H);
         expect(fig.max - fig.min + 1, `${label} ${cell} height`).toBeGreaterThanOrEqual(BODY_H - 2);
         expect(Math.abs(fig.max - (top + BODY_H - 1)), `${label} ${cell} sole`).toBeLessThanOrEqual(2);
