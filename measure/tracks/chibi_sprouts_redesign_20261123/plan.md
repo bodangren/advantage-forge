@@ -467,10 +467,10 @@ tests/apk3d/no-unpolyfilled-builtins.test.ts` exits 0.
     import, with no module-resolution text. The gate
     `node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-mom-kim.test.ts` exits 1 with
     `Test Files 1 failed (1)`, `Tests 2 failed | 27 passed (29)`: only `end to end: the script passes
-    sprout-mom-kim and writes measure.json` and `real hand: both hands pass all seven checks` fail, each
+sprout-mom-kim and writes measure.json` and `real hand: both hands pass all seven checks` fail, each
     on the missing-asset exit 1. The pass table, eleven doctored rows, five synthetic figures, four
     synthetic palm cases, three hand-edge cases, and the side-sign guard pass. `prettier --check
-    scripts/proportion-check.mjs` exits 0.
+scripts/proportion-check.mjs` exits 0.
   - Synthetic figure results (params, ok, single failure): pass `{}` ok; crown-high `{crownScale:1.15}`
     `FAIL heightInHeads: 3.298417 not in 3.54..3.74`; sole-low `{soleLower:0.1}`
     `FAIL legShare: 0.445401 not in 0.36..0.42`; wide-head `{headWiden:0.12}`
@@ -636,6 +636,16 @@ tests/apk3d/no-unpolyfilled-builtins.test.ts` exits 0.
   - Record: the command list, the zone, the instance name, the total minutes, the total estimate, and
     the verify output. A missing verify row blocks the task.
   - The result feeds the PM decision at T12. It changes no row of the SDF pass table.
+  - Result note 2026-11-23: Daniel looked at
+    `out/chibi-sprouts/redesign/lato2-gpu/lato2-shaded.png`.
+
+    > Daniel: Not better than what we already have.
+
+    The trial cost USD 0.58. It ran on one Spot L4 for 1.04 h. The VM and the disk are verified gone.
+
+    PM ruling 2026-11-23: LATO.2 is out. Do not run LATO.2 on a GPU again. It is not a reference in
+    the judge brief. The Mom SDF trial in our own tool stays the route. UniRig stays only as a note
+    in the options table, with no run planned.
 
 ## Phase 7: Look
 
@@ -643,6 +653,7 @@ tests/apk3d/no-unpolyfilled-builtins.test.ts` exits 0.
       `measure/runs/chibi_sprouts_redesign_20261123/judge.json` (new, not in git).
   - The judge reads `out/chibi-sprouts/redesign/mom-panel.png` and the numeric rows. It reads no Kim
     image (decision k).
+  - The judge brief names no LATO.2 image and no LATO.2 mesh as a reference (PM ruling 2026-11-23).
   - The judge is on a family other than Green's and Red's.
   - Done-when: `judge.json` holds the AC4 rule 5 fields, and both scores are 7.5 or more. A lower
     score records the comment as the work list and returns the track to T7. A PM demand for a
