@@ -174,6 +174,8 @@ Every task brief in this plan carries these lines:
 
 ## Phase 2: Green
 
+- [x] T2r Red (tests c916af45): review r1 test findings (repo root from the module, one ownership check with a collision case, cleanup) and two failing source cases (unknown view before build, asset-name validation)
+- [~] T3r Green remediation (C-P2-1 view validation before the build; B-F1 asset-name validation before the output path)
 - [x] T3 Green (src c69a5b73): Add the renderer options. Files: `src/cli/forge.ts`,
       `src/render/page.ts`, and `tests/apk3d/no-unpolyfilled-builtins.test.ts` (the line numbers
       it pins, see the note below).
