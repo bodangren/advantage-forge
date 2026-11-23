@@ -12,7 +12,7 @@
  * view, so the script runs no side scan for her and uses the page's rows 71 and 1528.
  */
 import { spawnSync } from 'node:child_process';
-import { existsSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, lstatSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
@@ -150,6 +150,16 @@ function textSvg(width, height, lines) {
 }
 
 async function main() {
+  // F3: refuse a linked output folder before any read or write. lstat never follows the link.
+  for (const rel of ['out/chibi-sprouts', 'out/chibi-sprouts/redesign']) {
+    const abs = path.join(ROOT, rel);
+    const st = lstatSync(abs, { throwIfNoEntry: false });
+    if (st?.isSymbolicLink()) {
+      console.error(`output folder is a link: ${rel}`);
+      process.exit(1);
+    }
+  }
+
   // The lit set is the source for both sheets. Render it first if a run is missing.
   if (!Object.values(LIT).every((p) => existsSync(p))) {
     const command =
@@ -171,11 +181,87 @@ async function main() {
     }
   }
 
-  const record = JSON.parse(readFileSync(MEASURE, 'utf8'));
+  // F2: measure.json is the pinned source of the lit rows. Validate it before any image work or
+  // write. The producer writes the two view-keyed pairs plus the legacy front/side records.
+  let record;
+  try {
+    record = JSON.parse(readFileSync(MEASURE, 'utf8'));
+  } catch (e) {
+    console.error(`mom-kim-sheet: measure.json is not readable: ${e?.message ?? String(e)}`);
+    process.exit(1);
+  }
+  const litRecord = record?.rows?.lit;
+  if (!litRecord || typeof litRecord !== 'object' || Array.isArray(litRecord)) {
+    console.error('mom-kim-sheet: measure.json has no rows.lit record');
+    process.exit(1);
+  }
+  const viewKeys = Object.keys(LIT);
+  const allowed = [...viewKeys, 'front', 'side'];
+  for (const key of Object.keys(litRecord)) {
+    if (!allowed.includes(key)) {
+      console.error(`mom-kim-sheet: measure.json rows.lit has an unknown row ${key}`);
+      process.exit(1);
+    }
+  }
+  for (const key of viewKeys) {
+    const value = litRecord[key];
+    if (
+      value !== undefined &&
+      (!Array.isArray(value) ||
+        value.length !== 2 ||
+        value.some((v) => typeof v !== 'number' || !Number.isFinite(v)))
+    ) {
+      console.error(`mom-kim-sheet: measure.json rows.lit row ${key} is not a finite pair`);
+      process.exit(1);
+    }
+  }
+  for (const key of ['front', 'side']) {
+    const value = litRecord[key];
+    if (
+      value !== undefined &&
+      (typeof value !== 'object' ||
+        Array.isArray(value) ||
+        !['crown', 'sole'].every((f) => typeof value[f] === 'number' && Number.isFinite(value[f])))
+    ) {
+      console.error(`mom-kim-sheet: measure.json rows.lit row ${key} is not finite`);
+      process.exit(1);
+    }
+  }
+  // The measurement script writes the legacy `front` / `side` records. Derive the view-keyed pair
+  // the sheet contract reads from those finite numbers; never read them from the image masks.
+  for (const [view, legacy] of [
+    ['front-level', 'front'],
+    ['side-level', 'side'],
+  ]) {
+    if (litRecord[view] === undefined) {
+      const old = litRecord[legacy];
+      if (!old) {
+        console.error(`mom-kim-sheet: measure.json rows.lit has no row ${view}`);
+        process.exit(1);
+      }
+      litRecord[view] = [old.crown, old.sole];
+    }
+  }
+  const measureMtime = statSync(MEASURE).mtimeMs;
+  for (const p of Object.values(LIT)) {
+    if (statSync(p).mtimeMs > measureMtime) {
+      console.error('mom-kim-sheet: measure.json lit rows are older than the lit renders');
+      process.exit(1);
+    }
+  }
+
   const kim = await rawPng(KIM_SHEET);
+  // F1: the Kim scan assumes an opaque white-backed reference. A transparent sheet is not a
+  // reference; refuse it before any scan or write. The real sheet is fully opaque.
+  let opaque = 0;
+  for (let i = 3; i < kim.data.length; i += kim.channels) if (kim.data[i] >= 128) opaque++;
+  if (opaque * 10 < kim.width * kim.height) {
+    console.error('mom-kim-sheet: Kim sheet is transparent, not a usable reference');
+    process.exit(1);
+  }
   const mom = await rawPng(MOM_DRAWING);
   const lit = {};
-  for (const view of Object.keys(LIT)) lit[view] = await rawPng(LIT[view]);
+  for (const view of viewKeys) lit[view] = await rawPng(LIT[view]);
 
   // Kim's side panel scan. The page's rows are 102 and 1195; the scan must agree within 4 px.
   const kimSideRows = scanRows(kim, 1036, 1334);
@@ -186,14 +272,10 @@ async function main() {
   const kimRows = [102, 1195];
   const momRows = [71, 1528]; // Mom has one drawing and no side drawing: no row scan for her side.
 
-  // The lit masks feed both the cells and the record. Keep the earlier keys and add the view-keyed
-  // pair the sheet contract reads; the two sources are the same alpha-128 masks.
+  // Persist the view-keyed rows derived from the validated record so every reader sees the same
+  // two finite pairs. No image mask is used to invent a row.
   const litRows = {};
-  for (const view of Object.keys(LIT)) {
-    const s = maskSpan(lit[view]);
-    litRows[view] = [s.top, s.top + s.height - 1];
-  }
-  record.rows.lit = { ...record.rows.lit, ...litRows };
+  for (const view of viewKeys) litRows[view] = litRecord[view];
   writeFileSync(MEASURE, `${JSON.stringify(record, null, 2)}\n`);
 
   const kimFrontCols = scanCols(kim, 60, 450, kimRows[0], kimRows[1]);
@@ -279,7 +361,7 @@ async function main() {
   console.log(`judge panel: ${path.relative(ROOT, PANEL)} ${PANEL_WIDTH}x${PANEL_H}`);
   console.log(`Kim rows: scan ${kimSideRows.join('..')}, used ${kimRows.join('..')}`);
   console.log(`Mom rows: used ${momRows.join('..')} (one drawing, no side drawing)`);
-  for (const view of Object.keys(LIT)) console.log(`${view} lit rows: ${litRows[view].join('..')}`);
+  for (const view of viewKeys) console.log(`${view} lit rows: ${litRows[view].join('..')}`);
 }
 
 main().catch((e) => {
