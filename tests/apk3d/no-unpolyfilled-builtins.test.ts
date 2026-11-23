@@ -314,30 +314,33 @@ function render(hit: Hit): string {
 type Exclusion = { file: string; line: number; label: string; text: string; reason: string };
 
 // The exact trimmed source lines of the three real calls, read from src/render/page.ts.
-const PAGE_263 = 'if (!b.isEmpty()) box.union(b);';
-const PAGE_440 = 'restBox.union(posedBox(effect));';
-const PAGE_447 = 'box.union(posedBox(effect));';
+// The line numbers follow that file. The renderer options of the chibi_sprouts_redesign_20261123
+// track moved the three calls from lines 263, 440, and 447 to lines 331, 531, and 538 on
+// 2026-11-23. The bound source text did not change.
+const PAGE_331 = 'if (!b.isEmpty()) box.union(b);';
+const PAGE_531 = 'restBox.union(posedBox(effect));';
+const PAGE_538 = 'box.union(posedBox(effect));';
 
 const EXCLUSIONS: Exclusion[] = [
   {
     file: 'src/render/page.ts',
-    line: 263,
+    line: 331,
     label: 'Set .union(',
-    text: PAGE_263,
+    text: PAGE_331,
     reason: 'Box3.union (three.js geometry), not Set.prototype.union',
   },
   {
     file: 'src/render/page.ts',
-    line: 440,
+    line: 531,
     label: 'Set .union(',
-    text: PAGE_440,
+    text: PAGE_531,
     reason: 'Box3.union (three.js geometry), not Set.prototype.union',
   },
   {
     file: 'src/render/page.ts',
-    line: 447,
+    line: 538,
     label: 'Set .union(',
-    text: PAGE_447,
+    text: PAGE_538,
     reason: 'Box3.union (three.js geometry), not Set.prototype.union',
   },
 ];
@@ -511,9 +514,9 @@ it('a different receiver keeps the stale-exclusion rot check (acceptance A7)', (
     'stale exclusion <fixture>:1: test bind',
     '<fixture>:1: Set .union(',
   ]);
-  const real263 = readFileSync(join(ROOT, 'src', 'render', 'page.ts'), 'utf8').split('\n')[262]!;
-  expect(real263).toContain('box.union(b)');
-  expect(problemsFor(real263, bound)).toEqual([]);
+  const real331 = readFileSync(join(ROOT, 'src', 'render', 'page.ts'), 'utf8').split('\n')[330]!;
+  expect(real331).toContain('box.union(b)');
+  expect(problemsFor(real331, bound)).toEqual([]);
 });
 
 it('exclusions bind to their exact call text, not just the line (review r1 C-F3)', () => {
@@ -618,8 +621,8 @@ it('the allowed text on a different line number stays reported (acceptance A7)',
 
 it('the three real exclusion lines still produce zero reported hits (acceptance A7)', () => {
   const page = readFileSync(join(ROOT, 'src', 'render', 'page.ts'), 'utf8').split('\n');
-  const lines = [page[262]!, page[439]!, page[446]!];
-  expect(lines.map((line) => line.trim())).toEqual([PAGE_263, PAGE_440, PAGE_447]);
+  const lines = [page[330]!, page[530]!, page[537]!];
+  expect(lines.map((line) => line.trim())).toEqual([PAGE_331, PAGE_531, PAGE_538]);
   const problemsFor = (fixture: string, exclusions: Exclusion[]): string[] => {
     const stripped = strip(fixture);
     const raw = scanText(stripped, '<fixture>');
@@ -628,13 +631,13 @@ it('the three real exclusion lines still produce zero reported hits (acceptance 
     );
   };
   const entries: Exclusion[] = [
-    { file: '<fixture>', line: 1, label: 'Set .union(', text: PAGE_263, reason: 'page.ts:263' },
-    { file: '<fixture>', line: 1, label: 'Set .union(', text: PAGE_440, reason: 'page.ts:440' },
-    { file: '<fixture>', line: 1, label: 'Set .union(', text: PAGE_447, reason: 'page.ts:447' },
+    { file: '<fixture>', line: 1, label: 'Set .union(', text: PAGE_331, reason: 'page.ts:331' },
+    { file: '<fixture>', line: 1, label: 'Set .union(', text: PAGE_531, reason: 'page.ts:531' },
+    { file: '<fixture>', line: 1, label: 'Set .union(', text: PAGE_538, reason: 'page.ts:538' },
   ];
-  expect(problemsFor(PAGE_263, [entries[0]!])).toEqual([]);
-  expect(problemsFor(PAGE_440, [entries[1]!])).toEqual([]);
-  expect(problemsFor(PAGE_447, [entries[2]!])).toEqual([]);
+  expect(problemsFor(PAGE_331, [entries[0]!])).toEqual([]);
+  expect(problemsFor(PAGE_531, [entries[1]!])).toEqual([]);
+  expect(problemsFor(PAGE_538, [entries[2]!])).toEqual([]);
 });
 
 /** Total pattern hits over the whole stripped text. */

@@ -42,11 +42,16 @@ const HELP = `forge — build and look at 3D assets
 
 render options
   --views front,three-quarter,side,back,top,back-three-quarter  (default: first four)
+  --views front-level,side-level   level views (no tilt): the camera looks straight at the asset
   --size 512           pixels per view
   --ref / --no-ref     show the asset's reference image above the views (default: on if set)
   --focus x,y,z,r      zoom every view on a sphere (world meters), e.g. the face
   --az 30 --el 10      add one custom view
   --bg '#aeb3ba'       background color; none = transparent views (the ground shadow stays, semi-transparent)
+  --ortho              level orthographic frame: one scale (pixels per meter) for every view
+  --flat               the flat pass: every mesh unlit in its own colour, no ground, no tone
+                       mapping; writes out/<name>/flat/<view>.png and leaves views/ alone
+                       (needs --fast and --bg none)
 
 sprite options
   --size 128  --dirs 8|4|1  --elevation 30  --colors 0 (palette size, 0 = full color)
@@ -103,6 +108,9 @@ const NAMED_VIEWS: Record<string, Omit<ViewSpec, 'name' | 'focus'>> = {
   back: { azimuth: 180, elevation: 8 },
   'back-three-quarter': { azimuth: 215, elevation: 12 },
   top: { azimuth: 25, elevation: 55 },
+  // Level views: no tilt, for a measured comparison between the front and the side.
+  'front-level': { azimuth: 0, elevation: 0 },
+  'side-level': { azimuth: 90, elevation: 0 },
 };
 
 const T0 = performance.now();
@@ -123,6 +131,8 @@ async function main(): Promise<void> {
       az: { type: 'string' },
       el: { type: 'string' },
       bg: { type: 'string' },
+      ortho: { type: 'boolean' },
+      flat: { type: 'boolean' },
       dirs: { type: 'string' },
       elevation: { type: 'string' },
       colors: { type: 'string' },
@@ -163,12 +173,29 @@ async function main(): Promise<void> {
   if (!['build', 'render', 'sprites', 'animate', 'all', 'inspect', 'check', 'cutout'].includes(command))
     throw new Error(`Unknown command '${command}'.\n${HELP}`);
   if (!name) throw new Error(`Usage: pnpm forge ${command} <asset>`);
-  if (command === 'cutout' && !values.out) throw new Error('Usage: ./forge cutout <asset> --out <dir> [options]');
+  if (command === 'cutout' && !values.out)
+    throw new Error('Usage: ./forge cutout <asset> --out <dir> [options]');
+  // The flat pass measures colours: it needs the vertex colours of a fast build and a
+  // transparent background, so both are required before the build starts.
+  if (values.flat && (values.fast !== true || values.bg !== 'none'))
+    throw new Error('--flat needs --fast and --bg none');
   const file = assetPath(name);
-  const wear = values.wear ? values.wear.split(',').map((w) => w.trim()).filter(Boolean) : [];
-  if (wear.length > 0 && command === 'check') throw new Error('check takes no --wear: run `forge check <piece>` for each piece.');
+  const wear = values.wear
+    ? values.wear
+        .split(',')
+        .map((w) => w.trim())
+        .filter(Boolean)
+    : [];
+  if (wear.length > 0 && command === 'check')
+    throw new Error('check takes no --wear: run `forge check <piece>` for each piece.');
   // A base in equipment (or the capped hair) writes beside the base, never over its outputs.
-  const outName = [name, ...wear, ...(values.capped ? ['capped'] : []), ...(values.tucked ? ['tucked'] : []), ...(values.reduced ? ['reduced'] : [])].join('+');
+  const outName = [
+    name,
+    ...wear,
+    ...(values.capped ? ['capped'] : []),
+    ...(values.tucked ? ['tucked'] : []),
+    ...(values.reduced ? ['reduced'] : []),
+  ].join('+');
 
   const server = await createServer({
     root: ROOT,
@@ -186,7 +213,9 @@ async function main(): Promise<void> {
       hmr: false,
       // One-shot commands need no file watcher. Several forge runs at once (and the thousands of
       // files under bench/) otherwise use up the system's inotify watches (ENOSPC).
-      watch: values.watch ? { ignored: ['**/bench/**', '**/out/**', '**/node_modules/**', '**/.git/**'] } : null,
+      watch: values.watch
+        ? { ignored: ['**/bench/**', '**/out/**', '**/node_modules/**', '**/.git/**'] }
+        : null,
     },
   });
   phase('vite server created');
@@ -228,10 +257,15 @@ async function main(): Promise<void> {
         if (def.equip) {
           // An equipment piece: the fit check, worn on the avatar base.
           const fit = (await server.ssrLoadModule('/src/equip-check.ts')) as typeof EquipCheck;
-          const base = pipeline.checkDefinition(await server.ssrLoadModule(assetPath('avatar-base')), 'avatar-base');
+          const base = pipeline.checkDefinition(
+            await server.ssrLoadModule(assetPath('avatar-base')),
+            'avatar-base',
+          );
           const report = await fit.checkEquip({ name, def }, base, {
             ...(values.fps !== undefined ? { fps: num(values.fps, 60) } : {}),
-            ...(values.clip !== undefined && values.clip !== 'all' ? { clips: String(values.clip).split(',') } : {}),
+            ...(values.clip !== undefined && values.clip !== 'all'
+              ? { clips: String(values.clip).split(',') }
+              : {}),
           });
           console.log(fit.formatEquipCheck(name, report));
           if (!report.ok) process.exitCode = 1;
@@ -239,13 +273,17 @@ async function main(): Promise<void> {
         }
         const report = await checker.checkClips(def, {
           ...(values.fps !== undefined ? { fps: num(values.fps, 60) } : {}),
-          ...(values.clip !== undefined && values.clip !== 'all' ? { clips: String(values.clip).split(',') } : {}),
+          ...(values.clip !== undefined && values.clip !== 'all'
+            ? { clips: String(values.clip).split(',') }
+            : {}),
         });
         console.log(checker.formatClipCheck(name, report));
         // The ground check needs the skinned mesh: a quick build without textures.
         const { result } = await pipeline.buildToGlb(def, file, 0);
         const ground = checker.checkGround(result.root, {
-          ...(values.clip !== undefined && values.clip !== 'all' ? { clips: String(values.clip).split(',') } : {}),
+          ...(values.clip !== undefined && values.clip !== 'all'
+            ? { clips: String(values.clip).split(',') }
+            : {}),
         });
         console.log(checker.formatGround(ground));
         if (!report.ok || !ground.ok) process.exitCode = 1;
@@ -265,9 +303,14 @@ async function main(): Promise<void> {
         const worn: { name: string; source: string; def: typeof def }[] = [];
         for (const w of wear) {
           const source = assetPath(w);
-          worn.push({ name: w, source, def: pipeline.checkDefinition(await server.ssrLoadModule(source), w) });
+          worn.push({
+            name: w,
+            source,
+            def: pipeline.checkDefinition(await server.ssrLoadModule(source), w),
+          });
         }
-        if (worn.length > 0) def = ((await server.ssrLoadModule('/src/equip.ts')) as typeof Equip).wearAsset(def, worn);
+        if (worn.length > 0)
+          def = ((await server.ssrLoadModule('/src/equip.ts')) as typeof Equip).wearAsset(def, worn);
         built = await pipeline.buildToGlb(
           def,
           file,
@@ -287,7 +330,13 @@ async function main(): Promise<void> {
       writeFileSync(glbPath, glb);
       writeFileSync(join(out, 'stats.json'), JSON.stringify(result.stats, null, 2));
       const atlas = result.root.userData.forgeTextures as
-        | { baseColor: Uint8Array; normal: Uint8Array; orm: Uint8Array; tintMask?: Uint8Array; presets?: Record<string, Uint8Array> }
+        | {
+            baseColor: Uint8Array;
+            normal: Uint8Array;
+            orm: Uint8Array;
+            tintMask?: Uint8Array;
+            presets?: Record<string, Uint8Array>;
+          }
         | undefined;
       rmSync(join(out, 'textures'), { recursive: true, force: true });
       if (atlas) {
@@ -320,9 +369,13 @@ async function main(): Promise<void> {
       await page.route(
         (u) => u.pathname.startsWith('/__forge/preset/'),
         (r) => {
-          const preset = decodeURIComponent(new URL(r.request().url()).pathname.slice('/__forge/preset/'.length).replace(/\.png$/, ''));
+          const preset = decodeURIComponent(
+            new URL(r.request().url()).pathname.slice('/__forge/preset/'.length).replace(/\.png$/, ''),
+          );
           const image = atlas?.presets?.[preset];
-          return image ? r.fulfill({ body: Buffer.from(image), contentType: 'image/png' }) : r.fulfill({ status: 404, body: 'no such preset' });
+          return image
+            ? r.fulfill({ body: Buffer.from(image), contentType: 'image/png' })
+            : r.fulfill({ status: 404, body: 'no such preset' });
         },
       );
       const def = (await server.ssrLoadModule(file)).default as { reference?: string };
@@ -342,7 +395,9 @@ async function main(): Promise<void> {
       if (command === 'render' || command === 'all') {
         // --preset all (and forge all): the default turnaround and one per preset, from one build.
         const looks: (string | undefined)[] =
-          values.preset === 'all' || command === 'all' ? [undefined, ...Object.keys(atlas?.presets ?? {})] : [values.preset];
+          values.preset === 'all' || command === 'all'
+            ? [undefined, ...Object.keys(atlas?.presets ?? {})]
+            : [values.preset];
         for (const preset of looks) {
           const t1 = performance.now();
           const req: ViewsRequest = {
@@ -353,8 +408,22 @@ async function main(): Promise<void> {
             title: preset ? `${outName} · ${preset}` : outName,
             ...(useRef ? { referenceUrl: `/__forge/reference?t=${Date.now()}` } : {}),
             ...(preset ? { preset } : {}),
+            ...(values.ortho ? { ortho: true } : {}),
+            ...(values.flat ? { flat: true } : {}),
           };
           const res = await page.evaluate((r) => window.forge.renderViews(r), req);
+          if (values.flat) {
+            // The flat pass writes its own folder and leaves the lit views alone.
+            const flatDir = preset ? join(out, 'flat', 'presets', preset) : join(out, 'flat');
+            if (!preset) rmSync(join(out, 'flat'), { recursive: true, force: true });
+            mkdirSync(flatDir, { recursive: true });
+            for (const [view, data] of Object.entries(res.views))
+              writePng(join(flatDir, `${view}.png`), data);
+            console.log(
+              `flat     ${rel(flatDir)}/  (${Object.keys(res.views).length} views, ${Math.round(performance.now() - t1)} ms)`,
+            );
+            continue;
+          }
           // A color preset's turnaround goes beside the default one: render.<preset>.png, and its
           // views in views/presets/<preset>/.
           const sheetFile = preset ? `render.${preset}.png` : 'render.png';
@@ -374,14 +443,19 @@ async function main(): Promise<void> {
       if (command === 'cutout') {
         const t1 = performance.now();
         const [cw, ch] = (values.canvas ?? '1024x1200').split('x').map((v) => Math.round(Number(v)));
-        if (!cw || !ch || cw < 16 || ch < 16) throw new Error(`--canvas needs WIDTHxHEIGHT, got '${values.canvas}'.`);
+        if (!cw || !ch || cw < 16 || ch < 16)
+          throw new Error(`--canvas needs WIDTHxHEIGHT, got '${values.canvas}'.`);
         const ppm = num(values.ppm, 900);
         const margin = num(values.margin, 16);
         const clipName = values.clip && values.clip !== 'all' ? values.clip : undefined;
-        if (values.clip === 'all' || values.clip?.includes(',')) throw new Error('--clip takes one clip name for a cut-out.');
+        if (values.clip === 'all' || values.clip?.includes(','))
+          throw new Error('--clip takes one clip name for a cut-out.');
         const at = num(values.at, 0);
         const stem = values.stem ?? (clipName ? `${clipName}-${at}` : undefined);
-        const viewNames = (values.views ?? (stem ? 'front' : 'front,three-quarter,side')).split(',').map((v) => v.trim()).filter(Boolean);
+        const viewNames = (values.views ?? (stem ? 'front' : 'front,three-quarter,side'))
+          .split(',')
+          .map((v) => v.trim())
+          .filter(Boolean);
         // Elevation 0 (or --el): the feet stay on the foot row; a look-down shifts the near edge
         // below it, so the folder records its elevation for the compositor and for the checker.
         const elevation = values.el !== undefined ? num(values.el, 0) : 0;
@@ -392,14 +466,26 @@ async function main(): Promise<void> {
         });
         const root = resolve(values.out!);
         const manifestPath = join(root, 'manifest.json');
-        let manifest: { ppm?: number; canvas?: number[]; elevation?: number; footPoint?: unknown; files?: Record<string, boolean>; [k: string]: unknown } = {};
+        let manifest: {
+          ppm?: number;
+          canvas?: number[];
+          elevation?: number;
+          footPoint?: unknown;
+          files?: Record<string, boolean>;
+          [k: string]: unknown;
+        } = {};
         try {
           manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
         } catch {
           /* no manifest yet */
         }
-        if (manifest.ppm !== undefined && (manifest.ppm !== ppm || manifest.canvas?.[0] !== cw || manifest.canvas?.[1] !== ch))
-          throw new Error(`${rel(manifestPath)} has ppm ${manifest.ppm} and canvas ${manifest.canvas?.join('x')}: one folder keeps one scale. Use the same options or a new folder.`);
+        if (
+          manifest.ppm !== undefined &&
+          (manifest.ppm !== ppm || manifest.canvas?.[0] !== cw || manifest.canvas?.[1] !== ch)
+        )
+          throw new Error(
+            `${rel(manifestPath)} has ppm ${manifest.ppm} and canvas ${manifest.canvas?.join('x')}: one folder keeps one scale. Use the same options or a new folder.`,
+          );
         if (manifest.elevation !== undefined && manifest.elevation !== elevation)
           throw new Error(
             `${rel(manifestPath)} has camera elevation ${manifest.elevation}: one folder keeps one elevation. Use the same options or a new folder.`,
@@ -412,7 +498,9 @@ async function main(): Promise<void> {
           height: ch,
           margin,
           supersample: num(values.ss, 3),
-          ...(clipName ? { clip: clipName, at, ...(clipInfoOf(clipName) ? { clipInfo: clipInfoOf(clipName)! } : {}) } : {}),
+          ...(clipName
+            ? { clip: clipName, at, ...(clipInfoOf(clipName) ? { clipInfo: clipInfoOf(clipName)! } : {}) }
+            : {}),
           ...(values.preset && values.preset !== 'all' ? { preset: values.preset } : {}),
           ...(values['hide-sing'] === true ? { hideSing: true } : {}),
         };
@@ -426,9 +514,18 @@ async function main(): Promise<void> {
           files[`${outName}/${fileStem}`] = true;
           console.log(`cutout   ${rel(join(dir, `${fileStem}.png`))}`);
         }
-        manifest = { ...manifest, ppm, canvas: [cw, ch], elevation, footPoint: { col: cw / 2, row: ch - margin }, files };
+        manifest = {
+          ...manifest,
+          ppm,
+          canvas: [cw, ch],
+          elevation,
+          footPoint: { col: cw / 2, row: ch - margin },
+          files,
+        };
         writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + '\n');
-        console.log(`cutout   ${rel(manifestPath)}  (${ppm} px/m, ${cw}x${ch}, ss ${res.supersample}, ${Math.round(performance.now() - t1)} ms)`);
+        console.log(
+          `cutout   ${rel(manifestPath)}  (${ppm} px/m, ${cw}x${ch}, ss ${res.supersample}, ${Math.round(performance.now() - t1)} ms)`,
+        );
         return;
       }
       const clips = await page.evaluate(
@@ -439,7 +536,10 @@ async function main(): Promise<void> {
         if (values.clip === undefined || values.clip === 'all') return all ? clips.map((c) => c.name) : [];
         // A comma list: the clips this asset has (a game sprite set asks every model for one list).
         if (values.clip.includes(',')) {
-          const asked = values.clip.split(',').map((c) => c.trim()).filter(Boolean);
+          const asked = values.clip
+            .split(',')
+            .map((c) => c.trim())
+            .filter(Boolean);
           const missing = asked.filter((c) => !clips.some((x) => x.name === c));
           if (missing.length) console.log(`clips    ${name} has no ${missing.join(', ')} (skipped)`);
           return asked.filter((c) => !missing.includes(c));
@@ -458,7 +558,10 @@ async function main(): Promise<void> {
         return u ? { loop: u.loop ?? true, dig: u.dig ?? 0 } : undefined;
       };
 
-      const sprites = async (clip: string | null, preset: string | undefined = values.preset === 'all' ? undefined : values.preset) => {
+      const sprites = async (
+        clip: string | null,
+        preset: string | undefined = values.preset === 'all' ? undefined : values.preset,
+      ) => {
         const t2 = performance.now();
         const size = command === 'all' ? 128 : num(values.size, 128);
         const req: SpritesRequest = {
@@ -471,9 +574,13 @@ async function main(): Promise<void> {
           outline: (values.outline ?? 'dark') as SpritesRequest['outline'],
           margin: num(values.margin, 0.06),
           ...(values.ppm ? { ppm: num(values.ppm, 64) } : {}),
-          ...(clip ? { clip, frames: frameCount, ...(clipInfo(clip) ? { clipInfo: clipInfo(clip)! } : {}) } : {}),
+          ...(clip
+            ? { clip, frames: frameCount, ...(clipInfo(clip) ? { clipInfo: clipInfo(clip)! } : {}) }
+            : {}),
           ...(preset ? { preset } : {}),
-          ...(values.cell && clip ? { fit: wanted(true).map((c) => ({ clip: c, ...(clipInfo(c) ? { info: clipInfo(c)! } : {}) })) } : {}),
+          ...(values.cell && clip
+            ? { fit: wanted(true).map((c) => ({ clip: c, ...(clipInfo(c) ? { info: clipInfo(c)! } : {}) })) }
+            : {}),
         };
         const res = await pg.evaluate((r) => window.forge.renderSprites(r), req);
         // A color preset's sprites go to sprites/presets/<preset>/, in the same layout.
@@ -491,7 +598,21 @@ async function main(): Promise<void> {
         if (res.gif) writeFileSync(join(dir, `${clip}.gif`), Buffer.from(res.gif, 'base64'));
         writeFileSync(
           join(dir, 'metrics.json'),
-          JSON.stringify({ size: res.cell, clip, pivot: res.pivot, ...(values.ppm ? { ppm: num(values.ppm, 64) } : {}), elevation: num(values.elevation, 30), directions: num(values.dirs, 8), frames: clip ? frameCount : 1, metrics: res.metrics, palette: res.palette }, null, 2),
+          JSON.stringify(
+            {
+              size: res.cell,
+              clip,
+              pivot: res.pivot,
+              ...(values.ppm ? { ppm: num(values.ppm, 64) } : {}),
+              elevation: num(values.elevation, 30),
+              directions: num(values.dirs, 8),
+              frames: clip ? frameCount : 1,
+              metrics: res.metrics,
+              palette: res.palette,
+            },
+            null,
+            2,
+          ),
         );
         console.log(`sprites  ${rel(join(dir, 'preview.png'))}  (${Math.round(performance.now() - t2)} ms)`);
         if (!clip) {
@@ -538,7 +659,8 @@ async function main(): Promise<void> {
       }
       if (command === 'sprites') {
         const list = values.clip === undefined ? [null] : wanted(true);
-        const looks = values.preset === 'all' ? [undefined, ...Object.keys(atlas?.presets ?? {})] : [undefined];
+        const looks =
+          values.preset === 'all' ? [undefined, ...Object.keys(atlas?.presets ?? {})] : [undefined];
         for (const look of looks) for (const c of list) await (look ? sprites(c, look) : sprites(c));
       }
       if (command === 'animate') {
