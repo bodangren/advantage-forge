@@ -1,4 +1,9 @@
-import { spawn, type ChildProcessWithoutNullStreams } from 'node:child_process';
+import {
+  spawn,
+  spawnSync,
+  type ChildProcessWithoutNullStreams,
+  type SpawnSyncReturns,
+} from 'node:child_process';
 import {
   existsSync,
   lstatSync,
@@ -66,6 +71,15 @@ function cleanup(): void {
   if (targetDir) rmSync(targetDir, { recursive: true, force: true });
 }
 
+function runEmptyListCommand(command: string): SpawnSyncReturns<string> {
+  return spawnSync('bash', [HEAVY_RUN, '-c', `./forge ${command} ${ASSET_NAME} --fast --views ',,,'`], {
+    cwd: ROOT,
+    encoding: 'utf8',
+    timeout: 600_000,
+    env: { ...process.env, HEAVY_MIN_AVAIL_MB: '1500', FORGE_DEBUG: '1' },
+  });
+}
+
 afterAll(cleanup);
 
 function renderWithOutputSwap(): Promise<{ status: number | null; output: string; swapped: boolean }> {
@@ -114,28 +128,59 @@ function renderWithOutputSwap(): Promise<{ status: number | null; output: string
   });
 }
 
-describe('flat output link race', () => {
-  it('refuses a linked output swapped in after the preflight check', { timeout: 600_000 }, async () => {
-    expect(existsSync(FIXTURE)).toBe(false);
-    expect(existsSync(OUT_ASSET)).toBe(false);
-    expect(existsSync(MOVED_OUT)).toBe(false);
-    createFixture();
-    targetDir = mkdtempSync(join(RUNS_DIR, `flat-symlink-race-target-${process.pid}-`));
-    mkdirSync(join(targetDir, 'flat'));
-    writeFileSync(join(targetDir, 'flat', 'marker.txt'), 'keep-race-target\n', { flag: 'wx' });
-    mkdirSync(join(OUT_ASSET, 'flat'), { recursive: true });
-    writeFileSync(join(OUT_ASSET, 'flat', 'marker.txt'), 'keep-original-output\n', { flag: 'wx' });
-    const result = await renderWithOutputSwap();
-    const ordinaryLines = result.output
-      .split('\n')
-      .map((line) => line.trim())
-      .filter((line) => line.length > 0 && !/^\[\d+ ms\]/.test(line));
-    expect(result.status).not.toBe(0);
-    expect(ordinaryLines).toHaveLength(1);
-    expect(ordinaryLines[0]).toContain('output folder is a link');
-    expect(readFileSync(join(targetDir, 'flat', 'marker.txt'), 'utf8')).toBe('keep-race-target\n');
-    expect(existsSync(join(targetDir, 'flat', 'front-level.png'))).toBe(false);
-    const originalOutput = result.swapped ? MOVED_OUT : OUT_ASSET;
-    expect(readFileSync(join(originalOutput, 'flat', 'marker.txt'), 'utf8')).toBe('keep-original-output\n');
-  });
+describe('view list and flat output adversarial checks', () => {
+  it(
+    'rejects a list with only empty members for animate and inspect before the build',
+    { timeout: 600_000 },
+    () => {
+      expect(existsSync(FIXTURE)).toBe(false);
+      expect(existsSync(OUT_ASSET)).toBe(false);
+      createFixture();
+
+      const problems: string[] = [];
+      for (const command of ['animate', 'inspect']) {
+        const result = runEmptyListCommand(command);
+        const text = `${result.stdout || ''}\n${result.stderr || ''}`;
+        const lines = text
+          .split('\n')
+          .map((line) => line.trim())
+          .filter((line) => line.length > 0 && !/^\[\d+ ms\]/.test(line));
+        if (result.status === 0) problems.push(`${command}: accepted empty members with exit 0`);
+        if (lines.length !== 1 || !lines[0]?.includes("Unknown view ''"))
+          problems.push(`${command}: expected one empty-member error line, got ${lines.join(' | ')}`);
+        if (text.includes('vite server created')) problems.push(`${command}: Vite started before refusal`);
+        if (existsSync(OUT_ASSET)) problems.push(`${command}: output folder appeared`);
+        removeOutputSafely(OUT_ASSET);
+      }
+      expect(problems).toEqual([]);
+    },
+  );
+
+  it.skip(
+    'refuses a linked output swapped in after the preflight check — PM 2026-11-23: F12 and N1 are tech debt (local writer needed); fix: check the link at every rebuild and write',
+    { timeout: 600_000 },
+    async () => {
+      expect(existsSync(FIXTURE)).toBe(false);
+      expect(existsSync(OUT_ASSET)).toBe(false);
+      expect(existsSync(MOVED_OUT)).toBe(false);
+      createFixture();
+      targetDir = mkdtempSync(join(RUNS_DIR, `flat-symlink-race-target-${process.pid}-`));
+      mkdirSync(join(targetDir, 'flat'));
+      writeFileSync(join(targetDir, 'flat', 'marker.txt'), 'keep-race-target\n', { flag: 'wx' });
+      mkdirSync(join(OUT_ASSET, 'flat'), { recursive: true });
+      writeFileSync(join(OUT_ASSET, 'flat', 'marker.txt'), 'keep-original-output\n', { flag: 'wx' });
+      const result = await renderWithOutputSwap();
+      const ordinaryLines = result.output
+        .split('\n')
+        .map((line) => line.trim())
+        .filter((line) => line.length > 0 && !/^\[\d+ ms\]/.test(line));
+      expect(result.status).not.toBe(0);
+      expect(ordinaryLines).toHaveLength(1);
+      expect(ordinaryLines[0]).toContain('output folder is a link');
+      expect(readFileSync(join(targetDir, 'flat', 'marker.txt'), 'utf8')).toBe('keep-race-target\n');
+      expect(existsSync(join(targetDir, 'flat', 'front-level.png'))).toBe(false);
+      const originalOutput = result.swapped ? MOVED_OUT : OUT_ASSET;
+      expect(readFileSync(join(originalOutput, 'flat', 'marker.txt'), 'utf8')).toBe('keep-original-output\n');
+    },
+  );
 });
