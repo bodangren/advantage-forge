@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "role": "spec-review",
+  "track": "chibi_sprouts_redesign_20261123",
+  "phase": "track setup",
+  "baseline_sha": "de232c05c098aa942343092ab94ee4c480420a78",
+  "audited_head_sha": "de232c05c098aa942343092ab94ee4c480420a78",
+  "status": "fail",
+  "summary": "The amendment closes seven prior findings. The palm proof and two new execution conflicts block the planned work.",
+  "blocking_findings": [
+    "F4 [Blocker] spec.md The hand rules and AC3: The exported palmNormal(vertices, side) has no triangles or landmarks, so it cannot perform the specified winding and signed-surface checks. Mirroring only the cloud also leaves the thumb inequality unchanged and can instead fail vertex-side selection. Define the full function inputs and mutations, and reject an empty palm patch. Rationale: Red and Green cannot implement the three named palm failures against the stated API.",
+    "F19 [Blocker] plan.md T5, T7, and T8: T5 adds a failing sheet test, T7 requires the full suite to pass, and T8 creates the sheet script only afterward. Move the sheet Green task before the full-suite gate or explicitly gate the phase with a test order that can pass. Rationale: T7 cannot satisfy its done-when while the T5 test still fails.",
+    "F20 [Blocker] spec.md Evaluation order step 7 and AC2 rule 7: A merged eye component retains the pass figure's pupil spacing and eye widths, so its width exceeds 0.40 of headWidth and it is rejected. The specified result expects one qualifying component. Rationale: The synthetic mutation reports zero qualifying eyes instead of the required one."
+  ],
+  "nonblocking_findings": [
+    "F21 [Major] spec.md Exclusions and LATO.2 GPU trial: The exclusions forbid sending Kim art to any model, while the approved VM trial sends Kim's crop to the LATO.2 model. Limit the exclusion to remote models, demos, and third parties. Rationale: The current text contradicts the approved own-VM trial.",
+    "F22 [Major] spec.md decision m and plan.md T9: The plan permits a standard L4 fallback, but the supplied approval specifies one Spot L4. Remove the fallback unless its separate approval is recorded. Rationale: The trial must stay within the approved compute choice.",
+    "F23 [Major] plan.md T2 and Known limits: The runtime fixture rewrites and removes a fixed shared path without checking whether it already exists. Require exclusive creation and preserve an existing file. Rationale: A concurrent run or a leftover file can be overwritten and deleted."
+  ],
+  "evidence": [
+    "F3 withdrawn: The twelve evaluation steps derive the eye window from the crown, chin, and head width before they derive the face seed.",
+    "F5 withdrawn: The front hand edge now selects each leg run from its hip and ankle window, and records rows without both runs.",
+    "F8 withdrawn: The supplied PM decision allows the established judge route for Mom's render and drawing; Kim art stays out.",
+    "F15 withdrawn: AC5 scans Kim's side panel only and derives lit render rows from alpha masks.",
+    "F16 withdrawn: T1, T2, T4, and T5 commit only tests paths. The mid-red gate checks committed paths; T2 creates its CLI fixture at runtime.",
+    "F17 withdrawn: The script checks the asset and GLB before dynamically importing either module.",
+    "F18 withdrawn: Phase 6 T9 and AC7 record the separately approved LATO.2 trial.",
+    "The area-weighted winding test fails a nonempty patch with reversed winding. A 180-degree turn with its palm landmark can fail the direction test.",
+    "A mirrored cloud with unchanged landmarks does not change the thumb inequality; side filtering or landmark contact can fail first.",
+    "Phase 9 task lines contain deferred and are excluded from incomplete counts by measure_interphase_checks.py.",
+    "src/pipeline.ts assetPath resolves an underscore-prefixed runtime fixture by its explicit name.",
+    "T4 drives the measurement script in T6. T5 drives the later sheet script in T8, not T6.",
+    "HEAD at start equals de232c05c098aa942343092ab94ee4c480420a78. The track diff from cd200d12 to HEAD is empty.",
+    "AC7 is a track acceptance requirement owned by the separate Measure trial task. Its ownership does not require Red or Green to run the GPU trial."
+  ],
+  "commands": ["git rev-parse HEAD", "git diff --stat cd200d12 de232c05 -- measure/tracks/chibi_sprouts_redesign_20261123", "git diff --stat 27b21d1b cd200d12 -- measure/tracks/chibi_sprouts_redesign_20261123", "Read measure_interphase_checks.py non_test_paths and role gates", "Read src/pipeline.ts assetPath and listAssets"],
+  "changed_files": ["measure/runs/chibi_sprouts_redesign_20261123/spec-review-de232c0.json", "measure/runs/chibi_sprouts_redesign_20261123/spec-review-de232c0.log"],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "escalate_human",
+  "confidence": "high",
+  "paraphrase": {
+    "proposes": "The track builds and measures a new SDF adult base with Mom as its first trial. It also records a separately approved GPU trial and stops before the cut-out and sprite for PM review.",
+    "current_system": "The scrapped Sprout models use a shared humanoid base whose adult palms face forward. Forge renders perspective views above level, and its test suite protects both scrapped Sprout contracts and the separate hero."
+  }
+}
