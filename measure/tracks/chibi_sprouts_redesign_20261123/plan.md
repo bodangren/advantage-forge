@@ -226,6 +226,8 @@ tests/storytime-book-pictures.test.ts` gave `Test Files 232 passed | 4 skipped (
     `metrics.json`.
   - Note: `src/render/page.ts` is not touched, so the three `Box3.union` lines that the apk3d
     scan test pins stay at lines 331, 531, and 538.
+- [x] T2r2 Red (tests 4f43e67c): round 2 test cases (inherited view names, cutout trailing comma, linked output parent)
+- [~] T3r2 Green remediation round 2 (one parsed view list shared by preflight and cutout, own-property membership; refuse a linked output parent before any write)
 - [x] T3 Green (src c69a5b73): Add the renderer options. Files: `src/cli/forge.ts`,
       `src/render/page.ts`, and `tests/apk3d/no-unpolyfilled-builtins.test.ts` (the line numbers
       it pins, see the note below).
