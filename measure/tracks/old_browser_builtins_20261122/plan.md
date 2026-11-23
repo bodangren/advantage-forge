@@ -332,11 +332,11 @@ tests/apk3d/no-unpolyfilled-builtins.test.ts'` exits 0: 1 file passed, 2 tests p
 - [x] T3r4 Red (72e74de0): acceptance rule A7, exact-call exclusion (PM 2026-11-23)
 - [x] T3r5 Red (9459687d): acceptance rule A7 closed by construction, exact-line exclusion (PM approval for A7, 2026-11-23)
 - Late finding C3-F6: tech-debt (the copy.ts:9-12 doc wording overstates the behavior of unsupported inputs; the fallback keeps the prototype; no user reaches a wrong result) — source measure/runs/old_browser_builtins_20261122/review-c-5a1da50.json
-- Late finding C3-F5: tech-debt (test-strategy.md:169 counts the changed source files wrong; the plan count is correct; no user reaches a wrong result)
+- Late finding C3-F5: tech-debt (test-strategy.md:169 counts the changed source files wrong; the plan count is correct; no user reaches a wrong result) — source measure/runs/old_browser_builtins_20261122/review-c-5a1da50.json
 - Late finding A3-F8: tech-debt (the plan keeps the historical TS2769 attribution at plan.md:173-177 and 206-209; a record error only; no user reaches a wrong result) — source measure/runs/old_browser_builtins_20261122/review-a-5a1da50.json
-- Late finding A3-F9: tech-debt (the scanner misses `math.if() / structuredClone(v) / 2` and `rows.at(one(two(three(four()))))`, and it accepts `otherbox.union(b)` for the exclusion `box.union(b)`; no such call exists in `src/`; no user reaches a wrong result)
-- Late finding A3-F10: tech-debt (tests/old-browser/index-math.test.ts:314-317 matches on a substring, so it also accepts `notatIndex`; the current site uses the correct helper; no user reaches a wrong result)
-- Late finding A3-F11: tech-debt (tests/old-browser/deep-copy.test.ts:119-124 reads an array index before the descriptor walk reports it; the test record overstates the check; no user reaches a wrong result)
+- Late finding A3-F9: tech-debt (the scanner misses `math.if() / structuredClone(v) / 2` and `rows.at(one(two(three(four()))))`, and it accepts `otherbox.union(b)` for the exclusion `box.union(b)`; no such call exists in `src/`; no user reaches a wrong result) — source measure/runs/old_browser_builtins_20261122/review-a-5a1da50.json
+- Late finding A3-F10: tech-debt (tests/old-browser/index-math.test.ts:314-317 matches on a substring, so it also accepts `notatIndex`; the current site uses the correct helper; no user reaches a wrong result) — source measure/runs/old_browser_builtins_20261122/review-a-5a1da50.json
+- Late finding A3-F11: tech-debt (tests/old-browser/deep-copy.test.ts:119-124 reads an array index before the descriptor walk reports it; the test record overstates the check; no user reaches a wrong result) — source measure/runs/old_browser_builtins_20261122/review-a-5a1da50.json
 - Late finding ADV-R5-1: tech-debt (the scanner does not detect computed property access such as `box['union']` with an argument `b`; no such call exists in `src/`, so no current user receives a wrong result) — source measure/runs/old_browser_builtins_20261122/adversarial-p2-dda92e7.json
 - Late finding A5-F12: tech-debt (the new control at tests/apk3d/no-unpolyfilled-builtins.test.ts:436-454 passes on 229323c5, so it is a regression pin, not a failing-first control; no user reaches a wrong result) — source measure/runs/old_browser_builtins_20261122/review-a-dda92e7.json
 - Late finding A5-F13: tech-debt (the ASCII boundary at tests/apk3d/no-unpolyfilled-builtins.test.ts:346-348 still excludes `holder.box.union(b)` and `\u00e9box.union(b)` in place of `box.union(b)`; the shipped line uses the permitted Box3 call; no user reaches a wrong result) — source measure/runs/old_browser_builtins_20261122/review-a-dda92e7.json
@@ -436,33 +436,54 @@ tests/apk3d/no-unpolyfilled-builtins.test.ts'` exits 0: 1 file passed, 2 tests p
 - PM-informed orchestrator ruling 2026-11-23: Phase 3 rounds 1 and 2 (T7r c3f48a52, T7r2 c9f6bba1)
   fixed the startup race, the cleanup and the no-input false PASS; the round 3 findings go to tech
   debt TD-49 under the PM rule for measurement-script findings; the PM may veto
-- Late finding A3-F6 and ADV3-F2: tech-debt (input causality can be faked by a harness that blocks
-  the game handlers after the page-side counter or calls the game's auto hook; contrived; AC5's
-  claims about the four built-ins and a running game are intact; fix = verify the game processed the
-  input with an input-processed counter from the game; the e8312fc1 witness stays live and the
-  387a7032 witness is skipped with TD-49; no user reaches a wrong result) — source
-  measure/runs/old_browser_builtins_20261122/review-a-p3-1eefa25.json and
+- Late finding A3-F6: tech-debt (input causality can be faked by a harness that blocks the game
+  handlers after the page-side counter, or by a call to the game's auto hook; contrived; AC5's
+  claims about the four built-ins and a running game are intact; fix = verify that the game
+  processed the input, with an input-processed counter from the game; the e8312fc1 witness stays
+  live and the 387a7032 witness is skipped with TD-49; no user reaches a wrong result) — source
+  measure/runs/old_browser_builtins_20261122/review-a-p3-1eefa25.json
+- Late finding ADV3-F2: tech-debt (the witness records the residual input-causality gap of A3-F6: a
+  harness can block the game handlers after the audit counter, then change the score or the
+  collected state, so the check counts a move; contrived; users cannot reach a wrong result; the
+  same fix applies and TD-49 holds the item) — source
   measure/runs/old_browser_builtins_20261122/adversarial-p3-1eefa25.json
-- Late finding C3-F6: tech-debt (the quiet-control field defaults to false before measurement;
-  startup failures still exit 1; no user reaches a wrong result) — source
+- Late finding C3-F6: tech-debt (scripts/old-browser-check.mjs:311 sets `negative_control.changed`
+  to false before the control runs, so a startup failure can look like a measured quiet window in
+  that field alone; `started` false and `errors` still hold, and the command exits 1; no user
+  reaches a wrong result) — source
   measure/runs/old_browser_builtins_20261122/review-c-p3-1eefa25.json
-- Late finding A3-F5 and C3-F4/F5: tech-debt (the CLI accepts a repeated valid `--game` pair, an
-  invalid value prints only the usage line, and a runtime error string can keep a stack; the same
-  game is checked and no run gives a false PASS; no user reaches a wrong result) — source
-  measure/runs/old_browser_builtins_20261122/review-a-p3-1eefa25.json and
+- Late finding A3-F5: tech-debt (scripts/old-browser-check.mjs:42-49 accepts a repeated valid
+  `--game` pair; it checks the same game, so no run gives a false PASS; no user reaches a wrong
+  result) — source measure/runs/old_browser_builtins_20261122/review-a-p3-1eefa25.json
+- Late finding C3-F4: tech-debt (scripts/old-browser-check.mjs:44-50 permits duplicate `--game`
+  options and does not name the invalid value; an invalid value prints only the usage line; the help
+  path exits 0; this is a carried finding; no user reaches a wrong result) — source
   measure/runs/old_browser_builtins_20261122/review-c-p3-1eefa25.json
+- Late finding C3-F5: tech-debt (scripts/old-browser-check.mjs:61-65 appends trimmed stacks despite
+  its no-stack comment; this is a carried finding; no run gives a false PASS; no user reaches a
+  wrong result) — source measure/runs/old_browser_builtins_20261122/review-c-p3-1eefa25.json
+- Phase 3 accepted 2026-11-23 at 9e406e8c (phase-acceptance-p3-9e406e8.json); TD-49 ruled tech-debt by the PM 2026-11-23 (reopen trigger recorded)
 
 ## Phase 4: Gates
 
-- [x] T8 Gates (d282495b): Run every gate of AC6 and record each exit code in this plan. Every
+- [ ] T8 Gates (d282495b): Run every gate of AC6 and record each exit code in this plan. Every
       command below ran on 2026-11-23 against HEAD `9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4`.
       The gate record commit is `d282495b999af9e1bcb56ab24e1bb86138fa3f46`.
+  - Amendment 2026-11-23 (orchestrator; the PM was informed): the AC6 Prettier line is a
+    non-regression check, per the four rules of `spec.md` AC6. Every file this track creates must
+    pass. An older changed file may fail now only if it failed at the baseline `3f6a1921`. The
+    record must name each baseline-failing file as pre-existing debt. Reason: the full command
+    already exits 1 for 35 files at the track start, and a clean exit 0 would reformat unrelated
+    lines of 30 sim files (Review A Phase 4 F1).
+  - Status under the amendment: rules 1 and 2 hold as recorded below for the files that the record
+    lists. Rule 3 does not hold, because this record names no baseline-failing file. T8 stays open
+    until the record lists the 35 pre-existing files by name. A subset is never the AC6 pass.
   - Three-file command: `node node_modules/vitest/vitest.mjs run tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts --maxWorkers=1` through the heavy runner exits 0. Reporter: `Test Files 3 passed (3)`, `Tests 23 passed (23)`. The scan reports zero hits over `src/`.
   - Witness files: `node node_modules/vitest/vitest.mjs run tests/old-browser/adversarial-check.test.ts tests/old-browser/adversarial-check-r2.test.ts --maxWorkers=1` through the heavy runner exits 0. Reporter: `Test Files 1 passed | 1 skipped (2)`, `Tests 1 passed | 1 skipped (2)`. The skipped file is the TD-49 deferred case.
   - Project command: `node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts` through the heavy runner exits 0. Reporter: `Test Files 231 passed | 2 skipped (233)`, `Tests 3397 passed | 10 skipped (3407)`. Tested commit: `9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4`. No TD-35 to TD-40 failure occurs in this run.
   - `node measure/tools/generate.mjs --check` exits 0: `Measure facts are current (4 files).`
   - `./measure/doctor.sh --structural-only` exits 0: `Measure doctor found no structural errors.`
-  - `node_modules/.bin/prettier --check` on the AC6 file list exits 1 with `Code style issues found in 35 files`. The split: the seven files this track created or widened (`scripts/old-browser-check.mjs`, `tests/old-browser/deep-copy.test.ts`, `tests/old-browser/index-math.test.ts`, `tests/apk3d/no-unpolyfilled-builtins.test.ts`, `src/apk3d/sim/copy.ts`, `src/apk3d/sim/index-math.ts`, `measure/tracks/old_browser_builtins_20261122/test-strategy.md`) pass with exit 0. All 35 failing files are pre-existing baseline debt: each fails when its version at track start `3f6a19214994e7ac05a79a8fa7faeded684267b7` is piped to the same check, and none is reformatted here. This is not a pass for those files.
+  - `node_modules/.bin/prettier --check` on the AC6 file list exits 1 with `Code style issues found in 35 files`. The split: the seven files this track created or widened (`scripts/old-browser-check.mjs`, `tests/old-browser/deep-copy.test.ts`, `tests/old-browser/index-math.test.ts`, `tests/apk3d/no-unpolyfilled-builtins.test.ts`, `src/apk3d/sim/copy.ts`, `src/apk3d/sim/index-math.ts`, `measure/tracks/old_browser_builtins_20261122/test-strategy.md`) pass with exit 0. All 35 failing files are pre-existing baseline debt: each fails when its version at track start `3f6a19214994e7ac05a79a8fa7faeded684267b7` is piped to the same check, and none is reformatted here. Under the amendment rule 1 the seven created files pass. Under rule 2 each older changed file fails only where its baseline version also fails. Under rule 3 this record fails, because it names none of the 35 files. This is not a pass for those files.
   - Standalone scan: `node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/no-unpolyfilled-builtins.test.ts` through the heavy runner exits 0: `Test Files 1 passed (1)`, `Tests 11 passed (11)`, zero reported hits.
   - Phase 3 check: `node scripts/old-browser-check.mjs --game spellweavers-run` through the heavy runner exits 0: `started: true`, `moves: 3`, `negative_control.changed: false`, `errors: []`, all four deleted names `undefined`. `ss -ltn` shows no listener on 5199 and `ps` shows no owned vite or chrome process.
   - Commands, each run through the heavy runner where it starts tests:
@@ -480,6 +501,8 @@ tests/apk3d/no-unpolyfilled-builtins.test.ts'` exits 0: 1 file passed, 2 tests p
 - [ ] T9 Closeout (deferred:closeout-steward): move this track to archive, update `measure/tracks.md`
       and `metadata.json`, and record final closeout. This task stays unchecked until the closeout role
       acts. It is not part of AC6 and no closeout metadata changes in T8.
+
+- Phase 4 Review A r1 (review-a-p4-fc8e728.json) failed on F1 (the AC6 Prettier command); closed by the AC6 amendment above
 
 ## Known limits
 
