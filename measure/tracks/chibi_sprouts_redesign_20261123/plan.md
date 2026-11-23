@@ -458,7 +458,37 @@ tests/apk3d/no-unpolyfilled-builtins.test.ts` exits 0.
 
 ## Phase 4: Green
 
-- [ ] T6 Green: Write the measurement script. File: `scripts/proportion-check.mjs`.
+- [x] T6 Green (src 1f61d0f2): Write the measurement script. File: `scripts/proportion-check.mjs`.
+  - Evidence 2026-11-23 (Green model `opencode-go/hy4-flash-free`, family hy4; the Red model of the
+    track is `opencode-go/muse-spark-1.3-contributor`, family muse). Every command ran through
+    `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '<cmd>'`.
+    The named-error proof `./node_modules/.bin/tsx scripts/proportion-check.mjs --asset sprout-mom-kim`
+    exits 1 printing `asset sprout-mom-kim: not built` and `missing: assets/sprout-mom-kim.ts`, before any
+    import, with no module-resolution text. The gate
+    `node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-mom-kim.test.ts` exits 1 with
+    `Test Files 1 failed (1)`, `Tests 2 failed | 27 passed (29)`: only `end to end: the script passes
+    sprout-mom-kim and writes measure.json` and `real hand: both hands pass all seven checks` fail, each
+    on the missing-asset exit 1. The pass table, eleven doctored rows, five synthetic figures, four
+    synthetic palm cases, three hand-edge cases, and the side-sign guard pass. `prettier --check
+    scripts/proportion-check.mjs` exits 0.
+  - Synthetic figure results (params, ok, single failure): pass `{}` ok; crown-high `{crownScale:1.15}`
+    `FAIL heightInHeads: 3.298417 not in 3.54..3.74`; sole-low `{soleLower:0.1}`
+    `FAIL legShare: 0.445401 not in 0.36..0.42`; wide-head `{headWiden:0.12}`
+    `FAIL headToShoulders: 1.414388 not in 1.11..1.27`; merged-eyes `{eyeGap:0.06,eyeWidth:0.064}`
+    `eye components: found 1, expected 2`. The pass figure's hand edge records 152 counted rows of
+    76 band rows (two sides), a minimum gap of 11 px, a 7 px front width under an 18.62 px limit, and
+    `pass: true`; the side sign records frontmost column 419 at or under limit 500; the merged-eyes
+    record names `row 620: no leg run`.
+  - Synthetic palm results: the base fixture passes all seven checks with `sideDot −1`, `agreement +1`,
+    `palmContact 0.0015 m`, `thumbContact 0`, `thumbOut 0.040 m`, `thumbForward 0.0408 m`. The three
+    mutations give exactly one named failure each: flipped winding
+    `hand L: palm surface faces away from the declared normal` (check 4), mirrored hand
+    `hand L: palm faces away from the body` (check 7), and turned hand
+    `hand L: thumb not on the radial front edge` (check 6).
+  - Note: the script measures projected image rows for the reach rows. The spec derived-target table
+    lists wrist 0.569 m, but its own pass table and the design page put the wrist 0.06 of hip-to-knee
+    ABOVE the hip. The base places the `hand.L` joint at 0.601 m so the image-row wrist row is −0.06;
+    the fingertip target 0.452 m is unchanged.
   - It follows the loading order of the spec: parse the arguments, check that the asset file and the
     GLB exist, then `await import()` the asset and the base module, then read the renders. The
     missing-asset path exits 1 with `asset <name>: not built` before any import.
