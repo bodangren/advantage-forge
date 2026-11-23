@@ -477,6 +477,10 @@ tests/apk3d/no-unpolyfilled-builtins.test.ts'` exits 0: 1 file passed, 2 tests p
     the run tested. A pinned count from an earlier track is not part of the record.
   - A failure that belongs to TD-35 to TD-40 stays named as that debt and does not count as a pass.
 
+- [ ] T9 Closeout (deferred:closeout-steward): move this track to archive, update `measure/tracks.md`
+      and `metadata.json`, and record final closeout. This task stays unchecked until the closeout role
+      acts. It is not part of AC6 and no closeout metadata changes in T8.
+
 ## Known limits
 
 - `tsc --noEmit` is not a gate while TD-35 to TD-39 are open. It reports 38 baseline errors.
