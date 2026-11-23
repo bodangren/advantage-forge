@@ -1,5 +1,5 @@
-import { mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
-import { extname, join, relative, resolve } from 'node:path';
+import { lstatSync, mkdirSync, readFileSync, realpathSync, rmSync, writeFileSync } from 'node:fs';
+import { dirname, extname, join, relative, resolve } from 'node:path';
 import { parseArgs } from 'node:util';
 import { chromium, type Browser, type Page } from 'playwright';
 import { createServer } from 'vite';
@@ -17,7 +17,7 @@ import type * as Pipeline from '../pipeline.js';
 import type * as ClipCheck from '../clip-check.js';
 import type * as Equip from '../equip.js';
 import type * as EquipCheck from '../equip-check.js';
-import { OUT_DIR, ROOT, assetPath, listAssets } from '../pipeline.js';
+import { OUT_DIR, ROOT, assetPath, checkAssetName, listAssets } from '../pipeline.js';
 import { encodePngRgba } from '../png.js';
 import { REDUCED_ERROR_SCALE, REDUCED_TEXTURE_SIZE } from '../asset.js';
 
@@ -113,6 +113,9 @@ const NAMED_VIEWS: Record<string, Omit<ViewSpec, 'name' | 'focus'>> = {
   'side-level': { azimuth: 90, elevation: 0 },
 };
 
+/** The commands that render named views, so their view names can be checked before the build. */
+const VIEW_COMMANDS = ['render', 'all', 'animate', 'inspect', 'cutout'];
+
 const T0 = performance.now();
 const phase = (label: string) => {
   if (process.env.FORGE_DEBUG) console.log(`[${Math.round(performance.now() - T0)} ms] ${label}`);
@@ -186,8 +189,12 @@ async function main(): Promise<void> {
         .map((w) => w.trim())
         .filter(Boolean)
     : [];
+  // The worn pieces join the output name, so their names are checked before it is built.
+  for (const w of wear) checkAssetName(w);
   if (wear.length > 0 && command === 'check')
     throw new Error('check takes no --wear: run `forge check <piece>` for each piece.');
+  // The view names are checked before the build: an unknown view costs no build and prints one line.
+  if (VIEW_COMMANDS.includes(command)) checkViewNames(viewNamesOf(command, values));
   // A base in equipment (or the capped hair) writes beside the base, never over its outputs.
   const outName = [
     name,
@@ -415,7 +422,7 @@ async function main(): Promise<void> {
           if (values.flat) {
             // The flat pass writes its own folder and leaves the lit views alone.
             const flatDir = preset ? join(out, 'flat', 'presets', preset) : join(out, 'flat');
-            if (!preset) rmSync(join(out, 'flat'), { recursive: true, force: true });
+            if (!preset) removeFlatFolder(join(out, 'flat'), OUT_DIR);
             mkdirSync(flatDir, { recursive: true });
             for (const [view, data] of Object.entries(res.views))
               writePng(join(flatDir, `${view}.png`), data);
@@ -728,6 +735,53 @@ async function runSafely(run: () => Promise<void>): Promise<void> {
       );
     process.exitCode = 1;
   }
+}
+
+/**
+ * The named views a command renders: the --views list, or the command default. The list follows
+ * the same rule as the command that renders it, so the early check and the render agree.
+ */
+function viewNamesOf(command: string, values: Record<string, unknown>): string[] {
+  if (command === 'animate')
+    return values.views ? String(values.views).split(',') : ['three-quarter', 'side'];
+  if (command === 'inspect')
+    return values.views ? String(values.views).split(',') : ['front', 'three-quarter', 'side', 'back', 'top'];
+  if (command === 'cutout') {
+    const clipName = values.clip && values.clip !== 'all' ? String(values.clip) : undefined;
+    const stem = values.stem ?? (clipName ? 'cutout' : undefined);
+    const given = values.views ?? (stem ? 'front' : 'front,three-quarter,side');
+    return String(given).split(',');
+  }
+  return typeof values.views === 'string'
+    ? values.views.split(',')
+    : ['front', 'three-quarter', 'side', 'back'];
+}
+
+/** The known view names, or one error line that names the unknown view and the known list. */
+function checkViewNames(names: readonly string[]): void {
+  for (const raw of names) {
+    const name = raw.trim();
+    if (!NAMED_VIEWS[name])
+      throw new Error(`Unknown view '${name}'. Known: ${Object.keys(NAMED_VIEWS).join(', ')}`);
+  }
+}
+
+/**
+ * Remove the flat folder of this run before the views are written. Only the known folder of this
+ * asset under the repo's out/ is removed: its real path must sit directly under the real out/
+ * root. A symlink is never followed and never removed.
+ */
+function removeFlatFolder(flatDir: string, outRoot: string): void {
+  const st = lstatSync(flatDir, { throwIfNoEntry: false });
+  if (!st || st.isSymbolicLink()) return;
+  let parent: string;
+  try {
+    parent = realpathSync(dirname(flatDir));
+  } catch {
+    return;
+  }
+  if (dirname(parent) !== realpathSync(outRoot)) return;
+  rmSync(realpathSync(flatDir), { recursive: true, force: true });
 }
 
 function viewList(values: Record<string, unknown>): ViewSpec[] {
