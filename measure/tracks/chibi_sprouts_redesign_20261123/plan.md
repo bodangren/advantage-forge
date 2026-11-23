@@ -175,7 +175,57 @@ Every task brief in this plan carries these lines:
 ## Phase 2: Green
 
 - [x] T2r Red (tests c916af45): review r1 test findings (repo root from the module, one ownership check with a collision case, cleanup) and two failing source cases (unknown view before build, asset-name validation)
-- [~] T3r Green remediation (C-P2-1 view validation before the build; B-F1 asset-name validation before the output path)
+- [x] T3r Green remediation (src 6b3a0781): C-P2-1 view validation before the build; B-F1
+      asset-name validation before the output path. Files: `src/cli/forge.ts`, `src/pipeline.ts`.
+  - Evidence 2026-11-23 (Green model `minimax-cn-coding-plan/MiniMax-M3.1-Flash`, family MiniMax;
+    the Red model of the track is `opencode-go/muse-spark-1.3-contributor`, family muse). Every
+    command below ran through
+    `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '<cmd>'`.
+  - C-P2-1: the view names are checked before the server starts and before the build.
+    `viewNamesOf(command, values)` gives each command its own list (the `--views` list or the
+    command default), and `checkViewNames` refuses an unknown name with one line. The refusal
+    comes from the top-level error handler, so the exit code is 1, the output is one line, and no
+    stack frame prints. The raw output of the refused command:
+    `Unknown view 'nosuch'. Known: front, three-quarter, side, back, back-three-quarter, top, front-level, side-level`
+    No output folder appears, because the build never runs.
+  - B-F1: `src/pipeline.ts` exports `checkAssetName(name)`, and `assetPath` calls it before it
+    builds a path. The check refuses an empty name, an absolute name, a name with a path
+    separator, and a dot-dot segment, each with one line. The CLI calls it for the worn pieces
+    too, before the output name is built. The raw output of the refused traversal:
+    `Invalid asset name '../measure/runs/chibi_sprouts_redesign_20261123/probe-escape-green': an asset name has no path separator.`
+    A name with a dot or a dash, and the `_flat-render-pin-<pid>` fixture name, still work.
+  - B-F1 (the flat removal): `removeFlatFolder(flatDir, outRoot)` replaces the recursive delete
+    of the flat folder. It removes nothing when the folder is a symlink, and it removes the
+    folder only when the real path of its parent sits directly under the real out/ root. A
+    symlinked output folder is never followed and never deleted.
+  - Gates, each through the runner:
+    - The remediation Red command exits 0:
+      `node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/render-options.test.ts
+tests/render-options.validation.test.ts` gave `Test Files 2 passed (2)` and
+      `Tests 11 passed (11)`.
+    - `node node_modules/vitest/vitest.mjs run --maxWorkers=1
+tests/render-options.adversarial.test.ts tests/sprout-base.test.ts
+tests/sprout-gestures.test.ts tests/sprout-gesture-offset.test.ts` exits 0 with
+      `Tests 5 passed | 15 skipped (20)`.
+    - The render-related existing tests and the scan test exit 0: `tests/cutout.test.ts`,
+      `tests/asset.test.ts`, `tests/equip.test.ts`, `tests/part.test.ts`,
+      `tests/variants.test.ts`, `tests/preset-colour.test.ts`, `tests/clip-check.test.ts`,
+      `tests/song-still-hook.test.ts`, `tests/rig.test.ts`, `tests/apk3d/renderer-setting.test.ts`,
+      `tests/apk3d/no-unpolyfilled-builtins.test.ts`, and `tests/storytime-line-art-pass.test.ts`
+      gave `Test Files 12 passed (12)` and `Tests 73 passed (73)`.
+    - `node node_modules/typescript/bin/tsc --noEmit` exits 2 with the 51 baseline errors of
+      TD-35 to TD-39, and no error names `src/cli/forge.ts` or `src/pipeline.ts`.
+    - `node_modules/.bin/prettier --check src/cli/forge.ts src/pipeline.ts` exits 0.
+    - The whole project gate exits 0:
+      `node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude
+tests/storytime-book-pictures.test.ts` gave `Test Files 232 passed | 4 skipped (236)` and
+      `Tests 3397 passed | 26 skipped (3423)`, with no failing test.
+  - The existing render output stays byte-identical. `./forge render sprout-pip --fast` and
+    `./forge sprites sprout-pip --fast` ran at the base commit and with the fix. The SHA-256 sums
+    match for `render.png` (`7efc9c27...`), the four views, the ten sprite PNGs, and
+    `metrics.json`.
+  - Note: `src/render/page.ts` is not touched, so the three `Box3.union` lines that the apk3d
+    scan test pins stay at lines 331, 531, and 538.
 - [x] T3 Green (src c69a5b73): Add the renderer options. Files: `src/cli/forge.ts`,
       `src/render/page.ts`, and `tests/apk3d/no-unpolyfilled-builtins.test.ts` (the line numbers
       it pins, see the note below).
