@@ -351,7 +351,7 @@ tests/apk3d/no-unpolyfilled-builtins.test.ts'` exits 0: 1 file passed, 2 tests p
 
 ## Phase 3: Browser check
 
-- [ ] T7 Measure: Add `scripts/old-browser-check.mjs` per AC5. Prerequisite, met: task T6k
+- [x] T7 Measure (d1be84d2): Add `scripts/old-browser-check.mjs` per AC5. Prerequisite, met: task T6k
       (`0cc7b5c4`) removed both `Object.hasOwn` calls from `src/apk3d/audio/`. The script serves the
       demo with the Vite dev server in the pattern of `scripts/apk3d-shot.ts`, opens
       `spellweavers-run` at `?qc=1&renderer=phaser`, and installs `context.addInitScript` before the
@@ -363,7 +363,19 @@ tests/apk3d/no-unpolyfilled-builtins.test.ts'` exits 0: 1 file passed, 2 tests p
     `errors: []`. The two screenshots exist. The plan records the game, the four deleted names, the
     move that ran, and the file paths.
   - If `spellweavers-run` cannot play a move in the 2D view, name the other 2D game with an `.at(`
-    call and record the reason here.
+    call and record the reason here. Not needed: the 2D view started and played a move.
+  - Green evidence 2026-11-23 at commit `d1be84d2`: the Red command before the script existed exits
+    1 with `MODULE_NOT_FOUND` for `scripts/old-browser-check.mjs` and writes no `check.json` and no
+    screenshot. The same Green command then exits 0. `out/old-browser/check.json` holds
+    `game: spellweavers-run`, `started: true`, `moves: 6`, `errors: []`, and four absent names:
+    `structuredClone`, `Array.prototype.at`, `Array.prototype.findLastIndex`, `Object.hasOwn`. Each
+    name is `undefined` in the page. The state digest changed after the move.
+  - The move: a click at the center of the `.game-layer canvas`, then five keys in order:
+    `ArrowRight`, `ArrowLeft`, `ArrowUp`, `1`, `ArrowRight`. The two screenshots are
+    `out/old-browser/spellweavers-run-start.png` (526116 bytes) and
+    `out/old-browser/spellweavers-run-move.png` (547915 bytes). Port 5199 is free after the run.
+    `node_modules/.bin/prettier --check scripts/old-browser-check.mjs` exits 0. `out/old-browser/`
+    stays out of git.
 
 ## Phase 4: Gates
 
