@@ -344,6 +344,10 @@ tests/apk3d/no-unpolyfilled-builtins.test.ts'` exits 0: 1 file passed, 2 tests p
 - Late finding C5-F7: tech-debt (tests/apk3d/no-unpolyfilled-builtins.test.ts:346-348 matches an ASCII word boundary, so a synthetic line with `holder.box.union(b)` or `\u03bbbox.union(b)` is excluded in place of `box.union(b)`; the shipped line calls Box3.union on box; no user reaches a wrong result) — source measure/runs/old_browser_builtins_20261122/review-c-dda92e7.json
 - PM 2026-11-23: round 3 approved (the A7 exact-call exclusion, scanner test only); escalation key in metadata.json; Red 72e74de0
 - PM 2026-11-23: Review B r2 F2-F5 deepCopy limits accepted as contract limits, documented in copy.ts 7d5c7129; dispositions CONTEST in green-p2-r2.log
+- Late finding A7-F15: tech-debt (the moved-line control and the three-real-line control pass at 61db4f13, so they are regression pins and not failing-first controls; no user reaches a wrong result) — source measure/runs/old_browser_builtins_20261122/phase-acceptance-p2-80ff571.json
+- Late finding A7-F16: tech-debt (the same-label control supplies a synthetic exclusion for the line that already holds the extra call, so it does not exercise the unchanged real-line entry; no user reaches a wrong result) — source measure/runs/old_browser_builtins_20261122/phase-acceptance-p2-80ff571.json
+- Late finding C7-F8: tech-debt (TD-47 still listed the C5-F7 receiver gap as open after the exact-line fix closed it; a record error only; no user reaches a wrong result) — source measure/runs/old_browser_builtins_20261122/review-c-80ff571.json
+- Phase 1 and Phase 2 accepted 2026-11-23 at 80ff5717 (phase-acceptance-p1-80ff571.json, phase-acceptance-p2-80ff571.json); A7 closed by the exact-line exclusion (Red 9459687d; PM approval for A7)
 
 ## Phase 3: Browser check
 
