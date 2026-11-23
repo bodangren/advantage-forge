@@ -713,6 +713,7 @@ builds their output (AC6).
 
 - [ ] T13 (deferred:pm) Measure: One 900 px or taller song cut-out of Mom on the new base. Files: a
       cut-out step on the existing cut-out path, and `out/chibi-sprouts/redesign/cutout/`.
+  - trigger: after T12 PM approval.
   - Every render run uses the wrapper:
     `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '<command>'`.
     The cut-out command takes a build slot.
@@ -721,6 +722,7 @@ builds their output (AC6).
 
 - [ ] T14 (deferred:pm) Measure: One 128 px idle sprite sample of Mom on the new base. Files:
       `out/sprout-mom-kim/sprites/` and its preview.
+  - trigger: after T12 PM approval.
   - The sample is idle only. The walk clip comes from a later amendment task pair (AC6 rule 3).
   - Every render run uses the wrapper:
     `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './forge sprites sprout-mom-kim --clip idle'`.
