@@ -223,9 +223,9 @@ export function palmCheck(side, mesh, landmarks) {
   const thumbForward = landmarks.thumbTip[2] - landmarks.palmCentre[2];
   if (thumbOut < 0.005 || thumbForward < 0.01) return fail('thumb not on the radial front edge');
 
-  // 7. palm toward the body: left normal points -X, right normal points +X
-  const sideSign = side === 'L' ? 1 : -1;
-  const sideDot = dot3(d, [sideSign, 0, 0]);
+  // 7. palm toward the body: the left palm normal points -X, the right palm normal points +X.
+  // sideDot is the normal's X component for both sides; the synthetic left hand gives -1.
+  const sideDot = d[0];
   if ((side === 'L' && sideDot > -0.9) || (side === 'R' && sideDot < 0.9))
     return fail('palm faces away from the body');
 
@@ -433,14 +433,31 @@ function measureFigure(figure) {
     Math.abs(crownRow - figure.projectedTop) <= 2,
     `${crownRow} vs ${fmt(figure.projectedTop)}`,
   );
-  const onMask = (u, v) =>
-    u >= 0 && u < W && v >= 0 && v < H && mask[Math.round(v) * W + Math.round(u)] === 1;
+  // A landmark on a silhouette vertex can round to an antialiased half-covered pixel. Accept the
+  // pixel itself or one of its eight neighbours (the other guards allow two pixels).
+  const onMask = (u, v) => {
+    const cu = Math.round(u),
+      cv = Math.round(v);
+    for (let dy = -1; dy <= 1; dy++)
+      for (let dx = -1; dx <= 1; dx++) {
+        const x = cu + dx,
+          y = cv + dy;
+        if (x >= 0 && y >= 0 && x < W && y < H && mask[y * W + x] === 1) return true;
+      }
+    return false;
+  };
+  const guardPoints = [
+    ['shoulder', L.shoulder],
+    ['hip', L.hip],
+    ['tip', [L.tipU, tipV]],
+    ['wristAtTip', [L.tipU, L.wristV]],
+    ['kneeAtHip', [L.hip[0], L.kneeV]],
+  ];
+  const offPoint = guardPoints.find(([, p]) => !onMask(p[0], p[1]));
   guard(
     'landmarks on mask',
-    [L.shoulder, L.hip, [L.tipU, tipV], [L.tipU, L.wristV], [L.hip[0], L.kneeV]].every((p) =>
-      onMask(p[0], p[1]),
-    ),
-    'a model landmark is off the mask',
+    !offPoint,
+    offPoint ? `${offPoint[0]} at ${fmt(offPoint[1][0])},${fmt(offPoint[1][1])}` : 'none',
   );
 
   const headWidth = widestSpan(mask, W, H, crownRow, crownRow + 0.7 * headHeight);
