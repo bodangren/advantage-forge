@@ -507,8 +507,58 @@ tests/apk3d/no-unpolyfilled-builtins.test.ts` exits 0.
     results that need no asset.
   - Note: T6 creates the script only. The base module and the asset arrive in T7.
 
-- [ ] T7 Green: Build the new base and Mom. Files: `assets/parts/humanoid-kim.ts` (new),
-      `assets/sprout-mom-kim.ts` (new), `tests/fixtures/preset-pin.json`.
+- [x] T7 Green (src aa9c9b74): Build the new base and Mom. Files: `assets/parts/humanoid-kim.ts`
+      (new), `assets/sprout-mom-kim.ts` (new), `tests/fixtures/preset-pin.json`, and a small
+      correction to `scripts/proportion-check.mjs` (the palm normal X convention and a one-pixel
+      antialiasing allowance on the landmark-on-mask guard).
+  - Evidence 2026-11-23 (Green model `opencode-go/hy4-flash-free`, family hy4; the Red model of the
+    track is `opencode-go/muse-spark-1.3-contributor`, family muse). Every command ran through
+    `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '<cmd>'`.
+    The two render commands are
+    `./forge render sprout-mom-kim --fast --views front-level,side-level --ortho --flat --bg none --size 1024`
+    and
+    `./forge render sprout-mom-kim --fast --views front-level,side-level --ortho --bg none --size 1024`.
+    Both exit 0. The script prints eleven rows, each a pass:
+    `heightInHeads 3.595144`, `armToTorso 1.328305`, `legShare 0.389427`, `headToShoulders 1.170666`,
+    `wrist -0.061303`, `fingertips 0.509578`, `eyeLine 0.62944`, `eyeHeight 0.104263`,
+    `spacingHead 0.383495`, `eyeWidthFace 0.226744`, `spacingFace 0.459302`. Both palms print `ok`.
+  - Look rounds, each read with the `read` tool on `views/front-level.png` and `views/side-level.png`:
+    - Round 1: (1) eyes read as white blobs because a final `paintWhere` repainted the eye white over
+      the iris and pupil; (2) the torso and sweater profiles stopped at hip height, leaving a hollow
+      gap between the head and the hips; (3) the hair mass was oversized. Fix: removed the final eye
+      repaint and raised both profiles to shoulder height.
+    - Round 2: (1) hair cap and waves were too wide (head width 0.426 m, `headToShoulders` 1.489);
+      (2) face width 0.241 m and eye width 0.050 m were too small; (3) the shoulder joint sat off the
+      mask. Fix: narrowed the hair, widened the skull and eye stencils, widened the sweater shoulder,
+      and moved the `hand.L` joint to 0.176 m.
+    - Round 3: (1) the hair reads as a helmet with a flat part and short waves; (2) the eyes are large
+      dark discs without Kim's softer opening; (3) the hands are thin slabs with visible banding from
+      the fine-palm displacement. All eleven rows pass, so the done-when stops the shape loop here.
+      These three are the remaining work list for the AC4 look judge and the PM, not a row failure.
+  - Gates, each through the runner:
+    - `node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-mom-kim.test.ts tests/preset-colour.test.ts tests/render-options.test.ts`
+      exits 0 with `Test Files 3 passed (3)` and `Tests 42 passed (42)`, including the real-hand case
+      on both hands.
+    - `./forge check sprout-mom-kim` ends with `result ok: no held item passes through the head`,
+      with rest and idle clips ok and ground ok.
+    - `node node_modules/typescript/bin/tsc --noEmit` exits 2 with the same 51 baseline TD-35 to
+      TD-39 errors as T3; no error names `assets/parts/humanoid-kim.ts`, `assets/sprout-mom-kim.ts`,
+      or `scripts/proportion-check.mjs`. Baseline 51, new count 51.
+    - `prettier --check` exits 0 on the script, both new assets, and the regenerated pin.
+  - Palm mutation names from T6, unchanged: flipped winding
+    `hand L: palm surface faces away from the declared normal` (check 4), mirrored hand
+    `hand L: palm faces away from the body` (check 7), turned hand
+    `hand L: thumb not on the radial front edge` (check 6). The real hands pass all seven checks;
+    the left normal is −X and the right normal is +X, so sideDot is −1 and +1.
+  - Pin key check: `./node_modules/.bin/tsx scripts/make-preset-pin.mjs` reports 394 assets, 909
+    presets, and 3194 slots. Parsed JSON against the role baseline `0540e6ce` (393 assets, 908
+    presets, 3190 slots) differs by the one added key `sprout-mom-kim` (one preset `mom`, four
+    slots); no baseline key removed and no baseline asset, preset, or slot value changed. The pin
+    was reformatted by Prettier; the diff is line breaks only, and the parsed values are identical.
+  - Note: the script's projected reach rows use image rows (y down). The spec derived-target table
+    lists wrist 0.569 m, but its pass table and the design page put the wrist 0.06 of hip-to-knee
+    above the hip, so the `hand.L` joint sits at 0.601 m. The guard on model landmarks allows one
+    antialiased neighbour pixel because the fingertip vertex can round to a half-covered edge pixel.
   - The base: the skeleton with the bone names `hips`, `spine`, `chest`, `neck`, `head`,
     `upperarm.L/R`, `forearm.L/R`, `hand.L/R`, `leg.L/R`, `shin.L/R`, and `foot.L/R`; the head with
     the face paint of the pass table; the torso; the arms; the open hands as one body named `hands`
