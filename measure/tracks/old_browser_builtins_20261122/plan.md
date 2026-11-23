@@ -1,6 +1,6 @@
 # Old-browser built-ins: every game and the host run on iOS 15.0+ and WebView 80+
 
-Status: new. The plan records execution state. `spec.md` holds the acceptance criteria.
+Status: in_progress. The plan records execution state. `spec.md` holds the acceptance criteria.
 
 Decisions (a) to (c) and the acceptance criteria: `spec.md`, PM decision of 2026-11-22. The device
 gate stays. Every game and the host must run on iOS 15.0+ and WebView 80+.
@@ -23,6 +23,8 @@ Files this track touches:
 - `src/host/reader.ts` (1 `findLastIndex` call, line 197)
 - `tests/old-browser/deep-copy.test.ts` (new)
 - `tests/old-browser/index-math.test.ts` (new)
+- `tests/old-browser/adversarial-check.test.ts` (new, the input-causality witness of T7r2)
+- `tests/old-browser/adversarial-check-r2.test.ts` (new, the TD-49 witness that stays skipped)
 - `tests/apk3d/no-unpolyfilled-builtins.test.ts` (the root resolve to `src/`, the `SCAN_WIDE` flag
   that T3 adds and T5 removes, the one-pass strip, the whole-text patterns, the named exclusions, and
   the control table with its witness; the audio track committed the file at `1f45fcfe`)
@@ -543,21 +545,25 @@ tests/apk3d/no-unpolyfilled-builtins.test.ts'` exits 0: 1 file passed, 2 tests p
     - `node measure/tools/generate.mjs --check`
     - `./measure/doctor.sh --structural-only`
     - `node_modules/.bin/prettier --check` on each new or changed text file
-  - Done-when: each command exits 0, and this plan holds one line per command with its date, its
-    exit code, and the reporter output of the run. For the project command, the reporter line gives
-    the file count, the passed test count, and the skipped count, and the line names the commit that
-    the run tested. A pinned count from an earlier track is not part of the record.
+  - Done-when: this plan holds one line per command with its date, its exit code, and the reporter
+    output of the run. The Prettier line follows rules 1 to 4 of the amended AC6 above. Its exit code
+    1 is the baseline debt of the 35 named files, and it never counts as a pass for them. For the
+    project command, the reporter line gives the file count, the passed test count, and the skipped
+    count, and the line names the commit that the run tested. A pinned count from an earlier track is
+    not part of the record.
   - A failure that belongs to TD-35 to TD-40 stays named as that debt and does not count as a pass.
 
-- [ ] T9 Closeout (deferred:closeout-steward): move this track to archive, update `measure/tracks.md`
-      and `metadata.json`, and record final closeout. This task stays unchecked until the closeout role
-      acts. It is not part of AC6 and no closeout metadata changes in T8.
+- [ ] T9 Closeout (deferred:closeout-steward; deferral recorded in `fc8e728e`): move this track to
+      archive, update `measure/tracks.md` and `metadata.json`, and record final closeout. This task
+      stays unchecked until the closeout role acts. It is not part of AC6 and no closeout metadata
+      changes in T8.
 
 - Phase 4 Review A r1 (review-a-p4-fc8e728.json) failed on F1 (the AC6 Prettier command); closed by the AC6 amendment above
 
 ## Known limits
 
-- `tsc --noEmit` is not a gate while TD-35 to TD-39 are open. It reports 38 baseline errors.
+- `tsc --noEmit` is not a gate while TD-35 to TD-39 are open. It reports 51 diagnostics at
+  `6dc919b5`, and none lies in a file that this track changed. TD-35 to TD-39 hold 38 of the 51.
 - `PROJECT_TESTS` excludes `tests/storytime-book-pictures.test.ts` while TD-40 is open.
 - The scan skips `*.gen.ts`, as the committed file does. A built-in that a generated file or a
   dependency brings in is out of its reach, and the browser check of AC5 is the only runtime proof
@@ -567,3 +573,7 @@ tests/apk3d/no-unpolyfilled-builtins.test.ts'` exits 0: 1 file passed, 2 tests p
   keeps the newlines for that reason.
 - The witness `stripCommentsFirst` exists only to prove the controls. It is never used on `src/`,
   and the scan test does not call it outside the control test.
+- Out of scope and not covered by the scan or AC5: `Element.replaceChildren` (Chrome 86, Safari 14)
+  is called in `src/games/dragon-flight`, `dragon-rider` and `hero-vs-zombie` 3D views; WebView 80 to
+  85 would fail on those views; recorded as TD-50 after the closeout; the closeout text does not
+  claim WebView 80 and up for every view.

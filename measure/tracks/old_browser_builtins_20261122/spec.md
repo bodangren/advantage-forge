@@ -215,9 +215,12 @@ at the track creation.
 Every test file that exists at the track start passes without an edit. The project test gate is
 `node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts`.
 The plan records the reporter output of the actual run: the file count, the test count, the skipped
-count, the exit code 0, and the commit that the run tested. This track adds two test files and
-changes one existing test file, `tests/apk3d/no-unpolyfilled-builtins.test.ts`. No other existing
-test file changes. A pinned count from an earlier track is not evidence for this track.
+count, the exit code 0, and the commit that the run tested. This track adds four test files,
+`tests/old-browser/deep-copy.test.ts`, `tests/old-browser/index-math.test.ts`,
+`tests/old-browser/adversarial-check.test.ts`, and `tests/old-browser/adversarial-check-r2.test.ts`,
+and changes one existing test file, `tests/apk3d/no-unpolyfilled-builtins.test.ts`. The second
+witness holds the TD-49 case, which stays skipped. No other existing test file changes. A pinned
+count from an earlier track is not evidence for this track.
 
 ### AC5: Browser check
 
@@ -288,7 +291,7 @@ These commands pass, and the plan records each exit code:
 
 ## Scope control
 
-This track adds two source modules, two test files, and one script. It changes one test file
+This track adds two source modules, four test files, and one script. It changes one test file
 (`tests/apk3d/no-unpolyfilled-builtins.test.ts`), 30 game files, 5 view and storytime files, one host
 file, and one barrel. It changes no game rule, no content, no string, and no renderer. It adds no
 dependency, changes no gate value, and changes no Vite target. It pushes nothing and writes nothing
