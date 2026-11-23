@@ -325,7 +325,7 @@ tests/storytime-book-pictures.test.ts` gave `Test Files 1 failed | 233 passed | 
     without `--fast` and `--bg none` with `--flat needs --fast and --bg none`.
   - Done-when:
     - `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/render-options.test.ts'`
-      exits 0 with 8 cases.
+      exits 0 with 9 cases.
     - `tsc --noEmit` through the runner reports no error in the two changed files.
     - One render of an existing asset still writes `views/` as before.
     - `prettier --check` exits 0 on the two changed files.
@@ -343,12 +343,16 @@ tests/storytime-book-pictures.test.ts` gave `Test Files 1 failed | 233 passed | 
     `front-level` (azimuth 0, elevation 0) and `side-level` (azimuth 90, elevation 0). `--flat`
     writes `out/<name>/flat/<view>.png`, leaves `views/` alone, writes no sheet, and is refused
     without `--fast` and `--bg none` with the message `--flat needs --fast and --bg none`.
-  - The T2 Red command now exits 0 with 8 cases:
+  - The T2 Red command now exits 0 with 9 cases:
     `node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/render-options.test.ts` gave
-    `Test Files 1 passed (1)` and `Tests 8 passed (8)`. The eight cases are the eight of the T2
+    `Test Files 1 passed (1)` and `Tests 9 passed (9)`. Eight cases are the eight of the T2
     evidence above: the two flat views at 256 x 256, the transparent corner, the body colour, the
     block colour, the two view heights, the side block left of centre, the named view without
-    `--ortho` with the refused `--flat`, and the fixture ownership.
+    `--ortho` with the refused `--flat`, and the fixture ownership. Remediation round 1 added the
+    ninth case on purpose (Red `c916af45`). The added case is
+    `fails closed when the actual fixture path already exists`. It plants a file at the actual
+    fixture path before the run. It requires the error `fixture path exists: <path>`, an untouched
+    planted file, no render result, and no output folder.
   - The flat pixel contract holds on the pin asset. The read values of
     `out/_flat-render-pin-<pid>/flat/front-level.png` are: the corner pixel `[0, 0, 0, 0]`, the
     centre pixel `[63, 143, 208, 255]` (the body hex `#3f8fd0`), and the block pixel
