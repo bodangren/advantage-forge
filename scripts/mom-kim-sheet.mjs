@@ -159,6 +159,19 @@ async function main() {
       process.exit(1);
     }
   }
+  // F5: the two PNG paths are outputs too. Refuse a link there before any write; lstat never
+  // follows it, so a pre-existing link cannot redirect a PNG into an unrelated user file.
+  for (const rel of [
+    'out/chibi-sprouts/redesign/mom-kim-review.png',
+    'out/chibi-sprouts/redesign/mom-panel.png',
+  ]) {
+    const abs = path.join(ROOT, rel);
+    const st = lstatSync(abs, { throwIfNoEntry: false });
+    if (st?.isSymbolicLink()) {
+      console.error(`output file is a link: ${rel}`);
+      process.exit(1);
+    }
+  }
 
   // The lit set is the source for both sheets. Render it first if a run is missing.
   if (!Object.values(LIT).every((p) => existsSync(p))) {
@@ -262,6 +275,18 @@ async function main() {
   const mom = await rawPng(MOM_DRAWING);
   const lit = {};
   for (const view of viewKeys) lit[view] = await rawPng(LIT[view]);
+
+  // F4: a well-formed pair can still be wrong. Recompute the same crown and sole rows the T6
+  // script writes from the alpha masks of the lit views we read, and compare with the 2 px
+  // tolerance of the spec's mask guards. A mismatch stops before measure.json or a PNG is written.
+  for (const view of viewKeys) {
+    const s = maskSpan(lit[view]);
+    const fromMask = [s.top, s.top + s.height - 1];
+    if (litRecord[view].some((v, i) => Math.abs(v - fromMask[i]) > 2)) {
+      console.error(`mom-kim-sheet: measure.json rows.lit row ${view} disagrees with the lit alpha mask`);
+      process.exit(1);
+    }
+  }
 
   // Kim's side panel scan. The page's rows are 102 and 1195; the scan must agree within 4 px.
   const kimSideRows = scanRows(kim, 1036, 1334);
