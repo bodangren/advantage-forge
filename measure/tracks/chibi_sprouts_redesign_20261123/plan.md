@@ -286,6 +286,28 @@ tests/storytime-book-pictures.test.ts` gave `Test Files 1 failed | 233 passed | 
     brief of this round. The adversarial file needs its exit-code expectation refreshed (lines
     106 and 118); its marker assertions still hold, because the refusal touches nothing. This
     role does not change test files.
+
+**Late findings and PM decisions (Phase 2).** Recorded 2026-11-23.
+
+> PM 2026-11-23: F12 (watch mode checks the linked output folder only at startup) and Review B N1 (check/write symlink race) go to one tech-debt row. Both need a local writer to plant a link inside out/ during a run; no normal run gives a wrong result. Fix named: check the link at every rebuild and write. No third round for them.
+
+- The audited HEAD is `9a2656ba8784a74e9011975e54fd9ee4867841a3`. Review A, Review B, and Review C read this commit.
+- The debt row is not yet in `measure/tech-debt.md`. The file on `master` holds 50 lines, the limit, and its last row is TD-50. The worktree copy is older, and its last row is TD-49. No task in this worktree edits that file.
+- Row text to add at the merge to `master`, after an archived row frees a line:
+
+  ```text
+  TD-NN, 2026-11-23, chibi_sprouts_redesign Phase 2: the flat render (watch mode rebuild, and the write after the pre-build link check) can write through a symlink planted in out/ during a run (F12, Review B N1); needs a local writer; Medium-low; Open; fix: check lstat for a link at every rebuild and immediately before each write; reopen trigger: a normal run writes outside its own out/<name> folder.
+  ```
+
+- Other late findings routed to tech debt, one line each:
+  - F13 (Review A): `tests/render-options.adversarial-r2.test.ts` can change the permissions of, or remove, a same-PID output path that the test did not create.
+  - F14 (Review A): the conflict note of T3r2 is stale, because commit `9a2656ba` refreshes the adversarial expectation.
+  - C-P2-9 (Review C, round 2): `tests/render-options.test.ts` and `tests/render-options.validation.test.ts` can remove a pre-existing output folder after the fixture creation fails, because they record no test ownership.
+  - C-P2-10 (Review C, round 2): the runner fallback in `tests/render-options.test.ts` assumes a nested worktree, so an ordinary checkout needs `HEAVY_RUN_PATH`.
+  - C-P2-11 (Review C, round 3): the comment at `src/cli/forge.ts:753-755` says one view-list source, but lines 464-466, 640, and 659 still repeat the defaults.
+  - C-P2-12 (Review C, round 3): the conflict note of T3r2 still calls the adversarial linked-output expectation open, and commit `9a2656ba` closes it.
+- F14 and C-P2-12 record one stale note. F13 and C-P2-9 record one test-ownership gap.
+
 - [x] T3 Green (src c69a5b73): Add the renderer options. Files: `src/cli/forge.ts`,
       `src/render/page.ts`, and `tests/apk3d/no-unpolyfilled-builtins.test.ts` (the line numbers
       it pins, see the note below).
