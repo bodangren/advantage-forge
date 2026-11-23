@@ -189,6 +189,27 @@ describe('mom-kim judge panel privacy invariant', () => {
     }
   });
 
+  it('rejects a fully transparent Kim sheet and writes no PNG', async () => {
+    const temp = tempRoot();
+    try {
+      const kim = join(temp, 'out/storytime-review/muse-cast/teacher-kim-sheet.png');
+      const { data, info } = await sharp(kim).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+      for (let i = 3; i < data.length; i += 4) data[i] = 0;
+      await sharp(data, { raw: info }).png().toFile(kim);
+
+      const result = spawnSync(process.execPath, [join(temp, 'scripts/mom-kim-sheet.mjs')], {
+        cwd: temp,
+        encoding: 'utf8',
+      });
+      expect(result.status).toBe(1);
+      expect(result.stderr).toContain('Kim');
+      expect(existsSync(join(temp, 'out/chibi-sprouts/redesign/mom-kim-review.png'))).toBe(false);
+      expect(existsSync(join(temp, 'out/chibi-sprouts/redesign/mom-panel.png'))).toBe(false);
+    } finally {
+      rmSync(temp, { recursive: true, force: true });
+    }
+  });
+
   it('rejects a missing rows.lit record before writing either PNG', async () => {
     const temp = tempRoot();
     try {
