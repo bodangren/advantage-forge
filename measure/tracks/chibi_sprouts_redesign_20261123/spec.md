@@ -96,7 +96,8 @@ These rules hold for every role of this track. The PM approved them on 2026-11-2
 
 - No role calls the `openchamber_image` tool. That tool generates or edits images, and it costs
   money. To look at an image, a role uses the `read` tool.
-- Kim art goes to no remote model, no demo, and no third party. Our own VM is allowed (decision m).
+- Kim art goes to no remote model, no hosted demo, and no third party. The approved own-VM LATO.2
+  trial is allowed (decision m).
 - Mom's render and Daniel's drawing may go to the established look-judge routes, as in the earlier
   sprout looks.
 - The Kim review sheet is built and kept locally for the PM. No route sends it out.
@@ -109,18 +110,18 @@ These rules hold for every role of this track. The PM approved them on 2026-11-2
 
 The page leaves seven rules open. This track fixes them here, so Red and Green decide nothing.
 
-| #   | Decision                                                | Rule                                                                                                                                                                                                     | Why                                                                                                                              |
-| --- | ------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| d   | Level orthographic renders need two new render options  | Add the named views `front-level` and `side-level` (azimuth 0 and 90, elevation 0), a `--ortho` flag, and a `--flat` flag.                                                                               | The page demands level orthographic views. The camera today is perspective and tilted.                                           |
-| e   | The measurement render is the flat vertex-colour render | `--flat` draws each mesh unlit in its own colour, with no tone mapping, no environment light, and no ground. It writes `out/<name>/flat/<view>.png`.                                                     | A lit, tone-mapped render moves the skin, hair, and eye colours by 30 % or more. A colour rule over it is not reliable.          |
-| f   | The orthographic frame is fixed for the whole run       | World height `H = max(size.x, size.y, size.z) × 1.10`, a square frame, centred on the bounds centre. `ppm = imageSize / H`.                                                                              | The page compares heights and widths in one image. One scale for both views lets a width compare with a depth.                   |
-| g   | The new asset needs a preset pin row                    | The new asset declares `variants` and `presets`. Green compares the parsed pin with the role baseline and requires one new key and no changed value.                                                     | `tests/preset-colour.test.ts` fails on an asset that is not in the pin. The PM forbids skipping that test.                       |
-| h   | The new base imports no scrapped module                 | `assets/parts/humanoid-kim.ts` imports only `src/index.js`. It does not import `assets/parts/humanoid-kind.ts`.                                                                                          | The scrapped base holds the hero torso and the palm-forward hand code. A new base must not inherit either.                       |
-| i   | Role families                                           | Green is not the Red family. Red is muse. The orchestrator picks Green with `ra-quota` at dispatch and records its model id in the plan. The AC4 judge comes from a family other than Green's and Red's. | The judge must not share the builder's blind spots, and the builder must not review its own Red. This rule names no fixed model. |
-| j   | The side projection sign                                | At azimuth 90 the camera sits at +X and looks toward −X, so image right is −Z: `u = (cz − z)·ppm + W/2`. A front landmark (larger z) lands left of centre.                                               | `Studio.aim` places the camera on +X. The first draft used `z − cz`, which mirrors the side landmarks.                           |
-| k   | The judge input holds no Kim art                        | The judge sees `mom-panel.png`, Mom's lit front and side render beside Mom's drawing, and the numeric Kim ratios. The Kim panel exists only on the local PM sheet.                                       | Decision 1 forbids Kim art to a third party. Mom's render may use the established look-judge routes.                             |
-| l   | The sheet uses the lit render                           | The sheet panels come from `views/front-level.png` and `views/side-level.png`. The flat render feeds the numbers only.                                                                                   | The sheet shows a person beside two drawings. An unlit vertex-colour figure does not compare with them.                          |
-| m   | The LATO.2 trial runs on our own VM                     | One Spot L4 (fallback one standard L4) in `asia-southeast1` on project `reading-advantage`, with a 3 hour VM cap and no hosted API and no public demo.                                                   | PM decision L caps the spend at USD 5, and decision 1 keeps Kim art off third-party services.                                    |
+| #   | Decision                                                | Rule                                                                                                                                                                                                                                                                               | Why                                                                                                                              |
+| --- | ------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| d   | Level orthographic renders need two new render options  | Add the named views `front-level` and `side-level` (azimuth 0 and 90, elevation 0), a `--ortho` flag, and a `--flat` flag.                                                                                                                                                         | The page demands level orthographic views. The camera today is perspective and tilted.                                           |
+| e   | The measurement render is the flat vertex-colour render | `--flat` draws each mesh unlit in its own colour, with no tone mapping, no environment light, and no ground. It writes `out/<name>/flat/<view>.png`.                                                                                                                               | A lit, tone-mapped render moves the skin, hair, and eye colours by 30 % or more. A colour rule over it is not reliable.          |
+| f   | The orthographic frame is fixed for the whole run       | World height `H = max(size.x, size.y, size.z) × 1.10`, a square frame, centred on the bounds centre. `ppm = imageSize / H`.                                                                                                                                                        | The page compares heights and widths in one image. One scale for both views lets a width compare with a depth.                   |
+| g   | The new asset needs a preset pin row                    | The new asset declares `variants` and `presets`. Green compares the parsed pin with the role baseline and requires one new key and no changed value.                                                                                                                               | `tests/preset-colour.test.ts` fails on an asset that is not in the pin. The PM forbids skipping that test.                       |
+| h   | The new base imports no scrapped module                 | `assets/parts/humanoid-kim.ts` imports only `src/index.js`. It does not import `assets/parts/humanoid-kind.ts`.                                                                                                                                                                    | The scrapped base holds the hero torso and the palm-forward hand code. A new base must not inherit either.                       |
+| i   | Role families                                           | Green is not the Red family. Red is muse. The orchestrator picks Green with `ra-quota` at dispatch and records its model id in the plan. The AC4 judge comes from a family other than Green's and Red's.                                                                           | The judge must not share the builder's blind spots, and the builder must not review its own Red. This rule names no fixed model. |
+| j   | The side projection sign                                | At azimuth 90 the camera sits at +X and looks toward −X, so image right is −Z: `u = (cz − z)·ppm + W/2`. A front landmark (larger z) lands left of centre.                                                                                                                         | `Studio.aim` places the camera on +X. The first draft used `z − cz`, which mirrors the side landmarks.                           |
+| k   | The judge input holds no Kim art                        | The judge sees `mom-panel.png`, Mom's lit front and side render beside Mom's drawing, and the numeric Kim ratios. The Kim panel exists only on the local PM sheet.                                                                                                                 | Decision 1 forbids Kim art to a third party. Mom's render may use the established look-judge routes.                             |
+| l   | The sheet uses the lit render                           | The sheet panels come from `views/front-level.png` and `views/side-level.png`. The flat render feeds the numbers only.                                                                                                                                                             | The sheet shows a person beside two drawings. An unlit vertex-colour figure does not compare with them.                          |
+| m   | The LATO.2 trial runs on our own VM                     | One Spot L4 in `asia-southeast1` on project `reading-advantage`, with a 3 hour VM cap and no hosted API and no public demo. One standard L4 is the fallback, as an orchestrator decision inside Daniel's USD 5 cap, with the PM informed 2026-11-23. The PM may veto the fallback. | PM decision L caps the spend at USD 5, and decision 1 keeps Kim art off third-party services.                                    |
 
 ## Scope
 
@@ -142,8 +143,9 @@ The page leaves seven rules open. This track fixes them here, so Red and Green d
 - No other character. Lily, Dad, Grandma, Grandpa, Tom, and the children stay untested on this base.
 - No 900 px song cut-out and no idle or walk sprite. Phase 9 holds them behind the PM approval.
 - No paid generation call, except the LATO.2 GPU trial of Phase 6 under the USD 5 cap (decision L).
-  The track runs no Muse call, no mmx call, no hosted API call, and no public demo call, and it sends
-  no Kim art to any demo, model, or third party.
+  The track runs no Muse call, no mmx call, no hosted API call, and no public demo call. It sends no
+  Kim art to a remote model, a hosted demo, or a third party. The approved own-VM LATO.2 trial is
+  allowed (decision m), because the crop and the model both stay on our own VM.
 - No edit of a scrapped source: `assets/sprout-*.ts`, `assets/parts/sprout-gestures.ts`, and the
   ADULT and AGE5 sets of `assets/parts/humanoid-kind.ts` stay byte for byte.
 - No deletion. The scrapped outputs under `out/sprout-*/` stay.
@@ -302,29 +304,65 @@ band is at least `0.02·ppm` left of `W/2`.
 | `eyeWidthFace`    | eye opening width / face width                   | .22 to .24 |
 | `spacingFace`     | pupil spacing / face width                       | .47 ± .03  |
 
-### The hand rules
+### The palm check API
 
 The hand checks read the `hands` body of the GLB, the `KIM_HANDS` export, and the flat front view.
+`scripts/proportion-check.mjs` exports one function for the palm side:
 
-1. Vertices and triangles: the `hands` body of the GLB, positions and indices, per side. The left
-   side holds x > 0, the right side x < 0, and a vertex with |x| at or below 1e-6 belongs to
-   neither. A side with fewer than 200 vertices fails with `hand <side>: too few vertices`.
-2. The palm direction `d` is `normalise(palmCentre − centroid of the side's vertices)`. Pass:
-   `d·x̂ ≤ −0.90` for the left hand and `d·x̂ ≥ 0.90` for the right hand.
-3. The palm patch is the set of triangles whose centre is within 1.5 mm of the plane through
-   `palmCentre` with normal `d` and within 0.02 m of `palmCentre`. The area-weighted sum of the
-   triangles' geometric normals, taken from the index winding, must satisfy
-   `dot(sum, d) ≥ 0.90 · sum(area)`. A failure is `hand <side>: palm surface faces away from the
-declared normal`. Why this test: a flipped winding cannot pass it, and an unsigned axis test
-   cannot catch a flipped winding.
-4. Landmark contact: the nearest vertex to `palmCentre` is 3 mm or closer, and the nearest vertex to
-   `thumbTip` is 5 mm or closer. A failure is `hand <side>: landmark off the surface`.
-5. The thumb sits on the radial front edge: `|thumbTip.x| ≥ |palmCentre.x| + 0.005` and
-   `thumbTip.z ≥ palmCentre.z + 0.010`. The right hand mirrors the x rule. A failure is
-   `hand <side>: thumb not on the radial front edge`. A mirrored cloud fails here.
-6. A degenerate cloud fails with `hand <side>: degenerate cloud`. The cloud is degenerate when the
-   largest eigenvalue of its covariance is below `1e-8` of the side's squared extent.
-7. The hand depth is `max z − min z` of the side's vertices, in meters.
+```js
+export function palmCheck(side, mesh, landmarks)
+```
+
+- `side`: `'L'` or `'R'`.
+- `mesh`: `{ positions, indices }`. `positions` is a `Float32Array` of xyz triples in rest-pose world
+  meters, holding the vertices of one side of the `hands` body. `indices` is a `Uint32Array` of
+  triangle indices into `positions`, in the GLB winding order.
+- `landmarks`: `{ palmCentre, thumbTip, fingerTip }`, each a `[number, number, number]` in the same
+  space, taken from `KIM_HANDS[side]`.
+
+The return value is `{ ok: true, normal, sideDot, patchArea, agreement, palmContact, thumbContact, thumbOut, thumbForward }`,
+or `{ ok: false, failure }` where `failure` is one of seven named strings. The checks run in this
+fixed order, and the first failure returns:
+
+1. `hand <side>: too few vertices`. Fires when `positions` holds fewer than 200 vertices, or when
+   `indices.length` is not a positive multiple of 3.
+2. `hand <side>: degenerate cloud`. Fires when the largest eigenvalue of the vertex covariance is
+   below `1e-8` of the side's squared extent.
+3. `hand <side>: palm patch: empty`. Fires when no triangle centre lies within 4 mm of the plane
+   through `palmCentre` with normal `d` and within 0.03 m of `palmCentre`. Here
+   `d = normalise(palmCentre − centroid)`. The 4 mm band is under one mesh cell, so a real palm
+   surface always holds triangles in it.
+4. `hand <side>: palm surface faces away from the declared normal`. Fires when `agreement < 0.90`.
+   `agreement` is the area-weighted sum of the patch triangles' geometric normals, taken in the
+   index order, dotted with `d`, then divided by `patchArea`.
+5. `hand <side>: landmark off the surface`. Fires when the nearest vertex to `palmCentre` is over
+   3 mm away, or the nearest vertex to `thumbTip` is over 5 mm away.
+6. `hand <side>: thumb not on the radial front edge`. Fires when `thumbOut < 0.005` or
+   `thumbForward < 0.010`, with `thumbOut = |thumbTip.x| − |palmCentre.x|` and
+   `thumbForward = thumbTip.z − palmCentre.z`.
+7. `hand <side>: palm faces away from the body`. Fires when `sideDot > −0.90` for the left hand or
+   `sideDot < 0.90` for the right hand.
+
+The script calls the function once per side and fails the figure with the returned name. The real
+hand passes all seven checks. The hand depth is `max z − min z` of the side's vertices, in meters.
+
+### The three palm mutations
+
+AC3 rule 6 builds each mutation from the real left hand of
+`out/sprout-mom-kim/sprout-mom-kim.glb`, in memory, and passes it to `palmCheck('L', mesh, landmarks)`.
+Each mutation produces exactly one named failure:
+
+1. Flipped winding: reverse the index order of every palm-patch triangle, and change nothing else.
+   The patch set and its area do not move, and the normal sum flips sign, so `agreement = −1` and
+   the call returns `hand L: palm surface faces away from the declared normal` (check 4).
+2. Mirrored hand: mirror `positions` and all three landmarks about x, and keep `side = 'L'`. The
+   patch set, the area, the contact distances, `thumbOut` and `thumbForward` do not change, and the
+   reflected winding makes the mirrored normals the true outward normals, so checks 3 to 6 pass.
+   `sideDot` becomes `+1`, and the call returns `hand L: palm faces away from the body` (check 7).
+3. Turned hand: rotate `positions` and the landmarks 180 degrees about the axis through `palmCentre`
+   along `fingerTip − palmCentre`. The palm direction and the surface turn together, so checks 3 to
+   5 pass and `sideDot` stays negative. The thumb then points backward, `thumbForward` is about
+   `−0.02`, and the call returns `hand L: thumb not on the radial front edge` (check 6).
 
 ### The front hand edge
 
@@ -391,8 +429,9 @@ The first command writes `out/sprout-mom-kim/flat/`. The second writes
 Phase 6 holds the trial. It runs alongside the SDF shape work, and its result feeds the PM decision.
 It does not replace the SDF base, and the pass table of this track stays the SDF acceptance.
 
-1. One Spot L4, with one standard L4 as the fallback, in `asia-southeast1` on project
-   `reading-advantage`. VM time has a hard cap of 3 hours.
+1. One Spot L4 in `asia-southeast1` on project `reading-advantage`. One standard L4 is the fallback,
+   as an orchestrator decision inside Daniel's USD 5 cap, with the PM informed on 2026-11-23. The PM
+   may veto the fallback, and the trial then stops. VM time has a hard cap of 3 hours.
 2. One Kim full-body front crop. It runs on our own VM only. The weights download to the VM, and the
    trial calls no hosted API and no public demo.
 3. The five steps are: create one VM and one temporary boot disk; set up the pinned dependencies and
@@ -453,7 +492,7 @@ It does not replace the SDF base, and the pass table of this track stays the SDF
    writes `out/chibi-sprouts/redesign/measure.json`. The record holds the loading order, each value
    of the evaluation order, each row with its value and its range, the image size, `ppm`, both render
    paths, the SHA-256 of each render, and the lit rows under `rows.lit`. The script exports
-   `checkRows(rows)`, `palmNormal(vertices, side)`, and `measurePixels()`.
+   `checkRows(rows)`, `palmCheck(side, mesh, landmarks)`, and `measurePixels()`.
 2. The script prints one line per row: `row value target±tolerance pass`. It exits 0 when every row
    passes and every guard holds. It exits 1 and prints `FAIL <row>: <value> not in <lo>..<hi>` for
    each failing row, and `GUARD <name>: <detail>` for each failing guard. A missing asset exits 1
@@ -477,29 +516,35 @@ It does not replace the SDF base, and the pass table of this track stays the SDF
    - a crown 15 % higher, with the same chin and eye rows, fails `heightInHeads`,
    - a sole 10 % lower, with the same model landmarks, fails `legShare`,
    - a head 12 % wider at the temples, with the same shoulder span, fails `headToShoulders`,
-   - two eyes drawn as one merged dark shape fail with `eye components: found 1, expected 2`.
+   - two eyes merged into one dark blob fail with `eye components: found 1, expected 2`. The
+     mutation draws the two eyes with their centres 0.060 m apart and an eye width of 0.064 m, so
+     the union is one blob 0.124 m wide. The pass figure's head width is 0.341 m, so the blob is
+     0.364 of head width, under the 0.40 limit of evaluation step 7. Its height is 0.045 m, its area
+     is 0.16 of the window, and its centre sits at `W/2`, so it is the one qualifying component. A
+     merge at the pass spacing of 0.130 m would be 0.194 m wide, over the limit, and would be
+     rejected. The mutation uses the closer spacing for that reason.
 8. The check needs no paid call and no network. It reads local files only.
 
 ### AC3: the palms face the legs
 
 1. The new base builds both hands as one body named `hands`, with a left half at x > 0, and exports
    `KIM_HANDS` with `palmCentre`, `thumbTip`, and `fingerTip` for each side.
-2. The script tests both hands with the signed rules of "The hand rules": the palm direction
-   (`d·x̂ ≤ −0.90` left, `d·x̂ ≥ 0.90` right), the oriented palm surface, the landmark contact, and
-   the thumb position.
-3. A side with too few vertices or a degenerate cloud fails with its named error.
+2. `scripts/proportion-check.mjs` exports `palmCheck(side, mesh, landmarks)` per "The palm check
+   API", and calls it once per side on the GLB's `hands` triangles and the `KIM_HANDS` landmarks.
+3. The real left hand and the real right hand pass all seven checks. A side with too few vertices, a
+   degenerate cloud, an empty palm patch, a landmark off the surface, or a wrong thumb or palm
+   direction fails with its named error, in the order of "The palm check API".
 4. The front flat view shows each hand as a separate run with a 2 px gap over 80 % of the band rows,
    and the hand front width is 0.60 of the hand depth times `ppm` or less, per "The front hand edge".
    A row without a run is named in the record and does not fail the figure on its own.
 5. The side view shows the thumbs forward and the backs of the hands out. The review sheet records
    both, and the look judge of AC4 rates the palms.
-6. Three breakage cases:
-   - the same hand cloud with flipped triangle winding fails `palm surface faces away from the
-declared normal`,
-   - a cloud mirrored about x, with the left landmarks unchanged, fails
-     `thumb not on the radial front edge`,
-   - a cloud turned 180 degrees about the finger axis, with its palm landmark moved with it, fails
-     the palm direction rule.
+6. The three mutations of "The three palm mutations" each produce exactly one named failure:
+   - flipped winding gives `hand L: palm surface faces away from the declared normal`,
+   - a mirrored hand with mirrored landmarks gives `hand L: palm faces away from the body`,
+   - a hand turned 180 degrees about its finger axis gives
+     `hand L: thumb not on the radial front edge`.
+     The test asserts that name and no other.
 
 ### AC4: the independent look judge
 
@@ -539,9 +584,9 @@ declared normal`,
 5. Every panel is scaled so the crown-to-sole height is 700 px, and every sole sits on the same
    baseline.
 6. The caption strip holds the asset name, the date, the pass table result, and the Green model id.
-7. The sheet and the panel are local. No route sends them to a model that is not an approved
-   look-judge route, and no route sends the Kim panels anywhere. T11 hands the path to the PM, and
-   the upload to Daniel waits for the PM's word.
+7. The Kim panels stay local. The Mom panel may go to an approved look-judge route only. No route
+   sends a Kim panel anywhere. T11 hands the path to the PM, and the upload to Daniel waits for the
+   PM's word.
 
 ### AC6: the stop
 
@@ -587,5 +632,5 @@ declared normal`,
 This track adds two asset modules, one measurement script, one sheet script, three test files, two
 render options, and one GPU trial. It changes the three scrapped test files, the preset pin, the
 Forge CLI, and the render page. It changes no scrapped source, no shipped asset, no game, no song
-page, no monorepo file, and no delivery folder. It sends no Kim art to a model or a third party, and
-it deletes nothing.
+page, no monorepo file, and no delivery folder. It sends no Kim art to a remote model, a hosted
+demo, or a third party, and it deletes nothing.

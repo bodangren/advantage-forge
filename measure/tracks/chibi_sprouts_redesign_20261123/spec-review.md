@@ -159,3 +159,36 @@ implementation and no test change.
   project, the 3 hour cap, the five steps, the delete and verify rule, the log header, and the result
   note. AC7 holds its acceptance, and the spec says the trial feeds the PM decision and does not
   replace the SDF base.
+
+## Amendment after r3 (2026-11-23)
+
+Source: `measure/runs/chibi_sprouts_redesign_20261123/spec-review-de232c0.json` (blockers F4, F19,
+F20; majors F21, F22, F23; baseline `de232c0`). Scope: `spec.md`, `plan.md`, and this file. No
+implementation and no test change.
+
+- F4 closed: the spec replaces the hand rules with "The palm check API". It names the export
+  `palmCheck(side, mesh, landmarks)`, the mesh shape (`positions`, `indices`, winding order), the
+  landmark shape, the return value, and seven ordered named failures, including
+  `palm patch: empty`. "The three palm mutations" defines each mutation against that call and its one
+  failure: flipped winding gives `palm surface faces away from the declared normal`, a mirrored hand
+  with mirrored landmarks gives `palm faces away from the body`, and a 180 degree turn gives
+  `thumb not on the radial front edge`. AC3 rules 2, 3, and 6 follow, and AC2 rule 1 exports
+  `palmCheck`.
+- F19 closed: the plan adds "Task order and gates", a table of T1 to T14 with each gate command and
+  the tests that still fail at that point. T7 no longer gates the full suite, because the sheet test
+  of T5 fails until T8. The full suite gate moves to T8, which runs after every earlier test is
+  green.
+- F20 closed: the merged-eye mutation now draws the two eyes 0.060 m apart with a 0.064 m eye width,
+  so the union is 0.124 m wide and 0.364 of the pass figure's 0.341 m head width. That is under the
+  0.40 limit of evaluation step 7, so exactly one component qualifies and the expected result is
+  `eye components: found 1, expected 2`. AC2 rule 7 states the numbers and why the pass spacing of
+  0.130 m would be rejected.
+- F21 closed: the standing rule, decision (m), the Exclusions, and "The LATO.2 GPU trial" limit the
+  ban to remote models, hosted demos, and third parties. The approved own-VM LATO.2 trial is allowed,
+  because the crop and the model both stay on our VM.
+- F22 closed: decision (m), "The LATO.2 GPU trial" rule 1, and T9 keep the standard L4 fallback and
+  record it as an orchestrator decision inside Daniel's USD 5 cap, with the PM informed on
+  2026-11-23. The PM may veto it, and the trial then stops before step 1.
+- F23 closed: T2 and the Known limits create the fixture at `assets/_flat-render-pin-<pid>.ts` with
+  the exclusive flag `wx`. An existing path fails with `fixture path exists: <path>`, and the
+  `finally` block removes only the path this run created.
