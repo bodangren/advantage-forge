@@ -1,11 +1,14 @@
 import { spawnSync, type SpawnSyncReturns } from 'node:child_process';
-import { existsSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
-import { join } from 'node:path';
+import { existsSync, lstatSync, readFileSync, realpathSync, rmSync, writeFileSync } from 'node:fs';
+import { basename, dirname, join, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { describe, expect, it, afterAll } from 'vitest';
 import sharp from 'sharp';
 
-const ROOT = '/home/daniebo/Desktop/forge-worktrees/sprouts-redesign';
-const HEAVY_RUN = '/home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh';
+// The checkout under test comes from this module, never from a hard-coded path.
+const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+const HEAVY_RUN =
+  process.env.HEAVY_RUN_PATH ?? resolve(ROOT, '..', '..', 'advantage-pr', 'scripts', 'jobs', 'heavy-run.sh');
 const PID = process.pid;
 const PIN_NAME = `_flat-render-pin-${PID}`;
 const FIXTURE_PATH = join(ROOT, 'assets', `${PIN_NAME}.ts`);
@@ -34,7 +37,8 @@ export default defineAsset({
 let created = false;
 let renderResult: SpawnSyncReturns<string> | null = null;
 
-function createFixture(targetPath: string, body: string): void {
+// The one ownership check: exclusive creation, or the named collision error.
+function createExclusive(targetPath: string, body: string): void {
   try {
     writeFileSync(targetPath, body, { flag: 'wx' });
   } catch (error) {
@@ -42,7 +46,21 @@ function createFixture(targetPath: string, body: string): void {
     if (e.code === 'EEXIST') throw new Error(`fixture path exists: ${targetPath}`);
     throw error;
   }
-  if (targetPath === FIXTURE_PATH) created = true;
+}
+
+function createFixture(body: string): void {
+  createExclusive(FIXTURE_PATH, body);
+  created = true;
+}
+
+function removeOutDir(): void {
+  const st = lstatSync(OUT_DIR, { throwIfNoEntry: false });
+  if (!st || !st.isDirectory()) return;
+  const real = realpathSync(OUT_DIR);
+  const outRoot = realpathSync(join(ROOT, 'out'));
+  if (dirname(real) !== outRoot) return;
+  if (!basename(real).startsWith('_flat-render-pin-')) return;
+  rmSync(real, { recursive: true, force: true });
 }
 
 function removeOwned(): void {
@@ -50,6 +68,7 @@ function removeOwned(): void {
     rmSync(FIXTURE_PATH, { force: true });
     created = false;
   }
+  removeOutDir();
 }
 
 function runForge(args: string): SpawnSyncReturns<string> {
@@ -62,7 +81,7 @@ function runForge(args: string): SpawnSyncReturns<string> {
 }
 
 function ensureRendered(): SpawnSyncReturns<string> {
-  if (!existsSync(FIXTURE_PATH)) createFixture(FIXTURE_PATH, pinSource());
+  if (!created) createFixture(pinSource());
   if (!renderResult) {
     renderResult = runForge(
       `render ${PIN_NAME} --fast --views front-level,side-level --ortho --flat --bg none --size 256`,
@@ -106,7 +125,28 @@ afterAll(() => {
 });
 
 describe('render options (orthographic flat pin)', () => {
+  it('fails closed when the actual fixture path already exists', { timeout: 600_000 }, () => {
+    expect(existsSync(FIXTURE_PATH)).toBe(false);
+    writeFileSync(FIXTURE_PATH, '// planted collision\n', { flag: 'wx' });
+    const before = readFileSync(FIXTURE_PATH, 'utf8');
+    let failure = '';
+    try {
+      ensureRendered();
+    } catch (error) {
+      failure = (error as Error).message;
+    }
+    expect(failure).toBe(`fixture path exists: ${FIXTURE_PATH}`);
+    expect(readFileSync(FIXTURE_PATH, 'utf8')).toBe(before);
+    expect(renderResult).toBeNull();
+    expect(existsSync(OUT_DIR)).toBe(false);
+    rmSync(FIXTURE_PATH, { force: true });
+    expect(existsSync(FIXTURE_PATH)).toBe(false);
+  });
+
   it('writes both flat views at 256x256', { timeout: 600_000 }, async () => {
+    expect(existsSync(join(ROOT, 'src', 'cli', 'forge.ts'))).toBe(true);
+    expect(existsSync(join(ROOT, 'package.json'))).toBe(true);
+    expect(existsSync(HEAVY_RUN), `missing runner ${HEAVY_RUN}`).toBe(true);
     const result = ensureRendered();
     expect(result.status, result.stderr || result.stdout).toBe(0);
     for (const pngPath of [FRONT_PNG, SIDE_PNG]) {
@@ -190,7 +230,7 @@ describe('render options (orthographic flat pin)', () => {
   );
 
   it('writes the named view without --ortho and rejects --flat without --fast', { timeout: 600_000 }, () => {
-    if (!existsSync(FIXTURE_PATH)) createFixture(FIXTURE_PATH, pinSource());
+    if (!created) createFixture(pinSource());
     const named = runForge(`render ${PIN_NAME} --views front-level --size 128 --bg none --fast`);
     expect(named.status, named.stderr || named.stdout).toBe(0);
     expect(existsSync(join(OUT_DIR, 'views', 'front-level.png'))).toBe(true);
@@ -201,21 +241,28 @@ describe('render options (orthographic flat pin)', () => {
 
   it('protects an existing fixture path and leaves no fixture behind', { timeout: 600_000 }, () => {
     const probePath = join(ROOT, 'assets', `${PIN_NAME}-probe.ts`);
-    writeFileSync(probePath, '// pre-existing probe\n');
-    const before = readFileSync(probePath, 'utf8');
-    let failure = '';
+    let probeFailure = '';
     try {
-      createFixture(probePath, pinSource());
+      createExclusive(probePath, pinSource());
     } catch (error) {
-      failure = (error as Error).message;
+      probeFailure = (error as Error).message;
     }
-    expect(failure).toBe(`fixture path exists: ${probePath}`);
+    expect(probeFailure).toBe('');
+    const before = readFileSync(probePath, 'utf8');
+    let secondFailure = '';
+    try {
+      createExclusive(probePath, pinSource());
+    } catch (error) {
+      secondFailure = (error as Error).message;
+    }
+    expect(secondFailure).toBe(`fixture path exists: ${probePath}`);
     expect(readFileSync(probePath, 'utf8')).toBe(before);
     rmSync(probePath, { force: true });
     const result = ensureRendered();
     expect(result.status, result.stderr || result.stdout).toBe(0);
     removeOwned();
     expect(existsSync(FIXTURE_PATH)).toBe(false);
+    expect(existsSync(OUT_DIR)).toBe(false);
     expect(created).toBe(false);
   });
 });
