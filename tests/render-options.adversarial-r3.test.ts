@@ -1,9 +1,4 @@
-import {
-  spawn,
-  spawnSync,
-  type ChildProcessWithoutNullStreams,
-  type SpawnSyncReturns,
-} from 'node:child_process';
+import { spawn, spawnSync, type SpawnSyncReturns } from 'node:child_process';
 import {
   existsSync,
   lstatSync,
@@ -86,7 +81,7 @@ afterAll(cleanup);
 
 function renderWithOutputSwap(): Promise<{ status: number | null; output: string; swapped: boolean }> {
   const command = `cd '${ROOT}' && ./forge render ${ASSET_NAME} --fast --flat --bg none --views front-level --size 64`;
-  const child: ChildProcessWithoutNullStreams = spawn('bash', [HEAVY_RUN, '-c', command], {
+  const child = spawn('bash', [HEAVY_RUN, '-c', command], {
     cwd: ROOT,
     env: { ...process.env, HEAVY_MIN_AVAIL_MB: '1500', FORGE_DEBUG: '1' },
     stdio: ['ignore', 'pipe', 'pipe'],
