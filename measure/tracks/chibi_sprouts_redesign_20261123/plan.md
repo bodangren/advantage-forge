@@ -98,9 +98,14 @@ Every task brief in this plan carries these lines:
 
 ## Phase 1: Red
 
-- [ ] T1 Red: Skip the scrapped contract tests with the scrap reason, and keep the hero assertions
+- [x] T1 Red (tests 4c8dded7): Skip the scrapped contract tests with the scrap reason, and keep the hero assertions
       active. Files: `tests/sprout-base.test.ts`, `tests/sprout-gestures.test.ts`,
       `tests/sprout-gesture-offset.test.ts`.
+  - Evidence 2026-11-23: baseline pre-edit exits 0 with 3 files and 15 passed tests. Post-edit the
+    same command exits 0 with 3 files and 3 passed plus 15 skipped tests. `grep -c
+'describe.skip('` gives 1, 1, 2; `grep -c 'hero clip contracts'` gives 1. The AC1 guard (3
+    reason comments, hero describe, 3 hero names, 4 skip titles) fails on the unedited files and
+    passes after the edit. `prettier --check` exits 0 on the three files.
   - `tests/sprout-base.test.ts`: the one describe becomes `describe.skip` with the title suffix
     ` — sprout base scrapped 2026-11-23 (Daniel)`. Two tests skip:
     `has the bone names, clip names, and equip sockets of the avatar base` and
@@ -130,7 +135,16 @@ Every task brief in this plan carries these lines:
   - Note: the three files pass before the skip. The skip retires a contract of the scrapped base; it
     does not repair a failure.
 
-- [ ] T2 Red: Pin the renderer options with a behaviour test. File: `tests/render-options.test.ts`.
+- [x] T2 Red (tests d02c8fa9): Pin the renderer options with a behaviour test. File: `tests/render-options.test.ts`.
+  - Evidence 2026-11-23: `vitest run tests/render-options.test.ts` exits 1 with 8 failed cases.
+    Failure text: `Unknown option '--ortho'`, `Unknown view 'front-level'`, and the missing
+    `out/_flat-render-pin-<pid>/flat/` PNGs. No syntax error, no collection error, no missing
+    module. `git status --porcelain tests/ assets/` shows the test file alone (plus the unrelated
+    pre-existing `assets/wizard-argon-trial.ts`). `prettier --check` exits 0; `tsc --noEmit`
+    reports no error in the new file (51 pre-existing errors stay). Fixture: one box
+    0.40 x 1.00 x 0.20 m with a 0.05 m block at +Z, created with the `wx` flag at the unique
+    per-run path `assets/_flat-render-pin-<pid>.ts`; an ownership flag gates removal in
+    `finally`; a pre-created path fails with `fixture path exists: <path>` and stays untouched.
   - The test writes a pin asset to a unique per-run path, `assets/_flat-render-pin-<pid>.ts`, where
     `<pid>` is the process id of the test run. It creates the file with the exclusive flag `wx`, so
     it never overwrites an existing file. The test sets an ownership flag `created = true` only after
