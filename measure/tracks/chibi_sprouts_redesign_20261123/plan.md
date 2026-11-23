@@ -170,7 +170,7 @@ Every task brief in this plan carries these lines:
   - Done-when: the test exits 1, and each case fails on the absent option or the absent output file,
     not on a syntax or import error. `git status --porcelain tests/ assets/` shows the test file
     alone. `prettier --check` exits 0 on the test file.
-  - Record: the command, the eight case names, the failure text, and the fixture body.
+  - Record: the command, the nine case names, the failure text, and the fixture body.
 
 ## Phase 2: Green
 

@@ -259,14 +259,15 @@ git status --porcelain tests/ assets/
 node_modules/.bin/prettier --check tests/render-options.test.ts
 ```
 
-Expected failing evidence: exit 1. Each of the eight cases fails inside the case on the absent
-option or the absent output file. Expected texts include an unknown view `front-level`, an unknown
-`--ortho` or `--flat` option, and a missing `out/_flat-render-pin-<pid>/flat/front-level.png`. The
-run never fails at collection, with a `SyntaxError`, with `Cannot find module`, or at file-scope
-import. `git status --porcelain tests/ assets/` shows the test file alone. The run-time fixture path
-is absent at the end. `prettier --check` exits 0.
+Expected failing evidence: exit 1. Eight of the nine cases fail inside the case on the absent option
+or the absent output file. The fail-closed case passes at once, because its guard sits in the test
+file. Expected texts include an unknown view `front-level`, an unknown `--ortho` or `--flat` option,
+and a missing `out/_flat-render-pin-<pid>/flat/front-level.png`. The run never fails at collection,
+with a `SyntaxError`, with `Cannot find module`, or at file-scope import. `git status --porcelain
+tests/ assets/` shows the test file alone. The run-time fixture path is absent at the end.
+`prettier --check` exits 0.
 
-The eight cases are fixed by behavior:
+The nine cases are fixed by behavior:
 
 1. Both flat views exist at 256 x 256.
 2. The corner pixel has alpha 0.
@@ -278,6 +279,9 @@ The eight cases are fixed by behavior:
    `--fast` fails with `--flat needs --fast and --bg none`.
 8. The fixture ownership case: a pre-created path fails with `fixture path exists: <path>` and the
    file stays; the run's own fixture path is absent at the end.
+9. The fail-closed case on the run's own fixture path: a planted file gives
+   `fixture path exists: <path>`, the planted file stays, and no render result or output folder
+   appears.
 
 The flat pixel contract behind cases 2 to 4 is fixed in `spec.md`: each mesh keeps its geometry and
 `visible` flag; the material becomes `MeshBasicMaterial({ color, vertexColors, toneMapped: false,
@@ -285,13 +289,13 @@ side })`; the ground is hidden; `outputColorSpace` stays `SRGBColorSpace`; a bas
 within 1 of 255 and a paint colour within 24 of 255; the mask uses alpha 128 and the colour rule
 uses alpha 250; `--flat` needs `--fast` and `--bg none`; the original materials return after the run.
 
-Green gate (at T3): the same Red command exits 0 with 8 cases. Closeout gate: `plan.md` records the
-command, the eight case names, the failure text, and the fixture body.
+Green gate (at T3): the same Red command exits 0 with 9 cases. Closeout gate: `plan.md` records the
+command, the nine case names, the failure text, and the fixture body.
 
 ### Phase 1 Green gate and closeout gate
 
 Green gate: T1's reporter line is 3 passed and 15 skipped with the grep counts holding, and T2's
-command exits 0 with 8 cases. Closeout gate: `prettier --check` passes on all four test files;
+command exits 0 with 9 cases. Closeout gate: `prettier --check` passes on all four test files;
 `node measure/tools/generate.mjs --check` and `./measure/doctor.sh --structural-only` exit 0 after
 the T2 commit; the mid-red gate shows each Red commit held `tests/` paths only.
 
@@ -320,7 +324,7 @@ function. `ViewsRequest` gains `readonly ortho?: boolean` and `readonly flat?: b
 writes `join(out, 'flat', `${view}.png`)` under `--flat`, and rejects `--flat` without `--fast` and
 `--bg none` with the named error.
 
-Green gate: the vitest command exits 0 with 8 cases; `tsc --noEmit` reports no error in the two
+Green gate: the vitest command exits 0 with 9 cases; `tsc --noEmit` reports no error in the two
 changed files while TD-35 to TD-39 stay open; one render of an existing asset still writes `views/`
 as before; `prettier --check` exits 0 on the two files. Closeout gate: `plan.md` records the exported
 symbols, the option names, the test run, the Green model id and family, and the render that shows no
@@ -602,8 +606,8 @@ study. The Kim-art rule is enforced by decision (k), AC4 rule 7, and the Phase 7
 
 | ID                   | Defense                                                                                                                            | Falsification                                                                    |
 | -------------------- | ---------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
-| A3 digit-only count  | Parse the case count as the labeled integer 8.                                                                                     | A run with seven or nine cases, or a count read from any other digit, fails.     |
-| A4 vacuous pass      | Require all eight cases to pass, including the fixture ownership case.                                                             | A run that executes no case, or a skipped ownership case, passes no green gate.  |
+| A3 digit-only count  | Parse the case count as the labeled integer 9.                                                                                     | A run with eight or ten cases, or a count read from any other digit, fails.      |
+| A4 vacuous pass      | Require all nine cases to pass, including the fail-closed and the ownership case.                                                  | A run that executes no case, or a skipped ownership case, passes no green gate.  |
 | A5 false claim       | Run the vitest command and `tsc --noEmit` before `plan.md` records a pass.                                                         | A green claim with a red command fails closeout.                                 |
 | A7 over-broad filter | The `finally` block removes only the exact created path under `created`. A collision fails and leaves the existing file untouched. | A broad removal, a removed ownership guard, or an overwritten file fails case 8. |
 | A10 facts drift      | Run `generate.mjs --check` and `doctor.sh --structural-only` after the T3 commit.                                                  | Stale committed facts fail the doctor.                                           |
