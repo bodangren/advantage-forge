@@ -11,7 +11,7 @@
   "deviation_notes": "Created 2026-11-22 from the ES2022+ built-in scan of src/ on 2026-11-22: 44 hits at baseline a414b406 (35 structuredClone, 8 array .at(, 1 findLastIndex). The device gate stays as it is (PM decision 2026-11-22): old Android phones with WebView 80 to 97 are the audience. Due 2026-11-27, before the Storytime launch of 2026-11-30. Amended 2026-11-23 after spec review r1 (report spec-review-af00767): the 8 array .at( sites are listed by line, the track widens the committed scanner tests/apk3d/no-unpolyfilled-builtins.test.ts instead of adding a second one, audio task T6k 0cc7b5c4 is recorded as a met prerequisite for the Object.hasOwn deletion, and the stale 217-file/3,299-test pin left AC4.",
   "workstream": "games",
   "retrospective": false,
-  "escalation": "third round: the Box3 exclusion matches a substring, so a renamed Set receiver hides a union call (acceptance rule A7)",
+  "escalation": "third round: the Box3 exclusion matches a substring, so a renamed Set receiver hides a union call (acceptance rule A7); fourth round: the Box3 exclusion regex boundary still hides holder.box.union(b) and a non-ASCII receiver; bind it to the exact line (acceptance rule A7)",
   "evidence": [
     "vite.demo.config.ts",
     "src/apk3d/device/gate.ts",

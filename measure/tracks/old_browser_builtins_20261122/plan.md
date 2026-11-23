@@ -330,6 +330,7 @@ tests/apk3d/no-unpolyfilled-builtins.test.ts'` exits 0: 1 file passed, 2 tests p
     reports no error in the file; `prettier --check` exits 0.
 
 - [x] T3r4 Red (72e74de0): acceptance rule A7, exact-call exclusion (PM 2026-11-23)
+- [x] T3r5 Red (9459687d): acceptance rule A7 closed by construction, exact-line exclusion (PM approval for A7, 2026-11-23)
 - Late finding C3-F6: tech-debt (the copy.ts:9-12 doc wording overstates the behavior of unsupported inputs; the fallback keeps the prototype; no user reaches a wrong result) — source measure/runs/old_browser_builtins_20261122/review-c-5a1da50.json
 - Late finding C3-F5: tech-debt (test-strategy.md:169 counts the changed source files wrong; the plan count is correct; no user reaches a wrong result)
 - Late finding A3-F8: tech-debt (the plan keeps the historical TS2769 attribution at plan.md:173-177 and 206-209; a record error only; no user reaches a wrong result) — source measure/runs/old_browser_builtins_20261122/review-a-5a1da50.json
