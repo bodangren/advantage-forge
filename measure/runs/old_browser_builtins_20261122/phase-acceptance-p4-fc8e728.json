@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "role": "phase-acceptance",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 4: Gates",
+  "baseline_sha": "9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4",
+  "phase_base_sha": "9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4",
+  "role_base_sha": "fc8e728e1f03b4be119084a8109d74d16f8cddc1",
+  "audited_head_sha": "fc8e728e1f03b4be119084a8109d74d16f8cddc1",
+  "status": "fail",
+  "summary": "Phase 4 acceptance did not run. The test strategy requires Review A, and no passing Review A result targets the audited HEAD.",
+  "blocking_findings": [
+    "F1 [Blocker] phase-acceptance: test-strategy.md:33 requires Review A for Phases 1 through 4. No Phase 4 Review A result targets fc8e728e. The Phase 3 result at 9e406e8 cannot satisfy the same-HEAD prerequisite because the intervening commits change the plan and generated status."
+  ],
+  "nonblocking_findings": [],
+  "evidence": [
+    "HEAD and the role base are fc8e728e1f03b4be119084a8109d74d16f8cddc1. The phase base is 9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4.",
+    "Both requested source, script and test diffs are empty. There are no later commits beyond the audited HEAD.",
+    "Commits d282495b, a563e3ee and fc8e728e change only plan.md and measure/generated/status.md. They do not qualify for the test-only or measure/runs SHA exception.",
+    "The strategy calls Phase 4 records-only at line 27 and still requires Review A at line 33. Lines 34-37 do not require Review B, Review C, adversarial testing or UX browser review for Phase 4.",
+    "The preflight found no Phase 4 Review A artifact. This role started no tests, browser or server. Port 5199 had no listener.",
+    "The T8 gate claims, Prettier baseline and pending record updates are not accepted or rejected in this preflight."
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "git diff --stat 9e406e8c fc8e728e -- src scripts tests (empty)",
+    "git diff --stat fc8e728e HEAD -- src scripts tests (empty)",
+    "git log --format='%h %s' --name-only 9e406e8c..fc8e728e",
+    "ss -H -ltnp 'sport = :5199' (empty)"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/phase-acceptance-p4-fc8e728.json",
+    "measure/runs/old_browser_builtins_20261122/phase-acceptance-p4-fc8e728.log"
+  ],
+  "test_strategy_violations": [
+    "The required Phase 4 Review A result is missing on the audited HEAD."
+  ],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "retry_audit",
+  "confidence": "high",
+  "route": "unknown",
+  "reviewer_ratings": []
+}

@@ -1,0 +1,22 @@
+MEASURE_AGENT_RESULT
+role: measure-review-b-security
+track: old_browser_builtins_20261122
+phase: Phase 3: Browser check
+round: re-bind to HEAD 9e406e8c
+phase_base_sha: 31af75444583c9236f342c908128c91da9f4f7e3
+role_base_sha: 9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4
+audited_head_sha: 9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4
+security_applicability: applicable
+status: pass
+blocking_findings: none
+nonblocking_findings: none
+evidence:
+  - "Binding: git diff --stat 1eefa25d 9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4 -- src scripts prints nothing (0 lines); src/ and scripts/ are byte-identical to the Round 3 audited HEAD; commits since are test-only (387a7032, 437bcb2d) or records (f9cacede, 9e406e8c)."
+  - "Green command through heavy-run.sh: node scripts/old-browser-check.mjs --game spellweavers-run -> exit 0; started=true, moves=3 (action_inputs ['ArrowRight','1','ArrowRight']), negative_control.changed=false, state_changed=true, errors=[], all four built-ins absent in page."
+  - "Cleanup: within 20 s of the Green run no listener row remained; ss -ltn shows nothing on 5199 and ps shows no vite.js or chrome-headless-shell process; nothing needed killing."
+  - "The standing Round 3 audit object holds: listener-owner verification is safe and fails closed, input causality and the negative control work (moves=3 with page-side event counting), the report is scrubbed, and loopback/signal/args/write properties are verified."
+  - "A2 not applicable: no draft-to-published path. A6: the test-only commits match their plan record and the Green output matches the doc comment fields."
+retry_recommendation: none
+result_path: measure/runs/old_browser_builtins_20261122/review-b-p3-9e406e8.json
+log_path: measure/runs/old_browser_builtins_20261122/review-b-p3-9e406e8.log
+END_MEASURE_AGENT_RESULT

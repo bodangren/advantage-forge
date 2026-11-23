@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: review-a
+status: complete
+track: old_browser_builtins_20261122
+phase: Phase 3: Browser check
+commits: none
+tests_run: Wrapped Green exit 0, three moves, four absent names, no errors. Wrapped witnesses exit 0, original passes and TD-49 is skipped. No audit-owned listener, Vite, or Chrome remains.
+files_changed: review-a-p3-9e406e8.json and review-a-p3-9e406e8.log
+plan_updates: none
+known_failures: F4 remains closed. F6 and F5 are nonblocking TD-49 items.
+handoff: Phase 3 passes at 9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4. The PM may veto the TD-49 disposition. No Green retry is requested.
+END_MEASURE_AGENT_RESULT

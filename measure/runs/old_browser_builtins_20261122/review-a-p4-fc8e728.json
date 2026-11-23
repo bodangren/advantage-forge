@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "role": "review-a",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 4: Gates",
+  "baseline_sha": "9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4",
+  "phase_base_sha": "9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4",
+  "role_base_sha": "fc8e728e1f03b4be119084a8109d74d16f8cddc1",
+  "audited_head_sha": "fc8e728e1f03b4be119084a8109d74d16f8cddc1",
+  "status": "fail",
+  "summary": "The wrapped test counts, generator, and doctor match the T8 record. T8 is marked complete, but the required AC6 formatter command still exits 1.",
+  "blocking_findings": [
+    "F1 [Blocker] review-a: plan.md:457,465,474 marks T8 complete although the required Prettier command exits 1. AC6 and test-strategy.md:263 require every listed command to exit 0. The audit reproduced the 35 warnings at HEAD and the same failures at the baseline. That comparison establishes baseline debt, not an AC6 pass. No approved exception covers this formatter result."
+  ],
+  "nonblocking_findings": [],
+  "evidence": [
+    "HEAD equals fc8e728e1f03b4be119084a8109d74d16f8cddc1. The exact phase diff changes only the track plan and generated status. The requested diff for src, scripts, and tests is empty.",
+    "The AC6 formatter command from test-strategy.md:278 exited 1 with 35 warnings. The named seven-file subset exited 0.",
+    "All 35 failing paths existed at the full track-start SHA recorded in the plan. The stdin check exited 1 for each baseline version. The path-restricted diff shows the built-in replacements and associated imports, not a bulk format change.",
+    "The wrapped three-file command exited 0 with 3 files and 23 tests passed. The witnesses exited 0 with 1 pass and 1 skip.",
+    "The wrapped project command exited 0 with 231 files passed and 2 skipped. It reported 3397 tests passed and 10 skipped.",
+    "The wrapped standalone scan exited 0 with 11 tests passed. Its src scan asserts that the list of unexcluded hits is empty.",
+    "The generator and structural doctor each exited 0 and printed the recorded success text.",
+    "T9 remains visibly pending and does not replace any AC6 check. The phase parser counts one completed task and no non-deferred tasks. The closeout validator still rejects T9 without a done SHA.",
+    "The project plan parser counts 17 of 17 tasks complete at a563e3ee and 17 of 18 at fc8e728e. The doctor rule at measure/tools/doctor.mjs:131 explains the intermediate structural failure and the pending T9.",
+    "The plan names the test date and tested commit for the gate set. The full tested SHA and the gate record SHA both resolve. The plan accurately labels the Prettier command as failing, but marks T8 complete.",
+    "The plan names TD-35 through TD-39 as typecheck debt outside the gate. The project command excludes the TD-40 Storytime file. No debt failure counts as a test pass.",
+    "The Phase 3 Review A record at 9e406e8c confirms the historical browser command and report values. The script and runtime source are unchanged in Phase 4. This audit started no browser or server.",
+    "There are no changed exports, callers, or framework checks in the phase. The build-graph database has no nodes table.",
+    "The final git rev-parse HEAD matched the audited SHA. The final ss and ps checks found no listener on 5199 and no audit-owned process."
+  ],
+  "commands": [
+    "git rev-parse HEAD; git diff 9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4..fc8e728e1f03b4be119084a8109d74d16f8cddc1; git diff --stat 9e406e8c fc8e728e -- src scripts tests",
+    "node_modules/.bin/prettier --check on the exact AC6 list and separately on the seven-file subset",
+    "git show 3f6a1921:<path> | node_modules/.bin/prettier --stdin-filepath <path> --check for all 35 failing paths; git diff 3f6a1921 fc8e728e --stat and --unified=0 on those paths",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c with the AC6 three-file command, both adversarial witnesses, the standalone built-in scan, and the AC6 project command with the Storytime exclusion",
+    "node measure/tools/generate.mjs --check; ./measure/doctor.sh --structural-only",
+    "Measure checker phase_counts and plan_closeout_feedback for T9",
+    "git rev-parse HEAD; ss -ltn 'sport = :5199'; ps -eo pid,ppid,stat,comm,args"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/review-a-p4-fc8e728.json",
+    "measure/runs/old_browser_builtins_20261122/review-a-p4-fc8e728.log"
+  ],
+  "test_strategy_violations": [
+    "The full AC6 formatter list exits 1, contrary to the exit-0 condition in test-strategy.md section 7."
+  ],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "retry_implementation",
+  "confidence": "high",
+  "route": "unknown",
+  "ratings": [
+    {"axis": "correctness", "score": 3, "evidence": "plan.md:457 marks T8 complete although the required Prettier command exits 1."},
+    {"axis": "test_meaning", "score": 4, "evidence": "The wrapped project command reproduced 3397 passes and 10 skips, including the named TD-49 skip."},
+    {"axis": "scope_discipline", "score": 5, "evidence": "The phase diff changes only the track plan and its generated status."},
+    {"axis": "evidence_quality", "score": 4, "evidence": "The formatter comparison reproduced exit 1 for all 35 failing paths at the track-start SHA."}
+  ]
+}

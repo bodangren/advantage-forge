@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: phase-acceptance
+status: complete
+track: old_browser_builtins_20261122
+phase: Phase 3: Browser check
+commits: none
+tests_run: Wrapped live AC5 PASS (two accepted moves, four undefined names, no errors); witness and source scan PASS with TD-49 skip; project suite PASS (3397 tests, 10 skipped); TypeScript baseline 51, none in changed files; structural checks PASS.
+files_changed: phase-acceptance-p3-9e406e8.json and .log
+plan_updates: none
+known_failures: None blocking. TD-49 retains the harness attribution and reporting limits. Port 5199 is free.
+handoff: Record the PM reopen trigger exactly: a browser check passes while a real input fails. Split grouped late-finding dispositions into one line per ID in the next record update.
+END_MEASURE_AGENT_RESULT

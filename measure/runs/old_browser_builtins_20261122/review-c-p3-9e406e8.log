@@ -1,0 +1,29 @@
+Phase base: 31af75444583c9236f342c908128c91da9f4f7e3
+Role base and audited HEAD: 9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4
+HEAD matched before and after the help check.
+
+git diff --stat 1eefa25d 9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4 -- src scripts
+Result: no output. The CLI and source are unchanged.
+
+HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/old-browser-check.mjs --help'
+Exit 0. Printed one usage line. No browser or server started.
+
+The T7 evidence and ruling distinguish the completed fixes from the findings deferred to TD-49.
+The plan and TD-49 record A3-F6, C3-F6, and the CLI group. The F3 closure is unchanged.
+A concurrent listener was not owned by this role. The final ss and ps checks showed the port free and the observed headless process gone.
+Retain the detached release worktree, shelf-sync and Chibi Sprouts worktrees and branches, and wip/oct-skill-docs-20261023 for their owners. Leave the origin refs unchanged.
+
+MEASURE_AGENT_RESULT
+role: measure-review-c-ux-api
+status: complete
+track: old_browser_builtins_20261122
+phase: Phase 3: Browser check
+commits: none
+tests_run: wrapped --help (exit 0, one usage line); no browser run
+files_changed: review-c-p3-9e406e8.json, review-c-p3-9e406e8.log
+plan_updates: none
+known_failures: no blockers; F4 and F5 nonblocking; C3-F6 remains late tech debt
+handoff: Use this result at 9e406e8c for Phase 3 acceptance. Keep C3-F6 and the recorded CLI findings in TD-49.
+END_MEASURE_AGENT_RESULT
+
+RESULT: PASS

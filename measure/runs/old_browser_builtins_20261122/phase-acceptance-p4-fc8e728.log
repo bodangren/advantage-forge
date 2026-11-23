@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: phase-acceptance
+status: blocked
+track: old_browser_builtins_20261122
+phase: Phase 4: Gates
+commits: none
+tests_run: None. Stopped at the prerequisite check. The source, script and test diffs were empty, and port 5199 was free.
+files_changed: phase-acceptance-p4-fc8e728.json and .log
+plan_updates: none
+known_failures: Required Phase 4 Review A is missing on fc8e728e. No gate verdict was issued for T8.
+handoff: Obtain a Phase 4 Review A result on the audited HEAD. Then rerun acceptance and the requested gates. Review B, Review C, adversarial testing and UX browser review are not required for this records-only phase.
+END_MEASURE_AGENT_RESULT

@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "role": "ux-browser-review",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 3: Browser check",
+  "baseline_sha": "31af75444583c9236f342c908128c91da9f4f7e3",
+  "phase_base_sha": "31af75444583c9236f342c908128c91da9f4f7e3",
+  "role_base_sha": "1eefa25d9d286a80d4f2a1576664f1894aeb755d",
+  "audited_head_sha": "9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4",
+  "status": "pass",
+  "summary": "Re-bound the Phase 3 UX result to orchestrator-confirmed current HEAD 9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4. The unchanged browser script and source retain the prior evidence. The current check and screenshots show a running game with all four built-ins absent and visible gameplay progress.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F1 [Nit] ux-browser-review: The Phaser 2D game has an empty accessibility snapshot because the interface renders in a canvas. The screenshots show game content, but the canvas does not expose that content to assistive technology. This remains a nonblocking limitation."
+  ],
+  "evidence": [
+    "The orchestrator supplied full current HEAD 9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4 and confirmed that it was current at re-bind.",
+    "The orchestrator reports that `git diff --stat 1eefa25d 9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4 -- src scripts` printed nothing. This is orchestrator-supplied evidence; this role did not run shell commands.",
+    "The orchestrator reports intervening commits 437bcb2d (test-only skip), f9cacede (plan and tech-debt records), and 9e406e8c (run records).",
+    "Read out/old-browser/check.json: spellweavers-run started; two accepted actions were ArrowRight and ArrowLeft; the 1500 ms negative control reports changed false; errors is empty; all four built-ins are undefined in the page.",
+    "Opened both current screenshots. The start image shows the game prompt, answer choices, HUD, forest scene, and player. The move image shows sentence progress, a selected answer, and a changed game scene.",
+    "Read scripts/old-browser-check.mjs. It deletes and checks the four built-ins, waits for the demo and mounted Phaser game, and verifies that the local port belongs to the spawned Vite process tree. These checks reject a blank page and a foreign server.",
+    "The script counts a move when a page input event and a player-action field change occur together. The quiet control checks for action-field changes without input. However, TD-49 records a contrived harness path that can block game handlers or call the game's auto hook. The orchestrator has classified A3-F6 and ADV3-F2 as tech debt; this result does not claim proof that the game itself processed the input.",
+    "Read green-p3-t7r2.log and the round 2 probes. The harness-score probe and foreign-server probe failed as expected. The Green run passed with an owned server, a mounted game, accepted inputs, and no recorded errors.",
+    "The browser panel opened the supplied URL in display-only mode. It did not provide an interactive snapshot, so this re-bind relies on the captured screenshots and run artifacts rather than a new live interaction.",
+    "The Phaser accessibility tree remains empty. No broader visual-quality or audible-quality claim is made."
+  ],
+  "commands": [
+    "Orchestrator-supplied: git rev-parse HEAD => 9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4; current at re-bind",
+    "Orchestrator-supplied: git diff --stat 1eefa25d 9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4 -- src scripts => no output",
+    "Read out/old-browser/check.json and opened both current screenshots",
+    "Read scripts/old-browser-check.mjs, green-p3-t7r2.log, and probe-p3r2-harness-score.mjs and probe-p3r2-startup-race.mjs",
+    "No shell commands run by this role"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/ux-browser-review-p3-9e406e8.json",
+    "measure/runs/old_browser_builtins_20261122/ux-browser-review-p3-9e406e8.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "openai/gpt-6-luna#high",
+  "webbridge_status": "not_run",
+  "webbridge_evidence": {
+    "screenshots": [
+      "out/old-browser/spellweavers-run-start.png: 1280x800 start state with the Spellweavers Run prompt, answer choices, HUD, forest scene, and player.",
+      "out/old-browser/spellweavers-run-move.png: 1280x800 move state with sentence progress, a selected answer, and changed gameplay."
+    ],
+    "accessibility_snapshots": [
+      "The Phaser 2D accessibility tree is empty because game content renders in canvas. This remains a nonblocking limitation."
+    ],
+    "interactions": [
+      "Current captured run opened http://127.0.0.1:5199/demo/index.html?qc=1&renderer=phaser and selected spellweavers-run.",
+      "The run started the Phaser game with structuredClone, Array.prototype.at, Array.prototype.findLastIndex, and Object.hasOwn deleted.",
+      "The captured check records ArrowRight and ArrowLeft as accepted actions, with a 1500 ms no-input control reporting no action change.",
+      "The move screenshot shows visible gameplay progress. TD-49 limits the causal claim: a contrived harness could block game handlers or call an auto hook."
+    ],
+    "dev_url": "http://127.0.0.1:5199/demo/"
+  },
+  "ux_applicability": "applicable"
+}

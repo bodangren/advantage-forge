@@ -1,0 +1,13 @@
+MEASURE_AGENT_RESULT
+role: measure-adversarial-testing
+status: complete
+track: old_browser_builtins_20261122
+phase: Phase 3: Browser check
+commits: none; rebound to record HEAD 9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4
+tests_run: both witness files ran through heavy-run (1 passed, 1 skipped); Green browser command passed (2 moves, no errors, four built-ins undefined)
+files_changed: measure/runs/old_browser_builtins_20261122/adversarial-p3-9e406e8.json; measure/runs/old_browser_builtins_20261122/adversarial-p3-9e406e8.log
+plan_updates: none
+known_failures: F2 remains a nonblocking late finding recorded as TD-49. The PM ruling says the contrived harness-only issue has no user-reachable wrong result. The preserved regression test stays skipped until TD-49 closes.
+handoff: Confirmed HEAD 9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4. The diff from 437bcb2d6533ef2bc23d38b37b5821b403283014 outside measure and docs/chibi-sprouts printed nothing. The two witness tests and Green command passed through heavy-run. No process listens on port 5199. Audit JSON and this log are the only files written in this run.
+dispositions: none
+END_MEASURE_AGENT_RESULT
