@@ -174,7 +174,9 @@ Every task brief in this plan carries these lines:
 
 ## Phase 2: Green
 
-- [ ] T3 Green: Add the renderer options. Files: `src/cli/forge.ts`, `src/render/page.ts`.
+- [x] T3 Green (src c69a5b73): Add the renderer options. Files: `src/cli/forge.ts`,
+      `src/render/page.ts`, and `tests/apk3d/no-unpolyfilled-builtins.test.ts` (the line numbers
+      it pins, see the note below).
   - `src/render/page.ts` exports `ORTHO_MARGIN = 1.10`, `orthoFrame(bounds, size)` (it returns
     `{ left, right, top, bottom, pixelsPerMetre }` from decision (f)), and
     `useFlatMaterials(root)` (it swaps each mesh material for a
@@ -195,6 +197,62 @@ Every task brief in this plan carries these lines:
     - `prettier --check` exits 0 on the two changed files.
   - Record: the exported symbols, the option names, the test run, and the render of the existing
     asset that shows no change.
+  - Evidence 2026-11-23 (Green model `minimax-cn-coding-plan/MiniMax-M3.1-Flash`, family MiniMax;
+    the Red model of this track was `opencode-go/muse-spark-1.3-contributor`, family muse, so the
+    two families differ). Every command below ran through
+    `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '<cmd>'`.
+  - The exported symbols in `src/render/page.ts`: `ORTHO_MARGIN` (1.1, the value 1.10 of decision
+    (f)), `orthoFrame(bounds, size)` (it returns `{ left, right, top, bottom, pixelsPerMetre }`),
+    and `useFlatMaterials(root)` (it returns the restore function). `ViewsRequest` gains
+    `readonly ortho?: boolean` and `readonly flat?: boolean`.
+  - The option names in `src/cli/forge.ts`: `--ortho` and `--flat`, plus the named views
+    `front-level` (azimuth 0, elevation 0) and `side-level` (azimuth 90, elevation 0). `--flat`
+    writes `out/<name>/flat/<view>.png`, leaves `views/` alone, writes no sheet, and is refused
+    without `--fast` and `--bg none` with the message `--flat needs --fast and --bg none`.
+  - The T2 Red command now exits 0 with 8 cases:
+    `node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/render-options.test.ts` gave
+    `Test Files 1 passed (1)` and `Tests 8 passed (8)`. The eight cases are the eight of the T2
+    evidence above: the two flat views at 256 x 256, the transparent corner, the body colour, the
+    block colour, the two view heights, the side block left of centre, the named view without
+    `--ortho` with the refused `--flat`, and the fixture ownership.
+  - The flat pixel contract holds on the pin asset. The read values of
+    `out/_flat-render-pin-<pid>/flat/front-level.png` are: the corner pixel `[0, 0, 0, 0]`, the
+    centre pixel `[63, 143, 208, 255]` (the body hex `#3f8fd0`), and the block pixel
+    `[224, 160, 48, 255]` (the block hex `#e0a030`). The side view holds the block in columns
+    99 to 109, so the block sits 29 px left of the centre, above the required 4.65 px
+    (`0.02` m times `ppm = 256 / 1.1`). Decision (j) holds: `Studio.aim` puts the azimuth-90
+    camera at +X, and the frame gives `u = (cz - z) * ppm + W / 2`.
+  - The other gates, each through the runner:
+    - `node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-base.test.ts
+tests/sprout-gestures.test.ts tests/sprout-gesture-offset.test.ts` exits 0 with
+      `Tests 3 passed | 15 skipped (18)`.
+    - The render-related existing tests exit 0: `tests/cutout.test.ts`, `tests/asset.test.ts`,
+      `tests/equip.test.ts`, `tests/part.test.ts`, `tests/variants.test.ts`,
+      `tests/preset-colour.test.ts`, `tests/clip-check.test.ts`, `tests/song-still-hook.test.ts`,
+      `tests/rig.test.ts`, `tests/apk3d/renderer-setting.test.ts`,
+      `tests/apk3d/no-unpolyfilled-builtins.test.ts`, and `tests/storytime-line-art-pass.test.ts`
+      gave `Test Files 12 passed (12)` and `Tests 73 passed (73)`.
+    - `node node_modules/typescript/bin/tsc --noEmit` exits 2 with the 51 baseline errors of
+      TD-35 to TD-39. The same 13 files fail as before the change, and no error names the two
+      changed source files or the refreshed test file.
+    - `node_modules/.bin/prettier --check src/cli/forge.ts src/render/page.ts
+tests/apk3d/no-unpolyfilled-builtins.test.ts` exits 0.
+  - The existing render output stays byte-identical. The renderer was run twice through the
+    runner on `sprout-pip`: once at the base commit and once with the new code. The SHA-256 sums
+    of `out/sprout-pip/render.png` and the four views match in both runs
+    (`render.png` `7efc9c27...`, `views/front.png` `c5746f41...`, `views/side.png` `172a6ff4...`,
+    `views/three-quarter.png` `d3d585e3...`, `views/back.png` `a830755b...`). The sprite set
+    matches too (ten PNG files plus `metrics.json`).
+  - Note on the format: the two source files were not Prettier-clean at the base commit
+    (`.prettierrc.json` sets `printWidth` 110; the base files were written at a wider width).
+    `prettier --write` reflowed the pre-existing lines of both files. The reflow changes line
+    breaks only. The byte-identical renders above show that no behaviour changed.
+  - Note on the apk3d test: `tests/apk3d/no-unpolyfilled-builtins.test.ts` binds three
+    `Box3.union` false positives to the line numbers 263, 440, and 447 of `src/render/page.ts`,
+    and it fails when those numbers rot. The new renderer code moved the three calls to lines
+    331, 531, and 538. The test now binds those three numbers. The bound source text, the
+    labels, the reasons, and the three rot cases are unchanged. The file is outside the file list
+    of this task, and the change is the refresh the test asks for when the scanned file moves.
 
 ## Phase 3: Red
 
