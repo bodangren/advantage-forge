@@ -41,7 +41,7 @@ names every test that still fails at that point.
 | T6   | `tsx scripts/proportion-check.mjs` with the named missing-asset error; `vitest run tests/sprout-mom-kim.test.ts` with only the end-to-end case and the real-hand case failing | the sheet test of T5, the measurement end-to-end case, and the measurement real-hand case |
 | T7   | `vitest run tests/sprout-mom-kim.test.ts tests/preset-colour.test.ts tests/render-options.test.ts`; expect exit 0                                                             | the sheet test of T5 only                                                                 |
 | T8   | `vitest run tests/mom-kim-sheet.test.ts`; then the full suite; expect exit 0 on both                                                                                          | none                                                                                      |
-| T9   | the trial log, the verify row, and the result note                                                                                                                            | none                                                                                      |
+| T9   | the step-log table of the result note, the verify row, and the result note                                                                                                    | none                                                                                      |
 | T10  | `judge.json` with both scores                                                                                                                                                 | none                                                                                      |
 | T11  | the handoff, no command                                                                                                                                                       | none                                                                                      |
 | T12  | the plan record                                                                                                                                                               | none                                                                                      |
@@ -318,6 +318,7 @@ tests/storytime-book-pictures.test.ts` gave `Test Files 1 failed | 233 passed | 
 - F6: a hard link at an output PNG path overwrites its target. Fix: refuse `st_nlink` greater than 1, and write through a temp file plus rename.
 - F7: one stray alpha pixel in a render lowers the visible figure to 667 px. Fix: take the largest connected component of the alpha mask.
 - Ruling: the orchestrator ruled F6 and F7 to tech debt on 2026-11-24, under the PM standing instruction to run Phase 5 to Phase 7 without stopping and the Phase 2 PM decision. A local writer or a stray pixel in a render of our own tool gives no wrong result. The real renders are clean at 700 px. `tests/mom-kim-sheet.adversarial-r3.test.ts` skips the two cases, and each skip title holds its debt reason.
+- Lesson (2026-11-24): the main tree `out/chibi-sprouts/redesign` was deleted during the Phase 5 audits. From now on, every role brief forbids probes and fixtures on a production `out/` path of any checkout, and demands temp copies under `/tmp`. Candidate debt row and lessons-learned entry to add at the merge to `master`: the scripts `proportion-check.mjs` and `mom-kim-sheet.mjs` write `out/chibi-sprouts/redesign` of the checkout that holds the script. Nothing stops a probe from pointing them at the main tree.
 
 **Project gate (Phases 4 and 5).** Recorded 2026-11-24.
 
@@ -753,10 +754,10 @@ scripts/proportion-check.mjs` exits 0.
 
 ## Phase 6: LATO.2 GPU trial (Daniel 2026-11-23, USD 5 cap)
 
-- [ ] T9 Measure: Run one LATO.2 image-to-mesh trial on our own VM. Files:
-      `out/chibi-sprouts/redesign/lato2-gpu/trial-log.tsv` and
-      `measure/runs/chibi_sprouts_redesign_20261123/lato2-gpu/trial-result.md` (both new, not in
-      git for the log path).
+- [x] T9 Measure (0d4ff336): Run one LATO.2 image-to-mesh trial on our own VM. Files:
+      `out/chibi-sprouts/redesign/lato2-gpu/trial-log.tsv` (lost 2026-11-24, see the loss record)
+      and `measure/runs/chibi_sprouts_redesign_20261123/lato2-gpu/trial-result.md` (both new, not
+      in git for the log path).
   - The trial runs in an orchestrator build session titled
     `Build · chibi redesign · LATO.2 GPU trial (Daniel USD 5)`. It runs alongside the SDF work. It
     uses one Spot L4 in `asia-southeast1` on project `reading-advantage`, with a 3 hour VM cap.
@@ -777,6 +778,9 @@ scripts/proportion-check.mjs` exits 0.
   - Done-when: the log holds one row per step, the verify row shows the VM and disk absent, the
     spend estimate stays at or under USD 5, and the result note holds the mesh result, the two render
     paths, the body rows, and the face-row note.
+    Amended 2026-11-24: the 'Steps and times' table of `trial-result.md` counts as the step log,
+    because `trial-log.tsv` was lost when the main tree `out/chibi-sprouts/redesign` folder went at
+    2026-11-24 03:36:24.
   - Record: the command list, the zone, the instance name, the total minutes, the total estimate, and
     the verify output. A missing verify row blocks the task.
   - The result feeds the PM decision at T12. It changes no row of the SDF pass table.
@@ -790,6 +794,46 @@ scripts/proportion-check.mjs` exits 0.
     PM ruling 2026-11-23: LATO.2 is out. Do not run LATO.2 on a GPU again. It is not a reference in
     the judge brief. The Mom SDF trial in our own tool stays the route. UniRig stays only as a note
     in the options table, with no run planned.
+
+  - Artifact loss record 2026-11-24: the main tree deleted and recreated `out/chibi-sprouts/redesign`
+    at 2026-11-24 03:36:24. The recreated folder has the new inode 33429231, and it holds
+    `measure.json` only. These LATO.2 artifacts are lost: `trial-log.tsv`, `kim-front_pred.obj`,
+    `kim-front_pred.ply`, `kim-front_cond.png`, `kim-front_ss.ply`, `kim-front.png`,
+    `mesh-front.png`, `mesh-side.png`, `mesh-metrics.json`, `lato2-review.png`, `lato2-shaded.png`,
+    `shaded-views/`, `vm-setup.sh`, and `vm-setup2.sh`. No author of the deletion is proven. The
+    loss window is the Phase 5 audit window. One process also copied `measure.json` into the new
+    folder, and copied `teacher-kim-sheet.png` over itself with identical bytes. `out/` is
+    git-ignored, so git holds no copy.
+  - What is intact: `measure/runs/chibi_sprouts_redesign_20261123/lato2-gpu/trial-result.md` in the
+    main tree, 8076 bytes. It holds the mesh counts, the body rows, the face-row note, and the
+    verify row.
+  - The steps and times of record, copied from `trial-result.md` on 2026-11-24. This table now
+    counts as the step log:
+
+    | Step                                     | Start UTC | End UTC  | Result                                                                                           |
+    | ---------------------------------------- | --------- | -------- | ------------------------------------------------------------------------------------------------ |
+    | Local crop of the Kim front view         | 01:58     | 01:59    | `kim-front.png`, 768 × 768, plain white background                                               |
+    | Price basis from the Google Cloud pages  | 01:58     | 01:59    | g2-standard-4 Spot in asia-southeast1 USD 0.544556 per hour; pd-balanced USD 0.11 per GiB-month  |
+    | Create the Spot VM                       | 02:00:19  | 02:00:35 | `lato2-trial-0123`, asia-southeast1-a, g2-standard-4, 1 L4, 100 GiB pd-balanced boot disk        |
+    | Clone LATO.2, venv, torch, base packages | 02:02     | 02:09    | torch 2.6.0+cu124; CUDA toolkit 12.9 present; image family `common-cu129-ubuntu-2204-nvidia-580` |
+    | Fix the build tools                      | 02:10     | 02:14    | `g++` and `python3.10-dev` were missing; install them with apt                                   |
+    | Build the CUDA extensions                | 02:15     | 02:30    | nvdiffrast 0.4.0, CuMesh 0.0.1, FlexGEMM 1.0.0; flash-attn 2.7.4.post1 wheel                     |
+    | Download the weights                     | 02:15     | 02:16    | 7 `.pt` files, 3.4 GiB; licence MIT                                                              |
+    | First two run attempts                   | 02:48     | 02:53    | Missing `safetensors`, then missing `kornia`; install both                                       |
+    | One image-to-mesh run                    | 02:54:27  | 02:54:55 | Generation 28.21 s; total 65 s with model load; peak VRAM 8102 MB                                |
+    | Copy the mesh out                        | 02:55     | 02:56    | 516 KiB of outputs                                                                               |
+    | Delete the VM and its disk               | 03:01:56  | 03:02:00 | `Deleted .../instances/lato2-trial-0123`                                                         |
+    | Verify                                   | 03:03     | 03:03    | `instances list`: "Listed 0 items." `disks list`: "Listed 0 items."                              |
+
+    VM time: 02:00:19 to 03:02:00 = 1.036 hours. The verify output is
+    `gcloud compute instances list` "Listed 0 items." and `gcloud compute disks list`
+    "Listed 0 items."
+
+  - The sheet that Daniel judged is on Drive:
+    `https://drive.google.com/file/d/1UbUsTb9xtSMGp3fW_YC2Zj7p2utReep7/view`. The PM session
+    uploaded it on 2026-11-23 17:35. Daniel judged it 'Not better than what we already have', and
+    the PM ruled LATO.2 out. No GPU re-run happens.
+  - Closed by the orchestrator after verification, 2026-11-24, on the `trial-result.md` evidence.
 
 ## Phase 7: Look
 
