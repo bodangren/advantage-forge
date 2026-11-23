@@ -470,12 +470,17 @@ tests/apk3d/no-unpolyfilled-builtins.test.ts'` exits 0: 1 file passed, 2 tests p
       command below ran on 2026-11-23 against HEAD `9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4`.
       The gate record commit is `d282495b999af9e1bcb56ab24e1bb86138fa3f46`. The amended AC6
       re-record commit is `c4b5e7e2772e47d15162b19d634ccd10692b1188`.
-  - Amendment 2026-11-23 (orchestrator; the PM was informed): the AC6 Prettier line is a
+  - Amendment 2026-11-23 (orchestrator; the PM approved (quotation below)): the AC6 Prettier line is a
     non-regression check, per the four rules of `spec.md` AC6. Every file this track creates must
     pass. An older changed file may fail now only if it failed at the baseline `3f6a1921`. The
     record must name each baseline-failing file as pre-existing debt. Reason: the full command
     already exits 1 for 35 files at the track start, and a clean exit 0 would reformat unrelated
     lines of 30 sim files (Review A Phase 4 F1).
+
+    PM approval, recorded by the orchestrator 2026-11-23:
+
+    > PM approves the AC6 Prettier non-regression amendment 7dbc1806 (2026-11-23): new files pass prettier --check; the 35 named older files may fail only where they failed at baseline 3f6a1921; no reformat of unrelated sim lines.
+
   - Status under the amendment, re-recorded 2026-11-23 at tested commit
     `9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4`: rule 1 holds because every file this track creates
     passes `prettier --check` (exit 0 on the seven created or widened files). Rule 2 holds because

@@ -241,11 +241,15 @@ test file changes. A pinned count from an earlier track is not evidence for this
 
 ### AC6: Gates
 
-**Amendment 2026-11-23** (orchestrator; the PM was informed). Rule: the Prettier line of AC6 is a
+**Amendment 2026-11-23** (orchestrator; the PM approved (quotation below)). Rule: the Prettier line of AC6 is a
 non-regression check. Reason: the full Prettier command already exits 1 for 35 files at the track
 start `3f6a1921`. A clean exit 0 would reformat unrelated lines of 30 sim files. That change is
 large and risky, and it has no user benefit. Review A Phase 4 F1 found that T8 was marked complete
 while the AC6 Prettier command still exits 1.
+
+PM approval, recorded by the orchestrator 2026-11-23:
+
+> PM approves the AC6 Prettier non-regression amendment 7dbc1806 (2026-11-23): new files pass prettier --check; the 35 named older files may fail only where they failed at baseline 3f6a1921; no reformat of unrelated sim lines.
 
 The Prettier line of AC6 passes when four rules hold:
 
