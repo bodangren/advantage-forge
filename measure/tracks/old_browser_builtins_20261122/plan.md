@@ -454,8 +454,9 @@ tests/apk3d/no-unpolyfilled-builtins.test.ts'` exits 0: 1 file passed, 2 tests p
 
 ## Phase 4: Gates
 
-- [x] T8 Gates (9e406e8c): Run every gate of AC6 and record each exit code in this plan. Every
+- [x] T8 Gates (d282495b): Run every gate of AC6 and record each exit code in this plan. Every
       command below ran on 2026-11-23 against HEAD `9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4`.
+      The gate record commit is `d282495b999af9e1bcb56ab24e1bb86138fa3f46`.
   - Three-file command: `node node_modules/vitest/vitest.mjs run tests/old-browser/deep-copy.test.ts tests/old-browser/index-math.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts --maxWorkers=1` through the heavy runner exits 0. Reporter: `Test Files 3 passed (3)`, `Tests 23 passed (23)`. The scan reports zero hits over `src/`.
   - Witness files: `node node_modules/vitest/vitest.mjs run tests/old-browser/adversarial-check.test.ts tests/old-browser/adversarial-check-r2.test.ts --maxWorkers=1` through the heavy runner exits 0. Reporter: `Test Files 1 passed | 1 skipped (2)`, `Tests 1 passed | 1 skipped (2)`. The skipped file is the TD-49 deferred case.
   - Project command: `node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts` through the heavy runner exits 0. Reporter: `Test Files 231 passed | 2 skipped (233)`, `Tests 3397 passed | 10 skipped (3407)`. Tested commit: `9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4`. No TD-35 to TD-40 failure occurs in this run.
