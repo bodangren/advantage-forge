@@ -1,3 +1,4 @@
+// sprout base scrapped 2026-11-23 (Daniel)
 import { describe, expect, it } from 'vitest';
 import * as THREE from 'three';
 import { AGE5, humanoidAsset } from '../assets/parts/humanoid-kind.js';
@@ -57,24 +58,47 @@ const TOL = 0.005;
 
 interface Captured {
   readonly skel: Record<string, { at: readonly [number, number, number] }>;
-  readonly anims: Map<string, { duration: number; loop?: boolean; pose: (t: number, p: number) => Record<string, { rotate?: readonly [number, number, number]; move?: readonly [number, number, number] }> }>;
+  readonly anims: Map<
+    string,
+    {
+      duration: number;
+      loop?: boolean;
+      pose: (
+        t: number,
+        p: number,
+      ) => Record<
+        string,
+        { rotate?: readonly [number, number, number]; move?: readonly [number, number, number] }
+      >;
+    }
+  >;
 }
 
 function capture(def: AssetDefinition): Captured {
   const anims = new Map<string, Captured['anims'] extends Map<string, infer A> ? A : never>();
   const skel: Captured['skel'] = {};
   const k: {
-    body(): void; add(): void; group(n: string, o: unknown, fn: (kk: unknown) => void): void;
-    skeleton(d: unknown): void; animation(n: string, a: unknown): void; tint(): string;
+    body(): void;
+    add(): void;
+    group(n: string, o: unknown, fn: (kk: unknown) => void): void;
+    skeleton(d: unknown): void;
+    animation(n: string, a: unknown): void;
+    tint(): string;
   } = {
     body() {},
     add() {},
-    group(_n: string, _o: unknown, fn: (kk: unknown) => void) { fn(k); },
-    skeleton(d: unknown) { Object.assign(skel, d); },
+    group(_n: string, _o: unknown, fn: (kk: unknown) => void) {
+      fn(k);
+    },
+    skeleton(d: unknown) {
+      Object.assign(skel, d);
+    },
     animation(n: string, a: unknown) {
       anims.set(n, a as Captured['anims'] extends Map<string, infer A> ? A : never);
     },
-    tint() { return '#ffffff'; },
+    tint() {
+      return '#ffffff';
+    },
   };
   // biome-ignore lint: the fake context only records skeleton and animation definitions.
   def.build(k as never);
@@ -133,7 +157,10 @@ function lilyLikeKind(gestureOpts: { handClearance?: number } | undefined): Huma
     },
     extra(k: never, h: never) {
       (sproutGestures as (k: never, h: never, p: never, o?: unknown) => void)(
-        k, h, AGE5 as never, gestureOpts,
+        k,
+        h,
+        AGE5 as never,
+        gestureOpts,
       );
     },
   };
@@ -147,8 +174,7 @@ function wristHeadDistance(
 ): number {
   const quat = (r: readonly [number, number, number]): THREE.Quaternion =>
     new THREE.Quaternion().setFromEuler(new THREE.Euler(r[0] * DEG, r[1] * DEG, r[2] * DEG));
-  const vec = (a: readonly [number, number, number]): THREE.Vector3 =>
-    new THREE.Vector3(a[0], a[1], a[2]);
+  const vec = (a: readonly [number, number, number]): THREE.Vector3 => new THREE.Vector3(a[0], a[1], a[2]);
   const S = vec(skel[`upperarm.${side}`]!.at);
   const E = vec(skel[`forearm.${side}`]!.at);
   const W = vec(skel[`hand.${side}`]!.at);
@@ -185,18 +211,58 @@ function digestAll(def: AssetDefinition): { size: number; digest: string } {
 }
 
 const SPROUT_CLIPS = [
-  'gesture-idle', 'gesture-clap', 'gesture-wave', 'gesture-nod', 'gesture-touch-nose',
-  'gesture-touch-neck', 'gesture-point-to-self', 'gesture-point-forward', 'gesture-hands-out',
-  'gesture-point-up', 'gesture-reach', 'gesture-count-fingers', 'gesture-sway', 'gesture-look',
-  'gesture-hop', 'gesture-stretch-up', 'gesture-eat', 'gesture-hug-self', 'gesture-bow',
-  'gesture-listen', 'gesture-stamp', 'gesture-march', 'gesture-turn', 'picture-march',
-  'picture-stamp', 'picture-sway',
+  'gesture-idle',
+  'gesture-clap',
+  'gesture-wave',
+  'gesture-nod',
+  'gesture-touch-nose',
+  'gesture-touch-neck',
+  'gesture-point-to-self',
+  'gesture-point-forward',
+  'gesture-hands-out',
+  'gesture-point-up',
+  'gesture-reach',
+  'gesture-count-fingers',
+  'gesture-sway',
+  'gesture-look',
+  'gesture-hop',
+  'gesture-stretch-up',
+  'gesture-eat',
+  'gesture-hug-self',
+  'gesture-bow',
+  'gesture-listen',
+  'gesture-stamp',
+  'gesture-march',
+  'gesture-turn',
+  'picture-march',
+  'picture-stamp',
+  'picture-sway',
 ];
 const BASE_CLIPS = ['idle', 'walk', 'run', 'attack', 'hit', 'rest', 'cheer', 'cast'];
 const MOVED_SPROUT = new Set(['gesture-point-up', 'picture-sway']);
 const MOVED_BASE = new Set(['cheer']);
 
-describe('per-character hand offset (default poses stay identical)', () => {
+describe('hero clip contracts (not scrapped)', () => {
+  it('keeps the hero clip inventory: the 8 base clips', () => {
+    const { anims } = capture(hero);
+    expect([...anims.keys()].sort()).toEqual([...BASE_CLIPS].sort());
+  });
+
+  it('keeps the hero default pose digest: size 8, digest 68442177', () => {
+    expect(digestAll(hero)).toEqual({ size: 8, digest: '68442177' });
+  });
+
+  it('keeps the hero cheer wrist-to-head distance: 0.27635 m', () => {
+    const c = capture(hero);
+    const pose = c.anims.get('cheer')!.pose(0.4, 0.5) as Record<
+      string,
+      { rotate?: readonly [number, number, number] }
+    >;
+    expect(wristHeadDistance(c.skel, pose, 'R')).toBeCloseTo(0.27635, 4);
+  });
+});
+
+describe.skip('per-character hand offset (default poses stay identical) — sprout base scrapped 2026-11-23 (Daniel)', () => {
   it('keeps the full clip inventory: 26 sprout clips plus 8 base clips', () => {
     for (const def of [pat, sam, mia, may, nan, adultBase]) {
       const { anims } = capture(def);
@@ -206,8 +272,6 @@ describe('per-character hand offset (default poses stay identical)', () => {
         expect(anims.get(name)!.loop).toBe(true);
       }
     }
-    const { anims } = capture(hero);
-    expect([...anims.keys()].sort()).toEqual([...BASE_CLIPS].sort());
   });
 
   it('keeps the full default pose data per character', () => {
@@ -217,17 +281,31 @@ describe('per-character hand offset (default poses stay identical)', () => {
     expect(digestAll(may)).toEqual({ size: 34, digest: '5e70ec98' });
     expect(digestAll(nan)).toEqual({ size: 34, digest: '22563e18' });
     expect(digestAll(adultBase)).toEqual({ size: 34, digest: '753da272' });
-    expect(digestAll(hero)).toEqual({ size: 8, digest: '68442177' });
   });
 
   it('keeps the key hand distances of point-up, picture-sway, and cheer', () => {
     const at = (def: AssetDefinition, clip: string, t: number, p: number) => {
       const c = capture(def);
-      return { skel: c.skel, pose: c.anims.get(clip)!.pose(t, p) as Record<string, { rotate?: readonly [number, number, number] }> };
+      return {
+        skel: c.skel,
+        pose: c.anims.get(clip)!.pose(t, p) as Record<string, { rotate?: readonly [number, number, number] }>,
+      };
     };
     // Raised right wrist of point-up at its hold (t = 1.0 s of 2 s).
-    expect(wristHeadDistance(at(sam, 'gesture-point-up', 1.0, 0.5).skel, at(sam, 'gesture-point-up', 1.0, 0.5).pose, 'R')).toBeCloseTo(0.21599, 4);
-    expect(wristHeadDistance(at(adultBase, 'gesture-point-up', 1.0, 0.5).skel, at(adultBase, 'gesture-point-up', 1.0, 0.5).pose, 'R')).toBeCloseTo(0.4216, 4);
+    expect(
+      wristHeadDistance(
+        at(sam, 'gesture-point-up', 1.0, 0.5).skel,
+        at(sam, 'gesture-point-up', 1.0, 0.5).pose,
+        'R',
+      ),
+    ).toBeCloseTo(0.21599, 4);
+    expect(
+      wristHeadDistance(
+        at(adultBase, 'gesture-point-up', 1.0, 0.5).skel,
+        at(adultBase, 'gesture-point-up', 1.0, 0.5).pose,
+        'R',
+      ),
+    ).toBeCloseTo(0.4216, 4);
     // Both raised wrists of picture-sway (constant held pose).
     const sway = at(sam, 'picture-sway', 1.0, 0.5);
     expect(wristHeadDistance(sway.skel, sway.pose, 'R')).toBeCloseTo(0.223, 4);
@@ -240,22 +318,30 @@ describe('per-character hand offset (default poses stay identical)', () => {
     expect(wristHeadDistance(cheer.skel, cheer.pose, 'L')).toBeCloseTo(0.22934, 4);
     const adultCheer = at(adultBase, 'cheer', 0.4, 0.5);
     expect(wristHeadDistance(adultCheer.skel, adultCheer.pose, 'R')).toBeCloseTo(0.47863, 4);
-    const heroCheer = at(hero, 'cheer', 0.4, 0.5);
-    expect(wristHeadDistance(heroCheer.skel, heroCheer.pose, 'R')).toBeCloseTo(0.27635, 4);
     // Pat holds a teddy bear, so his cheer arms stay down at the rest wrists.
     const patCheer = at(pat, 'cheer', 0.4, 0.5);
     expect(wristHeadDistance(patCheer.skel, patCheer.pose, 'R')).toBeCloseTo(0.18631, 4);
   });
 });
 
-describe('per-character hand offset (the opt-in moves the hands out)', () => {
+describe.skip('per-character hand offset (the opt-in moves the hands out) — sprout base scrapped 2026-11-23 (Daniel)', () => {
   it('moves the point-up hand outward by the requested clearance', () => {
     const { shape, skel } = realShape(AGE5);
     const run = (opts: { handClearance?: number } | undefined): number => {
-      const anims = new Map<string, { pose: (t: number, p: number) => Record<string, { rotate?: readonly [number, number, number] }> }>();
-      const k = { animation(n: string, a: never) { anims.set(n, a); } };
+      const anims = new Map<
+        string,
+        { pose: (t: number, p: number) => Record<string, { rotate?: readonly [number, number, number] }> }
+      >();
+      const k = {
+        animation(n: string, a: never) {
+          anims.set(n, a);
+        },
+      };
       (sproutGestures as (k: never, h: never, p: never, o?: unknown) => void)(
-        k as never, shape as never, AGE5 as never, opts,
+        k as never,
+        shape as never,
+        AGE5 as never,
+        opts,
       );
       return wristHeadDistance(skel, anims.get('gesture-point-up')!.pose(1.0, 0.5), 'R');
     };
@@ -268,10 +354,20 @@ describe('per-character hand offset (the opt-in moves the hands out)', () => {
   it('moves the picture-sway hands outward by the requested clearance', () => {
     const { shape, skel } = realShape(AGE5);
     const run = (opts: { handClearance?: number } | undefined): { R: number; L: number } => {
-      const anims = new Map<string, { pose: (t: number, p: number) => Record<string, { rotate?: readonly [number, number, number] }> }>();
-      const k = { animation(n: string, a: never) { anims.set(n, a); } };
+      const anims = new Map<
+        string,
+        { pose: (t: number, p: number) => Record<string, { rotate?: readonly [number, number, number] }> }
+      >();
+      const k = {
+        animation(n: string, a: never) {
+          anims.set(n, a);
+        },
+      };
       (sproutGestures as (k: never, h: never, p: never, o?: unknown) => void)(
-        k as never, shape as never, AGE5 as never, opts,
+        k as never,
+        shape as never,
+        AGE5 as never,
+        opts,
       );
       const pose = anims.get('picture-sway')!.pose(1.0, 0.5);
       return { R: wristHeadDistance(skel, pose, 'R'), L: wristHeadDistance(skel, pose, 'L') };
@@ -287,9 +383,16 @@ describe('per-character hand offset (the opt-in moves the hands out)', () => {
     const { shape } = realShape(AGE5);
     const run = (opts: { handClearance?: number } | undefined): Map<string, string> => {
       const anims = new Map<string, { duration: number; pose: (t: number, p: number) => unknown }>();
-      const k = { animation(n: string, a: never) { anims.set(n, a); } };
+      const k = {
+        animation(n: string, a: never) {
+          anims.set(n, a);
+        },
+      };
       (sproutGestures as (k: never, h: never, p: never, o?: unknown) => void)(
-        k as never, shape as never, AGE5 as never, opts,
+        k as never,
+        shape as never,
+        AGE5 as never,
+        opts,
       );
       const out = new Map<string, string>();
       for (const [name, a] of anims) {
@@ -319,11 +422,21 @@ describe('per-character hand offset (the opt-in moves the hands out)', () => {
     };
     const base = run(false);
     const moved = run(true);
-    const basePose = base.anims.get('cheer')!.pose(0.4, 0.5) as Record<string, { rotate?: readonly [number, number, number] }>;
-    const movedPose = moved.anims.get('cheer')!.pose(0.4, 0.5) as Record<string, { rotate?: readonly [number, number, number] }>;
+    const basePose = base.anims.get('cheer')!.pose(0.4, 0.5) as Record<
+      string,
+      { rotate?: readonly [number, number, number] }
+    >;
+    const movedPose = moved.anims.get('cheer')!.pose(0.4, 0.5) as Record<
+      string,
+      { rotate?: readonly [number, number, number] }
+    >;
     expect(wristHeadDistance(base.skel, basePose, 'R')).toBeCloseTo(0.22934, 4);
-    expect(wristHeadDistance(moved.skel, movedPose, 'R') - wristHeadDistance(base.skel, basePose, 'R')).toBeGreaterThanOrEqual(CLEARANCE - TOL);
-    expect(wristHeadDistance(moved.skel, movedPose, 'L') - wristHeadDistance(base.skel, basePose, 'L')).toBeGreaterThanOrEqual(CLEARANCE - TOL);
+    expect(
+      wristHeadDistance(moved.skel, movedPose, 'R') - wristHeadDistance(base.skel, basePose, 'R'),
+    ).toBeGreaterThanOrEqual(CLEARANCE - TOL);
+    expect(
+      wristHeadDistance(moved.skel, movedPose, 'L') - wristHeadDistance(base.skel, basePose, 'L'),
+    ).toBeGreaterThanOrEqual(CLEARANCE - TOL);
   });
 
   it('leaves the other 7 base clips identical with the kind option', () => {
@@ -351,7 +464,9 @@ describe('per-character hand offset (the opt-in moves the hands out)', () => {
     const c = capture(lily);
     const at = (clip: string, t: number, p: number) =>
       c.anims.get(clip)!.pose(t, p) as Record<string, { rotate?: readonly [number, number, number] }>;
-    expect(wristHeadDistance(c.skel, at('gesture-point-up', 1.0, 0.5), 'R')).toBeGreaterThanOrEqual(0.21599 + 0.035);
+    expect(wristHeadDistance(c.skel, at('gesture-point-up', 1.0, 0.5), 'R')).toBeGreaterThanOrEqual(
+      0.21599 + 0.035,
+    );
     const sway = at('picture-sway', 1.0, 0.5);
     expect(wristHeadDistance(c.skel, sway, 'R')).toBeGreaterThanOrEqual(0.223 + 0.035);
     expect(wristHeadDistance(c.skel, sway, 'L')).toBeGreaterThanOrEqual(0.223 + 0.035);
