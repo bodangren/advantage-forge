@@ -6,6 +6,7 @@ import {
   mkdirSync,
   mkdtempSync,
   readFileSync,
+  readdirSync,
   realpathSync,
   rmSync,
   symlinkSync,
@@ -23,6 +24,8 @@ const ASSET_NAME = `_flat-symlink-adversarial-${process.pid}`;
 const FIXTURE = join(ROOT, 'assets', `${ASSET_NAME}.ts`);
 const OUT_ROOT = join(ROOT, 'out');
 const OUT_ASSET = join(OUT_ROOT, ASSET_NAME);
+const OTHER_NAME = `${ASSET_NAME}-other`;
+const OTHER_OUT = join(OUT_ROOT, OTHER_NAME);
 
 let fixtureOwned = false;
 const tempDirs: string[] = [];
@@ -77,6 +80,39 @@ function removeOutputSafely(): void {
   rmSync(real, { recursive: true, force: true });
 }
 
+function removeOtherOutputSafely(): void {
+  const st = lstatSync(OTHER_OUT, { throwIfNoEntry: false });
+  if (!st) return;
+  if (st.isSymbolicLink()) {
+    rmSync(OTHER_OUT);
+    return;
+  }
+  if (!st.isDirectory()) return;
+  const real = realpathSync(OTHER_OUT);
+  if (dirname(real) !== realpathSync(OUT_ROOT) || basename(real) !== OTHER_NAME) return;
+  rmSync(real, { recursive: true, force: true });
+}
+
+function nonEmptyLines(output: string): string[] {
+  return output
+    .split('\n')
+    .map((line) => line.trim())
+    .filter((line) => line.length > 0);
+}
+
+function snapshotContents(dir: string): string[] {
+  const found: string[] = [];
+  const walk = (base: string, rel = ''): void => {
+    for (const entry of readdirSync(join(base, rel), { withFileTypes: true })) {
+      const path = rel ? `${rel}/${entry.name}` : entry.name;
+      if (entry.isDirectory()) walk(base, path);
+      else found.push(`${path}:${readFileSync(join(base, path)).toString('base64')}`);
+    }
+  };
+  walk(dir);
+  return found.sort();
+}
+
 afterAll(() => {
   if (existsSync(OUT_ASSET)) {
     try {
@@ -86,12 +122,13 @@ afterAll(() => {
     }
   }
   removeOutputSafely();
+  removeOtherOutputSafely();
   if (fixtureOwned) rmSync(FIXTURE, { force: true });
   for (const dir of tempDirs) rmSync(dir, { recursive: true, force: true });
 });
 
 describe('flat output removal containment', () => {
-  it('preserves targets for a flat symlink and an output-directory symlink', { timeout: 600_000 }, () => {
+  it('refuses linked flat and output folders without changing their targets', { timeout: 600_000 }, () => {
     expect(existsSync(FIXTURE)).toBe(false);
     expect(existsSync(OUT_ASSET)).toBe(false);
     createFixture();
@@ -103,20 +140,31 @@ describe('flat output removal containment', () => {
     symlinkSync(flatTarget, join(OUT_ASSET, 'flat'), 'dir');
 
     const flatRun = runForge();
-    expect(flatRun.status, flatRun.stderr || flatRun.stdout).toBe(0);
+    expect(flatRun.status).not.toBe(0);
+    const flatLines = nonEmptyLines(`${flatRun.stdout || ''}\n${flatRun.stderr || ''}`);
+    expect(flatLines).toHaveLength(1);
+    expect(flatLines[0]).toContain('output folder is a link');
     expect(readFileSync(flatMarker, 'utf8')).toBe('keep-flat-target\n');
+    expect(existsSync(join(flatTarget, 'front-level.png'))).toBe(false);
 
     removeOutputSafely();
-    const outputTarget = tempDir('output-link-target');
-    const outputFlat = join(outputTarget, 'flat');
+    mkdirSync(OTHER_OUT);
+    const outputFlat = join(OTHER_OUT, 'flat');
     const outputMarker = join(outputFlat, 'marker.txt');
     mkdirSync(outputFlat);
     writeFileSync(outputMarker, 'keep-output-target\n', { flag: 'wx' });
-    symlinkSync(outputTarget, OUT_ASSET, 'dir');
+    const existingPng = join(outputFlat, 'existing.png');
+    writeFileSync(existingPng, Buffer.from('existing-flat-render'), { flag: 'wx' });
+    const otherBefore = snapshotContents(OTHER_OUT);
+    symlinkSync(OTHER_OUT, OUT_ASSET, 'dir');
 
     const outputRun = runForge();
-    expect(outputRun.status, outputRun.stderr || outputRun.stdout).toBe(0);
+    expect(outputRun.status).not.toBe(0);
+    const outputLines = nonEmptyLines(`${outputRun.stdout || ''}\n${outputRun.stderr || ''}`);
+    expect(outputLines).toHaveLength(1);
+    expect(outputLines[0]).toContain('output folder is a link');
     expect(readFileSync(outputMarker, 'utf8')).toBe('keep-output-target\n');
+    expect(snapshotContents(OTHER_OUT)).toEqual(otherBefore);
   });
 
   it('does not remove a flat directory through a read-only asset parent', { timeout: 600_000 }, () => {
