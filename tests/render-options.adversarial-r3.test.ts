@@ -42,6 +42,8 @@ export default defineAsset({
   name: '${ASSET_NAME}',
   texture: false,
   build(k) {
+    k.skeleton({ hips: { at: [0, 0.5, 0] } });
+    k.animation('idle', { duration: 0.2, pose: () => ({}) });
     k.body('body', sdf.box([0.4, 1, 0.2]).at(0, 0.5, 0), { color: '#3f8fd0' });
   },
 });
@@ -71,8 +73,8 @@ function cleanup(): void {
   if (targetDir) rmSync(targetDir, { recursive: true, force: true });
 }
 
-function runEmptyListCommand(command: string): SpawnSyncReturns<string> {
-  return spawnSync('bash', [HEAVY_RUN, '-c', `./forge ${command} ${ASSET_NAME} --fast --views ',,,'`], {
+function runViewsCommand(command: string, views: string): SpawnSyncReturns<string> {
+  return spawnSync('bash', [HEAVY_RUN, '-c', `./forge ${command} ${ASSET_NAME} --fast --views '${views}'`], {
     cwd: ROOT,
     encoding: 'utf8',
     timeout: 600_000,
@@ -129,6 +131,33 @@ function renderWithOutputSwap(): Promise<{ status: number | null; output: string
 }
 
 describe('view list and flat output adversarial checks', () => {
+  it('uses command defaults for an explicit empty list on animate and inspect', { timeout: 600_000 }, () => {
+    expect(existsSync(FIXTURE)).toBe(false);
+    expect(existsSync(OUT_ASSET)).toBe(false);
+    createFixture();
+
+    const problems: string[] = [];
+    for (const command of ['animate', 'inspect']) {
+      const result = runViewsCommand(command, '');
+      const text = `${result.stdout || ''}\n${result.stderr || ''}`;
+      if (result.status !== 0) problems.push(`${command}: expected command defaults, exit ${result.status}`);
+      if (!text.includes('vite server created')) problems.push(`${command}: command did not start`);
+      if (command === 'animate' && !existsSync(join(OUT_ASSET, 'anim', 'idle.png')))
+        problems.push('animate: did not write the idle strip');
+      if (
+        command === 'inspect' &&
+        !['front', 'three-quarter', 'side', 'back', 'top'].every((view) => text.includes(view))
+      )
+        problems.push('inspect: did not report its default view set');
+      removeOutputSafely(OUT_ASSET);
+    }
+    if (fixtureOwned) {
+      rmSync(FIXTURE, { force: true });
+      fixtureOwned = false;
+    }
+    expect(problems).toEqual([]);
+  });
+
   it(
     'rejects a list with only empty members for animate and inspect before the build',
     { timeout: 600_000 },
@@ -139,13 +168,13 @@ describe('view list and flat output adversarial checks', () => {
 
       const problems: string[] = [];
       for (const command of ['animate', 'inspect']) {
-        const result = runEmptyListCommand(command);
+        const result = runViewsCommand(command, ',,,');
         const text = `${result.stdout || ''}\n${result.stderr || ''}`;
         const lines = text
           .split('\n')
           .map((line) => line.trim())
           .filter((line) => line.length > 0 && !/^\[\d+ ms\]/.test(line));
-        if (result.status === 0) problems.push(`${command}: accepted empty members with exit 0`);
+        if (result.status === 0) problems.push(`${command}: accepted only empty members with exit 0`);
         if (lines.length !== 1 || !lines[0]?.includes("Unknown view ''"))
           problems.push(`${command}: expected one empty-member error line, got ${lines.join(' | ')}`);
         if (text.includes('vite server created')) problems.push(`${command}: Vite started before refusal`);
