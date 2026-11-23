@@ -227,7 +227,65 @@ tests/storytime-book-pictures.test.ts` gave `Test Files 232 passed | 4 skipped (
   - Note: `src/render/page.ts` is not touched, so the three `Box3.union` lines that the apk3d
     scan test pins stay at lines 331, 531, and 538.
 - [x] T2r2 Red (tests 4f43e67c): round 2 test cases (inherited view names, cutout trailing comma, linked output parent)
-- [~] T3r2 Green remediation round 2 (one parsed view list shared by preflight and cutout, own-property membership; refuse a linked output parent before any write)
+- [x] T3r2 Green remediation round 2 (src 0fbd781b): one parsed view list shared by preflight and
+      cutout, own-property membership; refuse a linked output parent before any write.
+      File: `src/cli/forge.ts`.
+  - Evidence 2026-11-23 (Green model `minimax-cn-coding-plan/MiniMax-M3.1-Flash`, family MiniMax;
+    the Red model of the track is `opencode-go/muse-spark-1.3-contributor`, family muse). Every
+    command below ran through
+    `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '<cmd>'`.
+  - F8 and C-P2-7 (one parsed list): `parseViewList(list)` splits the list on the comma, trims each
+    member, and drops the empty members, as the cut-out parser did on the base. `viewListSource`
+    gives each command its list, and the preflight, the renderer, and the cut-out read it. A
+    trailing or a doubled comma names the same views as the list without it: the cut-out wrote
+    `front.png` for `--views front,` and exited 0.
+  - C-P2-1 (own-property membership): `isNamedView(name)` tests the named-view table with
+    `Object.prototype.hasOwnProperty.call`, so `constructor`, `toString`, `__proto__`, and
+    `hasOwnProperty` are unknown views. The renderer lookup uses the same rule. The raw output of
+    the refused command:
+    `Unknown view 'constructor'. Known: front, three-quarter, side, back, back-three-quarter, top, front-level, side-level`
+    The refusal comes before the server starts, so no build runs and no output folder appears.
+  - F9, C-P2-8, and N2 (a linked output folder): `checkOutputFolder(out)` runs before the build and
+    refuses a linked `out/<name>` or `out/<name>/flat` with one line:
+    `output folder is a link: out/<name>/flat`
+    The link is never followed. No flat PNG lands in the link target, and the other asset's flat
+    folder stays unchanged. `removeFlatFolder` keeps its realpath rule.
+  - Gates, each through the runner:
+    - The r2 Red command exits 0:
+      `node node_modules/vitest/vitest.mjs run --maxWorkers=1
+tests/render-options.validation-r2.test.ts tests/render-options.test.ts
+tests/render-options.validation.test.ts` gave `Test Files 3 passed (3)` and
+      `Tests 16 passed (16)`.
+    - The T1 files and `tests/render-options.adversarial.test.ts` exit 0: `Tests 5 passed |
+15 skipped`.
+    - The render-related existing tests and the scan test exit 0: `tests/cutout.test.ts`,
+      `tests/asset.test.ts`, `tests/equip.test.ts`, `tests/part.test.ts`,
+      `tests/variants.test.ts`, `tests/preset-colour.test.ts`, `tests/clip-check.test.ts`,
+      `tests/song-still-hook.test.ts`, `tests/rig.test.ts`, `tests/apk3d/renderer-setting.test.ts`,
+      `tests/apk3d/no-unpolyfilled-builtins.test.ts`, and `tests/storytime-line-art-pass.test.ts`
+      gave `Test Files 12 passed (12)` and `Tests 73 passed (73)`.
+    - `node node_modules/typescript/bin/tsc --noEmit` exits 2 with the 51 baseline errors of
+      TD-35 to TD-39, and no error names `src/cli/forge.ts`.
+    - `node_modules/.bin/prettier --check src/cli/forge.ts src/pipeline.ts` exits 0.
+    - The whole project gate exits 1 with one failing file:
+      `node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude
+tests/storytime-book-pictures.test.ts` gave `Test Files 1 failed | 233 passed | 4 skipped
+(238)` and `Tests 1 failed | 3403 passed | 26 skipped (3430)`. The failing file is
+      `tests/render-options.adversarial-r2.test.ts`, and the conflict note below names it.
+  - The existing render output stays byte-identical. `./forge render <asset> --fast` and
+    `./forge sprites <asset> --fast` ran at the base commit and with the fix for `sprout-pip`,
+    `ball`, and `kite`. Every SHA-256 sum matches for `render.png`, the views, and the sprites.
+    The three output folders are real folders in this worktree, so no write went through a link.
+  - Note: `src/render/page.ts` is not touched, so the three `Box3.union` lines that the apk3d
+    scan test pins stay at lines 331, 531, and 538.
+  - Conflict note, open for the orchestrator: `tests/render-options.adversarial-r2.test.ts`
+    (commit 3bc49ab1, 15:51) expects the flat render to exit 0 when the output folder is a link.
+    `tests/render-options.validation-r2.test.ts` (commit 4f43e67c, 16:17, the newer contract)
+    expects a non-zero exit with one line for the same fixture. The two expectations cannot both
+    hold. This task follows the newer contract, which matches findings F9, C-P2-8, and N2 and the
+    brief of this round. The adversarial file needs its exit-code expectation refreshed (lines
+    106 and 118); its marker assertions still hold, because the refusal touches nothing. This
+    role does not change test files.
 - [x] T3 Green (src c69a5b73): Add the renderer options. Files: `src/cli/forge.ts`,
       `src/render/page.ts`, and `tests/apk3d/no-unpolyfilled-builtins.test.ts` (the line numbers
       it pins, see the note below).
