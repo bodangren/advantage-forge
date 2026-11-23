@@ -703,6 +703,31 @@ scripts/proportion-check.mjs` exits 0.
     `54e11c762a4d08f61172b57583d7dce10c4466a9438234bf4616c6670eb4ece0` and `mom-panel.png` sha256
     `b6cba32ac4515dc23dc3332d21cfd5f950289b01567574603076377af5d5135f`.
 
+- [x] T8r2 Green (src 2325440f): fixed F4 and F5 in `scripts/mom-kim-sheet.mjs`.
+  - Evidence 2026-11-24 (Green model `opencode-go/hy4-flash-free`, family hy4; the Red model of the
+    track is `opencode-go/muse-spark-1.3-contributor`, family muse). The adversarial audit at
+    `measure/runs/chibi_sprouts_redesign_20261123/adversarial-p5-ca4e8d0.json` found F4 and F5.
+    Every command ran through
+    `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '<cmd>'`.
+  - F4: the script recomputes crown and sole rows from the alpha masks (alpha 128 or more) of the
+    two lit views it reads, using the same quantities the T6 measurement script writes into
+    `rows.lit`. It compares each recorded value with the mask value at the 2 px tolerance of the
+    spec's mask guards (AC2 rule 3) and exits 1 with one line
+    `mom-kim-sheet: measure.json rows.lit row <view> disagrees with the lit alpha mask` before any
+    write. The tolerance is not loosened. A fresh `[0, 0]` or `[1023, 1023]` pair fails.
+  - F5: `lstatSync` also checks `mom-kim-review.png` and `mom-panel.png` before any read or write.
+    A link exits 1 with one line `output file is a link: <path>` and is never followed, so the
+    target keeps its bytes. The linked-folder rule of T8r stays in force. The check-then-write swap
+    race remains tech debt under the PM decision of 2026-11-23.
+  - Gates: the three sheet files run together exit 0 with `Test Files 3 passed (3)` and
+    `Tests 15 passed (15)` (8 Red, 5 adversarial round 1, 2 adversarial round 2). The whole project
+    gate exits 0 with `Test Files 240 passed | 4 skipped (244)` and
+    `Tests 3469 passed | 27 skipped (3496)`. `tsc --noEmit` exits 2 with the 51 baseline errors and
+    none in the script. `prettier --check` exits 0.
+  - Both PNGs are byte-identical to T8: `mom-kim-review.png` sha256
+    `54e11c762a4d08f61172b57583d7dce10c4466a9438234bf4616c6670eb4ece0` and `mom-panel.png` sha256
+    `b6cba32ac4515dc23dc3332d21cfd5f950289b01567574603076377af5d5135f`.
+
 ## Phase 6: LATO.2 GPU trial (Daniel 2026-11-23, USD 5 cap)
 
 - [ ] T9 Measure: Run one LATO.2 image-to-mesh trial on our own VM. Files:
