@@ -306,50 +306,46 @@ function render(hit: Hit): string {
 
 // Named false positives: the three Box3.union calls of src/render/page.ts are three.js geometry,
 // not Set.prototype.union. this.at(, multi-argument .at(, and z.union( stay out by pattern.
-// Each exclusion binds the file, the line, the label, and the exact excluded call text, and it
-// filters exactly one hit instance: a different built-in — or a second same-label call such as
-// `items.union(other)` beside `box.union(b)` — on the same line is still reported. The call text
-// matches with a word boundary on the receiver, so a renamed receiver such as `otherbox` never
-// counts as the excluded call. An exclusion that matches nothing fails the test, so the list
-// cannot rot.
-type Exclusion = { file: string; line: number; label: string; call: string; reason: string };
+// Each exclusion binds the file, the line, the label, and the full trimmed source line text of
+// the real call, and it filters exactly one hit instance. Any other hit stays reported: a
+// different built-in, a second same-label call, a renamed receiver such as `otherbox` or
+// `holder.box`, a non-ASCII receiver, or the same call on a different line. An exclusion whose
+// entry no longer hits exactly once fails the test, so the list cannot rot.
+type Exclusion = { file: string; line: number; label: string; text: string; reason: string };
+
+// The exact trimmed source lines of the three real calls, read from src/render/page.ts.
+const PAGE_263 = 'if (!b.isEmpty()) box.union(b);';
+const PAGE_440 = 'restBox.union(posedBox(effect));';
+const PAGE_447 = 'box.union(posedBox(effect));';
 
 const EXCLUSIONS: Exclusion[] = [
   {
     file: 'src/render/page.ts',
     line: 263,
     label: 'Set .union(',
-    call: 'box.union(b)',
+    text: PAGE_263,
     reason: 'Box3.union (three.js geometry), not Set.prototype.union',
   },
   {
     file: 'src/render/page.ts',
     line: 440,
     label: 'Set .union(',
-    call: 'restBox.union(posedBox(effect))',
+    text: PAGE_440,
     reason: 'Box3.union (three.js geometry), not Set.prototype.union',
   },
   {
     file: 'src/render/page.ts',
     line: 447,
     label: 'Set .union(',
-    call: 'box.union(posedBox(effect))',
+    text: PAGE_447,
     reason: 'Box3.union (three.js geometry), not Set.prototype.union',
   },
 ];
 
-/** The exclusion call must occur as an exact call instance: the receiver keeps a word
- * boundary, so `box.union(b)` does not match `otherbox.union(b)`, `mybox.union(b)`, or
- * `box2.union(b)`, and the closing paren keeps one too, so a longer argument list is not
- * covered. A renamed receiver stays reported; a different built-in on an excluded line was
- * already reported by the single-instance filter. */
-function exclusionMatchesLine(strippedLine: string, call: string): boolean {
-  const escaped = call.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  return new RegExp(`(?<![\\w$])${escaped}(?![\\w$])`).test(strippedLine);
-}
-
-/** Applies applicable exclusions to raw hits; each exclusion filters exactly one hit instance,
- * so a second same-label call on the same line stays reported. */
+/** Applies applicable exclusions to raw hits. A raw hit is excluded only when its file, line,
+ * and label match one allowed entry and the trimmed stripped line text equals the entry text,
+ * so every other hit on the line stays reported. Each exclusion filters exactly one hit
+ * instance; an entry that no longer hits fails as a stale exclusion naming the entry. */
 function applyExclusions(
   raw: Hit[],
   exclusions: Exclusion[],
@@ -359,14 +355,17 @@ function applyExclusions(
   const excluded = new Set<number>();
   for (const exclusion of exclusions) {
     const lineText = strippedLine(exclusion.file, exclusion.line);
+    const trimmed = lineText === null ? null : lineText.trim();
     const index = raw.findIndex(
       (hit, k) =>
         !excluded.has(k) &&
         hit.path === exclusion.file &&
         hit.line === exclusion.line &&
-        hit.label === exclusion.label,
+        hit.label === exclusion.label &&
+        trimmed !== null &&
+        trimmed === exclusion.text,
     );
-    if (index === -1 || lineText === null || !exclusionMatchesLine(lineText, exclusion.call)) {
+    if (index === -1) {
       problems.push(`stale exclusion ${exclusion.file}:${exclusion.line}: ${exclusion.reason}`);
     } else {
       excluded.add(index);
@@ -408,9 +407,61 @@ it('an exclusion does not match a renamed receiver (acceptance A7)', () => {
     );
   };
   const bound: Exclusion[] = [
-    { file: '<fixture>', line: 1, label: 'Set .union(', call: 'box.union(b)', reason: 'test bind' },
+    {
+      file: '<fixture>',
+      line: 1,
+      label: 'Set .union(',
+      text: 'if (!b.isEmpty()) box.union(b);',
+      reason: 'test bind',
+    },
   ];
   expect(problemsFor('if (!b.isEmpty()) otherbox.union(b);', bound)).toEqual([
+    'stale exclusion <fixture>:1: test bind',
+    '<fixture>:1: Set .union(',
+  ]);
+});
+
+it('a holder receiver stays reported (acceptance A7)', () => {
+  const problemsFor = (fixture: string, exclusions: Exclusion[]): string[] => {
+    const stripped = strip(fixture);
+    const raw = scanText(stripped, '<fixture>');
+    return applyExclusions(raw, exclusions, (path, line) =>
+      path === '<fixture>' && line === 1 ? stripped : null,
+    );
+  };
+  const bound: Exclusion[] = [
+    {
+      file: '<fixture>',
+      line: 1,
+      label: 'Set .union(',
+      text: 'if (!b.isEmpty()) box.union(b);',
+      reason: 'test bind',
+    },
+  ];
+  expect(problemsFor('holder.box.union(b);', bound)).toEqual([
+    'stale exclusion <fixture>:1: test bind',
+    '<fixture>:1: Set .union(',
+  ]);
+});
+
+it('a non-ASCII receiver stays reported (acceptance A7)', () => {
+  const problemsFor = (fixture: string, exclusions: Exclusion[]): string[] => {
+    const stripped = strip(fixture);
+    const raw = scanText(stripped, '<fixture>');
+    return applyExclusions(raw, exclusions, (path, line) =>
+      path === '<fixture>' && line === 1 ? stripped : null,
+    );
+  };
+  const bound: Exclusion[] = [
+    {
+      file: '<fixture>',
+      line: 1,
+      label: 'Set .union(',
+      text: 'if (!b.isEmpty()) box.union(b);',
+      reason: 'test bind',
+    },
+  ];
+  expect(problemsFor('λbox.union(b);', bound)).toEqual([
     'stale exclusion <fixture>:1: test bind',
     '<fixture>:1: Set .union(',
   ]);
@@ -425,7 +476,13 @@ it('an exclusion does not match a longer receiver name (acceptance A7)', () => {
     );
   };
   const bound: Exclusion[] = [
-    { file: '<fixture>', line: 1, label: 'Set .union(', call: 'box.union(b)', reason: 'test bind' },
+    {
+      file: '<fixture>',
+      line: 1,
+      label: 'Set .union(',
+      text: 'if (!b.isEmpty()) box.union(b);',
+      reason: 'test bind',
+    },
   ];
   expect(problemsFor('if (!b.isEmpty()) mybox.union(b);', bound)).toEqual([
     'stale exclusion <fixture>:1: test bind',
@@ -442,7 +499,13 @@ it('a different receiver keeps the stale-exclusion rot check (acceptance A7)', (
     );
   };
   const bound: Exclusion[] = [
-    { file: '<fixture>', line: 1, label: 'Set .union(', call: 'box.union(b)', reason: 'test bind' },
+    {
+      file: '<fixture>',
+      line: 1,
+      label: 'Set .union(',
+      text: 'if (!b.isEmpty()) box.union(b);',
+      reason: 'test bind',
+    },
   ];
   expect(problemsFor('if (!b.isEmpty()) box2.union(b);', bound)).toEqual([
     'stale exclusion <fixture>:1: test bind',
@@ -463,11 +526,23 @@ it('exclusions bind to their exact call text, not just the line (review r1 C-F3)
   };
   const fixture = 'if (!b.isEmpty()) box.union(b); structuredClone(s);';
   const bound: Exclusion[] = [
-    { file: '<fixture>', line: 1, label: 'Set .union(', call: 'box.union(b)', reason: 'test bind' },
+    {
+      file: '<fixture>',
+      line: 1,
+      label: 'Set .union(',
+      text: 'if (!b.isEmpty()) box.union(b); structuredClone(s);',
+      reason: 'test bind',
+    },
   ];
   expect(problemsFor(fixture, bound)).toEqual(['<fixture>:1: structuredClone']);
   const rotted: Exclusion[] = [
-    { file: '<fixture>', line: 1, label: 'Set .union(', call: 'box.merge(b)', reason: 'test bind' },
+    {
+      file: '<fixture>',
+      line: 1,
+      label: 'Set .union(',
+      text: 'if (!b.isEmpty()) box.merge(b); structuredClone(s);',
+      reason: 'test bind',
+    },
   ];
   expect(problemsFor(fixture, rotted)).toEqual([
     'stale exclusion <fixture>:1: test bind',
@@ -484,15 +559,82 @@ it('an exclusion filters one call instance; a second same-label call stays (revi
       path === '<fixture>' && line === 1 ? stripped : null,
     );
   };
-  const bound: Exclusion[] = [
-    { file: '<fixture>', line: 1, label: 'Set .union(', call: 'box.union(b)', reason: 'test bind' },
+  const itemsFixture = 'if (!b.isEmpty()) box.union(b); items.union(other);';
+  const itemsBound: Exclusion[] = [
+    {
+      file: '<fixture>',
+      line: 1,
+      label: 'Set .union(',
+      text: 'if (!b.isEmpty()) box.union(b); items.union(other);',
+      reason: 'test bind',
+    },
   ];
-  expect(problemsFor('if (!b.isEmpty()) box.union(b); items.union(other);', bound)).toEqual([
-    '<fixture>:1: Set .union(',
+  expect(problemsFor(itemsFixture, itemsBound)).toEqual(['<fixture>:1: Set .union(']);
+  const setFixture = 'if (!b.isEmpty()) box.union(b); set.union(other);';
+  const setBound: Exclusion[] = [
+    {
+      file: '<fixture>',
+      line: 1,
+      label: 'Set .union(',
+      text: 'if (!b.isEmpty()) box.union(b); set.union(other);',
+      reason: 'test bind',
+    },
+  ];
+  expect(problemsFor(setFixture, setBound)).toEqual(['<fixture>:1: Set .union(']);
+});
+
+it('the allowed text on a different line number stays reported (acceptance A7)', () => {
+  const problemsFor = (fixture: string, exclusions: Exclusion[]): string[] => {
+    const stripped = strip(fixture);
+    const raw = scanText(stripped, '<fixture>');
+    return applyExclusions(raw, exclusions, (path, line) =>
+      path === '<fixture>' && line >= 1 ? (stripped.split('\n')[line - 1] ?? null) : null,
+    );
+  };
+  const moved: Exclusion[] = [
+    {
+      file: '<fixture>',
+      line: 2,
+      label: 'Set .union(',
+      text: 'if (!b.isEmpty()) box.union(b);',
+      reason: 'test bind',
+    },
+  ];
+  expect(problemsFor('const x = 1;\nif (!b.isEmpty()) box.union(b);', moved)).toEqual([]);
+  const staleLine: Exclusion[] = [
+    {
+      file: '<fixture>',
+      line: 1,
+      label: 'Set .union(',
+      text: 'if (!b.isEmpty()) box.union(b);',
+      reason: 'test bind',
+    },
+  ];
+  expect(problemsFor('const x = 1;\nif (!b.isEmpty()) box.union(b);', staleLine)).toEqual([
+    'stale exclusion <fixture>:1: test bind',
+    '<fixture>:2: Set .union(',
   ]);
-  expect(problemsFor('if (!b.isEmpty()) box.union(b); set.union(other);', bound)).toEqual([
-    '<fixture>:1: Set .union(',
-  ]);
+});
+
+it('the three real exclusion lines still produce zero reported hits (acceptance A7)', () => {
+  const page = readFileSync(join(ROOT, 'src', 'render', 'page.ts'), 'utf8').split('\n');
+  const lines = [page[262]!, page[439]!, page[446]!];
+  expect(lines.map((line) => line.trim())).toEqual([PAGE_263, PAGE_440, PAGE_447]);
+  const problemsFor = (fixture: string, exclusions: Exclusion[]): string[] => {
+    const stripped = strip(fixture);
+    const raw = scanText(stripped, '<fixture>');
+    return applyExclusions(raw, exclusions, (path, line) =>
+      path === '<fixture>' && line === 1 ? stripped : null,
+    );
+  };
+  const entries: Exclusion[] = [
+    { file: '<fixture>', line: 1, label: 'Set .union(', text: PAGE_263, reason: 'page.ts:263' },
+    { file: '<fixture>', line: 1, label: 'Set .union(', text: PAGE_440, reason: 'page.ts:440' },
+    { file: '<fixture>', line: 1, label: 'Set .union(', text: PAGE_447, reason: 'page.ts:447' },
+  ];
+  expect(problemsFor(PAGE_263, [entries[0]!])).toEqual([]);
+  expect(problemsFor(PAGE_440, [entries[1]!])).toEqual([]);
+  expect(problemsFor(PAGE_447, [entries[2]!])).toEqual([]);
 });
 
 /** Total pattern hits over the whole stripped text. */
