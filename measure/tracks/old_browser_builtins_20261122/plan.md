@@ -468,7 +468,8 @@ tests/apk3d/no-unpolyfilled-builtins.test.ts'` exits 0: 1 file passed, 2 tests p
 
 - [x] T8 Gates (d282495b): Run every gate of AC6 and record each exit code in this plan. Every
       command below ran on 2026-11-23 against HEAD `9e406e8ccf2c531b8a24fb18abe3f1398fc25fc4`.
-      The gate record commit is `d282495b999af9e1bcb56ab24e1bb86138fa3f46`.
+      The gate record commit is `d282495b999af9e1bcb56ab24e1bb86138fa3f46`. The amended AC6
+      re-record commit is `c4b5e7e2772e47d15162b19d634ccd10692b1188`.
   - Amendment 2026-11-23 (orchestrator; the PM was informed): the AC6 Prettier line is a
     non-regression check, per the four rules of `spec.md` AC6. Every file this track creates must
     pass. An older changed file may fail now only if it failed at the baseline `3f6a1921`. The
