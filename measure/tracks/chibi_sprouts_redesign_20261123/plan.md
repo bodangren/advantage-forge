@@ -458,6 +458,8 @@ tests/apk3d/no-unpolyfilled-builtins.test.ts` exits 0.
 
 ## Phase 4: Green
 
+- [x] T6r Red (tests 2c774c62): remediation round 1 cases (load order, strict row table, asset name, corrupt GLB)
+- [~] T6r Green remediation (render checks after both imports; strict checkRows; asset-name rules; one-line corrupt-GLB error)
 - [x] T6 Green (src 1f61d0f2): Write the measurement script. File: `scripts/proportion-check.mjs`.
   - Evidence 2026-11-23 (Green model `opencode-go/hy4-flash-free`, family hy4; the Red model of the
     track is `opencode-go/muse-spark-1.3-contributor`, family muse). Every command ran through
