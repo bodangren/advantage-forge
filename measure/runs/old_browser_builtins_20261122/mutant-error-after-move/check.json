@@ -1,0 +1,21 @@
+{
+  "game": "spellweavers-run",
+  "deleted": [
+    "structuredClone",
+    "Array.prototype.at",
+    "Array.prototype.findLastIndex",
+    "Object.hasOwn"
+  ],
+  "started": true,
+  "moves": 6,
+  "errors": [
+    "TypeError: injected post-move error\n    at eval (eval at evaluate (:370:30), <anonymous>:1:32)"
+  ],
+  "absent_in_page": {
+    "structuredClone": "undefined",
+    "Array.prototype.at": "undefined",
+    "Array.prototype.findLastIndex": "undefined",
+    "Object.hasOwn": "undefined"
+  },
+  "state_changed": true
+}

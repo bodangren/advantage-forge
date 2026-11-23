@@ -1,0 +1,22 @@
+{
+  "game": "spellweavers-run",
+  "deleted": [
+    "structuredClone",
+    "Array.prototype.at",
+    "Array.prototype.findLastIndex",
+    "Object.hasOwn"
+  ],
+  "started": false,
+  "moves": 0,
+  "action_inputs": [],
+  "state_changed": false,
+  "errors": [
+    "locator.waitFor: Timeout 1500ms exceeded. Call log: - waiting for locator('[data-game=\"not-the-target\"]:not(.soon)') to be visible | locator.waitFor: Timeout 1500ms exceeded. Call log: - waiting for locator('[data-game=\"not-the-target\"]:not(.soon)') to be visible at <repo>/measure/runs/old_browser_builtins_20261122/mutant-r2-wrong-game-card.mjs:277:14"
+  ],
+  "absent_in_page": {
+    "structuredClone": "undefined",
+    "Array.prototype.at": "undefined",
+    "Array.prototype.findLastIndex": "undefined",
+    "Object.hasOwn": "undefined"
+  }
+}

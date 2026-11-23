@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "role": "review-b",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 3: Browser check",
+  "round": 3,
+  "baseline_sha": "31af75444583c9236f342c908128c91da9f4f7e3",
+  "phase_base_sha": "31af75444583c9236f342c908128c91da9f4f7e3",
+  "role_base_sha": "1eefa25d9d286a80d4f2a1576664f1894aeb755d",
+  "audited_head_sha": "1eefa25d9d286a80d4f2a1576664f1894aeb755d",
+  "security_applicability": "applicable",
+  "status": "pass",
+  "summary": "Re-review after T7r2 (c9f6bba1 + e8312fc1). The new listener-owner verification has no path or process handling gap: fixed-argv ss parsing of the constant port, /proc/<digits>/stat reads only with EPERM fail-open that can never classify a foreign listener as owned, a desync-safe stat parse, and assertOwned at three evidence boundaries where every failure mode fails closed. Input causality (page-side event counting plus a committed false-pass pin) and the negative control work. All r2 properties re-verified at this HEAD: full run green (moves=3, negative_control.changed=false, check.json scrubbed), 277 ms collision failure with a decoy in one heavy-run call, --game handling unchanged, signals to the parent free the port within ~2 s with no orphans. No findings.",
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "evidence": [
+    "New listener-owner code is safe: listeningPids() uses execFileSync('ss', ['-ltnp']) with fixed argv (no shell, no injection; the port is a constant) and extracts pid=(\\d+) only from lines containing 127.0.0.1:5199 and LISTEN; childTree() reads only /proc/<digits>/stat (names filtered ^\\d+$, no path traversal) and treats other users' EPERM entries as absent, so a foreign listener can never be classified owned; the stat parse anchors on the last ')' so command names with spaces cannot desync the ppid; assertOwned runs at three boundaries (lines 236, 422, 431) and every failure mode fails closed (owner mismatch throw or 60 s timeout, never a pass).",
+    "Input causality: the init script counts page-side keydown/pointerdown events and acceptedAction requires eventsAfter > eventsBefore (lines 409-419), so a harness-only state write cannot count as a move; the committed pin e8312fc1 asserts acceptedAction(before, after, false) === false; the negative control (1500 ms quiet window) must show no change and throws otherwise (lines 387-391).",
+    "Full run green (probe-p3-r2-full.mjs): exit 0, started=true, moves=3 (action_inputs ['ArrowRight','ArrowLeft','ArrowRight']), negative_control.changed=false, state_changed=true, errors=0, all four built-ins absent in page, port free at parent exit (~0 ms), check.json grep-clean of '/home/' and the user name.",
+    "Collision (probe-p3-r2-collision.mjs): decoy on 127.0.0.1:5199 inside one heavy-run call; failed in 277 ms with scrubbed 'port 5199 already in use', no spawn, no orphan, port free, check.json and output grep-clean.",
+    "--game handling (probe-p3-r2-args.mjs): bad value, missing value, no arguments, injection attempt, unknown game, unknown flag all exit 1 with usage; --help exits 0; no injection file created.",
+    "Signals (probe-p3-signal.mjs, PID-set diffing): SIGTERM and SIGINT to the Node parent only; each vite child freed the port within ~2 s, no chromium orphan, no baseline process harmed, both exit 1.",
+    "PM load rule: every decoy, signal, and full run went through heavy-run.sh with HEAVY_MIN_AVAIL_MB=1500; the only 5199 listener at audit end belongs to another session's check run (parent PID verified); nothing of mine remains and nothing needed killing.",
+    "A2 not applicable: no draft-to-published path. A6: doc comment fields (negative_control, action_inputs semantics) match the observed check.json output."
+  ],
+  "commands": [
+    "git rev-parse HEAD && git status --short -- src/ scripts/ tests/",
+    "git log --oneline ad56865ba45daf5cf9d9c2557497a49f20c733ba..1eefa25d9d286a80d4f2a1576664f1894aeb755d",
+    "git show --stat c9f6bba1 && git show e8312fc1",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node measure/runs/old_browser_builtins_20261122/probe-p3-r2-full.mjs'",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node measure/runs/old_browser_builtins_20261122/probe-p3-r2-collision.mjs'",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node measure/runs/old_browser_builtins_20261122/probe-p3-r2-args.mjs; ls /tmp/p3-r2-owned 2>/dev/null && echo INJECTION-FILE-CREATED || echo no-injection-file'",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node measure/runs/old_browser_builtins_20261122/probe-p3-signal.mjs term'",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node measure/runs/old_browser_builtins_20261122/probe-p3-signal.mjs int'",
+    "ss -ltn | grep 5199; ps -eo pid,args | grep -E 'vite.js|chrome-headless' | grep -v grep"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/review-b-p3-1eefa25.json",
+    "measure/runs/old_browser_builtins_20261122/review-b-p3-1eefa25.log",
+    "measure/runs/old_browser_builtins_20261122/review-b-p3-1eefa25-notes.md"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "kimi-code-plan-cn/kimi-for-coding",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "The owner verification, input causality, and negative control behave as designed: full run green with moves=3 and negative_control.changed=false, collision fails in 277 ms, and every failure mode fails closed."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 5,
+      "evidence": "The harness-only false pass is pinned by the committed test e8312fc1, and the runtime check itself enforces causality and the negative control on every run."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "c9f6bba1 changes only scripts/old-browser-check.mjs and e8312fc1 adds only the pinning test, exactly the planned T7r2 files."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "Every claim cites a re-run probe at this HEAD (full, collision, args, two signals), a code line, or the live ss/ps inspection."
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: review-a
+status: complete
+track: old_browser_builtins_20261122
+phase: Phase 3: Browser check
+commits: none
+tests_run: Wrapped Green exit 0 and releases port 5199. Wrapped deleted-name probe exit 1 with page error. Wrapped no-input probe incorrectly exits 0. Collision probe accepts foreign HTTP 200. ENOSPC probe leaves Vite listening. SIGINT and SIGTERM stop Vite. Syntax, Prettier, generator, and doctor pass.
+files_changed: review-a-p3-29ad3aa.json and review-a-p3-29ad3aa.log
+plan_updates: none
+known_failures: F1 no-input false PASS; F2 report write failure skips cleanup; F3 foreign HTTP 200 passes readiness.
+handoff: Route F1-F3 to Green. Require a confirmed move, cleanup after report write failure, and readiness from the owned server. Re-review the remediation HEAD.
+END_MEASURE_AGENT_RESULT

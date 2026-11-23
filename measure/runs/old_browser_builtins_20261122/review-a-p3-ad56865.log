@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: review-a
+status: complete
+track: old_browser_builtins_20261122
+phase: Phase 3: Browser check
+commits: none
+tests_run: Wrapped no-input and missing-state: exit 1, zero moves. Wrapped ENOSPC: exit 1, cleanup verified. Pre-bound HTTP 200: exit 1, collision at 251 ms. Startup-race fixture: false exit 0. Wrapped Green: exit 0, two moves. Final ss and ps: no listener or owned Vite or Chrome.
+files_changed: review-a-p3-ad56865.json and review-a-p3-ad56865.log
+plan_updates: none
+known_failures: F1-F3 close on their original probes. F4 is a new late false PASS. F5 is nonblocking CLI debt.
+handoff: Route F4 to Green. Bind readiness to the Vite child that successfully opens the port. Do not accept on the foreign page.
+END_MEASURE_AGENT_RESULT

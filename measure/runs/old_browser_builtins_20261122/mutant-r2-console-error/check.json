@@ -1,0 +1,25 @@
+{
+  "game": "spellweavers-run",
+  "deleted": [
+    "structuredClone",
+    "Array.prototype.at",
+    "Array.prototype.findLastIndex",
+    "Object.hasOwn"
+  ],
+  "started": true,
+  "moves": 2,
+  "action_inputs": [
+    "ArrowRight",
+    "1"
+  ],
+  "state_changed": true,
+  "errors": [
+    "injected console TypeError: missing structuredClone"
+  ],
+  "absent_in_page": {
+    "structuredClone": "undefined",
+    "Array.prototype.at": "undefined",
+    "Array.prototype.findLastIndex": "undefined",
+    "Object.hasOwn": "undefined"
+  }
+}

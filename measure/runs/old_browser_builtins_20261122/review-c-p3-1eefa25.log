@@ -1,0 +1,31 @@
+Phase base: 31af75444583c9236f342c908128c91da9f4f7e3
+Role base and audited HEAD: 1eefa25d9d286a80d4f2a1576664f1894aeb755d
+HEAD matched before and after the CLI checks. The tracked worktree was clean.
+
+HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/old-browser-check.mjs --help'
+Exit 0. One usage line. No stack.
+HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/old-browser-check.mjs --game invalid-review-game'
+Exit 1. One usage line. No stack.
+
+F3 is closed. The script checks listener PIDs against its child tree and treats missing PIDs as pending. It checks ownership after readiness, before move evidence, and before report cleanup.
+The saved startup-race probe confirms exit 1 for a foreign listener that bound after preflight.
+The positive report records three accepted actions and a 1500 ms quiet window with no action change. The start and move PNGs show empty slots changing to Mia has.
+Late finding F6: tech-debt (the quiet-control field defaults to false before measurement; startup still fails, so this cannot give a false acceptance result).
+ss -ltn showed no listener on 5199. ps showed no Vite or Chrome process owned by this role. No browser or server ran in this audit.
+
+Retain the detached release worktree, both shelf-sync and Chibi Sprouts worktrees and branches, and wip/oct-skill-docs-20261023 for their owners. Leave the origin refs unchanged.
+
+MEASURE_AGENT_RESULT
+role: measure-review-c-ux-api
+status: complete
+track: old_browser_builtins_20261122
+phase: Phase 3: Browser check
+commits: none
+tests_run: wrapped --help (exit 0) and invalid --game (exit 1); inspected screenshots and Green probe reports; no browser run
+files_changed: review-c-p3-1eefa25.json, review-c-p3-1eefa25.log
+plan_updates: none
+known_failures: no blockers; F4 and F5 remain nonblocking; F6 is late report tech debt
+handoff: F3 is closed. Send F6 to tech debt only. No new false acceptance result was found.
+END_MEASURE_AGENT_RESULT
+
+RESULT: PASS

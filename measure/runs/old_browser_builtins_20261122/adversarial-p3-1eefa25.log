@@ -1,0 +1,13 @@
+MEASURE_AGENT_RESULT
+role: measure-adversarial-testing
+status: complete
+track: old_browser_builtins_20261122
+phase: Phase 3: Browser check
+commits: 437bcb2d6533ef2bc23d38b37b5821b403283014 (test-only skip; prior test commit 387a7032ee1cecac09cf4d6d78c9c64a335548ac)
+tests_run: r2 test file passed with 1 documented skip; earlier witness passed (1 test); project gate passed (231 files passed, 2 skipped; 3397 tests passed, 10 skipped); Prettier check passed
+files_changed: tests/old-browser/adversarial-check-r2.test.ts; measure/runs/old_browser_builtins_20261122/adversarial-p3-1eefa25.json; measure/runs/old_browser_builtins_20261122/adversarial-p3-1eefa25.log
+plan_updates: none; plan.md and tech-debt.md were not changed; PM ruling records F2 as TD-49
+known_failures: F2 remains a nonblocking late finding under the 2026-11-23 PM ruling. It requires contrived harness interference; no user can reach this wrong result. The preserved test body is skipped until TD-49 closes. The PM may veto the ruling.
+handoff: Audited HEAD is 437bcb2d6533ef2bc23d38b37b5821b403283014. The prior audited implementation HEAD is 1eefa25d9d286a80d4f2a1576664f1894aeb755d; `git diff --stat 1eefa25d9d286a80d4f2a1576664f1894aeb755d 437bcb2d6533ef2bc23d38b37b5821b403283014 -- src scripts` printed nothing. The skipped test retains its body and the exact TD-49 skip reason. The focused tests, project gate, and Prettier check passed. No listener uses port 5199.
+dispositions: none
+END_MEASURE_AGENT_RESULT

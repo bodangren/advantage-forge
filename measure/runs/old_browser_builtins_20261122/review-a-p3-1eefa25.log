@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: review-a
+status: complete
+track: old_browser_builtins_20261122
+phase: Phase 3: Browser check
+commits: none
+tests_run: At 1eefa25d: wrapped Green exit 0; original race exit 1 with no browser; quiet control exit 1; after-window probe false exit 0. At 437bcb2d: wrapped tests exit 0; original witness passes and TD-49 witness is skipped. Final ss and ps: no audit-owned listener, Vite, or Chrome.
+files_changed: review-a-p3-1eefa25.json and review-a-p3-1eefa25.log
+plan_updates: none
+known_failures: F4 closed. F6 and adversarial F2 are nonblocking TD-49 under the orchestrator ruling. The TD-49 witness is skipped. F5 remains CLI tech debt.
+handoff: Phase 3 passes. The PM may veto. Do not route F6 to Green. Track the proposed game input counter in TD-49.
+END_MEASURE_AGENT_RESULT

@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "role": "measure-adversarial-testing",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 3: Browser check",
+  "baseline_sha": "31af75444583c9236f342c908128c91da9f4f7e3",
+  "phase_base_sha": "31af75444583c9236f342c908128c91da9f4f7e3",
+  "role_base_sha": "29ad3aa3783be9f39411f14213e626280f278ab0",
+  "audited_head_sha": "29ad3aa3783be9f39411f14213e626280f278ab0",
+  "status": "pass",
+  "summary": "The live browser check passes with all four built-ins absent and a changed game state. Temporary mutants failed on a retained built-in, blank 200 page, wrong game, equal state digest, post-move exception, and calls to each missing built-in. No false PASS was found.",
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "evidence": [
+    "Audited HEAD and role_base_sha are 29ad3aa3783be9f39411f14213e626280f278ab0; phase_base_sha is 31af75444583c9236f342c908128c91da9f4f7e3.",
+    "The exact Phase 3 diff includes scripts/old-browser-check.mjs and record files; no src/ or test file changed for this phase.",
+    "The Green command returned started=true, moves=6, state_changed=true, all four absent_in_page values undefined, and errors=[]. A final rerun refreshed out/old-browser/check.json, which then held the same successful state.",
+    "A temporary copy that left structuredClone defined failed at assertDeleted with started=false, moves=0, and a recorded presence error.",
+    "A temporary stateDigest mutant returning equal JSON objects failed after the real game started and counted six inputs, with 'game state did not change after the move'.",
+    "A page-step mutant invoked each deleted API inside try/catch and sent each TypeError to console.error. The result recorded four TypeError messages, one for every deleted name, and exited nonzero.",
+    "A temporary post-move TypeError appeared in pageerror and made the run exit nonzero.",
+    "A temporary server returned a blank wrong page with HTTP 200. The script failed waiting for __apk3dReady with started=false and moves=0.",
+    "A temporary wrong-game selector failed waiting for the game card with started=false and moves=0. The normal script uses the exact GAME id selector and sets started only after the Phaser renderer and game object exist.",
+    "A fresh browser.newContext is created before the first page navigation; the init script is installed before goto, so the check uses no prior page or browser-context cache.",
+    "The project heavy-run gate passed 230 files, with 1 skipped; 3396 tests passed and 9 skipped.",
+    "The interim out/old-browser/check.json read during mutation testing showed a failed record different from the successful Green stdout. A final heavy-run Green rerun restored a successful record. Attribution for the interim overwrite is unknown.",
+    "After the final browser run, ss -ltn showed no listener on 5199, and ps showed no vite.js or chrome-headless-shell process. All owned scripts exited; no process needed killing. Process PIDs were not captured."
+  ],
+  "commands": [
+    "git rev-parse HEAD; git diff --stat and --name-status 31af75444583c9236f342c908128c91da9f4f7e3..29ad3aa3783be9f39411f14213e626280f278ab0",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/old-browser-check.mjs --game spellweavers-run' (exit 0; started=true, moves=6, errors=[]; final run refreshed output after an interim overwrite)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts' (exit 0; 230 passed, 1 skipped; 3396 passed, 9 skipped)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'if node measure/runs/old_browser_builtins_20261122/mutant-init-fails-silently.mjs --game spellweavers-run; then exit 8; else echo EXPECTED_FAIL_init; fi; if node measure/runs/old_browser_builtins_20261122/mutant-equal-state-digest.mjs --game spellweavers-run; then exit 8; else echo EXPECTED_FAIL_equal_digest; fi; if node measure/runs/old_browser_builtins_20261122/mutant-missing-builtins-console-errors.mjs --game spellweavers-run; then exit 8; else echo EXPECTED_FAIL_builtin_errors; fi; if node measure/runs/old_browser_builtins_20261122/mutant-error-after-move.mjs --game spellweavers-run; then exit 8; else echo EXPECTED_FAIL_post_move_error; fi; if node measure/runs/old_browser_builtins_20261122/mutant-blank-200-page.mjs --game spellweavers-run; then exit 8; else echo EXPECTED_FAIL_wrong_200_page; fi; if node measure/runs/old_browser_builtins_20261122/mutant-wrong-game-selector.mjs --game spellweavers-run; then exit 8; else echo EXPECTED_FAIL_wrong_game; fi' (expected failing mutants; all rejected)",
+    "ss -ltn; ps -eo pid,args | grep -E 'vite.js|chrome-headless' (no listener on 5199; no matching process)",
+    "build-graph stats measure/graph.db (exit 4: no such table: nodes)"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/adversarial-p3-29ad3aa.json",
+    "measure/runs/old_browser_builtins_20261122/adversarial-p3-29ad3aa.log",
+    "measure/runs/old_browser_builtins_20261122/make-browser-mutants-r1.mjs",
+    "measure/runs/old_browser_builtins_20261122/mutant-init-fails-silently.mjs",
+    "measure/runs/old_browser_builtins_20261122/mutant-equal-state-digest.mjs",
+    "measure/runs/old_browser_builtins_20261122/mutant-missing-builtins-console-errors.mjs",
+    "measure/runs/old_browser_builtins_20261122/mutant-error-after-move.mjs",
+    "measure/runs/old_browser_builtins_20261122/mutant-blank-200-page.mjs",
+    "measure/runs/old_browser_builtins_20261122/mutant-wrong-game-selector.mjs",
+    "measure/runs/old_browser_builtins_20261122/mutant-blank-200-page/check.json",
+    "measure/runs/old_browser_builtins_20261122/mutant-equal-state-digest/check.json",
+    "measure/runs/old_browser_builtins_20261122/mutant-equal-state-digest/spellweavers-run-start.png",
+    "measure/runs/old_browser_builtins_20261122/mutant-error-after-move/check.json",
+    "measure/runs/old_browser_builtins_20261122/mutant-error-after-move/spellweavers-run-start.png",
+    "measure/runs/old_browser_builtins_20261122/mutant-error-after-move/spellweavers-run-move.png",
+    "measure/runs/old_browser_builtins_20261122/mutant-init-fails-silently/check.json",
+    "measure/runs/old_browser_builtins_20261122/mutant-missing-builtins-console-errors/check.json",
+    "measure/runs/old_browser_builtins_20261122/mutant-missing-builtins-console-errors/spellweavers-run-start.png",
+    "measure/runs/old_browser_builtins_20261122/mutant-missing-builtins-console-errors/spellweavers-run-move.png",
+    "measure/runs/old_browser_builtins_20261122/mutant-wrong-game-selector/check.json"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "openai/gpt-6-luna#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "The live browser run started the target game, changed its state, and recorded all four built-ins absent."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 5,
+      "evidence": "Six browser mutants covering false-PASS paths all exited nonzero, and the project gate passed 3396 tests."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "All temporary mutant scripts and their outputs stayed under measure/runs; no source or test changed."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 4,
+      "evidence": "The live run and six mutant outcomes were recorded, but a concurrent or otherwise external overwrite changed the interim output artifact before the final rerun."
+    }
+  ]
+}

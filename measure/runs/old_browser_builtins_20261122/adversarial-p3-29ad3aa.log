@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: measure-adversarial-testing
+status: complete
+track: old_browser_builtins_20261122
+phase: Phase 3: Browser check
+commits: none
+tests_run: live Green heavy-run passed (started=true, moves=6, errors=[]; rerun refreshed output after interim overwrite); six temporary browser mutants all failed as required; project heavy-run passed (230 passed, 1 skipped; 3396 passed, 9 skipped); final ss/ps check found no listener on 5199 and no vite.js or chrome-headless-shell process
+files_changed: measure/runs/old_browser_builtins_20261122/adversarial-p3-29ad3aa.json; measure/runs/old_browser_builtins_20261122/adversarial-p3-29ad3aa.log; temporary mutants and generated outputs, all under measure/runs/old_browser_builtins_20261122/
+plan_updates: none
+known_failures: interim out/old-browser/check.json showed a failed record that differed from the successful Green output; the final heavy-run rerun refreshed it successfully; source of interim overwrite unknown; build-graph database has no nodes table
+handoff: No false PASS was found. Six mutations were rejected. The target check and project gate passed. No tests were added and no commit was made. No owned process remained to kill; PIDs were not captured.
+END_MEASURE_AGENT_RESULT

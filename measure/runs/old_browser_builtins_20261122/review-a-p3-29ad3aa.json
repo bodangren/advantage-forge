@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "role": "review-a",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 3: Browser check",
+  "baseline_sha": "31af75444583c9236f342c908128c91da9f4f7e3",
+  "phase_base_sha": "31af75444583c9236f342c908128c91da9f4f7e3",
+  "role_base_sha": "29ad3aa3783be9f39411f14213e626280f278ab0",
+  "audited_head_sha": "29ad3aa3783be9f39411f14213e626280f278ab0",
+  "status": "fail",
+  "summary": "The Green command passed, and the deleted-name probe failed as expected. The check also passed with move input blocked, trusted a foreign server, and left Vite running after a report write failure.",
+  "blocking_findings": [
+    "F1 [Blocker] review-a: scripts/old-browser-check.mjs:130-137,198-234 verifies an arbitrary state change and counts dispatched input attempts. With all browser move inputs blocked, the game clock still advanced. The game recorded no chosen lane, score change, collected word, or courage change. The script reported moves: 6, state_changed: true, and exit 0. Require a concrete input-driven transition before counting a move.",
+    "F2 [Blocker] review-a: scripts/old-browser-check.mjs:226-229 writes check.json before browser and server cleanup. When the write throws, both cleanup calls are skipped. An injected ENOSPC left the spawned Vite server listening after the script exited. Put report output inside a cleanup-safe structure and wait for Vite to exit on all paths.",
+    "F3 [Blocker] review-a: scripts/old-browser-check.mjs:95-110 accepts any HTTP 200 on port 5199 before the owned Vite child is ready. A pre-bound local HTTP server made the probe continue past waitForServer instead of reporting a collision. Gate readiness on the child that this script starts."
+  ],
+  "nonblocking_findings": [],
+  "evidence": [
+    "git rev-parse HEAD matches audited_head_sha at role start. The phase base resolves.",
+    "The scoped phase delta adds the browser script and T7 evidence. The other changes concern the unrelated Chibi redesign.",
+    "The init script runs before navigation and removes the four names. The browser assertion reported all four as undefined.",
+    "The wrapped unmodified Green command exited 0. Its result names Spellweavers Run, reports started: true and moves: 6, and has no errors.",
+    "An in-memory variant added a call to the deleted structuredClone in the existing init script. The run recorded a TypeError as a page error and exited 1. No src file was edited.",
+    "A wrapped in-memory browser variant blocked all move input events. The game clock advanced from 1666.67 to 5733.33 ms. Score, collected words, courage, and lane choice remained unchanged. The script exited 0.",
+    "Port 5199 had no listener after the injected page error, the no-input pass, or the Green run.",
+    "A later check found PID 2751030 on port 5199. All four audit-probe Vite PIDs had exited. The audit did not stop the later process.",
+    "The lifecycle probe sent SIGINT and SIGTERM to the script after its owned Vite server became ready. Both paths exited 1 and left no listener.",
+    "The report-write failure probe exited 1 with ENOSPC while its Vite PID still served port 5199. The audit harness stopped that PID. The final port check showed no listener.",
+    "The port-collision probe pre-bound port 5199 with a server that returned HTTP 200. The script crossed the readiness boundary before the probe stopped it to avoid opening Chromium.",
+    "The final Green result has the required JSON keys and two nonempty screenshots. No file under out/old-browser is tracked.",
+    "The missing and unsupported --game values each exited 1 without starting a browser.",
+    "Node syntax, focused Prettier, the generator, and the structural doctor passed. The graph database had no nodes table. The runtime hook was traced through src/host/main.ts:425 and src/games/spellweavers-run/view2d/game.ts:418.",
+    "Later working-tree edits touch only unrelated Chibi redesign records. The release and shelf-sync worktrees, the wip/oct-skill-docs-20261023 branch, and origin refs remain untouched."
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "git diff 31af75444583c9236f342c908128c91da9f4f7e3..29ad3aa3783be9f39411f14213e626280f278ab0 -- scripts/old-browser-check.mjs measure/tracks/old_browser_builtins_20261122/plan.md",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c with the in-memory deleted-name and no-input browser variants and node scripts/old-browser-check.mjs --game spellweavers-run",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c with in-memory write-failure, port-collision, SIGINT, and SIGTERM lifecycle variants",
+    "ss -ltn 'sport = :5199'",
+    "node --check scripts/old-browser-check.mjs; node scripts/old-browser-check.mjs --game other-game; node scripts/old-browser-check.mjs",
+    "node measure/tools/generate.mjs --check; ./measure/doctor.sh --structural-only; node_modules/.bin/prettier --check scripts/old-browser-check.mjs measure/tracks/old_browser_builtins_20261122/plan.md"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/review-a-p3-29ad3aa.json",
+    "measure/runs/old_browser_builtins_20261122/review-a-p3-29ad3aa.log"
+  ],
+  "test_strategy_violations": [
+    "The live browser gate passes with all move inputs blocked, contrary to the test-strategy.md section 6 real-move requirement.",
+    "The Vite child outlives the command when the report write fails, contrary to the section 6 lifecycle requirement."
+  ],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "retry_implementation",
+  "confidence": "high",
+  "route": "unknown",
+  "ratings": [
+    {"axis": "correctness", "score": 2, "evidence": "The live no-input browser probe exited 0 without accepting a move."},
+    {"axis": "test_meaning", "score": 2, "evidence": "The deleted-name probe exited 1, but scripts/old-browser-check.mjs:217-219 accepts passive clock changes."},
+    {"axis": "scope_discipline", "score": 5, "evidence": "The old-browser phase delta contains the browser check and the T7 records."},
+    {"axis": "evidence_quality", "score": 3, "evidence": "The T7 evidence at plan.md:368-373 proves a digest change but not a real move."}
+  ]
+}

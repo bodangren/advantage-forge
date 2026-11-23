@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "role": "ux-browser-review",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 3: Browser check",
+  "baseline_sha": "31af75444583c9236f342c908128c91da9f4f7e3",
+  "phase_base_sha": "31af75444583c9236f342c908128c91da9f4f7e3",
+  "role_base_sha": "1eefa25d9d286a80d4f2a1576664f1894aeb755d",
+  "audited_head_sha": "1eefa25d9d286a80d4f2a1576664f1894aeb755d",
+  "status": "pass",
+  "summary": "The round 2 browser evidence shows Spellweavers Run 2D started and accepted three input-driven actions with all four built-ins absent. The negative control shows no action change without input, and the screenshots show a visible gameplay change.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F1 [Nit] ux-browser-review: The Phaser 2D game has an empty accessibility snapshot because the interface renders in a canvas. The screenshots show game content, but the canvas does not expose that content to assistive technology. This remains a nonblocking limitation."
+  ],
+  "evidence": [
+    "The audited HEAD is 1eefa25d9d286a80d4f2a1576664f1894aeb755d, recorded as final_green_head in green-p3-t7r2.log.",
+    "Read out/old-browser/check.json: game is spellweavers-run; started is true; moves is 3; action_inputs are ArrowRight, ArrowLeft, and ArrowRight; negative_control is 1500 ms and changed false; errors is empty; state_changed is true; all four built-ins are undefined in the page.",
+    "Read scripts/old-browser-check.mjs. It deletes the four built-ins before page scripts, asserts their absence, launches the fixed demo URL, selects Spellweavers Run, and waits for the Phaser renderer and mounted game.",
+    "The script requires the page's listener on port 5199 to belong to the spawned Vite process tree, checks ownership during readiness and before accepting browser evidence, and rechecks ownership before report write. A foreign page or server cannot satisfy these checks.",
+    "The script's 1500 ms negative control requires player-action fields to remain unchanged without input. It counts a move only when a key or pointer event reaches the page and a player-action field changes after that event.",
+    "Read probe-p3r2-harness-score.mjs. It raises score from the harness while neutralizing input dispatch. green-p3-t7r2.log records the expected failure with zero moves, showing a harness state write alone cannot pass.",
+    "Read probe-p3r2-startup-race.mjs. It supplies a foreign server with a Vite client marker after the preflight. green-p3-t7r2.log records the expected owner-mismatch failure, so a foreign page cannot pass.",
+    "Opened both screenshots. The start image shows the Spellweavers Run prompt, answer choices, HUD, forest, and player. The move image shows the word sequence progressed, a selected answer, and a changed game view.",
+    "The page URL is http://127.0.0.1:5199/demo/index.html?qc=1&renderer=phaser and the game id is spellweavers-run.",
+    "green-p3-t7r2.log reports the Green command exited 0, errors were empty, and port 5199 had no listener after the run.",
+    "The Phaser accessibility tree remains empty. The screenshots show the recorded game states only; no broader visual-quality or audible-quality claim is made."
+  ],
+  "commands": [
+    "Read out/old-browser/check.json => spellweavers-run, started true, moves 3, action_inputs ArrowRight/ArrowLeft/ArrowRight, negative control unchanged, errors [], four built-ins undefined",
+    "Read scripts/old-browser-check.mjs => owned-server and page-game checks; input-event plus player-action gate; 1500 ms quiet negative control",
+    "Read measure/runs/old_browser_builtins_20261122/green-p3-t7r2.log => final Green exit 0; cleanup confirms port 5199 free",
+    "Read probe-p3r2-harness-score.mjs and probe-p3r2-startup-race.mjs",
+    "Opened out/old-browser/spellweavers-run-start.png and out/old-browser/spellweavers-run-move.png"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/ux-browser-review-p3-1eefa25.json",
+    "measure/runs/old_browser_builtins_20261122/ux-browser-review-p3-1eefa25.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "openai/gpt-6-luna#high",
+  "webbridge_status": "not_run",
+  "webbridge_evidence": {
+    "screenshots": [
+      "out/old-browser/spellweavers-run-start.png: 1280x800 start state with Spellweavers Run question, answer choices, HUD, forest, and player.",
+      "out/old-browser/spellweavers-run-move.png: 1280x800 move state with the sentence advanced and an answer selected."
+    ],
+    "accessibility_snapshots": [
+      "The Phaser 2D accessibility tree is empty because game content renders in canvas. This remains a nonblocking limitation."
+    ],
+    "interactions": [
+      "Opened http://127.0.0.1:5199/demo/index.html?qc=1&renderer=phaser and selected spellweavers-run.",
+      "Advanced through the story reader and briefing, then started the Phaser game with all four built-ins deleted.",
+      "Waited through a 1500 ms no-input control with no player-action field change.",
+      "Sent ArrowRight, ArrowLeft, and ArrowRight. All three were accepted as input-driven actions and the move screenshot shows changed gameplay.",
+      "Probe controls rejected a harness-only score change and a foreign page/server."
+    ],
+    "dev_url": "http://127.0.0.1:5199/demo/"
+  },
+  "ux_applicability": "applicable"
+}

@@ -1,0 +1,14 @@
+MEASURE_AGENT_RESULT
+status: complete
+verdict: PASS
+audited_head: 29ad3aa3783be9f39411f14213e626280f278ab0
+phase_base_sha: 31af75444583c9236f342c908128c91da9f4f7e3
+role_base_sha: 29ad3aa3783be9f39411f14213e626280f278ab0
+checks: Read the Green evidence for Phase 3. check.json records game spellweavers-run, started true, six moves, errors empty, and changed state. All four built-ins are undefined in the page. The start and move screenshots show the active game and a visibly changed state. The script deletes built-ins before navigation, selects and starts the game through the demo, requires the Phaser renderer and game object, and requires changed state. It collects console and page errors. These checks prevent a blank page from passing. The Phaser accessibility tree is empty because game content renders in canvas; this remains a nonblocking note. Page URL: http://127.0.0.1:5199/demo/index.html?qc=1&renderer=phaser. Game id: spellweavers-run.
+blocking_findings: None.
+nonblocking_findings: The Phaser 2D accessibility tree is empty because the interface renders in canvas. This is a known limitation.
+evidence: out/old-browser/check.json; scripts/old-browser-check.mjs; measure/runs/old_browser_builtins_20261122/green-p3-t7.log; out/old-browser/spellweavers-run-start.png; out/old-browser/spellweavers-run-move.png.
+retry_recommendation: none
+handoff: Phase 3 browser gate passes at audited HEAD 29ad3aa3783be9f39411f14213e626280f278ab0. The evidence shows a playable game with the four built-ins absent and no recorded errors. Keep the empty Phaser accessibility tree as a nonblocking note.
+result_artifact: measure/runs/old_browser_builtins_20261122/ux-browser-review-p3-29ad3aa.json
+END_MEASURE_AGENT_RESULT

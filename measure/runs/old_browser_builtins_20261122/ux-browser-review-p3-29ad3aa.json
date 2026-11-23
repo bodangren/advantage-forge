@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "role": "ux-browser-review",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 3: Browser check",
+  "baseline_sha": "31af75444583c9236f342c908128c91da9f4f7e3",
+  "phase_base_sha": "31af75444583c9236f342c908128c91da9f4f7e3",
+  "role_base_sha": "29ad3aa3783be9f39411f14213e626280f278ab0",
+  "audited_head_sha": "29ad3aa3783be9f39411f14213e626280f278ab0",
+  "status": "pass",
+  "summary": "The Phase 3 browser check shows Spellweavers Run 2D started and playable with all four built-ins absent. The move screenshot shows a changed game state. The script cannot pass on a blank page.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F1 [Nit] ux-browser-review: The Phaser 2D game has an empty accessibility snapshot because the interface renders in a canvas. The screenshots show game content, but the canvas does not expose that content to assistive technology. This is a known nonblocking limitation."
+  ],
+  "evidence": [
+    "The audited HEAD is 29ad3aa3783be9f39411f14213e626280f278ab0, matching the final Green HEAD in green-p3-t7.log. The role base is recorded as the audited HEAD.",
+    "Read out/old-browser/check.json: game is spellweavers-run; started is true; moves is 6; errors is empty; state_changed is true; all four named built-ins are undefined in the page.",
+    "Read scripts/old-browser-check.mjs. It installs the deletion init script before navigation, checks all four built-ins, visits the demo URL, selects Spellweavers Run, advances through the reader and briefing, and waits for the Phaser renderer and game hook.",
+    "The script records pageerror events and console errors. It requires a non-null game state before and after the move and throws if the state does not change.",
+    "The start screenshot visibly shows the Spellweavers Run HUD, question panel, answer choices, forest scene, and player character. The move screenshot shows the answer progress and game scene changed.",
+    "The script cannot pass on a blank page: it waits for the demo ready signal, selects the game card, starts the Phaser renderer, requires a game object, and requires changed state. The inspected screenshots independently show the live game.",
+    "The page URL is http://127.0.0.1:5199/demo/index.html?qc=1&renderer=phaser. The selected game id is spellweavers-run.",
+    "green-p3-t7.log reports the command exited 0 and port 5199 was free after the run.",
+    "The empty Phaser accessibility tree is nonblocking. No broader visual-quality or audible-quality claim is made."
+  ],
+  "commands": [
+    "Read out/old-browser/check.json => spellweavers-run, started true, moves 6, errors [], state_changed true; all four built-ins undefined",
+    "Read scripts/old-browser-check.mjs => init deletion before navigation; game and state-change assertions; pageerror and console-error collection",
+    "Read measure/runs/old_browser_builtins_20261122/green-p3-t7.log => Green exit 0; port 5199 free",
+    "Opened out/old-browser/spellweavers-run-start.png and out/old-browser/spellweavers-run-move.png"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/ux-browser-review-p3-29ad3aa.json",
+    "measure/runs/old_browser_builtins_20261122/ux-browser-review-p3-29ad3aa.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "openai/gpt-6-luna#high",
+  "webbridge_status": "not_run",
+  "webbridge_evidence": {
+    "screenshots": [
+      "out/old-browser/spellweavers-run-start.png: 1280x800 start state; shows Spellweavers Run HUD, question, answer choices, forest scene, and player character.",
+      "out/old-browser/spellweavers-run-move.png: 1280x800 move state; shows changed question progress, answer state, and game scene."
+    ],
+    "accessibility_snapshots": [
+      "The Phaser game accessibility tree is empty because the game content renders in canvas. This is a nonblocking, known limitation."
+    ],
+    "interactions": [
+      "Opened http://127.0.0.1:5199/demo/index.html?qc=1&renderer=phaser.",
+      "Selected spellweavers-run in the demo, advanced through the story reader and briefing, and started the Phaser game.",
+      "Clicked the game canvas and pressed ArrowRight, ArrowLeft, ArrowUp, 1, and ArrowRight. The game state changed."
+    ],
+    "dev_url": "http://127.0.0.1:5199/demo/"
+  },
+  "ux_applicability": "applicable"
+}

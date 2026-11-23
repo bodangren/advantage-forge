@@ -1,0 +1,22 @@
+{
+  "game": "spellweavers-run",
+  "deleted": [
+    "structuredClone",
+    "Array.prototype.at",
+    "Array.prototype.findLastIndex",
+    "Object.hasOwn"
+  ],
+  "started": true,
+  "moves": 0,
+  "action_inputs": [],
+  "state_changed": true,
+  "errors": [
+    "no player-action transition | Error: no player-action transition at file://<repo>/measure/runs/old_browser_builtins_20261122/mutant-r2-time-field-only.mjs:313:31"
+  ],
+  "absent_in_page": {
+    "structuredClone": "undefined",
+    "Array.prototype.at": "undefined",
+    "Array.prototype.findLastIndex": "undefined",
+    "Object.hasOwn": "undefined"
+  }
+}

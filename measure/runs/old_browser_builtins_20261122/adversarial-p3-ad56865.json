@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "role": "measure-adversarial-testing",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 3: Browser check",
+  "baseline_sha": "31af75444583c9236f342c908128c91da9f4f7e3",
+  "phase_base_sha": "31af75444583c9236f342c908128c91da9f4f7e3",
+  "role_base_sha": "ad56865ba45daf5cf9d9c2557497a49f20c733ba",
+  "audited_head_sha": "ad56865ba45daf5cf9d9c2557497a49f20c733ba",
+  "status": "fail",
+  "summary": "A harness-only score mutation makes the browser check report six accepted moves and exit 0 when all inputs are blocked. This is a false PASS in the delivered check. Eight other mutants and the pre-bound stale-demo fixture exited 1. The passing Green run and screenshots were verified; the one project gate failed on the new regression test, as expected.",
+  "blocking_findings": [
+    "F1 [Blocker] adversarial-testing: scripts/old-browser-check.mjs:201-223,313-321 counts watched state changes as accepted actions without proving that the sent input caused them. With input.play() neutralized and the harness incrementing state.score before each mark, the mutant reports started=true, moves=6, all six action labels, errors=[], and exits 0. The browser check can falsely certify that the old-browser game accepted player input. This round-2 late finding meets the false-PASS exception and merits one fix round."
+  ],
+  "nonblocking_findings": [],
+  "evidence": [
+    "The required immutable audited HEAD resolved to ad56865ba45daf5cf9d9c2557497a49f20c733ba before this role's test-only commit. phase_base_sha is 31af75444583c9236f342c908128c91da9f4f7e3. The role's test-only commit is e8312fc1ee1724db0b88078baf10e289634c50a1; the production source was not changed by this role.",
+    "The all-inputs-blocked mutant exited 1 with started=true, moves=0, action_inputs=[], and a no-player-action-transition error.",
+    "The clock-only-change and time-field-only mutants each exited 1 with moves=0 and a no-player-action-transition error.",
+    "The post-move-error mutant exited 1 with two accepted actions and a captured injected page error.",
+    "The built-in-still-defined mutant exited 1 after detecting structuredClone in the page.",
+    "The console-error mutant exited 1 and recorded the injected console TypeError in errors.",
+    "The blank-200-page mutant exited 1 because the owned-server readiness marker was absent. The wrong-game-card mutant exited 1 because the target game card was absent.",
+    "The harness-mutates-score-no-input mutant exited 0 with started=true, moves=6, all six input labels, errors=[], and all four built-ins absent. It replaced input.play() with a no-op and incremented the game's score from page.evaluate before each action mark. This is a direct false PASS.",
+    "The pre-bound stale-demo fixture served a page with HTTP 200 and the Vite client marker on port 5199. The browser check exited 1 with port 5199 already in use. The separate attempted post-preflight race fixture could not start its Vite decoy and exited 1 before browser navigation; it provides no race-mutant pass evidence.",
+    "The stale-demo decoy, each mutant, the Green run, and the project test gate ran through HEAVY_MIN_AVAIL_MB=1500 heavy-run calls. The mutant runner logged nine individual mutant exits: eight exit 1 and harness-mutates-score-no-input exit 0. The stale-demo child reported exit 1; its driver exited 0 because that was the expected rejection.",
+    "The wrapped Green command exited 0 with started=true, moves=2, action_inputs ArrowRight and 1, errors=[], and all four built-ins undefined. Its start and move screenshots exist at 522580 and 541089 bytes.",
+    "The single project gate run exited 1 because tests/old-browser/adversarial-check.test.ts failed: acceptedAction returned true for a score change when the test represented no input. The same run reported 230 passed files, 1 skipped file, 1 failed file; 3396 passed tests, 9 skipped tests, and 1 failed test.",
+    "Reviews A and C independently recorded an unresolved post-preflight server-ownership race at this same audited HEAD. Their findings are in review-a-p3-ad56865.json F4 and review-c-p3-ad56865.json F3. My pre-bound stale-demo case rejected, and my separate race fixture did not reach browser navigation.",
+    "The final ss check showed no listener on 5199. The final ps check showed no vite.js or chrome-headless-shell process. Started browser and Vite PIDs are recorded in pids-ad56865.log; no process remained to kill.",
+    "build-graph was attempted earlier in this run sequence and failed because measure/graph.db has no nodes table."
+  ],
+  "commands": [
+    "git rev-parse HEAD (verified ad56865ba45daf5cf9d9c2557497a49f20c733ba before the test-only commit; current HEAD after that commit is e8312fc1ee1724db0b88078baf10e289634c50a1)",
+    "git diff --stat 31af75444583c9236f342c908128c91da9f4f7e3 ad56865ba45daf5cf9d9c2557497a49f20c733ba; git diff -- scripts/old-browser-check.mjs",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'NODE_OPTIONS=--import=/home/daniebo/Desktop/advantage-forge/measure/runs/old_browser_builtins_20261122/pid-recorder-ad56865.mjs node scripts/old-browser-check.mjs --game spellweavers-run' (exit 0; started=true, moves=2, errors=[]; two screenshots nonzero)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'NODE_OPTIONS=--import=/home/daniebo/Desktop/advantage-forge/measure/runs/old_browser_builtins_20261122/pid-recorder-ad56865.mjs node measure/runs/old_browser_builtins_20261122/run-mutants-ad56865.mjs > measure/runs/old_browser_builtins_20261122/mutants-ad56865.log 2>&1; status=$?; grep -E \"MUTANT_RESULT|FALSE_PASS|STALE_DEMO_MUTANT_EXIT\" measure/runs/old_browser_builtins_20261122/mutants-ad56865.log; exit \"$status\"' (exit 9: eight mutants exit 1; harness-mutates-score-no-input exits 0; pre-bound stale-demo child exits 1)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts' (exit 1; 230 passed, 1 skipped, 1 failed files; 3396 passed, 9 skipped, 1 failed tests)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/old-browser/adversarial-check.test.ts' (exit 1 as expected for the regression witness)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'NODE_OPTIONS=--import=/home/daniebo/Desktop/advantage-forge/measure/runs/old_browser_builtins_20261122/pid-recorder-ad56865.mjs node measure/runs/old_browser_builtins_20261122/mutant-r2-stale-demo-race.mjs --game spellweavers-run' (exit 1 before browser navigation; race Vite decoy exited)",
+    "ss -ltn | grep ':5199'; ps -eo pid,args | grep -E 'vite.js|chrome-headless-shell' | grep -v grep (no listener or matching process)",
+    "build-graph stats measure/graph.db (exit 4: no such table: nodes)"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/adversarial-p3-ad56865.json",
+    "measure/runs/old_browser_builtins_20261122/adversarial-p3-ad56865.log",
+    "measure/runs/old_browser_builtins_20261122/make-browser-mutants-r2.mjs",
+    "measure/runs/old_browser_builtins_20261122/mutant-r2-all-inputs-blocked.mjs and its output directory",
+    "measure/runs/old_browser_builtins_20261122/mutant-r2-clock-only-change.mjs and its output directory",
+    "measure/runs/old_browser_builtins_20261122/mutant-r2-time-field-only.mjs and its output directory",
+    "measure/runs/old_browser_builtins_20261122/mutant-r2-post-move-error.mjs and its output directory",
+    "measure/runs/old_browser_builtins_20261122/mutant-r2-builtin-still-defined.mjs and its output directory",
+    "measure/runs/old_browser_builtins_20261122/mutant-r2-console-error.mjs and its output directory",
+    "measure/runs/old_browser_builtins_20261122/mutant-r2-blank-200-page.mjs and its output directory",
+    "measure/runs/old_browser_builtins_20261122/mutant-r2-wrong-game-card.mjs and its output directory",
+    "measure/runs/old_browser_builtins_20261122/mutant-r2-harness-mutates-score-no-input.mjs and its output directory",
+    "measure/runs/old_browser_builtins_20261122/run-mutants-ad56865.mjs",
+    "measure/runs/old_browser_builtins_20261122/run-stale-demo-mutant-r2.mjs",
+    "measure/runs/old_browser_builtins_20261122/mutants-ad56865.log",
+    "measure/runs/old_browser_builtins_20261122/make-stale-race-mutant-ad56865.mjs",
+    "measure/runs/old_browser_builtins_20261122/mutant-r2-stale-demo-race.mjs",
+    "measure/runs/old_browser_builtins_20261122/pid-recorder-ad56865.mjs",
+    "measure/runs/old_browser_builtins_20261122/pids-ad56865.log",
+    "tests/old-browser/adversarial-check.test.ts (committed in e8312fc1ee1724db0b88078baf10e289634c50a1)"
+  ],
+  "test_strategy_violations": [
+    "The live gate accepts a score mutation performed by the test harness without a successful player input, contrary to the Phase 3 accepted-move requirement."
+  ],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "retry_implementation",
+  "confidence": "high",
+  "route": "unknown",
+  "ratings": [
+    {"axis": "correctness", "score": 1, "evidence": "mutant-r2-harness-mutates-score-no-input/check.json records six moves and no errors after input.play() became a no-op."},
+    {"axis": "test_meaning", "score": 2, "evidence": "The all-inputs-blocked and clock-only mutants fail, but the committed regression test fails on the harness-only score change that makes the gate exit 0."},
+    {"axis": "scope_discipline", "score": 5, "evidence": "Only the adversarial regression test was committed; browser mutants and outputs stayed under measure/runs/old_browser_builtins_20261122/."},
+    {"axis": "evidence_quality", "score": 4, "evidence": "The mutant runner logs each exit, and the Green command, project gate, screenshots, PID log, and cleanup checks are recorded."}
+  ]
+}

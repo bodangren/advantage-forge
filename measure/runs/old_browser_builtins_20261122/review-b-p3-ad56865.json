@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "role": "review-b",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 3: Browser check",
+  "round": 2,
+  "baseline_sha": "31af75444583c9236f342c908128c91da9f4f7e3",
+  "phase_base_sha": "31af75444583c9236f342c908128c91da9f4f7e3",
+  "role_base_sha": "ad56865ba45daf5cf9d9c2557497a49f20c733ba",
+  "audited_head_sha": "ad56865ba45daf5cf9d9c2557497a49f20c733ba",
+  "security_applicability": "applicable",
+  "status": "pass",
+  "summary": "Re-review after T7r (c3f48a52). All three r1 nonblocking findings are withdrawn and verified fixed: the script fails a decoy collision in 267 ms before spawning anything, check.json and stderr carry no /home/ path or user name on failure (scrub verified on the failure stack), and the port is already free at parent exit (teardown lag gone). r1 properties hold: loopback only, SIGTERM/SIGINT to the parent free the port within ~2 s with no chromium orphan, --game handling rejects every bad case with usage (and --help exits 0), writes stay under out/old-browser/, and the full run is green with the accepted-move rule. No new findings; one cosmetic observation (SIGINT exits 130, cleanup identical).",
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "evidence": [
+    "F1 withdrawn (collision bypass): the script now refuses to start when anything answers on 5199 (portAnswering pre-spawn check, scripts/old-browser-check.mjs:240) and after spawn requires the owned child alive plus the /@vite/client marker (lines 145-169). Probe probe-p3-r2-collision.mjs: decoy on 127.0.0.1:5199 inside one heavy-run call; the script failed in 267 ms with 'port 5199 already in use', exit 1, no vite or chromium spawned, port free afterwards.",
+    "F2 withdrawn (home path in check.json): scrub() (lines 52-58) replaces the repo root with <repo> and $HOME with <home>; describe() feeds scrubbed messages and trimmed stacks. The collision failure grep-verified: check.json and stdout/stderr hold no '/home/' and no user name; the stack reads file://<repo>scripts/old-browser-check.mjs:240. The full run's check.json is likewise clean.",
+    "F3 withdrawn (teardown lag): stopServer re-awaits the child exit (lines 120-122). Probe probe-p3-r2-full.mjs: at parent exit the port was already free (freed after ~0 ms); the r1 lingering-listener behavior is gone.",
+    "r1 properties hold: loopback only (config host 127.0.0.1, single BASE fetch target, --remote-debugging-pipe); SIGTERM and SIGINT to the Node parent only freed the port within ~2 s with no chromium orphan and no baseline process harmed (probe-p3-signal.mjs); --game cases all exit 1 with usage, --help exits 0, no injection file (probe-p3-r2-args.mjs); writes only under out/old-browser/ with a wrapped report write (lines 24, 31-33, 241, 294, 327, 334-338).",
+    "Full run green: exit 0, started=true, moves=2 with accepted-move rule (action_inputs ['ArrowRight','1']), state_changed=true, errors=0, all four built-ins absent in page.",
+    "PM load rule compliance: every decoy, signal, and full run went through heavy-run.sh with HEAVY_MIN_AVAIL_MB=1500; final ss/ps shows nothing of mine on 5199 and no vite.js or chrome-headless-shell process; nothing needed killing.",
+    "Observation (not a finding): the SIGINT path exits 130 instead of 1; cleanup is identical and complete.",
+    "A2 not applicable: no draft-to-published path. A6: the script doc comment matches observed behavior including accepted-move semantics and the scrubbed report."
+  ],
+  "commands": [
+    "git rev-parse HEAD && git status --short -- src/ scripts/ tests/",
+    "git log --oneline 31af75444583c9236f342c908128c91da9f4f7e3..ad56865ba45daf5cf9d9c2557497a49f20c733ba",
+    "git show --stat c3f48a52",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node measure/runs/old_browser_builtins_20261122/probe-p3-r2-collision.mjs'",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node measure/runs/old_browser_builtins_20261122/probe-p3-r2-args.mjs; ls /tmp/p3-r2-owned 2>/dev/null && echo INJECTION-FILE-CREATED || echo no-injection-file'",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node measure/runs/old_browser_builtins_20261122/probe-p3-r2-full.mjs'",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node measure/runs/old_browser_builtins_20261122/probe-p3-signal.mjs term'",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node measure/runs/old_browser_builtins_20261122/probe-p3-signal.mjs int'",
+    "ss -ltn | grep 5199; ps -eo pid,args | grep -E 'vite.js|chrome-headless' | grep -v grep"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/review-b-p3-ad56865.json",
+    "measure/runs/old_browser_builtins_20261122/review-b-p3-ad56865.log",
+    "measure/runs/old_browser_builtins_20261122/review-b-p3-ad56865-notes.md",
+    "measure/runs/old_browser_builtins_20261122/probe-p3-r2-collision.mjs",
+    "measure/runs/old_browser_builtins_20261122/probe-p3-r2-args.mjs",
+    "measure/runs/old_browser_builtins_20261122/probe-p3-r2-full.mjs"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "kimi-code-plan-cn/kimi-for-coding",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "All three r1 findings verified fixed by probe (267 ms collision failure, scrubbed failure output, port free at parent exit) and the full run is green with the accepted-move rule."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "The script self-checks deletion, start, and accepted moves at runtime; the collision, signal, and scrub paths are proven by this audit's probes but have no committed test."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "git show --stat c3f48a52 changes only scripts/old-browser-check.mjs, exactly the planned T7r file."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "Every claim cites a probe run (r2 collision, r2 args, r2 full, two signal runs), a live ss/ps observation, or a script line."
+    }
+  ]
+}

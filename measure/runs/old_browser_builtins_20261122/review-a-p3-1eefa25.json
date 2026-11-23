@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "role": "review-a",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 3: Browser check",
+  "baseline_sha": "31af75444583c9236f342c908128c91da9f4f7e3",
+  "phase_base_sha": "31af75444583c9236f342c908128c91da9f4f7e3",
+  "role_base_sha": "1eefa25d9d286a80d4f2a1576664f1894aeb755d",
+  "audited_head_sha": "437bcb2d6533ef2bc23d38b37b5821b403283014",
+  "status": "pass",
+  "summary": "Phase 3 passes under the orchestrator ruling. F4 is closed. F6 is nonblocking TD-49. The original witness passes, and the TD-49 witness is skipped.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F5 [Nit] review-a: Carry forward CLI tech debt. scripts/old-browser-check.mjs:42-49 still accepts a repeated valid --game pair. It checks the same game, so this does not produce a wrong result or a false PASS.",
+    "F6 [Major] review-a: Nonblocking late finding. The probe blocked the game handlers and called the auto hook after the quiet window. The script credited that timed action to the blocked canvas click and exited 0. The orchestrator applies the PM rule of 2026-11-23 after the second remediation. It groups F6 and adversarial F2 as TD-49, not a Green retry. The induced false PASS affects only measurement tooling, with no user-reachable wrong result. The proposed fix is a game counter that records processed input. The PM may veto this disposition."
+  ],
+  "evidence": [
+    "HEAD is 437bcb2d6533ef2bc23d38b37b5821b403283014. The phase range adds the browser check, adversarial tests, and track records. The other commits concern Chibi Sprouts.",
+    "git diff --stat 1eefa25d HEAD -- src scripts printed nothing. Only tests/old-browser/adversarial-check-r2.test.ts changed after the original review. No browser rerun was needed for the rebind.",
+    "F4 closed: the original race fixture bound port 5199 after the preflight and before Vite spawn. The script exited 1 in 344 ms with an owner mismatch. The instrumentation recorded no browser launch.",
+    "The ownership checks reject an unrelated PID at startup and at evidence boundaries. A missing PID stays pending until timeout at startup and fails at an evidence boundary.",
+    "The configured Vite process binds the specific IPv4 loopback address. A foreign replacement that remains at the next check fails. The process-tree checks use PID snapshots, not a pinned socket or process lifetime identifier. No second ownership false PASS was demonstrated.",
+    "The simulation sets chosen and increases word, collected, or score in choose at src/games/spellweavers-run/core/sim.ts:142-172. A wrong choice reduces courage. Tick changes clock fields, but its word reset and courage recovery have the opposite direction from an accepted action.",
+    "The quiet-window probe called the existing game auto hook inside the 1500 ms sample. It exited 1 with action field changed without input, negative_control.changed true, and zero moves.",
+    "The same hook ran after the quiet window with all move events blocked before the game saw them. AUDIT_AUTO_DID_MOVE was true. The check exited 0 with moves 1, action_inputs [canvas click], negative_control.changed false, and no errors.",
+    "The wrapped unmodified Green run at 1eefa25d exited 0 with three reported moves and no errors. The report showed all four built-ins absent, and both screenshots were nonempty. The owner check and the quiet negative control are unchanged.",
+    "The original e8312fc1 witness passed again at 437bcb2d. It rejects a score change with an explicit false input flag. It does not exercise a counted DOM event that never reaches the game.",
+    "The second witness failed at 387a7032 with expected false, received true. Commit 437bcb2d skips that witness as TD-49. The wrapped two-file command then exited 0 with one pass and one skip.",
+    "T7r2's Green report and original witness results match the independent runs. The historical full-suite result is in green-p3-t7r2.log. This review did not rerun the full suite.",
+    "The orchestrator identifies the debt as TD-49, and the skipped witness carries that ID. The local registry does not yet contain the ID. This role made no registry change.",
+    "Node syntax, Prettier, git diff --check, generated facts, and the structural doctor passed. The T6k commit is an ancestor, and out/old-browser is untracked.",
+    "The build-graph database has no nodes table. The script exports no symbols. Source search traced the existing host bridge to the Spellweavers Run Phaser view and simulation.",
+    "The wrapped runner found no listener or audit-owned Vite or Chrome process after each probe. The final ss and ps checks confirmed no audit-owned resources remained."
+  ],
+  "commands": [
+    "git rev-parse HEAD; git diff 31af75444583c9236f342c908128c91da9f4f7e3..437bcb2d6533ef2bc23d38b37b5821b403283014 --stat",
+    "git diff --stat 1eefa25d HEAD -- src scripts; git diff --name-status 1eefa25d HEAD",
+    "At 1eefa25d: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c with the original race fixture, both timed auto-hook probes, the Green browser check, and the original witness",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run tests/old-browser/adversarial-check.test.ts tests/old-browser/adversarial-check-r2.test.ts --maxWorkers=1'",
+    "node --check scripts/old-browser-check.mjs; node_modules/.bin/prettier --check scripts/old-browser-check.mjs tests/old-browser/adversarial-check.test.ts measure/tracks/old_browser_builtins_20261122/plan.md",
+    "node measure/tools/generate.mjs --check; ./measure/doctor.sh --structural-only",
+    "build-graph callers measure/graph.db createSpellweaversRun",
+    "git ls-files -- out/old-browser; git merge-base --is-ancestor 0cc7b5c4 HEAD",
+    "ss -ltn 'sport = :5199'; ss -ltnp 'sport = :5199'; ps -eo pid,ppid,stat,args"
+  ],
+  "changed_files": [
+    "measure/runs/old_browser_builtins_20261122/review-a-p3-1eefa25.json",
+    "measure/runs/old_browser_builtins_20261122/review-a-p3-1eefa25.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "unknown",
+  "ratings": [
+    {"axis": "correctness", "score": 3, "evidence": "The real run passes and the foreign server fails, but the wrapped after-window probe reports a timed move as player input."},
+    {"axis": "test_meaning", "score": 3, "evidence": "The witness at tests/old-browser/adversarial-check.test.ts:25-39 tests an explicit flag, not delivery to the game."},
+    {"axis": "scope_discipline", "score": 5, "evidence": "The remediation changes the Phase 3 script, its witness, and Measure records, with no change to the game."},
+    {"axis": "evidence_quality", "score": 4, "evidence": "The independent wrapped run confirms the T7r2 startup race, Green result, and witness, but exposes a limit in the quiet control."}
+  ]
+}

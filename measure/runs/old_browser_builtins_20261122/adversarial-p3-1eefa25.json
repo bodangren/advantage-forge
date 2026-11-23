@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "role": "measure-adversarial-testing",
+  "track": "old_browser_builtins_20261122",
+  "phase": "Phase 3: Browser check",
+  "baseline_sha": "387a7032ee1cecac09cf4d6d78c9c64a335548ac",
+  "phase_base_sha": "31af75444583c9236f342c908128c91da9f4f7e3",
+  "role_base_sha": "387a7032ee1cecac09cf4d6d78c9c64a335548ac",
+  "audited_head_sha": "437bcb2d6533ef2bc23d38b37b5821b403283014",
+  "status": "pass",
+  "summary": "The PM ruling records F2 as TD-49, a nonblocking late finding. The preserved regression case is skipped with the requested reason. Focused tests, the project gate, and Prettier pass.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F2 [Nit] adversarial-testing: tests/old-browser/adversarial-check-r2.test.ts:24-35 records the residual input-causality gap as TD-49. A harness can block game handlers after the audit counter, then change score or collected state so the check counts a move. This is only reachable through contrived harness interference; users cannot reach the wrong result. The PM ruling dated 2026-11-23 sends it to tech debt, not Green, because this is a measurement-script finding in round 3 after the second remediation. A fix would verify that the game processed input, such as with a game-owned input-processed counter. The PM may veto this ruling."
+  ],
+  "evidence": [
+    "Pre-commit role base was 387a7032ee1cecac09cf4d6d78c9c64a335548ac. The test-only commit produced audited HEAD 437bcb2d6533ef2bc23d38b37b5821b403283014.",
+    "The source and scripts trees are byte-identical to the prior audited implementation: `git diff --stat 1eefa25d9d286a80d4f2a1576664f1894aeb755d 437bcb2d6533ef2bc23d38b37b5821b403283014 -- src scripts` printed no output.",
+    "F1 withdrawn: the earlier harness-score-before-input finding was checked against fix c9f6bba1. The e8312fc1 witness passes, and the related mutant exits 1.",
+    "The r2 test body remains intact and is skipped with the requested TD-49 reason. Its focused Vitest run reports 1 skipped test and exits 0.",
+    "The earlier witness `tests/old-browser/adversarial-check.test.ts` passes: 1 test passed.",
+    "The project gate passes: 231 test files passed, 2 skipped; 3397 tests passed, 10 skipped.",
+    "Prettier check passes for `tests/old-browser/adversarial-check-r2.test.ts`.",
+    "The prior Green browser run found all four built-ins undefined, started the game, accepted two moves, and reported no errors. The test-only commit did not alter `src/` or `scripts/`.",
+    "The final listener check found no process listening on port 5199."
+  ],
+  "commands": [
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/old-browser/adversarial-check-r2.test.ts' (exit 0; 1 skipped test)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/old-browser/adversarial-check.test.ts' (exit 0; 1 passed test)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts' (exit 0; 231 files passed, 2 skipped; 3397 tests passed, 10 skipped)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/prettier --check tests/old-browser/adversarial-check-r2.test.ts' (exit 0)",
+    "git diff --stat 1eefa25d9d286a80d4f2a1576664f1894aeb755d 437bcb2d6533ef2bc23d38b37b5821b403283014 -- src scripts (no output)",
+    "ss -ltn | grep ':5199' (no output; no listener)"
+  ],
+  "changed_files": [
+    "tests/old-browser/adversarial-check-r2.test.ts (commit 437bcb2d6533ef2bc23d38b37b5821b403283014)",
+    "measure/runs/old_browser_builtins_20261122/adversarial-p3-1eefa25.json",
+    "measure/runs/old_browser_builtins_20261122/adversarial-p3-1eefa25.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "escalate_human",
+  "confidence": "high",
+  "route": "unknown",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 3,
+      "evidence": "The prior Green browser check passed, while the residual harness-only input-causality edge is recorded as TD-49."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "Both focused tests and the project gate pass; the TD-49 test remains preserved as a skip."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "Commit 437bcb2 changes only the assigned test file, and src/scripts have no diff from 1eefa25d."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "The test runs, project gate, formatting check, source diff, and port check have recorded command results."
+    }
+  ]
+}
