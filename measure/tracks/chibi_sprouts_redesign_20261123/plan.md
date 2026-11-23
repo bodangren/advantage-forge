@@ -459,7 +459,34 @@ tests/apk3d/no-unpolyfilled-builtins.test.ts` exits 0.
 ## Phase 4: Green
 
 - [x] T6r Red (tests 2c774c62): remediation round 1 cases (load order, strict row table, asset name, corrupt GLB)
-- [~] T6r Green remediation (render checks after both imports; strict checkRows; asset-name rules; one-line corrupt-GLB error)
+- [x] T6r Green remediation (src b6d66051): render checks after both imports; strict checkRows;
+      asset-name rules; one-line corrupt-GLB error.
+  - Evidence 2026-11-23 (Green model `opencode-go/hy4-flash-free`, family hy4; the Red model of the
+    track is `opencode-go/muse-spark-1.3-contributor`, family muse). Every command ran through
+    `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '<cmd>'`.
+    The targeted Red command before the fix exits 1 with `Tests 18 failed | 1 passed (19)`; after the
+    fix `node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-mom-kim.validation.test.ts`
+    exits 0 with `Test Files 1 passed (1)` and `Tests 19 passed (19)`.
+  - F1: the render-file checks now run after the asset import and the base import. The load-order
+    case writes a marker on import, and the run reports `missing: out/_load-order-<pid>/flat/front-level.png`
+    with the marker present.
+  - F2: `checkRows` requires exactly eleven rows with the eleven expected unique names, and returns
+    the exact names `checkRows: expected 11 rows, found 0`, `checkRows: missing row legShare`,
+    `checkRows: duplicate row eyeLine`, `checkRows: unknown row extra-row`, and the value names
+    `FAIL heightInHeads: not a number`, `FAIL wrist: not a number`, `FAIL armToTorso: not finite`,
+    `FAIL spacingHead: not a number`, `FAIL eyeLine: not a number`, and `FAIL legShare: negative`.
+    The pass-table bounds are unchanged and the valid eleven rows still return [].
+  - N1: the script copies the `checkAssetName` rule of `src/pipeline.ts` (empty, absolute, path
+    separator or backslash, dot-dot segment) and refuses a bad name in one line before any import,
+    read or write. The empty name reports the required-name error. Copying keeps the load order.
+  - N3: a corrupt or truncated GLB is caught at the read site and reports one line
+    `Invalid GLB: out/<name>/<name>.glb` with no stack frames and no measure.json write.
+  - Gates: the three-file vitest exits 0 with 3 files and 42 passed; the real-asset script exits 0
+    with the same eleven T7 rows and both palms ok; `./forge check sprout-mom-kim` ends `result ok`.
+    `tsc --noEmit` exits 2 with the 51 baseline errors and none in `scripts/proportion-check.mjs`.
+    The whole project gate exits 1 with only the 8 T5 sheet cases failing, each on the absent
+    `scripts/mom-kim-sheet.mjs` (T8): `Test Files 1 failed | 237 passed | 4 skipped (242)` and
+    `Tests 8 failed | 3454 passed | 27 skipped (3489)`. `prettier --check` exits 0 on the script.
 - [x] T6 Green (src 1f61d0f2): Write the measurement script. File: `scripts/proportion-check.mjs`.
   - Evidence 2026-11-23 (Green model `opencode-go/hy4-flash-free`, family hy4; the Red model of the
     track is `opencode-go/muse-spark-1.3-contributor`, family muse). Every command ran through
