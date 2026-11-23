@@ -404,6 +404,31 @@ tests/apk3d/no-unpolyfilled-builtins.test.ts'` exits 0: 1 file passed, 2 tests p
     `node_modules/.bin/prettier --check scripts/old-browser-check.mjs` exits 0. `ss -ltn` and `ps`
     show no listener on 5199 and no owned vite or chrome process after each run.
 
+- [x] T7r2 Green (c9f6bba1): startup race closed by owner verification, F1 input causality with a negative control
+  - Owner verification: after the preflight, the script spawns Vite and polls the listening state.
+    It reads `ss -ltnp` for the PID on 127.0.0.1:5199 and requires that PID to be the spawned child
+    or a descendant. A child exit before readiness or before the result is accepted fails the run.
+    Ownership is re-checked before browser evidence is accepted and again before the report write.
+  - Input causality: a 1500 ms quiet window before any input requires the player-action fields to
+    stay unchanged. A change there raises `action field changed without input`. Each input is
+    counted only when an input event reached the page and the action mark changed after that input.
+    `negative_control: {window_ms: 1500, changed: false}` is written to `check.json`.
+    `acceptedAction(before, after, inputWasSent)` returns false when no input was sent; the committed
+    witness `tests/old-browser/adversarial-check.test.ts` passes.
+  - Probes 2026-11-23 (files under `measure/runs/old_browser_builtins_20261122/`, not committed):
+    `make-p3r2-probes.mjs` writes both probe copies from the final script.
+    `probe-p3r2-harness-score.mjs` neutralizes `input.play()` and raises the score from the harness;
+    it exits 1 with `no player-action transition`, `moves: 0` and `negative_control.changed: false`.
+    `probe-p3r2-startup-race.mjs` binds a foreign Vite-marker server after the preflight; the check
+    exits 1 with `port 5199 listener owner mismatch: not the spawned dev server` and never opens a
+    browser. Both runs leave port 5199 free.
+  - Gates 2026-11-23: the Green command exits 0 with `started: true`, `moves: 3`,
+    `action_inputs: ["ArrowRight", "ArrowLeft", "ArrowRight"]`, `negative_control.changed: false`
+    and `errors: []`. The witness test exits 0 with 1 file and 1 test. The project gate exits 0
+    with `Test Files 231 passed | 1 skipped (232)` and `Tests 3397 passed | 9 skipped (3406)`.
+    `node_modules/.bin/prettier --check scripts/old-browser-check.mjs` exits 0. `ss -ltn` and `ps`
+    show no listener on 5199 and no owned vite or chrome process after every run.
+
 ## Phase 4: Gates
 
 - [ ] T8 Gates: Run every gate of AC6 and record each exit code in this plan.
