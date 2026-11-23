@@ -42,6 +42,7 @@ Rules:
 - New direction: a proportion spec from Daniel's drawings, then a first trial on Kim's base. The
   redesign page picks Lily or one adult. The trial is judged side by side with the drawing. The
   spec is `docs/chibi-sprouts/redesign-2026-11-23.md` (in progress).
+- Daniel 2026-11-23: the shipped song videos stay for the 30 November launch and are replaced when the new cast passes (option A); Daniel has seen only unit 1 week 1; the week 5 pass came through Storytime.
 
 ## Method
 
@@ -185,8 +186,9 @@ Contract and commands: `docs/storytime-song.md`.
   stage file now takes `sun` (high or side) and `dog` (howl or quiet) for the owner's C3 and C4;
   side-sun comparison stills in `out/chibi-sprouts/r1/week1/song/sun-side/` (Ben's hair shades
   his eyes with the side sun). Commit: fdcc0957.
-- [ ] Task: The owner's notes on cut 2 (2026-10-24 04:48, via Storytime): week 5 PASS ("a body
-  and the context is there"); weeks 2, 3, 6 FAIL for one cause: the objects the song names are
+- [ ] Task: Storytime reported a week 5 pass on 2026-10-24 04:48 (relayed by Storytime; Daniel has
+  not seen it; Daniel has seen only unit 1 week 1, 2026-11-23): "a body and the context is there";
+  the same relay says weeks 2, 3, 6 FAIL for one cause: the objects the song names are
   not in the picture (the apple, the sky, the animals, the numbers), and one sustained take feels
   lifeless. Stage contract v2 (`~/Desktop/primary-parity-progress/forge-stage-contract-v2-20261024.md`,
   `docs/storytime-song.md`): `sets` keyed by the spec's scene names (map, light, sun, marks,
