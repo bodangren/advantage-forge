@@ -1,5 +1,5 @@
 import { existsSync, readdirSync } from 'node:fs';
-import { basename, dirname, join } from 'node:path';
+import { basename, dirname, isAbsolute, join } from 'node:path';
 import { buildAsset, type AssetContext, type AssetDefinition, type BuildResult } from './asset.js';
 import { toGlb } from './gltf.js';
 
@@ -25,7 +25,24 @@ export function listAssets(): string[] {
     .sort();
 }
 
+/**
+ * An asset name is one file name: not empty, not an absolute path, no path separator, and no
+ * dot-dot segment. A name that walks out of assets/ would read and write outside the repository,
+ * so it is refused before any path is built from it.
+ */
+export function checkAssetName(name: string): void {
+  if (name.trim() === '') throw new Error('An asset name is required.');
+  if (isAbsolute(name))
+    throw new Error(`Invalid asset name '${name}': an asset name is not an absolute path.`);
+  if (name.includes('/') || name.includes('\\'))
+    throw new Error(`Invalid asset name '${name}': an asset name has no path separator.`);
+  // A name with no separator is one segment, so the dot-dot segment is the name itself.
+  if (name === '.' || name === '..')
+    throw new Error(`Invalid asset name '${name}': an asset name has no dot-dot segment.`);
+}
+
 export function assetPath(name: string): string {
+  checkAssetName(name);
   const file = join(ASSET_DIR, `${name}.ts`);
   if (!existsSync(file)) {
     const known = listAssets();

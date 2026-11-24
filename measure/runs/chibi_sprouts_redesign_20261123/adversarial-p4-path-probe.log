@@ -1,0 +1,17 @@
+path probe launcher PID=1727779
+ASSET=__missing_probe_asset__
+asset __missing_probe_asset__: not built
+missing: assets/__missing_probe_asset__.ts
+EXIT=1
+ASSET=wizard-argon-trial
+asset wizard-argon-trial: not built
+missing: out/wizard-argon-trial/flat/front-level.png
+EXIT=1
+ASSET=../assets/sprout-mom-kim
+asset ../assets/sprout-mom-kim: not built
+missing: out/../assets/sprout-mom-kim/../assets/sprout-mom-kim.glb
+EXIT=1
+ASSET=../measure/runs/chibi_sprouts_redesign_20261123/adversarial-p4-probe
+asset ../measure/runs/chibi_sprouts_redesign_20261123/adversarial-p4-probe: not built
+missing: assets/../measure/runs/chibi_sprouts_redesign_20261123/adversarial-p4-probe.ts
+EXIT=1

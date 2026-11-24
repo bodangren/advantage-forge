@@ -1,0 +1,13 @@
+gate_shell_pid=$
+
+ RUN  v5.1.1 /home/daniebo/Desktop/forge-worktrees/sprouts-redesign
+
+
+ Test Files  234 passed | 4 skipped (238)
+      Tests  3404 passed | 26 skipped (3430)
+   Start at  17:01:50
+   Duration  106.24s (tests 82%, import 17%, transform 1%, worker 1%)
+
+    Isolate  238 workers spawned · ~70ms startup each (spawn + environment, per file)
+             at least ~16.60s faster with isolate: false — reuses workers across files instead of one per file
+

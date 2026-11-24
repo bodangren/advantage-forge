@@ -1,0 +1,8 @@
+{"label":"trailing-dot","guard":"accepted","assetPath":"No asset 'avatar-base.' in assets/"}
+{"label":"trailing-space","guard":"accepted","assetPath":"No asset 'avatar-base ' in assets/"}
+{"label":"windows-drive-relative","guard":"accepted","assetPath":"No asset 'C:avatar-base' in assets/"}
+{"label":"nul","guard":"accepted","assetPath":"No asset 'avatar-base\u0000' in assets/"}
+{"label":"very-long","guard":"accepted","assetPath":"No asset 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa' in assets/"}
+{"label":"out","guard":"accepted","assetPath":"No asset 'out' in assets/"}
+{"label":"assets","guard":"accepted","assetPath":"No asset 'assets' in assets/"}
+{"label":"case-mismatch","guard":"accepted","assetPath":"No asset 'Avatar-base' in assets/"}

@@ -1,0 +1,23 @@
+empty-render-list: pid=56996 exit=1 expected=Unknown view '' PASS
+only-commas-render: pid=57301 exit=1 expected=Unknown view '' PASS
+whitespace-members: pid=57559 exit=0 expected=success PASS
+duplicate-members: pid=57957 exit=0 expected=success PASS
+case-sensitive: pid=58316 exit=1 expected=Unknown view 'Front' PASS
+unicode-member: pid=58558 exit=1 expected=Unknown view 'frönt' PASS
+very-long-list: pid=59308 exit=1 expected=Unknown view 'nosuch' PASS
+own-property-__proto__: pid=59578 exit=1 expected=Unknown view '__proto__' PASS
+own-property-constructor: pid=59956 exit=1 expected=Unknown view 'constructor' PASS
+own-property-toString: pid=60237 exit=1 expected=Unknown view 'toString' PASS
+own-property-valueOf: pid=60486 exit=1 expected=Unknown view 'valueOf' PASS
+own-property-hasOwnProperty: pid=60733 exit=1 expected=Unknown view 'hasOwnProperty' PASS
+own-property-prototype: pid=60970 exit=1 expected=Unknown view 'prototype' PASS
+top-valid-inspect: pid=61245 exit=0 expected=success PASS
+top-valid-render: pid=61765 exit=0 expected=success PASS
+front-level-animate: pid=62073 exit=0 expected=success PASS
+empty-animate-list: pid=62597 exit=0 expected=empty-fallback PASS
+empty-inspect-list: pid=63201 exit=0 expected=empty-fallback PASS
+cutout-whitespace-members: pid=63560 exit=0 PASS
+dangling-flat-link: pid=63869 exit=1 one-line=true refused=true target-created=false
+TOTAL=20
+EMPTY_ANIMATE_USED_DEFAULT=false
+

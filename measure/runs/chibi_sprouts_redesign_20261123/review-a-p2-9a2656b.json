@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "role": "review-a",
+  "track": "chibi_sprouts_redesign_20261123",
+  "phase": "Phase 2: Green",
+  "baseline_sha": "23e551df54b7996776a4bcb9e8ccfdb9f35a6083",
+  "phase_base_sha": "23e551df54b7996776a4bcb9e8ccfdb9f35a6083",
+  "role_base_sha": "9a2656ba8784a74e9011975e54fd9ee4867841a3",
+  "audited_head_sha": "9a2656ba8784a74e9011975e54fd9ee4867841a3",
+  "status": "pass",
+  "summary": "The Phase 2 audit passes for 9a2656ba. F8 and the one-shot F9 cases pass. The PM deferred F12 with Review B N1 as one tech-debt item.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F12 [Nit] review-a: Tech-debt. src/cli/forge.ts:207,694-708 checks linked output folders only at startup. The PM decision in 6faa4200 (plan.md:292) combines F12 and Review B N1 because both require a local writer to plant a link during a run. Check for links at every rebuild and write. No third remediation round.",
+    "F13 [Nit] review-a: tests/render-options.adversarial-r2.test.ts:70-94,116-127 can change permissions or remove a same-PID output path that the test did not create. Track ownership before changing or removing a path. | Late finding F13: tech-debt (the affected paths are test fixtures).",
+    "F14 [Nit] review-a: plan.md:270-287 records the earlier failure correctly but still calls the conflicting assertion open. Commit 9a2656ba updates the assertion, and the project gate passes on that commit. | Late finding F14: tech-debt (the remaining issue is a stale record)."
+  ],
+  "evidence": [
+    "At review start, HEAD matched 9a2656ba on chibi-sprouts-redesign. The phase base is an ancestor of the audited commit.",
+    "The wrapped project gate at audited commit 9a2656ba exits 0 with 234 passing files and 4 skipped files. It reports 3404 passing tests and 26 skipped tests.",
+    "The disposition check finds current HEAD 6950d7d0. The net changes after 9a2656ba affect only tests/render-options.adversarial-r3.test.ts and the track plan. The intervening commit d08bd553 is test-only.",
+    "Commit 6faa4200 records the PM decision. The runtime source is unchanged, and the prior test and output evidence remains bound to 9a2656ba. No heavy command was rerun.",
+    "F8 withdrawn: the base and HEAD produce the same trailing-comma cutout, SHA-256 ca9cdedf74ae6b427e5a861946dc527f41c1a6fd99955ecfbabd1dbbcc40008b. The passing validation suite rejects the inherited names before build.",
+    "F9 withdrawn: both one-shot linked destinations are refused before the build. The passing cases compare another asset's output before and after the refusal.",
+    "The audit executed the actual watch callback with fake file operations. It reached the writer without rechecking the output parent after the link status changed.",
+    "The only checkOutputFolder call is outside the build closure. The closure writes the GLB and calls the unchanged removeFlatFolder helper that the prior audit checked.",
+    "The project gate covers the scanner. The Box3.union source and pins remain unchanged at lines 331, 531, and 538.",
+    "The three assets have 16 byte-identical outputs each. The phase-base and HEAD copies use real output directories and no output links.",
+    "sprout-pip sorted checksum manifest SHA-256: 36efc0946ef0a7c3751654799059c7373632358fb3331d92b516095ee73bdec7.",
+    "ball sorted checksum manifest SHA-256: 6c7459259152dad8f6820bcf398702e0e1e2a62a7dd5132b87da0b46a6c0fb25.",
+    "kite sorted checksum manifest SHA-256: e395b9f80091a4390a07b678ac00fd3f5f3b0badef815f6018b0e7a7bcb98edb.",
+    "Wrapped tsc exits 2 in both snapshots with the same 51 diagnostics in 14 files. The old attribution gap in the plan remains.",
+    "A4: The exact cutout test rejects a fixture where Forge exits 0 but produces no PNGs.",
+    "The dependency graph identifies the CLI and Vite configuration. The previous renderer and pipeline exports are unchanged in this remediation.",
+    "The format, generation, structural, and diff checks pass. No audit job remains, and tracked and staged files are unchanged."
+  ],
+  "commands": [
+    "git rev-parse HEAD; git merge-base --is-ancestor 23e551df 9a2656ba; git diff 23e551df..9a2656ba; git diff fc823ed..9a2656ba",
+    "Wrapped build-graph scan, callers, and affected on the CLI, pipeline, and render page",
+    "Wrapped project Vitest gate once: node node_modules/vitest/vitest.mjs run --maxWorkers=1 --no-cache --exclude tests/storytime-book-pictures.test.ts",
+    "Wrapped tsc --noEmit --pretty false at the phase base and HEAD; compare normalized diagnostic lists",
+    "Wrapped forge render and forge sprites --fast for sprout-pip, ball, and kite in copies of both commits; compare SHA-256 manifests",
+    "Wrapped forge cutout ball with a trailing comma in the view list at both commits; compare the PNG bytes",
+    "Node AST probes for the watch callback and missing cutout deliverables",
+    "node measure/tools/generate.mjs --check; bash measure/doctor.sh --structural-only; prettier --check; git diff --check",
+    "Disposition: git log --oneline 9a2656ba..HEAD; git diff --stat 9a2656ba HEAD; git diff --name-status 9a2656ba HEAD; git show --stat 6faa4200"
+  ],
+  "changed_files": [
+    "measure/generated/status.md",
+    "measure/tracks/chibi_sprouts_redesign_20261123/plan.md",
+    "src/cli/forge.ts",
+    "tests/render-options.adversarial-r2.test.ts",
+    "tests/render-options.validation-r2.test.ts"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "unknown",
+  "ratings": [
+    {"axis": "correctness", "score": 3, "evidence": "One-shot cases pass, but src/cli/forge.ts:694-708 can run again after the link check at line 207."},
+    {"axis": "test_meaning", "score": 4, "evidence": "The real CLI suite covers both pre-existing link cases and the missing-PNG probe fails as expected."},
+    {"axis": "scope_discipline", "score": 5, "evidence": "Commit 0fbd781b changes only the CLI, and the separate test commits cover the round's two routed fixes."},
+    {"axis": "evidence_quality", "score": 4, "evidence": "The three checksum manifests and green project gate confirm current results, but plan.md:270-287 still describes the old test conflict as open."}
+  ]
+}

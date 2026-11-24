@@ -1,3 +1,4 @@
+// sprout base scrapped 2026-11-23 (Daniel)
 import { describe, expect, it } from 'vitest';
 import { ADULT, AGE5 } from '../assets/parts/humanoid-kind.js';
 import { gestureTargets } from '../assets/parts/sprout-gestures.js';
@@ -8,7 +9,7 @@ import { gestureTargets } from '../assets/parts/sprout-gestures.js';
  * moves each goal to the same place on the grown-up body (in front of the chest, at the jaw,
  * on the hip) instead of inside the belly.
  */
-describe('sprout gestures (adult-aware targets)', () => {
+describe.skip('sprout gestures (adult-aware targets) — sprout base scrapped 2026-11-23 (Daniel)', () => {
   const child = gestureTargets(AGE5);
 
   it('keeps the child clap plane and hand gap', () => {
@@ -49,7 +50,16 @@ describe('sprout gestures (adult-aware targets)', () => {
 
   it('moves each adult goal to the same place on the grown-up body', () => {
     const adult = gestureTargets(ADULT);
-    for (const point of [adult.neck, adult.self, adult.count, adult.hip, adult.eat, adult.hugR, adult.hugL, adult.listen])
+    for (const point of [
+      adult.neck,
+      adult.self,
+      adult.count,
+      adult.hip,
+      adult.eat,
+      adult.hugR,
+      adult.hugL,
+      adult.listen,
+    ])
       for (const v of point) expect(Number.isFinite(v)).toBe(true);
     // Hands meet in front of the adult chest, above the child plane.
     expect(adult.clap.y).toBeGreaterThan(0.55);

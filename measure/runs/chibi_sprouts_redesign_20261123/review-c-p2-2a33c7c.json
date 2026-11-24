@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "role": "measure-review-c-ux-api",
+  "track": "chibi_sprouts_redesign_20261123",
+  "phase": "Phase 2: Green",
+  "baseline_sha": "23e551df54b7996776a4bcb9e8ccfdb9f35a6083",
+  "phase_base_sha": "23e551df54b7996776a4bcb9e8ccfdb9f35a6083",
+  "role_base_sha": "2a33c7c1c304825c3efd2dc775c99d84b22ff2f7",
+  "audited_head_sha": "2a33c7c1c304825c3efd2dc775c99d84b22ff2f7",
+  "contract_applicability": "applicable",
+  "status": "fail",
+  "summary": "An unknown render view prints a stack after build outputs change. The T2 test bypasses fixture ownership and can test the wrong checkout. The shared runner did not start the independent runtime checks.",
+  "blocking_findings": [
+    "C-P2-1 [Blocker] review-c: An unknown render view prints a stack instead of one error line. src/cli/forge.ts:405 validates the view after lines 327–341 change build outputs. Lines 715–729 print the stack. Validate render views before the build and report the known-view list without the stack.",
+    "C-P2-2 [Blocker] review-c: tests/render-options.test.ts:64–69 and :192–194 bypass exclusive creation when the actual fixture path exists. The render then uses the pre-existing asset instead of reporting the required collision. The probe at :202–214 writes with no exclusive flag and can replace and remove a pre-existing probe. Use one ownership check and cover collision on the actual fixture path.",
+    "C-P2-3 [Blocker] review-c: tests/render-options.test.ts:7–12 and :55–58 hard-code the audit worktree. A test run in another checkout can execute Forge and write fixtures in this worktree instead of verifying its own code. Derive the repository root from the test module."
+  ],
+  "nonblocking_findings": [
+    "C-P2-4 [Nit] review-c: src/cli/forge.ts:45–54 says --ortho makes the frame level and --focus zooms every view. src/render/page.ts:432–449 retains the selected elevation and ignores focus under --ortho. State that the level views set elevation and that the fixed frame does not use focus.",
+    "C-P2-5 [Nit] review-c: The new camera comments do not explain the side projection sign. At src/cli/forge.ts:113 or src/render/page.ts:443, cite decision (j): the camera looks from +X with +Y up, so image right is -Z.",
+    "C-P2-6 [Nit] review-c: plan.md:185–186 says renderViews restores both changes. src/render/page.ts:435–461 resets no camera state; it restores the materials and ground. Name the state that the restore function resets."
+  ],
+  "evidence": [
+    "git rev-parse HEAD returned the supplied audited SHA.",
+    "test-strategy.md:57 names Phase 2 as applicable; the exact phase diff changes src/cli/forge.ts and src/render/page.ts.",
+    "A read-only probe ran the audited viewList and runSafely functions. The invalid front-lvel name produced two error writes and a stack.",
+    "A read-only probe of the audited parseArgs options and flat guard produced one line for each invalid flat combination and for the unknown option.",
+    "A read-only probe of ensureRendered simulated a pre-existing pin path. It called the render once and the exclusive create zero times.",
+    "The read-only AC1 guard passed on the audited HEAD and rejected the phase base. All four titles, three comments, and three active hero names matched.",
+    "plan.md:259–274 schedules the durable AC1 guard for T4. tests/sprout-mom-kim.test.ts does not exist on the audited HEAD.",
+    "The Phase 2 plan and strategy name no README or docs deliverable. The spec contains both commands at lines 433–442. README.md:207 still lists only the original render options.",
+    "The flat-pass JSDoc names the material, visibility, and ground changes. studio.ts:32 keeps sRGB. page.ts:461 restores the materials and ground in finally. Sprite and cut-out requests set their own camera parameters.",
+    "Prettier passed on all four T1 and T2 test files. The T2 test names identify the user-visible behavior. The named-view and missing-flag assertions share one case as planned.",
+    "Both wrapped invocations reported a shared lock wait over 600 seconds. I stopped my jobs before the CLI or Vitest started. All captured audit processes exited.",
+    "green-p2.log:20–21 records prior wrapped runs: T2 had eight passes. T1 had three passes and 15 skips. These are Green results, not independent reruns.",
+    "The CLI registers both options as long boolean flags. The flags flow through ViewsRequest to the render page. No HTTP route contract changed."
+  ],
+  "commands": [
+    "git -C /home/daniebo/Desktop/forge-worktrees/sprouts-redesign rev-parse HEAD",
+    "git -C /home/daniebo/Desktop/forge-worktrees/sprouts-redesign diff --name-status 23e551df54b7996776a4bcb9e8ccfdb9f35a6083 2a33c7c1c304825c3efd2dc775c99d84b22ff2f7",
+    "git -C /home/daniebo/Desktop/forge-worktrees/sprouts-redesign diff --check 23e551df54b7996776a4bcb9e8ccfdb9f35a6083..2a33c7c1c304825c3efd2dc775c99d84b22ff2f7",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '/home/daniebo/Desktop/forge-worktrees/sprouts-redesign/forge --help'",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node /home/daniebo/Desktop/forge-worktrees/sprouts-redesign/node_modules/vitest/vitest.mjs run --maxWorkers=1 /home/daniebo/Desktop/forge-worktrees/sprouts-redesign/tests/render-options.test.ts /home/daniebo/Desktop/forge-worktrees/sprouts-redesign/tests/sprout-base.test.ts /home/daniebo/Desktop/forge-worktrees/sprouts-redesign/tests/sprout-gestures.test.ts /home/daniebo/Desktop/forge-worktrees/sprouts-redesign/tests/sprout-gesture-offset.test.ts'",
+    "Wrapped Node spawnSync probe: render ball --flat --bg none; render ball --flat --fast; render ball --flat --fast --bg #112233; render ball --fast --orthographic",
+    "node node_modules/prettier/bin/prettier.cjs --check tests/render-options.test.ts tests/sprout-base.test.ts tests/sprout-gestures.test.ts tests/sprout-gesture-offset.test.ts",
+    "node --input-type=module -e <read-only audit of the AC1 source guard and separate source probes of the unknown-view handler and ensureRendered>"
+  ],
+  "changed_files": [
+    "measure/generated/status.md",
+    "measure/tracks.md",
+    "measure/tracks/chibi_sprouts_redesign_20261123/metadata.json",
+    "measure/tracks/chibi_sprouts_redesign_20261123/plan.md",
+    "src/cli/forge.ts",
+    "src/render/page.ts",
+    "tests/apk3d/no-unpolyfilled-builtins.test.ts",
+    "tests/render-options.test.ts",
+    "tests/sprout-base.test.ts",
+    "tests/sprout-gesture-offset.test.ts",
+    "tests/sprout-gestures.test.ts"
+  ],
+  "test_strategy_violations": [
+    "C-P2-2: The actual pin path can bypass the collision error that test-strategy.md:84–96 requires.",
+    "C-P2-3: The T2 test can exercise a different checkout from the one the test runner verifies."
+  ],
+  "live_contract_violations": [
+    "C-P2-1: An unknown render view prints a stack and changes build outputs before it rejects the view."
+  ],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "retry_implementation",
+  "confidence": "high",
+  "route": "openai/gpt-6.2-sol#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 3,
+      "evidence": "src/cli/forge.ts:403–421 wires the main render path, but lines 715–729 print a stack for an unknown view."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 3,
+      "evidence": "tests/render-options.test.ts:109–188 checks real PNGs, but the collision test at lines 202–219 uses a different fixture path."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 4,
+      "evidence": "The T3 commit changes the two planned renderer files and refreshes the scanner offsets recorded in plan.md:250–255."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 4,
+      "evidence": "The read-only probes reproduced the unknown-view stack and the fixture ownership bypass on the audited source."
+    }
+  ]
+}

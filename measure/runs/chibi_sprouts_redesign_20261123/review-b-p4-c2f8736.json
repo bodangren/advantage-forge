@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "role": "review-b",
+  "track": "chibi_sprouts_redesign_20261123",
+  "phase": "Phase 4: Green",
+  "baseline_sha": "28ff79903552f5d8c2a8bf118775ee1dab7eb514",
+  "phase_base_sha": "28ff79903552f5d8c2a8bf118775ee1dab7eb514",
+  "role_base_sha": "c2f8736e0756b91790f3fe98251851b199ec3499",
+  "audited_head_sha": "c2f8736e0756b91790f3fe98251851b199ec3499",
+  "security_applicability": "applicable: the phase adds a Node script that parses argv, builds paths, dynamically imports modules by path, reads a binary GLB, and writes a JSON record; hostile-input probing is required and was done",
+  "status": "pass",
+  "summary": "No blocking findings. The measurement script behaves correctly on every normal and missing-input path (exit 1 with the named error before any import, no hang on a truncated GLB, no wrong measure.json). Three local-only hardening items: --asset is not validated with the checkAssetName rules, so a traversal name escapes the repo for reads and the dynamic import executes the out-of-repo module (probe marker printed); the measure.json write follows a pre-planted symlink; a corrupt GLB prints a raw multi-line stack. Each needs a hostile local file or argument, so no normal run reaches a wrong result; all three are tech-debt.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "N1 [Tech-debt] review-b: scripts/proportion-check.mjs never validates --asset with the checkAssetName rules that src/pipeline.ts:33 exports and the forge CLI enforces. A traversal name (six '../' segments) passes all existence checks, reads assets/, out/, stats.json, and the GLB outside the repository, and the dynamic import() at scripts/proportion-check.mjs:904 executes the target module's top-level code: my probe .ts in /tmp printed P4_PROBE_IMPORT_EXECUTED before the script failed on the truncated GLB. The measure.json write path (scripts/proportion-check.mjs:1069) is fixed and cannot traverse. Reaching this needs a hostile argument or a hostile local file, and the operator supplies the argument, so no normal run is affected; fix by calling checkAssetName (or the same three rules) in parseArgs.",
+    "N2 [Tech-debt] review-b: the measure.json write follows a pre-planted symlink: with out/chibi-sprouts/redesign/measure.json symlinked to a temp file, a normal run of `./node_modules/.bin/tsx scripts/proportion-check.mjs --asset sprout-mom-kim` overwrote the target with the record (probe target contained the full measure.json content after the run; symlink intact). Local-writer only, the same class the Phase 2 review accepted for the forge CLI (review-b-p2 N2); scripts/proportion-check.mjs:1071 uses plain writeFileSync with no exclusive create.",
+    "N3 [Tech-debt] review-b: a truncated GLB fails safe but noisily: readGlb (scripts/proportion-check.mjs:725) throws a RangeError and the top-level handler prints a multi-line stack, not one named error line. Exit is 1, there is no hang, and the write at line 1071 never runs, so no wrong result; consider catching parse errors into the `asset <name>: not built`-style one-line format."
+  ],
+  "evidence": [
+    "HEAD matches audited_head_sha c2f8736e0756b91790f3fe98251851b199ec3499 (git rev-parse); phase_base_sha 28ff79903552f5d8c2a8bf118775ee1dab7eb514 is its ancestor; role_base_sha recorded as HEAD.",
+    "Phase diff scope (git diff --stat 28ff7990..c2f8736e) is exactly the planned surface: scripts/proportion-check.mjs (new), assets/parts/humanoid-kim.ts (new), assets/sprout-mom-kim.ts (new), tests/fixtures/preset-pin.json, tests/sprout-mom-kim.test.ts and tests/mom-kim-sheet.test.ts (both authored in the Phase 3 Red commits inside the range), plan.md, and the two measure/generated fact files. No unintended file; T6 commit 1f61d0f2 touches only the script; T7 commit aa9c9b74 touches only the two assets, the script correction, and the pin.",
+    "No child process, no network, no secret, no openchamber_image or paid call: proportion-check.mjs imports only node:crypto, node:fs, node:path, node:url, and sharp (scripts/proportion-check.mjs:18-22); make-preset-pin.mjs imports only node:fs, node:path, node:url, and ../src/variants.ts (scripts/make-preset-pin.mjs:19-22). The new asset files import only src/index.js.",
+    "The test harness spawns the script with spawnSync(TSX, [SCRIPT, ...args]) (tests/sprout-mom-kim.test.ts:60-66), an argv array with no shell, so the tests themselves have no command-injection surface.",
+    "Hostile name probes, each through heavy-run.sh: '--asset ../x' exits 1 'asset ../x: not built / missing: assets/../x.ts'; '--asset a/b' exits 1 'missing: assets/a/b.ts'; '--asset \"\"' exits 1 with the one-line usage. All fail closed, but all are refused only by the existence check, not by name validation.",
+    "Traversal probe: --asset with six '../' segments resolving to /tmp/p4-probe/escape passed every existence check, executed the out-of-repo module (output line P4_PROBE_IMPORT_EXECUTED, proving the import at scripts/proportion-check.mjs:904 ran the file's top-level code), then exited 1 on the truncated GLB. Confirms N1.",
+    "Truncated GLB probe (12-byte file with the glTF magic): exit 1 with RangeError at readGlb scripts/proportion-check.mjs:728, no hang, no measure.json write; the fixture lived under /tmp/p4-probe and was removed at the end.",
+    "Symlink write probe: measure.json replaced with a symlink to a pre-existing temp file; the normal run (eleven rows pass, both palms ok, exit 0) rewrote the target with the record. The fixture and symlink were removed and measure.json restored from a byte copy afterwards. A first attempt with a dangling symlink saw the link disappear before the write (a concurrent cleaner in this shared worktree); the re-probe with a live target is the conclusive one.",
+    "Normal-run correctness re-verified by this review: `./node_modules/.bin/tsx scripts/proportion-check.mjs --asset sprout-mom-kim` exits 0 and prints the same eleven rows the plan records (heightInHeads 3.595144 through spacingFace 0.459302), both palms ok; a normal run reaches the right result.",
+    "Missing-input order verified: --asset wizard-argon-trial (a real asset file with no build) exits 1 naming out/wizard-argon-trial/flat/front-level.png before any import, matching the spec load order (spec 'How the script loads its inputs').",
+    "Preset pin verified read-only against role baseline 0540e6ce: 394 assets / 909 presets / 3194 slots, added key exactly sprout-mom-kim (preset mom, slots skin/hair/eyes/cloth), zero removed keys, zero changed baseline values; matches the plan claim. make-preset-pin.mjs writes only the fixed path tests/fixtures/preset-pin.json (line 26, 78) and takes no user path.",
+    "A2 not applicable: no draft-to-published flow exists anywhere in this phase's surface; nothing flips a publish status, and no named-subject consent gate is involved.",
+    "A6: no security state is claimed 'resolved' in measure/tracks.md for this work; the plan's T6/T7 evidence claims (missing-asset text, eleven rows, palm results, pin counts) match my own probe outputs verbatim, so the record does not outrun the implementation.",
+    "Every probe ran through HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '<cmd>' from the worktree; no shell redirection was used; /tmp/p4-probe is removed; no tsx or proportion-check process is left running; no production code, test, plan, or registry file was edited and nothing was committed."
+  ],
+  "commands": [
+    "git -C /home/daniebo/Desktop/forge-worktrees/sprouts-redesign rev-parse HEAD; git log --oneline 28ff7990..HEAD; git diff --stat 28ff7990..c2f8736e",
+    "sed -n 1,1096p scripts/proportion-check.mjs; sed -n 1,86p scripts/make-preset-pin.mjs; sed -n 25,52p src/pipeline.ts",
+    "heavy-run.sh -c './node_modules/.bin/tsx scripts/proportion-check.mjs --asset ../x' (exit 1, named missing path)",
+    "heavy-run.sh -c './node_modules/.bin/tsx scripts/proportion-check.mjs --asset a/b' (exit 1, named missing path)",
+    "heavy-run.sh -c './node_modules/.bin/tsx scripts/proportion-check.mjs --asset \"\"' (exit 1, one-line usage)",
+    "heavy-run.sh -c './node_modules/.bin/tsx scripts/proportion-check.mjs --asset wizard-argon-trial' (exit 1 before any import)",
+    "heavy-run.sh -c './node_modules/.bin/tsx scripts/proportion-check.mjs --asset <six '../' segments>tmp/p4-probe/escape' (traversal: probe marker executed from /tmp, then exit 1 on truncated GLB)",
+    "heavy-run.sh -c './node_modules/.bin/tsx scripts/proportion-check.mjs --asset sprout-mom-kim' with measure.json symlinked to a temp target (write-through confirmed), and the plain run (exit 0, eleven rows, both palms ok)",
+    "node read-only pin comparison of tests/fixtures/preset-pin.json against git show 0540e6ce:tests/fixtures/preset-pin.json"
+  ],
+  "changed_files": [
+    "scripts/proportion-check.mjs",
+    "assets/parts/humanoid-kim.ts",
+    "assets/sprout-mom-kim.ts",
+    "tests/fixtures/preset-pin.json",
+    "tests/sprout-mom-kim.test.ts",
+    "tests/mom-kim-sheet.test.ts",
+    "measure/tracks/chibi_sprouts_redesign_20261123/plan.md",
+    "measure/generated/asset-inventory.json",
+    "measure/generated/status.md"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "kimi-code-plan-cn/kimi-for-coding",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 4,
+      "evidence": "The script follows the spec load order and my normal run reproduces the plan's eleven rows and both palm ok results exactly (scripts/proportion-check.mjs:871-1088); the unvalidated --asset edge (N1) is the one gap."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "Red pinned the missing-asset exit, the pass table, eleven doctored rows, five synthetic figures, and four synthetic palm cases (tests/sprout-mom-kim.test.ts), but no test pins hostile-name rejection because the script does not implement it."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "git diff --stat 28ff7990..c2f8736e lists only the planned files plus measure/generated facts; T6 commit 1f61d0f2 touches only scripts/proportion-check.mjs and T7 commit aa9c9b74 only the two assets, the script correction, and the pin."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "Every claim carries a wrapped probe result or a file:line; the plan's recorded rows, pin counts (394/909/3194), and missing-asset text match my probes verbatim."
+    }
+  ]
+}

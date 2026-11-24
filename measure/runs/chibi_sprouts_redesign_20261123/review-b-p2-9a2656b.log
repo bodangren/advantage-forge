@@ -1,0 +1,13 @@
+MEASURE_AGENT_RESULT
+role: review-b
+track: chibi_sprouts_redesign_20261123
+phase: Phase 2: Green
+audited_head_sha: 9a2656ba8784a74e9011975e54fd9ee4867841a3
+status: pass
+summary: N2 closed — a linked out/<name> or out/<name>/flat is refused before the build with one line and nothing is written through it; inherited view names are refused by own-property membership. N1 kept: the check-then-act TOCTOU race remains on both the deletion and the write side; it needs a concurrent local writer in out/, so no CLI user can reach it (tech-debt, escalated).
+blocking_findings: []
+nonblocking_findings:
+- "N1 [Tech-debt] review-b: check-then-act TOCTOU remains — rmSync deletes through a symlink swapped into an intermediate path component, and a live race probe wrote front-level.png through a symlink swapped in after checkOutputFolder's pre-build check. Concurrent local writer required; no CLI user can reach it. | CONTEST kept: both races are real and unchanged by 0fbd781b; local-only tech-debt, escalated for owner disposition."
+retry_recommendation: escalate_human
+result_path: measure/runs/chibi_sprouts_redesign_20261123/review-b-p2-9a2656b.json
+END_MEASURE_AGENT_RESULT

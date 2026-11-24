@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "role": "review-a",
+  "track": "chibi_sprouts_redesign_20261123",
+  "phase": "Phase 2: Green",
+  "baseline_sha": "23e551df54b7996776a4bcb9e8ccfdb9f35a6083",
+  "phase_base_sha": "23e551df54b7996776a4bcb9e8ccfdb9f35a6083",
+  "role_base_sha": "2a33c7c1c304825c3efd2dc775c99d84b22ff2f7",
+  "audited_head_sha": "2a33c7c1c304825c3efd2dc775c99d84b22ff2f7",
+  "status": "fail",
+  "summary": "The renderer passes the pixel and output checks. T2 can test a different checkout or render an unowned fixture. Both defects block phase acceptance.",
+  "blocking_findings": [
+    "F1 [Blocker] review-a: tests/render-options.test.ts:7-15,55-69 hard-codes the render checkout and the wrapper path. A different checkout can get a green result for this worktree's renderer. Resolve the checkout from the test module and configure the required wrapper without an owner-specific path.",
+    "F2 [Blocker] review-a: tests/render-options.test.ts:64-70,192-218 bypasses the exclusive create when the real fixture path exists. The test sends that unowned file to Forge instead of reporting `fixture path exists: <path>`. The collision probe tests a different path and creates it without `wx`. Exercise the real path and confirm that a collision starts no render."
+  ],
+  "nonblocking_findings": [
+    "F3 [Nit] review-a: src/cli/forge.ts:46-54 says `--ortho` is level and `--focus` zooms every view. src/render/page.ts:430-449 keeps the selected elevation and ignores focus in orthographic mode. Document these limits or reject incompatible options before the build.",
+    "F4 [Nit] review-a: tests/render-options.test.ts:86-97,153-159 measures two empty masks as one pixel each. Other cases still reject blank PNGs. Require a nonempty mask in the height case itself.",
+    "F5 [Nit] review-a: c69a5b73 changed a test despite the Green brief. The edit updates three exact line pins only and leaves the T2 Red test intact. Record it as a reviewed role-scope deviation in plan.md:250-255.",
+    "F6 [Nit] review-a: plan.md:185-186 says both changes are restored. src/render/page.ts:430-463 restores the materials and ground, not the camera. State which state is restored and which camera settings each caller sets.",
+    "F7 [Nit] review-a: A5 at plan.md:235-237. Both exact snapshots report 51 type errors in 14 files, not 13. The pre-existing Storytime guard accounts for 13 errors beyond TD-35 to TD-39. Correct the evidence without making full tsc a gate."
+  ],
+  "evidence": [
+    "HEAD matches audited_head_sha. The phase base is its ancestor.",
+    "An isolated probe ran the committed fixture logic with a pre-existing real fixture path and observed a Forge call on the foreign source.",
+    "The alternate-checkout probe shows the committed test selects the original worktree and the fixed wrapper path.",
+    "T1 has 15 passing tests at the phase base. At HEAD, its three hero tests pass and 15 scrapped tests skip.",
+    "The HEAD scanner passes. The scanner with old pins fails at exactly the three moved Box3.union calls.",
+    "Reversing only the scanner's line pins, indices, and explanatory comment recreates the old scanner byte for byte. The T2 test blob is unchanged from d02c8fa9.",
+    "Wrapped HEAD Vitest exits 0: 14 files pass, 2 files skip; 84 tests pass, 15 tests skip. The 84 passing tests include all 8 T2 cases and 73 existing render-related tests.",
+    "The fresh 256 × 256 PNGs have transparent corners and equal mask rows 12 to 243. Front body RGBA is [63,143,208,255], and the block is [224,160,48,255].",
+    "The side PNG has edge alpha and the +Z landmark in columns 99 to 109. Studio.aim projects its centre to column 104.727273 using decision (j).",
+    "Wrapped sprout-pip renders and sprites from isolated phase-base and HEAD snapshots have matching SHA-256 sums for all 16 deliverables. render.png matches 7efc9c271626c597bd542d72e4ea9d0bc9949f3b031cef0baacb1a190cba7b23.",
+    "Wrapped tsc exits 2 at both commits. The 51 diagnostics in 14 files match after normalizing the temporary snapshot path. No diagnostic names a changed file.",
+    "The flat-material probe verifies retained geometry and visibility, full coverage opacity, and exact material and ground restoration.",
+    "The CLI preflight probe rejects missing fast, missing background, and an opaque background with the exact named error before asset lookup or Vite.",
+    "A3: Counts came from labeled Vitest reporter lines and exact file/count pairs from grep -Hc.",
+    "A4: The PNG case rejects a successful subprocess that produced no PNGs. The Measure doctor check rejects a registered track with no plan.",
+    "A4: The isolated height case accepts two fully transparent images. The other pixel tests reject those images.",
+    "A5: The T1, T2, and existing test counts match the plan. The type-check file count and debt attribution do not.",
+    "The AC1 audit guard rejects the phase base and a missing test file. The persistent guard remains scheduled for T4.",
+    "build-graph affected reports only the renderer page and CLI. git grep confirms the CLI passes the optional ViewsRequest fields to the page."
+  ],
+  "commands": [
+    "git rev-parse HEAD; git merge-base --is-ancestor 23e551df 2a33c7c1; git diff 23e551df..2a33c7c1",
+    "build-graph scan; build-graph callers; build-graph affected",
+    "Wrapped Vitest on the three T1 files at the phase base, and those three files plus the scanner at HEAD",
+    "Wrapped Vitest at HEAD: node node_modules/vitest/vitest.mjs run --maxWorkers=1 --reporter=verbose on T1, T2, and the 12 render-related files in plan.md:229-234",
+    "Wrapped Vitest on the phase-base scanner with the audited src tree",
+    "Wrapped ./forge render sprout-pip --fast and ./forge sprites sprout-pip --fast at each exact commit, followed by SHA-256 comparison",
+    "Wrapped node node_modules/typescript/bin/tsc --noEmit --pretty false on isolated phase-base and HEAD snapshots; compare normalized diagnostics",
+    "node measure/tools/generate.mjs --check; bash measure/doctor.sh --structural-only; prettier --check",
+    "Node probes for exact fixture ownership, missing PNGs, empty masks, alternate checkout, flat material restoration, and camera projection"
+  ],
+  "changed_files": [
+    "measure/generated/status.md",
+    "measure/tracks.md",
+    "measure/tracks/chibi_sprouts_redesign_20261123/metadata.json",
+    "measure/tracks/chibi_sprouts_redesign_20261123/plan.md",
+    "src/cli/forge.ts",
+    "src/render/page.ts",
+    "tests/apk3d/no-unpolyfilled-builtins.test.ts",
+    "tests/render-options.test.ts",
+    "tests/sprout-base.test.ts",
+    "tests/sprout-gesture-offset.test.ts",
+    "tests/sprout-gestures.test.ts"
+  ],
+  "test_strategy_violations": [
+    "F1: The T2 test can render a different checkout from the checkout under test.",
+    "F2: The real pin path can bypass the collision rule in test-strategy.md:84-96."
+  ],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "retry_implementation",
+  "confidence": "high",
+  "route": "openai/gpt-6.2-sol#high",
+  "ratings": [
+    {"axis": "correctness", "score": 4, "evidence": "The flat pixel and material probes pass, but src/render/page.ts:430-449 ignores focus under orthographic projection."},
+    {"axis": "test_meaning", "score": 3, "evidence": "All eight T2 cases pass locally, but tests/render-options.test.ts:64-70 bypasses the collision check on the real path."},
+    {"axis": "scope_discipline", "score": 4, "evidence": "Commit c69a5b73 exceeded the Green test scope only to update three existing scanner line pins."},
+    {"axis": "evidence_quality", "score": 4, "evidence": "The replays match all output hashes, but plan.md:235-237 understates the number of files with baseline type errors."}
+  ]
+}

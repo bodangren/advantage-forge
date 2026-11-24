@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: adversarial-testing
+status: fail
+track: chibi_sprouts_redesign_20261123
+phase: Phase 5: Green
+commits: 56781137
+tests_run: sheet suites PASS 13/13; project gate PASS 239 files, 3467 passed, 27 skipped; new round-2 adversarial tests FAIL 2/2; all six earlier mutants fail a test
+files_changed: tests/mom-kim-sheet.adversarial-r2.test.ts; measure/runs/chibi_sprouts_redesign_20261123/adversarial-p5-ca4e8d0.json; measure/runs/chibi_sprouts_redesign_20261123/adversarial-p5-ca4e8d0.log
+plan_updates: none
+known_failures: a fresh rows.lit pair can disagree with alpha masks and remain in measure.json; a symlink at either output PNG path is followed and overwrites its target
+handoff: Audited immutable implementation HEAD ca4e8d0 against phase_base_sha 75bb2b4; role_base_sha is ca4e8d0. F1-F3 are withdrawn. F4 and F5 are late, user-reachable wrong-result findings and qualify for one fix round. The local output-directory swap race is tech debt under the Phase 2 PM decision. Green remediation commit: 976144e8. Adversarial test commit: 56781137. The project gate ran before the new failing-first test file was added.
+END_MEASURE_AGENT_RESULT

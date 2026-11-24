@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "role": "review-b",
+  "track": "chibi_sprouts_redesign_20261123",
+  "phase": "Phase 2: Green",
+  "baseline_sha": "23e551df54b7996776a4bcb9e8ccfdb9f35a6083",
+  "phase_base_sha": "23e551df54b7996776a4bcb9e8ccfdb9f35a6083",
+  "role_base_sha": "9a2656ba8784a74e9011975e54fd9ee4867841a3",
+  "audited_head_sha": "9a2656ba8784a74e9011975e54fd9ee4867841a3",
+  "status": "pass",
+  "summary": "N2 is closed: a linked out/<name> or out/<name>/flat is refused before the build with one line and nothing is written through it. Inherited view names are refused by own-property membership. One finding stays: the check-then-act TOCTOU race (N1), now also demonstrable on the write side; it needs a concurrent local writer in out/, so no CLI user can reach it. It is tech-debt.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "N1 [Tech-debt] review-b: The symlink checks are check-then-act, so a TOCTOU race remains. On the deletion side, removeFlatFolder's rmSync still deletes through a symlink swapped into an intermediate path component between realpathSync and rmSync (round-2 probe; the function is unchanged in 0fbd781b). On the write side, a live race probe swapped a symlink into out/<name>/flat after checkOutputFolder's pre-build lstat and before the late mkdirSync/writePng: the run exited 0 and wrote front-level.png into the race target, which only worked because a concurrent local actor planted the link (the deletion side still refused: the target's own marker survived). No CLI user can reach this; a concurrent writer inside out/ can. Consider rename-then-delete and a post-mkdir lstat before the first write, or document the accepted race. | CONTEST kept: both races are real and unchanged by 0fbd781b; they are local-only tech-debt, escalated for owner disposition."
+  ],
+  "evidence": [
+    "HEAD matches audited_head_sha 9a2656ba8784a74e9011975e54fd9ee4867841a3; phase_base_sha is its ancestor; role_base_sha recorded as HEAD.",
+    "N2 withdrawn: with a symlink at out/<name>/flat (real target with an exclusively-created marker), ./forge render <name> --fast --bg none --flat exits 1 with one line 'output folder is a link: out/<name>/flat'; the marker survives, nothing is written into the target, and the symlink itself survives. The same holds for a symlink at out/<name> and for dangling symlinks at both spots.",
+    "checkOutputFolder runs before the build: the refusal precedes the server and the build (src/cli/forge.ts), and the linked-outname probe showed no stats.json or GLB appearing in the target folder.",
+    "Inherited view names refused with one line before the build: --views constructor, __proto__, prototype, hasOwnProperty, and toString each exit 1 with 'Unknown view ...'; --views ',,,' is refused for render; '--views front,' is accepted and renders front (empty members dropped).",
+    "Asset-name regression probes still refuse with one line: traversal '../measure/runs/.../x', backslash 'a\\b', absolute '/tmp/evil'.",
+    "Happy-path regression: a clean flat render exits 0 and writes flat/front-level.png under out/<name>/ only.",
+    "Write-side TOCTOU probe: a symlink swapped into out/<race>/flat between the pre-build check and the late writes was followed (exit 0, front-level.png landed in the race target); the race target's pre-existing marker survived because removeFlatFolder still refuses to delete through a symlink.",
+    "The link refusal covers only --flat: a linked out/<name> on a non-flat render still receives the glb, stats.json, and textures writes (unchanged pre-existing behavior, noted for context; out/ legitimately holds symlinks by design).",
+    "A symlinked out/ root itself would be an environment-level redirection outside a single run's control; the per-run checks remain correct relative to the real out/ root (realpath comparison in removeFlatFolder).",
+    "0fbd781b..HEAD content scan: src/cli/forge.ts, the three round-2 test files, and the measure records contain no secret patterns (AKIA, sk-, ghp_, private key headers, api keys, bearer tokens); no unintended file was added.",
+    "A2 not applicable; A6: the plan's T3r2 evidence (one parsed list, own-property membership, linked-output refusal before any write) matches the implementation and these probes.",
+    "Every render ran through heavy-run.sh with HEAVY_MIN_AVAIL_MB=1500; all probe fixtures, symlinks, outputs, and temp dirs were removed (verified: no leftover pin3-rb/race-rb fixtures in assets or out, no probe-r3 dir); nothing of this review is left running."
+  ],
+  "commands": [
+    "git -C <worktree> rev-parse HEAD; git log --oneline fc823ed1..HEAD; git diff fc823ed1..HEAD -- src/cli/forge.ts",
+    "node probe-r3-driver.cjs (13 wrapped forge renders + live write-side race probe; JSON report)",
+    "git diff 0fbd781b~1..HEAD --name-only plus content grep of all non-measure files for secret patterns (0 hits)",
+    "grep -n -A20 T3r2 measure/tracks/chibi_sprouts_redesign_20261123/plan.md (evidence cross-check)"
+  ],
+  "changed_files": [
+    "measure/generated/status.md",
+    "measure/tracks/chibi_sprouts_redesign_20261123/plan.md",
+    "src/cli/forge.ts",
+    "tests/render-options.adversarial-r2.test.ts",
+    "tests/render-options.adversarial.test.ts",
+    "tests/render-options.test.ts",
+    "tests/render-options.validation.test.ts"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "escalate_human",
+  "confidence": "high",
+  "route": "kimi-code-plan-cn/kimi-for-coding",
+  "ratings": [
+    {"axis": "correctness", "score": 5, "evidence": "Linked output folders are refused before the build (exit 1, one line, marker survives, no write-through) and inherited view names are refused."},
+    {"axis": "test_meaning", "score": 5, "evidence": "tests/render-options.validation.test.ts and tests/render-options.adversarial-r2.test.ts pin the traversal, linked-output, and inherited-view refusals with failing-first evidence (11 cases green per plan)."},
+    {"axis": "scope_discipline", "score": 5, "evidence": "0fbd781b touches only src/cli/forge.ts; src/render/page.ts stays untouched and the scanner pins stay at lines 331/531/538."},
+    {"axis": "evidence_quality", "score": 5, "evidence": "Every claim carries a wrapped probe result from probe-r3-driver.cjs or a file:line; the plan evidence matches the probes verbatim."}
+  ]
+}

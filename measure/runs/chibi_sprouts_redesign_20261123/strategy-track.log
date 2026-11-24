@@ -1,0 +1,21 @@
+MEASURE_AGENT_RESULT
+role: measure-strategy
+track_id: chibi_sprouts_redesign_20261123
+status: PASS
+worktree: /home/daniebo/Desktop/forge-worktrees/sprouts-redesign
+branch: chibi-sprouts-redesign
+role_base_sha: 641d4b3b085129e351df5e63ccbaf2f8ef771cee
+strategy_commit: 23e551df54b7996776a4bcb9e8ccfdb9f35a6083
+commit_message: measure(chibi_sprouts_redesign): test strategy
+strategy_artifact: measure/tracks/chibi_sprouts_redesign_20261123/test-strategy.md
+phase_base_sha_capture_point: immediately after the strategy commit lands; run git -C /home/daniebo/Desktop/forge-worktrees/sprouts-redesign rev-parse HEAD; no SHA predating the committed strategy may be used as phase_base_sha
+generate_check: exit 0; Measure facts are current (4 files).
+doctor_structural: exit 0; Measure doctor found no structural errors.
+prettier_strategy: exit 0; All matched files use Prettier code style.
+output_not_committed: measure/runs/chibi_sprouts_redesign_20261123/strategy-track.log
+untouched_untracked: assets/wizard-argon-trial.ts; measure/runs/asset_chibi_sprouts_r1_20261022/ux-browser-review-78dbd22.json
+red_command_t1: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-base.test.ts tests/sprout-gestures.test.ts tests/sprout-gesture-offset.test.ts'
+red_command_t2: HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/render-options.test.ts'
+coverage: T1-T14; per-task test files, Red and Green commands, Red evidence, Green gate, closeout gate, order table, model-family rule, mid-red path rule, run-time fixture rule, load order, PM stop, risk classes, review applicability, anti-pattern defenses with falsification
+handoff: none
+END_MEASURE_AGENT_RESULT

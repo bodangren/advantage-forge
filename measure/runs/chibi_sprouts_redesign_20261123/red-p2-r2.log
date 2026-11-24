@@ -1,0 +1,24 @@
+MEASURE_AGENT_RESULT
+track: chibi_sprouts_redesign_20261123
+phase: Phase 2: Green (T3 remediation round 2, Red test side)
+role: measure-mid-red
+phase_base_sha: 23e551df54b7996776a4bcb9e8ccfdb9f35a6083
+role_base_sha: 3bc49ab1f065f1c67a167b15b57cd15d0412b
+resulting_head_sha: 693914a6c960d1d4749743ac4903a936a665f01d
+commits:
+- 4f43e67cdcef6c915a9607f43ba04d8ef22acf10 measure(chibi_sprouts_redesign): T2r2 Red round 2 cases (inherited views, cutout commas, linked output) (tests only: render-options.validation-r2.test.ts)
+- 870b6481143e3b518b1993d030cc86c3ff4b6e36 measure(chibi_sprouts_redesign): Phase 2 records T2r2 Red 4f43e67c and T3r2 remediation (plan only)
+- 693914a6c960d1d4749743ac4903a936a665f01d measure(chibi_sprouts_redesign): refresh generated facts for T2r2/T3r2 plan lines (measure bookkeeping only; run files not committed)
+dirty_paths: assets/wizard-argon-trial.ts and measure/runs logs (unrelated or generated, preserved, not committed); no fixture, probe, out, or temp-worktree leftovers from these runs
+base behaviour proof (C-P2-7): ./forge cutout ball --fast --views front, in a temp worktree at 23e551df exits 0 and writes ball/front.png (plus manifest.json); the cutout parser (src/cli/forge.ts:462-465) splits, trims, and drops empty members before lookup; the temp worktree was removed afterwards
+fail-first Red run: node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/render-options.validation-r2.test.ts tests/render-options.test.ts tests/render-options.validation.test.ts exits 1 with 4 failed and 12 passed (16 total); the 12 passes are the 11 round-1 cases plus the front,nosuch guard, which passes now and must keep passing
+failing cases (all fail on the current source with the named reasons):
+- rejects inherited view names on render before the build: constructor, toString, __proto__, hasOwnProperty each exit 0 (accepted), print 5 lines, and create build outputs; the lookup NAMED_VIEWS[name] is truthy for inherited members
+- rejects inherited view names on animate and cutout before the build: animate gives 9 lines plus a stack plus build outputs; cutout constructor exits 0 with 6 lines, build outputs, and writes constructor.png plus manifest.json to the probe out folder
+- cutout drops empty view members like the base: front, and ,front and front,,side each exit 1 with Unknown view '' and write no PNG
+- 'output folder is a link' refuses render --flat before any write: a flat symlink makes the run exit 0 with 5 lines and PNGs in the link target; an out/<name> symlink makes the run exit 0 with 5 lines and changes the other asset's flat folder
+guard kept passing: cutout front,nosuch exits non-zero with one line, no PNGs, and no build outputs
+other suites: tests/render-options.adversarial.test.ts and tests/render-options.adversarial-r2.test.ts (both untouched) plus the three T1 files exit 0 (7 passed, 15 skipped)
+gates: prettier --check exits 0 on the new test file and plan.md; tsc --noEmit reports no error in the new test file (51 pre-existing errors stay); every fixture, probe dir, symlink, out dir, and the temp worktree this round created was removed by the test or the round
+status: blocked_reason=none; T2r2 Red test work is done, T3r2 Green owns the source fix
+END_MEASURE_AGENT_RESULT

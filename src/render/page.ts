@@ -31,6 +31,66 @@ export interface ViewsRequest {
   readonly title?: string;
   /** A color preset of the asset (its `presets`): the tinted materials take its slot colors. */
   readonly preset?: string;
+  /** A level orthographic frame: one pixels-per-metre scale for every view of the run. */
+  readonly ortho?: boolean;
+  /** The flat pass: every mesh unlit in its own colour, no ground, no tone mapping. */
+  readonly flat?: boolean;
+}
+
+/**
+ * The margin of the orthographic frame: the world height of the frame is the largest side of the
+ * asset times 1.10, so the asset keeps a small border in every view.
+ */
+export const ORTHO_MARGIN = 1.1;
+
+/**
+ * The orthographic frame of a run: a square frame in camera space, centred on the asset, with one
+ * pixels-per-metre scale for every view. The world height is the largest side of the bounds times
+ * `ORTHO_MARGIN`, and `pixelsPerMetre` is the image size over that height.
+ */
+export function orthoFrame(
+  bounds: THREE.Box3,
+  size: number,
+): { left: number; right: number; top: number; bottom: number; pixelsPerMetre: number } {
+  const box = bounds.getSize(new THREE.Vector3());
+  const height = Math.max(box.x, box.y, box.z, 1e-6) * ORTHO_MARGIN;
+  const half = height / 2;
+  return { left: -half, right: half, top: half, bottom: -half, pixelsPerMetre: size / height };
+}
+
+/**
+ * The flat pass: every mesh of the asset becomes unlit, in its own colour, with no tone mapping.
+ * The geometry and the `visible` flag stay. The ground is hidden, so no shadow lands on it. The
+ * returned function puts the old materials and the ground back.
+ */
+export function useFlatMaterials(
+  root: THREE.Object3D,
+  ground: THREE.Object3D | null = studio.ground,
+): () => void {
+  const swapped: { mesh: THREE.Mesh; material: THREE.Material | THREE.Material[] }[] = [];
+  root.traverse((o) => {
+    const mesh = o as THREE.Mesh;
+    if (!mesh.isMesh) return;
+    const original = mesh.material;
+    const list = Array.isArray(original) ? original : [original];
+    const flat = list.map((m) => {
+      const source = m as THREE.MeshStandardMaterial;
+      return new THREE.MeshBasicMaterial({
+        color: source.color instanceof THREE.Color ? source.color : new THREE.Color(0xffffff),
+        vertexColors: source.vertexColors === true,
+        toneMapped: false,
+        side: m.side,
+      });
+    });
+    mesh.material = Array.isArray(original) ? flat : flat[0]!;
+    swapped.push({ mesh, material: original });
+  });
+  const groundVisible = ground?.visible ?? false;
+  if (ground) ground.visible = false;
+  return () => {
+    for (const { mesh, material } of swapped) mesh.material = material;
+    if (ground) ground.visible = groundVisible;
+  };
 }
 
 export interface CutoutsRequest {
@@ -121,7 +181,10 @@ let current: { scene: THREE.Object3D; mixer: THREE.AnimationMixer; clips: THREE.
   null;
 
 interface ForgeVariants {
-  readonly slots: Record<string, { channel: string; default: string; options: Record<string, [number, number, number]> }>;
+  readonly slots: Record<
+    string,
+    { channel: string; default: string; options: Record<string, [number, number, number]> }
+  >;
   readonly presets: Record<string, Record<string, string>>;
 }
 let variants: ForgeVariants | null = null;
@@ -129,7 +192,8 @@ let variants: ForgeVariants | null = null;
 async function load(url: string): Promise<THREE.Object3D> {
   const gltf = await loader.loadAsync(url);
   studio.renderer.clippingPlanes = [];
-  variants = ((gltf.userData as { forgeVariants?: ForgeVariants }).forgeVariants ?? null) as ForgeVariants | null;
+  variants = ((gltf.userData as { forgeVariants?: ForgeVariants }).forgeVariants ??
+    null) as ForgeVariants | null;
   current = { scene: gltf.scene, mixer: new THREE.AnimationMixer(gltf.scene), clips: gltf.animations };
   studio.setAsset(gltf.scene);
   return gltf.scene;
@@ -144,8 +208,11 @@ async function applyPreset(name: string | undefined): Promise<void> {
   if (!name) return;
   if (!variants) throw new Error(`Preset '${name}': this asset has no color variants.`);
   const choice = variants.presets[name];
-  if (!choice) throw new Error(`No preset '${name}'. Presets: ${Object.keys(variants.presets).join(', ') || '(none)'}.`);
-  const map = await new THREE.TextureLoader().loadAsync(`/__forge/preset/${encodeURIComponent(name)}.png?t=${Date.now()}`);
+  if (!choice)
+    throw new Error(`No preset '${name}'. Presets: ${Object.keys(variants.presets).join(', ') || '(none)'}.`);
+  const map = await new THREE.TextureLoader().loadAsync(
+    `/__forge/preset/${encodeURIComponent(name)}.png?t=${Date.now()}`,
+  );
   map.flipY = false;
   map.colorSpace = THREE.SRGBColorSpace;
   current!.scene.traverse((o) => {
@@ -246,7 +313,8 @@ function effectMeshes(samples = 6): Set<THREE.Mesh> {
   for (const clip of clips)
     for (const t of sampleTimes(clip, samples, { loop: false, dig: 0 })) {
       poseAt(clip, t);
-      for (const m of meshes) if (!effect.has(m) && Math.max(...meshBox(m).getSize(size).toArray()) < 0.005) effect.add(m);
+      for (const m of meshes)
+        if (!effect.has(m) && Math.max(...meshBox(m).getSize(size).toArray()) < 0.005) effect.add(m);
     }
   toRest();
   return effect;
@@ -268,7 +336,8 @@ function posedBox(effect: ReadonlySet<THREE.Mesh>): THREE.Box3 {
 
 /** A clip that digs keeps the floor at y = 0 and hides what is below it, as a game floor does. */
 function floorClip(info?: ClipInfo): void {
-  studio.renderer.clippingPlanes = info && info.dig > 0 ? [new THREE.Plane(new THREE.Vector3(0, 1, 0), 0)] : [];
+  studio.renderer.clippingPlanes =
+    info && info.dig > 0 ? [new THREE.Plane(new THREE.Vector3(0, 1, 0), 0)] : [];
 }
 
 function gifBase64(frames: readonly HTMLCanvasElement[], delayMs: number): string {
@@ -348,27 +417,49 @@ async function renderViews(req: ViewsRequest): Promise<{ sheet: string; views: R
   // 'none': a transparent view (icons for pages); the shadow ground keeps a soft shadow.
   studio.setBackground(req.background === 'none' ? null : req.background);
   studio.ground.visible = true;
-  const cam = studio.perspective;
   const images: Record<string, HTMLCanvasElement> = {};
   const views: Record<string, string> = {};
   // One distance for every view so the turnaround keeps a constant scale: fit the height and the
   // widest horizontal extent (bounds diagonal in XZ) with a small margin.
   const size = studio.bounds.getSize(new THREE.Vector3());
   const fitRadius = (Math.max(size.y, Math.hypot(size.x, size.z)) / 2) * 1.18;
-  for (const v of req.views) {
-    const center = v.focus ? new THREE.Vector3(...v.focus.center) : studio.center;
-    const radius = v.focus ? v.focus.radius : fitRadius;
-    const distance = radius / Math.tan(THREE.MathUtils.degToRad(cam.fov / 2));
-    cam.near = distance / 50;
-    cam.far = distance * 10;
-    studio.aim(cam, center, distance, v.azimuth, v.elevation);
-    studio.render(cam, req.size, req.size);
-    const c = document.createElement('canvas');
-    c.width = req.size;
-    c.height = req.size;
-    c.getContext('2d')!.drawImage(studio.renderer.domElement, 0, 0);
-    images[v.name] = c;
-    views[v.name] = c.toDataURL('image/png');
+  // The flat pass swaps the materials and hides the ground. The restore function puts them back,
+  // so a later command in the same page sees the normal render.
+  const restore = req.flat ? useFlatMaterials(current!.scene) : null;
+  try {
+    for (const v of req.views) {
+      if (req.ortho) {
+        // A level orthographic frame: one scale for the whole run, so a width compares with a
+        // depth. The camera sits far away, so the frame is the frame and not the perspective.
+        const frame = orthoFrame(studio.bounds, req.size);
+        const distance = Math.max(studio.radius * 4, 10);
+        studio.ortho.left = frame.left;
+        studio.ortho.right = frame.right;
+        studio.ortho.top = frame.top;
+        studio.ortho.bottom = frame.bottom;
+        studio.ortho.near = Math.max(0.01, distance - studio.radius * 2);
+        studio.ortho.far = distance + studio.radius * 2;
+        studio.ortho.updateProjectionMatrix();
+        studio.aim(studio.ortho, studio.center, distance, v.azimuth, v.elevation);
+        studio.render(studio.ortho, req.size, req.size);
+      } else {
+        const center = v.focus ? new THREE.Vector3(...v.focus.center) : studio.center;
+        const radius = v.focus ? v.focus.radius : fitRadius;
+        const distance = radius / Math.tan(THREE.MathUtils.degToRad(studio.perspective.fov / 2));
+        studio.perspective.near = distance / 50;
+        studio.perspective.far = distance * 10;
+        studio.aim(studio.perspective, center, distance, v.azimuth, v.elevation);
+        studio.render(studio.perspective, req.size, req.size);
+      }
+      const c = document.createElement('canvas');
+      c.width = req.size;
+      c.height = req.size;
+      c.getContext('2d')!.drawImage(studio.renderer.domElement, 0, 0);
+      images[v.name] = c;
+      views[v.name] = c.toDataURL('image/png');
+    }
+  } finally {
+    restore?.();
   }
 
   const cols = Math.min(4, req.views.length);
@@ -452,14 +543,19 @@ async function renderSprites(req: SpritesRequest): Promise<{
     return r;
   };
   const el = THREE.MathUtils.degToRad(req.elevation);
-  const spanOf = (R: number, h: number) => Math.max(2 * R, h * Math.cos(el) + 2 * R * Math.sin(el)) / (1 - 2 * req.margin);
+  const spanOf = (R: number, h: number) =>
+    Math.max(2 * R, h * Math.cos(el) + 2 * R * Math.sin(el)) / (1 - 2 * req.margin);
   const R0 = radius(restBox);
   const h0 = Math.max(restBox.max.y, 0.01);
   // A fixed cell seen from one direction (S, the camera on +Z) frames the box as that camera sees
   // it: a point projects to u = x across and v = y cos(el) - z sin(el) up. Any other request frames
   // a circle of radius R, so every direction fits the same cell.
   const front = names.length === 1 && !!req.fit?.length && !req.ppm;
-  const corners = [restBox.min, restBox.max].flatMap((a) => [restBox.min, restBox.max].flatMap((b) => [restBox.min, restBox.max].map((c) => [a.x, b.y, c.z] as const)));
+  const corners = [restBox.min, restBox.max].flatMap((a) =>
+    [restBox.min, restBox.max].flatMap((b) =>
+      [restBox.min, restBox.max].map((c) => [a.x, b.y, c.z] as const),
+    ),
+  );
   const vs = corners.map(([, y, z]) => y * Math.cos(el) - z * Math.sin(el));
   const frontW = 2 * Math.max(...corners.map(([x]) => Math.abs(x)));
   const frontV: [number, number] = [Math.min(...vs), Math.max(...vs)];
@@ -468,12 +564,18 @@ async function renderSprites(req: SpritesRequest): Promise<{
   const R = Math.max(R0, radius(box));
   const h = Math.max(h0, box.max.y);
   const fitted = Math.ceil((spanOf(R, h) * ppm) / 4) * 4;
-  const cellPx = req.ppm ? Math.max(8, fitted) : clip && !req.fit?.length ? Math.max(req.size, fitted) : req.size;
+  const cellPx = req.ppm
+    ? Math.max(8, fitted)
+    : clip && !req.fit?.length
+      ? Math.max(req.size, fitted)
+      : req.size;
   const span = cellPx / ppm;
   const spanY = h * Math.cos(el) + 2 * R * Math.sin(el);
   const cam = studio.ortho;
   // The ground contact and the top: the ground line sits at the bottom margin.
-  const bottom = front ? frontV[0] - (span - (frontV[1] - frontV[0])) / 2 : -R * Math.sin(el) - (span - spanY) / 2;
+  const bottom = front
+    ? frontV[0] - (span - (frontV[1] - frontV[0])) / 2
+    : -R * Math.sin(el) - (span - spanY) / 2;
   cam.left = -span / 2;
   cam.right = span / 2;
   cam.bottom = bottom;
@@ -799,7 +901,9 @@ const CUTOUT_DISTANCE = 6;
  * Pixels come from the premultiplied WebGL buffer at `supersample` x the canvas size and resolve
  * to straight alpha (see cutout.ts). Returns raw RGBA as base64 for each view.
  */
-async function renderCutouts(req: CutoutsRequest): Promise<{ views: Record<string, string>; supersample: number }> {
+async function renderCutouts(
+  req: CutoutsRequest,
+): Promise<{ views: Record<string, string>; supersample: number }> {
   await load(req.glbUrl);
   await applyPreset(req.preset);
   studio.setBackground(null);
@@ -813,7 +917,10 @@ async function renderCutouts(req: CutoutsRequest): Promise<{ views: Record<strin
       if ((o as THREE.Mesh).isMesh && SING_BODY_NAMES.includes(o.name)) o.visible = false;
     });
   const gl = studio.renderer.getContext();
-  const maxSize = Math.min(gl.getParameter(gl.MAX_RENDERBUFFER_SIZE) as number, gl.getParameter(gl.MAX_TEXTURE_SIZE) as number);
+  const maxSize = Math.min(
+    gl.getParameter(gl.MAX_RENDERBUFFER_SIZE) as number,
+    gl.getParameter(gl.MAX_TEXTURE_SIZE) as number,
+  );
   let ss = Math.max(1, Math.floor(req.supersample));
   while (ss > 1 && Math.max(req.width, req.height) * ss > maxSize) ss--;
 
@@ -831,7 +938,8 @@ async function renderCutouts(req: CutoutsRequest): Promise<{ views: Record<strin
   current!.scene.traverse((o) => {
     if ((o as THREE.Mesh).isMesh && o.visible) meshes.push(o as THREE.Mesh);
   });
-  for (const m of meshes) if ((m as THREE.SkinnedMesh).isSkinnedMesh) (m as THREE.SkinnedMesh).skeleton.update();
+  for (const m of meshes)
+    if ((m as THREE.SkinnedMesh).isSkinnedMesh) (m as THREE.SkinnedMesh).skeleton.update();
 
   const views: Record<string, string> = {};
   const v = new THREE.Vector3();
@@ -901,4 +1009,12 @@ declare global {
   }
 }
 
-window.forge = { renderViews, renderCutouts, renderSprites, renderAnimation, listClips, inspectAsset, ready: true };
+window.forge = {
+  renderViews,
+  renderCutouts,
+  renderSprites,
+  renderAnimation,
+  listClips,
+  inspectAsset,
+  ready: true,
+};

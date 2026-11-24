@@ -1,0 +1,13 @@
+asset path probe launcher
+CASE=source-missing-but-glb-present
+asset no-source: not built
+missing: assets/no-source.ts
+EXIT=1
+CASE=source-present-glb-missing
+asset no-glb: not built
+missing: out/no-glb/no-glb.glb
+EXIT=1
+CASE=invalid-traversal
+asset ../assets/no-glb: not built
+missing: out/../assets/no-glb/../assets/no-glb.glb
+EXIT=1

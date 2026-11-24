@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "role": "adversarial-testing",
+  "track": "chibi_sprouts_redesign_20261123",
+  "phase": "Phase 2: Green",
+  "baseline_sha": "2a33c7c1c304825c3efd2dc775c99d84b22ff2f7",
+  "phase_base_sha": "23e551df54b7996776a4bcb9e8ccfdb9f35a6083",
+  "role_base_sha": "2a33c7c1c304825c3efd2dc775c99d84b22ff2f7",
+  "audited_head_sha": "2a33c7c1c304825c3efd2dc775c99d84b22ff2f7",
+  "status": "fail",
+  "summary": "Renderer checks passed, but the required project gate failed on eight tests outside this phase. The role gate cannot pass until a human triages these baseline failures.",
+  "blocking_findings": [
+    "F2 [Blocker] adversarial-testing: The required project gate failed 8 tests across six files outside this phase. Rationale: the acceptance gate requires the project command to pass, and this audit cannot classify these failures as phase regressions."
+  ],
+  "nonblocking_findings": [
+    "F1 [Nit] adversarial-testing: tests/render-options.test.ts:65 skips createFixture when the exact PID path already exists. A recycled PID can make the test use a stale file or symlink, then leave it behind. Rationale: this affects test isolation, not a delivered render or measurement."
+  ],
+  "evidence": [
+    "HEAD 2a33c7c1c304825c3efd2dc775c99d84b22ff2f7 matched the requested audited HEAD; phase base 23e551df54b7996776a4bcb9e8ccfdb9f35a6083 is its ancestor.",
+    "T2 command passed 8 tests; see adversarial-p2-2a33c7c-t2.log.",
+    "The tone-mapping mutation failed 3 T2 assertions, and the side-sign mutation failed the side-landmark assertion; see mutation-tone.log and mutation-side.log.",
+    "Removing the renderViews restore call left T2 at 8/8, but the new browser test failed on that mutation. The unmutated browser test passed 2/2; see mutation-restore-adversarial.log and adversarial-restore-test.log.",
+    "Flat and orthographic options accepted 257-pixel views. Both invalid flat combinations returned '--flat needs --fast and --bg none'; focus/no-focus orthographic renders had identical hashes.",
+    "Avatar-base and barrel render, view, sprite, and metrics SHA-256 lists matched between phase base and audited HEAD; render-hash-diff.txt is empty.",
+    "Two concurrent T2 processes used distinct PIDs 1987862 and 1988854. Both passed 8/8, and neither left a fixture in assets/.",
+    "The symlink probe reported EEXIST, kept the symlink, and preserved target content; see fixture-symlink-probe.log.",
+    "The project gate reported 6 failed files, 8 failed tests, 3386 passed, and 25 skipped; see adversarial-p2-2a33c7c-project.log and the role-gate output.",
+    "The audit added only tests/render-options.adversarial.test.ts. Commits b46da1ea and 0c98cba8 contain test-only changes; the renderer source did not change after the audited HEAD."
+  ],
+  "commands": [
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/render-options.test.ts'",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/render-options.adversarial.test.ts'",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts'",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './forge render avatar-base --fast --views front,three-quarter --ortho --bg none --size 257 --focus 0,0.452,0,0.1'",
+    "git diff --check 23e551df54b7996776a4bcb9e8ccfdb9f35a6083..2a33c7c1c304825c3efd2dc775c99d84b22ff2f7"
+  ],
+  "changed_files": [
+    "tests/render-options.adversarial.test.ts"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "escalate_human",
+  "confidence": "high",
+  "route": "openai/gpt-6-luna#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 4,
+      "evidence": "T2 pixels and 257-pixel option combinations passed; the same phase-base render hashes matched for avatar-base and barrel."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "The browser restore test fails when the renderViews restore call is removed, while tone and side mutations fail T2."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "Commits b46da1ea and 0c98cba8 changed only tests/render-options.adversarial.test.ts."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "Targeted tests, mutation runs, output hashes, and the full project gate have retained logs under measure/runs/chibi_sprouts_redesign_20261123/."
+    }
+  ]
+}

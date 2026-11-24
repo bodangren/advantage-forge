@@ -1,0 +1,32 @@
+MEASURE_AGENT_RESULT
+track: chibi_sprouts_redesign_20261123
+phase: Phase 1: Red
+role: measure-mid-red
+phase_base_sha: 23e551df54b7996776a4bcb9e8ccfdb9f35a6083
+role_base_sha: 23e551df54b7996776a4bcb9e8ccfdb9f35a6083
+resulting_head_sha: 9601a0cbb068bb500be35e8ead158852e2842eac
+commits:
+- 4c8dded7835c476f3ceb259fd08a802dc11b6cc4 measure(chibi_sprouts_redesign): T1 Red skips scrapped sprout contracts, keeps hero assertions (tests only: sprout-base, sprout-gestures, sprout-gesture-offset)
+- d02c8fa9b320a8febd9b7d3c72ecf8a64aaa883b measure(chibi_sprouts_redesign): T2 Red pins renderer options, fails on absent --ortho/--flat/views (tests only: render-options.test.ts)
+- 848fbbee87969d164df9df825e87483054d3214c measure(chibi_sprouts_redesign): Phase 1 Red records T1 4c8dded7 and T2 d02c8fa9 (plan only)
+- 9601a0cbb068bb500be35e8ead158852e2842eac measure(chibi_sprouts_redesign): Phase 1 Red marks track in_progress and refreshes generated facts (measure bookkeeping only; run files not committed)
+dirty_paths: assets/wizard-argon-trial.ts (unrelated user work, preserved), measure/runs/asset_chibi_sprouts_r1_20261022/ux-browser-review-78dbd22.json (unrelated, preserved), measure/runs/chibi_sprouts_redesign_20261123/strategy-track.log (generated, not committed)
+T1 (retirement, not a failure):
+- baseline pre-edit: 3 files, 15 passed, exit 0
+- post-edit: 3 files, 3 passed, 15 skipped, exit 0
+- active hero tests (3): keeps the hero clip inventory: the 8 base clips; keeps the hero default pose digest: size 8, digest 68442177; keeps the hero cheer wrist-to-head distance: 0.27635 m
+- skipped tests (15): has the bone names, clip names, and equip sockets of the avatar base; keeps the hero head and a shorter body; keeps the child clap plane and hand gap; keeps the child touch points; keeps the child chest and hip points; moves each adult goal to the same place on the grown-up body; keeps the full clip inventory: 26 sprout clips plus 8 base clips; keeps the full default pose data per character; keeps the key hand distances of point-up, picture-sway, and cheer; moves the point-up hand outward by the requested clearance; moves the picture-sway hands outward by the requested clearance; leaves the other 24 sprout clips identical with the option; moves the cheer fists outward by the requested clearance on the kind path; leaves the other 7 base clips identical with the kind option; Lily opts in: her point-up, picture-sway, and cheer clear the bob hair
+- guard: fails on unedited files (10 checks fail), passes after the edit
+T2 (failing-first Red, exit 1, 8 failed of 8):
+- writes both flat views at 256x256: Unknown option '--ortho'
+- leaves the corner pixel transparent: missing out/_flat-render-pin-<pid>/flat/front-level.png
+- renders the body colour within 1 of 255: missing flat front-level.png
+- renders the block colour within 1 of 255: missing flat front-level.png
+- keeps both view heights within 2 px: missing flat front-level.png
+- places the side block left of centre by 0.02 m ppm or more (decision j): missing flat side-level.png
+- writes the named view without --ortho and rejects --flat without --fast: Unknown view 'front-level'
+- protects an existing fixture path and leaves no fixture behind: Unknown option '--ortho' on the render-status assert; the probe path fails with fixture path exists and stays untouched
+- no SyntaxError, no collection error, no missing module; fixture path absent after the run
+gates: prettier --check exits 0 on all four test files and plan.md; tsc --noEmit reports no error in the four test files (51 pre-existing errors stay)
+status: blocked_reason=none; T1 and T2 Red work is done, Green owns the next step
+END_MEASURE_AGENT_RESULT

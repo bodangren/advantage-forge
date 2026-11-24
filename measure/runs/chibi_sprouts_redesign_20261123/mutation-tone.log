@@ -1,0 +1,53 @@
+
+ RUN  v5.1.1 /home/daniebo/Desktop/forge-worktrees/sprouts-redesign/measure/runs/chibi_sprouts_redesign_20261123/mutation-copy
+
+ ❯ tests/render-options.test.ts (8 tests | 3 failed) 4815ms
+   ❯ render options (orthographic flat pin) (8)
+     × renders the body colour within 1 of 255 5ms
+     × renders the block colour within 1 of 255 2ms
+     × places the side block left of centre by 0.02 m ppm or more (decision j) 2ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/render-options.test.ts > render options (orthographic flat pin) > renders the body colour within 1 of 255
+AssertionError: expected 30 to be less than or equal to 1
+ ❯ tests/render-options.test.ts:136:30
+    134|     const [r, g, b, a] = await pixel(FRONT_PNG, Math.floor(meta.width!…
+    135|     expect(a).toBeGreaterThanOrEqual(250);
+    136|     expect(Math.abs(r - rr)).toBeLessThanOrEqual(1);
+       |                              ^
+    137|     expect(Math.abs(g - gg)).toBeLessThanOrEqual(1);
+    138|     expect(Math.abs(b - bb)).toBeLessThanOrEqual(1);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  tests/render-options.test.ts > render options (orthographic flat pin) > renders the block colour within 1 of 255
+AssertionError: expected 3 to be less than or equal to 1
+ ❯ tests/render-options.test.ts:148:30
+    146|     const [r, g, b, a] = await pixel(FRONT_PNG, Math.floor(meta.width!…
+    147|     expect(a).toBeGreaterThanOrEqual(250);
+    148|     expect(Math.abs(r - rr)).toBeLessThanOrEqual(1);
+       |                              ^
+    149|     expect(Math.abs(g - gg)).toBeLessThanOrEqual(1);
+    150|     expect(Math.abs(b - bb)).toBeLessThanOrEqual(1);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  tests/render-options.test.ts > render options (orthographic flat pin) > places the side block left of centre by 0.02 m ppm or more (decision j)
+AssertionError: expected 256 to be less than 256
+ ❯ tests/render-options.test.ts:186:22
+    184|         }
+    185|       }
+    186|       expect(minCol).toBeLessThan(width);
+       |                      ^
+    187|       const ppm = 256 / 1.1;
+    188|       expect(width / 2 - minCol).toBeGreaterThanOrEqual(0.02 * ppm);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  3 failed | 5 passed (8)
+   Start at  12:52:06
+   Duration  4.96s (tests 99%, import 1%)
+

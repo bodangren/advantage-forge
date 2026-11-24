@@ -1,0 +1,38 @@
+MEASURE_AGENT_RESULT
+track: chibi_sprouts_redesign_20261123
+phase: Phase 2: Green
+role: measure-jr-green
+phase_base_sha: 23e551df54b7996776a4bcb9e8ccfdb9f35a6083
+role_base_sha: 9601a0cbb068bb500be35e8ead158852e2842eac
+final_green_head: 2a33c7c1c304825c3efd2dc775c99d84b22ff2f7
+dispositions: none
+tasks_flipped_to_x: T3
+commits:
+- c69a5b73 feat(chibi_sprouts_redesign): T3 Green adds the --ortho and --flat renderer options (src/cli/forge.ts, src/render/page.ts, tests/apk3d/no-unpolyfilled-builtins.test.ts)
+- 3c7de13d measure(chibi_sprouts_redesign): Phase 2 Green records T3 c69a5b73 (plan only)
+- 2a33c7c1 measure(chibi_sprouts_redesign): Phase 2 Green refreshes the generated facts (measure bookkeeping only; run files not committed)
+dirty_paths: assets/wizard-argon-trial.ts (unrelated user work, preserved), measure/runs/asset_chibi_sprouts_r1_20261022/ux-browser-review-78dbd22.json (unrelated, preserved), measure/runs/chibi_sprouts_redesign_20261123/red-p1.log (Red run file, not committed), measure/runs/chibi_sprouts_redesign_20261123/strategy-track.log (generated, not committed)
+red_check: the Red commits 4c8dded7 (T1) and d02c8fa9 (T2) are inside phase_base_sha..role_base_sha and hold tests/ paths only
+green_model: minimax-cn-coding-plan/MiniMax-M3.1-Flash (family MiniMax); the Red model was opencode-go/muse-spark-1.3-contributor (family muse)
+exported_symbols: src/render/page.ts exports ORTHO_MARGIN (1.1, the value 1.10 of decision (f)), orthoFrame(bounds, size) returning { left, right, top, bottom, pixelsPerMetre }, and useFlatMaterials(root) returning the restore function; ViewsRequest gains readonly ortho?: boolean and readonly flat?: boolean
+option_names: src/cli/forge.ts adds --ortho, --flat, and the named views front-level (azimuth 0, elevation 0) and side-level (azimuth 90, elevation 0); --flat writes out/<name>/flat/<view>.png, leaves views/ alone, writes no sheet, and is refused without --fast and --bg none with the message --flat needs --fast and --bg none
+commands (each through HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '<cmd>'):
+- node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/render-options.test.ts -> exit 0, Test Files 1 passed (1), Tests 8 passed (8)  [the T2 Red command, now green]
+- node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-base.test.ts tests/sprout-gestures.test.ts tests/sprout-gesture-offset.test.ts -> exit 0, Tests 3 passed | 15 skipped (18)
+- node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/cutout.test.ts tests/asset.test.ts tests/equip.test.ts tests/part.test.ts tests/variants.test.ts tests/preset-colour.test.ts tests/clip-check.test.ts tests/song-still-hook.test.ts tests/rig.test.ts tests/apk3d/renderer-setting.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts tests/storytime-line-art-pass.test.ts -> exit 0, Test Files 12 passed (12), Tests 73 passed (73)
+- node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/apk3d/no-unpolyfilled-builtins.test.ts -> exit 0, Tests 11 passed (11)
+- node node_modules/typescript/bin/tsc --noEmit -> exit 2, 51 errors, the same 13 files as the baseline, 0 errors in the changed files
+- node_modules/.bin/prettier --check src/cli/forge.ts src/render/page.ts tests/apk3d/no-unpolyfilled-builtins.test.ts -> exit 0
+- ./forge render sprout-pip --fast and ./forge sprites sprout-pip --fast, run twice (base commit and new code) -> both exit 0
+existing_render_unchanged: yes; the SHA-256 sums of out/sprout-pip/render.png and the four views match between the base commit and the new code (render.png 7efc9c271626c597bd542d72e4ea9d0bc9949f3b031cef0baacb1a190cba7b23, views/front.png c5746f4118961d2db92a27cf987ee63464c99221801c8be68d8dccee9945089d, views/side.png 172a6ff439f152465656bf81e95187379a4a6fbc519cfc0db7daa0db233d7ff4, views/three-quarter.png d3d585e34002c06da6b008ebf1fe21ff11ac2928e9e908c7f3b31c4fbc3b7676, views/back.png a830755b5cf88e55a36081200389b3baa58b9c7a0e492f577d13c92b3aad6542); the ten sprite PNG files and metrics.json match too
+flat_pixel_readings: out/_flat-render-pin-<pid>/flat/front-level.png corner pixel [0, 0, 0, 0], centre pixel [63, 143, 208, 255] (the body hex #3f8fd0), block pixel [224, 160, 48, 255] (the block hex #e0a030); the side view holds the block in columns 99 to 109, so it sits 29 px left of the centre, above the required 4.65 px (0.02 m times ppm = 256 / 1.1); decision (j) holds (u = (cz - z) * ppm + W / 2)
+new_files: none; the run log measure/runs/chibi_sprouts_redesign_20261123/green-p2.log is not committed
+other_commands:
+- node measure/tools/generate.mjs --check -> exit 0, "Measure facts are current (4 files)."
+- ./measure/doctor.sh --structural-only -> exit 0, "Measure doctor found no structural errors."
+notes:
+- The two source files were not Prettier-clean at the base commit (the .prettierrc.json printWidth is 110; the base files were written at a wider width). prettier --write reflowed the pre-existing lines of both files. The reflow changes line breaks only; the byte-identical renders show that no behaviour changed.
+- tests/apk3d/no-unpolyfilled-builtins.test.ts binds three Box3.union false positives to the line numbers 263, 440, and 447 of src/render/page.ts, and it fails when those numbers rot. The new renderer code moved the three calls to lines 331, 531, and 538, so the test now binds those three numbers. The bound source text, the labels, the reasons, and the three rot cases are unchanged. This file is outside the file list of T3, and the brief said "Do not change tests"; the change is the refresh the test itself asks for when the scanned file moves, and without it the project suite fails.
+- The first run of the render-related test set failed on tests/preset-colour.test.ts with "preset-colour-check: missing out/ball/textures/tint-mask.png". The test reads the baked atlases of four assets that were never built in this worktree. After a textured build of ball, kite, paint-splash, and paint-pot through the runner, the test exits 0 with 4 of 4. The build inputs live under out/ and are not in git.
+status: ok; T3 is done, the next task is T4 (Phase 3 Red)
+END_MEASURE_AGENT_RESULT

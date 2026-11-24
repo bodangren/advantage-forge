@@ -1,0 +1,8 @@
+forge check launcher PID=1743827
+check  sprout-mom-kim: held items hands (hand.R) (hand.R), hands (hand.L) (hand.L)
+       head parts: head-skin, studs; body parts: head-skin, torso-skin, sweater, jeans
+  rest       ok, nothing within 5.0 cm of the head
+  idle       ok, nothing within 5.0 cm of the head
+result  ok: no held item passes through the head (contact limit 0.3 cm; closest more than 5.0 cm)
+ground  ok: no clip sinks more than 1.5 cm below the rest pose (rest lowest -0.5 cm)
+FORGE_CHECK_EXIT=0

@@ -155,10 +155,10 @@ implementation and no test change.
   `await import()` on the asset and the base module. AC2 rule 2 and T4 expect that named error before
   the asset exists.
 - F18 closed: Phase 6 holds T9, the LATO.2 GPU trial under the USD 5 cap, with the approval quote in
-  decision L and in the Exclusions. The task fixes the Spot L4 and the fallback, the region, the
-  project, the 3 hour cap, the five steps, the delete and verify rule, the log header, and the result
-  note. AC7 holds its acceptance, and the spec says the trial feeds the PM decision and does not
-  replace the SDF base.
+  decision L and in the Exclusions. The task fixes the Spot L4 and the region, the project, the 3
+  hour cap, the five steps, the delete and verify rule, the log header, and the result note. AC7
+  holds its acceptance, and the spec says the trial feeds the PM decision and does not replace the
+  SDF base. The fallback compute left at r4, which keeps one Spot L4 only.
 
 ## Amendment after r3 (2026-11-23)
 
@@ -188,7 +188,36 @@ implementation and no test change.
   because the crop and the model both stay on our VM.
 - F22 closed: decision (m), "The LATO.2 GPU trial" rule 1, and T9 keep the standard L4 fallback and
   record it as an orchestrator decision inside Daniel's USD 5 cap, with the PM informed on
-  2026-11-23. The PM may veto it, and the trial then stops before step 1.
+  2026-11-23. The PM may veto it, and the trial then stops before step 1. Superseded by the r4
+  amendment: the fallback is withdrawn and the trial is one Spot L4.
 - F23 closed: T2 and the Known limits create the fixture at `assets/_flat-render-pin-<pid>.ts` with
   the exclusive flag `wx`. An existing path fails with `fixture path exists: <path>`, and the
   `finally` block removes only the path this run created.
+
+## Amendment after r4 (2026-11-23)
+
+Source: `measure/runs/chibi_sprouts_redesign_20261123/spec-review-86fee8d.json` (blockers F4 and F19;
+majors F22 and F23; baseline `86fee8d`). Scope: `spec.md`, `plan.md`, and this file. No implementation
+and no test change.
+
+- F4 closed: "The palm fixture and the three mutations" defines a synthetic left hand and the
+  arithmetic of each mutation. The mirrored row now mirrors the positions and the landmarks and
+  reverses the index order of every mirrored triangle, so `agreement` stays `+1` and only check 7
+  fails. The turned row keeps its indices, so check 4 stays `+1` and check 6 fails on
+  `thumbForward ≈ −0.042`. A table shows check 4, check 6, and check 7 for each row, so no mutation
+  reaches an earlier failure by accident.
+- F19 closed: T6 owns a synthetic hand fixture built inside the test, and the three palm mutations
+  share it. The real-hand case moves to the T7 gate. The task order table now shows T4, T6, and T7
+  with their gates and the tests that still fail: T6 leaves the end-to-end and real-hand cases
+  failing, and T7 closes both.
+- F22 closed: the standard L4 fallback is withdrawn everywhere: decision (m), "The LATO.2 GPU trial"
+  rule 1, and T9. The trial is one Spot L4. A failed Spot create stops the task, cleans up, and
+  reports, and the PM decides. The withdrawal dates from 2026-11-23, after this review, by the
+  orchestrator.
+- F23 closed: T2 sets an ownership flag only after the `wx` create succeeds, and the `finally` block
+  removes the path only under that flag. A failed create leaves the existing file untouched and fails
+  the test with `fixture path exists: <path>`. The Known limits record the same rule.
+
+This was the fourth spec review of the track. The orchestrator asked the PM to accept that no
+further spec review runs, and that any remaining gap is closed by an orchestrator amendment when Red
+or Green meets it.

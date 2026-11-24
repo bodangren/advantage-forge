@@ -1,0 +1,20 @@
+avatar-base: 26,863 triangles, 0.5 x 0.904 x 0.43 m, built in 1634 ms
+  skin                      9972 tris  (912 ms)
+  hair                      8323 tris  (751 ms)
+  undershirt                4542 tris  (261 ms)
+  pants                     1880 tris  (122 ms)
+  shoes                     2146 tris  (134 ms)
+texture  none (vertex colors)
+glb      out/avatar-base/avatar-base.glb  (1198 KB)
+render   out/avatar-base/render.png  (201 ms)
+avatar-base: 26,863 triangles, 0.5 x 0.904 x 0.43 m, built in 1685 ms
+  skin                      9972 tris  (950 ms)
+  hair                      8323 tris  (758 ms)
+  undershirt                4542 tris  (266 ms)
+  pants                     1880 tris  (104 ms)
+  shoes                     2146 tris  (116 ms)
+texture  none (vertex colors)
+glb      out/avatar-base/avatar-base.glb  (1198 KB)
+flat     out/avatar-base/flat/  (2 views, 152 ms)
+--flat needs --fast and --bg none
+--flat needs --fast and --bg none

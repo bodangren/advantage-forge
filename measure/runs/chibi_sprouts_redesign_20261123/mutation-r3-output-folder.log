@@ -1,0 +1,27 @@
+
+ RUN  v5.1.1 /home/daniebo/Desktop/forge-worktrees/sprouts-redesign/measure/runs/chibi_sprouts_redesign_20261123/mutant-r3-output-folder
+
+ ❯ tests/render-options.adversarial-r2.test.ts (2 tests | 1 failed) 3501ms
+   ❯ flat output removal containment (2)
+     × refuses linked flat and output folders without changing their targets 1927ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/render-options.adversarial-r2.test.ts > flat output removal containment > refuses linked flat and output folders without changing their targets
+AssertionError: expected +0 not to be +0 // Object.is equality
+ ❯ tests/render-options.adversarial-r2.test.ts:143:32
+    141|
+    142|     const flatRun = runForge();
+    143|     expect(flatRun.status).not.toBe(0);
+       |                                ^
+    144|     const flatLines = nonEmptyLines(`${flatRun.stdout || ''}\n${flatRu…
+    145|     expect(flatLines).toHaveLength(1);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 passed (2)
+   Start at  17:10:42
+   Duration  3.59s (tests 100%)
+

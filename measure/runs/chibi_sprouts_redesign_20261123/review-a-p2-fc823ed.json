@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "role": "review-a",
+  "track": "chibi_sprouts_redesign_20261123",
+  "phase": "Phase 2: Green",
+  "baseline_sha": "23e551df54b7996776a4bcb9e8ccfdb9f35a6083",
+  "phase_base_sha": "23e551df54b7996776a4bcb9e8ccfdb9f35a6083",
+  "role_base_sha": "fc823ed14104a6b81e942f6a9a5e8b507aab949f",
+  "audited_head_sha": "fc823ed14104a6b81e942f6a9a5e8b507aab949f",
+  "status": "fail",
+  "summary": "F1 and F2 are closed, and the project gate passes. Two late findings qualify for one fix round because users can receive wrong results.",
+  "blocking_findings": [
+    "F8 [Blocker] review-a: src/cli/forge.ts:744-766 validates a different view list from cutout at lines 462-465. A trailing comma previously produced the requested view. HEAD rejects the command before writing any cutout. The same check accepts inherited object members as view names. Parse the list once and test membership in the named-view table itself. | Late finding F8: one-fix-round (the shipped CLI refuses a previously supported cutout command).",
+    "F9 [Blocker] review-a: src/cli/forge.ts:424-428,774-784 follows a symlinked asset output parent if it resolves to another asset directly under out/. This deletes the other asset's flat output. Reject an aliased output parent before any write or cleanup. | Late finding F9: one-fix-round (a flat render can delete another asset's delivered views)."
+  ],
+  "nonblocking_findings": [
+    "F7 [Nit] review-a: The type-check record in plan.md:216-217,287-289 still attributes all 51 diagnostics to TD-35 to TD-39 and lists 13 files. Both snapshots show 51 diagnostics in 14 files, including 13 diagnostics in the pre-existing Storytime guard.",
+    "F10 [Nit] review-a: tests/render-options.test.ts:54-71 and tests/render-options.validation.test.ts:99-105 clean a same-PID output path without proving ownership. An isolated probe preserves the foreign source but deletes an existing output marker. | Late finding F10: tech-debt (the paths are test fixtures, not phase product files).",
+    "F11 [Nit] review-a: tests/render-options.adversarial.test.ts:8-9 still fixes the restoration test to the audit worktree and runner. Another checkout cannot use that test as evidence for its own renderer. | Late finding F11: tech-debt (the changed path is a test, not a phase product file)."
+  ],
+  "evidence": [
+    "HEAD matches the brief. The phase base is an ancestor of HEAD.",
+    "The wrapped project gate exits 0 with 232 passed and 4 skipped files. It reports 3397 passed and 26 skipped tests.",
+    "F1 withdrawn: both T2 suites passed all 11 cases in the isolated HEAD checkout with HEAVY_RUN_PATH set. The test derives the checkout and child process working directory from its own module.",
+    "F2 withdrawn: the actual source path collision case passes. The same-PID stale source probe reports the named error, starts no render, and preserves the source after cleanup.",
+    "Merge cc8b6e83 changes 197 first-parent paths. All 197 came from the incoming master range. Only generated status differs from the incoming versions.",
+    "The renderer, pipeline, scanner, and renderer test blobs are unchanged across the merge. The passing project gate includes the scanner with exact Box3.union pins 331, 531, and 538.",
+    "build-graph reports the CLI and Vite config in the pipeline blast radius. vite.config.ts:57,61 calls assetPath.",
+    "The isolated sprout-pip, ball, and kite replays match all 48 outputs. The compared sets include the render sheets, views, sprite PNGs, and metrics.",
+    "sprout-pip sorted checksum manifest SHA-256: 36efc0946ef0a7c3751654799059c7373632358fb3331d92b516095ee73bdec7.",
+    "ball sorted checksum manifest SHA-256: 6c7459259152dad8f6820bcf398702e0e1e2a62a7dd5132b87da0b46a6c0fb25.",
+    "kite sorted checksum manifest SHA-256: e395b9f80091a4390a07b678ac00fd3f5f3b0badef815f6018b0e7a7bcb98edb.",
+    "Wrapped tsc exits 2 on both snapshots. The normalized diagnostic lists match exactly: 51 in 14 files and none in a changed file.",
+    "The wrapped legacy cutout replay exits 0 and writes front.png at the phase base. HEAD exits 1 with Unknown view '' and writes no cutout.",
+    "An isolated probe executes removeFlatFolder on a sibling asset alias and observes deletion of that sibling's marker.",
+    "The generation check, structural doctor, formatting check, and git diff --check pass. The audit jobs exited and tracked files remain unchanged."
+  ],
+  "commands": [
+    "git rev-parse HEAD; git merge-base --is-ancestor 23e551df fc823ed; git diff 23e551df..fc823ed",
+    "git diff cc8b6e83^1 cc8b6e83 --stat; git diff 0c98cba8 cc8b6e83 -- src/cli/forge.ts src/render/page.ts src/pipeline.ts tests/render-options.test.ts; compare incoming master path and blob sets",
+    "Wrapped build-graph scan, callers, and affected on the CLI and pipeline",
+    "Wrapped project Vitest gate once: node node_modules/vitest/vitest.mjs run --maxWorkers=1 --no-cache --exclude tests/storytime-book-pictures.test.ts",
+    "Wrapped Vitest on tests/render-options.test.ts and tests/render-options.validation.test.ts in the isolated HEAD checkout",
+    "Wrapped tsc --noEmit --pretty false in isolated phase-base and HEAD snapshots",
+    "Wrapped forge render and forge sprites --fast for sprout-pip, ball, and kite at both exact commits; compare SHA-256 manifests",
+    "Wrapped forge cutout ball with a trailing comma in the view list at both exact commits",
+    "Isolated Node probes for stale same-PID fixture ownership, inherited view names, and flat output parent ownership",
+    "node measure/tools/generate.mjs --check; bash measure/doctor.sh --structural-only; prettier --check; git diff --check"
+  ],
+  "changed_files": [
+    "docs/chibi-sprouts/redesign-2026-11-23.md",
+    "measure/generated/status.md",
+    "measure/tech-debt.md",
+    "measure/tracks.md",
+    "measure/tracks/chibi_sprouts_redesign_20261123/metadata.json",
+    "measure/tracks/chibi_sprouts_redesign_20261123/plan.md",
+    "measure/tracks/old_browser_builtins_20261122/plan.md",
+    "measure/tracks/old_browser_builtins_20261122/spec.md",
+    "measure/runs/old_browser_builtins_20261122/",
+    "scripts/old-browser-check.mjs",
+    "src/cli/forge.ts",
+    "src/pipeline.ts",
+    "src/render/page.ts",
+    "tests/apk3d/no-unpolyfilled-builtins.test.ts",
+    "tests/old-browser/adversarial-check-r2.test.ts",
+    "tests/old-browser/adversarial-check.test.ts",
+    "tests/render-options.adversarial.test.ts",
+    "tests/render-options.test.ts",
+    "tests/render-options.validation.test.ts",
+    "tests/sprout-base.test.ts",
+    "tests/sprout-gesture-offset.test.ts",
+    "tests/sprout-gestures.test.ts"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [
+    "F8: Early validation rejects a cutout list that the previous CLI accepts.",
+    "F9: The flat pass can remove outputs that belong to a different asset."
+  ],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "retry_implementation",
+  "confidence": "high",
+  "route": "unknown",
+  "ratings": [
+    {"axis": "correctness", "score": 2, "evidence": "The legacy cutout replay produces front.png at the base but exits 1 at HEAD."},
+    {"axis": "test_meaning", "score": 3, "evidence": "The alternate-checkout T2 suites pass, but tests/render-options.test.ts:54-71 deletes an unowned output fixture."},
+    {"axis": "scope_discipline", "score": 4, "evidence": "The merge changes only incoming master paths, but src/cli/forge.ts:744-766 changes legacy cutout list behavior."},
+    {"axis": "evidence_quality", "score": 4, "evidence": "Three checksum manifests and the project gate confirm the main claims, but plan.md:287-289 has a stale type-check file count."}
+  ]
+}

@@ -1,0 +1,23 @@
+commit 0fbd781bc844f81da261171f01c2a4398a0df6d8
+Author:     Daniel Bo <bodangren@gmail.com>
+AuthorDate: Mon Nov 23 16:47:22 2026 +0700
+Commit:     Daniel Bo <bodangren@gmail.com>
+CommitDate: Mon Nov 23 16:47:22 2026 +0700
+
+    fix(chibi_sprouts_redesign): T3r2 Green shares one parsed view list and refuses a linked output
+    
+    F8 and C-P2-7: parseViewList splits the --views list on the comma, trims each
+    member, and drops the empty members, as the cut-out parser did on the base. The
+    preflight, the renderer, and the cut-out all read the list from viewListSource, so
+    a trailing or doubled comma names the same views as the list without it.
+    
+    C-P2-1: isNamedView tests the named-view table with hasOwnProperty, so constructor,
+    toString, __proto__, and hasOwnProperty are unknown views. The renderer lookup uses
+    the same rule.
+    
+    F9, C-P2-8, and N2: checkOutputFolder runs before the build and refuses a linked
+    out/<name> or out/<name>/flat with one line. The link is never followed, so no flat
+    PNG lands in another asset's output folder.
+
+ src/cli/forge.ts | 85 ++++++++++++++++++++++++++++++++++++++------------------
+ 1 file changed, 58 insertions(+), 27 deletions(-)

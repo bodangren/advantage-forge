@@ -1,0 +1,22 @@
+[1 ms] cli start
+[15 ms] vite server created
+[33 ms] vite listening
+[85 ms] chromium launched
+[665 ms] render page ready
+[806 ms] pipeline loaded
+  mesh phases: band 37 nets 9 snap+color 33 seams 6 reduce 21 ms
+  mesh phases: band 49 nets 8 snap+color 25 seams 14 reduce 20 ms
+  mesh phases: band 149 nets 20 snap+color 52 seams 44 reduce 23 ms
+  mesh phases: band 319 nets 38 snap+color 264 seams 78 reduce 56 ms
+  mesh phases: band 397 nets 34 snap+color 381 seams 112 reduce 56 ms
+avatar-base: 26,863 triangles, 0.5 x 0.904 x 0.43 m, built in 1899 ms
+  skin                      9972 tris  (981 ms)
+  hair                      8323 tris  (756 ms)
+  undershirt                4542 tris  (288 ms)
+  pants                     1880 tris  (107 ms)
+  shoes                     2146 tris  (116 ms)
+texture  none (vertex colors)
+glb      out/avatar-base/avatar-base.glb  (1198 KB)
+flat     out/avatar-base/flat/  (1 views, 147 ms)
+[2780 ms] browser closed
+[2781 ms] server closed

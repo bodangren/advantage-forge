@@ -1,0 +1,36 @@
+avatar-base: 26,863 triangles, 0.5 x 0.904 x 0.43 m, built in 1784 ms
+  skin                      9972 tris  (937 ms)
+  hair                      8323 tris  (729 ms)
+  undershirt                4542 tris  (289 ms)
+  pants                     1880 tris  (111 ms)
+  shoes                     2146 tris  (136 ms)
+texture  none (vertex colors)
+glb      out/avatar-base/avatar-base.glb  (1198 KB)
+render   out/avatar-base/render.png  (295 ms)
+avatar-base: 26,863 triangles, 0.5 x 0.904 x 0.43 m, built in 1654 ms
+  skin                      9972 tris  (932 ms)
+  hair                      8323 tris  (734 ms)
+  undershirt                4542 tris  (267 ms)
+  pants                     1880 tris  (92 ms)
+  shoes                     2146 tris  (129 ms)
+texture  none (vertex colors)
+glb      out/avatar-base/avatar-base.glb  (1198 KB)
+sprites  out/avatar-base/sprites/preview.png  (364 ms)
+         occupied: S 52x89  SW 48x91  W 45x90  NW 48x90  N 52x88  NE 48x92  E 45x93  SE 48x91
+barrel: 14,795 triangles, 0.681 x 0.917 x 0.681 m, built in 885 ms
+  staves                    5997 tris  (373 ms)
+  hoops                     7000 tris  (461 ms)
+  lid                       1198 tris  (150 ms)
+  bung                       600 tris  (27 ms)
+texture  none (vertex colors)
+glb      out/barrel/barrel.glb  (384 KB)
+render   out/barrel/render.png  (200 ms)
+barrel: 14,795 triangles, 0.681 x 0.917 x 0.681 m, built in 768 ms
+  staves                    5997 tris  (341 ms)
+  hoops                     7000 tris  (440 ms)
+  lid                       1198 tris  (136 ms)
+  bung                       600 tris  (33 ms)
+texture  none (vertex colors)
+glb      out/barrel/barrel.glb  (384 KB)
+sprites  out/barrel/sprites/preview.png  (233 ms)
+         occupied: S 62x94  SW 60x94  W 62x94  NW 60x94  N 62x94  NE 60x94  E 62x94  SE 60x94

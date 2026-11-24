@@ -1,0 +1,38 @@
+
+ RUN  v5.1.1 /home/daniebo/Desktop/forge-worktrees/sprouts-redesign/measure/runs/chibi_sprouts_redesign_20261123/mutant-view-order
+
+ ❯ tests/render-options.validation.test.ts (2 tests | 1 failed) 3428ms
+   ❯ render validation (unknown view, asset-name validation) (2)
+     × rejects an unknown render view before the build with one error line 1696ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/render-options.validation.test.ts > render validation (unknown view, asset-name validation) > rejects an unknown render view before the build with one error line
+AssertionError: expected [ …(3) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "expected 1 error line, got 11",
++   "stack trace frames present",
++   "build outputs appeared: _flat-render-validation-3493205.glb, stats.json",
++ ]
+
+ ❯ tests/render-options.validation.test.ts:134:22
+    132|     if (/^\s*at\s/m.test(combined)) problems.push('stack trace frames …
+    133|     if (existsSync(VOUT)) problems.push(`build outputs appeared: ${sna…
+    134|     expect(problems).toEqual([]);
+       |                      ^
+    135|     rmSync(VFIXTURE, { force: true });
+    136|     created = false;
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 passed (2)
+   Start at  15:43:10
+   Duration  3.54s (tests 99%, transform 1%)
+

@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "role": "review-b",
+  "track": "chibi_sprouts_redesign_20261123",
+  "phase": "Phase 2: Green",
+  "baseline_sha": "23e551df54b7996776a4bcb9e8ccfdb9f35a6083",
+  "phase_base_sha": "23e551df54b7996776a4bcb9e8ccfdb9f35a6083",
+  "role_base_sha": "2a33c7c1c304825c3efd2dc775c99d84b22ff2f7",
+  "audited_head_sha": "2a33c7c1c304825c3efd2dc775c99d84b22ff2f7",
+  "status": "fail",
+  "summary": "The --ortho/--flat renderer options work and the test fixture is safe (wx blocks planted files and symlinks; cleanup removes only the owned file). But the asset name is never validated: a dot-dot name escapes assets/ and out/, and the new flat pass recursively deletes a pre-existing directory at the escaped path. That blocks the phase.",
+  "blocking_findings": [
+    "F1 [Blocker] review-b: Path traversal through the asset name reaches the new --flat recursive delete. src/pipeline.ts:28-34 (assetPath) validates only file existence, so `./forge render ../measure/runs/chibi_sprouts_redesign_20261123/probe-escape --fast --bg none --flat --views front-level --size 64` built and rendered an asset from outside assets/ and wrote stats.json, the GLB, and flat/front-level.png entirely outside out/ (end-to-end probe through heavy-run.sh). The new T3 code `rmSync(join(out, 'flat'), { recursive: true, force: true })` in the flat branch of src/cli/forge.ts recursively deleted a pre-existing marker.txt at the escaped path before writing the views. Writes outside out/ predate this diff (glb/stats/textures follow the same out variable), but the flat pass adds a recursive-delete primitive to the traversal, and the audit invariant 'writes stay under out/<name>/flat/' does not hold. Fix: reject asset names that contain a path separator or a dot-dot segment before assetPath and outName are computed (for example /^[A-Za-z0-9][A-Za-z0-9_-]*$/ over the raw name)."
+  ],
+  "nonblocking_findings": [
+    "F2 [Nit] review-b: tests/render-options.test.ts removes the fixture asset in afterAll but leaves out/_flat-render-pin-<pid>/ (flat PNGs, stats.json, GLB) behind, and a crash before afterAll leaves the fixture itself in assets/. Both leftovers are inert (the `_` prefix keeps the asset out of listAssets, and a stale file fails a later run closed with 'fixture path exists'), but the test should remove its out/ directory together with the fixture.",
+    "F3 [Nit] review-b: `--size` accepts any finite number through num() (src/cli/forge.ts:774-778), so `--size 1e9` reaches the canvas allocation in src/render/page.ts. This predates the diff and the run fails on allocation, but a sanity cap (for example 1..8192) would fail fast with a clear message."
+  ],
+  "evidence": [
+    "HEAD matches audited_head_sha 2a33c7c1; phase_base_sha 23e551df is its ancestor; role_base_sha recorded as HEAD.",
+    "Traversal probe (wrapped render, exit 0): a dot-dot asset name was accepted end to end; stats.json and flat/front-level.png landed in measure/runs/chibi_sprouts_redesign_20261123/probe-escape/ (outside out/), the GLB landed in a doubled-traversal path, and the pre-existing marker.txt inside the escaped flat/ directory was deleted by rmSync recursive before the views were written.",
+    "Static confirmation: join(ASSET_DIR, name + '.ts') and join(OUT_DIR, outName) normalize the dot-dot segments; assetPath checks existsSync only and has no separator or dot-dot rejection.",
+    "wx probe: writeFileSync with flag 'wx' against a planted symlink failed with EEXIST, the symlink target kept its content, and the symlink itself survived, so the test fixture cannot overwrite or follow a planted file or symlink at assets/_flat-render-pin-<pid>.ts.",
+    "Fixture cleanup audit: removeOwned() rmSyncs only FIXTURE_PATH and only when created=true, and the wx create sets created only after a successful exclusive create, so cleanup cannot delete a user file.",
+    "View names are validated against NAMED_VIEWS (src/cli/forge.ts:743-746) and the az/el custom name is built from numbers, so the flat write loop's file names cannot traverse.",
+    "Preset traversal is blocked: renderViews calls applyPreset before any write and throws for a name not in variants.presets (src/render/page.ts:207-213,416).",
+    "The diff adds no process.env reads, no fetch/network calls, and no eval; asset loading is the pre-existing ssrLoadModule of a path that passed the existence check.",
+    "useFlatMaterials swaps materials and restores them plus the ground in a finally block (src/render/page.ts:49-74, 430-463), so a failed render leaves the page state intact.",
+    "A2 not applicable: no draft-to-published status flip exists in this track's surface.",
+    "A6: measure/tracks.md claims no resolved security state for this track; the scanner pin refresh binds the real lines 331, 531, and 538 of src/render/page.ts (verified by sed), matching review-a's wrapped green run of tests/apk3d/no-unpolyfilled-builtins.test.ts.",
+    "No secret or home path appears in render outputs: stats.json holds name/bounds/triangle counts; console output prints cwd-relative paths.",
+    "All probes ran through heavy-run.sh with HEAVY_MIN_AVAIL_MB=1500; every probe artifact was removed; the only running heavy jobs belong to review-a (REVIEW_P4_OWNER=review-a-0849215); nothing of this review is left running."
+  ],
+  "commands": [
+    "git -C <worktree> rev-parse HEAD; git log --oneline 23e551df..HEAD; git diff 23e551df..HEAD --stat",
+    "git diff 23e551df..HEAD -- src/cli/forge.ts src/render/page.ts (manual inspection of the flat branch, view validation, num, writePng)",
+    "node path-math probe reproducing assetPath/out/flatDir resolution for a dot-dot name",
+    "Wrapped ./forge render ../measure/runs/chibi_sprouts_redesign_20261123/probe-escape --fast --bg none --flat --views front-level --size 64 (exit 0; writes and the marker deletion verified)",
+    "node wx probe: writeFileSync flag 'wx' against a planted symlink (EEXIST, target untouched)",
+    "sed -n 331p,531p,538p src/render/page.ts (scanner pin check); grep for process.env/fetch/eval in the diff (none)"
+  ],
+  "changed_files": [
+    "measure/generated/status.md",
+    "measure/tracks.md",
+    "measure/tracks/chibi_sprouts_redesign_20261123/metadata.json",
+    "measure/tracks/chibi_sprouts_redesign_20261123/plan.md",
+    "src/cli/forge.ts",
+    "src/render/page.ts",
+    "tests/apk3d/no-unpolyfilled-builtins.test.ts",
+    "tests/render-options.test.ts",
+    "tests/sprout-base.test.ts",
+    "tests/sprout-gesture-offset.test.ts",
+    "tests/sprout-gestures.test.ts"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "retry_implementation",
+  "confidence": "high",
+  "route": "kimi-code-plan-cn/kimi-for-coding",
+  "ratings": [
+    {"axis": "correctness", "score": 3, "evidence": "The flat pixel contract and material restore pass, but a dot-dot asset name writes outside out/ and the new flat rmSync deletes there (probe run, exit 0)."},
+    {"axis": "test_meaning", "score": 3, "evidence": "tests/render-options.test.ts holds 8 real behaviour cases with failing-first evidence, but no case covers a traversal name (tests/render-options.test.ts:108-220)."},
+    {"axis": "scope_discipline", "score": 4, "evidence": "c69a5b73 stays on the two source files plus a recorded scanner pin refresh and Prettier reflow; plan.md documents both."},
+    {"axis": "evidence_quality", "score": 4, "evidence": "Plan evidence lists wrapped commands and hashes, and each of my findings carries a probe command result or a file:line."}
+  ]
+}

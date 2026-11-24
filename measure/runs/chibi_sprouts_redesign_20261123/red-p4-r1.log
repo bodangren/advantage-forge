@@ -1,0 +1,21 @@
+MEASURE_AGENT_RESULT
+track: chibi_sprouts_redesign_20261123
+phase: Phase 4: Green (T6/T7 remediation round 1, Red test side)
+role: measure-mid-red
+phase_base_sha: 28ff79903552f5d8c2a8bf118775ee1dab7eb514
+role_base_sha: 0d4ff3364f6dcd0a924151599e34fb8d0114197a
+resulting_head_sha: b0a7caada1582335db124b3729a6cd00ecd2cf25
+commits:
+- 2c774c62ac04f6026b83bd240f5e45abe03feb96 measure(chibi_sprouts_redesign): T6r Red round 1 cases (load order, strict rows, asset name, corrupt GLB) (tests only: sprout-mom-kim.validation.test.ts)
+- ba8712f1d77855015188b01f6347e58a4517ea80 measure(chibi_sprouts_redesign): Phase 4 records T6r Red 2c774c62 and T6r remediation (plan only)
+- b0a7caada1582335db124b3729a6cd00ecd2cf25 measure(chibi_sprouts_redesign): refresh generated facts for T6r Red (measure bookkeeping only; run files not committed)
+dirty_paths: none tracked; pre-existing untracked run logs and assets/wizard-argon-trial.ts preserved, not committed; no temp fixtures left (all /tmp probe dirs, temp assets, markers, and out dirs removed by the tests)
+fail-first Red run: node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-mom-kim.validation.test.ts exits 1 with 18 failed and 1 passed of 19 cases; the valid eleven rows still pass
+failing cases and their named reasons:
+- load order (F1): the asset import ran before the render check is false; the temp asset exists with its GLB but the missing flat render error fires before any import; a manual traversal probe on the current source confirms the same order (missing render named, no import marker written)
+- checkRows strict table (F2, 10 cases): empty table, missing legShare, duplicate eyeLine, unknown extra-row, numeric string '3.6', NaN, Infinity, null, undefined, and legShare -0.1 each fail to produce their exact named failure (current code returns [] or a range message): `checkRows: expected 11 rows, found 0`, `checkRows: missing row legShare`, `checkRows: duplicate row eyeLine`, `checkRows: unknown row extra-row`, `FAIL heightInHeads: not a number`, `FAIL wrist: not a number`, `FAIL armToTorso: not finite`, `FAIL spacingHead: not a number`, `FAIL eyeLine: not a number`, `FAIL legShare: negative`
+- asset name validation (N1, 6 cases): ../x, a/b, a\b, and /tmp/x each exit 1 with two lines and no Invalid asset name phrase; empty name exits 1 with the usage line; the traversal to a /tmp module exits 1 with two lines and would run the outside module (review-b probe executed it); all must exit 1 with ONE line naming Invalid asset name (empty: the required-name error) and import nothing
+- corrupt GLB (N3): the truncated GLB exits 1 with a multi-line RangeError stack naming no GLB contract; it must exit 1 with ONE line naming the GLB, no stack frames, no hang, and no measure.json write (verified byte-identical before and after)
+gates: prettier --check exits 0 on the new test file and plan.md; tsc --noEmit reports no error in the new test file (51 pre-existing errors stay); the existing suites stay green (sprout-mom-kim, preset-colour, render-options: 3 files, 42 passed)
+status: blocked_reason=none; T6r Red test work is done, T6r Green owns the source fix
+END_MEASURE_AGENT_RESULT

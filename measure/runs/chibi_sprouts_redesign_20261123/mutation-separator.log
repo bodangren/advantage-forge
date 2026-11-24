@@ -1,0 +1,38 @@
+
+ RUN  v5.1.1 /home/daniebo/Desktop/forge-worktrees/sprouts-redesign/measure/runs/chibi_sprouts_redesign_20261123/mutant-separator
+
+ ❯ tests/render-options.validation.test.ts (2 tests | 1 failed) 3541ms
+   ❯ render validation (unknown view, asset-name validation) (2)
+     × rejects an asset name with a path separator before any path is computed 2588ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/render-options.validation.test.ts > render validation (unknown view, asset-name validation) > rejects an asset name with a path separator before any path is computed
+AssertionError: expected [ …(3) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "traversal: expected 1 error line, got 6",
++   "traversal: stack trace frames present",
++   "traversal: output path created outside out/",
++ ]
+
+ ❯ tests/render-options.validation.test.ts:174:24
+    172|       checkRun('traversal', `render ${ESCAPE_NAME} --fast --bg none --…
+    173|       checkRun('separator', `render a/b --fast --bg none --size 64`);
+    174|       expect(problems).toEqual([]);
+       |                        ^
+    175|     } finally {
+    176|       rmSync(PROBE_DIR, { recursive: true, force: true });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 passed (2)
+   Start at  15:43:25
+   Duration  3.67s (tests 99%, transform 1%)
+

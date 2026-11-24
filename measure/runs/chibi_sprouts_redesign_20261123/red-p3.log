@@ -1,0 +1,18 @@
+MEASURE_AGENT_RESULT
+track: chibi_sprouts_redesign_20261123
+phase: Phase 3: Red
+role: measure-mid-red
+phase_base_sha: 28ff79903552f5d8c2a8bf118775ee1dab7eb514
+role_base_sha: 28ff79903552f5d8c2a8bf118775ee1dab7eb514
+resulting_head_sha: 0540e6ce7e04216e375f0e2b1db129fbad2e8fbc
+commits:
+- ba884846a82f9addfe7ee9ae46c4d992e56e5db4 measure(chibi_sprouts_redesign): T4/T5 Red pin the measurement and sheet contracts (tests only: sprout-mom-kim.test.ts, mom-kim-sheet.test.ts)
+- ef49fb7024d3a0e8013744be79faa78051bab043 measure(chibi_sprouts_redesign): Phase 3 records T4/T5 Red ba884846 (plan only)
+- 0540e6ce7e04216e375f0e2b1db129fbad2e8fbc measure(chibi_sprouts_redesign): refresh generated facts for T4/T5 Red (measure bookkeeping only; run files not committed)
+dirty_paths: none tracked; pre-existing untracked run logs and assets/wizard-argon-trial.ts preserved, not committed
+T4: vitest run tests/sprout-mom-kim.test.ts exits 1 with 28 failed and 1 passed of 29 cases. The AC1 skip guard passes (3 reason comments, hero describe, 3 hero names, 4 skip titles). Every other case fails inside the case: pure cases on Cannot find module scripts/proportion-check.mjs from the in-case dynamic import through a variable file URL (no static import, no collection error); tsx cases on the missing script file. File holds 29 cases: skip guard, level and orthographic proof, pass table, eleven doctored rows, five synthetic figures, four synthetic palm cases, three hand-edge cases, side sign guard, real-hand case, end-to-end case.
+T5: vitest run tests/mom-kim-sheet.test.ts exits 1 with 8 failed of 8 cases. Every case fails inside the case on Cannot find module scripts/mom-kim-sheet.mjs from the in-case tsx spawn. File holds 8 cases: run outputs, sheet size, two rows, no-side-drawing cell, baseline and 700 px scale, lit row sources, caption strip, two-cell mom-panel.
+synthetic fixture body (spec verbatim): palm box x 0.150-0.190, y 0.450-0.520, z 0.030-0.090; thumb box x 0.170-0.190, y 0.495-0.505, z 0.090-0.115; fingers box x 0.155-0.185, y 0.430-0.450, z 0.035-0.085; 16x16 quads per face with outward winding, over 200 vertices; palmCentre [0.150, centroid y, centroid z], thumbTip [0.190, 0.500, 0.115], fingerTip [0.170, 0.430, 0.060].
+gates: prettier --check exits 0 on both test files and plan.md; tsc --noEmit reports no error in the new files (51 pre-existing errors stay); no fixture, render, or server leftovers from these runs
+status: blocked_reason=none; T4 and T5 Red work is done, T6/T8 Green own the scripts
+END_MEASURE_AGENT_RESULT

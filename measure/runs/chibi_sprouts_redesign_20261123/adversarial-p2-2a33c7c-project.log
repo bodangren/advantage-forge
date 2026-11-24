@@ -1,0 +1,325 @@
+
+ RUN  v5.1.1 /home/daniebo/Desktop/forge-worktrees/sprouts-redesign
+
+ ❯ tests/storytime-u2-family-words.test.ts (17 tests | 2 failed) 117ms
+   ❯ the unit 2 app family-word specs (U2FW) (6)
+     × U2FW4 holds at most 10 references, and every reference file exists 4ms
+     × U2FW5 names Sam and both feet off the ground for the jump word 1ms
+ ❯ tests/storytime-u2-specs.test.ts (20 tests | 2 failed) 43ms
+   ❯ unit 2 Muse specs (20)
+     × FR-3: every reference exists, or is the output of a drafted element spec 5ms
+     × FR-6: every reuse row names a source that exists 0ms
+ ❯ tests/storytime-family-word-specs.test.ts (13 tests | 1 failed) 29ms
+   ❯ storytime family-word specs (FS) (13)
+     × FS5 pins each reference set to an existing file in the repository 6ms
+ ❯ tests/storytime-card-specs.test.ts (10 tests | 1 failed) 24ms
+   ❯ storytime card specs (CS) (10)
+     × CS6 pins each card reference set to an existing in-repository file 4ms
+ ❯ tests/storytime-cover-specs.test.ts (10 tests | 1 failed) 13ms
+   ❯ the cover spec (CS4 to CS8) (5)
+     × CS5 holds 7 references, every file exists, and no file of the avoid folder is a reference 6ms
+ ❯ tests/old-browser/adversarial-check.test.ts (1 test | 1 failed) 7ms
+   × does not count a harness-only score mutation as a player action 6ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 8 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/storytime-card-specs.test.ts > storytime card specs (CS) > CS6 pins each card reference set to an existing in-repository file
+AssertionError: missing reference out/storytime/l2/unit1/w01/muse/elements/nan-ref-clean-face-crop.png: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-card-specs.test.ts:114:66
+    112|         const resolved = path.resolve(ROOT, ref);
+    113|         expect(resolved.startsWith(`${ROOT}${path.sep}`), ref).toBe(tr…
+    114|         expect(existsSync(resolved), `missing reference ${ref}`).toBe(…
+       |                                                                  ^
+    115|       }
+    116|     }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/14]⎯
+
+ FAIL  tests/storytime-cover-specs.test.ts > the cover spec (CS4 to CS8) > CS5 holds 7 references, every file exists, and no file of the avoid folder is a reference
+AssertionError: out/storytime/covers/teacher-front/refs/style-student-front-final.jpg: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-cover-specs.test.ts:143:68
+    141|     expect(references[6]).toBe('out/storytime-review/judge/cast/sam.pn…
+    142|     for (const reference of references) {
+    143|       expect.soft(existsSync(resolve(REPO, reference)), reference).toB…
+       |                                                                    ^
+    144|       expect.soft(reference.includes('/avoid/'), reference).toBe(false…
+    145|     }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/14]⎯
+
+ FAIL  tests/storytime-cover-specs.test.ts > the cover spec (CS4 to CS8) > CS5 holds 7 references, every file exists, and no file of the avoid folder is a reference
+AssertionError: out/storytime/covers/teacher-front/refs/cast-teacher-kim.png: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-cover-specs.test.ts:143:68
+    141|     expect(references[6]).toBe('out/storytime-review/judge/cast/sam.pn…
+    142|     for (const reference of references) {
+    143|       expect.soft(existsSync(resolve(REPO, reference)), reference).toB…
+       |                                                                    ^
+    144|       expect.soft(reference.includes('/avoid/'), reference).toBe(false…
+    145|     }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/14]⎯
+
+ FAIL  tests/storytime-cover-specs.test.ts > the cover spec (CS4 to CS8) > CS5 holds 7 references, every file exists, and no file of the avoid folder is a reference
+AssertionError: out/storytime/covers/teacher-front/refs/cast-nan.png: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-cover-specs.test.ts:143:68
+    141|     expect(references[6]).toBe('out/storytime-review/judge/cast/sam.pn…
+    142|     for (const reference of references) {
+    143|       expect.soft(existsSync(resolve(REPO, reference)), reference).toB…
+       |                                                                    ^
+    144|       expect.soft(reference.includes('/avoid/'), reference).toBe(false…
+    145|     }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/14]⎯
+
+ FAIL  tests/storytime-cover-specs.test.ts > the cover spec (CS4 to CS8) > CS5 holds 7 references, every file exists, and no file of the avoid folder is a reference
+AssertionError: out/storytime/covers/teacher-front/refs/cast-sam.png: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-cover-specs.test.ts:143:68
+    141|     expect(references[6]).toBe('out/storytime-review/judge/cast/sam.pn…
+    142|     for (const reference of references) {
+    143|       expect.soft(existsSync(resolve(REPO, reference)), reference).toB…
+       |                                                                    ^
+    144|       expect.soft(reference.includes('/avoid/'), reference).toBe(false…
+    145|     }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/14]⎯
+
+ FAIL  tests/storytime-cover-specs.test.ts > the cover spec (CS4 to CS8) > CS5 holds 7 references, every file exists, and no file of the avoid folder is a reference
+AssertionError: out/storytime-review/judge/cast/teacher-kim.png: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-cover-specs.test.ts:143:68
+    141|     expect(references[6]).toBe('out/storytime-review/judge/cast/sam.pn…
+    142|     for (const reference of references) {
+    143|       expect.soft(existsSync(resolve(REPO, reference)), reference).toB…
+       |                                                                    ^
+    144|       expect.soft(reference.includes('/avoid/'), reference).toBe(false…
+    145|     }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/14]⎯
+
+ FAIL  tests/storytime-cover-specs.test.ts > the cover spec (CS4 to CS8) > CS5 holds 7 references, every file exists, and no file of the avoid folder is a reference
+AssertionError: out/storytime-review/judge/cast/nan.png: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-cover-specs.test.ts:143:68
+    141|     expect(references[6]).toBe('out/storytime-review/judge/cast/sam.pn…
+    142|     for (const reference of references) {
+    143|       expect.soft(existsSync(resolve(REPO, reference)), reference).toB…
+       |                                                                    ^
+    144|       expect.soft(reference.includes('/avoid/'), reference).toBe(false…
+    145|     }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/14]⎯
+
+ FAIL  tests/storytime-cover-specs.test.ts > the cover spec (CS4 to CS8) > CS5 holds 7 references, every file exists, and no file of the avoid folder is a reference
+AssertionError: out/storytime-review/judge/cast/sam.png: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-cover-specs.test.ts:143:68
+    141|     expect(references[6]).toBe('out/storytime-review/judge/cast/sam.pn…
+    142|     for (const reference of references) {
+    143|       expect.soft(existsSync(resolve(REPO, reference)), reference).toB…
+       |                                                                    ^
+    144|       expect.soft(reference.includes('/avoid/'), reference).toBe(false…
+    145|     }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/14]⎯
+
+ FAIL  tests/storytime-family-word-specs.test.ts > storytime family-word specs (FS) > FS5 pins each reference set to an existing file in the repository
+AssertionError: FS5 missing reference files: expected [ …(24) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "out/storytime-review/batch-22/sprout-pat-render.png",
++   "out/storytime/l2/unit1/w01/muse/elements/nan-ref-clean-face-crop.png",
++   "out/storytime/l2/unit1/w01/muse/elements/nan-ref-clean-look-reference.png",
++   "out/storytime/l2/unit1/w01/muse/elements/nan-ref-clean-face-crop.png",
++   "out/storytime/l2/unit1/w01/muse/elements/nan-ref-clean-look-reference.png",
++   "out/storytime-review/batch-22/sprout-pat-render.png",
++   "out/storytime/l2/unit1/w01/muse/elements/nan-ref-clean-face-crop.png",
++   "out/storytime/l2/unit1/w01/muse/elements/nan-ref-clean-look-reference.png",
++   "out/storytime-review/batch-22/sprout-pat-render.png",
++   "out/storytime/l2/unit1/w01/muse/elements/nan-ref-clean-face-crop.png",
++   "out/storytime/l2/unit1/w01/muse/elements/nan-ref-clean-look-reference.png",
++   "out/storytime-review/batch-22/sprout-pat-render.png",
++   "out/storytime/l2/unit1/w01/muse/elements/nan-ref-clean-face-crop.png",
++   "out/storytime/l2/unit1/w01/muse/elements/nan-ref-clean-look-reference.png",
++   "out/cat/views/three-quarter.png",
++   "out/dog/views/three-quarter.png",
++   "out/storytime/l2/unit1/w06/muse/elements/prop-blue-bird-sheet-m1-color.png",
++   "out/fish/views/side.png",
++   "out/frog/views/three-quarter.png",
++   "out/storytime/l2/unit1/w02/muse/elements/prop-ducks-sheet-m1-color.png",
++   "out/storytime/l2/unit1/w06/muse/elements/prop-white-horse-sheet-m1-color.png",
++   "out/storytime/l2/unit1/w07/muse/elements/prop-toys-sheet-m1-color.png",
++   "out/storytime/l2/unit1/w07/muse/elements/prop-toys-sheet-m1-color.png",
++   "out/storytime/l2/unit1/w07/muse/elements/prop-toys-sheet-m1-color.png",
++ ]
+
+ ❯ tests/storytime-family-word-specs.test.ts:246:52
+    244|       }
+    245|     }
+    246|     expect(missing, 'FS5 missing reference files').toEqual([]);
+       |                                                    ^
+    247|   });
+    248|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/14]⎯
+
+ FAIL  tests/storytime-u2-family-words.test.ts > the unit 2 app family-word specs (U2FW) > U2FW4 holds at most 10 references, and every reference file exists
+AssertionError: l2-w09-family-milk names the missing file out/storytime/l2/unit1/w04/muse/elements/prop-milk-sheet-m1-color.png: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-u2-family-words.test.ts:229:99
+    227|       for (const reference of references) {
+    228|         expect(typeof reference).toBe('string');
+    229|         expect(existsSync(resolve(REPO, reference)), `${id} names the …
+       |                                                                                                   ^
+    230|       }
+    231|     }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/14]⎯
+
+ FAIL  tests/storytime-u2-family-words.test.ts > the unit 2 app family-word specs (U2FW) > U2FW5 names Sam and both feet off the ground for the jump word
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-u2-family-words.test.ts:240:60
+    238|     expect(jump.colorPrompt).toContain('both feet off the ground');
+    239|     expect(jump.references).toEqual(['out/storytime/l2/unit1/w05/muse/…
+    240|     expect(existsSync(resolve(REPO, jump.references[0]!))).toBe(true);
+       |                                                            ^
+    241|   });
+    242|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/14]⎯
+
+ FAIL  tests/storytime-u2-specs.test.ts > unit 2 Muse specs > FR-3: every reference exists, or is the output of a drafted element spec
+AssertionError: l2-w09-story-page-i-like-rice-yum -> out/storytime/l2/unit1/w05/muse/elements/sam-ref-render.png: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-u2-specs.test.ts:47:44
+     45|       for (const ref of spec.references) {
+     46|         const ok = existsSync(resolve(REPO, ref)) || elementOutputs.ha…
+     47|         expect(ok, `${spec.id} -> ${ref}`).toBe(true);
+       |                                            ^
+     48|       }
+     49|     }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/14]⎯
+
+ FAIL  tests/storytime-u2-specs.test.ts > unit 2 Muse specs > FR-6: every reuse row names a source that exists
+AssertionError: l2-w09-check-row-dog: out/storytime/l2/unit1/w06/delivery-muse-v1/l2-w06-check-row-dog-v1.png: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/storytime-u2-specs.test.ts:264:93
+    262|     for (const { row } of specs) {
+    263|       if (!row.reuse) continue;
+    264|       expect(existsSync(resolve(REPO, row.reuse.source)), `${row.id}: …
+       |                                                                                             ^
+    265|     }
+    266|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/14]⎯
+
+ FAIL  tests/old-browser/adversarial-check.test.ts > does not count a harness-only score mutation as a player action
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ tests/old-browser/adversarial-check.test.ts:42:48
+     40|
+     41|   expect(acceptedAction(before, after, true)).toBe(true);
+     42|   expect(acceptedAction(before, after, false)).toBe(false);
+       |                                                ^
+     43| });
+     44|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/14]⎯
+
+
+ Test Files  6 failed | 224 passed | 3 skipped (233)
+      Tests  8 failed | 3384 passed | 25 skipped (3417)
+   Start at  12:40:14
+   Duration  85.57s (tests 74%, import 21%, transform 4%, worker 1%)
+
+    Isolate  233 workers spawned · ~69ms startup each (spawn + environment, per file)
+             at least ~16.11s faster with isolate: false — reuses workers across files instead of one per file
+

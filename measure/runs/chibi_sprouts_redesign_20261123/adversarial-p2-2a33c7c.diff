@@ -1,0 +1,1504 @@
+diff --git a/measure/generated/status.md b/measure/generated/status.md
+index 76501a08..703b3cbe 100644
+--- a/measure/generated/status.md
++++ b/measure/generated/status.md
+@@ -1,7 +1,7 @@
+ # Measure status
+ 
+ Tracks: 78.
+-Tracks by status: new: 28; in_progress: 49; completed: 1.
++Tracks by status: new: 27; in_progress: 50; completed: 1.
+ Tracks by workstream: assets: 34; games: 41; foundation: 3.
+ 
+ | Track | Status | Workstream | Plan tasks | Estimate | Actual |
+@@ -22,7 +22,7 @@ Tracks by workstream: assets: 34; games: 41; foundation: 3.
+ | [asset_scenes_wilderness_20260928](../tracks/asset_scenes_wilderness_20260928/) | in_progress | assets | 0/9 | 9 | — |
+ | [audio_sfx_library_20261013](../tracks/audio_sfx_library_20261013/) | in_progress | assets | 18/19 | 12 | — |
+ | [audio_sources_expand_20261014](../tracks/audio_sources_expand_20261014/) | in_progress | assets | 7/11 | 10 | — |
+-| [chibi_sprouts_redesign_20261123](../tracks/chibi_sprouts_redesign_20261123/) | new | assets | 0/14 | 14 | — |
++| [chibi_sprouts_redesign_20261123](../tracks/chibi_sprouts_redesign_20261123/) | in_progress | assets | 3/14 | 14 | — |
+ | [game_2d_parity_20260928](../tracks/game_2d_parity_20260928/) | new | games | 0/5 | 5 | — |
+ | [game_abyssal_well_20260928](../tracks/game_abyssal_well_20260928/) | in_progress | games | 6/8 | 8 | — |
+ | [game_alchemists_synthesis_20260928](../tracks/game_alchemists_synthesis_20260928/) | in_progress | games | 6/8 | 8 | — |
+diff --git a/measure/tracks.md b/measure/tracks.md
+index d698567d..a9630106 100644
+--- a/measure/tracks.md
++++ b/measure/tracks.md
+@@ -70,7 +70,7 @@ This registry gives each historical, current, and planned work item one Measure
+ - [~] **Track: Chibi Sprouts, release 1 art**
+   *Link: [./tracks/asset_chibi_sprouts_r1_20261022/](./tracks/asset_chibi_sprouts_r1_20261022/)*
+ 
+-- [ ] **Track: Chibi Sprouts: new adult base on Teacher Kim, with Mom as the first trial**
++- [~] **Track: Chibi Sprouts: new adult base on Teacher Kim, with Mom as the first trial**
+   *Link: [./tracks/chibi_sprouts_redesign_20261123/](./tracks/chibi_sprouts_redesign_20261123/)*
+ 
+ ## Games
+diff --git a/measure/tracks/chibi_sprouts_redesign_20261123/metadata.json b/measure/tracks/chibi_sprouts_redesign_20261123/metadata.json
+index 6cbe9420..7ad54e98 100644
+--- a/measure/tracks/chibi_sprouts_redesign_20261123/metadata.json
++++ b/measure/tracks/chibi_sprouts_redesign_20261123/metadata.json
+@@ -1,9 +1,9 @@
+ {
+   "track_id": "chibi_sprouts_redesign_20261123",
+   "type": "feature",
+-  "status": "new",
++  "status": "in_progress",
+   "created_at": "2026-11-23T00:00:00Z",
+-  "updated_at": "2026-11-23T00:00:00Z",
++  "updated_at": "2026-11-23T04:01:34Z",
+   "description": "Chibi Sprouts redesign: one new SDF adult base on Teacher Kim's measured proportions, with Mom as the first trial, a numeric proportion check over a level orthographic render, an independent look judge, and a PM stop before the song cut-out and the 128 px sprite",
+   "estimated_tasks": 14,
+   "actual_tasks": null,
+diff --git a/measure/tracks/chibi_sprouts_redesign_20261123/plan.md b/measure/tracks/chibi_sprouts_redesign_20261123/plan.md
+index 0de0a8f4..3f559c75 100644
+--- a/measure/tracks/chibi_sprouts_redesign_20261123/plan.md
++++ b/measure/tracks/chibi_sprouts_redesign_20261123/plan.md
+@@ -98,9 +98,14 @@ Every task brief in this plan carries these lines:
+ 
+ ## Phase 1: Red
+ 
+-- [ ] T1 Red: Skip the scrapped contract tests with the scrap reason, and keep the hero assertions
++- [x] T1 Red (tests 4c8dded7): Skip the scrapped contract tests with the scrap reason, and keep the hero assertions
+       active. Files: `tests/sprout-base.test.ts`, `tests/sprout-gestures.test.ts`,
+       `tests/sprout-gesture-offset.test.ts`.
++  - Evidence 2026-11-23: baseline pre-edit exits 0 with 3 files and 15 passed tests. Post-edit the
++    same command exits 0 with 3 files and 3 passed plus 15 skipped tests. `grep -c
++'describe.skip('` gives 1, 1, 2; `grep -c 'hero clip contracts'` gives 1. The AC1 guard (3
++    reason comments, hero describe, 3 hero names, 4 skip titles) fails on the unedited files and
++    passes after the edit. `prettier --check` exits 0 on the three files.
+   - `tests/sprout-base.test.ts`: the one describe becomes `describe.skip` with the title suffix
+     ` — sprout base scrapped 2026-11-23 (Daniel)`. Two tests skip:
+     `has the bone names, clip names, and equip sockets of the avatar base` and
+@@ -130,7 +135,16 @@ Every task brief in this plan carries these lines:
+   - Note: the three files pass before the skip. The skip retires a contract of the scrapped base; it
+     does not repair a failure.
+ 
+-- [ ] T2 Red: Pin the renderer options with a behaviour test. File: `tests/render-options.test.ts`.
++- [x] T2 Red (tests d02c8fa9): Pin the renderer options with a behaviour test. File: `tests/render-options.test.ts`.
++  - Evidence 2026-11-23: `vitest run tests/render-options.test.ts` exits 1 with 8 failed cases.
++    Failure text: `Unknown option '--ortho'`, `Unknown view 'front-level'`, and the missing
++    `out/_flat-render-pin-<pid>/flat/` PNGs. No syntax error, no collection error, no missing
++    module. `git status --porcelain tests/ assets/` shows the test file alone (plus the unrelated
++    pre-existing `assets/wizard-argon-trial.ts`). `prettier --check` exits 0; `tsc --noEmit`
++    reports no error in the new file (51 pre-existing errors stay). Fixture: one box
++    0.40 x 1.00 x 0.20 m with a 0.05 m block at +Z, created with the `wx` flag at the unique
++    per-run path `assets/_flat-render-pin-<pid>.ts`; an ownership flag gates removal in
++    `finally`; a pre-created path fails with `fixture path exists: <path>` and stays untouched.
+   - The test writes a pin asset to a unique per-run path, `assets/_flat-render-pin-<pid>.ts`, where
+     `<pid>` is the process id of the test run. It creates the file with the exclusive flag `wx`, so
+     it never overwrites an existing file. The test sets an ownership flag `created = true` only after
+@@ -160,7 +174,9 @@ Every task brief in this plan carries these lines:
+ 
+ ## Phase 2: Green
+ 
+-- [ ] T3 Green: Add the renderer options. Files: `src/cli/forge.ts`, `src/render/page.ts`.
++- [x] T3 Green (src c69a5b73): Add the renderer options. Files: `src/cli/forge.ts`,
++      `src/render/page.ts`, and `tests/apk3d/no-unpolyfilled-builtins.test.ts` (the line numbers
++      it pins, see the note below).
+   - `src/render/page.ts` exports `ORTHO_MARGIN = 1.10`, `orthoFrame(bounds, size)` (it returns
+     `{ left, right, top, bottom, pixelsPerMetre }` from decision (f)), and
+     `useFlatMaterials(root)` (it swaps each mesh material for a
+@@ -181,6 +197,62 @@ Every task brief in this plan carries these lines:
+     - `prettier --check` exits 0 on the two changed files.
+   - Record: the exported symbols, the option names, the test run, and the render of the existing
+     asset that shows no change.
++  - Evidence 2026-11-23 (Green model `minimax-cn-coding-plan/MiniMax-M3.1-Flash`, family MiniMax;
++    the Red model of this track was `opencode-go/muse-spark-1.3-contributor`, family muse, so the
++    two families differ). Every command below ran through
++    `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '<cmd>'`.
++  - The exported symbols in `src/render/page.ts`: `ORTHO_MARGIN` (1.1, the value 1.10 of decision
++    (f)), `orthoFrame(bounds, size)` (it returns `{ left, right, top, bottom, pixelsPerMetre }`),
++    and `useFlatMaterials(root)` (it returns the restore function). `ViewsRequest` gains
++    `readonly ortho?: boolean` and `readonly flat?: boolean`.
++  - The option names in `src/cli/forge.ts`: `--ortho` and `--flat`, plus the named views
++    `front-level` (azimuth 0, elevation 0) and `side-level` (azimuth 90, elevation 0). `--flat`
++    writes `out/<name>/flat/<view>.png`, leaves `views/` alone, writes no sheet, and is refused
++    without `--fast` and `--bg none` with the message `--flat needs --fast and --bg none`.
++  - The T2 Red command now exits 0 with 8 cases:
++    `node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/render-options.test.ts` gave
++    `Test Files 1 passed (1)` and `Tests 8 passed (8)`. The eight cases are the eight of the T2
++    evidence above: the two flat views at 256 x 256, the transparent corner, the body colour, the
++    block colour, the two view heights, the side block left of centre, the named view without
++    `--ortho` with the refused `--flat`, and the fixture ownership.
++  - The flat pixel contract holds on the pin asset. The read values of
++    `out/_flat-render-pin-<pid>/flat/front-level.png` are: the corner pixel `[0, 0, 0, 0]`, the
++    centre pixel `[63, 143, 208, 255]` (the body hex `#3f8fd0`), and the block pixel
++    `[224, 160, 48, 255]` (the block hex `#e0a030`). The side view holds the block in columns
++    99 to 109, so the block sits 29 px left of the centre, above the required 4.65 px
++    (`0.02` m times `ppm = 256 / 1.1`). Decision (j) holds: `Studio.aim` puts the azimuth-90
++    camera at +X, and the frame gives `u = (cz - z) * ppm + W / 2`.
++  - The other gates, each through the runner:
++    - `node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-base.test.ts
++tests/sprout-gestures.test.ts tests/sprout-gesture-offset.test.ts` exits 0 with
++      `Tests 3 passed | 15 skipped (18)`.
++    - The render-related existing tests exit 0: `tests/cutout.test.ts`, `tests/asset.test.ts`,
++      `tests/equip.test.ts`, `tests/part.test.ts`, `tests/variants.test.ts`,
++      `tests/preset-colour.test.ts`, `tests/clip-check.test.ts`, `tests/song-still-hook.test.ts`,
++      `tests/rig.test.ts`, `tests/apk3d/renderer-setting.test.ts`,
++      `tests/apk3d/no-unpolyfilled-builtins.test.ts`, and `tests/storytime-line-art-pass.test.ts`
++      gave `Test Files 12 passed (12)` and `Tests 73 passed (73)`.
++    - `node node_modules/typescript/bin/tsc --noEmit` exits 2 with the 51 baseline errors of
++      TD-35 to TD-39. The same 13 files fail as before the change, and no error names the two
++      changed source files or the refreshed test file.
++    - `node_modules/.bin/prettier --check src/cli/forge.ts src/render/page.ts
++tests/apk3d/no-unpolyfilled-builtins.test.ts` exits 0.
++  - The existing render output stays byte-identical. The renderer was run twice through the
++    runner on `sprout-pip`: once at the base commit and once with the new code. The SHA-256 sums
++    of `out/sprout-pip/render.png` and the four views match in both runs
++    (`render.png` `7efc9c27...`, `views/front.png` `c5746f41...`, `views/side.png` `172a6ff4...`,
++    `views/three-quarter.png` `d3d585e3...`, `views/back.png` `a830755b...`). The sprite set
++    matches too (ten PNG files plus `metrics.json`).
++  - Note on the format: the two source files were not Prettier-clean at the base commit
++    (`.prettierrc.json` sets `printWidth` 110; the base files were written at a wider width).
++    `prettier --write` reflowed the pre-existing lines of both files. The reflow changes line
++    breaks only. The byte-identical renders above show that no behaviour changed.
++  - Note on the apk3d test: `tests/apk3d/no-unpolyfilled-builtins.test.ts` binds three
++    `Box3.union` false positives to the line numbers 263, 440, and 447 of `src/render/page.ts`,
++    and it fails when those numbers rot. The new renderer code moved the three calls to lines
++    331, 531, and 538. The test now binds those three numbers. The bound source text, the
++    labels, the reasons, and the three rot cases are unchanged. The file is outside the file list
++    of this task, and the change is the refresh the test asks for when the scanned file moves.
+ 
+ ## Phase 3: Red
+ 
+diff --git a/src/cli/forge.ts b/src/cli/forge.ts
+index 9afb602e..5fd3225a 100644
+--- a/src/cli/forge.ts
++++ b/src/cli/forge.ts
+@@ -42,11 +42,16 @@ const HELP = `forge — build and look at 3D assets
+ 
+ render options
+   --views front,three-quarter,side,back,top,back-three-quarter  (default: first four)
++  --views front-level,side-level   level views (no tilt): the camera looks straight at the asset
+   --size 512           pixels per view
+   --ref / --no-ref     show the asset's reference image above the views (default: on if set)
+   --focus x,y,z,r      zoom every view on a sphere (world meters), e.g. the face
+   --az 30 --el 10      add one custom view
+   --bg '#aeb3ba'       background color; none = transparent views (the ground shadow stays, semi-transparent)
++  --ortho              level orthographic frame: one scale (pixels per meter) for every view
++  --flat               the flat pass: every mesh unlit in its own colour, no ground, no tone
++                       mapping; writes out/<name>/flat/<view>.png and leaves views/ alone
++                       (needs --fast and --bg none)
+ 
+ sprite options
+   --size 128  --dirs 8|4|1  --elevation 30  --colors 0 (palette size, 0 = full color)
+@@ -103,6 +108,9 @@ const NAMED_VIEWS: Record<string, Omit<ViewSpec, 'name' | 'focus'>> = {
+   back: { azimuth: 180, elevation: 8 },
+   'back-three-quarter': { azimuth: 215, elevation: 12 },
+   top: { azimuth: 25, elevation: 55 },
++  // Level views: no tilt, for a measured comparison between the front and the side.
++  'front-level': { azimuth: 0, elevation: 0 },
++  'side-level': { azimuth: 90, elevation: 0 },
+ };
+ 
+ const T0 = performance.now();
+@@ -123,6 +131,8 @@ async function main(): Promise<void> {
+       az: { type: 'string' },
+       el: { type: 'string' },
+       bg: { type: 'string' },
++      ortho: { type: 'boolean' },
++      flat: { type: 'boolean' },
+       dirs: { type: 'string' },
+       elevation: { type: 'string' },
+       colors: { type: 'string' },
+@@ -163,12 +173,29 @@ async function main(): Promise<void> {
+   if (!['build', 'render', 'sprites', 'animate', 'all', 'inspect', 'check', 'cutout'].includes(command))
+     throw new Error(`Unknown command '${command}'.\n${HELP}`);
+   if (!name) throw new Error(`Usage: pnpm forge ${command} <asset>`);
+-  if (command === 'cutout' && !values.out) throw new Error('Usage: ./forge cutout <asset> --out <dir> [options]');
++  if (command === 'cutout' && !values.out)
++    throw new Error('Usage: ./forge cutout <asset> --out <dir> [options]');
++  // The flat pass measures colours: it needs the vertex colours of a fast build and a
++  // transparent background, so both are required before the build starts.
++  if (values.flat && (values.fast !== true || values.bg !== 'none'))
++    throw new Error('--flat needs --fast and --bg none');
+   const file = assetPath(name);
+-  const wear = values.wear ? values.wear.split(',').map((w) => w.trim()).filter(Boolean) : [];
+-  if (wear.length > 0 && command === 'check') throw new Error('check takes no --wear: run `forge check <piece>` for each piece.');
++  const wear = values.wear
++    ? values.wear
++        .split(',')
++        .map((w) => w.trim())
++        .filter(Boolean)
++    : [];
++  if (wear.length > 0 && command === 'check')
++    throw new Error('check takes no --wear: run `forge check <piece>` for each piece.');
+   // A base in equipment (or the capped hair) writes beside the base, never over its outputs.
+-  const outName = [name, ...wear, ...(values.capped ? ['capped'] : []), ...(values.tucked ? ['tucked'] : []), ...(values.reduced ? ['reduced'] : [])].join('+');
++  const outName = [
++    name,
++    ...wear,
++    ...(values.capped ? ['capped'] : []),
++    ...(values.tucked ? ['tucked'] : []),
++    ...(values.reduced ? ['reduced'] : []),
++  ].join('+');
+ 
+   const server = await createServer({
+     root: ROOT,
+@@ -186,7 +213,9 @@ async function main(): Promise<void> {
+       hmr: false,
+       // One-shot commands need no file watcher. Several forge runs at once (and the thousands of
+       // files under bench/) otherwise use up the system's inotify watches (ENOSPC).
+-      watch: values.watch ? { ignored: ['**/bench/**', '**/out/**', '**/node_modules/**', '**/.git/**'] } : null,
++      watch: values.watch
++        ? { ignored: ['**/bench/**', '**/out/**', '**/node_modules/**', '**/.git/**'] }
++        : null,
+     },
+   });
+   phase('vite server created');
+@@ -228,10 +257,15 @@ async function main(): Promise<void> {
+         if (def.equip) {
+           // An equipment piece: the fit check, worn on the avatar base.
+           const fit = (await server.ssrLoadModule('/src/equip-check.ts')) as typeof EquipCheck;
+-          const base = pipeline.checkDefinition(await server.ssrLoadModule(assetPath('avatar-base')), 'avatar-base');
++          const base = pipeline.checkDefinition(
++            await server.ssrLoadModule(assetPath('avatar-base')),
++            'avatar-base',
++          );
+           const report = await fit.checkEquip({ name, def }, base, {
+             ...(values.fps !== undefined ? { fps: num(values.fps, 60) } : {}),
+-            ...(values.clip !== undefined && values.clip !== 'all' ? { clips: String(values.clip).split(',') } : {}),
++            ...(values.clip !== undefined && values.clip !== 'all'
++              ? { clips: String(values.clip).split(',') }
++              : {}),
+           });
+           console.log(fit.formatEquipCheck(name, report));
+           if (!report.ok) process.exitCode = 1;
+@@ -239,13 +273,17 @@ async function main(): Promise<void> {
+         }
+         const report = await checker.checkClips(def, {
+           ...(values.fps !== undefined ? { fps: num(values.fps, 60) } : {}),
+-          ...(values.clip !== undefined && values.clip !== 'all' ? { clips: String(values.clip).split(',') } : {}),
++          ...(values.clip !== undefined && values.clip !== 'all'
++            ? { clips: String(values.clip).split(',') }
++            : {}),
+         });
+         console.log(checker.formatClipCheck(name, report));
+         // The ground check needs the skinned mesh: a quick build without textures.
+         const { result } = await pipeline.buildToGlb(def, file, 0);
+         const ground = checker.checkGround(result.root, {
+-          ...(values.clip !== undefined && values.clip !== 'all' ? { clips: String(values.clip).split(',') } : {}),
++          ...(values.clip !== undefined && values.clip !== 'all'
++            ? { clips: String(values.clip).split(',') }
++            : {}),
+         });
+         console.log(checker.formatGround(ground));
+         if (!report.ok || !ground.ok) process.exitCode = 1;
+@@ -265,9 +303,14 @@ async function main(): Promise<void> {
+         const worn: { name: string; source: string; def: typeof def }[] = [];
+         for (const w of wear) {
+           const source = assetPath(w);
+-          worn.push({ name: w, source, def: pipeline.checkDefinition(await server.ssrLoadModule(source), w) });
++          worn.push({
++            name: w,
++            source,
++            def: pipeline.checkDefinition(await server.ssrLoadModule(source), w),
++          });
+         }
+-        if (worn.length > 0) def = ((await server.ssrLoadModule('/src/equip.ts')) as typeof Equip).wearAsset(def, worn);
++        if (worn.length > 0)
++          def = ((await server.ssrLoadModule('/src/equip.ts')) as typeof Equip).wearAsset(def, worn);
+         built = await pipeline.buildToGlb(
+           def,
+           file,
+@@ -287,7 +330,13 @@ async function main(): Promise<void> {
+       writeFileSync(glbPath, glb);
+       writeFileSync(join(out, 'stats.json'), JSON.stringify(result.stats, null, 2));
+       const atlas = result.root.userData.forgeTextures as
+-        | { baseColor: Uint8Array; normal: Uint8Array; orm: Uint8Array; tintMask?: Uint8Array; presets?: Record<string, Uint8Array> }
++        | {
++            baseColor: Uint8Array;
++            normal: Uint8Array;
++            orm: Uint8Array;
++            tintMask?: Uint8Array;
++            presets?: Record<string, Uint8Array>;
++          }
+         | undefined;
+       rmSync(join(out, 'textures'), { recursive: true, force: true });
+       if (atlas) {
+@@ -320,9 +369,13 @@ async function main(): Promise<void> {
+       await page.route(
+         (u) => u.pathname.startsWith('/__forge/preset/'),
+         (r) => {
+-          const preset = decodeURIComponent(new URL(r.request().url()).pathname.slice('/__forge/preset/'.length).replace(/\.png$/, ''));
++          const preset = decodeURIComponent(
++            new URL(r.request().url()).pathname.slice('/__forge/preset/'.length).replace(/\.png$/, ''),
++          );
+           const image = atlas?.presets?.[preset];
+-          return image ? r.fulfill({ body: Buffer.from(image), contentType: 'image/png' }) : r.fulfill({ status: 404, body: 'no such preset' });
++          return image
++            ? r.fulfill({ body: Buffer.from(image), contentType: 'image/png' })
++            : r.fulfill({ status: 404, body: 'no such preset' });
+         },
+       );
+       const def = (await server.ssrLoadModule(file)).default as { reference?: string };
+@@ -342,7 +395,9 @@ async function main(): Promise<void> {
+       if (command === 'render' || command === 'all') {
+         // --preset all (and forge all): the default turnaround and one per preset, from one build.
+         const looks: (string | undefined)[] =
+-          values.preset === 'all' || command === 'all' ? [undefined, ...Object.keys(atlas?.presets ?? {})] : [values.preset];
++          values.preset === 'all' || command === 'all'
++            ? [undefined, ...Object.keys(atlas?.presets ?? {})]
++            : [values.preset];
+         for (const preset of looks) {
+           const t1 = performance.now();
+           const req: ViewsRequest = {
+@@ -353,8 +408,22 @@ async function main(): Promise<void> {
+             title: preset ? `${outName} · ${preset}` : outName,
+             ...(useRef ? { referenceUrl: `/__forge/reference?t=${Date.now()}` } : {}),
+             ...(preset ? { preset } : {}),
++            ...(values.ortho ? { ortho: true } : {}),
++            ...(values.flat ? { flat: true } : {}),
+           };
+           const res = await page.evaluate((r) => window.forge.renderViews(r), req);
++          if (values.flat) {
++            // The flat pass writes its own folder and leaves the lit views alone.
++            const flatDir = preset ? join(out, 'flat', 'presets', preset) : join(out, 'flat');
++            if (!preset) rmSync(join(out, 'flat'), { recursive: true, force: true });
++            mkdirSync(flatDir, { recursive: true });
++            for (const [view, data] of Object.entries(res.views))
++              writePng(join(flatDir, `${view}.png`), data);
++            console.log(
++              `flat     ${rel(flatDir)}/  (${Object.keys(res.views).length} views, ${Math.round(performance.now() - t1)} ms)`,
++            );
++            continue;
++          }
+           // A color preset's turnaround goes beside the default one: render.<preset>.png, and its
+           // views in views/presets/<preset>/.
+           const sheetFile = preset ? `render.${preset}.png` : 'render.png';
+@@ -374,14 +443,19 @@ async function main(): Promise<void> {
+       if (command === 'cutout') {
+         const t1 = performance.now();
+         const [cw, ch] = (values.canvas ?? '1024x1200').split('x').map((v) => Math.round(Number(v)));
+-        if (!cw || !ch || cw < 16 || ch < 16) throw new Error(`--canvas needs WIDTHxHEIGHT, got '${values.canvas}'.`);
++        if (!cw || !ch || cw < 16 || ch < 16)
++          throw new Error(`--canvas needs WIDTHxHEIGHT, got '${values.canvas}'.`);
+         const ppm = num(values.ppm, 900);
+         const margin = num(values.margin, 16);
+         const clipName = values.clip && values.clip !== 'all' ? values.clip : undefined;
+-        if (values.clip === 'all' || values.clip?.includes(',')) throw new Error('--clip takes one clip name for a cut-out.');
++        if (values.clip === 'all' || values.clip?.includes(','))
++          throw new Error('--clip takes one clip name for a cut-out.');
+         const at = num(values.at, 0);
+         const stem = values.stem ?? (clipName ? `${clipName}-${at}` : undefined);
+-        const viewNames = (values.views ?? (stem ? 'front' : 'front,three-quarter,side')).split(',').map((v) => v.trim()).filter(Boolean);
++        const viewNames = (values.views ?? (stem ? 'front' : 'front,three-quarter,side'))
++          .split(',')
++          .map((v) => v.trim())
++          .filter(Boolean);
+         // Elevation 0 (or --el): the feet stay on the foot row; a look-down shifts the near edge
+         // below it, so the folder records its elevation for the compositor and for the checker.
+         const elevation = values.el !== undefined ? num(values.el, 0) : 0;
+@@ -392,14 +466,26 @@ async function main(): Promise<void> {
+         });
+         const root = resolve(values.out!);
+         const manifestPath = join(root, 'manifest.json');
+-        let manifest: { ppm?: number; canvas?: number[]; elevation?: number; footPoint?: unknown; files?: Record<string, boolean>; [k: string]: unknown } = {};
++        let manifest: {
++          ppm?: number;
++          canvas?: number[];
++          elevation?: number;
++          footPoint?: unknown;
++          files?: Record<string, boolean>;
++          [k: string]: unknown;
++        } = {};
+         try {
+           manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
+         } catch {
+           /* no manifest yet */
+         }
+-        if (manifest.ppm !== undefined && (manifest.ppm !== ppm || manifest.canvas?.[0] !== cw || manifest.canvas?.[1] !== ch))
+-          throw new Error(`${rel(manifestPath)} has ppm ${manifest.ppm} and canvas ${manifest.canvas?.join('x')}: one folder keeps one scale. Use the same options or a new folder.`);
++        if (
++          manifest.ppm !== undefined &&
++          (manifest.ppm !== ppm || manifest.canvas?.[0] !== cw || manifest.canvas?.[1] !== ch)
++        )
++          throw new Error(
++            `${rel(manifestPath)} has ppm ${manifest.ppm} and canvas ${manifest.canvas?.join('x')}: one folder keeps one scale. Use the same options or a new folder.`,
++          );
+         if (manifest.elevation !== undefined && manifest.elevation !== elevation)
+           throw new Error(
+             `${rel(manifestPath)} has camera elevation ${manifest.elevation}: one folder keeps one elevation. Use the same options or a new folder.`,
+@@ -412,7 +498,9 @@ async function main(): Promise<void> {
+           height: ch,
+           margin,
+           supersample: num(values.ss, 3),
+-          ...(clipName ? { clip: clipName, at, ...(clipInfoOf(clipName) ? { clipInfo: clipInfoOf(clipName)! } : {}) } : {}),
++          ...(clipName
++            ? { clip: clipName, at, ...(clipInfoOf(clipName) ? { clipInfo: clipInfoOf(clipName)! } : {}) }
++            : {}),
+           ...(values.preset && values.preset !== 'all' ? { preset: values.preset } : {}),
+           ...(values['hide-sing'] === true ? { hideSing: true } : {}),
+         };
+@@ -426,9 +514,18 @@ async function main(): Promise<void> {
+           files[`${outName}/${fileStem}`] = true;
+           console.log(`cutout   ${rel(join(dir, `${fileStem}.png`))}`);
+         }
+-        manifest = { ...manifest, ppm, canvas: [cw, ch], elevation, footPoint: { col: cw / 2, row: ch - margin }, files };
++        manifest = {
++          ...manifest,
++          ppm,
++          canvas: [cw, ch],
++          elevation,
++          footPoint: { col: cw / 2, row: ch - margin },
++          files,
++        };
+         writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + '\n');
+-        console.log(`cutout   ${rel(manifestPath)}  (${ppm} px/m, ${cw}x${ch}, ss ${res.supersample}, ${Math.round(performance.now() - t1)} ms)`);
++        console.log(
++          `cutout   ${rel(manifestPath)}  (${ppm} px/m, ${cw}x${ch}, ss ${res.supersample}, ${Math.round(performance.now() - t1)} ms)`,
++        );
+         return;
+       }
+       const clips = await page.evaluate(
+@@ -439,7 +536,10 @@ async function main(): Promise<void> {
+         if (values.clip === undefined || values.clip === 'all') return all ? clips.map((c) => c.name) : [];
+         // A comma list: the clips this asset has (a game sprite set asks every model for one list).
+         if (values.clip.includes(',')) {
+-          const asked = values.clip.split(',').map((c) => c.trim()).filter(Boolean);
++          const asked = values.clip
++            .split(',')
++            .map((c) => c.trim())
++            .filter(Boolean);
+           const missing = asked.filter((c) => !clips.some((x) => x.name === c));
+           if (missing.length) console.log(`clips    ${name} has no ${missing.join(', ')} (skipped)`);
+           return asked.filter((c) => !missing.includes(c));
+@@ -458,7 +558,10 @@ async function main(): Promise<void> {
+         return u ? { loop: u.loop ?? true, dig: u.dig ?? 0 } : undefined;
+       };
+ 
+-      const sprites = async (clip: string | null, preset: string | undefined = values.preset === 'all' ? undefined : values.preset) => {
++      const sprites = async (
++        clip: string | null,
++        preset: string | undefined = values.preset === 'all' ? undefined : values.preset,
++      ) => {
+         const t2 = performance.now();
+         const size = command === 'all' ? 128 : num(values.size, 128);
+         const req: SpritesRequest = {
+@@ -471,9 +574,13 @@ async function main(): Promise<void> {
+           outline: (values.outline ?? 'dark') as SpritesRequest['outline'],
+           margin: num(values.margin, 0.06),
+           ...(values.ppm ? { ppm: num(values.ppm, 64) } : {}),
+-          ...(clip ? { clip, frames: frameCount, ...(clipInfo(clip) ? { clipInfo: clipInfo(clip)! } : {}) } : {}),
++          ...(clip
++            ? { clip, frames: frameCount, ...(clipInfo(clip) ? { clipInfo: clipInfo(clip)! } : {}) }
++            : {}),
+           ...(preset ? { preset } : {}),
+-          ...(values.cell && clip ? { fit: wanted(true).map((c) => ({ clip: c, ...(clipInfo(c) ? { info: clipInfo(c)! } : {}) })) } : {}),
++          ...(values.cell && clip
++            ? { fit: wanted(true).map((c) => ({ clip: c, ...(clipInfo(c) ? { info: clipInfo(c)! } : {}) })) }
++            : {}),
+         };
+         const res = await pg.evaluate((r) => window.forge.renderSprites(r), req);
+         // A color preset's sprites go to sprites/presets/<preset>/, in the same layout.
+@@ -491,7 +598,21 @@ async function main(): Promise<void> {
+         if (res.gif) writeFileSync(join(dir, `${clip}.gif`), Buffer.from(res.gif, 'base64'));
+         writeFileSync(
+           join(dir, 'metrics.json'),
+-          JSON.stringify({ size: res.cell, clip, pivot: res.pivot, ...(values.ppm ? { ppm: num(values.ppm, 64) } : {}), elevation: num(values.elevation, 30), directions: num(values.dirs, 8), frames: clip ? frameCount : 1, metrics: res.metrics, palette: res.palette }, null, 2),
++          JSON.stringify(
++            {
++              size: res.cell,
++              clip,
++              pivot: res.pivot,
++              ...(values.ppm ? { ppm: num(values.ppm, 64) } : {}),
++              elevation: num(values.elevation, 30),
++              directions: num(values.dirs, 8),
++              frames: clip ? frameCount : 1,
++              metrics: res.metrics,
++              palette: res.palette,
++            },
++            null,
++            2,
++          ),
+         );
+         console.log(`sprites  ${rel(join(dir, 'preview.png'))}  (${Math.round(performance.now() - t2)} ms)`);
+         if (!clip) {
+@@ -538,7 +659,8 @@ async function main(): Promise<void> {
+       }
+       if (command === 'sprites') {
+         const list = values.clip === undefined ? [null] : wanted(true);
+-        const looks = values.preset === 'all' ? [undefined, ...Object.keys(atlas?.presets ?? {})] : [undefined];
++        const looks =
++          values.preset === 'all' ? [undefined, ...Object.keys(atlas?.presets ?? {})] : [undefined];
+         for (const look of looks) for (const c of list) await (look ? sprites(c, look) : sprites(c));
+       }
+       if (command === 'animate') {
+diff --git a/src/render/page.ts b/src/render/page.ts
+index 7134e31d..87b0f522 100644
+--- a/src/render/page.ts
++++ b/src/render/page.ts
+@@ -31,6 +31,66 @@ export interface ViewsRequest {
+   readonly title?: string;
+   /** A color preset of the asset (its `presets`): the tinted materials take its slot colors. */
+   readonly preset?: string;
++  /** A level orthographic frame: one pixels-per-metre scale for every view of the run. */
++  readonly ortho?: boolean;
++  /** The flat pass: every mesh unlit in its own colour, no ground, no tone mapping. */
++  readonly flat?: boolean;
++}
++
++/**
++ * The margin of the orthographic frame: the world height of the frame is the largest side of the
++ * asset times 1.10, so the asset keeps a small border in every view.
++ */
++export const ORTHO_MARGIN = 1.1;
++
++/**
++ * The orthographic frame of a run: a square frame in camera space, centred on the asset, with one
++ * pixels-per-metre scale for every view. The world height is the largest side of the bounds times
++ * `ORTHO_MARGIN`, and `pixelsPerMetre` is the image size over that height.
++ */
++export function orthoFrame(
++  bounds: THREE.Box3,
++  size: number,
++): { left: number; right: number; top: number; bottom: number; pixelsPerMetre: number } {
++  const box = bounds.getSize(new THREE.Vector3());
++  const height = Math.max(box.x, box.y, box.z, 1e-6) * ORTHO_MARGIN;
++  const half = height / 2;
++  return { left: -half, right: half, top: half, bottom: -half, pixelsPerMetre: size / height };
++}
++
++/**
++ * The flat pass: every mesh of the asset becomes unlit, in its own colour, with no tone mapping.
++ * The geometry and the `visible` flag stay. The ground is hidden, so no shadow lands on it. The
++ * returned function puts the old materials and the ground back.
++ */
++export function useFlatMaterials(
++  root: THREE.Object3D,
++  ground: THREE.Object3D | null = studio.ground,
++): () => void {
++  const swapped: { mesh: THREE.Mesh; material: THREE.Material | THREE.Material[] }[] = [];
++  root.traverse((o) => {
++    const mesh = o as THREE.Mesh;
++    if (!mesh.isMesh) return;
++    const original = mesh.material;
++    const list = Array.isArray(original) ? original : [original];
++    const flat = list.map((m) => {
++      const source = m as THREE.MeshStandardMaterial;
++      return new THREE.MeshBasicMaterial({
++        color: source.color instanceof THREE.Color ? source.color : new THREE.Color(0xffffff),
++        vertexColors: source.vertexColors === true,
++        toneMapped: false,
++        side: m.side,
++      });
++    });
++    mesh.material = Array.isArray(original) ? flat : flat[0]!;
++    swapped.push({ mesh, material: original });
++  });
++  const groundVisible = ground?.visible ?? false;
++  if (ground) ground.visible = false;
++  return () => {
++    for (const { mesh, material } of swapped) mesh.material = material;
++    if (ground) ground.visible = groundVisible;
++  };
+ }
+ 
+ export interface CutoutsRequest {
+@@ -121,7 +181,10 @@ let current: { scene: THREE.Object3D; mixer: THREE.AnimationMixer; clips: THREE.
+   null;
+ 
+ interface ForgeVariants {
+-  readonly slots: Record<string, { channel: string; default: string; options: Record<string, [number, number, number]> }>;
++  readonly slots: Record<
++    string,
++    { channel: string; default: string; options: Record<string, [number, number, number]> }
++  >;
+   readonly presets: Record<string, Record<string, string>>;
+ }
+ let variants: ForgeVariants | null = null;
+@@ -129,7 +192,8 @@ let variants: ForgeVariants | null = null;
+ async function load(url: string): Promise<THREE.Object3D> {
+   const gltf = await loader.loadAsync(url);
+   studio.renderer.clippingPlanes = [];
+-  variants = ((gltf.userData as { forgeVariants?: ForgeVariants }).forgeVariants ?? null) as ForgeVariants | null;
++  variants = ((gltf.userData as { forgeVariants?: ForgeVariants }).forgeVariants ??
++    null) as ForgeVariants | null;
+   current = { scene: gltf.scene, mixer: new THREE.AnimationMixer(gltf.scene), clips: gltf.animations };
+   studio.setAsset(gltf.scene);
+   return gltf.scene;
+@@ -144,8 +208,11 @@ async function applyPreset(name: string | undefined): Promise<void> {
+   if (!name) return;
+   if (!variants) throw new Error(`Preset '${name}': this asset has no color variants.`);
+   const choice = variants.presets[name];
+-  if (!choice) throw new Error(`No preset '${name}'. Presets: ${Object.keys(variants.presets).join(', ') || '(none)'}.`);
+-  const map = await new THREE.TextureLoader().loadAsync(`/__forge/preset/${encodeURIComponent(name)}.png?t=${Date.now()}`);
++  if (!choice)
++    throw new Error(`No preset '${name}'. Presets: ${Object.keys(variants.presets).join(', ') || '(none)'}.`);
++  const map = await new THREE.TextureLoader().loadAsync(
++    `/__forge/preset/${encodeURIComponent(name)}.png?t=${Date.now()}`,
++  );
+   map.flipY = false;
+   map.colorSpace = THREE.SRGBColorSpace;
+   current!.scene.traverse((o) => {
+@@ -246,7 +313,8 @@ function effectMeshes(samples = 6): Set<THREE.Mesh> {
+   for (const clip of clips)
+     for (const t of sampleTimes(clip, samples, { loop: false, dig: 0 })) {
+       poseAt(clip, t);
+-      for (const m of meshes) if (!effect.has(m) && Math.max(...meshBox(m).getSize(size).toArray()) < 0.005) effect.add(m);
++      for (const m of meshes)
++        if (!effect.has(m) && Math.max(...meshBox(m).getSize(size).toArray()) < 0.005) effect.add(m);
+     }
+   toRest();
+   return effect;
+@@ -268,7 +336,8 @@ function posedBox(effect: ReadonlySet<THREE.Mesh>): THREE.Box3 {
+ 
+ /** A clip that digs keeps the floor at y = 0 and hides what is below it, as a game floor does. */
+ function floorClip(info?: ClipInfo): void {
+-  studio.renderer.clippingPlanes = info && info.dig > 0 ? [new THREE.Plane(new THREE.Vector3(0, 1, 0), 0)] : [];
++  studio.renderer.clippingPlanes =
++    info && info.dig > 0 ? [new THREE.Plane(new THREE.Vector3(0, 1, 0), 0)] : [];
+ }
+ 
+ function gifBase64(frames: readonly HTMLCanvasElement[], delayMs: number): string {
+@@ -348,27 +417,49 @@ async function renderViews(req: ViewsRequest): Promise<{ sheet: string; views: R
+   // 'none': a transparent view (icons for pages); the shadow ground keeps a soft shadow.
+   studio.setBackground(req.background === 'none' ? null : req.background);
+   studio.ground.visible = true;
+-  const cam = studio.perspective;
+   const images: Record<string, HTMLCanvasElement> = {};
+   const views: Record<string, string> = {};
+   // One distance for every view so the turnaround keeps a constant scale: fit the height and the
+   // widest horizontal extent (bounds diagonal in XZ) with a small margin.
+   const size = studio.bounds.getSize(new THREE.Vector3());
+   const fitRadius = (Math.max(size.y, Math.hypot(size.x, size.z)) / 2) * 1.18;
+-  for (const v of req.views) {
+-    const center = v.focus ? new THREE.Vector3(...v.focus.center) : studio.center;
+-    const radius = v.focus ? v.focus.radius : fitRadius;
+-    const distance = radius / Math.tan(THREE.MathUtils.degToRad(cam.fov / 2));
+-    cam.near = distance / 50;
+-    cam.far = distance * 10;
+-    studio.aim(cam, center, distance, v.azimuth, v.elevation);
+-    studio.render(cam, req.size, req.size);
+-    const c = document.createElement('canvas');
+-    c.width = req.size;
+-    c.height = req.size;
+-    c.getContext('2d')!.drawImage(studio.renderer.domElement, 0, 0);
+-    images[v.name] = c;
+-    views[v.name] = c.toDataURL('image/png');
++  // The flat pass swaps the materials and hides the ground. The restore function puts them back,
++  // so a later command in the same page sees the normal render.
++  const restore = req.flat ? useFlatMaterials(current!.scene) : null;
++  try {
++    for (const v of req.views) {
++      if (req.ortho) {
++        // A level orthographic frame: one scale for the whole run, so a width compares with a
++        // depth. The camera sits far away, so the frame is the frame and not the perspective.
++        const frame = orthoFrame(studio.bounds, req.size);
++        const distance = Math.max(studio.radius * 4, 10);
++        studio.ortho.left = frame.left;
++        studio.ortho.right = frame.right;
++        studio.ortho.top = frame.top;
++        studio.ortho.bottom = frame.bottom;
++        studio.ortho.near = Math.max(0.01, distance - studio.radius * 2);
++        studio.ortho.far = distance + studio.radius * 2;
++        studio.ortho.updateProjectionMatrix();
++        studio.aim(studio.ortho, studio.center, distance, v.azimuth, v.elevation);
++        studio.render(studio.ortho, req.size, req.size);
++      } else {
++        const center = v.focus ? new THREE.Vector3(...v.focus.center) : studio.center;
++        const radius = v.focus ? v.focus.radius : fitRadius;
++        const distance = radius / Math.tan(THREE.MathUtils.degToRad(studio.perspective.fov / 2));
++        studio.perspective.near = distance / 50;
++        studio.perspective.far = distance * 10;
++        studio.aim(studio.perspective, center, distance, v.azimuth, v.elevation);
++        studio.render(studio.perspective, req.size, req.size);
++      }
++      const c = document.createElement('canvas');
++      c.width = req.size;
++      c.height = req.size;
++      c.getContext('2d')!.drawImage(studio.renderer.domElement, 0, 0);
++      images[v.name] = c;
++      views[v.name] = c.toDataURL('image/png');
++    }
++  } finally {
++    restore?.();
+   }
+ 
+   const cols = Math.min(4, req.views.length);
+@@ -452,14 +543,19 @@ async function renderSprites(req: SpritesRequest): Promise<{
+     return r;
+   };
+   const el = THREE.MathUtils.degToRad(req.elevation);
+-  const spanOf = (R: number, h: number) => Math.max(2 * R, h * Math.cos(el) + 2 * R * Math.sin(el)) / (1 - 2 * req.margin);
++  const spanOf = (R: number, h: number) =>
++    Math.max(2 * R, h * Math.cos(el) + 2 * R * Math.sin(el)) / (1 - 2 * req.margin);
+   const R0 = radius(restBox);
+   const h0 = Math.max(restBox.max.y, 0.01);
+   // A fixed cell seen from one direction (S, the camera on +Z) frames the box as that camera sees
+   // it: a point projects to u = x across and v = y cos(el) - z sin(el) up. Any other request frames
+   // a circle of radius R, so every direction fits the same cell.
+   const front = names.length === 1 && !!req.fit?.length && !req.ppm;
+-  const corners = [restBox.min, restBox.max].flatMap((a) => [restBox.min, restBox.max].flatMap((b) => [restBox.min, restBox.max].map((c) => [a.x, b.y, c.z] as const)));
++  const corners = [restBox.min, restBox.max].flatMap((a) =>
++    [restBox.min, restBox.max].flatMap((b) =>
++      [restBox.min, restBox.max].map((c) => [a.x, b.y, c.z] as const),
++    ),
++  );
+   const vs = corners.map(([, y, z]) => y * Math.cos(el) - z * Math.sin(el));
+   const frontW = 2 * Math.max(...corners.map(([x]) => Math.abs(x)));
+   const frontV: [number, number] = [Math.min(...vs), Math.max(...vs)];
+@@ -468,12 +564,18 @@ async function renderSprites(req: SpritesRequest): Promise<{
+   const R = Math.max(R0, radius(box));
+   const h = Math.max(h0, box.max.y);
+   const fitted = Math.ceil((spanOf(R, h) * ppm) / 4) * 4;
+-  const cellPx = req.ppm ? Math.max(8, fitted) : clip && !req.fit?.length ? Math.max(req.size, fitted) : req.size;
++  const cellPx = req.ppm
++    ? Math.max(8, fitted)
++    : clip && !req.fit?.length
++      ? Math.max(req.size, fitted)
++      : req.size;
+   const span = cellPx / ppm;
+   const spanY = h * Math.cos(el) + 2 * R * Math.sin(el);
+   const cam = studio.ortho;
+   // The ground contact and the top: the ground line sits at the bottom margin.
+-  const bottom = front ? frontV[0] - (span - (frontV[1] - frontV[0])) / 2 : -R * Math.sin(el) - (span - spanY) / 2;
++  const bottom = front
++    ? frontV[0] - (span - (frontV[1] - frontV[0])) / 2
++    : -R * Math.sin(el) - (span - spanY) / 2;
+   cam.left = -span / 2;
+   cam.right = span / 2;
+   cam.bottom = bottom;
+@@ -799,7 +901,9 @@ const CUTOUT_DISTANCE = 6;
+  * Pixels come from the premultiplied WebGL buffer at `supersample` x the canvas size and resolve
+  * to straight alpha (see cutout.ts). Returns raw RGBA as base64 for each view.
+  */
+-async function renderCutouts(req: CutoutsRequest): Promise<{ views: Record<string, string>; supersample: number }> {
++async function renderCutouts(
++  req: CutoutsRequest,
++): Promise<{ views: Record<string, string>; supersample: number }> {
+   await load(req.glbUrl);
+   await applyPreset(req.preset);
+   studio.setBackground(null);
+@@ -813,7 +917,10 @@ async function renderCutouts(req: CutoutsRequest): Promise<{ views: Record<strin
+       if ((o as THREE.Mesh).isMesh && SING_BODY_NAMES.includes(o.name)) o.visible = false;
+     });
+   const gl = studio.renderer.getContext();
+-  const maxSize = Math.min(gl.getParameter(gl.MAX_RENDERBUFFER_SIZE) as number, gl.getParameter(gl.MAX_TEXTURE_SIZE) as number);
++  const maxSize = Math.min(
++    gl.getParameter(gl.MAX_RENDERBUFFER_SIZE) as number,
++    gl.getParameter(gl.MAX_TEXTURE_SIZE) as number,
++  );
+   let ss = Math.max(1, Math.floor(req.supersample));
+   while (ss > 1 && Math.max(req.width, req.height) * ss > maxSize) ss--;
+ 
+@@ -831,7 +938,8 @@ async function renderCutouts(req: CutoutsRequest): Promise<{ views: Record<strin
+   current!.scene.traverse((o) => {
+     if ((o as THREE.Mesh).isMesh && o.visible) meshes.push(o as THREE.Mesh);
+   });
+-  for (const m of meshes) if ((m as THREE.SkinnedMesh).isSkinnedMesh) (m as THREE.SkinnedMesh).skeleton.update();
++  for (const m of meshes)
++    if ((m as THREE.SkinnedMesh).isSkinnedMesh) (m as THREE.SkinnedMesh).skeleton.update();
+ 
+   const views: Record<string, string> = {};
+   const v = new THREE.Vector3();
+@@ -901,4 +1009,12 @@ declare global {
+   }
+ }
+ 
+-window.forge = { renderViews, renderCutouts, renderSprites, renderAnimation, listClips, inspectAsset, ready: true };
++window.forge = {
++  renderViews,
++  renderCutouts,
++  renderSprites,
++  renderAnimation,
++  listClips,
++  inspectAsset,
++  ready: true,
++};
+diff --git a/tests/apk3d/no-unpolyfilled-builtins.test.ts b/tests/apk3d/no-unpolyfilled-builtins.test.ts
+index 355b6990..8cb99226 100644
+--- a/tests/apk3d/no-unpolyfilled-builtins.test.ts
++++ b/tests/apk3d/no-unpolyfilled-builtins.test.ts
+@@ -314,30 +314,33 @@ function render(hit: Hit): string {
+ type Exclusion = { file: string; line: number; label: string; text: string; reason: string };
+ 
+ // The exact trimmed source lines of the three real calls, read from src/render/page.ts.
+-const PAGE_263 = 'if (!b.isEmpty()) box.union(b);';
+-const PAGE_440 = 'restBox.union(posedBox(effect));';
+-const PAGE_447 = 'box.union(posedBox(effect));';
++// The line numbers follow that file. The renderer options of the chibi_sprouts_redesign_20261123
++// track moved the three calls from lines 263, 440, and 447 to lines 331, 531, and 538 on
++// 2026-11-23. The bound source text did not change.
++const PAGE_331 = 'if (!b.isEmpty()) box.union(b);';
++const PAGE_531 = 'restBox.union(posedBox(effect));';
++const PAGE_538 = 'box.union(posedBox(effect));';
+ 
+ const EXCLUSIONS: Exclusion[] = [
+   {
+     file: 'src/render/page.ts',
+-    line: 263,
++    line: 331,
+     label: 'Set .union(',
+-    text: PAGE_263,
++    text: PAGE_331,
+     reason: 'Box3.union (three.js geometry), not Set.prototype.union',
+   },
+   {
+     file: 'src/render/page.ts',
+-    line: 440,
++    line: 531,
+     label: 'Set .union(',
+-    text: PAGE_440,
++    text: PAGE_531,
+     reason: 'Box3.union (three.js geometry), not Set.prototype.union',
+   },
+   {
+     file: 'src/render/page.ts',
+-    line: 447,
++    line: 538,
+     label: 'Set .union(',
+-    text: PAGE_447,
++    text: PAGE_538,
+     reason: 'Box3.union (three.js geometry), not Set.prototype.union',
+   },
+ ];
+@@ -511,9 +514,9 @@ it('a different receiver keeps the stale-exclusion rot check (acceptance A7)', (
+     'stale exclusion <fixture>:1: test bind',
+     '<fixture>:1: Set .union(',
+   ]);
+-  const real263 = readFileSync(join(ROOT, 'src', 'render', 'page.ts'), 'utf8').split('\n')[262]!;
+-  expect(real263).toContain('box.union(b)');
+-  expect(problemsFor(real263, bound)).toEqual([]);
++  const real331 = readFileSync(join(ROOT, 'src', 'render', 'page.ts'), 'utf8').split('\n')[330]!;
++  expect(real331).toContain('box.union(b)');
++  expect(problemsFor(real331, bound)).toEqual([]);
+ });
+ 
+ it('exclusions bind to their exact call text, not just the line (review r1 C-F3)', () => {
+@@ -618,8 +621,8 @@ it('the allowed text on a different line number stays reported (acceptance A7)',
+ 
+ it('the three real exclusion lines still produce zero reported hits (acceptance A7)', () => {
+   const page = readFileSync(join(ROOT, 'src', 'render', 'page.ts'), 'utf8').split('\n');
+-  const lines = [page[262]!, page[439]!, page[446]!];
+-  expect(lines.map((line) => line.trim())).toEqual([PAGE_263, PAGE_440, PAGE_447]);
++  const lines = [page[330]!, page[530]!, page[537]!];
++  expect(lines.map((line) => line.trim())).toEqual([PAGE_331, PAGE_531, PAGE_538]);
+   const problemsFor = (fixture: string, exclusions: Exclusion[]): string[] => {
+     const stripped = strip(fixture);
+     const raw = scanText(stripped, '<fixture>');
+@@ -628,13 +631,13 @@ it('the three real exclusion lines still produce zero reported hits (acceptance
+     );
+   };
+   const entries: Exclusion[] = [
+-    { file: '<fixture>', line: 1, label: 'Set .union(', text: PAGE_263, reason: 'page.ts:263' },
+-    { file: '<fixture>', line: 1, label: 'Set .union(', text: PAGE_440, reason: 'page.ts:440' },
+-    { file: '<fixture>', line: 1, label: 'Set .union(', text: PAGE_447, reason: 'page.ts:447' },
++    { file: '<fixture>', line: 1, label: 'Set .union(', text: PAGE_331, reason: 'page.ts:331' },
++    { file: '<fixture>', line: 1, label: 'Set .union(', text: PAGE_531, reason: 'page.ts:531' },
++    { file: '<fixture>', line: 1, label: 'Set .union(', text: PAGE_538, reason: 'page.ts:538' },
+   ];
+-  expect(problemsFor(PAGE_263, [entries[0]!])).toEqual([]);
+-  expect(problemsFor(PAGE_440, [entries[1]!])).toEqual([]);
+-  expect(problemsFor(PAGE_447, [entries[2]!])).toEqual([]);
++  expect(problemsFor(PAGE_331, [entries[0]!])).toEqual([]);
++  expect(problemsFor(PAGE_531, [entries[1]!])).toEqual([]);
++  expect(problemsFor(PAGE_538, [entries[2]!])).toEqual([]);
+ });
+ 
+ /** Total pattern hits over the whole stripped text. */
+diff --git a/tests/render-options.test.ts b/tests/render-options.test.ts
+new file mode 100644
+index 00000000..0e48ac70
+--- /dev/null
++++ b/tests/render-options.test.ts
+@@ -0,0 +1,221 @@
++import { spawnSync, type SpawnSyncReturns } from 'node:child_process';
++import { existsSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
++import { join } from 'node:path';
++import { describe, expect, it, afterAll } from 'vitest';
++import sharp from 'sharp';
++
++const ROOT = '/home/daniebo/Desktop/forge-worktrees/sprouts-redesign';
++const HEAVY_RUN = '/home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh';
++const PID = process.pid;
++const PIN_NAME = `_flat-render-pin-${PID}`;
++const FIXTURE_PATH = join(ROOT, 'assets', `${PIN_NAME}.ts`);
++const OUT_DIR = join(ROOT, 'out', PIN_NAME);
++const FLAT_DIR = join(OUT_DIR, 'flat');
++const FRONT_PNG = join(FLAT_DIR, 'front-level.png');
++const SIDE_PNG = join(FLAT_DIR, 'side-level.png');
++
++const BODY_HEX = '#3f8fd0';
++const BLOCK_HEX = '#e0a030';
++
++function pinSource(): string {
++  return `import { defineAsset, sdf } from '../src/index.js';
++
++export default defineAsset({
++  name: '${PIN_NAME}',
++  texture: false,
++  build(k) {
++    k.body('body', sdf.box([0.4, 1.0, 0.2]).at(0, 0.5, 0), { color: '${BODY_HEX}' });
++    k.body('block', sdf.box([0.2, 0.05, 0.05]).at(0, 0.9, 0.125), { color: '${BLOCK_HEX}' });
++  },
++});
++`;
++}
++
++let created = false;
++let renderResult: SpawnSyncReturns<string> | null = null;
++
++function createFixture(targetPath: string, body: string): void {
++  try {
++    writeFileSync(targetPath, body, { flag: 'wx' });
++  } catch (error) {
++    const e = error as NodeJS.ErrnoException;
++    if (e.code === 'EEXIST') throw new Error(`fixture path exists: ${targetPath}`);
++    throw error;
++  }
++  if (targetPath === FIXTURE_PATH) created = true;
++}
++
++function removeOwned(): void {
++  if (created) {
++    rmSync(FIXTURE_PATH, { force: true });
++    created = false;
++  }
++}
++
++function runForge(args: string): SpawnSyncReturns<string> {
++  return spawnSync('bash', [HEAVY_RUN, '-c', `./forge ${args}`], {
++    cwd: ROOT,
++    encoding: 'utf8',
++    timeout: 600_000,
++    env: { ...process.env, HEAVY_MIN_AVAIL_MB: '1500' },
++  });
++}
++
++function ensureRendered(): SpawnSyncReturns<string> {
++  if (!existsSync(FIXTURE_PATH)) createFixture(FIXTURE_PATH, pinSource());
++  if (!renderResult) {
++    renderResult = runForge(
++      `render ${PIN_NAME} --fast --views front-level,side-level --ortho --flat --bg none --size 256`,
++    );
++  }
++  return renderResult;
++}
++
++async function pixel(pngPath: string, col: number, row: number): Promise<[number, number, number, number]> {
++  const { data, info } = await sharp(pngPath).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
++  const idx = (row * info.width! + col) * 4;
++  return [data[idx!]!, data[idx! + 1]!, data[idx! + 2]!, data[idx! + 3]!];
++}
++
++async function maskRows(
++  pngPath: string,
++): Promise<{ top: number; bottom: number; height: number; width: number }> {
++  const { data, info } = await sharp(pngPath).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
++  const width = info.width!;
++  const height = info.height!;
++  let top = -1;
++  let bottom = -1;
++  for (let row = 0; row < height; row += 1) {
++    for (let col = 0; col < width; col += 1) {
++      if (data[(row * width + col) * 4 + 3]! >= 128) {
++        if (top === -1) top = row;
++        bottom = row;
++        break;
++      }
++    }
++  }
++  return { top, bottom, height: bottom - top + 1, width };
++}
++
++function hexToRgb(hex: string): [number, number, number] {
++  return [parseInt(hex.slice(1, 3), 16), parseInt(hex.slice(3, 5), 16), parseInt(hex.slice(5, 7), 16)];
++}
++
++afterAll(() => {
++  removeOwned();
++});
++
++describe('render options (orthographic flat pin)', () => {
++  it('writes both flat views at 256x256', { timeout: 600_000 }, async () => {
++    const result = ensureRendered();
++    expect(result.status, result.stderr || result.stdout).toBe(0);
++    for (const pngPath of [FRONT_PNG, SIDE_PNG]) {
++      expect(existsSync(pngPath), `missing ${pngPath}`).toBe(true);
++    }
++    for (const pngPath of [FRONT_PNG, SIDE_PNG]) {
++      const meta = await sharp(pngPath).metadata();
++      expect(meta.width).toBe(256);
++      expect(meta.height).toBe(256);
++    }
++  });
++
++  it('leaves the corner pixel transparent', { timeout: 600_000 }, async () => {
++    ensureRendered();
++    expect(existsSync(FRONT_PNG), `missing ${FRONT_PNG}`).toBe(true);
++    const [, , , a] = await pixel(FRONT_PNG, 0, 0);
++    expect(a).toBe(0);
++  });
++
++  it('renders the body colour within 1 of 255', { timeout: 600_000 }, async () => {
++    ensureRendered();
++    expect(existsSync(FRONT_PNG), `missing ${FRONT_PNG}`).toBe(true);
++    const meta = await sharp(FRONT_PNG).metadata();
++    const [rr, gg, bb] = hexToRgb(BODY_HEX);
++    const [r, g, b, a] = await pixel(FRONT_PNG, Math.floor(meta.width! / 2), Math.floor(meta.height! / 2));
++    expect(a).toBeGreaterThanOrEqual(250);
++    expect(Math.abs(r - rr)).toBeLessThanOrEqual(1);
++    expect(Math.abs(g - gg)).toBeLessThanOrEqual(1);
++    expect(Math.abs(b - bb)).toBeLessThanOrEqual(1);
++  });
++
++  it('renders the block colour within 1 of 255', { timeout: 600_000 }, async () => {
++    ensureRendered();
++    expect(existsSync(FRONT_PNG), `missing ${FRONT_PNG}`).toBe(true);
++    const meta = await sharp(FRONT_PNG).metadata();
++    const [rr, gg, bb] = hexToRgb(BLOCK_HEX);
++    const [r, g, b, a] = await pixel(FRONT_PNG, Math.floor(meta.width! / 2), Math.floor(meta.height! * 0.12));
++    expect(a).toBeGreaterThanOrEqual(250);
++    expect(Math.abs(r - rr)).toBeLessThanOrEqual(1);
++    expect(Math.abs(g - gg)).toBeLessThanOrEqual(1);
++    expect(Math.abs(b - bb)).toBeLessThanOrEqual(1);
++  });
++
++  it('keeps both view heights within 2 px', { timeout: 600_000 }, async () => {
++    ensureRendered();
++    expect(existsSync(FRONT_PNG), `missing ${FRONT_PNG}`).toBe(true);
++    expect(existsSync(SIDE_PNG), `missing ${SIDE_PNG}`).toBe(true);
++    const front = await maskRows(FRONT_PNG);
++    const side = await maskRows(SIDE_PNG);
++    expect(Math.abs(front.height - side.height)).toBeLessThanOrEqual(2);
++  });
++
++  it(
++    'places the side block left of centre by 0.02 m ppm or more (decision j)',
++    { timeout: 600_000 },
++    async () => {
++      ensureRendered();
++      expect(existsSync(SIDE_PNG), `missing ${SIDE_PNG}`).toBe(true);
++      const { data, info } = await sharp(SIDE_PNG).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
++      const width = info.width!;
++      const height = info.height!;
++      const [rr, gg, bb] = hexToRgb(BLOCK_HEX);
++      let minCol = width;
++      for (let row = 0; row < height; row += 1) {
++        for (let col = 0; col < width; col += 1) {
++          const idx = (row * width + col) * 4;
++          if (
++            data[idx + 3]! >= 250 &&
++            Math.abs(data[idx]! - rr) <= 1 &&
++            Math.abs(data[idx + 1]! - gg) <= 1 &&
++            Math.abs(data[idx + 2]! - bb) <= 1
++          ) {
++            if (col < minCol) minCol = col;
++          }
++        }
++      }
++      expect(minCol).toBeLessThan(width);
++      const ppm = 256 / 1.1;
++      expect(width / 2 - minCol).toBeGreaterThanOrEqual(0.02 * ppm);
++    },
++  );
++
++  it('writes the named view without --ortho and rejects --flat without --fast', { timeout: 600_000 }, () => {
++    if (!existsSync(FIXTURE_PATH)) createFixture(FIXTURE_PATH, pinSource());
++    const named = runForge(`render ${PIN_NAME} --views front-level --size 128 --bg none --fast`);
++    expect(named.status, named.stderr || named.stdout).toBe(0);
++    expect(existsSync(join(OUT_DIR, 'views', 'front-level.png'))).toBe(true);
++    const flat = runForge(`render ${PIN_NAME} --views front-level --flat --bg none --size 128`);
++    expect(flat.status).not.toBe(0);
++    expect(`${flat.stderr || ''}${flat.stdout || ''}`).toContain('--flat needs --fast and --bg none');
++  });
++
++  it('protects an existing fixture path and leaves no fixture behind', { timeout: 600_000 }, () => {
++    const probePath = join(ROOT, 'assets', `${PIN_NAME}-probe.ts`);
++    writeFileSync(probePath, '// pre-existing probe\n');
++    const before = readFileSync(probePath, 'utf8');
++    let failure = '';
++    try {
++      createFixture(probePath, pinSource());
++    } catch (error) {
++      failure = (error as Error).message;
++    }
++    expect(failure).toBe(`fixture path exists: ${probePath}`);
++    expect(readFileSync(probePath, 'utf8')).toBe(before);
++    rmSync(probePath, { force: true });
++    const result = ensureRendered();
++    expect(result.status, result.stderr || result.stdout).toBe(0);
++    removeOwned();
++    expect(existsSync(FIXTURE_PATH)).toBe(false);
++    expect(created).toBe(false);
++  });
++});
+diff --git a/tests/sprout-base.test.ts b/tests/sprout-base.test.ts
+index 26e0154c..1e741234 100644
+--- a/tests/sprout-base.test.ts
++++ b/tests/sprout-base.test.ts
+@@ -1,3 +1,4 @@
++// sprout base scrapped 2026-11-23 (Daniel)
+ import { describe, expect, it } from 'vitest';
+ import avatarBase from '../assets/avatar-base.js';
+ import sproutBase from '../assets/sprout-base.js';
+@@ -5,14 +6,16 @@ import { AGE5, HERO } from '../assets/parts/humanoid-kind.js';
+ import { collectBodies } from '../src/asset.js';
+ import { SOCKETS } from '../src/equip.js';
+ 
+-describe('sprout-base (age-5 humanoid)', () => {
++describe.skip('sprout-base (age-5 humanoid) — sprout base scrapped 2026-11-23 (Daniel)', () => {
+   it('has the bone names, clip names, and equip sockets of the avatar base', async () => {
+     const hero = await collectBodies(avatarBase);
+     const sprout = await collectBodies(sproutBase);
+     expect(Object.keys(sprout.skeleton!).sort()).toEqual(Object.keys(hero.skeleton!).sort());
+-    for (const [bone, def] of Object.entries(hero.skeleton!)) expect(sprout.skeleton![bone]!.parent, bone).toBe(def.parent);
++    for (const [bone, def] of Object.entries(hero.skeleton!))
++      expect(sprout.skeleton![bone]!.parent, bone).toBe(def.parent);
+     expect([...sprout.animations.keys()]).toEqual([...hero.animations.keys()]);
+-    for (const [name, socket] of Object.entries(SOCKETS)) expect(sprout.skeleton![socket.bone], name).toBeDefined();
++    for (const [name, socket] of Object.entries(SOCKETS))
++      expect(sprout.skeleton![socket.bone], name).toBeDefined();
+   });
+ 
+   it('keeps the hero head and a shorter body', () => {
+diff --git a/tests/sprout-gesture-offset.test.ts b/tests/sprout-gesture-offset.test.ts
+index 7214026a..d75174c9 100644
+--- a/tests/sprout-gesture-offset.test.ts
++++ b/tests/sprout-gesture-offset.test.ts
+@@ -1,3 +1,4 @@
++// sprout base scrapped 2026-11-23 (Daniel)
+ import { describe, expect, it } from 'vitest';
+ import * as THREE from 'three';
+ import { AGE5, humanoidAsset } from '../assets/parts/humanoid-kind.js';
+@@ -57,24 +58,47 @@ const TOL = 0.005;
+ 
+ interface Captured {
+   readonly skel: Record<string, { at: readonly [number, number, number] }>;
+-  readonly anims: Map<string, { duration: number; loop?: boolean; pose: (t: number, p: number) => Record<string, { rotate?: readonly [number, number, number]; move?: readonly [number, number, number] }> }>;
++  readonly anims: Map<
++    string,
++    {
++      duration: number;
++      loop?: boolean;
++      pose: (
++        t: number,
++        p: number,
++      ) => Record<
++        string,
++        { rotate?: readonly [number, number, number]; move?: readonly [number, number, number] }
++      >;
++    }
++  >;
+ }
+ 
+ function capture(def: AssetDefinition): Captured {
+   const anims = new Map<string, Captured['anims'] extends Map<string, infer A> ? A : never>();
+   const skel: Captured['skel'] = {};
+   const k: {
+-    body(): void; add(): void; group(n: string, o: unknown, fn: (kk: unknown) => void): void;
+-    skeleton(d: unknown): void; animation(n: string, a: unknown): void; tint(): string;
++    body(): void;
++    add(): void;
++    group(n: string, o: unknown, fn: (kk: unknown) => void): void;
++    skeleton(d: unknown): void;
++    animation(n: string, a: unknown): void;
++    tint(): string;
+   } = {
+     body() {},
+     add() {},
+-    group(_n: string, _o: unknown, fn: (kk: unknown) => void) { fn(k); },
+-    skeleton(d: unknown) { Object.assign(skel, d); },
++    group(_n: string, _o: unknown, fn: (kk: unknown) => void) {
++      fn(k);
++    },
++    skeleton(d: unknown) {
++      Object.assign(skel, d);
++    },
+     animation(n: string, a: unknown) {
+       anims.set(n, a as Captured['anims'] extends Map<string, infer A> ? A : never);
+     },
+-    tint() { return '#ffffff'; },
++    tint() {
++      return '#ffffff';
++    },
+   };
+   // biome-ignore lint: the fake context only records skeleton and animation definitions.
+   def.build(k as never);
+@@ -133,7 +157,10 @@ function lilyLikeKind(gestureOpts: { handClearance?: number } | undefined): Huma
+     },
+     extra(k: never, h: never) {
+       (sproutGestures as (k: never, h: never, p: never, o?: unknown) => void)(
+-        k, h, AGE5 as never, gestureOpts,
++        k,
++        h,
++        AGE5 as never,
++        gestureOpts,
+       );
+     },
+   };
+@@ -147,8 +174,7 @@ function wristHeadDistance(
+ ): number {
+   const quat = (r: readonly [number, number, number]): THREE.Quaternion =>
+     new THREE.Quaternion().setFromEuler(new THREE.Euler(r[0] * DEG, r[1] * DEG, r[2] * DEG));
+-  const vec = (a: readonly [number, number, number]): THREE.Vector3 =>
+-    new THREE.Vector3(a[0], a[1], a[2]);
++  const vec = (a: readonly [number, number, number]): THREE.Vector3 => new THREE.Vector3(a[0], a[1], a[2]);
+   const S = vec(skel[`upperarm.${side}`]!.at);
+   const E = vec(skel[`forearm.${side}`]!.at);
+   const W = vec(skel[`hand.${side}`]!.at);
+@@ -185,18 +211,58 @@ function digestAll(def: AssetDefinition): { size: number; digest: string } {
+ }
+ 
+ const SPROUT_CLIPS = [
+-  'gesture-idle', 'gesture-clap', 'gesture-wave', 'gesture-nod', 'gesture-touch-nose',
+-  'gesture-touch-neck', 'gesture-point-to-self', 'gesture-point-forward', 'gesture-hands-out',
+-  'gesture-point-up', 'gesture-reach', 'gesture-count-fingers', 'gesture-sway', 'gesture-look',
+-  'gesture-hop', 'gesture-stretch-up', 'gesture-eat', 'gesture-hug-self', 'gesture-bow',
+-  'gesture-listen', 'gesture-stamp', 'gesture-march', 'gesture-turn', 'picture-march',
+-  'picture-stamp', 'picture-sway',
++  'gesture-idle',
++  'gesture-clap',
++  'gesture-wave',
++  'gesture-nod',
++  'gesture-touch-nose',
++  'gesture-touch-neck',
++  'gesture-point-to-self',
++  'gesture-point-forward',
++  'gesture-hands-out',
++  'gesture-point-up',
++  'gesture-reach',
++  'gesture-count-fingers',
++  'gesture-sway',
++  'gesture-look',
++  'gesture-hop',
++  'gesture-stretch-up',
++  'gesture-eat',
++  'gesture-hug-self',
++  'gesture-bow',
++  'gesture-listen',
++  'gesture-stamp',
++  'gesture-march',
++  'gesture-turn',
++  'picture-march',
++  'picture-stamp',
++  'picture-sway',
+ ];
+ const BASE_CLIPS = ['idle', 'walk', 'run', 'attack', 'hit', 'rest', 'cheer', 'cast'];
+ const MOVED_SPROUT = new Set(['gesture-point-up', 'picture-sway']);
+ const MOVED_BASE = new Set(['cheer']);
+ 
+-describe('per-character hand offset (default poses stay identical)', () => {
++describe('hero clip contracts (not scrapped)', () => {
++  it('keeps the hero clip inventory: the 8 base clips', () => {
++    const { anims } = capture(hero);
++    expect([...anims.keys()].sort()).toEqual([...BASE_CLIPS].sort());
++  });
++
++  it('keeps the hero default pose digest: size 8, digest 68442177', () => {
++    expect(digestAll(hero)).toEqual({ size: 8, digest: '68442177' });
++  });
++
++  it('keeps the hero cheer wrist-to-head distance: 0.27635 m', () => {
++    const c = capture(hero);
++    const pose = c.anims.get('cheer')!.pose(0.4, 0.5) as Record<
++      string,
++      { rotate?: readonly [number, number, number] }
++    >;
++    expect(wristHeadDistance(c.skel, pose, 'R')).toBeCloseTo(0.27635, 4);
++  });
++});
++
++describe.skip('per-character hand offset (default poses stay identical) — sprout base scrapped 2026-11-23 (Daniel)', () => {
+   it('keeps the full clip inventory: 26 sprout clips plus 8 base clips', () => {
+     for (const def of [pat, sam, mia, may, nan, adultBase]) {
+       const { anims } = capture(def);
+@@ -206,8 +272,6 @@ describe('per-character hand offset (default poses stay identical)', () => {
+         expect(anims.get(name)!.loop).toBe(true);
+       }
+     }
+-    const { anims } = capture(hero);
+-    expect([...anims.keys()].sort()).toEqual([...BASE_CLIPS].sort());
+   });
+ 
+   it('keeps the full default pose data per character', () => {
+@@ -217,17 +281,31 @@ describe('per-character hand offset (default poses stay identical)', () => {
+     expect(digestAll(may)).toEqual({ size: 34, digest: '5e70ec98' });
+     expect(digestAll(nan)).toEqual({ size: 34, digest: '22563e18' });
+     expect(digestAll(adultBase)).toEqual({ size: 34, digest: '753da272' });
+-    expect(digestAll(hero)).toEqual({ size: 8, digest: '68442177' });
+   });
+ 
+   it('keeps the key hand distances of point-up, picture-sway, and cheer', () => {
+     const at = (def: AssetDefinition, clip: string, t: number, p: number) => {
+       const c = capture(def);
+-      return { skel: c.skel, pose: c.anims.get(clip)!.pose(t, p) as Record<string, { rotate?: readonly [number, number, number] }> };
++      return {
++        skel: c.skel,
++        pose: c.anims.get(clip)!.pose(t, p) as Record<string, { rotate?: readonly [number, number, number] }>,
++      };
+     };
+     // Raised right wrist of point-up at its hold (t = 1.0 s of 2 s).
+-    expect(wristHeadDistance(at(sam, 'gesture-point-up', 1.0, 0.5).skel, at(sam, 'gesture-point-up', 1.0, 0.5).pose, 'R')).toBeCloseTo(0.21599, 4);
+-    expect(wristHeadDistance(at(adultBase, 'gesture-point-up', 1.0, 0.5).skel, at(adultBase, 'gesture-point-up', 1.0, 0.5).pose, 'R')).toBeCloseTo(0.4216, 4);
++    expect(
++      wristHeadDistance(
++        at(sam, 'gesture-point-up', 1.0, 0.5).skel,
++        at(sam, 'gesture-point-up', 1.0, 0.5).pose,
++        'R',
++      ),
++    ).toBeCloseTo(0.21599, 4);
++    expect(
++      wristHeadDistance(
++        at(adultBase, 'gesture-point-up', 1.0, 0.5).skel,
++        at(adultBase, 'gesture-point-up', 1.0, 0.5).pose,
++        'R',
++      ),
++    ).toBeCloseTo(0.4216, 4);
+     // Both raised wrists of picture-sway (constant held pose).
+     const sway = at(sam, 'picture-sway', 1.0, 0.5);
+     expect(wristHeadDistance(sway.skel, sway.pose, 'R')).toBeCloseTo(0.223, 4);
+@@ -240,22 +318,30 @@ describe('per-character hand offset (default poses stay identical)', () => {
+     expect(wristHeadDistance(cheer.skel, cheer.pose, 'L')).toBeCloseTo(0.22934, 4);
+     const adultCheer = at(adultBase, 'cheer', 0.4, 0.5);
+     expect(wristHeadDistance(adultCheer.skel, adultCheer.pose, 'R')).toBeCloseTo(0.47863, 4);
+-    const heroCheer = at(hero, 'cheer', 0.4, 0.5);
+-    expect(wristHeadDistance(heroCheer.skel, heroCheer.pose, 'R')).toBeCloseTo(0.27635, 4);
+     // Pat holds a teddy bear, so his cheer arms stay down at the rest wrists.
+     const patCheer = at(pat, 'cheer', 0.4, 0.5);
+     expect(wristHeadDistance(patCheer.skel, patCheer.pose, 'R')).toBeCloseTo(0.18631, 4);
+   });
+ });
+ 
+-describe('per-character hand offset (the opt-in moves the hands out)', () => {
++describe.skip('per-character hand offset (the opt-in moves the hands out) — sprout base scrapped 2026-11-23 (Daniel)', () => {
+   it('moves the point-up hand outward by the requested clearance', () => {
+     const { shape, skel } = realShape(AGE5);
+     const run = (opts: { handClearance?: number } | undefined): number => {
+-      const anims = new Map<string, { pose: (t: number, p: number) => Record<string, { rotate?: readonly [number, number, number] }> }>();
+-      const k = { animation(n: string, a: never) { anims.set(n, a); } };
++      const anims = new Map<
++        string,
++        { pose: (t: number, p: number) => Record<string, { rotate?: readonly [number, number, number] }> }
++      >();
++      const k = {
++        animation(n: string, a: never) {
++          anims.set(n, a);
++        },
++      };
+       (sproutGestures as (k: never, h: never, p: never, o?: unknown) => void)(
+-        k as never, shape as never, AGE5 as never, opts,
++        k as never,
++        shape as never,
++        AGE5 as never,
++        opts,
+       );
+       return wristHeadDistance(skel, anims.get('gesture-point-up')!.pose(1.0, 0.5), 'R');
+     };
+@@ -268,10 +354,20 @@ describe('per-character hand offset (the opt-in moves the hands out)', () => {
+   it('moves the picture-sway hands outward by the requested clearance', () => {
+     const { shape, skel } = realShape(AGE5);
+     const run = (opts: { handClearance?: number } | undefined): { R: number; L: number } => {
+-      const anims = new Map<string, { pose: (t: number, p: number) => Record<string, { rotate?: readonly [number, number, number] }> }>();
+-      const k = { animation(n: string, a: never) { anims.set(n, a); } };
++      const anims = new Map<
++        string,
++        { pose: (t: number, p: number) => Record<string, { rotate?: readonly [number, number, number] }> }
++      >();
++      const k = {
++        animation(n: string, a: never) {
++          anims.set(n, a);
++        },
++      };
+       (sproutGestures as (k: never, h: never, p: never, o?: unknown) => void)(
+-        k as never, shape as never, AGE5 as never, opts,
++        k as never,
++        shape as never,
++        AGE5 as never,
++        opts,
+       );
+       const pose = anims.get('picture-sway')!.pose(1.0, 0.5);
+       return { R: wristHeadDistance(skel, pose, 'R'), L: wristHeadDistance(skel, pose, 'L') };
+@@ -287,9 +383,16 @@ describe('per-character hand offset (the opt-in moves the hands out)', () => {
+     const { shape } = realShape(AGE5);
+     const run = (opts: { handClearance?: number } | undefined): Map<string, string> => {
+       const anims = new Map<string, { duration: number; pose: (t: number, p: number) => unknown }>();
+-      const k = { animation(n: string, a: never) { anims.set(n, a); } };
++      const k = {
++        animation(n: string, a: never) {
++          anims.set(n, a);
++        },
++      };
+       (sproutGestures as (k: never, h: never, p: never, o?: unknown) => void)(
+-        k as never, shape as never, AGE5 as never, opts,
++        k as never,
++        shape as never,
++        AGE5 as never,
++        opts,
+       );
+       const out = new Map<string, string>();
+       for (const [name, a] of anims) {
+@@ -319,11 +422,21 @@ describe('per-character hand offset (the opt-in moves the hands out)', () => {
+     };
+     const base = run(false);
+     const moved = run(true);
+-    const basePose = base.anims.get('cheer')!.pose(0.4, 0.5) as Record<string, { rotate?: readonly [number, number, number] }>;
+-    const movedPose = moved.anims.get('cheer')!.pose(0.4, 0.5) as Record<string, { rotate?: readonly [number, number, number] }>;
++    const basePose = base.anims.get('cheer')!.pose(0.4, 0.5) as Record<
++      string,
++      { rotate?: readonly [number, number, number] }
++    >;
++    const movedPose = moved.anims.get('cheer')!.pose(0.4, 0.5) as Record<
++      string,
++      { rotate?: readonly [number, number, number] }
++    >;
+     expect(wristHeadDistance(base.skel, basePose, 'R')).toBeCloseTo(0.22934, 4);
+-    expect(wristHeadDistance(moved.skel, movedPose, 'R') - wristHeadDistance(base.skel, basePose, 'R')).toBeGreaterThanOrEqual(CLEARANCE - TOL);
+-    expect(wristHeadDistance(moved.skel, movedPose, 'L') - wristHeadDistance(base.skel, basePose, 'L')).toBeGreaterThanOrEqual(CLEARANCE - TOL);
++    expect(
++      wristHeadDistance(moved.skel, movedPose, 'R') - wristHeadDistance(base.skel, basePose, 'R'),
++    ).toBeGreaterThanOrEqual(CLEARANCE - TOL);
++    expect(
++      wristHeadDistance(moved.skel, movedPose, 'L') - wristHeadDistance(base.skel, basePose, 'L'),
++    ).toBeGreaterThanOrEqual(CLEARANCE - TOL);
+   });
+ 
+   it('leaves the other 7 base clips identical with the kind option', () => {
+@@ -351,7 +464,9 @@ describe('per-character hand offset (the opt-in moves the hands out)', () => {
+     const c = capture(lily);
+     const at = (clip: string, t: number, p: number) =>
+       c.anims.get(clip)!.pose(t, p) as Record<string, { rotate?: readonly [number, number, number] }>;
+-    expect(wristHeadDistance(c.skel, at('gesture-point-up', 1.0, 0.5), 'R')).toBeGreaterThanOrEqual(0.21599 + 0.035);
++    expect(wristHeadDistance(c.skel, at('gesture-point-up', 1.0, 0.5), 'R')).toBeGreaterThanOrEqual(
++      0.21599 + 0.035,
++    );
+     const sway = at('picture-sway', 1.0, 0.5);
+     expect(wristHeadDistance(c.skel, sway, 'R')).toBeGreaterThanOrEqual(0.223 + 0.035);
+     expect(wristHeadDistance(c.skel, sway, 'L')).toBeGreaterThanOrEqual(0.223 + 0.035);
+diff --git a/tests/sprout-gestures.test.ts b/tests/sprout-gestures.test.ts
+index 2e06a18e..b4aa45fc 100644
+--- a/tests/sprout-gestures.test.ts
++++ b/tests/sprout-gestures.test.ts
+@@ -1,3 +1,4 @@
++// sprout base scrapped 2026-11-23 (Daniel)
+ import { describe, expect, it } from 'vitest';
+ import { ADULT, AGE5 } from '../assets/parts/humanoid-kind.js';
+ import { gestureTargets } from '../assets/parts/sprout-gestures.js';
+@@ -8,7 +9,7 @@ import { gestureTargets } from '../assets/parts/sprout-gestures.js';
+  * moves each goal to the same place on the grown-up body (in front of the chest, at the jaw,
+  * on the hip) instead of inside the belly.
+  */
+-describe('sprout gestures (adult-aware targets)', () => {
++describe.skip('sprout gestures (adult-aware targets) — sprout base scrapped 2026-11-23 (Daniel)', () => {
+   const child = gestureTargets(AGE5);
+ 
+   it('keeps the child clap plane and hand gap', () => {
+@@ -49,7 +50,16 @@ describe('sprout gestures (adult-aware targets)', () => {
+ 
+   it('moves each adult goal to the same place on the grown-up body', () => {
+     const adult = gestureTargets(ADULT);
+-    for (const point of [adult.neck, adult.self, adult.count, adult.hip, adult.eat, adult.hugR, adult.hugL, adult.listen])
++    for (const point of [
++      adult.neck,
++      adult.self,
++      adult.count,
++      adult.hip,
++      adult.eat,
++      adult.hugR,
++      adult.hugL,
++      adult.listen,
++    ])
+       for (const v of point) expect(Number.isFinite(v)).toBe(true);
+     // Hands meet in front of the adult chest, above the child plane.
+     expect(adult.clap.y).toBeGreaterThan(0.55);

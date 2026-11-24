@@ -1,0 +1,26 @@
+MEASURE_AGENT_RESULT
+track: chibi_sprouts_redesign_20261123
+phase: Phase 2: Green (T3 remediation, Red test side)
+role: measure-mid-red
+phase_base_sha: 23e551df54b7996776a4bcb9e8ccfdb9f35a6083
+role_base_sha: cc8b6e832b8bd483ab466456be88c1c1633453d4
+resulting_head_sha: f06ebe8f81b1b9b52a9f8e2c2bb98e64a8886011
+commits:
+- c916af45c1a8c4a9a9d1e05c4f457910c4ea199b measure(chibi_sprouts_redesign): T2r Red test findings (module root, one ownership check, cleanup) and two failing source cases (tests only: render-options.test.ts, render-options.validation.test.ts)
+- 00f9f6e61807ba384e9632f431661dc5f6f96c56 measure(chibi_sprouts_redesign): Phase 2 records T2r Red c916af45 and T3r remediation (plan only)
+- f06ebe8f81b1b9b52a9f8e2c2bb98e64a8886011 measure(chibi_sprouts_redesign): refresh generated facts for T2r/T3r plan lines (measure bookkeeping only; run files not committed)
+dirty_paths: assets/wizard-argon-trial.ts (unrelated user work, preserved); measure/runs logs (generated or unrelated, not committed); no fixture, probe, or out leftovers from these runs
+T2r test-side fixes (pass on the current source by construction):
+- repo root derives from the test module (fileURLToPath + '..'), HEAVY_RUN derives from it with a HEAVY_RUN_PATH override; the run uses cwd ROOT and asserts the checkout files exist
+- one ownership check: wx creation or 'fixture path exists: <path>'; no existsSync bypass; the ownership flag sets only after a successful create; the finally removes only the owned file; the probe uses wx with a pid-unique name; the first case plants a collision on the actual fixture path, requires the named error, an untouched plant, no render, and removes the plant itself
+- old-text bypass proof (/tmp/ownership-probe.mjs, uncommitted): the old existsSync-guard logic renders the planted file with no error; the new logic throws the named error and leaves the plant untouched
+- out cleanup: removeOutDir removes only the run's own out/_flat-render-pin-<pid>/ after lstat (no symlink follow), realpath, under-repo-out, and name-prefix checks
+- the 9 cases of tests/render-options.test.ts pass on the current source (test-side hardening, no source change)
+new source cases (fail on the current source, exit 1):
+- rejects an unknown render view before the build with one error line: got 11 output lines, stack trace frames, and build outputs (_flat-render-validation-<pid>.glb, stats.json) appeared
+- rejects an asset name with a path separator before any path is computed: traversal run gave 6 output lines, stack frames, and created the output path outside out/; the a/b run already prints one line (assetPath throws outside the run wrapper), so only the traversal defects fail
+final Red run: node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/render-options.test.ts tests/render-options.validation.test.ts exits 1 with 2 failed and 9 passed (11 total)
+other suites: tests/render-options.adversarial.test.ts plus the three T1 files exit 0 (5 passed, 15 skipped); the adversarial file is unchanged
+gates: prettier --check exits 0 on both test files and plan.md; tsc --noEmit reports no error in the touched test files (51 pre-existing errors stay); no error or warning names a Red file
+status: blocked_reason=none; T2r Red test work is done, T3r Green remediation owns the source fix
+END_MEASURE_AGENT_RESULT

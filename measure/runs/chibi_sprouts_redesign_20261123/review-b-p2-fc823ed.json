@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "role": "review-b",
+  "track": "chibi_sprouts_redesign_20261123",
+  "phase": "Phase 2: Green",
+  "baseline_sha": "23e551df54b7996776a4bcb9e8ccfdb9f35a6083",
+  "phase_base_sha": "23e551df54b7996776a4bcb9e8ccfdb9f35a6083",
+  "role_base_sha": "fc823ed14104a6b81e942f6a9a5e8b507aab949f",
+  "audited_head_sha": "fc823ed14104a6b81e942f6a9a5e8b507aab949f",
+  "status": "pass",
+  "summary": "F1 is fixed: the r1 traversal probe now exits 1 with one line, builds nothing, and deletes nothing; hostile names, symlinks at flat and at out/<name>, and the out/ symlink farm all hold. Two late local-only hardening items remain (rmSync TOCTOU on an intermediate swap; writes follow a pre-planted flat symlink). No user can reach a wrong result; both are tech-debt.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "N1 [Tech-debt] review-b: removeFlatFolder (src/cli/forge.ts) has a TOCTOU window: rmSync deletes through a symlink swapped into an intermediate path component between realpathSync(flatDir) and rmSync (probe: an intermediate swap out/<name> -> symlink let rmSync delete through to the target; a leaf swap was refused and the target survived). Reaching it needs a concurrent local writer racing inside out/, so no CLI user can hit it; consider rename-then-delete or document the accepted race.",
+    "N2 [Tech-debt] review-b: writes follow a pre-planted symlink even though deletion refuses: with out/<name>/flat or out/<name> symlinked to another folder, the flat PNGs land in the symlink target (probe wrote front-level.png into both targets; both markers survived removal). Local-only, needs a pre-planted symlink inside out/; the removeFlatFolder realpath rule still guarantees nothing outside the real out/ root is ever deleted, including through the worktree out/ symlinks to the main tree."
+  ],
+  "evidence": [
+    "HEAD matches audited_head_sha fc823ed14104a6b81e942f6a9a5e8b507aab949f; phase_base_sha is its ancestor; role_base_sha recorded as HEAD.",
+    "F1 withdrawn: the r1 traversal probe (./forge render ../measure/runs/chibi_sprouts_redesign_20261123/probe-r2/escape-asset --fast --bg none --flat --views front-level --size 64, through heavy-run.sh) now exits 1 with exactly one line 'Invalid asset name ...: an asset name has no path separator.', builds nothing, writes nothing, and the exclusively-created marker file survives.",
+    "F2 withdrawn: tests/render-options.test.ts now resolves ROOT from import.meta.url and HEAVY_RUN from an env override or a relative path, has a single ownership check (createExclusive), tests the real fixture path collision (no render starts), and afterAll removes the fixture plus its out/ dir guarded by realpath and the _flat-render-pin- prefix.",
+    "F3 withdrawn: the --size cap was a suggestion about pre-existing, unchanged behavior; it is not a regression and is out of this track's scope.",
+    "Hostile name probes (each exit 1, no build, marker survives): backslash (separator), absolute path, '..' and '.', newline (fails closed at the existence check), fullwidth slash 'sprout／pip' (not a filesystem separator), dot-start '.hidden' (allowed by checkAssetName, fails at existence).",
+    "NUL byte: node spawn rejects it before exec ('must be a string without null bytes'); the OS cannot pass NUL in argv.",
+    "Fixture-name happy path: '_flat-render-pin-rb<pid>' renders with exit 0 and writes only <name>.glb, stats.json, and flat/front-level.png under out/<name>/ (no views/); a second run removes a real prior flat dir (sentinel gone) and rewrites it.",
+    "Symlink at out/<name>/flat: removal refused (lstat isSymbolicLink), the target marker survives, the symlink itself survives.",
+    "Symlink at out/<name> to a temp folder: removal refused (realpath of the parent is not a direct child of the real out/ root), the target marker survives; the worktree out/ holds 1254 symlinks to the main tree and the realpath rule cannot be satisfied through them, so nothing in the main tree's out/ is reachable by the removal.",
+    "Asset file under assets/ as a symlink to a source outside assets/: accepted (vite reads through the symlink; read-side is inherent symlink semantics and needs a pre-planted link), but every write stayed under out/<name>/ (write-side boundary holds).",
+    "TOCTOU probe: rmSync recursive removes a symlink swapped in at the leaf without touching its target, but deletes through a symlink swapped into an intermediate path component (both swaps raced between realpath and rmSync to model removeFlatFolder).",
+    "Merge cc8b6e83 scan: the 7 non-run files (status, tech-debt, old_browser plan/spec, scripts/old-browser-check.mjs, two old-browser tests) contain no secret patterns (AKIA, sk-, ghp_, private key headers, api keys, bearer tokens); no added file has a secret-like name; the remaining added files are the old_browser track's reviewed run artifacts.",
+    "A2 not applicable: no draft-to-published flow in this surface.",
+    "A6: the plan's T3r claims match the implementation and my probes (one-line refusals, no build, symlink refusal, fixture name works); no security state is claimed resolved beyond what the adversarial tests in tests/render-options.validation.test.ts prove.",
+    "Every render ran through heavy-run.sh with HEAVY_MIN_AVAIL_MB=1500; all probe fixtures, symlinks, outputs, and temp dirs were removed; the probe drivers stay under measure/runs/chibi_sprouts_redesign_20261123/ as evidence; nothing of this review is left running."
+  ],
+  "commands": [
+    "git -C <worktree> rev-parse HEAD; git log --oneline 23e551df..HEAD; git diff 2a33c7c1..fc823ed1 -- src/pipeline.ts src/cli/forge.ts",
+    "node probe-r2-driver.cjs (11 wrapped forge renders + node-only TOCTOU/NUL probes; JSON report)",
+    "node probe-r2b-driver.cjs / probe-r2d-driver.cjs (asset-file-symlink re-probe with corrected import depth)",
+    "git diff cc8b6e83^1 cc8b6e83 --name-only | grep -vE ^measure/runs/old_browser; content grep of the 7 non-run files for secret patterns; name grep for secret-like file names",
+    "sed -n 178,235p measure/tracks/chibi_sprouts_redesign_20261123/plan.md (T3r evidence cross-check)"
+  ],
+  "changed_files": [
+    "measure/generated/status.md",
+    "measure/tracks.md",
+    "measure/tracks/chibi_sprouts_redesign_20261123/metadata.json",
+    "measure/tracks/chibi_sprouts_redesign_20261123/plan.md",
+    "src/cli/forge.ts",
+    "src/pipeline.ts",
+    "src/render/page.ts",
+    "tests/apk3d/no-unpolyfilled-builtins.test.ts",
+    "tests/render-options.adversarial.test.ts",
+    "tests/render-options.test.ts",
+    "tests/render-options.validation.test.ts",
+    "tests/sprout-base.test.ts",
+    "tests/sprout-gesture-offset.test.ts",
+    "tests/sprout-gestures.test.ts"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "kimi-code-plan-cn/kimi-for-coding",
+  "ratings": [
+    {"axis": "correctness", "score": 5, "evidence": "The r1 traversal probe now exits 1 with one line and the marker survives; the happy-path flat render writes only glb, stats.json, and flat/ under out/<name>/."},
+    {"axis": "test_meaning", "score": 5, "evidence": "tests/render-options.validation.test.ts re-runs the r1 traversal as a failing-first case with a marker, plus separator and unknown-view cases; tests/render-options.test.ts now tests the real fixture collision."},
+    {"axis": "scope_discipline", "score": 5, "evidence": "6b3a0781 touches only src/cli/forge.ts and src/pipeline.ts for the fix; the scanner pins stay at lines 331/531/538 of the untouched src/render/page.ts."},
+    {"axis": "evidence_quality", "score": 5, "evidence": "Every claim carries a wrapped probe result (probe-r2-driver.cjs report) or a file:line; the plan evidence matches the probes verbatim."}
+  ]
+}

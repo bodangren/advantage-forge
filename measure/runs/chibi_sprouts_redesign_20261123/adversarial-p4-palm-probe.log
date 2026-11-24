@@ -1,0 +1,66 @@
+[
+  {
+    "case": "normal-L",
+    "result": {
+      "ok": true,
+      "normal": [
+        -0.9999999999999848,
+        1.7530776373048308e-7,
+        1.0956738008712505e-9
+      ],
+      "sideDot": -0.9999999999999848,
+      "patchArea": 0.0015999997049569918,
+      "agreement": 1,
+      "palmContact": 0,
+      "thumbContact": 0,
+      "thumbOut": 0.04000000000000001,
+      "thumbForward": 0.020000000000000004
+    }
+  },
+  {
+    "case": "normal-R",
+    "result": {
+      "ok": true,
+      "normal": [
+        0.9999999999999848,
+        1.7530776373048308e-7,
+        1.0956738008712505e-9
+      ],
+      "sideDot": 0.9999999999999848,
+      "patchArea": 0.0015999997049569918,
+      "agreement": 1,
+      "palmContact": 0,
+      "thumbContact": 0,
+      "thumbOut": 0.04000000000000001,
+      "thumbForward": 0.020000000000000004
+    }
+  },
+  {
+    "case": "thumb-backward",
+    "result": {
+      "ok": false,
+      "failure": "hand L: thumb not on the radial front edge"
+    }
+  },
+  {
+    "case": "empty-indices",
+    "result": {
+      "ok": false,
+      "failure": "hand L: too few vertices"
+    }
+  },
+  {
+    "case": "degenerate-triangles",
+    "result": {
+      "ok": false,
+      "failure": "hand L: palm patch: empty"
+    }
+  },
+  {
+    "case": "degenerate-cloud",
+    "result": {
+      "ok": false,
+      "failure": "hand L: palm patch: empty"
+    }
+  }
+]

@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: review-a
+status: complete
+track: chibi_sprouts_redesign_20261123
+phase: Phase 5: Green
+commits: none
+tests_run: Three sheet test files passed (15 tests); full suite passed (240 files, 3469 tests; 4 files and 27 tests skipped); tsc reported 51 baseline diagnostics and none in the sheet script. The normal render-measure-sheet flow and F4/F5 boundary probes passed.
+files_changed: measure/runs/chibi_sprouts_redesign_20261123/review-a-p5-3941af5.json; measure/runs/chibi_sprouts_redesign_20261123/review-a-p5-3941af5.log
+plan_updates: none
+known_failures: tsc retains 51 baseline diagnostics.
+handoff: PASS. HEAD matches audited_head_sha 3941af5aeb3b7f688fca93f988d7fa86032ac98f. F4 uses the T6 alpha-mask crown and sole values with the specified 2 px tolerance. F5 refuses symlinks at both PNG paths. The normal render-measure-sheet order passed, and both expected PNG hashes remained unchanged. No prior Review A finding was contested. See the provenance-bound JSON for evidence and ratings.
+END_MEASURE_AGENT_RESULT

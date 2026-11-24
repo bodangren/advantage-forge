@@ -1,0 +1,2 @@
+ee5b50da9a2775426ac70699d64e233523473443aa5ec2e537f96cfd9fbf5e6e  out/avatar-base/views/front.png
+e9dc47f17d94ae2cce4e24fe21f95dd59fec62ec577b965a162d35d5a1b05797  out/avatar-base/views/three-quarter.png

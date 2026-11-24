@@ -1,0 +1,11 @@
+checkRows probe launcher PID=3455282
+{"name":"all-lo","result":[]}
+{"name":"all-hi","result":[]}
+{"name":"unicode-extra","result":["checkRows: unknown row éyeLine"]}
+{"name":"prototype-__proto__","result":["checkRows: unknown row __proto__"]}
+{"name":"prototype-constructor","result":["checkRows: unknown row constructor"]}
+{"name":"not-array","result":["checkRows: expected 11 rows, found 0"]}
+{"name":"extra-fields","result":[]}
+{"name":"boxed-number","result":["FAIL heightInHeads: not a number"]}
+{"name":"negative-zero-wrist","result":[]}
+{"name":"negative-zero-positive-row","result":["FAIL legShare: 0 not in 0.36..0.42"]}

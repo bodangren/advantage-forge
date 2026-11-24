@@ -1,0 +1,168 @@
+full-copy mutant launcher PID=1758929
+MUTATION=long-arms
+sprout-mom-kim: 48,900 triangles, 0.432 x 1.513 x 0.385 m, built in 1431 ms
+  head-skin                 6838 tris  (432 ms)
+  torso-skin                2180 tris  (134 ms)
+  arms-skin                 1390 tris  (108 ms)
+  legs-skin                 1236 tris  (135 ms)
+  feet-skin                 1402 tris  (46 ms)
+  hands                    19988 tris  (537 ms)
+  hair                      4926 tris  (333 ms)
+  sweater                   5678 tris  (444 ms)
+  jeans                     3170 tris  (143 ms)
+  flats                     1742 tris  (80 ms)
+  studs                      350 tris  (5 ms)
+texture  none (vertex colors)
+glb      out/sprout-mom-kim/sprout-mom-kim.glb  (1827 KB)
+flat     out/sprout-mom-kim/flat/  (2 views, 259 ms)
+sprout-mom-kim: 48,900 triangles, 0.432 x 1.513 x 0.385 m, built in 1133 ms
+  head-skin                 6838 tris  (454 ms)
+  torso-skin                2180 tris  (198 ms)
+  arms-skin                 1390 tris  (95 ms)
+  legs-skin                 1236 tris  (101 ms)
+  feet-skin                 1402 tris  (40 ms)
+  hands                    19988 tris  (499 ms)
+  hair                      4926 tris  (309 ms)
+  sweater                   5678 tris  (413 ms)
+  jeans                     3170 tris  (156 ms)
+  flats                     1742 tris  (69 ms)
+  studs                      350 tris  (3 ms)
+texture  none (vertex colors)
+glb      out/sprout-mom-kim/sprout-mom-kim.glb  (1827 KB)
+render   out/sprout-mom-kim/render.png  (322 ms)
+heightInHeads 3.595144 3.54..3.74 pass
+armToTorso 1.44957 1.25..1.41 FAIL
+legShare 0.389427 0.36..0.42 pass
+headToShoulders 1.170666 1.11..1.27 pass
+wrist -0.061303 -0.16..0.04 pass
+fingertips 0.700516 0.41..0.61 FAIL
+eyeLine 0.62944 0.59..0.65 pass
+eyeHeight 0.104263 0.09..0.13 pass
+spacingHead 0.383495 0.35..0.41 pass
+eyeWidthFace 0.226744 0.22..0.24 pass
+spacingFace 0.459302 0.44..0.5 pass
+palm L: ok
+palm R: ok
+FAIL armToTorso: 1.44957 not in 1.25..1.41
+FAIL fingertips: 0.700516 not in 0.41..0.61
+MEASURE_EXIT=1
+MUTATION=small-head
+sprout-mom-kim: 48,808 triangles, 0.432 x 1.433 x 0.384 m, built in 1266 ms
+  head-skin                 7100 tris  (424 ms)
+  torso-skin                2180 tris  (188 ms)
+  arms-skin                 1390 tris  (111 ms)
+  legs-skin                 1236 tris  (80 ms)
+  feet-skin                 1402 tris  (45 ms)
+  hands                    19966 tris  (380 ms)
+  hair                      4594 tris  (265 ms)
+  sweater                   5678 tris  (397 ms)
+  jeans                     3170 tris  (179 ms)
+  flats                     1742 tris  (60 ms)
+  studs                      350 tris  (2 ms)
+texture  none (vertex colors)
+glb      out/sprout-mom-kim/sprout-mom-kim.glb  (1820 KB)
+flat     out/sprout-mom-kim/flat/  (2 views, 245 ms)
+sprout-mom-kim: 48,808 triangles, 0.432 x 1.433 x 0.384 m, built in 1199 ms
+  head-skin                 7100 tris  (422 ms)
+  torso-skin                2180 tris  (221 ms)
+  arms-skin                 1390 tris  (110 ms)
+  legs-skin                 1236 tris  (100 ms)
+  feet-skin                 1402 tris  (51 ms)
+  hands                    19966 tris  (387 ms)
+  hair                      4594 tris  (302 ms)
+  sweater                   5678 tris  (428 ms)
+  jeans                     3170 tris  (172 ms)
+  flats                     1742 tris  (47 ms)
+  studs                      350 tris  (2 ms)
+texture  none (vertex colors)
+glb      out/sprout-mom-kim/sprout-mom-kim.glb  (1820 KB)
+render   out/sprout-mom-kim/render.png  (326 ms)
+palm L: ok
+palm R: ok
+eye component touches the window
+MEASURE_EXIT=1
+MUTATION=palms-out
+sprout-mom-kim: 48,904 triangles, 0.432 x 1.513 x 0.385 m, built in 1211 ms
+  head-skin                 6838 tris  (447 ms)
+  torso-skin                2180 tris  (153 ms)
+  arms-skin                 1390 tris  (75 ms)
+  legs-skin                 1236 tris  (126 ms)
+  feet-skin                 1402 tris  (47 ms)
+  hands                    19992 tris  (376 ms)
+  hair                      4926 tris  (293 ms)
+  sweater                   5678 tris  (402 ms)
+  jeans                     3170 tris  (178 ms)
+  flats                     1742 tris  (54 ms)
+  studs                      350 tris  (3 ms)
+texture  none (vertex colors)
+glb      out/sprout-mom-kim/sprout-mom-kim.glb  (1828 KB)
+flat     out/sprout-mom-kim/flat/  (2 views, 248 ms)
+sprout-mom-kim: 48,904 triangles, 0.432 x 1.513 x 0.385 m, built in 1173 ms
+  head-skin                 6838 tris  (439 ms)
+  torso-skin                2180 tris  (140 ms)
+  arms-skin                 1390 tris  (99 ms)
+  legs-skin                 1236 tris  (110 ms)
+  feet-skin                 1402 tris  (53 ms)
+  hands                    19992 tris  (368 ms)
+  hair                      4926 tris  (314 ms)
+  sweater                   5678 tris  (428 ms)
+  jeans                     3170 tris  (179 ms)
+  flats                     1742 tris  (61 ms)
+  studs                      350 tris  (4 ms)
+texture  none (vertex colors)
+glb      out/sprout-mom-kim/sprout-mom-kim.glb  (1828 KB)
+render   out/sprout-mom-kim/render.png  (324 ms)
+heightInHeads 3.595144 3.54..3.74 pass
+armToTorso 1.327761 1.25..1.41 pass
+legShare 0.389427 0.36..0.42 pass
+headToShoulders 1.170666 1.11..1.27 pass
+wrist -0.061303 -0.16..0.04 pass
+fingertips 0.509267 0.41..0.61 pass
+eyeLine 0.62944 0.59..0.65 pass
+eyeHeight 0.104263 0.09..0.13 pass
+spacingHead 0.383495 0.35..0.41 pass
+eyeWidthFace 0.226744 0.22..0.24 pass
+spacingFace 0.459302 0.44..0.5 pass
+GUARD hand edge: counted 152/76 gap 2 width 37/26.547271
+palm L: hand L: palm surface faces away from the declared normal
+palm R: hand R: palm surface faces away from the declared normal
+GUARD hand edge: counted 152/76 gap 2 width 37/26.547271
+hand L: palm surface faces away from the declared normal
+hand R: palm surface faces away from the declared normal
+MEASURE_EXIT=1
+MUTATION=merged-eyes
+sprout-mom-kim: 48,048 triangles, 0.432 x 1.513 x 0.385 m, built in 1276 ms
+  head-skin                 6008 tris  (470 ms)
+  torso-skin                2180 tris  (150 ms)
+  arms-skin                 1390 tris  (84 ms)
+  legs-skin                 1236 tris  (132 ms)
+  feet-skin                 1402 tris  (47 ms)
+  hands                    19966 tris  (369 ms)
+  hair                      4926 tris  (283 ms)
+  sweater                   5678 tris  (422 ms)
+  jeans                     3170 tris  (153 ms)
+  flats                     1742 tris  (74 ms)
+  studs                      350 tris  (3 ms)
+texture  none (vertex colors)
+glb      out/sprout-mom-kim/sprout-mom-kim.glb  (1769 KB)
+flat     out/sprout-mom-kim/flat/  (2 views, 259 ms)
+sprout-mom-kim: 48,048 triangles, 0.432 x 1.513 x 0.385 m, built in 1128 ms
+  head-skin                 6008 tris  (443 ms)
+  torso-skin                2180 tris  (143 ms)
+  arms-skin                 1390 tris  (97 ms)
+  legs-skin                 1236 tris  (112 ms)
+  feet-skin                 1402 tris  (58 ms)
+  hands                    19966 tris  (341 ms)
+  hair                      4926 tris  (290 ms)
+  sweater                   5678 tris  (405 ms)
+  jeans                     3170 tris  (191 ms)
+  flats                     1742 tris  (51 ms)
+  studs                      350 tris  (4 ms)
+texture  none (vertex colors)
+glb      out/sprout-mom-kim/sprout-mom-kim.glb  (1769 KB)
+render   out/sprout-mom-kim/render.png  (329 ms)
+palm L: ok
+palm R: ok
+eye components: found 1, expected 2
+MEASURE_EXIT=1
+MUTATION_EXIT=0

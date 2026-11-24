@@ -1,0 +1,99 @@
+{
+  "schema_version": 1,
+  "role": "adversarial-testing",
+  "track": "chibi_sprouts_redesign_20261123",
+  "phase": "Phase 4: Green",
+  "baseline_sha": "28ff79903552f5d8c2a8bf118775ee1dab7eb514",
+  "phase_base_sha": "28ff79903552f5d8c2a8bf118775ee1dab7eb514",
+  "role_base_sha": "c2f8736e0756b91790f3fe98251851b199ec3499",
+  "audited_head_sha": "c2f8736e0756b91790f3fe98251851b199ec3499",
+  "status": "fail",
+  "summary": "The core proportion check can report success when its row table omits required measurements. Real Mom runs, four asset mutants, palm mutations, render rejection, preset pin, forge check, and sprout-pip parity were also probed.",
+  "blocking_findings": [
+    "F2 [Blocker] adversarial-testing: scripts/proportion-check.mjs:44-50 accepts incomplete or malformed measurement tables: checkRows([]), a missing row, an extra or duplicate row, and numeric-string values all return no failure. The pass table requires exactly eleven unique named rows with numeric values. Rationale: an omitted measurement can make the phase's proportion gate pass without proving every required ratio. Probe: adversarial-p4-probe.mjs, 93 cases, 15 unexpected passes; the wrist value 0 is valid and was excluded from unexpected passes."
+  ],
+  "nonblocking_findings": [],
+  "evidence": [
+    "Provenance: HEAD was c2f8736e0756b91790f3fe98251851b199ec3499 at role start; phase_base_sha 28ff79903552f5d8c2a8bf118775ee1dab7eb514 resolves to a commit. The current HEAD later advanced to 0d4ff3364f6dcd0a924151599e34fb8d0114197a; Review C records that later change as plan/design-only. Audit remains bound to the required c2f8736e0756b91790f3fe98251851b199ec3499.",
+    "Exact audited diff saved at measure/runs/chibi_sprouts_redesign_20261123/adversarial-p4-c2f8736.diff; its Phase 4 deliverables are scripts/proportion-check.mjs, assets/parts/humanoid-kim.ts, assets/sprout-mom-kim.ts, and tests/fixtures/preset-pin.json, with associated plan, generated facts, and Red test files.",
+    "checkRows probe: 93 cases covered lower/upper bounds and values just outside each bound across eleven rows, NaN, negative, zero, numeric strings, missing, extra, duplicate, and empty tables, plus the five synthetic figures. All valid edge values passed; 15 invalid input cases returned pass. `wrist=0` is inside its specified interval and is not a failure.",
+    "Five synthetic figures behaved as expected: pass figure passed; crown-high failed heightInHeads; sole-low failed legShare; wide-head failed headToShoulders; merged-eyes failed with `eye components: found 1, expected 2`.",
+    "Synthetic palm probe: normal L and R passed; a backward thumb failed `hand L: thumb not on the radial front edge`; empty indices failed `too few vertices`; degenerate triangles failed `palm patch: empty`. The existing three mutations remain individually named.",
+    "Real asset mutant renders in a disposable /tmp repository copy: long arms failed armToTorso and fingertips; small head failed `eye component touches the window`; palms turned outward failed both palm orientation checks and hand-edge guard; merged eyes failed `eye components: found 1, expected 2`. No mutant passed all eleven rows and guards. The scratch copy was removed.",
+    "A 5-degree rotation of the flat front render in a disposable copy failed `sole on mask`, `top on mask`, and the eye-window check. The temporary copy was removed.",
+    "Missing-input paths in a temporary copy returned exit 1 with the missing source path when a GLB existed, and with the missing GLB path when the source existed. Traversal names were not rejected explicitly; Review B already routed this as N1 Tech-debt, so this run does not duplicate it.",
+    "The measure.json output-symlink probe in a disposable copy exited 0 and created the target outside the output folder. Review B already routed this as N2 Tech-debt, so this run does not duplicate it. The stale symlink in the worktree was unlinked without following it before the fresh measurement run.",
+    "After deleting the stale measure.json link, the wrapped real measurement command recreated a regular file, exited 0, printed eleven passing rows, and reported both palms ok.",
+    "Parsed preset-pin comparison against 0540e6ce found 394 current assets versus 393 baseline assets; only `sprout-mom-kim` was added, with no removed keys or changed baseline values.",
+    "Wrapped `./forge check sprout-mom-kim` exited 0 with rest, idle, and ground checks ok.",
+    "Wrapped targeted phase tests passed: 3 files and 42 tests. The full project gate exited 1 with only the expected T5 sheet cases red: 8 failures in tests/mom-kim-sheet.test.ts, 3435 passed, 27 skipped; the missing scripts/mom-kim-sheet.mjs error matches the plan until T8.",
+    "Byte-identical sprout-pip render check on disposable phase-base and audited-HEAD copies: both render.png files had SHA-256 7efc9c271626c597bd542d72e4ea9d0bc9949f3b031cef0baacb1a190cba7b23. Both copies were removed.",
+    "Build graph scan completed through heavy-run: 22474 nodes and 25301 edges. The separate callers query returned no result for the .mjs export and did not affect the code findings.",
+    "Review B N1 and N2 are corroborated by this run and remain prior Tech-debt findings. No new duplicate finding was added for either item."
+  ],
+  "commands": [
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node /home/daniebo/Desktop/forge-worktrees/sprouts-redesign/measure/runs/chibi_sprouts_redesign_20261123/adversarial-p4-probe.mjs' — 93 cases, 15 unexpected passes.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node /home/daniebo/Desktop/forge-worktrees/sprouts-redesign/measure/runs/chibi_sprouts_redesign_20261123/adversarial-p4-palm-probe.mjs' — L/R normal, backward-thumb, empty-index, degenerate-triangle cases recorded.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'bash /tmp/adv-sprouts-p4-full/mutate.sh' — all four mutations rejected; scratch copy removed.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'cd /tmp/adv-sprout-projection && node rotate-test.mjs && ./node_modules/.bin/tsx scripts/proportion-check.mjs --asset sprout-mom-kim' — rotated render rejected; scratch copy removed.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'cd /tmp/adv-proportion-paths; ... proportion-check.mjs --asset no-source; ... proportion-check.mjs --asset no-glb; ... proportion-check.mjs --asset ../assets/no-glb' — source-missing, GLB-missing, and traversal cases recorded; scratch copy removed.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'cd /tmp/adv-sprout-symlink && ./node_modules/.bin/tsx scripts/proportion-check.mjs --asset sprout-mom-kim' — exit 0; external temporary target created through measure.json symlink; scratch and target removed.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'cd /home/daniebo/Desktop/forge-worktrees/sprouts-redesign && ./node_modules/.bin/tsx scripts/proportion-check.mjs --asset sprout-mom-kim' — exit 0 after stale output link removal; eleven rows and both palms pass.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'cd /home/daniebo/Desktop/forge-worktrees/sprouts-redesign && node --input-type=module -e <parsed preset-pin comparison>' — one added asset key, no changed baseline values.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'cd /home/daniebo/Desktop/forge-worktrees/sprouts-redesign && ./forge check sprout-mom-kim' — exit 0.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'cd /home/daniebo/Desktop/forge-worktrees/sprouts-redesign && node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-mom-kim.test.ts tests/preset-colour.test.ts tests/render-options.test.ts' — exit 0, 3 files, 42 tests.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'cd /home/daniebo/Desktop/forge-worktrees/sprouts-redesign && node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts' — exit 1, only T5 sheet test red: 8 failed, 3435 passed, 27 skipped.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'cd /tmp/adv-sprout-pip-base && ./forge render sprout-pip --fast && sha256sum out/sprout-pip/render.png && cd /tmp/adv-sprout-pip-head && ./forge render sprout-pip --fast && sha256sum out/sprout-pip/render.png' — identical SHA-256; scratch copies removed.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'build-graph scan /home/daniebo/Desktop/forge-worktrees/sprouts-redesign /home/daniebo/Desktop/forge-worktrees/sprouts-redesign/measure/runs/chibi_sprouts_redesign_20261123/adversarial-p4-graph.db' — scanned 22474 nodes and 25301 edges."
+  ],
+  "changed_files": [
+    "measure/runs/chibi_sprouts_redesign_20261123/adversarial-p4-c2f8736.json",
+    "measure/runs/chibi_sprouts_redesign_20261123/adversarial-p4-c2f8736.log",
+    "measure/runs/chibi_sprouts_redesign_20261123/adversarial-p4-c2f8736.diff",
+    "measure/runs/chibi_sprouts_redesign_20261123/adversarial-p4-probe.mjs",
+    "measure/runs/chibi_sprouts_redesign_20261123/adversarial-p4-probe.log",
+    "measure/runs/chibi_sprouts_redesign_20261123/adversarial-p4-palm-probe.mjs",
+    "measure/runs/chibi_sprouts_redesign_20261123/adversarial-p4-palm-probe.log",
+    "measure/runs/chibi_sprouts_redesign_20261123/adversarial-p4-asset-mutations.log",
+    "measure/runs/chibi_sprouts_redesign_20261123/adversarial-p4-projection.log",
+    "measure/runs/chibi_sprouts_redesign_20261123/adversarial-p4-path-probe.sh",
+    "measure/runs/chibi_sprouts_redesign_20261123/adversarial-p4-path-probe.log",
+    "measure/runs/chibi_sprouts_redesign_20261123/adversarial-p4-missing-files.log",
+    "measure/runs/chibi_sprouts_redesign_20261123/adversarial-p4-output-symlink.log",
+    "measure/runs/chibi_sprouts_redesign_20261123/adversarial-p4-regeneration.log",
+    "measure/runs/chibi_sprouts_redesign_20261123/adversarial-p4-phase-tests.log",
+    "measure/runs/chibi_sprouts_redesign_20261123/adversarial-p4-project-gate.log",
+    "measure/runs/chibi_sprouts_redesign_20261123/adversarial-p4-forge-check.log",
+    "measure/runs/chibi_sprouts_redesign_20261123/adversarial-p4-render-compare.log",
+    "measure/runs/chibi_sprouts_redesign_20261123/adversarial-p4-graph.db"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "retry_implementation",
+  "confidence": "high",
+  "route": "openai/gpt-6-luna#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 2,
+      "evidence": "scripts/proportion-check.mjs:44-50 returns an empty failure list for an empty, missing-row, duplicate-row, extra-row, or numeric-string table."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 3,
+      "evidence": "The 42 targeted tests cover valid measurements and row-value mutations, but adversarial-p4-probe.log shows 15 invalid table inputs still pass."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The audited phase diff contains the planned measurement script, base, Mom asset, preset pin, and associated phase tests and records."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "The wrapped tests, four real asset mutations, rotated render, preset comparison, forge check, and byte-identical render hashes are recorded in measure/runs/chibi_sprouts_redesign_20261123/adversarial-p4-*.log."
+    }
+  ]
+}

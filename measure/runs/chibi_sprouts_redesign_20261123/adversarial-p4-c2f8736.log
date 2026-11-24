@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: adversarial-testing
+status: fail
+track: chibi_sprouts_redesign_20261123
+phase: Phase 4: Green
+commits: none
+tests_run: wrapped targeted vitest passed 3 files and 42 tests; wrapped project gate exited 1 with only the expected T5 sheet test failures (8 failed, 3435 passed, 27 skipped); 93-row, palm, mutation, projection, missing-input, preset-pin, forge-check, and render-parity probes recorded in the result artifacts
+files_changed: measure/runs/chibi_sprouts_redesign_20261123/adversarial-p4-c2f8736.json, .log, .diff, probe scripts and logs, graph database
+plan_updates: none
+known_failures: F2: checkRows accepts incomplete tables, duplicate or extra rows, and numeric-string values as passing; the full suite remains red only on the expected T5 sheet cases until T8
+handoff: Route F2 [Blocker] to Green: require exactly eleven unique expected row names and reject non-number/non-finite values; add fail-first coverage for empty, missing, duplicate, extra, and string-valued rows. Review B N1/N2 were independently corroborated as prior Tech-debt findings and were not duplicated. Audited HEAD remains c2f8736e0756b91790f3fe98251851b199ec3499; worktree HEAD advanced to 0d4ff3364f6dcd0a924151599e34fb8d0114197a for plan/design-only changes. No production or test files changed; no processes remain from this role.
+END_MEASURE_AGENT_RESULT

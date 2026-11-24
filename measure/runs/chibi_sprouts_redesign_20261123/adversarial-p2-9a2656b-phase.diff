@@ -1,0 +1,1958 @@
+diff --git a/src/cli/forge.ts b/src/cli/forge.ts
+index 9afb602e..0d285cea 100644
+--- a/src/cli/forge.ts
++++ b/src/cli/forge.ts
+@@ -1,5 +1,5 @@
+-import { mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+-import { extname, join, relative, resolve } from 'node:path';
++import { lstatSync, mkdirSync, readFileSync, realpathSync, rmSync, writeFileSync } from 'node:fs';
++import { dirname, extname, join, relative, resolve } from 'node:path';
+ import { parseArgs } from 'node:util';
+ import { chromium, type Browser, type Page } from 'playwright';
+ import { createServer } from 'vite';
+@@ -17,7 +17,7 @@ import type * as Pipeline from '../pipeline.js';
+ import type * as ClipCheck from '../clip-check.js';
+ import type * as Equip from '../equip.js';
+ import type * as EquipCheck from '../equip-check.js';
+-import { OUT_DIR, ROOT, assetPath, listAssets } from '../pipeline.js';
++import { OUT_DIR, ROOT, assetPath, checkAssetName, listAssets } from '../pipeline.js';
+ import { encodePngRgba } from '../png.js';
+ import { REDUCED_ERROR_SCALE, REDUCED_TEXTURE_SIZE } from '../asset.js';
+ 
+@@ -42,11 +42,16 @@ const HELP = `forge — build and look at 3D assets
+ 
+ render options
+   --views front,three-quarter,side,back,top,back-three-quarter  (default: first four)
++  --views front-level,side-level   level views (no tilt): the camera looks straight at the asset
+   --size 512           pixels per view
+   --ref / --no-ref     show the asset's reference image above the views (default: on if set)
+   --focus x,y,z,r      zoom every view on a sphere (world meters), e.g. the face
+   --az 30 --el 10      add one custom view
+   --bg '#aeb3ba'       background color; none = transparent views (the ground shadow stays, semi-transparent)
++  --ortho              level orthographic frame: one scale (pixels per meter) for every view
++  --flat               the flat pass: every mesh unlit in its own colour, no ground, no tone
++                       mapping; writes out/<name>/flat/<view>.png and leaves views/ alone
++                       (needs --fast and --bg none)
+ 
+ sprite options
+   --size 128  --dirs 8|4|1  --elevation 30  --colors 0 (palette size, 0 = full color)
+@@ -103,8 +108,14 @@ const NAMED_VIEWS: Record<string, Omit<ViewSpec, 'name' | 'focus'>> = {
+   back: { azimuth: 180, elevation: 8 },
+   'back-three-quarter': { azimuth: 215, elevation: 12 },
+   top: { azimuth: 25, elevation: 55 },
++  // Level views: no tilt, for a measured comparison between the front and the side.
++  'front-level': { azimuth: 0, elevation: 0 },
++  'side-level': { azimuth: 90, elevation: 0 },
+ };
+ 
++/** The commands that render named views, so their view names can be checked before the build. */
++const VIEW_COMMANDS = ['render', 'all', 'animate', 'inspect', 'cutout'];
++
+ const T0 = performance.now();
+ const phase = (label: string) => {
+   if (process.env.FORGE_DEBUG) console.log(`[${Math.round(performance.now() - T0)} ms] ${label}`);
+@@ -123,6 +134,8 @@ async function main(): Promise<void> {
+       az: { type: 'string' },
+       el: { type: 'string' },
+       bg: { type: 'string' },
++      ortho: { type: 'boolean' },
++      flat: { type: 'boolean' },
+       dirs: { type: 'string' },
+       elevation: { type: 'string' },
+       colors: { type: 'string' },
+@@ -163,12 +176,35 @@ async function main(): Promise<void> {
+   if (!['build', 'render', 'sprites', 'animate', 'all', 'inspect', 'check', 'cutout'].includes(command))
+     throw new Error(`Unknown command '${command}'.\n${HELP}`);
+   if (!name) throw new Error(`Usage: pnpm forge ${command} <asset>`);
+-  if (command === 'cutout' && !values.out) throw new Error('Usage: ./forge cutout <asset> --out <dir> [options]');
++  if (command === 'cutout' && !values.out)
++    throw new Error('Usage: ./forge cutout <asset> --out <dir> [options]');
++  // The flat pass measures colours: it needs the vertex colours of a fast build and a
++  // transparent background, so both are required before the build starts.
++  if (values.flat && (values.fast !== true || values.bg !== 'none'))
++    throw new Error('--flat needs --fast and --bg none');
+   const file = assetPath(name);
+-  const wear = values.wear ? values.wear.split(',').map((w) => w.trim()).filter(Boolean) : [];
+-  if (wear.length > 0 && command === 'check') throw new Error('check takes no --wear: run `forge check <piece>` for each piece.');
++  const wear = values.wear
++    ? values.wear
++        .split(',')
++        .map((w) => w.trim())
++        .filter(Boolean)
++    : [];
++  // The worn pieces join the output name, so their names are checked before it is built.
++  for (const w of wear) checkAssetName(w);
++  if (wear.length > 0 && command === 'check')
++    throw new Error('check takes no --wear: run `forge check <piece>` for each piece.');
++  // The view names are checked before the build: an unknown view costs no build and prints one line.
++  if (VIEW_COMMANDS.includes(command)) checkViewNames(viewNamesOf(command, values), command === 'cutout');
+   // A base in equipment (or the capped hair) writes beside the base, never over its outputs.
+-  const outName = [name, ...wear, ...(values.capped ? ['capped'] : []), ...(values.tucked ? ['tucked'] : []), ...(values.reduced ? ['reduced'] : [])].join('+');
++  const outName = [
++    name,
++    ...wear,
++    ...(values.capped ? ['capped'] : []),
++    ...(values.tucked ? ['tucked'] : []),
++    ...(values.reduced ? ['reduced'] : []),
++  ].join('+');
++  // A linked output folder is never written through: the check runs before the build.
++  if (values.flat) checkOutputFolder(join(OUT_DIR, outName));
+ 
+   const server = await createServer({
+     root: ROOT,
+@@ -186,7 +222,9 @@ async function main(): Promise<void> {
+       hmr: false,
+       // One-shot commands need no file watcher. Several forge runs at once (and the thousands of
+       // files under bench/) otherwise use up the system's inotify watches (ENOSPC).
+-      watch: values.watch ? { ignored: ['**/bench/**', '**/out/**', '**/node_modules/**', '**/.git/**'] } : null,
++      watch: values.watch
++        ? { ignored: ['**/bench/**', '**/out/**', '**/node_modules/**', '**/.git/**'] }
++        : null,
+     },
+   });
+   phase('vite server created');
+@@ -228,10 +266,15 @@ async function main(): Promise<void> {
+         if (def.equip) {
+           // An equipment piece: the fit check, worn on the avatar base.
+           const fit = (await server.ssrLoadModule('/src/equip-check.ts')) as typeof EquipCheck;
+-          const base = pipeline.checkDefinition(await server.ssrLoadModule(assetPath('avatar-base')), 'avatar-base');
++          const base = pipeline.checkDefinition(
++            await server.ssrLoadModule(assetPath('avatar-base')),
++            'avatar-base',
++          );
+           const report = await fit.checkEquip({ name, def }, base, {
+             ...(values.fps !== undefined ? { fps: num(values.fps, 60) } : {}),
+-            ...(values.clip !== undefined && values.clip !== 'all' ? { clips: String(values.clip).split(',') } : {}),
++            ...(values.clip !== undefined && values.clip !== 'all'
++              ? { clips: String(values.clip).split(',') }
++              : {}),
+           });
+           console.log(fit.formatEquipCheck(name, report));
+           if (!report.ok) process.exitCode = 1;
+@@ -239,13 +282,17 @@ async function main(): Promise<void> {
+         }
+         const report = await checker.checkClips(def, {
+           ...(values.fps !== undefined ? { fps: num(values.fps, 60) } : {}),
+-          ...(values.clip !== undefined && values.clip !== 'all' ? { clips: String(values.clip).split(',') } : {}),
++          ...(values.clip !== undefined && values.clip !== 'all'
++            ? { clips: String(values.clip).split(',') }
++            : {}),
+         });
+         console.log(checker.formatClipCheck(name, report));
+         // The ground check needs the skinned mesh: a quick build without textures.
+         const { result } = await pipeline.buildToGlb(def, file, 0);
+         const ground = checker.checkGround(result.root, {
+-          ...(values.clip !== undefined && values.clip !== 'all' ? { clips: String(values.clip).split(',') } : {}),
++          ...(values.clip !== undefined && values.clip !== 'all'
++            ? { clips: String(values.clip).split(',') }
++            : {}),
+         });
+         console.log(checker.formatGround(ground));
+         if (!report.ok || !ground.ok) process.exitCode = 1;
+@@ -265,9 +312,14 @@ async function main(): Promise<void> {
+         const worn: { name: string; source: string; def: typeof def }[] = [];
+         for (const w of wear) {
+           const source = assetPath(w);
+-          worn.push({ name: w, source, def: pipeline.checkDefinition(await server.ssrLoadModule(source), w) });
++          worn.push({
++            name: w,
++            source,
++            def: pipeline.checkDefinition(await server.ssrLoadModule(source), w),
++          });
+         }
+-        if (worn.length > 0) def = ((await server.ssrLoadModule('/src/equip.ts')) as typeof Equip).wearAsset(def, worn);
++        if (worn.length > 0)
++          def = ((await server.ssrLoadModule('/src/equip.ts')) as typeof Equip).wearAsset(def, worn);
+         built = await pipeline.buildToGlb(
+           def,
+           file,
+@@ -287,7 +339,13 @@ async function main(): Promise<void> {
+       writeFileSync(glbPath, glb);
+       writeFileSync(join(out, 'stats.json'), JSON.stringify(result.stats, null, 2));
+       const atlas = result.root.userData.forgeTextures as
+-        | { baseColor: Uint8Array; normal: Uint8Array; orm: Uint8Array; tintMask?: Uint8Array; presets?: Record<string, Uint8Array> }
++        | {
++            baseColor: Uint8Array;
++            normal: Uint8Array;
++            orm: Uint8Array;
++            tintMask?: Uint8Array;
++            presets?: Record<string, Uint8Array>;
++          }
+         | undefined;
+       rmSync(join(out, 'textures'), { recursive: true, force: true });
+       if (atlas) {
+@@ -320,9 +378,13 @@ async function main(): Promise<void> {
+       await page.route(
+         (u) => u.pathname.startsWith('/__forge/preset/'),
+         (r) => {
+-          const preset = decodeURIComponent(new URL(r.request().url()).pathname.slice('/__forge/preset/'.length).replace(/\.png$/, ''));
++          const preset = decodeURIComponent(
++            new URL(r.request().url()).pathname.slice('/__forge/preset/'.length).replace(/\.png$/, ''),
++          );
+           const image = atlas?.presets?.[preset];
+-          return image ? r.fulfill({ body: Buffer.from(image), contentType: 'image/png' }) : r.fulfill({ status: 404, body: 'no such preset' });
++          return image
++            ? r.fulfill({ body: Buffer.from(image), contentType: 'image/png' })
++            : r.fulfill({ status: 404, body: 'no such preset' });
+         },
+       );
+       const def = (await server.ssrLoadModule(file)).default as { reference?: string };
+@@ -342,7 +404,9 @@ async function main(): Promise<void> {
+       if (command === 'render' || command === 'all') {
+         // --preset all (and forge all): the default turnaround and one per preset, from one build.
+         const looks: (string | undefined)[] =
+-          values.preset === 'all' || command === 'all' ? [undefined, ...Object.keys(atlas?.presets ?? {})] : [values.preset];
++          values.preset === 'all' || command === 'all'
++            ? [undefined, ...Object.keys(atlas?.presets ?? {})]
++            : [values.preset];
+         for (const preset of looks) {
+           const t1 = performance.now();
+           const req: ViewsRequest = {
+@@ -353,8 +417,22 @@ async function main(): Promise<void> {
+             title: preset ? `${outName} · ${preset}` : outName,
+             ...(useRef ? { referenceUrl: `/__forge/reference?t=${Date.now()}` } : {}),
+             ...(preset ? { preset } : {}),
++            ...(values.ortho ? { ortho: true } : {}),
++            ...(values.flat ? { flat: true } : {}),
+           };
+           const res = await page.evaluate((r) => window.forge.renderViews(r), req);
++          if (values.flat) {
++            // The flat pass writes its own folder and leaves the lit views alone.
++            const flatDir = preset ? join(out, 'flat', 'presets', preset) : join(out, 'flat');
++            if (!preset) removeFlatFolder(join(out, 'flat'), OUT_DIR);
++            mkdirSync(flatDir, { recursive: true });
++            for (const [view, data] of Object.entries(res.views))
++              writePng(join(flatDir, `${view}.png`), data);
++            console.log(
++              `flat     ${rel(flatDir)}/  (${Object.keys(res.views).length} views, ${Math.round(performance.now() - t1)} ms)`,
++            );
++            continue;
++          }
+           // A color preset's turnaround goes beside the default one: render.<preset>.png, and its
+           // views in views/presets/<preset>/.
+           const sheetFile = preset ? `render.${preset}.png` : 'render.png';
+@@ -374,32 +452,48 @@ async function main(): Promise<void> {
+       if (command === 'cutout') {
+         const t1 = performance.now();
+         const [cw, ch] = (values.canvas ?? '1024x1200').split('x').map((v) => Math.round(Number(v)));
+-        if (!cw || !ch || cw < 16 || ch < 16) throw new Error(`--canvas needs WIDTHxHEIGHT, got '${values.canvas}'.`);
++        if (!cw || !ch || cw < 16 || ch < 16)
++          throw new Error(`--canvas needs WIDTHxHEIGHT, got '${values.canvas}'.`);
+         const ppm = num(values.ppm, 900);
+         const margin = num(values.margin, 16);
+         const clipName = values.clip && values.clip !== 'all' ? values.clip : undefined;
+-        if (values.clip === 'all' || values.clip?.includes(',')) throw new Error('--clip takes one clip name for a cut-out.');
++        if (values.clip === 'all' || values.clip?.includes(','))
++          throw new Error('--clip takes one clip name for a cut-out.');
+         const at = num(values.at, 0);
+         const stem = values.stem ?? (clipName ? `${clipName}-${at}` : undefined);
+-        const viewNames = (values.views ?? (stem ? 'front' : 'front,three-quarter,side')).split(',').map((v) => v.trim()).filter(Boolean);
++        const viewNames = parseViewList(
++          String(values.views ?? (stem ? 'front' : 'front,three-quarter,side')),
++        );
+         // Elevation 0 (or --el): the feet stay on the foot row; a look-down shifts the near edge
+         // below it, so the folder records its elevation for the compositor and for the checker.
+         const elevation = values.el !== undefined ? num(values.el, 0) : 0;
+         const views = viewNames.map((v) => {
+-          const spec = NAMED_VIEWS[v];
++          const spec = isNamedView(v) ? NAMED_VIEWS[v] : undefined;
+           if (!spec) throw new Error(`Unknown view '${v}'. Views: ${Object.keys(NAMED_VIEWS).join(', ')}.`);
+           return { name: v, azimuth: spec.azimuth, elevation };
+         });
+         const root = resolve(values.out!);
+         const manifestPath = join(root, 'manifest.json');
+-        let manifest: { ppm?: number; canvas?: number[]; elevation?: number; footPoint?: unknown; files?: Record<string, boolean>; [k: string]: unknown } = {};
++        let manifest: {
++          ppm?: number;
++          canvas?: number[];
++          elevation?: number;
++          footPoint?: unknown;
++          files?: Record<string, boolean>;
++          [k: string]: unknown;
++        } = {};
+         try {
+           manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
+         } catch {
+           /* no manifest yet */
+         }
+-        if (manifest.ppm !== undefined && (manifest.ppm !== ppm || manifest.canvas?.[0] !== cw || manifest.canvas?.[1] !== ch))
+-          throw new Error(`${rel(manifestPath)} has ppm ${manifest.ppm} and canvas ${manifest.canvas?.join('x')}: one folder keeps one scale. Use the same options or a new folder.`);
++        if (
++          manifest.ppm !== undefined &&
++          (manifest.ppm !== ppm || manifest.canvas?.[0] !== cw || manifest.canvas?.[1] !== ch)
++        )
++          throw new Error(
++            `${rel(manifestPath)} has ppm ${manifest.ppm} and canvas ${manifest.canvas?.join('x')}: one folder keeps one scale. Use the same options or a new folder.`,
++          );
+         if (manifest.elevation !== undefined && manifest.elevation !== elevation)
+           throw new Error(
+             `${rel(manifestPath)} has camera elevation ${manifest.elevation}: one folder keeps one elevation. Use the same options or a new folder.`,
+@@ -412,7 +506,9 @@ async function main(): Promise<void> {
+           height: ch,
+           margin,
+           supersample: num(values.ss, 3),
+-          ...(clipName ? { clip: clipName, at, ...(clipInfoOf(clipName) ? { clipInfo: clipInfoOf(clipName)! } : {}) } : {}),
++          ...(clipName
++            ? { clip: clipName, at, ...(clipInfoOf(clipName) ? { clipInfo: clipInfoOf(clipName)! } : {}) }
++            : {}),
+           ...(values.preset && values.preset !== 'all' ? { preset: values.preset } : {}),
+           ...(values['hide-sing'] === true ? { hideSing: true } : {}),
+         };
+@@ -426,9 +522,18 @@ async function main(): Promise<void> {
+           files[`${outName}/${fileStem}`] = true;
+           console.log(`cutout   ${rel(join(dir, `${fileStem}.png`))}`);
+         }
+-        manifest = { ...manifest, ppm, canvas: [cw, ch], elevation, footPoint: { col: cw / 2, row: ch - margin }, files };
++        manifest = {
++          ...manifest,
++          ppm,
++          canvas: [cw, ch],
++          elevation,
++          footPoint: { col: cw / 2, row: ch - margin },
++          files,
++        };
+         writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + '\n');
+-        console.log(`cutout   ${rel(manifestPath)}  (${ppm} px/m, ${cw}x${ch}, ss ${res.supersample}, ${Math.round(performance.now() - t1)} ms)`);
++        console.log(
++          `cutout   ${rel(manifestPath)}  (${ppm} px/m, ${cw}x${ch}, ss ${res.supersample}, ${Math.round(performance.now() - t1)} ms)`,
++        );
+         return;
+       }
+       const clips = await page.evaluate(
+@@ -439,7 +544,10 @@ async function main(): Promise<void> {
+         if (values.clip === undefined || values.clip === 'all') return all ? clips.map((c) => c.name) : [];
+         // A comma list: the clips this asset has (a game sprite set asks every model for one list).
+         if (values.clip.includes(',')) {
+-          const asked = values.clip.split(',').map((c) => c.trim()).filter(Boolean);
++          const asked = values.clip
++            .split(',')
++            .map((c) => c.trim())
++            .filter(Boolean);
+           const missing = asked.filter((c) => !clips.some((x) => x.name === c));
+           if (missing.length) console.log(`clips    ${name} has no ${missing.join(', ')} (skipped)`);
+           return asked.filter((c) => !missing.includes(c));
+@@ -458,7 +566,10 @@ async function main(): Promise<void> {
+         return u ? { loop: u.loop ?? true, dig: u.dig ?? 0 } : undefined;
+       };
+ 
+-      const sprites = async (clip: string | null, preset: string | undefined = values.preset === 'all' ? undefined : values.preset) => {
++      const sprites = async (
++        clip: string | null,
++        preset: string | undefined = values.preset === 'all' ? undefined : values.preset,
++      ) => {
+         const t2 = performance.now();
+         const size = command === 'all' ? 128 : num(values.size, 128);
+         const req: SpritesRequest = {
+@@ -471,9 +582,13 @@ async function main(): Promise<void> {
+           outline: (values.outline ?? 'dark') as SpritesRequest['outline'],
+           margin: num(values.margin, 0.06),
+           ...(values.ppm ? { ppm: num(values.ppm, 64) } : {}),
+-          ...(clip ? { clip, frames: frameCount, ...(clipInfo(clip) ? { clipInfo: clipInfo(clip)! } : {}) } : {}),
++          ...(clip
++            ? { clip, frames: frameCount, ...(clipInfo(clip) ? { clipInfo: clipInfo(clip)! } : {}) }
++            : {}),
+           ...(preset ? { preset } : {}),
+-          ...(values.cell && clip ? { fit: wanted(true).map((c) => ({ clip: c, ...(clipInfo(c) ? { info: clipInfo(c)! } : {}) })) } : {}),
++          ...(values.cell && clip
++            ? { fit: wanted(true).map((c) => ({ clip: c, ...(clipInfo(c) ? { info: clipInfo(c)! } : {}) })) }
++            : {}),
+         };
+         const res = await pg.evaluate((r) => window.forge.renderSprites(r), req);
+         // A color preset's sprites go to sprites/presets/<preset>/, in the same layout.
+@@ -491,7 +606,21 @@ async function main(): Promise<void> {
+         if (res.gif) writeFileSync(join(dir, `${clip}.gif`), Buffer.from(res.gif, 'base64'));
+         writeFileSync(
+           join(dir, 'metrics.json'),
+-          JSON.stringify({ size: res.cell, clip, pivot: res.pivot, ...(values.ppm ? { ppm: num(values.ppm, 64) } : {}), elevation: num(values.elevation, 30), directions: num(values.dirs, 8), frames: clip ? frameCount : 1, metrics: res.metrics, palette: res.palette }, null, 2),
++          JSON.stringify(
++            {
++              size: res.cell,
++              clip,
++              pivot: res.pivot,
++              ...(values.ppm ? { ppm: num(values.ppm, 64) } : {}),
++              elevation: num(values.elevation, 30),
++              directions: num(values.dirs, 8),
++              frames: clip ? frameCount : 1,
++              metrics: res.metrics,
++              palette: res.palette,
++            },
++            null,
++            2,
++          ),
+         );
+         console.log(`sprites  ${rel(join(dir, 'preview.png'))}  (${Math.round(performance.now() - t2)} ms)`);
+         if (!clip) {
+@@ -538,7 +667,8 @@ async function main(): Promise<void> {
+       }
+       if (command === 'sprites') {
+         const list = values.clip === undefined ? [null] : wanted(true);
+-        const looks = values.preset === 'all' ? [undefined, ...Object.keys(atlas?.presets ?? {})] : [undefined];
++        const looks =
++          values.preset === 'all' ? [undefined, ...Object.keys(atlas?.presets ?? {})] : [undefined];
+         for (const look of looks) for (const c of list) await (look ? sprites(c, look) : sprites(c));
+       }
+       if (command === 'animate') {
+@@ -608,9 +738,86 @@ async function runSafely(run: () => Promise<void>): Promise<void> {
+   }
+ }
+ 
++/**
++ * The members of a --views list: split on the comma, each member trimmed, and the empty members
++ * dropped. A trailing or doubled comma names the same views as the list without it.
++ */
++function parseViewList(list: string): string[] {
++  return list
++    .split(',')
++    .map((v) => v.trim())
++    .filter(Boolean);
++}
++
++/**
++ * The view list of a command: the --views list, or the command default. Every command reads its
++ * list from here, so the preflight and the render agree.
++ */
++function viewListSource(command: string, values: Record<string, unknown>): string {
++  if (command === 'animate') return values.views ? String(values.views) : 'three-quarter,side';
++  if (command === 'inspect') return values.views ? String(values.views) : 'front,three-quarter,side,back,top';
++  if (command === 'cutout') {
++    const clipName = values.clip && values.clip !== 'all' ? String(values.clip) : undefined;
++    const stem = values.stem ?? (clipName ? 'cutout' : undefined);
++    return String(values.views ?? (stem ? 'front' : 'front,three-quarter,side'));
++  }
++  return typeof values.views === 'string' ? values.views : 'front,three-quarter,side,back';
++}
++
++/** The named views of a command, with the empty members dropped. */
++function viewNamesOf(command: string, values: Record<string, unknown>): string[] {
++  return parseViewList(viewListSource(command, values));
++}
++
++/** A view of the table itself: an inherited member such as `constructor` is no view. */
++function isNamedView(name: string): boolean {
++  return Object.prototype.hasOwnProperty.call(NAMED_VIEWS, name);
++}
++
++/**
++ * The known view names, or one error line that names the unknown view and the known list. A
++ * command that accepts an empty list (the cut-out) keeps it; the others refuse it.
++ */
++function checkViewNames(names: readonly string[], allowEmpty: boolean): void {
++  for (const name of names) {
++    if (!isNamedView(name))
++      throw new Error(`Unknown view '${name}'. Known: ${Object.keys(NAMED_VIEWS).join(', ')}`);
++  }
++  if (names.length === 0 && !allowEmpty)
++    throw new Error(`Unknown view ''. Known: ${Object.keys(NAMED_VIEWS).join(', ')}`);
++}
++
++/**
++ * A linked output folder is never written through. The check runs before the build, and it never
++ * follows a link.
++ */
++function checkOutputFolder(out: string): void {
++  for (const path of [out, join(out, 'flat')]) {
++    const st = lstatSync(path, { throwIfNoEntry: false });
++    if (st?.isSymbolicLink()) throw new Error(`output folder is a link: ${rel(path)}`);
++  }
++}
++
++/**
++ * Remove the flat folder of this run before the views are written. Only the known folder of this
++ * asset under the repo's out/ is removed: its real path must sit directly under the real out/
++ * root. A symlink is never followed and never removed.
++ */
++function removeFlatFolder(flatDir: string, outRoot: string): void {
++  const st = lstatSync(flatDir, { throwIfNoEntry: false });
++  if (!st || st.isSymbolicLink()) return;
++  let parent: string;
++  try {
++    parent = realpathSync(dirname(flatDir));
++  } catch {
++    return;
++  }
++  if (dirname(parent) !== realpathSync(outRoot)) return;
++  rmSync(realpathSync(flatDir), { recursive: true, force: true });
++}
++
+ function viewList(values: Record<string, unknown>): ViewSpec[] {
+-  const names =
+-    typeof values.views === 'string' ? values.views.split(',') : ['front', 'three-quarter', 'side', 'back'];
++  const names = parseViewList(viewListSource('render', values));
+   let focus: ViewSpec['focus'];
+   if (typeof values.focus === 'string') {
+     const f = values.focus.split(',').map(Number);
+@@ -618,9 +825,9 @@ function viewList(values: Record<string, unknown>): ViewSpec[] {
+     focus = { center: [f[0]!, f[1]!, f[2]!], radius: f[3]! };
+   }
+   const views: ViewSpec[] = names.map((n) => {
+-    const v = NAMED_VIEWS[n.trim()];
++    const v = isNamedView(n) ? NAMED_VIEWS[n] : undefined;
+     if (!v) throw new Error(`Unknown view '${n}'. Known: ${Object.keys(NAMED_VIEWS).join(', ')}`);
+-    return { name: n.trim(), ...v, ...(focus ? { focus } : {}) };
++    return { name: n, ...v, ...(focus ? { focus } : {}) };
+   });
+   if (typeof values.az === 'string' || typeof values.el === 'string') {
+     const azimuth = num(values.az as string | undefined, 0);
+diff --git a/src/render/page.ts b/src/render/page.ts
+index 7134e31d..87b0f522 100644
+--- a/src/render/page.ts
++++ b/src/render/page.ts
+@@ -31,6 +31,66 @@ export interface ViewsRequest {
+   readonly title?: string;
+   /** A color preset of the asset (its `presets`): the tinted materials take its slot colors. */
+   readonly preset?: string;
++  /** A level orthographic frame: one pixels-per-metre scale for every view of the run. */
++  readonly ortho?: boolean;
++  /** The flat pass: every mesh unlit in its own colour, no ground, no tone mapping. */
++  readonly flat?: boolean;
++}
++
++/**
++ * The margin of the orthographic frame: the world height of the frame is the largest side of the
++ * asset times 1.10, so the asset keeps a small border in every view.
++ */
++export const ORTHO_MARGIN = 1.1;
++
++/**
++ * The orthographic frame of a run: a square frame in camera space, centred on the asset, with one
++ * pixels-per-metre scale for every view. The world height is the largest side of the bounds times
++ * `ORTHO_MARGIN`, and `pixelsPerMetre` is the image size over that height.
++ */
++export function orthoFrame(
++  bounds: THREE.Box3,
++  size: number,
++): { left: number; right: number; top: number; bottom: number; pixelsPerMetre: number } {
++  const box = bounds.getSize(new THREE.Vector3());
++  const height = Math.max(box.x, box.y, box.z, 1e-6) * ORTHO_MARGIN;
++  const half = height / 2;
++  return { left: -half, right: half, top: half, bottom: -half, pixelsPerMetre: size / height };
++}
++
++/**
++ * The flat pass: every mesh of the asset becomes unlit, in its own colour, with no tone mapping.
++ * The geometry and the `visible` flag stay. The ground is hidden, so no shadow lands on it. The
++ * returned function puts the old materials and the ground back.
++ */
++export function useFlatMaterials(
++  root: THREE.Object3D,
++  ground: THREE.Object3D | null = studio.ground,
++): () => void {
++  const swapped: { mesh: THREE.Mesh; material: THREE.Material | THREE.Material[] }[] = [];
++  root.traverse((o) => {
++    const mesh = o as THREE.Mesh;
++    if (!mesh.isMesh) return;
++    const original = mesh.material;
++    const list = Array.isArray(original) ? original : [original];
++    const flat = list.map((m) => {
++      const source = m as THREE.MeshStandardMaterial;
++      return new THREE.MeshBasicMaterial({
++        color: source.color instanceof THREE.Color ? source.color : new THREE.Color(0xffffff),
++        vertexColors: source.vertexColors === true,
++        toneMapped: false,
++        side: m.side,
++      });
++    });
++    mesh.material = Array.isArray(original) ? flat : flat[0]!;
++    swapped.push({ mesh, material: original });
++  });
++  const groundVisible = ground?.visible ?? false;
++  if (ground) ground.visible = false;
++  return () => {
++    for (const { mesh, material } of swapped) mesh.material = material;
++    if (ground) ground.visible = groundVisible;
++  };
+ }
+ 
+ export interface CutoutsRequest {
+@@ -121,7 +181,10 @@ let current: { scene: THREE.Object3D; mixer: THREE.AnimationMixer; clips: THREE.
+   null;
+ 
+ interface ForgeVariants {
+-  readonly slots: Record<string, { channel: string; default: string; options: Record<string, [number, number, number]> }>;
++  readonly slots: Record<
++    string,
++    { channel: string; default: string; options: Record<string, [number, number, number]> }
++  >;
+   readonly presets: Record<string, Record<string, string>>;
+ }
+ let variants: ForgeVariants | null = null;
+@@ -129,7 +192,8 @@ let variants: ForgeVariants | null = null;
+ async function load(url: string): Promise<THREE.Object3D> {
+   const gltf = await loader.loadAsync(url);
+   studio.renderer.clippingPlanes = [];
+-  variants = ((gltf.userData as { forgeVariants?: ForgeVariants }).forgeVariants ?? null) as ForgeVariants | null;
++  variants = ((gltf.userData as { forgeVariants?: ForgeVariants }).forgeVariants ??
++    null) as ForgeVariants | null;
+   current = { scene: gltf.scene, mixer: new THREE.AnimationMixer(gltf.scene), clips: gltf.animations };
+   studio.setAsset(gltf.scene);
+   return gltf.scene;
+@@ -144,8 +208,11 @@ async function applyPreset(name: string | undefined): Promise<void> {
+   if (!name) return;
+   if (!variants) throw new Error(`Preset '${name}': this asset has no color variants.`);
+   const choice = variants.presets[name];
+-  if (!choice) throw new Error(`No preset '${name}'. Presets: ${Object.keys(variants.presets).join(', ') || '(none)'}.`);
+-  const map = await new THREE.TextureLoader().loadAsync(`/__forge/preset/${encodeURIComponent(name)}.png?t=${Date.now()}`);
++  if (!choice)
++    throw new Error(`No preset '${name}'. Presets: ${Object.keys(variants.presets).join(', ') || '(none)'}.`);
++  const map = await new THREE.TextureLoader().loadAsync(
++    `/__forge/preset/${encodeURIComponent(name)}.png?t=${Date.now()}`,
++  );
+   map.flipY = false;
+   map.colorSpace = THREE.SRGBColorSpace;
+   current!.scene.traverse((o) => {
+@@ -246,7 +313,8 @@ function effectMeshes(samples = 6): Set<THREE.Mesh> {
+   for (const clip of clips)
+     for (const t of sampleTimes(clip, samples, { loop: false, dig: 0 })) {
+       poseAt(clip, t);
+-      for (const m of meshes) if (!effect.has(m) && Math.max(...meshBox(m).getSize(size).toArray()) < 0.005) effect.add(m);
++      for (const m of meshes)
++        if (!effect.has(m) && Math.max(...meshBox(m).getSize(size).toArray()) < 0.005) effect.add(m);
+     }
+   toRest();
+   return effect;
+@@ -268,7 +336,8 @@ function posedBox(effect: ReadonlySet<THREE.Mesh>): THREE.Box3 {
+ 
+ /** A clip that digs keeps the floor at y = 0 and hides what is below it, as a game floor does. */
+ function floorClip(info?: ClipInfo): void {
+-  studio.renderer.clippingPlanes = info && info.dig > 0 ? [new THREE.Plane(new THREE.Vector3(0, 1, 0), 0)] : [];
++  studio.renderer.clippingPlanes =
++    info && info.dig > 0 ? [new THREE.Plane(new THREE.Vector3(0, 1, 0), 0)] : [];
+ }
+ 
+ function gifBase64(frames: readonly HTMLCanvasElement[], delayMs: number): string {
+@@ -348,27 +417,49 @@ async function renderViews(req: ViewsRequest): Promise<{ sheet: string; views: R
+   // 'none': a transparent view (icons for pages); the shadow ground keeps a soft shadow.
+   studio.setBackground(req.background === 'none' ? null : req.background);
+   studio.ground.visible = true;
+-  const cam = studio.perspective;
+   const images: Record<string, HTMLCanvasElement> = {};
+   const views: Record<string, string> = {};
+   // One distance for every view so the turnaround keeps a constant scale: fit the height and the
+   // widest horizontal extent (bounds diagonal in XZ) with a small margin.
+   const size = studio.bounds.getSize(new THREE.Vector3());
+   const fitRadius = (Math.max(size.y, Math.hypot(size.x, size.z)) / 2) * 1.18;
+-  for (const v of req.views) {
+-    const center = v.focus ? new THREE.Vector3(...v.focus.center) : studio.center;
+-    const radius = v.focus ? v.focus.radius : fitRadius;
+-    const distance = radius / Math.tan(THREE.MathUtils.degToRad(cam.fov / 2));
+-    cam.near = distance / 50;
+-    cam.far = distance * 10;
+-    studio.aim(cam, center, distance, v.azimuth, v.elevation);
+-    studio.render(cam, req.size, req.size);
+-    const c = document.createElement('canvas');
+-    c.width = req.size;
+-    c.height = req.size;
+-    c.getContext('2d')!.drawImage(studio.renderer.domElement, 0, 0);
+-    images[v.name] = c;
+-    views[v.name] = c.toDataURL('image/png');
++  // The flat pass swaps the materials and hides the ground. The restore function puts them back,
++  // so a later command in the same page sees the normal render.
++  const restore = req.flat ? useFlatMaterials(current!.scene) : null;
++  try {
++    for (const v of req.views) {
++      if (req.ortho) {
++        // A level orthographic frame: one scale for the whole run, so a width compares with a
++        // depth. The camera sits far away, so the frame is the frame and not the perspective.
++        const frame = orthoFrame(studio.bounds, req.size);
++        const distance = Math.max(studio.radius * 4, 10);
++        studio.ortho.left = frame.left;
++        studio.ortho.right = frame.right;
++        studio.ortho.top = frame.top;
++        studio.ortho.bottom = frame.bottom;
++        studio.ortho.near = Math.max(0.01, distance - studio.radius * 2);
++        studio.ortho.far = distance + studio.radius * 2;
++        studio.ortho.updateProjectionMatrix();
++        studio.aim(studio.ortho, studio.center, distance, v.azimuth, v.elevation);
++        studio.render(studio.ortho, req.size, req.size);
++      } else {
++        const center = v.focus ? new THREE.Vector3(...v.focus.center) : studio.center;
++        const radius = v.focus ? v.focus.radius : fitRadius;
++        const distance = radius / Math.tan(THREE.MathUtils.degToRad(studio.perspective.fov / 2));
++        studio.perspective.near = distance / 50;
++        studio.perspective.far = distance * 10;
++        studio.aim(studio.perspective, center, distance, v.azimuth, v.elevation);
++        studio.render(studio.perspective, req.size, req.size);
++      }
++      const c = document.createElement('canvas');
++      c.width = req.size;
++      c.height = req.size;
++      c.getContext('2d')!.drawImage(studio.renderer.domElement, 0, 0);
++      images[v.name] = c;
++      views[v.name] = c.toDataURL('image/png');
++    }
++  } finally {
++    restore?.();
+   }
+ 
+   const cols = Math.min(4, req.views.length);
+@@ -452,14 +543,19 @@ async function renderSprites(req: SpritesRequest): Promise<{
+     return r;
+   };
+   const el = THREE.MathUtils.degToRad(req.elevation);
+-  const spanOf = (R: number, h: number) => Math.max(2 * R, h * Math.cos(el) + 2 * R * Math.sin(el)) / (1 - 2 * req.margin);
++  const spanOf = (R: number, h: number) =>
++    Math.max(2 * R, h * Math.cos(el) + 2 * R * Math.sin(el)) / (1 - 2 * req.margin);
+   const R0 = radius(restBox);
+   const h0 = Math.max(restBox.max.y, 0.01);
+   // A fixed cell seen from one direction (S, the camera on +Z) frames the box as that camera sees
+   // it: a point projects to u = x across and v = y cos(el) - z sin(el) up. Any other request frames
+   // a circle of radius R, so every direction fits the same cell.
+   const front = names.length === 1 && !!req.fit?.length && !req.ppm;
+-  const corners = [restBox.min, restBox.max].flatMap((a) => [restBox.min, restBox.max].flatMap((b) => [restBox.min, restBox.max].map((c) => [a.x, b.y, c.z] as const)));
++  const corners = [restBox.min, restBox.max].flatMap((a) =>
++    [restBox.min, restBox.max].flatMap((b) =>
++      [restBox.min, restBox.max].map((c) => [a.x, b.y, c.z] as const),
++    ),
++  );
+   const vs = corners.map(([, y, z]) => y * Math.cos(el) - z * Math.sin(el));
+   const frontW = 2 * Math.max(...corners.map(([x]) => Math.abs(x)));
+   const frontV: [number, number] = [Math.min(...vs), Math.max(...vs)];
+@@ -468,12 +564,18 @@ async function renderSprites(req: SpritesRequest): Promise<{
+   const R = Math.max(R0, radius(box));
+   const h = Math.max(h0, box.max.y);
+   const fitted = Math.ceil((spanOf(R, h) * ppm) / 4) * 4;
+-  const cellPx = req.ppm ? Math.max(8, fitted) : clip && !req.fit?.length ? Math.max(req.size, fitted) : req.size;
++  const cellPx = req.ppm
++    ? Math.max(8, fitted)
++    : clip && !req.fit?.length
++      ? Math.max(req.size, fitted)
++      : req.size;
+   const span = cellPx / ppm;
+   const spanY = h * Math.cos(el) + 2 * R * Math.sin(el);
+   const cam = studio.ortho;
+   // The ground contact and the top: the ground line sits at the bottom margin.
+-  const bottom = front ? frontV[0] - (span - (frontV[1] - frontV[0])) / 2 : -R * Math.sin(el) - (span - spanY) / 2;
++  const bottom = front
++    ? frontV[0] - (span - (frontV[1] - frontV[0])) / 2
++    : -R * Math.sin(el) - (span - spanY) / 2;
+   cam.left = -span / 2;
+   cam.right = span / 2;
+   cam.bottom = bottom;
+@@ -799,7 +901,9 @@ const CUTOUT_DISTANCE = 6;
+  * Pixels come from the premultiplied WebGL buffer at `supersample` x the canvas size and resolve
+  * to straight alpha (see cutout.ts). Returns raw RGBA as base64 for each view.
+  */
+-async function renderCutouts(req: CutoutsRequest): Promise<{ views: Record<string, string>; supersample: number }> {
++async function renderCutouts(
++  req: CutoutsRequest,
++): Promise<{ views: Record<string, string>; supersample: number }> {
+   await load(req.glbUrl);
+   await applyPreset(req.preset);
+   studio.setBackground(null);
+@@ -813,7 +917,10 @@ async function renderCutouts(req: CutoutsRequest): Promise<{ views: Record<strin
+       if ((o as THREE.Mesh).isMesh && SING_BODY_NAMES.includes(o.name)) o.visible = false;
+     });
+   const gl = studio.renderer.getContext();
+-  const maxSize = Math.min(gl.getParameter(gl.MAX_RENDERBUFFER_SIZE) as number, gl.getParameter(gl.MAX_TEXTURE_SIZE) as number);
++  const maxSize = Math.min(
++    gl.getParameter(gl.MAX_RENDERBUFFER_SIZE) as number,
++    gl.getParameter(gl.MAX_TEXTURE_SIZE) as number,
++  );
+   let ss = Math.max(1, Math.floor(req.supersample));
+   while (ss > 1 && Math.max(req.width, req.height) * ss > maxSize) ss--;
+ 
+@@ -831,7 +938,8 @@ async function renderCutouts(req: CutoutsRequest): Promise<{ views: Record<strin
+   current!.scene.traverse((o) => {
+     if ((o as THREE.Mesh).isMesh && o.visible) meshes.push(o as THREE.Mesh);
+   });
+-  for (const m of meshes) if ((m as THREE.SkinnedMesh).isSkinnedMesh) (m as THREE.SkinnedMesh).skeleton.update();
++  for (const m of meshes)
++    if ((m as THREE.SkinnedMesh).isSkinnedMesh) (m as THREE.SkinnedMesh).skeleton.update();
+ 
+   const views: Record<string, string> = {};
+   const v = new THREE.Vector3();
+@@ -901,4 +1009,12 @@ declare global {
+   }
+ }
+ 
+-window.forge = { renderViews, renderCutouts, renderSprites, renderAnimation, listClips, inspectAsset, ready: true };
++window.forge = {
++  renderViews,
++  renderCutouts,
++  renderSprites,
++  renderAnimation,
++  listClips,
++  inspectAsset,
++  ready: true,
++};
+diff --git a/tests/render-options.adversarial-r2.test.ts b/tests/render-options.adversarial-r2.test.ts
+new file mode 100644
+index 00000000..829b43be
+--- /dev/null
++++ b/tests/render-options.adversarial-r2.test.ts
+@@ -0,0 +1,182 @@
++import { spawnSync, type SpawnSyncReturns } from 'node:child_process';
++import {
++  chmodSync,
++  existsSync,
++  lstatSync,
++  mkdirSync,
++  mkdtempSync,
++  readFileSync,
++  readdirSync,
++  realpathSync,
++  rmSync,
++  symlinkSync,
++  writeFileSync,
++} from 'node:fs';
++import { basename, dirname, join, resolve } from 'node:path';
++import { fileURLToPath } from 'node:url';
++import { afterAll, describe, expect, it } from 'vitest';
++
++const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
++const HEAVY_RUN =
++  process.env.HEAVY_RUN_PATH ?? resolve(ROOT, '..', '..', 'advantage-pr', 'scripts', 'jobs', 'heavy-run.sh');
++const RUNS_DIR = join(ROOT, 'measure', 'runs', 'chibi_sprouts_redesign_20261123');
++const ASSET_NAME = `_flat-symlink-adversarial-${process.pid}`;
++const FIXTURE = join(ROOT, 'assets', `${ASSET_NAME}.ts`);
++const OUT_ROOT = join(ROOT, 'out');
++const OUT_ASSET = join(OUT_ROOT, ASSET_NAME);
++const OTHER_NAME = `${ASSET_NAME}-other`;
++const OTHER_OUT = join(OUT_ROOT, OTHER_NAME);
++
++let fixtureOwned = false;
++const tempDirs: string[] = [];
++
++function createFixture(): void {
++  writeFileSync(
++    FIXTURE,
++    `import { defineAsset, sdf } from '../src/index.js';
++
++export default defineAsset({
++  name: '${ASSET_NAME}',
++  texture: false,
++  build(k) {
++    k.body('body', sdf.box([0.4, 1, 0.2]).at(0, 0.5, 0), { color: '#3f8fd0' });
++  },
++});
++`,
++    { flag: 'wx' },
++  );
++  fixtureOwned = true;
++}
++
++function runForge(): SpawnSyncReturns<string> {
++  return spawnSync(
++    'bash',
++    [HEAVY_RUN, '-c', `./forge render ${ASSET_NAME} --fast --flat --bg none --views front-level --size 64`],
++    {
++      cwd: ROOT,
++      encoding: 'utf8',
++      timeout: 600_000,
++      env: { ...process.env, HEAVY_MIN_AVAIL_MB: '1500' },
++    },
++  );
++}
++
++function tempDir(label: string): string {
++  const dir = mkdtempSync(join(RUNS_DIR, `${label}-${process.pid}-`));
++  tempDirs.push(dir);
++  return dir;
++}
++
++function removeOutputSafely(): void {
++  const st = lstatSync(OUT_ASSET, { throwIfNoEntry: false });
++  if (!st) return;
++  if (st.isSymbolicLink()) {
++    rmSync(OUT_ASSET);
++    return;
++  }
++  if (!st.isDirectory()) return;
++  const real = realpathSync(OUT_ASSET);
++  if (dirname(real) !== realpathSync(OUT_ROOT) || basename(real) !== ASSET_NAME) return;
++  rmSync(real, { recursive: true, force: true });
++}
++
++function removeOtherOutputSafely(): void {
++  const st = lstatSync(OTHER_OUT, { throwIfNoEntry: false });
++  if (!st) return;
++  if (st.isSymbolicLink()) {
++    rmSync(OTHER_OUT);
++    return;
++  }
++  if (!st.isDirectory()) return;
++  const real = realpathSync(OTHER_OUT);
++  if (dirname(real) !== realpathSync(OUT_ROOT) || basename(real) !== OTHER_NAME) return;
++  rmSync(real, { recursive: true, force: true });
++}
++
++function nonEmptyLines(output: string): string[] {
++  return output
++    .split('\n')
++    .map((line) => line.trim())
++    .filter((line) => line.length > 0);
++}
++
++function snapshotContents(dir: string): string[] {
++  const found: string[] = [];
++  const walk = (base: string, rel = ''): void => {
++    for (const entry of readdirSync(join(base, rel), { withFileTypes: true })) {
++      const path = rel ? `${rel}/${entry.name}` : entry.name;
++      if (entry.isDirectory()) walk(base, path);
++      else found.push(`${path}:${readFileSync(join(base, path)).toString('base64')}`);
++    }
++  };
++  walk(dir);
++  return found.sort();
++}
++
++afterAll(() => {
++  if (existsSync(OUT_ASSET)) {
++    try {
++      chmodSync(OUT_ASSET, 0o755);
++    } catch {
++      // Cleanup still checks the real output root before removal.
++    }
++  }
++  removeOutputSafely();
++  removeOtherOutputSafely();
++  if (fixtureOwned) rmSync(FIXTURE, { force: true });
++  for (const dir of tempDirs) rmSync(dir, { recursive: true, force: true });
++});
++
++describe('flat output removal containment', () => {
++  it('refuses linked flat and output folders without changing their targets', { timeout: 600_000 }, () => {
++    expect(existsSync(FIXTURE)).toBe(false);
++    expect(existsSync(OUT_ASSET)).toBe(false);
++    createFixture();
++
++    const flatTarget = tempDir('flat-link-target');
++    const flatMarker = join(flatTarget, 'marker.txt');
++    writeFileSync(flatMarker, 'keep-flat-target\n', { flag: 'wx' });
++    mkdirSync(OUT_ASSET);
++    symlinkSync(flatTarget, join(OUT_ASSET, 'flat'), 'dir');
++
++    const flatRun = runForge();
++    expect(flatRun.status).not.toBe(0);
++    const flatLines = nonEmptyLines(`${flatRun.stdout || ''}\n${flatRun.stderr || ''}`);
++    expect(flatLines).toHaveLength(1);
++    expect(flatLines[0]).toContain('output folder is a link');
++    expect(readFileSync(flatMarker, 'utf8')).toBe('keep-flat-target\n');
++    expect(existsSync(join(flatTarget, 'front-level.png'))).toBe(false);
++
++    removeOutputSafely();
++    mkdirSync(OTHER_OUT);
++    const outputFlat = join(OTHER_OUT, 'flat');
++    const outputMarker = join(outputFlat, 'marker.txt');
++    mkdirSync(outputFlat);
++    writeFileSync(outputMarker, 'keep-output-target\n', { flag: 'wx' });
++    const existingPng = join(outputFlat, 'existing.png');
++    writeFileSync(existingPng, Buffer.from('existing-flat-render'), { flag: 'wx' });
++    const otherBefore = snapshotContents(OTHER_OUT);
++    symlinkSync(OTHER_OUT, OUT_ASSET, 'dir');
++
++    const outputRun = runForge();
++    expect(outputRun.status).not.toBe(0);
++    const outputLines = nonEmptyLines(`${outputRun.stdout || ''}\n${outputRun.stderr || ''}`);
++    expect(outputLines).toHaveLength(1);
++    expect(outputLines[0]).toContain('output folder is a link');
++    expect(readFileSync(outputMarker, 'utf8')).toBe('keep-output-target\n');
++    expect(snapshotContents(OTHER_OUT)).toEqual(otherBefore);
++  });
++
++  it('does not remove a flat directory through a read-only asset parent', { timeout: 600_000 }, () => {
++    removeOutputSafely();
++    if (!fixtureOwned) createFixture();
++    mkdirSync(join(OUT_ASSET, 'flat'), { recursive: true });
++    const marker = join(OUT_ASSET, 'flat', 'marker.txt');
++    writeFileSync(marker, 'keep-read-only-parent\n', { flag: 'wx' });
++    chmodSync(OUT_ASSET, 0o555);
++
++    const result = runForge();
++    expect(result.status).not.toBe(0);
++    expect(readFileSync(marker, 'utf8')).toBe('keep-read-only-parent\n');
++  });
++});
+diff --git a/tests/render-options.adversarial.test.ts b/tests/render-options.adversarial.test.ts
+new file mode 100644
+index 00000000..2c327c7c
+--- /dev/null
++++ b/tests/render-options.adversarial.test.ts
+@@ -0,0 +1,187 @@
++import { spawnSync, type SpawnSyncReturns } from 'node:child_process';
++import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
++import { join } from 'node:path';
++import { chromium, type Browser, type Page } from 'playwright';
++import { createServer, type ViteDevServer } from 'vite';
++import { afterAll, beforeAll, describe, expect, it } from 'vitest';
++
++const ROOT = '/home/daniebo/Desktop/forge-worktrees/sprouts-redesign';
++const HEAVY_RUN = '/home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh';
++const PIN_NAME = `_flat-restore-pin-${process.pid}`;
++const FIXTURE_PATH = join(ROOT, 'assets', `${PIN_NAME}.ts`);
++const OUT_DIR = join(ROOT, 'out', PIN_NAME);
++const GLB_PATH = join(OUT_DIR, `${PIN_NAME}.glb`);
++const CACHE_DIR = join(
++  ROOT,
++  'measure/runs/chibi_sprouts_redesign_20261123',
++  `vite-adversarial-cache-${process.pid}`,
++);
++
++let server: ViteDevServer | null = null;
++let browser: Browser | null = null;
++let page: Page | null = null;
++let createdCache = false;
++let createdFixture = false;
++let ownsOutputPath = false;
++let threeModuleUrl = '';
++
++function pinSource(): string {
++  return `import { defineAsset, sdf } from '../src/index.js';
++
++export default defineAsset({
++  name: '${PIN_NAME}',
++  texture: false,
++  build(k) {
++    k.body('body', sdf.box([0.4, 1.0, 0.2]).at(0, 0.5, 0), { color: '#3f8fd0' });
++  },
++});
++`;
++}
++
++function runForge(args: string): SpawnSyncReturns<string> {
++  return spawnSync('bash', [HEAVY_RUN, '-c', `./forge ${args}`], {
++    cwd: ROOT,
++    encoding: 'utf8',
++    timeout: 600_000,
++    env: { ...process.env, HEAVY_MIN_AVAIL_MB: '1500' },
++  });
++}
++
++beforeAll(async () => {
++  if (existsSync(OUT_DIR)) throw new Error(`fixture output path exists: ${OUT_DIR}`);
++  try {
++    writeFileSync(FIXTURE_PATH, pinSource(), { flag: 'wx' });
++  } catch (error) {
++    const e = error as NodeJS.ErrnoException;
++    if (e.code === 'EEXIST') throw new Error(`fixture path exists: ${FIXTURE_PATH}`);
++    throw error;
++  }
++  createdFixture = true;
++  ownsOutputPath = true;
++  const built = runForge(`build ${PIN_NAME} --fast`);
++  if (built.status !== 0) throw new Error(built.stderr || built.stdout || 'fixture build failed');
++  if (!existsSync(GLB_PATH)) throw new Error(`missing ${GLB_PATH}`);
++
++  mkdirSync(CACHE_DIR);
++  createdCache = true;
++  server = await createServer({
++    root: ROOT,
++    configFile: false,
++    logLevel: 'error',
++    cacheDir: CACHE_DIR,
++    optimizeDeps: { entries: ['render.html'] },
++    server: { port: 0, strictPort: false, hmr: false, watch: null },
++  });
++  await server.listen();
++  const url = server.resolvedUrls?.local[0];
++  if (!url) throw new Error('Could not start the render server.');
++
++  browser = await chromium.launch({
++    args: ['--use-angle=gl', '--enable-gpu', '--ignore-gpu-blocklist', '--enable-unsafe-swiftshader'],
++  });
++  page = await browser.newPage();
++  page.on('request', (request) => {
++    const url = request.url();
++    if (!threeModuleUrl && url.toLowerCase().includes('three')) threeModuleUrl = url;
++  });
++  await page.route('**/__forge/asset.glb*', (route) =>
++    route.fulfill({ body: readFileSync(GLB_PATH), contentType: 'model/gltf-binary' }),
++  );
++  await page.goto(`${url}render.html`, { timeout: 180_000 });
++  await page.waitForFunction(() => window.forge?.ready === true, undefined, { timeout: 180_000 });
++}, 600_000);
++
++afterAll(async () => {
++  await browser?.close();
++  await server?.close();
++  if (createdCache) rmSync(CACHE_DIR, { recursive: true, force: true });
++  if (createdFixture) rmSync(FIXTURE_PATH, { force: true });
++  if (ownsOutputPath) rmSync(OUT_DIR, { recursive: true, force: true });
++});
++
++describe('flat render state restoration (same browser page)', () => {
++  it('restores live mesh materials after the flat render pass', async () => {
++    if (!page) throw new Error('render page did not start');
++    if (!threeModuleUrl) throw new Error('Three.js module request was not found.');
++    const materials = (await page.evaluate(`(async () => {
++      const THREE = await import(${JSON.stringify(threeModuleUrl)});
++      const proto = THREE.Mesh.prototype;
++      const descriptor = Object.getOwnPropertyDescriptor(proto, 'material');
++      const original = new WeakMap();
++      const current = new WeakMap();
++      const meshes = [];
++      const isFlat = (material) =>
++        Array.isArray(material)
++          ? material.some((item) => item.type === 'MeshBasicMaterial')
++          : material?.type === 'MeshBasicMaterial';
++      Object.defineProperty(proto, 'material', {
++        configurable: true,
++        get() { return current.get(this); },
++        set(value) {
++          if (!original.has(this) && isFlat(value)) {
++            original.set(this, current.get(this));
++            meshes.push(this);
++          }
++          current.set(this, value);
++        },
++      });
++      try {
++        await window.forge.renderViews({
++          glbUrl: '/__forge/asset.glb?restore-test=1',
++          views: [{ name: 'front-level', azimuth: 0, elevation: 0 }],
++          size: 128,
++          background: 'none',
++          ortho: true,
++          flat: true,
++        });
++        return meshes.map((mesh) => ({
++          restored: current.get(mesh) === original.get(mesh),
++          type: mesh.material.type,
++        }));
++      } finally {
++        if (descriptor) Object.defineProperty(proto, 'material', descriptor);
++        else delete proto.material;
++      }
++    })()`)) as { restored: boolean; type: string }[];
++
++    expect(materials.length).toBeGreaterThan(0);
++    expect(materials.every((material) => material.restored)).toBe(true);
++  }, 600_000);
++
++  it('restores the original material and ground visibility', async () => {
++    if (!page) throw new Error('render page did not start');
++    const state = (await page.evaluate(`(async () => {
++      const THREE = await import('/node_modules/.vite/deps/three.js');
++      const { useFlatMaterials } = await import('/src/render/page.ts');
++      const root = new THREE.Group();
++      const mesh = new THREE.Mesh(
++        new THREE.BufferGeometry(),
++        new THREE.MeshStandardMaterial({ color: '#3f8fd0' }),
++      );
++      const ground = new THREE.Object3D();
++      root.add(mesh);
++      ground.visible = true;
++      const original = mesh.material;
++      const restore = useFlatMaterials(root, ground);
++      const swapped = mesh.material !== original;
++      const flatIsUnlit = mesh.material.toneMapped === false;
++      restore();
++      return {
++        swapped,
++        flatIsUnlit,
++        materialRestored: mesh.material === original,
++        groundRestored: ground.visible,
++      };
++    })()`)) as {
++      swapped: boolean;
++      flatIsUnlit: boolean;
++      materialRestored: boolean;
++      groundRestored: boolean;
++    };
++
++    expect(state.swapped).toBe(true);
++    expect(state.flatIsUnlit).toBe(true);
++    expect(state.materialRestored).toBe(true);
++    expect(state.groundRestored).toBe(true);
++  }, 600_000);
++});
+diff --git a/tests/render-options.test.ts b/tests/render-options.test.ts
+new file mode 100644
+index 00000000..22a0303b
+--- /dev/null
++++ b/tests/render-options.test.ts
+@@ -0,0 +1,268 @@
++import { spawnSync, type SpawnSyncReturns } from 'node:child_process';
++import { existsSync, lstatSync, readFileSync, realpathSync, rmSync, writeFileSync } from 'node:fs';
++import { basename, dirname, join, resolve } from 'node:path';
++import { fileURLToPath } from 'node:url';
++import { describe, expect, it, afterAll } from 'vitest';
++import sharp from 'sharp';
++
++// The checkout under test comes from this module, never from a hard-coded path.
++const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
++const HEAVY_RUN =
++  process.env.HEAVY_RUN_PATH ?? resolve(ROOT, '..', '..', 'advantage-pr', 'scripts', 'jobs', 'heavy-run.sh');
++const PID = process.pid;
++const PIN_NAME = `_flat-render-pin-${PID}`;
++const FIXTURE_PATH = join(ROOT, 'assets', `${PIN_NAME}.ts`);
++const OUT_DIR = join(ROOT, 'out', PIN_NAME);
++const FLAT_DIR = join(OUT_DIR, 'flat');
++const FRONT_PNG = join(FLAT_DIR, 'front-level.png');
++const SIDE_PNG = join(FLAT_DIR, 'side-level.png');
++
++const BODY_HEX = '#3f8fd0';
++const BLOCK_HEX = '#e0a030';
++
++function pinSource(): string {
++  return `import { defineAsset, sdf } from '../src/index.js';
++
++export default defineAsset({
++  name: '${PIN_NAME}',
++  texture: false,
++  build(k) {
++    k.body('body', sdf.box([0.4, 1.0, 0.2]).at(0, 0.5, 0), { color: '${BODY_HEX}' });
++    k.body('block', sdf.box([0.2, 0.05, 0.05]).at(0, 0.9, 0.125), { color: '${BLOCK_HEX}' });
++  },
++});
++`;
++}
++
++let created = false;
++let renderResult: SpawnSyncReturns<string> | null = null;
++
++// The one ownership check: exclusive creation, or the named collision error.
++function createExclusive(targetPath: string, body: string): void {
++  try {
++    writeFileSync(targetPath, body, { flag: 'wx' });
++  } catch (error) {
++    const e = error as NodeJS.ErrnoException;
++    if (e.code === 'EEXIST') throw new Error(`fixture path exists: ${targetPath}`);
++    throw error;
++  }
++}
++
++function createFixture(body: string): void {
++  createExclusive(FIXTURE_PATH, body);
++  created = true;
++}
++
++function removeOutDir(): void {
++  const st = lstatSync(OUT_DIR, { throwIfNoEntry: false });
++  if (!st || !st.isDirectory()) return;
++  const real = realpathSync(OUT_DIR);
++  const outRoot = realpathSync(join(ROOT, 'out'));
++  if (dirname(real) !== outRoot) return;
++  if (!basename(real).startsWith('_flat-render-pin-')) return;
++  rmSync(real, { recursive: true, force: true });
++}
++
++function removeOwned(): void {
++  if (created) {
++    rmSync(FIXTURE_PATH, { force: true });
++    created = false;
++  }
++  removeOutDir();
++}
++
++function runForge(args: string): SpawnSyncReturns<string> {
++  return spawnSync('bash', [HEAVY_RUN, '-c', `./forge ${args}`], {
++    cwd: ROOT,
++    encoding: 'utf8',
++    timeout: 600_000,
++    env: { ...process.env, HEAVY_MIN_AVAIL_MB: '1500' },
++  });
++}
++
++function ensureRendered(): SpawnSyncReturns<string> {
++  if (!created) createFixture(pinSource());
++  if (!renderResult) {
++    renderResult = runForge(
++      `render ${PIN_NAME} --fast --views front-level,side-level --ortho --flat --bg none --size 256`,
++    );
++  }
++  return renderResult;
++}
++
++async function pixel(pngPath: string, col: number, row: number): Promise<[number, number, number, number]> {
++  const { data, info } = await sharp(pngPath).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
++  const idx = (row * info.width! + col) * 4;
++  return [data[idx!]!, data[idx! + 1]!, data[idx! + 2]!, data[idx! + 3]!];
++}
++
++async function maskRows(
++  pngPath: string,
++): Promise<{ top: number; bottom: number; height: number; width: number }> {
++  const { data, info } = await sharp(pngPath).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
++  const width = info.width!;
++  const height = info.height!;
++  let top = -1;
++  let bottom = -1;
++  for (let row = 0; row < height; row += 1) {
++    for (let col = 0; col < width; col += 1) {
++      if (data[(row * width + col) * 4 + 3]! >= 128) {
++        if (top === -1) top = row;
++        bottom = row;
++        break;
++      }
++    }
++  }
++  return { top, bottom, height: bottom - top + 1, width };
++}
++
++function hexToRgb(hex: string): [number, number, number] {
++  return [parseInt(hex.slice(1, 3), 16), parseInt(hex.slice(3, 5), 16), parseInt(hex.slice(5, 7), 16)];
++}
++
++afterAll(() => {
++  removeOwned();
++});
++
++describe('render options (orthographic flat pin)', () => {
++  it('fails closed when the actual fixture path already exists', { timeout: 600_000 }, () => {
++    expect(existsSync(FIXTURE_PATH)).toBe(false);
++    writeFileSync(FIXTURE_PATH, '// planted collision\n', { flag: 'wx' });
++    const before = readFileSync(FIXTURE_PATH, 'utf8');
++    let failure = '';
++    try {
++      ensureRendered();
++    } catch (error) {
++      failure = (error as Error).message;
++    }
++    expect(failure).toBe(`fixture path exists: ${FIXTURE_PATH}`);
++    expect(readFileSync(FIXTURE_PATH, 'utf8')).toBe(before);
++    expect(renderResult).toBeNull();
++    expect(existsSync(OUT_DIR)).toBe(false);
++    rmSync(FIXTURE_PATH, { force: true });
++    expect(existsSync(FIXTURE_PATH)).toBe(false);
++  });
++
++  it('writes both flat views at 256x256', { timeout: 600_000 }, async () => {
++    expect(existsSync(join(ROOT, 'src', 'cli', 'forge.ts'))).toBe(true);
++    expect(existsSync(join(ROOT, 'package.json'))).toBe(true);
++    expect(existsSync(HEAVY_RUN), `missing runner ${HEAVY_RUN}`).toBe(true);
++    const result = ensureRendered();
++    expect(result.status, result.stderr || result.stdout).toBe(0);
++    for (const pngPath of [FRONT_PNG, SIDE_PNG]) {
++      expect(existsSync(pngPath), `missing ${pngPath}`).toBe(true);
++    }
++    for (const pngPath of [FRONT_PNG, SIDE_PNG]) {
++      const meta = await sharp(pngPath).metadata();
++      expect(meta.width).toBe(256);
++      expect(meta.height).toBe(256);
++    }
++  });
++
++  it('leaves the corner pixel transparent', { timeout: 600_000 }, async () => {
++    ensureRendered();
++    expect(existsSync(FRONT_PNG), `missing ${FRONT_PNG}`).toBe(true);
++    const [, , , a] = await pixel(FRONT_PNG, 0, 0);
++    expect(a).toBe(0);
++  });
++
++  it('renders the body colour within 1 of 255', { timeout: 600_000 }, async () => {
++    ensureRendered();
++    expect(existsSync(FRONT_PNG), `missing ${FRONT_PNG}`).toBe(true);
++    const meta = await sharp(FRONT_PNG).metadata();
++    const [rr, gg, bb] = hexToRgb(BODY_HEX);
++    const [r, g, b, a] = await pixel(FRONT_PNG, Math.floor(meta.width! / 2), Math.floor(meta.height! / 2));
++    expect(a).toBeGreaterThanOrEqual(250);
++    expect(Math.abs(r - rr)).toBeLessThanOrEqual(1);
++    expect(Math.abs(g - gg)).toBeLessThanOrEqual(1);
++    expect(Math.abs(b - bb)).toBeLessThanOrEqual(1);
++  });
++
++  it('renders the block colour within 1 of 255', { timeout: 600_000 }, async () => {
++    ensureRendered();
++    expect(existsSync(FRONT_PNG), `missing ${FRONT_PNG}`).toBe(true);
++    const meta = await sharp(FRONT_PNG).metadata();
++    const [rr, gg, bb] = hexToRgb(BLOCK_HEX);
++    const [r, g, b, a] = await pixel(FRONT_PNG, Math.floor(meta.width! / 2), Math.floor(meta.height! * 0.12));
++    expect(a).toBeGreaterThanOrEqual(250);
++    expect(Math.abs(r - rr)).toBeLessThanOrEqual(1);
++    expect(Math.abs(g - gg)).toBeLessThanOrEqual(1);
++    expect(Math.abs(b - bb)).toBeLessThanOrEqual(1);
++  });
++
++  it('keeps both view heights within 2 px', { timeout: 600_000 }, async () => {
++    ensureRendered();
++    expect(existsSync(FRONT_PNG), `missing ${FRONT_PNG}`).toBe(true);
++    expect(existsSync(SIDE_PNG), `missing ${SIDE_PNG}`).toBe(true);
++    const front = await maskRows(FRONT_PNG);
++    const side = await maskRows(SIDE_PNG);
++    expect(Math.abs(front.height - side.height)).toBeLessThanOrEqual(2);
++  });
++
++  it(
++    'places the side block left of centre by 0.02 m ppm or more (decision j)',
++    { timeout: 600_000 },
++    async () => {
++      ensureRendered();
++      expect(existsSync(SIDE_PNG), `missing ${SIDE_PNG}`).toBe(true);
++      const { data, info } = await sharp(SIDE_PNG).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
++      const width = info.width!;
++      const height = info.height!;
++      const [rr, gg, bb] = hexToRgb(BLOCK_HEX);
++      let minCol = width;
++      for (let row = 0; row < height; row += 1) {
++        for (let col = 0; col < width; col += 1) {
++          const idx = (row * width + col) * 4;
++          if (
++            data[idx + 3]! >= 250 &&
++            Math.abs(data[idx]! - rr) <= 1 &&
++            Math.abs(data[idx + 1]! - gg) <= 1 &&
++            Math.abs(data[idx + 2]! - bb) <= 1
++          ) {
++            if (col < minCol) minCol = col;
++          }
++        }
++      }
++      expect(minCol).toBeLessThan(width);
++      const ppm = 256 / 1.1;
++      expect(width / 2 - minCol).toBeGreaterThanOrEqual(0.02 * ppm);
++    },
++  );
++
++  it('writes the named view without --ortho and rejects --flat without --fast', { timeout: 600_000 }, () => {
++    if (!created) createFixture(pinSource());
++    const named = runForge(`render ${PIN_NAME} --views front-level --size 128 --bg none --fast`);
++    expect(named.status, named.stderr || named.stdout).toBe(0);
++    expect(existsSync(join(OUT_DIR, 'views', 'front-level.png'))).toBe(true);
++    const flat = runForge(`render ${PIN_NAME} --views front-level --flat --bg none --size 128`);
++    expect(flat.status).not.toBe(0);
++    expect(`${flat.stderr || ''}${flat.stdout || ''}`).toContain('--flat needs --fast and --bg none');
++  });
++
++  it('protects an existing fixture path and leaves no fixture behind', { timeout: 600_000 }, () => {
++    const probePath = join(ROOT, 'assets', `${PIN_NAME}-probe.ts`);
++    let probeFailure = '';
++    try {
++      createExclusive(probePath, pinSource());
++    } catch (error) {
++      probeFailure = (error as Error).message;
++    }
++    expect(probeFailure).toBe('');
++    const before = readFileSync(probePath, 'utf8');
++    let secondFailure = '';
++    try {
++      createExclusive(probePath, pinSource());
++    } catch (error) {
++      secondFailure = (error as Error).message;
++    }
++    expect(secondFailure).toBe(`fixture path exists: ${probePath}`);
++    expect(readFileSync(probePath, 'utf8')).toBe(before);
++    rmSync(probePath, { force: true });
++    const result = ensureRendered();
++    expect(result.status, result.stderr || result.stdout).toBe(0);
++    removeOwned();
++    expect(existsSync(FIXTURE_PATH)).toBe(false);
++    expect(existsSync(OUT_DIR)).toBe(false);
++    expect(created).toBe(false);
++  });
++});
+diff --git a/tests/render-options.validation-r2.test.ts b/tests/render-options.validation-r2.test.ts
+new file mode 100644
+index 00000000..160d40c7
+--- /dev/null
++++ b/tests/render-options.validation-r2.test.ts
+@@ -0,0 +1,334 @@
++import { spawnSync, type SpawnSyncReturns } from 'node:child_process';
++import {
++  existsSync,
++  lstatSync,
++  mkdirSync,
++  readFileSync,
++  realpathSync,
++  readdirSync,
++  rmSync,
++  symlinkSync,
++  writeFileSync,
++} from 'node:fs';
++import { basename, dirname, join, resolve } from 'node:path';
++import { fileURLToPath } from 'node:url';
++import { describe, expect, it, afterAll } from 'vitest';
++import sharp from 'sharp';
++
++// The checkout under test comes from this module, never from a hard-coded path.
++const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
++const HEAVY_RUN =
++  process.env.HEAVY_RUN_PATH ?? resolve(ROOT, '..', '..', 'advantage-pr', 'scripts', 'jobs', 'heavy-run.sh');
++const PID = process.pid;
++const RUNS_DIR = join(ROOT, 'measure', 'runs', 'chibi_sprouts_redesign_20261123');
++
++const PINS = {
++  inheritedRender: `_flat-render-r2a-${PID}`,
++  inheritedOther: `_flat-render-r2b-${PID}`,
++  trailingComma: `_flat-render-r2c-${PID}`,
++  unknownMember: `_flat-render-r2d-${PID}`,
++  linkedOutput: `_flat-render-r2e-${PID}`,
++} as const;
++const OTHER_OUT = `_flat-render-r2other-${PID}`;
++const LINK_TARGET = join(RUNS_DIR, `link-target-${PID}`);
++
++function pinSource(name: string): string {
++  return `import { defineAsset, sdf } from '../src/index.js';
++
++export default defineAsset({
++  name: '${name}',
++  texture: false,
++  build(k) {
++    k.body('body', sdf.box([0.4, 1.0, 0.2]).at(0, 0.5, 0), { color: '#3f8fd0' });
++  },
++});
++`;
++}
++
++const created = new Set<string>();
++
++function runForge(args: string): SpawnSyncReturns<string> {
++  return spawnSync('bash', [HEAVY_RUN, '-c', `./forge ${args}`], {
++    cwd: ROOT,
++    encoding: 'utf8',
++    timeout: 600_000,
++    env: { ...process.env, HEAVY_MIN_AVAIL_MB: '1500' },
++  });
++}
++
++function nonEmptyLines(output: string): string[] {
++  return output
++    .split('\n')
++    .map((l) => l.trim())
++    .filter((l) => l.length > 0);
++}
++
++function snapshotFiles(dir: string): string[] {
++  const found: string[] = [];
++  const walk = (base: string, rel: string): void => {
++    for (const entry of readdirSync(join(base, rel), { withFileTypes: true })) {
++      const relPath = rel === '' ? entry.name : `${rel}/${entry.name}`;
++      if (entry.isDirectory()) walk(base, relPath);
++      else found.push(relPath);
++    }
++  };
++  walk(dir, '');
++  return found.sort();
++}
++
++function snapshotContents(dir: string): string[] {
++  return snapshotFiles(dir).map((f) => `${f}:${readFileSync(join(dir, f), 'utf8')}`);
++}
++
++// Only paths this run owns are ever removed: a symlink is unlinked, never followed;
++// a directory must sit under out/ with a run prefix or under this track's runs
++// folder with a probe prefix.
++function removeOwnedPath(p: string): void {
++  const st = lstatSync(p, { throwIfNoEntry: false });
++  if (!st) return;
++  if (st.isSymbolicLink()) {
++    rmSync(p);
++    return;
++  }
++  if (!st.isDirectory()) {
++    rmSync(p, { force: true });
++    return;
++  }
++  const real = realpathSync(p);
++  const outRoot = realpathSync(join(ROOT, 'out'));
++  const runsRoot = realpathSync(RUNS_DIR);
++  const underOut = dirname(real) === outRoot && basename(real).startsWith('_flat-render-r2');
++  const underRuns = dirname(real) === runsRoot && /^(link-target|cutout|probe)-/.test(basename(real));
++  if (!underOut && !underRuns) throw new Error(`refusing to remove unowned path: ${p}`);
++  rmSync(real, { recursive: true, force: true });
++}
++
++function createFixture(name: string): string {
++  const path = join(ROOT, 'assets', `${name}.ts`);
++  if (existsSync(path)) throw new Error(`fixture path exists: ${path}`);
++  writeFileSync(path, pinSource(name), { flag: 'wx' });
++  created.add(name);
++  return path;
++}
++
++function outDir(name: string): string {
++  return join(ROOT, 'out', name);
++}
++
++function removeFixture(name: string): void {
++  removeOwnedPath(join(ROOT, 'assets', `${name}.ts`));
++  removeOwnedPath(outDir(name));
++  created.delete(name);
++}
++
++afterAll(() => {
++  for (const name of [...created]) {
++    try {
++      removeFixture(name);
++    } catch {
++      /* best effort */
++    }
++  }
++  for (const dir of [LINK_TARGET, join(ROOT, 'out', OTHER_OUT)]) {
++    try {
++      removeOwnedPath(dir);
++    } catch {
++      /* best effort */
++    }
++  }
++});
++
++describe('render validation round 2 (views, cutout list, linked output)', () => {
++  it('rejects inherited view names on render before the build', { timeout: 600_000 }, () => {
++    const pin = PINS.inheritedRender;
++    const fixture = createFixture(pin);
++    expect(existsSync(outDir(pin))).toBe(false);
++    const problems: string[] = [];
++    try {
++      for (const name of ['constructor', 'toString', '__proto__', 'hasOwnProperty']) {
++        const result = runForge(`render ${pin} --fast --views ${name} --size 64 --bg none`);
++        const label = `render --views ${name}`;
++        if (result.status === 0) problems.push(`${label}: exit 0, the name was accepted`);
++        const lines = nonEmptyLines(`${result.stdout || ''}\n${result.stderr || ''}`);
++        if (lines.length !== 1) problems.push(`${label}: expected 1 error line, got ${lines.length}`);
++        else {
++          if (!lines[0]!.includes(`Unknown view '${name}'`))
++            problems.push(`${label}: error line names no view: ${lines[0]}`);
++          if (!lines[0]!.includes('Known')) problems.push(`${label}: error line lists no known views`);
++        }
++        if (/^\s*at\s/m.test(`${result.stdout || ''}\n${result.stderr || ''}`))
++          problems.push(`${label}: stack trace frames present`);
++        if (existsSync(outDir(pin))) problems.push(`${label}: build outputs appeared`);
++      }
++      expect(problems).toEqual([]);
++    } finally {
++      removeFixture(pin);
++    }
++    expect(existsSync(fixture)).toBe(false);
++    expect(existsSync(outDir(pin))).toBe(false);
++  });
++
++  it('rejects inherited view names on animate and cutout before the build', { timeout: 600_000 }, () => {
++    const pin = PINS.inheritedOther;
++    const fixture = createFixture(pin);
++    expect(existsSync(outDir(pin))).toBe(false);
++    const problems: string[] = [];
++    const probeOut = join(RUNS_DIR, `cutout-${PID}-inherited`);
++    try {
++      mkdirSync(probeOut);
++      const animated = runForge(`animate ${pin} --views constructor --clip idle --frames 2`);
++      if (animated.status === 0) problems.push('animate: exit 0, the name was accepted');
++      const animatedLines = nonEmptyLines(`${animated.stdout || ''}\n${animated.stderr || ''}`);
++      if (animatedLines.length !== 1)
++        problems.push(`animate: expected 1 error line, got ${animatedLines.length}`);
++      if (/^\s*at\s/m.test(`${animated.stdout || ''}\n${animated.stderr || ''}`))
++        problems.push('animate: stack trace frames present');
++      if (existsSync(outDir(pin))) problems.push('animate: build outputs appeared');
++      const cut = runForge(`cutout ${pin} --fast --out ${probeOut} --views constructor`);
++      if (cut.status === 0) problems.push('cutout: exit 0, the name was accepted');
++      const cutLines = nonEmptyLines(`${cut.stdout || ''}\n${cut.stderr || ''}`);
++      if (cutLines.length !== 1) problems.push(`cutout: expected 1 error line, got ${cutLines.length}`);
++      if (/^\s*at\s/m.test(`${cut.stdout || ''}\n${cut.stderr || ''}`))
++        problems.push('cutout: stack trace frames present');
++      if (existsSync(outDir(pin))) problems.push('cutout: build outputs appeared');
++      if (snapshotFiles(probeOut).length > 0)
++        problems.push(`cutout: wrote to the out folder: ${snapshotFiles(probeOut).join(', ')}`);
++      expect(problems).toEqual([]);
++    } finally {
++      removeOwnedPath(probeOut);
++      removeFixture(pin);
++    }
++    expect(existsSync(fixture)).toBe(false);
++    expect(existsSync(outDir(pin))).toBe(false);
++    expect(existsSync(probeOut)).toBe(false);
++  });
++
++  it(
++    'cutout drops empty view members like the base (front, and ,front and front,,side)',
++    { timeout: 600_000 },
++    () => {
++      const pin = PINS.trailingComma;
++      const fixture = createFixture(pin);
++      const problems: string[] = [];
++      try {
++        const cases: Array<{ views: string; pngs: string[] }> = [
++          { views: 'front,', pngs: ['front.png'] },
++          { views: ',front', pngs: ['front.png'] },
++          { views: 'front,,side', pngs: ['front.png', 'side.png'] },
++        ];
++        cases.forEach(({ views, pngs }, index) => {
++          const probeOut = join(RUNS_DIR, `cutout-${PID}-comma-${index}`);
++          mkdirSync(probeOut);
++          try {
++            const result = runForge(`cutout ${pin} --fast --out ${probeOut} --views ${views} --size 64`);
++            const label = `cutout --views ${views}`;
++            if (result.status !== 0)
++              problems.push(
++                `${label}: exit ${result.status}: ${nonEmptyLines(`${result.stdout || ''}\n${result.stderr || ''}`).join(' | ')}`,
++              );
++            for (const png of pngs) {
++              if (!existsSync(join(probeOut, pin, png))) problems.push(`${label}: missing ${png}`);
++            }
++          } finally {
++            removeOwnedPath(probeOut);
++          }
++        });
++        expect(problems).toEqual([]);
++      } finally {
++        removeFixture(pin);
++      }
++      expect(existsSync(fixture)).toBe(false);
++    },
++  );
++
++  it('cutout still rejects an unknown member before the build', { timeout: 600_000 }, () => {
++    const pin = PINS.unknownMember;
++    const fixture = createFixture(pin);
++    const probeOut = join(RUNS_DIR, `cutout-${PID}-nosuch`);
++    const problems: string[] = [];
++    try {
++      mkdirSync(probeOut);
++      const result = runForge(`cutout ${pin} --fast --out ${probeOut} --views front,nosuch`);
++      if (result.status === 0) problems.push('exit 0, the unknown member was accepted');
++      const lines = nonEmptyLines(`${result.stdout || ''}\n${result.stderr || ''}`);
++      if (lines.length !== 1) problems.push(`expected 1 error line, got ${lines.length}`);
++      if (/^\s*at\s/m.test(`${result.stdout || ''}\n${result.stderr || ''}`))
++        problems.push('stack trace frames present');
++      if (snapshotFiles(probeOut).length > 0)
++        problems.push(`cutout wrote before the build: ${snapshotFiles(probeOut).join(', ')}`);
++      if (existsSync(outDir(pin))) problems.push('build outputs appeared');
++      expect(problems).toEqual([]);
++    } finally {
++      removeOwnedPath(probeOut);
++      removeFixture(pin);
++    }
++    expect(existsSync(fixture)).toBe(false);
++    expect(existsSync(outDir(pin))).toBe(false);
++    expect(existsSync(probeOut)).toBe(false);
++  });
++
++  it("'output folder is a link' refuses render --flat before any write", { timeout: 600_000 }, async () => {
++    const pin = PINS.linkedOutput;
++    const fixture = createFixture(pin);
++    const problems: string[] = [];
++    try {
++      // A symlink at out/<name>/flat, aimed at a temp folder this test owns.
++      mkdirSync(LINK_TARGET);
++      const targetMarker = join(LINK_TARGET, 'marker.txt');
++      writeFileSync(targetMarker, 'link-target-marker\n', { flag: 'wx' });
++      mkdirSync(outDir(pin), { recursive: true });
++      symlinkSync(LINK_TARGET, join(outDir(pin), 'flat'));
++      const flatRun = runForge(`render ${pin} --fast --views front-level --ortho --flat --bg none --size 64`);
++      if (flatRun.status === 0) problems.push('flat symlink: exit 0, the linked folder was accepted');
++      const flatLines = nonEmptyLines(`${flatRun.stdout || ''}\n${flatRun.stderr || ''}`);
++      if (flatLines.length !== 1)
++        problems.push(`flat symlink: expected 1 error line, got ${flatLines.length}`);
++      if (/^\s*at\s/m.test(`${flatRun.stdout || ''}\n${flatRun.stderr || ''}`))
++        problems.push('flat symlink: stack trace frames present');
++      if (snapshotFiles(LINK_TARGET).filter((f) => f.endsWith('.png')).length > 0)
++        problems.push('flat symlink: PNG appeared in the link target');
++      if (readFileSync(targetMarker, 'utf8') !== 'link-target-marker\n')
++        problems.push('flat symlink: marker changed or deleted');
++
++      // out/<name> itself a symlink, aimed at another asset out folder this test owns.
++      const otherOut = join(ROOT, 'out', OTHER_OUT);
++      mkdirSync(join(otherOut, 'flat'), { recursive: true });
++      const otherMarker = join(otherOut, 'flat', 'marker.txt');
++      writeFileSync(otherMarker, 'other-marker\n', { flag: 'wx' });
++      const otherPng = join(otherOut, 'flat', 'existing.png');
++      const pngBytes = await sharp({
++        create: { width: 4, height: 4, channels: 4, background: { r: 1, g: 2, b: 3, alpha: 255 } },
++      })
++        .png()
++        .toBuffer();
++      writeFileSync(otherPng, pngBytes, { flag: 'wx' });
++      const otherBefore = snapshotFiles(otherOut).map(
++        (f) => `${f}:${readFileSync(join(otherOut, f), 'utf8')}`,
++      );
++      removeOwnedPath(outDir(pin));
++      symlinkSync(otherOut, outDir(pin));
++      const outRun = runForge(`render ${pin} --fast --views front-level --ortho --flat --bg none --size 64`);
++      if (outRun.status === 0) problems.push('out symlink: exit 0, the linked folder was accepted');
++      const outLines = nonEmptyLines(`${outRun.stdout || ''}\n${outRun.stderr || ''}`);
++      if (outLines.length !== 1) problems.push(`out symlink: expected 1 error line, got ${outLines.length}`);
++      if (/^\s*at\s/m.test(`${outRun.stdout || ''}\n${outRun.stderr || ''}`))
++        problems.push('out symlink: stack trace frames present');
++      const otherAfter = snapshotFiles(otherOut).map(
++        (f) => `${f}:${readFileSync(join(otherOut, f), 'utf8')}`,
++      );
++      if (JSON.stringify(otherAfter) !== JSON.stringify(otherBefore))
++        problems.push("out symlink: the other asset's flat folder changed");
++      expect(problems).toEqual([]);
++    } finally {
++      removeOwnedPath(outDir(pin));
++      removeOwnedPath(join(ROOT, 'out', OTHER_OUT));
++      removeOwnedPath(LINK_TARGET);
++      removeFixture(pin);
++    }
++    expect(problems).toEqual([]);
++    expect(existsSync(fixture)).toBe(false);
++    expect(existsSync(outDir(pin))).toBe(false);
++    expect(existsSync(LINK_TARGET)).toBe(false);
++    expect(existsSync(join(ROOT, 'out', OTHER_OUT))).toBe(false);
++  });
++});
+diff --git a/tests/render-options.validation.test.ts b/tests/render-options.validation.test.ts
+new file mode 100644
+index 00000000..1f6ebb39
+--- /dev/null
++++ b/tests/render-options.validation.test.ts
+@@ -0,0 +1,180 @@
++import { spawnSync, type SpawnSyncReturns } from 'node:child_process';
++import {
++  existsSync,
++  lstatSync,
++  mkdirSync,
++  readFileSync,
++  realpathSync,
++  readdirSync,
++  rmSync,
++  statSync,
++  writeFileSync,
++} from 'node:fs';
++import { basename, dirname, join, resolve } from 'node:path';
++import { fileURLToPath } from 'node:url';
++import { describe, expect, it, afterAll } from 'vitest';
++import { createHash } from 'node:crypto';
++
++// The checkout under test comes from this module, never from a hard-coded path.
++const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
++const HEAVY_RUN =
++  process.env.HEAVY_RUN_PATH ?? resolve(ROOT, '..', '..', 'advantage-pr', 'scripts', 'jobs', 'heavy-run.sh');
++const PID = process.pid;
++const RUNS_DIR = join(ROOT, 'measure', 'runs', 'chibi_sprouts_redesign_20261123');
++
++const VPIN = `_flat-render-validation-${PID}`;
++const VFIXTURE = join(ROOT, 'assets', `${VPIN}.ts`);
++const VOUT = join(ROOT, 'out', VPIN);
++
++const PROBE_DIR = join(RUNS_DIR, `probe-${PID}`);
++const MARKER = join(PROBE_DIR, 'marker.txt');
++const ESCAPE_TS = join(PROBE_DIR, 'probe-escape-asset.ts');
++const ESCAPE_OUT = join(PROBE_DIR, 'probe-escape-asset');
++const ESCAPE_NAME = `../measure/runs/chibi_sprouts_redesign_20261123/probe-${PID}/probe-escape-asset`;
++
++function pinSource(): string {
++  return `import { defineAsset, sdf } from '../src/index.js';
++
++export default defineAsset({
++  name: '${VPIN}',
++  texture: false,
++  build(k) {
++    k.body('body', sdf.box([0.4, 1.0, 0.2]).at(0, 0.5, 0), { color: '#3f8fd0' });
++  },
++});
++`;
++}
++
++function escapeSource(): string {
++  return `import { defineAsset, sdf } from '../../../../src/index.js';
++
++export default defineAsset({
++  name: 'probe-escape-asset',
++  texture: false,
++  build(k) {
++    k.body('body', sdf.box([0.4, 1.0, 0.2]).at(0, 0.5, 0), { color: '#3f8fd0' });
++  },
++});
++`;
++}
++
++let created = false;
++
++function runForge(args: string): SpawnSyncReturns<string> {
++  return spawnSync('bash', [HEAVY_RUN, '-c', `./forge ${args}`], {
++    cwd: ROOT,
++    encoding: 'utf8',
++    timeout: 600_000,
++    env: { ...process.env, HEAVY_MIN_AVAIL_MB: '1500' },
++  });
++}
++
++function removeOutDir(outDir: string, prefix: string): void {
++  const st = lstatSync(outDir, { throwIfNoEntry: false });
++  if (!st || !st.isDirectory()) return;
++  const real = realpathSync(outDir);
++  const outRoot = realpathSync(join(ROOT, 'out'));
++  if (dirname(real) !== outRoot) return;
++  if (!basename(real).startsWith(prefix)) return;
++  rmSync(real, { recursive: true, force: true });
++}
++
++function snapshotFiles(dir: string): string[] {
++  const found: string[] = [];
++  const walk = (base: string, rel: string): void => {
++    for (const entry of readdirSync(join(base, rel), { withFileTypes: true })) {
++      const relPath = rel === '' ? entry.name : `${rel}/${entry.name}`;
++      if (entry.isDirectory()) walk(base, relPath);
++      else found.push(relPath);
++    }
++  };
++  walk(dir, '');
++  return found.sort();
++}
++
++function sha256(path: string): string {
++  return createHash('sha256').update(readFileSync(path)).digest('hex');
++}
++
++afterAll(() => {
++  if (created) {
++    rmSync(VFIXTURE, { force: true });
++    created = false;
++  }
++  removeOutDir(VOUT, '_flat-render-validation-');
++});
++
++describe('render validation (unknown view, asset-name validation)', () => {
++  it('rejects an unknown render view before the build with one error line', { timeout: 600_000 }, () => {
++    expect(existsSync(VFIXTURE)).toBe(false);
++    expect(existsSync(VOUT)).toBe(false);
++    try {
++      writeFileSync(VFIXTURE, pinSource(), { flag: 'wx' });
++    } catch (error) {
++      const e = error as NodeJS.ErrnoException;
++      if (e.code === 'EEXIST') throw new Error(`fixture path exists: ${VFIXTURE}`);
++      throw error;
++    }
++    created = true;
++    const result = runForge(`render ${VPIN} --fast --views nosuch --size 64 --bg none`);
++    const problems: string[] = [];
++    if (result.status === 0) problems.push('exit 0 for unknown view nosuch');
++    const combined = `${result.stdout || ''}\n${result.stderr || ''}`;
++    const lines = combined
++      .split('\n')
++      .map((l) => l.trim())
++      .filter((l) => l.length > 0);
++    if (lines.length !== 1) problems.push(`expected 1 error line, got ${lines.length}`);
++    else {
++      if (!lines[0]!.includes('Unknown view')) problems.push(`error line names no view: ${lines[0]}`);
++      if (!lines[0]!.includes('Known')) problems.push(`error line lists no known views: ${lines[0]}`);
++    }
++    if (/^\s*at\s/m.test(combined)) problems.push('stack trace frames present');
++    if (existsSync(VOUT)) problems.push(`build outputs appeared: ${snapshotFiles(VOUT).join(', ')}`);
++    expect(problems).toEqual([]);
++    rmSync(VFIXTURE, { force: true });
++    created = false;
++    removeOutDir(VOUT, '_flat-render-validation-');
++    expect(existsSync(VFIXTURE)).toBe(false);
++    expect(existsSync(VOUT)).toBe(false);
++  });
++
++  it('rejects an asset name with a path separator before any path is computed', { timeout: 600_000 }, () => {
++    expect(existsSync(PROBE_DIR)).toBe(false);
++    try {
++      mkdirSync(PROBE_DIR);
++      writeFileSync(MARKER, 'probe-marker\n', { flag: 'wx' });
++      writeFileSync(ESCAPE_TS, escapeSource(), { flag: 'wx' });
++      const markerBefore = readFileSync(MARKER, 'utf8');
++      const filesBefore = snapshotFiles(PROBE_DIR);
++      expect(filesBefore).toEqual(['marker.txt', 'probe-escape-asset.ts']);
++
++      const problems: string[] = [];
++      const checkRun = (label: string, args: string): void => {
++        const hadEscapeOut = existsSync(ESCAPE_OUT);
++        const result = runForge(args);
++        if (result.status === 0) problems.push(`${label}: exit 0, the name was accepted`);
++        const combined = `${result.stdout || ''}\n${result.stderr || ''}`;
++        const lines = combined
++          .split('\n')
++          .map((l) => l.trim())
++          .filter((l) => l.length > 0);
++        if (lines.length !== 1) problems.push(`${label}: expected 1 error line, got ${lines.length}`);
++        if (/^\s*at\s/m.test(combined)) problems.push(`${label}: stack trace frames present`);
++        if (!hadEscapeOut && existsSync(ESCAPE_OUT))
++          problems.push(`${label}: output path created outside out/`);
++        const markerNow = existsSync(MARKER) ? readFileSync(MARKER, 'utf8') : '<deleted>';
++        if (markerNow !== markerBefore) problems.push(`${label}: marker changed or deleted`);
++        const now = snapshotFiles(PROBE_DIR);
++        const extras = now.filter((f) => !filesBefore.includes(f));
++        if (extras.length > 0) problems.push(`${label}: wrote outside out/: ${extras.join(', ')}`);
++      };
++      checkRun('traversal', `render ${ESCAPE_NAME} --fast --bg none --flat --views front-level --size 64`);
++      checkRun('separator', `render a/b --fast --bg none --size 64`);
++      expect(problems).toEqual([]);
++    } finally {
++      rmSync(PROBE_DIR, { recursive: true, force: true });
++    }
++    expect(existsSync(PROBE_DIR)).toBe(false);
++  });
++});

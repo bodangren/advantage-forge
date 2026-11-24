@@ -1,0 +1,379 @@
+project gate launcher PID=3569105
+
+ RUN  v5.1.1 /home/daniebo/Desktop/forge-worktrees/sprouts-redesign
+
+ ❯ tests/mom-kim-sheet.test.ts (8 tests | 8 failed) 817ms
+   ❯ mom-kim sheet layout (Red pin) (8)
+     × writes the review sheet and the judge panel 105ms
+     × sheet size holds two 700 px rows and a caption strip 100ms
+     × two rows split into three segments each 101ms
+     × the no side drawing cell holds text, not a figure 102ms
+     × one baseline and the 700 px body scale 102ms
+     × lit row sources feed the render cells 103ms
+     × caption strip holds content 101ms
+     × two-cell mom-panel holds both renders 101ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 8 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/mom-kim-sheet.test.ts > mom-kim sheet layout (Red pin) > writes the review sheet and the judge panel
+AssertionError: 
+node:internal/modules/esm/resolve:271
+    throw new ERR_MODULE_NOT_FOUND(
+          ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/daniebo/Desktop/forge-worktrees/sprouts-redesign/scripts/mom-kim-sheet.mjs' imported from /home/daniebo/Desktop/forge-worktrees/sprouts-redesign/
+    at finalizeResolution (node:internal/modules/esm/resolve:271:11)
+    at moduleResolve (node:internal/modules/esm/resolve:865:10)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at nextStep (node:internal/modules/customization_hooks:189:26)
+    at resolveBaseSync (file:///home/daniebo/Desktop/advantage-forge/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:11092)
+    at resolveDirectorySync (file:///home/daniebo/Desktop/advantage-forge/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:12398)
+    at resolveTsPathsSync (file:///home/daniebo/Desktop/advantage-forge/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:13605)
+    at resolve (file:///home/daniebo/Desktop/advantage-forge/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:16832) {
+  code: 'ERR_MODULE_NOT_FOUND',
+  url: 'file:///home/daniebo/Desktop/forge-worktrees/sprouts-redesign/scripts/mom-kim-sheet.mjs'
+}
+
+Node.js v24.19.0
+: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ resolveBaseSync ../../advantage-forge/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:11092
+ ❯ resolveDirectorySync ../../advantage-forge/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:12398
+ ❯ resolveTsPathsSync ../../advantage-forge/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:13605
+ ❯ ensureSheet tests/mom-kim-sheet.test.ts:59:75
+     57|     env: { ...process.env, HEAVY_MIN_AVAIL_MB: '1500' },
+     58|   });
+     59|   expect(result.status, `${result.stdout || ''}\n${result.stderr || ''…
+       |                                                                           ^
+     60|   sheetRan = true;
+     61| }
+ ❯ tests/mom-kim-sheet.test.ts:194:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/8]⎯
+
+ FAIL  tests/mom-kim-sheet.test.ts > mom-kim sheet layout (Red pin) > sheet size holds two 700 px rows and a caption strip
+AssertionError: 
+node:internal/modules/esm/resolve:271
+    throw new ERR_MODULE_NOT_FOUND(
+          ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/daniebo/Desktop/forge-worktrees/sprouts-redesign/scripts/mom-kim-sheet.mjs' imported from /home/daniebo/Desktop/forge-worktrees/sprouts-redesign/
+    at finalizeResolution (node:internal/modules/esm/resolve:271:11)
+    at moduleResolve (node:internal/modules/esm/resolve:865:10)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at nextStep (node:internal/modules/customization_hooks:189:26)
+    at resolveBaseSync (file:///home/daniebo/Desktop/advantage-forge/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:11092)
+    at resolveDirectorySync (file:///home/daniebo/Desktop/advantage-forge/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:12398)
+    at resolveTsPathsSync (file:///home/daniebo/Desktop/advantage-forge/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:13605)
+    at resolve (file:///home/daniebo/Desktop/advantage-forge/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:16832) {
+  code: 'ERR_MODULE_NOT_FOUND',
+  url: 'file:///home/daniebo/Desktop/forge-worktrees/sprouts-redesign/scripts/mom-kim-sheet.mjs'
+}
+
+Node.js v24.19.0
+: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ resolveBaseSync ../../advantage-forge/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:11092
+ ❯ resolveDirectorySync ../../advantage-forge/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:12398
+ ❯ resolveTsPathsSync ../../advantage-forge/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:13605
+ ❯ ensureSheet tests/mom-kim-sheet.test.ts:59:75
+     57|     env: { ...process.env, HEAVY_MIN_AVAIL_MB: '1500' },
+     58|   });
+     59|   expect(result.status, `${result.stdout || ''}\n${result.stderr || ''…
+       |                                                                           ^
+     60|   sheetRan = true;
+     61| }
+ ❯ tests/mom-kim-sheet.test.ts:202:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/8]⎯
+
+ FAIL  tests/mom-kim-sheet.test.ts > mom-kim sheet layout (Red pin) > two rows split into three segments each
+AssertionError: 
+node:internal/modules/esm/resolve:271
+    throw new ERR_MODULE_NOT_FOUND(
+          ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/daniebo/Desktop/forge-worktrees/sprouts-redesign/scripts/mom-kim-sheet.mjs' imported from /home/daniebo/Desktop/forge-worktrees/sprouts-redesign/
+    at finalizeResolution (node:internal/modules/esm/resolve:271:11)
+    at moduleResolve (node:internal/modules/esm/resolve:865:10)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at nextStep (node:internal/modules/customization_hooks:189:26)
+    at resolveBaseSync (file:///home/daniebo/Desktop/advantage-forge/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:11092)
+    at resolveDirectorySync (file:///home/daniebo/Desktop/advantage-forge/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:12398)
+    at resolveTsPathsSync (file:///home/daniebo/Desktop/advantage-forge/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:13605)
+    at resolve (file:///home/daniebo/Desktop/advantage-forge/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:16832) {
+  code: 'ERR_MODULE_NOT_FOUND',
+  url: 'file:///home/daniebo/Desktop/forge-worktrees/sprouts-redesign/scripts/mom-kim-sheet.mjs'
+}
+
+Node.js v24.19.0
+: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ resolveBaseSync ../../advantage-forge/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:11092
+ ❯ resolveDirectorySync ../../advantage-forge/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:12398
+ ❯ resolveTsPathsSync ../../advantage-forge/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:13605
+ ❯ ensureSheet tests/mom-kim-sheet.test.ts:59:75
+     57|     env: { ...process.env, HEAVY_MIN_AVAIL_MB: '1500' },
+     58|   });
+     59|   expect(result.status, `${result.stdout || ''}\n${result.stderr || ''…
+       |                                                                           ^
+     60|   sheetRan = true;
+     61| }
+ ❯ tests/mom-kim-sheet.test.ts:212:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/8]⎯
+
+ FAIL  tests/mom-kim-sheet.test.ts > mom-kim sheet layout (Red pin) > the no side drawing cell holds text, not a figure
+AssertionError: 
+node:internal/modules/esm/resolve:271
+    throw new ERR_MODULE_NOT_FOUND(
+          ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/daniebo/Desktop/forge-worktrees/sprouts-redesign/scripts/mom-kim-sheet.mjs' imported from /home/daniebo/Desktop/forge-worktrees/sprouts-redesign/
+    at finalizeResolution (node:internal/modules/esm/resolve:271:11)
+    at moduleResolve (node:internal/modules/esm/resolve:865:10)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at nextStep (node:internal/modules/customization_hooks:189:26)
+    at resolveBaseSync (file:///home/daniebo/Desktop/advantage-forge/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:11092)
+    at resolveDirectorySync (file:///home/daniebo/Desktop/advantage-forge/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:12398)
+    at resolveTsPathsSync (file:///home/daniebo/Desktop/advantage-forge/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:13605)
+    at resolve (file:///home/daniebo/Desktop/advantage-forge/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:16832) {
+  code: 'ERR_MODULE_NOT_FOUND',
+  url: 'file:///home/daniebo/Desktop/forge-worktrees/sprouts-redesign/scripts/mom-kim-sheet.mjs'
+}
+
+Node.js v24.19.0
+: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ resolveBaseSync ../../advantage-forge/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:11092
+ ❯ resolveDirectorySync ../../advantage-forge/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:12398
+ ❯ resolveTsPathsSync ../../advantage-forge/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:13605
+ ❯ ensureSheet tests/mom-kim-sheet.test.ts:59:75
+     57|     env: { ...process.env, HEAVY_MIN_AVAIL_MB: '1500' },
+     58|   });
+     59|   expect(result.status, `${result.stdout || ''}\n${result.stderr || ''…
+       |                                                                           ^
+     60|   sheetRan = true;
+     61| }
+ ❯ tests/mom-kim-sheet.test.ts:224:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/8]⎯
+
+ FAIL  tests/mom-kim-sheet.test.ts > mom-kim sheet layout (Red pin) > one baseline and the 700 px body scale
+AssertionError: 
+node:internal/modules/esm/resolve:271
+    throw new ERR_MODULE_NOT_FOUND(
+          ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/daniebo/Desktop/forge-worktrees/sprouts-redesign/scripts/mom-kim-sheet.mjs' imported from /home/daniebo/Desktop/forge-worktrees/sprouts-redesign/
+    at finalizeResolution (node:internal/modules/esm/resolve:271:11)
+    at moduleResolve (node:internal/modules/esm/resolve:865:10)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at nextStep (node:internal/modules/customization_hooks:189:26)
+    at resolveBaseSync (file:///home/daniebo/Desktop/advantage-forge/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:11092)
+    at resolveDirectorySync (file:///home/daniebo/Desktop/advantage-forge/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:12398)
+    at resolveTsPathsSync (file:///home/daniebo/Desktop/advantage-forge/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:13605)
+    at resolve (file:///home/daniebo/Desktop/advantage-forge/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:16832) {
+  code: 'ERR_MODULE_NOT_FOUND',
+  url: 'file:///home/daniebo/Desktop/forge-worktrees/sprouts-redesign/scripts/mom-kim-sheet.mjs'
+}
+
+Node.js v24.19.0
+: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ resolveBaseSync ../../advantage-forge/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:11092
+ ❯ resolveDirectorySync ../../advantage-forge/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:12398
+ ❯ resolveTsPathsSync ../../advantage-forge/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:13605
+ ❯ ensureSheet tests/mom-kim-sheet.test.ts:59:75
+     57|     env: { ...process.env, HEAVY_MIN_AVAIL_MB: '1500' },
+     58|   });
+     59|   expect(result.status, `${result.stdout || ''}\n${result.stderr || ''…
+       |                                                                           ^
+     60|   sheetRan = true;
+     61| }
+ ❯ tests/mom-kim-sheet.test.ts:238:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/8]⎯
+
+ FAIL  tests/mom-kim-sheet.test.ts > mom-kim sheet layout (Red pin) > lit row sources feed the render cells
+AssertionError: 
+node:internal/modules/esm/resolve:271
+    throw new ERR_MODULE_NOT_FOUND(
+          ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/daniebo/Desktop/forge-worktrees/sprouts-redesign/scripts/mom-kim-sheet.mjs' imported from /home/daniebo/Desktop/forge-worktrees/sprouts-redesign/
+    at finalizeResolution (node:internal/modules/esm/resolve:271:11)
+    at moduleResolve (node:internal/modules/esm/resolve:865:10)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at nextStep (node:internal/modules/customization_hooks:189:26)
+    at resolveBaseSync (file:///home/daniebo/Desktop/advantage-forge/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:11092)
+    at resolveDirectorySync (file:///home/daniebo/Desktop/advantage-forge/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:12398)
+    at resolveTsPathsSync (file:///home/daniebo/Desktop/advantage-forge/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:13605)
+    at resolve (file:///home/daniebo/Desktop/advantage-forge/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:16832) {
+  code: 'ERR_MODULE_NOT_FOUND',
+  url: 'file:///home/daniebo/Desktop/forge-worktrees/sprouts-redesign/scripts/mom-kim-sheet.mjs'
+}
+
+Node.js v24.19.0
+: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ resolveBaseSync ../../advantage-forge/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:11092
+ ❯ resolveDirectorySync ../../advantage-forge/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:12398
+ ❯ resolveTsPathsSync ../../advantage-forge/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:13605
+ ❯ ensureSheet tests/mom-kim-sheet.test.ts:59:75
+     57|     env: { ...process.env, HEAVY_MIN_AVAIL_MB: '1500' },
+     58|   });
+     59|   expect(result.status, `${result.stdout || ''}\n${result.stderr || ''…
+       |                                                                           ^
+     60|   sheetRan = true;
+     61| }
+ ❯ tests/mom-kim-sheet.test.ts:268:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/8]⎯
+
+ FAIL  tests/mom-kim-sheet.test.ts > mom-kim sheet layout (Red pin) > caption strip holds content
+AssertionError: 
+node:internal/modules/esm/resolve:271
+    throw new ERR_MODULE_NOT_FOUND(
+          ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/daniebo/Desktop/forge-worktrees/sprouts-redesign/scripts/mom-kim-sheet.mjs' imported from /home/daniebo/Desktop/forge-worktrees/sprouts-redesign/
+    at finalizeResolution (node:internal/modules/esm/resolve:271:11)
+    at moduleResolve (node:internal/modules/esm/resolve:865:10)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at nextStep (node:internal/modules/customization_hooks:189:26)
+    at resolveBaseSync (file:///home/daniebo/Desktop/advantage-forge/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:11092)
+    at resolveDirectorySync (file:///home/daniebo/Desktop/advantage-forge/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:12398)
+    at resolveTsPathsSync (file:///home/daniebo/Desktop/advantage-forge/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:13605)
+    at resolve (file:///home/daniebo/Desktop/advantage-forge/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:16832) {
+  code: 'ERR_MODULE_NOT_FOUND',
+  url: 'file:///home/daniebo/Desktop/forge-worktrees/sprouts-redesign/scripts/mom-kim-sheet.mjs'
+}
+
+Node.js v24.19.0
+: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ resolveBaseSync ../../advantage-forge/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:11092
+ ❯ resolveDirectorySync ../../advantage-forge/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:12398
+ ❯ resolveTsPathsSync ../../advantage-forge/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:13605
+ ❯ ensureSheet tests/mom-kim-sheet.test.ts:59:75
+     57|     env: { ...process.env, HEAVY_MIN_AVAIL_MB: '1500' },
+     58|   });
+     59|   expect(result.status, `${result.stdout || ''}\n${result.stderr || ''…
+       |                                                                           ^
+     60|   sheetRan = true;
+     61| }
+ ❯ tests/mom-kim-sheet.test.ts:315:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/8]⎯
+
+ FAIL  tests/mom-kim-sheet.test.ts > mom-kim sheet layout (Red pin) > two-cell mom-panel holds both renders
+AssertionError: 
+node:internal/modules/esm/resolve:271
+    throw new ERR_MODULE_NOT_FOUND(
+          ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/daniebo/Desktop/forge-worktrees/sprouts-redesign/scripts/mom-kim-sheet.mjs' imported from /home/daniebo/Desktop/forge-worktrees/sprouts-redesign/
+    at finalizeResolution (node:internal/modules/esm/resolve:271:11)
+    at moduleResolve (node:internal/modules/esm/resolve:865:10)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at nextStep (node:internal/modules/customization_hooks:189:26)
+    at resolveBaseSync (file:///home/daniebo/Desktop/advantage-forge/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:11092)
+    at resolveDirectorySync (file:///home/daniebo/Desktop/advantage-forge/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:12398)
+    at resolveTsPathsSync (file:///home/daniebo/Desktop/advantage-forge/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:13605)
+    at resolve (file:///home/daniebo/Desktop/advantage-forge/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:16832) {
+  code: 'ERR_MODULE_NOT_FOUND',
+  url: 'file:///home/daniebo/Desktop/forge-worktrees/sprouts-redesign/scripts/mom-kim-sheet.mjs'
+}
+
+Node.js v24.19.0
+: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ resolveBaseSync ../../advantage-forge/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:11092
+ ❯ resolveDirectorySync ../../advantage-forge/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:12398
+ ❯ resolveTsPathsSync ../../advantage-forge/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-nyXW-TH3.mjs:2:13605
+ ❯ ensureSheet tests/mom-kim-sheet.test.ts:59:75
+     57|     env: { ...process.env, HEAVY_MIN_AVAIL_MB: '1500' },
+     58|   });
+     59|   expect(result.status, `${result.stdout || ''}\n${result.stderr || ''…
+       |                                                                           ^
+     60|   sheetRan = true;
+     61| }
+ ❯ tests/mom-kim-sheet.test.ts:322:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/8]⎯
+
+
+ Test Files  1 failed | 237 passed | 4 skipped (242)
+      Tests  8 failed | 3454 passed | 27 skipped (3489)
+   Start at  22:53:00
+   Duration  116.71s (tests 83%, import 15%, transform 1%, worker 1%)
+
+    Isolate  242 workers spawned · ~69ms startup each (spawn + environment, per file)
+             at least ~16.67s faster with isolate: false — reuses workers across files instead of one per file
+
+PROJECT_GATE_EXIT=1

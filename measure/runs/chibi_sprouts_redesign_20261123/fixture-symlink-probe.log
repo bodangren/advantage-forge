@@ -1,0 +1,3 @@
+exclusive-create-on-symlink=EEXIST
+link-preserved=true
+target-content=sentinel
