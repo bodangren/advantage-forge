@@ -1,0 +1,295 @@
+mutant runner started
+MUTANT=unique TEST=checkRows names a duplicate row
+
+ RUN  v5.1.1 /tmp/adv-p4-mutants
+
+ ❯ tests/sprout-mom-kim.validation.test.ts (19 tests | 1 failed | 18 skipped) 30ms
+   ❯ sprout-mom-kim validation round 1 (Red pin) (19)
+     × checkRows names a duplicate row 29ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprout-mom-kim.validation.test.ts > sprout-mom-kim validation round 1 (Red pin) > checkRows names a duplicate row
+AssertionError: expected [ Array(1) ] to deeply equal [ 'checkRows: duplicate row eyeLine' ]
+
+- Expected
++ Received
+
+  [
+-   "checkRows: duplicate row eyeLine",
++   "checkRows: expected 11 rows, found 12",
+  ]
+
+ ❯ tests/sprout-mom-kim.validation.test.ts:144:22
+    142|     const fn = await checkRows();
+    143|     const rows = [...passRows(), { ...passRows().find((r) => r.name ==…
+    144|     expect(fn(rows)).toEqual(['checkRows: duplicate row eyeLine']);
+       |                      ^
+    145|   });
+    146|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 18 skipped (19)
+   Start at  22:49:22
+   Duration  176ms (import 39%, tests 32%, transform 26%, worker 3%)
+
+MUTANT_TEST_EXIT=1
+MUTANT_KILLED=unique
+MUTANT=finite TEST=checkRows names Infinity
+
+ RUN  v5.1.1 /tmp/adv-p4-mutants
+
+ ❯ tests/sprout-mom-kim.validation.test.ts (19 tests | 1 failed | 18 skipped) 41ms
+   ❯ sprout-mom-kim validation round 1 (Red pin) (19)
+     × checkRows names Infinity 39ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprout-mom-kim.validation.test.ts > sprout-mom-kim validation round 1 (Red pin) > checkRows names Infinity
+AssertionError: expected [ Array(1) ] to deeply equal [ 'FAIL armToTorso: not finite' ]
+
+- Expected
++ Received
+
+  [
+-   "FAIL armToTorso: not finite",
++   "FAIL armToTorso: Infinity not in 1.25..1.41",
+  ]
+
+ ❯ tests/sprout-mom-kim.validation.test.ts:168:22
+    166|     const fn = await checkRows();
+    167|     const rows = passRows().map((r) => (r.name === 'armToTorso' ? { ..…
+    168|     expect(fn(rows)).toEqual(['FAIL armToTorso: not finite']);
+       |                      ^
+    169|   });
+    170|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 18 skipped (19)
+   Start at  22:49:22
+   Duration  160ms (tests 49%, import 42%, transform 5%, worker 3%)
+
+MUTANT_TEST_EXIT=1
+MUTANT_KILLED=finite
+MUTANT=asset-name TEST=asset name validation rejects ../x
+
+ RUN  v5.1.1 /tmp/adv-p4-mutants
+
+ ❯ tests/sprout-mom-kim.validation.test.ts (19 tests | 1 failed | 18 skipped) 173ms
+   ❯ sprout-mom-kim validation round 1 (Red pin) (19)
+     × asset name validation rejects ../x with one line before any import 171ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprout-mom-kim.validation.test.ts > sprout-mom-kim validation round 1 (Red pin) > asset name validation rejects ../x with one line before any import
+AssertionError: expected [ 'asset ../x: not built', …(1) ] to have a length of 1 but got 2
+
+- Expected
++ Received
+
+- 1
++ 2
+
+ ❯ tests/sprout-mom-kim.validation.test.ts:199:21
+    197|       expect(result.status).toBe(1);
+    198|       const lines = nonEmptyLines(result.output);
+    199|       expect(lines).toHaveLength(1);
+       |                     ^
+    200|       expect(lines[0]).toContain('Invalid asset name');
+    201|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 18 skipped (19)
+   Start at  22:49:23
+   Duration  314ms (tests 79%, import 17%, transform 2%, worker 1%)
+
+MUTANT_TEST_EXIT=1
+MUTANT_KILLED=asset-name
+MUTANT=load-order TEST=load order: the asset import runs before the missing-render error
+
+ RUN  v5.1.1 /tmp/adv-p4-mutants
+
+ ❯ tests/sprout-mom-kim.validation.test.ts (19 tests | 1 failed | 18 skipped) 5ms
+   ❯ sprout-mom-kim validation round 1 (Red pin) (19)
+     × load order: the asset import runs before the missing-render error 4ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprout-mom-kim.validation.test.ts > sprout-mom-kim validation round 1 (Red pin) > load order: the asset import runs before the missing-render error
+Error: ENOENT: no such file or directory, mkdir '/tmp/adv-p4-mutants/out/_load-order-3531894'
+ ❯ tests/sprout-mom-kim.validation.test.ts:113:7
+    111|     try {
+    112|       writeFileSync(assetPath, source, { flag: 'wx' });
+    113|       mkdirSync(outDir);
+       |       ^
+    114|       writeFileSync(glbPath, Buffer.alloc(0));
+    115|       const result = runScript(['--asset', name]);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 18 skipped (19)
+   Start at  22:49:23
+   Duration  133ms (import 76%, tests 10%, transform 8%, worker 6%)
+
+MUTANT_TEST_EXIT=1
+MUTANT_KILLED=load-order
+MUTATION_RUNNER_EXIT=0
+mutation vitest launcher PID=3687718
+MUTATION_REPLAY
+MUTANT=unique TEST=checkRows names a duplicate row
+
+ RUN  v5.1.1 /tmp/adv-p4-mutants-rerun
+
+ ❯ tests/sprout-mom-kim.validation.test.ts (19 tests | 1 failed | 18 skipped) 32ms
+   ❯ sprout-mom-kim validation round 1 (Red pin) (19)
+     × checkRows names a duplicate row 30ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprout-mom-kim.validation.test.ts > sprout-mom-kim validation round 1 (Red pin) > checkRows names a duplicate row
+AssertionError: expected [ Array(1) ] to deeply equal [ 'checkRows: duplicate row eyeLine' ]
+
+- Expected
++ Received
+
+  [
+-   "checkRows: duplicate row eyeLine",
++   "checkRows: expected 11 rows, found 12",
+  ]
+
+ ❯ tests/sprout-mom-kim.validation.test.ts:144:22
+    142|     const fn = await checkRows();
+    143|     const rows = [...passRows(), { ...passRows().find((r) => r.name ==…
+    144|     expect(fn(rows)).toEqual(['checkRows: duplicate row eyeLine']);
+       |                      ^
+    145|   });
+    146|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 18 skipped (19)
+   Start at  23:04:00
+   Duration  179ms (import 38%, tests 34%, transform 26%, worker 3%)
+
+MUTANT_TEST_EXIT=1
+MUTANT_KILLED=unique
+MUTANT=finite TEST=checkRows names Infinity
+
+ RUN  v5.1.1 /tmp/adv-p4-mutants-rerun
+
+ ❯ tests/sprout-mom-kim.validation.test.ts (19 tests | 1 failed | 18 skipped) 40ms
+   ❯ sprout-mom-kim validation round 1 (Red pin) (19)
+     × checkRows names Infinity 38ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprout-mom-kim.validation.test.ts > sprout-mom-kim validation round 1 (Red pin) > checkRows names Infinity
+AssertionError: expected [ Array(1) ] to deeply equal [ 'FAIL armToTorso: not finite' ]
+
+- Expected
++ Received
+
+  [
+-   "FAIL armToTorso: not finite",
++   "FAIL armToTorso: Infinity not in 1.25..1.41",
+  ]
+
+ ❯ tests/sprout-mom-kim.validation.test.ts:168:22
+    166|     const fn = await checkRows();
+    167|     const rows = passRows().map((r) => (r.name === 'armToTorso' ? { ..…
+    168|     expect(fn(rows)).toEqual(['FAIL armToTorso: not finite']);
+       |                      ^
+    169|   });
+    170|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 18 skipped (19)
+   Start at  23:04:01
+   Duration  163ms (tests 48%, import 44%, transform 5%, worker 3%)
+
+MUTANT_TEST_EXIT=1
+MUTANT_KILLED=finite
+MUTANT=asset-name TEST=asset name validation rejects ../x
+
+ RUN  v5.1.1 /tmp/adv-p4-mutants-rerun
+
+ ❯ tests/sprout-mom-kim.validation.test.ts (19 tests | 1 failed | 18 skipped) 169ms
+   ❯ sprout-mom-kim validation round 1 (Red pin) (19)
+     × asset name validation rejects ../x with one line before any import 167ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprout-mom-kim.validation.test.ts > sprout-mom-kim validation round 1 (Red pin) > asset name validation rejects ../x with one line before any import
+AssertionError: expected [ 'asset ../x: not built', …(1) ] to have a length of 1 but got 2
+
+- Expected
++ Received
+
+- 1
++ 2
+
+ ❯ tests/sprout-mom-kim.validation.test.ts:199:21
+    197|       expect(result.status).toBe(1);
+    198|       const lines = nonEmptyLines(result.output);
+    199|       expect(lines).toHaveLength(1);
+       |                     ^
+    200|       expect(lines[0]).toContain('Invalid asset name');
+    201|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 18 skipped (19)
+   Start at  23:04:01
+   Duration  305ms (tests 79%, import 18%, transform 2%, worker 1%)
+
+MUTANT_TEST_EXIT=1
+MUTANT_KILLED=asset-name
+MUTANT=load-order TEST=load order: the asset import runs before the missing-render error
+
+ RUN  v5.1.1 /tmp/adv-p4-mutants-rerun
+
+ ❯ tests/sprout-mom-kim.validation.test.ts (19 tests | 1 failed | 18 skipped) 5ms
+   ❯ sprout-mom-kim validation round 1 (Red pin) (19)
+     × load order: the asset import runs before the missing-render error 4ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprout-mom-kim.validation.test.ts > sprout-mom-kim validation round 1 (Red pin) > load order: the asset import runs before the missing-render error
+Error: ENOENT: no such file or directory, mkdir '/tmp/adv-p4-mutants-rerun/out/_load-order-3689142'
+ ❯ tests/sprout-mom-kim.validation.test.ts:113:7
+    111|     try {
+    112|       writeFileSync(assetPath, source, { flag: 'wx' });
+    113|       mkdirSync(outDir);
+       |       ^
+    114|       writeFileSync(glbPath, Buffer.alloc(0));
+    115|       const result = runScript(['--asset', name]);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 18 skipped (19)
+   Start at  23:04:02
+   Duration  131ms (import 76%, tests 10%, transform 8%, worker 6%)
+
+MUTANT_TEST_EXIT=1
+MUTANT_KILLED=load-order
+MUTATION_REPLAY_EXIT=0

@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: measure-review-c-ux-api
+status: blocked
+track: chibi_sprouts_redesign_20261123
+phase: Phase 2: Green
+commits: none
+tests_run: Read-only AC1 guard and Prettier passed. CLI error and fixture probes reproduced the blockers. Wrapped help, error, and T1/T2 commands did not start after a shared lock wait over 600 s. All audit processes exited.
+files_changed: review-c-p2-2a33c7c.json, review-c-p2-2a33c7c.log
+plan_updates: none
+known_failures: Unknown render views print a stack after build outputs change. The T2 test bypasses fixture ownership and hard-codes its worktree.
+handoff: Route C-P2-1 through C-P2-3 to Green. Repeat the wrapped CLI and T1/T2 checks on the new audited HEAD.
+END_MEASURE_AGENT_RESULT

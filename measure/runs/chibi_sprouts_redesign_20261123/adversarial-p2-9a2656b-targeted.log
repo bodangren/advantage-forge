@@ -1,0 +1,10 @@
+gate_shell_pid=$
+
+ RUN  v5.1.1 /home/daniebo/Desktop/forge-worktrees/sprouts-redesign
+
+
+ Test Files  5 passed (5)
+      Tests  20 passed (20)
+   Start at  16:59:25
+   Duration  27.62s (tests 99%, import 1%)
+

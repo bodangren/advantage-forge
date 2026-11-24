@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: adversarial-testing
+status: complete
+track: chibi_sprouts_redesign_20261123
+phase: Phase 5: Green
+commits: 62786ebf; dc8b8b51
+ tests_run: three earlier sheet files PASS 15/15; R3 sheet file PASS 1 with 3 documented skips; project gate PASS 241 files, 3470 tests, 30 skipped; Prettier PASS
+files_changed: tests/mom-kim-sheet.adversarial-r3.test.ts; measure/runs/chibi_sprouts_redesign_20261123/adversarial-p5-3941af5.json; measure/runs/chibi_sprouts_redesign_20261123/adversarial-p5-3941af5.log
+plan_updates: PM ruling is already recorded in plan.md by commit 6faa4200; no plan edit made
+known_failures: none blocking; F6 and F7 are nonblocking tech debt under the PM disposition
+handoff: F4 and F5 are withdrawn. F6 hard links at either output PNG and F7 a fabricated stray alpha pixel are nonblocking tech-debt findings. The PM ruling says a local writer must prepare the hostile path and no normal run gives a wrong result; real renders are clean at 700 px and all rows pass. No further fix round. The R3 file skips both F6 output-path cases and F7 with the requested exact reasons. Audited HEAD: 3941af5aeb3b7f688fca93f988d7fa86032ac98f; phase_base_sha: 75bb2b4231a5b4733d4340efa9284b7ebc214f68; role_base_sha: 3941af5aeb3b7f688fca93f988d7fa86032ac98f.
+END_MEASURE_AGENT_RESULT

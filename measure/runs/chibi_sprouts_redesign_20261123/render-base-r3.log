@@ -1,0 +1,40 @@
+forge_pid=75715 command=render avatar-base --fast
+avatar-base: 26,863 triangles, 0.5 x 0.904 x 0.43 m, built in 1716 ms
+  skin                      9972 tris  (915 ms)
+  hair                      8323 tris  (707 ms)
+  undershirt                4542 tris  (246 ms)
+  pants                     1880 tris  (96 ms)
+  shoes                     2146 tris  (133 ms)
+texture  none (vertex colors)
+glb      out/avatar-base/avatar-base.glb  (1198 KB)
+render   out/avatar-base/render.png  (279 ms)
+forge_pid=75973 command=sprites avatar-base --fast
+avatar-base: 26,863 triangles, 0.5 x 0.904 x 0.43 m, built in 1629 ms
+  skin                      9972 tris  (910 ms)
+  hair                      8323 tris  (714 ms)
+  undershirt                4542 tris  (275 ms)
+  pants                     1880 tris  (124 ms)
+  shoes                     2146 tris  (129 ms)
+texture  none (vertex colors)
+glb      out/avatar-base/avatar-base.glb  (1198 KB)
+sprites  out/avatar-base/sprites/preview.png  (358 ms)
+         occupied: S 52x89  SW 48x91  W 45x90  NW 48x90  N 52x88  NE 48x92  E 45x93  SE 48x91
+forge_pid=76186 command=render barrel --fast
+barrel: 14,795 triangles, 0.681 x 0.917 x 0.681 m, built in 784 ms
+  staves                    5997 tris  (366 ms)
+  hoops                     7000 tris  (445 ms)
+  lid                       1198 tris  (134 ms)
+  bung                       600 tris  (24 ms)
+texture  none (vertex colors)
+glb      out/barrel/barrel.glb  (384 KB)
+render   out/barrel/render.png  (192 ms)
+forge_pid=76320 command=sprites barrel --fast
+barrel: 14,795 triangles, 0.681 x 0.917 x 0.681 m, built in 776 ms
+  staves                    5997 tris  (334 ms)
+  hoops                     7000 tris  (438 ms)
+  lid                       1198 tris  (136 ms)
+  bung                       600 tris  (32 ms)
+texture  none (vertex colors)
+glb      out/barrel/barrel.glb  (384 KB)
+sprites  out/barrel/sprites/preview.png  (237 ms)
+         occupied: S 62x94  SW 60x94  W 62x94  NW 60x94  N 62x94  NE 60x94  E 62x94  SE 60x94

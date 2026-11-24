@@ -1,0 +1,48 @@
+base/head render launcher PID=1750782
+/home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh: line 1263: warning: command substitution: ignored null byte in input
+/home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh: line 1263: warning: command substitution: ignored null byte in input
+/home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh: line 1263: warning: command substitution: ignored null byte in input
+/home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh: line 1263: warning: command substitution: ignored null byte in input
+sprout-pip: 41,199 triangles, 0.303 x 0.436 x 0.477 m, built in 4499 ms
+  fur                      13568 tris  (3094 ms)
+  jawFur                    2626 tris  (667 ms)
+  mouth                     1018 tris  (140 ms)
+  tongue                     534 tris  (70 ms)
+  jawCream                  1916 tris  (179 ms)
+  cream                     3407 tris  (375 ms)
+  nose                       566 tris  (31 ms)
+  ears                      4020 tris  (735 ms)
+  tufts                     1690 tris  (139 ms)
+  brows                     1048 tris  (75 ms)
+  mouth-open                 808 tris  (54 ms)
+  tongue-in                  716 tris  (37 ms)
+  eye-shine                  588 tris  (66 ms)
+  collar                    3418 tris  (499 ms)
+  tag                        692 tris  (38 ms)
+  tail-fur                  4584 tris  (617 ms)
+texture  none (vertex colors)
+glb      out/sprout-pip/sprout-pip.glb  (1815 KB)
+render   out/sprout-pip/render.png  (325 ms)
+7efc9c271626c597bd542d72e4ea9d0bc9949f3b031cef0baacb1a190cba7b23  out/sprout-pip/render.png
+sprout-pip: 41,199 triangles, 0.303 x 0.436 x 0.477 m, built in 4519 ms
+  fur                      13568 tris  (3099 ms)
+  jawFur                    2626 tris  (645 ms)
+  mouth                     1018 tris  (122 ms)
+  tongue                     534 tris  (74 ms)
+  jawCream                  1916 tris  (166 ms)
+  cream                     3407 tris  (338 ms)
+  nose                       566 tris  (29 ms)
+  ears                      4020 tris  (733 ms)
+  tufts                     1690 tris  (127 ms)
+  brows                     1048 tris  (83 ms)
+  mouth-open                 808 tris  (57 ms)
+  tongue-in                  716 tris  (41 ms)
+  eye-shine                  588 tris  (65 ms)
+  collar                    3418 tris  (488 ms)
+  tag                        692 tris  (51 ms)
+  tail-fur                  4584 tris  (592 ms)
+texture  none (vertex colors)
+glb      out/sprout-pip/sprout-pip.glb  (1815 KB)
+render   out/sprout-pip/render.png  (302 ms)
+7efc9c271626c597bd542d72e4ea9d0bc9949f3b031cef0baacb1a190cba7b23  out/sprout-pip/render.png
+RENDER_COMPARE_EXIT=0

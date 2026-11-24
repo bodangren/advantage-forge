@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: adversarial-testing
+status: complete
+track: chibi_sprouts_redesign_20261123
+phase: Phase 2: Green
+commits: 3bc49ab1 (test-only; audited HEAD remains fc823ed1)
+tests_run: Existing render-options tests 11/11 passed; symlink tests 2/2 passed; project gate 3399 passed, 26 skipped, 0 failed; all three required mutants failed their Red tests
+files_changed: tests/render-options.adversarial-r2.test.ts; audit JSON and run evidence under measure/runs/chibi_sprouts_redesign_20261123/
+plan_updates: none
+known_failures: None. The project gate passed.
+handoff: F1 and F2 from the previous adversarial audit are withdrawn. The view, asset-name, flat-folder, mutation, and image-regression checks passed. No production source changed after audited HEAD fc823ed14104a6b81e942f6a9a5e8b507aab949f.
+END_MEASURE_AGENT_RESULT

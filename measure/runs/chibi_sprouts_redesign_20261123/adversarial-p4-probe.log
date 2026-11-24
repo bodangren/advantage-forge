@@ -1,0 +1,552 @@
+re-run launcher PID=1925622
+[
+  {
+    "case": "heightInHeads:lo",
+    "expected": "pass",
+    "got": "pass",
+    "ok": true
+  },
+  {
+    "case": "heightInHeads:hi",
+    "expected": "pass",
+    "got": "pass",
+    "ok": true
+  },
+  {
+    "case": "heightInHeads:below",
+    "expected": "FAIL heightInHeads",
+    "got": "FAIL heightInHeads: 3.54 not in 3.54..3.74",
+    "ok": true
+  },
+  {
+    "case": "heightInHeads:above",
+    "expected": "FAIL heightInHeads",
+    "got": "FAIL heightInHeads: 3.74 not in 3.54..3.74",
+    "ok": true
+  },
+  {
+    "case": "heightInHeads:NaN",
+    "got": "FAIL heightInHeads: NaN not in 3.54..3.74",
+    "ok": true
+  },
+  {
+    "case": "heightInHeads:negative",
+    "got": "FAIL heightInHeads: -1 not in 3.54..3.74",
+    "ok": true
+  },
+  {
+    "case": "heightInHeads:zero",
+    "got": "FAIL heightInHeads: 0 not in 3.54..3.74",
+    "ok": true
+  },
+  {
+    "case": "heightInHeads:numeric-string",
+    "got": "pass",
+    "ok": false
+  },
+  {
+    "case": "armToTorso:lo",
+    "expected": "pass",
+    "got": "pass",
+    "ok": true
+  },
+  {
+    "case": "armToTorso:hi",
+    "expected": "pass",
+    "got": "pass",
+    "ok": true
+  },
+  {
+    "case": "armToTorso:below",
+    "expected": "FAIL armToTorso",
+    "got": "FAIL armToTorso: 1.25 not in 1.25..1.41",
+    "ok": true
+  },
+  {
+    "case": "armToTorso:above",
+    "expected": "FAIL armToTorso",
+    "got": "FAIL armToTorso: 1.41 not in 1.25..1.41",
+    "ok": true
+  },
+  {
+    "case": "armToTorso:NaN",
+    "got": "FAIL armToTorso: NaN not in 1.25..1.41",
+    "ok": true
+  },
+  {
+    "case": "armToTorso:negative",
+    "got": "FAIL armToTorso: -1 not in 1.25..1.41",
+    "ok": true
+  },
+  {
+    "case": "armToTorso:zero",
+    "got": "FAIL armToTorso: 0 not in 1.25..1.41",
+    "ok": true
+  },
+  {
+    "case": "armToTorso:numeric-string",
+    "got": "pass",
+    "ok": false
+  },
+  {
+    "case": "legShare:lo",
+    "expected": "pass",
+    "got": "pass",
+    "ok": true
+  },
+  {
+    "case": "legShare:hi",
+    "expected": "pass",
+    "got": "pass",
+    "ok": true
+  },
+  {
+    "case": "legShare:below",
+    "expected": "FAIL legShare",
+    "got": "FAIL legShare: 0.36 not in 0.36..0.42",
+    "ok": true
+  },
+  {
+    "case": "legShare:above",
+    "expected": "FAIL legShare",
+    "got": "FAIL legShare: 0.42 not in 0.36..0.42",
+    "ok": true
+  },
+  {
+    "case": "legShare:NaN",
+    "got": "FAIL legShare: NaN not in 0.36..0.42",
+    "ok": true
+  },
+  {
+    "case": "legShare:negative",
+    "got": "FAIL legShare: -1 not in 0.36..0.42",
+    "ok": true
+  },
+  {
+    "case": "legShare:zero",
+    "got": "FAIL legShare: 0 not in 0.36..0.42",
+    "ok": true
+  },
+  {
+    "case": "legShare:numeric-string",
+    "got": "pass",
+    "ok": false
+  },
+  {
+    "case": "headToShoulders:lo",
+    "expected": "pass",
+    "got": "pass",
+    "ok": true
+  },
+  {
+    "case": "headToShoulders:hi",
+    "expected": "pass",
+    "got": "pass",
+    "ok": true
+  },
+  {
+    "case": "headToShoulders:below",
+    "expected": "FAIL headToShoulders",
+    "got": "FAIL headToShoulders: 1.11 not in 1.11..1.27",
+    "ok": true
+  },
+  {
+    "case": "headToShoulders:above",
+    "expected": "FAIL headToShoulders",
+    "got": "FAIL headToShoulders: 1.27 not in 1.11..1.27",
+    "ok": true
+  },
+  {
+    "case": "headToShoulders:NaN",
+    "got": "FAIL headToShoulders: NaN not in 1.11..1.27",
+    "ok": true
+  },
+  {
+    "case": "headToShoulders:negative",
+    "got": "FAIL headToShoulders: -1 not in 1.11..1.27",
+    "ok": true
+  },
+  {
+    "case": "headToShoulders:zero",
+    "got": "FAIL headToShoulders: 0 not in 1.11..1.27",
+    "ok": true
+  },
+  {
+    "case": "headToShoulders:numeric-string",
+    "got": "pass",
+    "ok": false
+  },
+  {
+    "case": "wrist:lo",
+    "expected": "pass",
+    "got": "pass",
+    "ok": true
+  },
+  {
+    "case": "wrist:hi",
+    "expected": "pass",
+    "got": "pass",
+    "ok": true
+  },
+  {
+    "case": "wrist:below",
+    "expected": "FAIL wrist",
+    "got": "FAIL wrist: -0.16 not in -0.16..0.04",
+    "ok": true
+  },
+  {
+    "case": "wrist:above",
+    "expected": "FAIL wrist",
+    "got": "FAIL wrist: 0.04 not in -0.16..0.04",
+    "ok": true
+  },
+  {
+    "case": "wrist:NaN",
+    "got": "FAIL wrist: NaN not in -0.16..0.04",
+    "ok": true
+  },
+  {
+    "case": "wrist:negative",
+    "got": "FAIL wrist: -1 not in -0.16..0.04",
+    "ok": true
+  },
+  {
+    "case": "wrist:zero",
+    "got": "pass",
+    "ok": true
+  },
+  {
+    "case": "wrist:numeric-string",
+    "got": "pass",
+    "ok": false
+  },
+  {
+    "case": "fingertips:lo",
+    "expected": "pass",
+    "got": "pass",
+    "ok": true
+  },
+  {
+    "case": "fingertips:hi",
+    "expected": "pass",
+    "got": "pass",
+    "ok": true
+  },
+  {
+    "case": "fingertips:below",
+    "expected": "FAIL fingertips",
+    "got": "FAIL fingertips: 0.41 not in 0.41..0.61",
+    "ok": true
+  },
+  {
+    "case": "fingertips:above",
+    "expected": "FAIL fingertips",
+    "got": "FAIL fingertips: 0.61 not in 0.41..0.61",
+    "ok": true
+  },
+  {
+    "case": "fingertips:NaN",
+    "got": "FAIL fingertips: NaN not in 0.41..0.61",
+    "ok": true
+  },
+  {
+    "case": "fingertips:negative",
+    "got": "FAIL fingertips: -1 not in 0.41..0.61",
+    "ok": true
+  },
+  {
+    "case": "fingertips:zero",
+    "got": "FAIL fingertips: 0 not in 0.41..0.61",
+    "ok": true
+  },
+  {
+    "case": "fingertips:numeric-string",
+    "got": "pass",
+    "ok": false
+  },
+  {
+    "case": "eyeLine:lo",
+    "expected": "pass",
+    "got": "pass",
+    "ok": true
+  },
+  {
+    "case": "eyeLine:hi",
+    "expected": "pass",
+    "got": "pass",
+    "ok": true
+  },
+  {
+    "case": "eyeLine:below",
+    "expected": "FAIL eyeLine",
+    "got": "FAIL eyeLine: 0.59 not in 0.59..0.65",
+    "ok": true
+  },
+  {
+    "case": "eyeLine:above",
+    "expected": "FAIL eyeLine",
+    "got": "FAIL eyeLine: 0.65 not in 0.59..0.65",
+    "ok": true
+  },
+  {
+    "case": "eyeLine:NaN",
+    "got": "FAIL eyeLine: NaN not in 0.59..0.65",
+    "ok": true
+  },
+  {
+    "case": "eyeLine:negative",
+    "got": "FAIL eyeLine: -1 not in 0.59..0.65",
+    "ok": true
+  },
+  {
+    "case": "eyeLine:zero",
+    "got": "FAIL eyeLine: 0 not in 0.59..0.65",
+    "ok": true
+  },
+  {
+    "case": "eyeLine:numeric-string",
+    "got": "pass",
+    "ok": false
+  },
+  {
+    "case": "eyeHeight:lo",
+    "expected": "pass",
+    "got": "pass",
+    "ok": true
+  },
+  {
+    "case": "eyeHeight:hi",
+    "expected": "pass",
+    "got": "pass",
+    "ok": true
+  },
+  {
+    "case": "eyeHeight:below",
+    "expected": "FAIL eyeHeight",
+    "got": "FAIL eyeHeight: 0.09 not in 0.09..0.13",
+    "ok": true
+  },
+  {
+    "case": "eyeHeight:above",
+    "expected": "FAIL eyeHeight",
+    "got": "FAIL eyeHeight: 0.13 not in 0.09..0.13",
+    "ok": true
+  },
+  {
+    "case": "eyeHeight:NaN",
+    "got": "FAIL eyeHeight: NaN not in 0.09..0.13",
+    "ok": true
+  },
+  {
+    "case": "eyeHeight:negative",
+    "got": "FAIL eyeHeight: -1 not in 0.09..0.13",
+    "ok": true
+  },
+  {
+    "case": "eyeHeight:zero",
+    "got": "FAIL eyeHeight: 0 not in 0.09..0.13",
+    "ok": true
+  },
+  {
+    "case": "eyeHeight:numeric-string",
+    "got": "pass",
+    "ok": false
+  },
+  {
+    "case": "spacingHead:lo",
+    "expected": "pass",
+    "got": "pass",
+    "ok": true
+  },
+  {
+    "case": "spacingHead:hi",
+    "expected": "pass",
+    "got": "pass",
+    "ok": true
+  },
+  {
+    "case": "spacingHead:below",
+    "expected": "FAIL spacingHead",
+    "got": "FAIL spacingHead: 0.35 not in 0.35..0.41",
+    "ok": true
+  },
+  {
+    "case": "spacingHead:above",
+    "expected": "FAIL spacingHead",
+    "got": "FAIL spacingHead: 0.41 not in 0.35..0.41",
+    "ok": true
+  },
+  {
+    "case": "spacingHead:NaN",
+    "got": "FAIL spacingHead: NaN not in 0.35..0.41",
+    "ok": true
+  },
+  {
+    "case": "spacingHead:negative",
+    "got": "FAIL spacingHead: -1 not in 0.35..0.41",
+    "ok": true
+  },
+  {
+    "case": "spacingHead:zero",
+    "got": "FAIL spacingHead: 0 not in 0.35..0.41",
+    "ok": true
+  },
+  {
+    "case": "spacingHead:numeric-string",
+    "got": "pass",
+    "ok": false
+  },
+  {
+    "case": "eyeWidthFace:lo",
+    "expected": "pass",
+    "got": "pass",
+    "ok": true
+  },
+  {
+    "case": "eyeWidthFace:hi",
+    "expected": "pass",
+    "got": "pass",
+    "ok": true
+  },
+  {
+    "case": "eyeWidthFace:below",
+    "expected": "FAIL eyeWidthFace",
+    "got": "FAIL eyeWidthFace: 0.22 not in 0.22..0.24",
+    "ok": true
+  },
+  {
+    "case": "eyeWidthFace:above",
+    "expected": "FAIL eyeWidthFace",
+    "got": "FAIL eyeWidthFace: 0.24 not in 0.22..0.24",
+    "ok": true
+  },
+  {
+    "case": "eyeWidthFace:NaN",
+    "got": "FAIL eyeWidthFace: NaN not in 0.22..0.24",
+    "ok": true
+  },
+  {
+    "case": "eyeWidthFace:negative",
+    "got": "FAIL eyeWidthFace: -1 not in 0.22..0.24",
+    "ok": true
+  },
+  {
+    "case": "eyeWidthFace:zero",
+    "got": "FAIL eyeWidthFace: 0 not in 0.22..0.24",
+    "ok": true
+  },
+  {
+    "case": "eyeWidthFace:numeric-string",
+    "got": "pass",
+    "ok": false
+  },
+  {
+    "case": "spacingFace:lo",
+    "expected": "pass",
+    "got": "pass",
+    "ok": true
+  },
+  {
+    "case": "spacingFace:hi",
+    "expected": "pass",
+    "got": "pass",
+    "ok": true
+  },
+  {
+    "case": "spacingFace:below",
+    "expected": "FAIL spacingFace",
+    "got": "FAIL spacingFace: 0.44 not in 0.44..0.5",
+    "ok": true
+  },
+  {
+    "case": "spacingFace:above",
+    "expected": "FAIL spacingFace",
+    "got": "FAIL spacingFace: 0.5 not in 0.44..0.5",
+    "ok": true
+  },
+  {
+    "case": "spacingFace:NaN",
+    "got": "FAIL spacingFace: NaN not in 0.44..0.5",
+    "ok": true
+  },
+  {
+    "case": "spacingFace:negative",
+    "got": "FAIL spacingFace: -1 not in 0.44..0.5",
+    "ok": true
+  },
+  {
+    "case": "spacingFace:zero",
+    "got": "FAIL spacingFace: 0 not in 0.44..0.5",
+    "ok": true
+  },
+  {
+    "case": "spacingFace:numeric-string",
+    "got": "pass",
+    "ok": false
+  },
+  {
+    "case": "table:missing-row",
+    "got": "pass",
+    "ok": false
+  },
+  {
+    "case": "table:extra-row",
+    "got": "pass",
+    "ok": false
+  },
+  {
+    "case": "table:duplicate-row",
+    "got": "pass",
+    "ok": false
+  },
+  {
+    "case": "table:empty",
+    "got": "pass",
+    "ok": false
+  },
+  {
+    "case": "five-synthetic-figures",
+    "got": [
+      {
+        "name": "pass",
+        "ok": true,
+        "failures": [],
+        "guards": []
+      },
+      {
+        "name": "crown-high",
+        "ok": false,
+        "failures": [
+          "FAIL heightInHeads: 3.298417 not in 3.54..3.74"
+        ],
+        "guards": []
+      },
+      {
+        "name": "sole-low",
+        "ok": false,
+        "failures": [
+          "FAIL legShare: 0.445401 not in 0.36..0.42"
+        ],
+        "guards": []
+      },
+      {
+        "name": "wide-head",
+        "ok": false,
+        "failures": [
+          "FAIL headToShoulders: 1.414388 not in 1.11..1.27"
+        ],
+        "guards": []
+      },
+      {
+        "name": "merged-eyes",
+        "ok": false,
+        "failures": [
+          "eye components: found 1, expected 2"
+        ],
+        "guards": []
+      }
+    ],
+    "ok": true
+  }
+]
+SUMMARY cases=93 failed=15

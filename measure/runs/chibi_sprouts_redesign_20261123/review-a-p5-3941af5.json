@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "role": "review-a",
+  "track": "chibi_sprouts_redesign_20261123",
+  "phase": "Phase 5: Green",
+  "baseline_sha": "75bb2b4231a5b4733d4340efa9284b7ebc214f68",
+  "phase_base_sha": "75bb2b4231a5b4733d4340efa9284b7ebc214f68",
+  "role_base_sha": "56781137c7f4ea76d91c93721cf7f61d7c9c0fa4",
+  "audited_head_sha": "3941af5aeb3b7f688fca93f988d7fa86032ac98f",
+  "status": "pass",
+  "summary": "F4 and F5 are fixed within the stated tolerance and output scope. Normal rendering, measurement, and sheet generation preserve both PNGs; all required tests pass.",
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "evidence": [
+    "HEAD is 3941af5aeb3b7f688fca93f988d7fa86032ac98f; the audited range is exactly phase_base_sha..audited_head_sha.",
+    "The delta since ca4e8d0c contains the sheet script, plan, generated status, and the new round-2 adversarial test; git diff 56781137..HEAD -- tests/ is empty.",
+    "F4 is fixed at scripts/mom-kim-sheet.mjs:279-288: alpha-128 mask top and bottom rows are recomputed and compared to rows.lit with a 2 px maximum difference.",
+    "T6 scripts/proportion-check.mjs:1080-1096 writes crown and sole from the same alpha-128 pixel mask; the comparison uses those row values, not the inclusive height field.",
+    "The tolerance probe accepts a 2 px row difference and rejects a 3 px difference before creating either sheet.",
+    "F5 is fixed at scripts/mom-kim-sheet.mjs:162-174: lstat refuses links at both planned PNG paths before any read or write.",
+    "Temporary probes for mom-kim-review.png and mom-panel.png symlinks both exited 1 and preserved each target file.",
+    "The normal flat-render, lit-render, measurement, and sheet order succeeds. All eleven measurement rows and both palm checks pass.",
+    "The review-sheet SHA-256 is 54e11c762a4d08f61172b57583d7dce10c4466a9438234bf4616c6670eb4ece0, matching the required hash.",
+    "The Mom-only panel SHA-256 is b6cba32ac4515dc23dc3332d21cfd5f950289b01567574603076377af5d5135f, matching the required hash.",
+    "Fresh image reads show the expected two-row comparison sheet, shared baselines, readable caption, and Mom-only panel.",
+    "All three sheet test files pass: 3 files and 15 tests.",
+    "The project suite exits 0 with 240 passing files, 4 skipped files, 3469 passing tests, and 27 skipped tests.",
+    "Wrapped tsc exits 2 with 51 baseline diagnostics; none names scripts/mom-kim-sheet.mjs."
+  ],
+  "commands": [
+    "git -C /home/daniebo/Desktop/forge-worktrees/sprouts-redesign rev-parse HEAD (3941af5aeb3b7f688fca93f988d7fa86032ac98f)",
+    "git -C /home/daniebo/Desktop/forge-worktrees/sprouts-redesign diff --stat ca4e8d0c6d157f146c9cbe781b3e0a7af3e105a2..3941af5aeb3b7f688fca93f988d7fa86032ac98f (4 paths; 148 insertions, 1 deletion)",
+    "git -C /home/daniebo/Desktop/forge-worktrees/sprouts-redesign diff 56781137..HEAD -- tests/ (empty)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './forge render sprout-mom-kim --fast --views front-level,side-level --ortho --flat --bg none --size 1024' (exit 0)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './forge render sprout-mom-kim --fast --views front-level,side-level --ortho --bg none --size 1024' (exit 0)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './node_modules/.bin/tsx scripts/proportion-check.mjs --asset sprout-mom-kim' (exit 0; eleven rows and both palms pass)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/mom-kim-sheet.mjs' (exit 0; 46..977 rows for both lit views)",
+    "sha256sum /home/daniebo/Desktop/forge-worktrees/sprouts-redesign/out/chibi-sprouts/redesign/mom-kim-review.png /home/daniebo/Desktop/forge-worktrees/sprouts-redesign/out/chibi-sprouts/redesign/mom-panel.png (both expected hashes match)",
+    "node -e temporary fixtures: 2 px row difference passes; 3 px difference fails before PNG creation; symlinks at both output PNG paths are refused without changing targets",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/mom-kim-sheet.test.ts tests/mom-kim-sheet.adversarial.test.ts tests/mom-kim-sheet.adversarial-r2.test.ts' (exit 0; 3 files, 15 tests passed)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts' (exit 0; 240 files passed, 4 skipped; 3469 tests passed, 27 skipped)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/typescript/bin/tsc --noEmit --pretty false' (exit 2; 51 baseline diagnostics, none in the new script)"
+  ],
+  "changed_files": [
+    "scripts/mom-kim-sheet.mjs",
+    "tests/mom-kim-sheet.adversarial-r2.test.ts",
+    "measure/tracks/chibi_sprouts_redesign_20261123/plan.md",
+    "measure/generated/status.md"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "openai/gpt-6-luna#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "scripts/mom-kim-sheet.mjs:279-288 matches stored mask rows against T6 values within the specified 2 px tolerance."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 5,
+      "evidence": "The three-file command passes 15 tests, and temporary probes verify the exact 2 px boundary and both output-file symlinks."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The delta adds the requested adversarial test and changes only the assigned sheet script and Measure records."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "Wrapped tests, type check, normal output flow, hashes, image reads, and temporary boundary probes ran on the verified HEAD."
+    }
+  ]
+}

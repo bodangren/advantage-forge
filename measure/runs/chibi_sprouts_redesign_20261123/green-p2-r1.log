@@ -1,0 +1,41 @@
+MEASURE_AGENT_RESULT
+track: chibi_sprouts_redesign_20261123
+phase: Phase 2: Green (T3r remediation)
+role: measure-jr-green
+phase_base_sha: 23e551df54b7996776a4bcb9e8ccfdb9f35a6083
+role_base_sha: f06ebe8f81b1b9b52a9f8e2c2bb98e64a8886011
+final_green_head: fc823ed14104a6b81e942f6a9a5e8b507aab949f
+dispositions: C-P2-1=FIX; B-F1=FIX
+tasks_flipped_to_x: T3r
+commits:
+- 6b3a07817e8761c67b22eb4e316707a6a6d5e342 fix(chibi_sprouts_redesign): T3r Green validates views and asset names before the build (src/cli/forge.ts, src/pipeline.ts)
+- be515322 measure(chibi_sprouts_redesign): Phase 2 Green records T3r 6b3a0781 (plan only)
+- fc823ed14104a6b81e942f6a9a5e8b507aab949f measure(chibi_sprouts_redesign): Phase 2 Green refreshes the generated facts (measure bookkeeping only; run files not committed)
+dirty_paths: assets/wizard-argon-trial.ts (unrelated user work, preserved); the measure/runs logs of this track and of other tracks (generated or unrelated, not committed)
+red_check: the Red remediation commits c916af45, 00f9f6e6, and f06ebe8f are inside phase_base_sha..role_base_sha and hold tests/ and measure/ paths only; tests/render-options.test.ts and tests/render-options.validation.test.ts are not touched by this role
+green_model: minimax-cn-coding-plan/MiniMax-M3.1-Flash (family MiniMax); the Red model of this track was opencode-go/muse-spark-1.3-contributor (family muse)
+C-P2-1_fix: src/cli/forge.ts checks the view names of render, all, animate, inspect, and cutout before the server starts and before the build. viewNamesOf(command, values) gives each command its own list (the --views list or the command default); checkViewNames refuses an unknown name with one line through the top-level error handler, so the exit code is 1, the output is one line, and no stack frame prints. Raw output: "Unknown view 'nosuch'. Known: front, three-quarter, side, back, back-three-quarter, top, front-level, side-level". The output folder did not appear (GATE_D_UNKNOWN_VIEW_OUT_DIR_EXISTS=no), because the build never runs.
+B-F1_fix: src/pipeline.ts exports checkAssetName(name); assetPath calls it before it builds a path. An empty, absolute, separator, or dot-dot name is refused with one line and a non-zero exit. The CLI checks the worn piece names too, before the output name is built. Raw output of the traversal: "Invalid asset name '../measure/runs/chibi_sprouts_redesign_20261123/probe-escape-green': an asset name has no path separator." Raw output of the separator: "Invalid asset name 'a/b': an asset name has no path separator." The traversal wrote nothing outside out/ (GATE_D_TRAVERSAL_LEAK=no). A name with a dot or a dash and the _flat-render-pin-<pid> fixture name still work.
+B-F1_fix_flat_removal: removeFlatFolder(flatDir, outRoot) in src/cli/forge.ts replaces the recursive delete of the flat folder. It removes nothing when the folder is a symlink, and it removes the folder only when the real path of its parent sits directly under the real out/ root. A symlinked output folder is never followed and never deleted. The flat folder is removed only after the asset name check passed.
+commands (each through HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '<cmd>'):
+- node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/render-options.test.ts tests/render-options.validation.test.ts -> exit 0, Test Files 2 passed (2), Tests 11 passed (11)  [the remediation Red command]
+- node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/render-options.adversarial.test.ts tests/sprout-base.test.ts tests/sprout-gestures.test.ts tests/sprout-gesture-offset.test.ts -> exit 0, Tests 5 passed | 15 skipped (20)
+- node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/cutout.test.ts tests/asset.test.ts tests/equip.test.ts tests/part.test.ts tests/variants.test.ts tests/preset-colour.test.ts tests/clip-check.test.ts tests/song-still-hook.test.ts tests/rig.test.ts tests/apk3d/renderer-setting.test.ts tests/apk3d/no-unpolyfilled-builtins.test.ts tests/storytime-line-art-pass.test.ts -> exit 0, Test Files 12 passed (12), Tests 73 passed (73)
+- ./forge render <probe> --fast --views nosuch --size 64 --bg none -> exit 1, one line, no output folder
+- ./forge render ../measure/runs/chibi_sprouts_redesign_20261123/probe-escape-green --fast --bg none --flat --views front-level --size 64 -> exit 1, one line, nothing written outside out/
+- ./forge render a/b --fast --bg none --size 64 -> exit 1, one line
+- ./forge render sprout-pip --fast and ./forge sprites sprout-pip --fast, run at the base commit and with the fix -> both exit 0
+- node node_modules/typescript/bin/tsc --noEmit -> exit 2, 51 errors, the baseline count, 0 errors in src/cli/forge.ts and src/pipeline.ts
+- node_modules/.bin/prettier --check src/cli/forge.ts src/pipeline.ts -> exit 0
+- node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts -> exit 0, Test Files 232 passed | 4 skipped (236), Tests 3397 passed | 26 skipped (3423), no failing test
+other_commands:
+- node measure/tools/generate.mjs --check -> exit 0, "Measure facts are current (4 files)."
+- ./measure/doctor.sh --structural-only -> exit 0, "Measure doctor found no structural errors."
+existing_render_unchanged: yes; the SHA-256 sums of out/sprout-pip/render.png and the four views match between the base commit and the fix (render.png 7efc9c271626c597bd542d72e4ea9d0bc9949f3b031cef0baacb1a190cba7b23, views/front.png c5746f4118961d2db92a27cf987ee63464c99221801c8be68d8dccee9945089d, views/side.png 172a6ff439f152465656bf81e95187379a4a6fbc519cfc0db7daa0db233d7ff4, views/three-quarter.png d3d585e34002c06da6b008ebf1fe21ff11ac2928e9e908c7f3b31c4fbc3b7676, views/back.png a830755b5cf88e55a36081200389b3baa58b9c7a0e492f577d13c92b3aad6542); the ten sprite PNG files and metrics.json match too
+new_files: none; the run log measure/runs/chibi_sprouts_redesign_20261123/green-p2-r1.log is not committed
+notes:
+- src/render/page.ts is not touched, so the three Box3.union lines that the apk3d scan test pins stay at lines 331, 531, and 538. The scan test passed with 11 of 11.
+- Prettier: src/cli/forge.ts and src/pipeline.ts were Prettier-clean at the base commit, so the format of the changed files changes only on the new lines.
+- No test file was changed by this role.
+status: ok; T3r is done, the next task is T4 (Phase 3 Red)
+END_MEASURE_AGENT_RESULT

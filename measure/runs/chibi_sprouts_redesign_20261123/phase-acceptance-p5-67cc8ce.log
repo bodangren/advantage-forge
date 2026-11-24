@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: phase-acceptance
+status: complete
+track: chibi_sprouts_redesign_20261123
+phase: Phase 5: Green
+commits: none
+tests_run: four sheet test files PASS 16 passed and 3 skipped; project gate PASS 241 files and 3470 tests passed with 4 files and 30 tests skipped; tsc 51 baseline diagnostics with none in changed files; Prettier PASS; generate --check PASS; doctor PASS; sprout-pip byte parity PASS (stats.json differs only in milliseconds); both PNG SHA-256 values match plan.md T8 after two in-place rewrites
+files_changed: measure/runs/chibi_sprouts_redesign_20261123/phase-acceptance-p5-67cc8ce.json and measure/runs/chibi_sprouts_redesign_20261123/phase-acceptance-p5-67cc8ce.log
+plan_updates: none
+known_failures: none blocking; three Nit findings (F1 fixed caption text, F2 F1 and F2 labels swapped between plan.md and the audit record, F3 no debt row text for F6 and F7); F6 and F7 stay skipped as tech debt; the shell denied the delete of /tmp/chibi-p5-accept-3070507, so that folder remains outside the repository
+handoff: Phase 5 is accepted on 67cc8ce1d184b2797ea64b00fd95cf5e4c137b9f with phase_base_sha 75bb2b4231a5b4733d4340efa9284b7ebc214f68 and role_base_sha 67cc8ce1d184b2797ea64b00fd95cf5e4c137b9f. Prerequisites bind to 3941af5aeb3b7f688fca93f988d7fa86032ac98f; the allowed later commits are the test-only 62786ebf and dc8b8b51 and the record commits 211bec8d, fa8ef070, and 67cc8ce1. Model families: Red muse; Green hy4; Review A and adversarial OpenAI; acceptance Anthropic. The orchestrator routes the three Nit findings to the plan owner and to the merge step. Owner cleanup: rm -r -- /tmp/chibi-p5-accept-3070507 (it removes the node_modules symlink and never its target).
+END_MEASURE_AGENT_RESULT

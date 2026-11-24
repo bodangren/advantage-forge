@@ -1,0 +1,42 @@
+
+ RUN  v5.1.1 /home/daniebo/Desktop/forge-worktrees/sprouts-redesign/measure/runs/chibi_sprouts_redesign_20261123/mutant-r3-shared-parse
+
+ ❯ tests/render-options.validation-r2.test.ts (5 tests | 1 failed) 11677ms
+   ❯ render validation round 2 (views, cutout list, linked output) (5)
+     × cutout drops empty view members like the base (front, and ,front and front,,side) 2947ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/render-options.validation-r2.test.ts > render validation round 2 (views, cutout list, linked output) > cutout drops empty view members like the base (front, and ,front and front,,side)
+AssertionError: expected [ …(7) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "cutout --views front,: exit 1: Unknown view ''. Known: front, three-quarter, side, back, back-three-quarter, top, front-level, side-level",
++   "cutout --views front,: missing front.png",
++   "cutout --views ,front: exit 1: Unknown view ''. Known: front, three-quarter, side, back, back-three-quarter, top, front-level, side-level",
++   "cutout --views ,front: missing front.png",
++   "cutout --views front,,side: exit 1: Unknown view ''. Known: front, three-quarter, side, back, back-three-quarter, top, front-level, side-level",
++   "cutout --views front,,side: missing front.png",
++   "cutout --views front,,side: missing side.png",
++ ]
+
+ ❯ tests/render-options.validation-r2.test.ts:236:26
+    234|           }
+    235|         });
+    236|         expect(problems).toEqual([]);
+       |                          ^
+    237|       } finally {
+    238|         removeFixture(pin);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 passed (5)
+   Start at  17:10:24
+   Duration  11.84s (tests 100%)
+

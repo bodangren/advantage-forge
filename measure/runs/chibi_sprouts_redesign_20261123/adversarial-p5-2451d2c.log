@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: adversarial-testing
+status: fail
+track: chibi_sprouts_redesign_20261123
+phase: Phase 5: Green
+commits: a361ceeb, e4df76e1
+tests_run: targeted sheet suite PASS 8/8; project gate PASS 238 files, 3462 passed, 27 skipped; adversarial suite FAIL 3/5, exposing missing-row and transparent-input defects; mutant suite confirms baseline, 600px scale, side-drawing, caption, and Kim-panel checks
+files_changed: tests/mom-kim-sheet.adversarial.test.ts; measure/runs/chibi_sprouts_redesign_20261123/adversarial-p5-2451d2c.json; measure/runs/chibi_sprouts_redesign_20261123/adversarial-p5-2451d2c.log
+plan_updates: none
+known_failures: missing rows.lit and transparent Kim fixtures exit 0 and write both PNGs; stale, extra, and string rows also exit 0; output-directory symlink receives measure.json and both PNGs
+handoff: Audited immutable HEAD 2451d2c against phase_base_sha 75bb2b4. Route F1, F2, and F3 to Green. The original tests passed Kim-panel and missing-caption-pass mutants; new tests detect both. Temporary copies were removed.
+END_MEASURE_AGENT_RESULT

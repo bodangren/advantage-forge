@@ -1,0 +1,27 @@
+
+ RUN  v5.1.1 /home/daniebo/Desktop/forge-worktrees/sprouts-redesign/measure/runs/chibi_sprouts_redesign_20261123/mutation-copy
+
+ ❯ tests/render-options.test.ts (8 tests | 1 failed) 4651ms
+   ❯ render options (orthographic flat pin) (8)
+     × places the side block left of centre by 0.02 m ppm or more (decision j) 4ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/render-options.test.ts > render options (orthographic flat pin) > places the side block left of centre by 0.02 m ppm or more (decision j)
+AssertionError: expected -18 to be greater than or equal to 4.654545454545454
+ ❯ tests/render-options.test.ts:188:34
+    186|       expect(minCol).toBeLessThan(width);
+    187|       const ppm = 256 / 1.1;
+    188|       expect(width / 2 - minCol).toBeGreaterThanOrEqual(0.02 * ppm);
+       |                                  ^
+    189|     },
+    190|   );
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 7 passed (8)
+   Start at  12:57:44
+   Duration  4.77s (tests 99%, import 1%)
+

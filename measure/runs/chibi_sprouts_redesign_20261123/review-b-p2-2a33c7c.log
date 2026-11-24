@@ -1,0 +1,15 @@
+MEASURE_AGENT_RESULT
+role: review-b
+track: chibi_sprouts_redesign_20261123
+phase: Phase 2: Green
+audited_head_sha: 2a33c7c1c304825c3efd2dc775c99d84b22ff2f7
+status: fail
+summary: The --ortho/--flat options work and the test fixture is safe, but a dot-dot asset name escapes assets/ and out/, and the new flat pass recursively deletes at the escaped path.
+blocking_findings:
+- F1 [Blocker] review-b: Path traversal through the asset name reaches the new --flat recursive delete. src/pipeline.ts:28-34 validates only file existence; a wrapped end-to-end probe rendered an asset from outside assets/ and wrote stats.json, the GLB, and flat PNGs outside out/, and the new rmSync(join(out,'flat'),{recursive:true,force:true}) deleted a pre-existing marker at the escaped path. Fix: reject names with separators or dot-dot before assetPath/outName.
+nonblocking_findings:
+- F2 [Nit] review-b: the test removes its fixture asset but leaves out/_flat-render-pin-<pid>/ behind; a crash before afterAll leaves the fixture in assets/ (inert, `_` prefix).
+- F3 [Nit] review-b: --size accepts any finite number (pre-existing); a sanity cap would fail fast.
+retry_recommendation: retry_implementation
+result_path: measure/runs/chibi_sprouts_redesign_20261123/review-b-p2-2a33c7c.json
+END_MEASURE_AGENT_RESULT

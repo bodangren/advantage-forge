@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "role": "measure-review-c-ux-api",
+  "track": "chibi_sprouts_redesign_20261123",
+  "phase": "Phase 2: Green",
+  "baseline_sha": "23e551df54b7996776a4bcb9e8ccfdb9f35a6083",
+  "phase_base_sha": "23e551df54b7996776a4bcb9e8ccfdb9f35a6083",
+  "role_base_sha": "fc823ed14104a6b81e942f6a9a5e8b507aab949f",
+  "audited_head_sha": "fc823ed14104a6b81e942f6a9a5e8b507aab949f",
+  "contract_applicability": "applicable",
+  "status": "fail",
+  "summary": "The requested CLI examples and the T1/T2 tests pass. The validation still accepts inherited view names and rejects a valid cutout list. The flat writer can follow a link after cleanup skips it.",
+  "blocking_findings": [
+    "C-P2-1 [Blocker] review-c: The nosuch case is fixed, but src/cli/forge.ts:761–765 still accepts inherited object names such as constructor. The renderer uses the same lookup at :796–798. It can start the build and change artifacts without the required one-line error. Check only entries that the named-view map defines.",
+    "C-P2-7 [Blocker] review-c: src/cli/forge.ts:749–765 rejects an empty list member for cutout. The cutout parser at :462–466 drops empty members, as it did on 2a33c7c1. A user who passes --views front, now gets an unknown-view error instead of a front PNG. Make preflight use the same normalization as cutout.",
+    "C-P2-8 [Blocker] review-c: src/cli/forge.ts:774–785 skips removal of a linked flat folder, but :424–428 still writes PNGs through the link. A linked flat folder can receive replacements for another asset's views. Reject a linked destination before the build instead of proceeding to the write."
+  ],
+  "nonblocking_findings": [
+    "C-P2-9 [Nit] review-c: tests/render-options.test.ts:66–73 and tests/render-options.validation.test.ts:97–103 can remove a pre-existing output folder after fixture creation fails. The removal checks location and prefix but not test ownership. Record ownership before removing the output.",
+    "C-P2-10 [Nit] review-c: The runner fallback at tests/render-options.test.ts:10–11 assumes a nested worktree. An ordinary checkout needs HEAVY_RUN_PATH or the test cannot find the runner. Use the same runner convention for both checkout layouts."
+  ],
+  "evidence": [
+    "Git confirmed the supplied SHA as the current HEAD. test-strategy.md:57 and the exact phase diff for src/cli/forge.ts and src/render/page.ts make the contract review applicable.",
+    "Wrapped Forge help returned 0 and documented both flags, both level views, the flat output path, and the required fast and transparent background options.",
+    "Wrapped render ball --views nosuch, render nosuch-asset, and render ../x returned 1 with one stderr line, no stdout, and no stack. The ball output snapshot did not change.",
+    "The invalid-name message states the name cannot contain a path separator. Supply a bare name instead of ../x. The unknown option and both missing-flat-prerequisite cases also returned one line and exit 1.",
+    "The wrapped five-file Vitest run passed with 14 tests passed and 15 skipped. It includes the actual pin collision case and the unknown-view validation case.",
+    "The wrapped cutout with --views front, returned exit 1 and Unknown view ''. It wrote no PNG. The cutout parser on 2a33c7c1 trims and filters the empty member before lookup.",
+    "C-P2-2 withdrawn: tests/render-options.test.ts:41–54 uses one exclusive create and sets ownership after success. Lines 128–146 exercise a planted collision at the actual fixture path. Lines 243–262 use exclusive creation for the probe.",
+    "C-P2-3 withdrawn: tests/render-options.test.ts:9 and tests/render-options.validation.test.ts:19 derive the checkout from import.meta.url. Both child processes use that checkout as cwd.",
+    "The three T1 files have no changes since 2a33c7c1. Git confirmed the exact reason comments and four skip suffixes. The three named hero tests remain active. The T2 names describe the CLI behavior and list the expected output.",
+    "Plan T3 and T3r name no README or user docs file as a deliverable. README.md:207 omits the flags, but spec.md:433–442 gives the two command examples. The README omission does not block this phase.",
+    "The early-check names and comments explain intent. The promised agreement at src/cli/forge.ts:741–743 does not hold on the cutout route. The earlier help and side-sign notes were not part of T3r.",
+    "The full phase diff includes unrelated old-browser changes from cc8b6e83. The changed_files list records the Phase 2 paths only.",
+    "Late finding C-P2-7: one-fix-round (the changed CLI rejects a list that used to produce a front cutout).",
+    "Late finding C-P2-8: one-fix-round (the changed CLI can write PNGs to the wrong asset folder).",
+    "Late finding C-P2-9: tech-debt (test output ownership only; no delivered product output changes).",
+    "Late finding C-P2-10: tech-debt (test runner discovery only; no delivered product output changes).",
+    "No audit runner processes remained at close."
+  ],
+  "commands": [
+    "git -C /home/daniebo/Desktop/forge-worktrees/sprouts-redesign rev-parse HEAD",
+    "git -C /home/daniebo/Desktop/forge-worktrees/sprouts-redesign diff --name-status 23e551df54b7996776a4bcb9e8ccfdb9f35a6083 fc823ed14104a6b81e942f6a9a5e8b507aab949f",
+    "git -C /home/daniebo/Desktop/forge-worktrees/sprouts-redesign diff --name-status cc8b6e83..fc823ed1",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '<Node probe of ./forge --help; render nosuch-asset; render ball --views nosuch; render ../x; render ball --fast --orthographic; render ball --flat --bg none; render ball --flat --fast>'",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/render-options.test.ts tests/render-options.validation.test.ts tests/sprout-base.test.ts tests/sprout-gestures.test.ts tests/sprout-gesture-offset.test.ts'",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '<Node probe of ./forge cutout ball --fast --out <audit-run-folder> --views front,>'"
+  ],
+  "changed_files": [
+    "measure/generated/status.md",
+    "measure/tracks.md",
+    "measure/tracks/chibi_sprouts_redesign_20261123/metadata.json",
+    "measure/tracks/chibi_sprouts_redesign_20261123/plan.md",
+    "src/cli/forge.ts",
+    "src/pipeline.ts",
+    "src/render/page.ts",
+    "tests/apk3d/no-unpolyfilled-builtins.test.ts",
+    "tests/render-options.adversarial.test.ts",
+    "tests/render-options.test.ts",
+    "tests/render-options.validation.test.ts",
+    "tests/sprout-base.test.ts",
+    "tests/sprout-gesture-offset.test.ts",
+    "tests/sprout-gestures.test.ts"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [
+    "C-P2-1: Inherited keys can pass the named-view validation and reach the build.",
+    "C-P2-8: The flat writer still follows a linked folder after the new cleanup code skips it."
+  ],
+  "prod_wiring_violations": [],
+  "route_parity_violations": ["C-P2-7: The cutout preflight and renderer handle empty view list members differently."],
+  "retry_recommendation": "retry_implementation",
+  "confidence": "high",
+  "route": "unknown",
+  "ratings": [
+    {"axis": "correctness", "score": 3, "evidence": "The wrapped CLI cases pass, but the cutout preflight at src/cli/forge.ts:749–765 rejects a view list the renderer accepts."},
+    {"axis": "test_meaning", "score": 3, "evidence": "tests/render-options.test.ts:128 tests the actual fixture collision, but the tests do not pin normalization across commands."},
+    {"axis": "scope_discipline", "score": 3, "evidence": "The change in 6b3a0781 touches two source files but changes the accepted inputs on the cutout route."},
+    {"axis": "evidence_quality", "score": 4, "evidence": "The wrapped CLI probe records exit codes, the error text, and a snapshot check on the build output."}
+  ]
+}

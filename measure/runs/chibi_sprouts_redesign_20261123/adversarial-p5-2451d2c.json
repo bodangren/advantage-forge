@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "role": "adversarial-testing",
+  "track": "chibi_sprouts_redesign_20261123",
+  "phase": "Phase 5: Green",
+  "baseline_sha": "75bb2b4231a5b4733d4340efa9284b7ebc214f68",
+  "phase_base_sha": "75bb2b4231a5b4733d4340efa9284b7ebc214f68",
+  "role_base_sha": "2451d2c93953f0ba29e99d0264414402a165d663",
+  "audited_head_sha": "2451d2c93953f0ba29e99d0264414402a165d663",
+  "status": "fail",
+  "summary": "Adversarial testing found two input-validation defects and one symlink-write defect. The new tests prove the Kim-panel privacy boundary and expose invalid-input cases.",
+  "blocking_findings": [
+    "F1 [Blocker] adversarial-testing: scripts/mom-kim-sheet.mjs accepts missing, stale, extra, and string-valued rows.lit data, overwrites measure.json from image masks, and writes both sheets instead of issuing a named error. A missing rows.lit fixture exits 0 and leaves two PNGs. Rationale: AC5 rule 4 makes measure.json the pinned source for lit rows and requires invalid input to stop before output.",
+    "F2 [Blocker] adversarial-testing: scripts/mom-kim-sheet.mjs accepts a fully transparent Kim sheet and writes both sheets. Its nonWhite scan ignores alpha, so a blank reference can reach the local review. Rationale: AC5 requires the Kim reference scan to reject invalid figure bands before producing the review sheet."
+  ],
+  "nonblocking_findings": [
+    "F3 [Major] adversarial-testing: scripts/mom-kim-sheet.mjs writes measure.json, mom-kim-review.png, and mom-panel.png through a symlink at out/chibi-sprouts/redesign. A temp-root symlink probe exited 0 and placed all three files in the symlink target. Rationale: output writes must stay within the two planned PNG paths and must not follow symlinks."
+  ],
+  "evidence": [
+    "Verified audited HEAD 2451d2c93953f0ba29e99d0264414402a165d663 and phase_base_sha 75bb2b4231a5b4733d4340efa9284b7ebc214f68.",
+    "The exact phase diff contains plan.md, generated status, scripts/mom-kim-sheet.mjs, and tests/mom-kim-sheet.test.ts.",
+    "Read measure/tracks/chibi_sprouts_redesign_20261123/test-strategy.md and the canonical A1-A11 catalog at /home/daniebo/Desktop/measure/measure/anti-patterns.md; A2 does not apply, and the active input, test-meaning, and false-claim probes ran.",
+    "The targeted Red sheet test passed 8 of 8. The project gate passed 238 files, 3462 tests, and skipped 27 tests across 4 skipped files.",
+    "A five-pixel shifted Kim sheet, a one-band Kim sheet, a blank Kim sheet, and a smaller Kim sheet each exited 1 with one named Kim-row line and wrote no sheet.",
+    "A fully transparent Kim sheet exited 0 and wrote both PNGs. This reproduces the transparent-alpha defect.",
+    "Missing rows.lit, stale rows, extra rows, and string rows each exited 0 and wrote both PNGs. Missing rows.lit was replaced in measure.json. Malformed JSON exited 1 before output with a JSON parse error.",
+    "A symlink at the output directory received measure.json and both PNGs. The script exited 0.",
+    "An injected Kim image in mom-panel.png passed the original Red test suite, 8 of 8. The new exact-render comparison failed on the same mutant.",
+    "Removing the 4 px tolerance let the original Red tests pass with a five-pixel-shifted Kim source. The new shifted-row test failed on that mutant.",
+    "The Red suite failed on baseline offset, 600 px scale, and Mom side drawing mutants. The caption-pass mutant passed the old suite and failed the new rendered-caption test.",
+    "The new adversarial test file has 5 cases. Three passed and two failed against the audited implementation: fully transparent Kim and missing rows.lit.",
+    "The background adversarial Vitest runner PID 1075420 completed after the heavy-run queue wait. A process check found no remaining Forge or temporary-copy test process.",
+    "Temporary inputs and mutation copies under /tmp/chibi-p5-adv-1038752 and /tmp/mom-kim-sheet.adversarial.formatted.ts were removed.",
+    "Build graph scanned 22492 nodes and 25321 edges. Search found both sheet test files; the scanner indexes TypeScript, not the .mjs implementation."
+  ],
+  "commands": [
+    "git -C /home/daniebo/Desktop/forge-worktrees/sprouts-redesign rev-parse HEAD -> 2451d2c93953f0ba29e99d0264414402a165d663 before audit tests.",
+    "git -C /home/daniebo/Desktop/forge-worktrees/sprouts-redesign diff 75bb2b4231a5b4733d4340efa9284b7ebc214f68..2451d2c93953f0ba29e99d0264414402a165d663 -- scripts/mom-kim-sheet.mjs tests/mom-kim-sheet.test.ts -> exact phase implementation and Red-test diff.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/mom-kim-sheet.test.ts' -> exit 0, 8 passed.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts' -> exit 0, 238 files passed, 3462 passed, 27 skipped.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/mom-kim-sheet.adversarial.test.ts' -> exit 1, 3 passed, 2 failed.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/mom-kim-sheet.test.ts tests/mom-kim-sheet.adversarial.test.ts' on caption mutant -> exit 1, old suite passed, rendered-caption assertion failed.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/mom-kim-sheet.test.ts' on Kim-panel mutant -> exit 0, 8 passed.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/mom-kim-sheet.adversarial.test.ts' on Kim-panel mutant -> exit 1, privacy assertion failed.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/mom-kim-sheet.test.ts' on 4 px, baseline, scale, and side-drawing mutants -> results recorded above.",
+    "HEAVY_PRIORITY=p1 HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'build-graph scan /home/daniebo/Desktop/forge-worktrees/sprouts-redesign /home/daniebo/Desktop/forge-worktrees/sprouts-redesign/measure/runs/chibi_sprouts_redesign_20261123/adversarial-p5-2451d2c.db && build-graph search /home/daniebo/Desktop/forge-worktrees/sprouts-redesign/measure/runs/chibi_sprouts_redesign_20261123/adversarial-p5-2451d2c.db mom-kim-sheet' -> 22492 nodes, 25321 edges.",
+    "node_modules/.bin/prettier --check tests/mom-kim-sheet.adversarial.test.ts -> exit 0.",
+    "git commits a361ceeb and e4df76e1 added only tests/mom-kim-sheet.adversarial.test.ts. The audited implementation HEAD remains 2451d2c93953f0ba29e99d0264414402a165d663."
+  ],
+  "changed_files": [
+    "tests/mom-kim-sheet.adversarial.test.ts",
+    "measure/runs/chibi_sprouts_redesign_20261123/adversarial-p5-2451d2c.json",
+    "measure/runs/chibi_sprouts_redesign_20261123/adversarial-p5-2451d2c.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "retry_implementation",
+  "confidence": "high",
+  "route": "openai/gpt-6-luna#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 2,
+      "evidence": "Transparent Kim and invalid rows.lit fixtures exit 0 and produce sheets, contrary to AC5 input gates."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 3,
+      "evidence": "The original 8-case test passes a Kim-panel mutant; the new exact-render check fails on it."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The only committed source change is the assigned adversarial test file."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "The wrapped project gate passed 238 files and the fixture probes reproduced input and symlink cases."
+    }
+  ]
+}

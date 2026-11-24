@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: adversarial-testing
+status: partial
+track: chibi_sprouts_redesign_20261123
+phase: Phase 2: Green
+commits: b46da1ea, 0c98cba8
+tests_run: HEAVY wrapper T2 8/8 pass; browser restore test 2/2 pass; tone and side mutations fail; restore-call mutation fails the browser test; full project gate 8 fail, 3384 pass, 25 skipped; avatar-base and barrel hashes match phase base
+files_changed: tests/render-options.adversarial.test.ts; two test-only commits
+plan_updates: none
+known_failures: Project gate failed 8 tests across six files outside this phase: five storytime reference checks and one old-browser adversarial check. F1 is test-isolation debt.
+handoff: F2 is a blocker because the required project gate failed. Escalate F2 for human triage; retain retry_recommendation=escalate_human. F1 is tech debt because it cannot change a delivered render or measurement. The audited renderer code passed targeted checks and regression hashes. No production change followed audited HEAD.
+END_MEASURE_AGENT_RESULT

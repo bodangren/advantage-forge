@@ -1,0 +1,14 @@
+MEASURE_AGENT_RESULT
+role: review-b
+track: chibi_sprouts_redesign_20261123
+phase: Phase 2: Green
+audited_head_sha: fc823ed14104a6b81e942f6a9a5e8b507aab949f
+status: pass
+summary: F1 fixed (r1 traversal probe exits 1 with one line, builds nothing, deletes nothing, marker survives); hostile names, flat/out/<name> symlinks, and the out/ symlink farm all hold. Two late local-only hardening items (rmSync TOCTOU on an intermediate swap; writes follow a pre-planted flat symlink) are tech-debt; no user can reach a wrong result.
+blocking_findings: []
+nonblocking_findings:
+- "N1 [Tech-debt] review-b: removeFlatFolder has a TOCTOU window: rmSync deletes through a symlink swapped into an intermediate path component between realpath and remove (leaf swap refused). Needs a concurrent local writer in out/; consider rename-then-delete or document the race."
+- "N2 [Tech-debt] review-b: writes follow a pre-planted symlink at out/<name>/flat or out/<name> (PNG lands in the target) though deletion refuses; nothing outside the real out/ root can be deleted, including through the out/ symlinks to the main tree."
+retry_recommendation: none
+result_path: measure/runs/chibi_sprouts_redesign_20261123/review-b-p2-fc823ed.json
+END_MEASURE_AGENT_RESULT

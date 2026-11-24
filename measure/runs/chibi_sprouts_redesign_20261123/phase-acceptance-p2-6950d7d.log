@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: phase-acceptance
+status: complete
+track: chibi_sprouts_redesign_20261123
+phase: Phase 2: Green
+commits: none
+tests_run: phase test PASS 9; project gate PASS 3406 with 27 skipped; tsc FAIL 52 diagnostics including TS2375 in changed r3 test; Prettier PASS; generate PASS; byte parity PASS; doctor FAIL on remaining acceptance copies
+files_changed: phase-acceptance-p2-6950d7d.json and .log; acceptance-p2-6950d7d-scratch remains after denied cleanup
+plan_updates: none
+known_failures: F1 TS2375 at tests/render-options.adversarial-r3.test.ts:89; F2 plan requires 8 cases but the phase test reports 9; doctor scanned remaining acceptance copies after cleanup denial
+handoff: Fix F1 and the plan count, remove measure/runs/chibi_sprouts_redesign_20261123/acceptance-p2-6950d7d-scratch with rm -r -- <absolute path>, then rerun acceptance on the new HEAD. Red family muse; Green family MiniMax; acceptance family Kimi.
+END_MEASURE_AGENT_RESULT

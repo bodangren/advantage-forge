@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: review-a
+status: complete
+track: chibi_sprouts_redesign_20261123
+phase: Phase 2: Green
+commits: none
+tests_run: Wrapped Vitest: 84 passed, 15 skipped. Old scanner pins: 3 expected failures. Sprout-pip: all 16 outputs match. Wrapped tsc: 51 unchanged diagnostics. Format and structure pass.
+files_changed: review-a-p2-2a33c7c.json and .log
+plan_updates: none
+known_failures: F1 can test a different checkout. F2 can render an unowned fixture. Baseline tsc exits 2 in 14 files.
+handoff: Route F1 and F2 to Green. Record the mechanical scanner refresh as an independently checked role-scope deviation. Correct the plan type-check record.
+END_MEASURE_AGENT_RESULT

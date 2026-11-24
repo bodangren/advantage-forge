@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "role": "phase-acceptance",
+  "track": "chibi_sprouts_redesign_20261123",
+  "phase": "Phase 2: Green",
+  "baseline_sha": "28ff79903552f5d8c2a8bf118775ee1dab7eb514",
+  "phase_base_sha": "23e551df54b7996776a4bcb9e8ccfdb9f35a6083",
+  "role_base_sha": "28ff79903552f5d8c2a8bf118775ee1dab7eb514",
+  "audited_head_sha": "28ff79903552f5d8c2a8bf118775ee1dab7eb514",
+  "status": "pass",
+  "summary": "Phase 2 passes acceptance on 28ff7990. All required gates pass. F1 and F2 are closed by 9febcaac, d7e41671, and 28ff7990.",
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "evidence": [
+    "HEAD and role_base_sha are 28ff79903552f5d8c2a8bf118775ee1dab7eb514. phase_base_sha is 23e551df54b7996776a4bcb9e8ccfdb9f35a6083.",
+    "Review A, Review B, Review C, and adversarial results target 9a2656ba8784a74e9011975e54fd9ee4867841a3 and pass their gates.",
+    "The delta after 9a2656ba touches only tests/render-options.adversarial-r3.test.ts and measure/ records. No implementation content changed.",
+    "F1 withdrawn: commit 9febcaac infers the spawned child type. Full tsc now reports the 51-diagnostic baseline and no changed-file diagnostic.",
+    "F2 withdrawn: plan.md:173,328,346-355 and test-strategy.md:262-327,609-610 now require nine cases. The phase test reports nine passing cases.",
+    "T2r c916af45, T3r 6b3a0781, T2r2 4f43e67c, T3r2 0fbd781b, and T3 c69a5b73 are ancestors of HEAD. Every Phase 2 task is [x].",
+    "The wrapped phase test exits 0 with one passing file and nine passing tests. A3 and A4 pass with the labeled count.",
+    "The wrapped project gate exits 0 with 235 passing files, 4 skipped files, 3406 passing tests, and 27 skipped tests. No test fails.",
+    "Wrapped tsc exits 2 with exactly 51 known diagnostics. A parsed output check confirms zero diagnostics in changed files.",
+    "Prettier exits 0 on the three source files and ten changed test files checked by this role.",
+    "node measure/tools/generate.mjs --check exits 0 and reports four current fact files.",
+    "bash measure/doctor.sh --structural-only exits 0 and reports no structural errors.",
+    "sprout-pip render.png, four view PNGs, and eleven sprite files are byte-identical between isolated base and HEAD copies.",
+    "The shared render.png SHA-256 is 7efc9c271626c597bd542d72e4ea9d0bc9949f3b031cef0baacb1a190cba7b23.",
+    "The parity copies used real out/ directories under /tmp. No render wrote through a worktree out/ symlink.",
+    "tests/render-options.adversarial-r3.test.ts:183-184 skips only the local-writer race with the PM reason. The scrapped-base contracts retain their documented skips.",
+    "plan.md:290-309 records the PM disposition of F12 and Review B N1. It also records the other late findings as tech debt.",
+    "A5 pass claims have passing commands. A6 has no registry resolution claim. A7 keeps exact scanner and cleanup filters.",
+    "Model families: Red muse; Green MiniMax; Review A OpenAI; Review B Kimi; Review C OpenAI; adversarial OpenAI; phase acceptance Kimi.",
+    "This role made no paid call, image-generation call, implementation edit, test edit, plan edit, or commit. No tracked or staged file changed.",
+    "No process started by this role remains active. The external scratch directory remains after one denied rm command. It is outside the repository and did not affect doctor."
+  ],
+  "commands": [
+    "git rev-parse HEAD; git diff --stat 9a2656ba8784a74e9011975e54fd9ee4867841a3 HEAD; git diff --name-status 9a2656ba8784a74e9011975e54fd9ee4867841a3 HEAD",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/render-options.test.ts' (exit 0; 9 passed)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts' (exit 0; 3406 passed, 27 skipped)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/typescript/bin/tsc --noEmit --pretty false' (exit 2; 51 baseline diagnostics, none in changed files)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/prettier --check <three changed source files and ten changed test files>' (exit 0)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node measure/tools/generate.mjs --check' (exit 0)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'bash measure/doctor.sh --structural-only' (exit 0; no structural errors)",
+    "External isolated copies: wrapped ./forge render sprout-pip --fast and ./forge sprites sprout-pip --fast at 23e551df and 28ff7990; cmp and diff -qr (all outputs identical)",
+    "git diff --check 23e551df54b7996776a4bcb9e8ccfdb9f35a6083..HEAD -- <phase source and test files> (exit 0)",
+    "rm -r -- /tmp/chibi-p2-accept-28ff799-opencode (denied before execution; directory remains outside the repository)"
+  ],
+  "changed_files": [
+    "measure/runs/chibi_sprouts_redesign_20261123/phase-acceptance-p2-28ff799.json",
+    "measure/runs/chibi_sprouts_redesign_20261123/phase-acceptance-p2-28ff799.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "kimi-code-plan-cn/k3.1-pro#high",
+  "ratings": [
+    {"axis": "correctness", "score": 5, "evidence": "The nine live option cases and full project gate pass, with byte-identical existing outputs."},
+    {"axis": "test_meaning", "score": 5, "evidence": "The fail-closed collision case, live pixel checks, adversarial mutations, and PM-documented race skip have explicit evidence."},
+    {"axis": "scope_discipline", "score": 5, "evidence": "The delta after 9a2656ba touches only the r3 test and measure/ records."},
+    {"axis": "evidence_quality", "score": 5, "evidence": "Every current-phase claim has a command result or file:line, including the corrected nine-case record."}
+  ],
+  "reviewer_ratings": [
+    {"reviewer_role": "review-a", "reviewer_route": "unknown", "agreed": true, "score": 3, "evidence": "Its 9a2656ba gate and 51-diagnostic record match its HEAD, but its pass did not address the former eight-case drift."},
+    {"reviewer_role": "review-b", "reviewer_route": "kimi-code-plan-cn/kimi-for-coding", "agreed": true, "score": 5, "evidence": "The preflight-only output check and PM race disposition confirm its N1 finding and pass-with-debt verdict."},
+    {"reviewer_role": "review-c", "reviewer_route": "unknown", "agreed": true, "score": 4, "evidence": "Own-property validation and linked-output refusal match the implementation and the passing project gate."},
+    {"reviewer_role": "adversarial", "reviewer_route": "unknown", "agreed": false, "score": 1, "evidence": "Its original pass missed TS2375 in the added r3 test; commit 9febcaac now fixes that omission and tsc returns to 51 diagnostics."}
+  ]
+}

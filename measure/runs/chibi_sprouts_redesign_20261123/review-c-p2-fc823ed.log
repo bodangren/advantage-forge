@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: measure-review-c-ux-api
+status: complete
+track: chibi_sprouts_redesign_20261123
+phase: Phase 2: Green
+commits: none
+tests_run: Wrapped help and six CLI error checks passed. Wrapped T1, T2, and validation tests: 14 passed, 15 skipped. The wrapped cutout probe reproduced the view-list regression.
+files_changed: review-c-p2-fc823ed.json, review-c-p2-fc823ed.log
+plan_updates: none
+known_failures: Inherited view names can reach the build. Cutout rejects a trailing comma. The flat writer can follow a linked output folder.
+handoff: Route C-P2-1, C-P2-7, and C-P2-8 to Green. Route C-P2-9 and C-P2-10 to tech debt. No audit jobs remain.
+END_MEASURE_AGENT_RESULT

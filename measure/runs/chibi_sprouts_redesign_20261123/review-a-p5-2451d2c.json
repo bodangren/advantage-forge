@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "role": "review-a",
+  "track": "chibi_sprouts_redesign_20261123",
+  "phase": "Phase 5: Green",
+  "baseline_sha": "75bb2b4231a5b4733d4340efa9284b7ebc214f68",
+  "phase_base_sha": "75bb2b4231a5b4733d4340efa9284b7ebc214f68",
+  "role_base_sha": "b8a4f1b216ec2e06c55c07a28f83c9fe18454683",
+  "audited_head_sha": "2451d2c93953f0ba29e99d0264414402a165d663",
+  "status": "pass",
+  "summary": "Phase 5 passes. The sheet script meets AC5, its outputs contain the required figures, and both test gates pass.",
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "evidence": [
+    "HEAD is 2451d2c93953f0ba29e99d0264414402a165d663; the audited diff is exactly phase_base_sha..audited_head_sha.",
+    "The diff contains plan.md, generated status, scripts/mom-kim-sheet.mjs, and tests/mom-kim-sheet.test.ts; Green added no test changes.",
+    "scripts/mom-kim-sheet.mjs:152-197 reads the lit views and measure.json, scans Kim's side panel, enforces the reference rows, and records alpha-128 lit rows.",
+    "scripts/mom-kim-sheet.mjs:203-276 builds the Kim/Mom three-cell sheet and composes mom-panel.png from Mom's two lit render buffers only.",
+    "AC5 is covered by the script output and tests/mom-kim-sheet.test.ts:192-345; the targeted test passes 8 of 8.",
+    "The T5r change in e10890f9 fixes the right-cell range to [c4, r.width] and excludes the row-two text cell; it preserves the existing height and baseline bounds.",
+    "The full suite exits 0: 238 test files passed, 4 skipped, 3462 tests passed, and 27 skipped.",
+    "Wrapped tsc exits 2 with 51 existing diagnostics and no diagnostic in scripts/mom-kim-sheet.mjs.",
+    "The review sheet shows Kim front and side, Mom front and side renders, Mom's drawing, the no-side-drawing text, and the caption. Figures are readable and share a baseline; no figure is clipped or misaligned.",
+    "mom-panel.png visually contains Mom's front and side renders only; it contains no Kim image."
+  ],
+  "commands": [
+    "git -C /home/daniebo/Desktop/forge-worktrees/sprouts-redesign rev-parse HEAD (2451d2c93953f0ba29e99d0264414402a165d663)",
+    "git -C /home/daniebo/Desktop/forge-worktrees/sprouts-redesign diff --name-status 75bb2b4231a5b4733d4340efa9284b7ebc214f68..2451d2c93953f0ba29e99d0264414402a165d663 (four paths: plan, generated status, sheet script, sheet test)",
+    "git -C /home/daniebo/Desktop/forge-worktrees/sprouts-redesign show --format= --unified=12 e10890f97a1d18d671da06aaa8b85c4bdaf3fdfa -- tests/mom-kim-sheet.test.ts (right-cell fix confirmed)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/mom-kim-sheet.test.ts' (exit 0; 8 passed)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts' (exit 0; 238 files passed, 4 skipped; 3462 tests passed, 27 skipped)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/typescript/bin/tsc --noEmit --pretty false' (exit 2; 51 baseline diagnostics, none in the new script)"
+  ],
+  "changed_files": [
+    "scripts/mom-kim-sheet.mjs",
+    "tests/mom-kim-sheet.test.ts",
+    "measure/tracks/chibi_sprouts_redesign_20261123/plan.md",
+    "measure/generated/status.md"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "openai/gpt-6-luna#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "scripts/mom-kim-sheet.mjs:180-197 verifies Kim's row scan and derives lit rows from both alpha masks."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "tests/mom-kim-sheet.test.ts passes all 8 live-output checks, including layout, scale, rows, caption pixels, and panel cells."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The audited diff adds only the planned sheet script and changes its test and plan evidence."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "Both wrapped Vitest gates and the wrapped TypeScript check were run on the verified audited HEAD."
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "role": "adversarial-testing",
+  "track": "chibi_sprouts_redesign_20261123",
+  "phase": "Phase 4: Green",
+  "baseline_sha": "28ff79903552f5d8c2a8bf118775ee1dab7eb514",
+  "phase_base_sha": "28ff79903552f5d8c2a8bf118775ee1dab7eb514",
+  "role_base_sha": "366deffb77b83c16a66a2c372b555aded82f87e4",
+  "audited_head_sha": "366deffb77b83c16a66a2c372b555aded82f87e4",
+  "status": "pass",
+  "summary": "F2 is closed. Required row, argument, import-order, corrupt-GLB, and real-asset probes passed. One new test-only false positive is late tech debt; current code rejects all tested corrupt GLBs.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "ADV-R2-1 [Nit] adversarial-testing: tests/sprout-mom-kim.validation.test.ts:248-298 does not prove that a corrupt GLB reaches the GLB parser. The generated asset name contains `p4glb`, and line 285 accepts any output matching `/glb/i`; asset-name validation rejects the traversal name before GLB access. In a temporary copy, replacing the `Invalid GLB` error with `Invalid asset name '${asset}'` still made this test pass. Late finding: Tech-debt. This is a regression-test false positive, not a current wrong result; no user reaches an incorrect measurement from this test gap."
+  ],
+  "evidence": [
+    "F2 withdrawn: scripts/proportion-check.mjs:49-76 now rejects empty, missing, duplicate, extra, non-array, numeric-string, boxed-number, NaN, and infinite tables. All eleven rows pass at both inclusive bounds. Negative zero behaves as numeric zero.",
+    "Provenance: role started at audited HEAD 366deffb77b83c16a66a2c372b555aded82f87e4. phase_base_sha 28ff79903552f5d8c2a8bf118775ee1dab7eb514 resolves to a commit. HEAD later advanced to 75bb2b4231a5b4733d4340efa9284b7ebc214f68; that commit changes only measure/tracks/chibi_sprouts_redesign_20261123/plan.md.",
+    "Exact phase diff saved at measure/runs/chibi_sprouts_redesign_20261123/adversarial-p4-366deff.diff. The remediation delta from c2f8736e to 366deff changes scripts/proportion-check.mjs and adds tests/sprout-mom-kim.validation.test.ts.",
+    "checkRows boundary probe: lower and upper values for all eleven rows returned no failures. Unicode, __proto__, and constructor names returned unknown-row errors; a non-array returned an 11-row shape error; boxed numbers returned not-a-number; extra fields were ignored; -0 passed wrist and failed legShare's positive lower bound.",
+    "Asset-name probes: trailing-dot and case-mismatched names exited 1 with named missing paths; a 5,000-character name exited 1 without a crash. A NUL cannot be passed through OS argv; Node rejected it with ERR_INVALID_ARG_VALUE before the script started.",
+    "Required temporary mutants were all killed by Red tests: duplicate-row validation removal, finite-number validation removal, asset-name validation removal, and render-check-before-import order. Each focused test exited 1 on its assertion. Replay evidence and launcher PID 3687718 are in adversarial-p4-r2-mutants.log.",
+    "The corrupt-GLB regression case has a surviving negative-control mutant: a one-line `Invalid asset name` message containing the fixture's `p4glb` text passes the test. This is the ADV-R2-1 late tech-debt finding. The temporary mutant copy was removed.",
+    "Real-asset mutants in a disposable repository copy: longer arms failed armToTorso and fingertips; a smaller head failed `eye component touches the window`; outward palms failed both palm-normal checks and the hand-edge guard; merged eyes failed `eye components: found 1, expected 2`. All four exited 1. The copy was removed.",
+    "Corrupt GLB probes in a disposable copy: empty file, header JSON length 0xffffffff, and a directory at the GLB path each exited 1 with exactly `Invalid GLB: out/sprout-mom-kim/sprout-mom-kim.glb`. The copy was removed.",
+    "Targeted phase tests exited 0: 4 files and 61 tests passed. The project gate exited 1 only on the expected 8 tests in tests/mom-kim-sheet.test.ts, which cannot import the not-yet-created scripts/mom-kim-sheet.mjs; 237 files passed and 4 were skipped, with 3454 tests passed and 27 skipped.",
+    "sprout-pip renders from phase_base_sha and audited HEAD were byte-identical: both SHA-256 values were 7efc9c271626c597bd542d72e4ea9d0bc9949f3b031cef0baacb1a190cba7b23. Both copies were removed.",
+    "build-graph scanned the audited worktree: 22487 nodes and 25315 edges. The scan database is measure/runs/chibi_sprouts_redesign_20261123/adversarial-p4-r2-graph.db.",
+    "No production file or test file was modified. All scratch repositories under /tmp were removed. No role processes remain."
+  ],
+  "commands": [
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'cd /home/daniebo/Desktop/forge-worktrees/sprouts-redesign && node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-mom-kim.validation.test.ts tests/sprout-mom-kim.test.ts tests/preset-colour.test.ts tests/render-options.test.ts' — exit 0, 4 files, 61 tests.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'bash /tmp/adv-p4-mutants-rerun/run.sh' — four required mutants killed by focused Red tests; temporary copy removed.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'cd /tmp/adv-p4-corrupt-negative && node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-mom-kim.validation.test.ts -t \"a corrupt GLB fails\"' — exit 0 with a deliberately wrong asset-name error; proves the test false positive; temporary copy removed.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'bash /tmp/adv-p4-realmutants/run.sh' — four real-asset mutants rejected; temporary copy removed.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'bash /tmp/adv-p4-corrupt/run.sh' — empty, huge-length, and directory GLBs each exited 1 with one named line; temporary copy removed.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node /tmp/adv-p4-checkrows.mjs' — boundaries, unicode, prototype names, wrong table type, extra fields, boxed number, and negative zero.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node /tmp/adv-p4-name-probe.mjs' — trailing dot, NUL, long name, and case probes.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'cd /home/daniebo/Desktop/forge-worktrees/sprouts-redesign && node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts' — exit 1 only on 8 expected T5 sheet cases; 3454 passed, 27 skipped.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'cd /tmp/adv-p4-pip-base && ./forge render sprout-pip --fast && sha256sum out/sprout-pip/render.png && cd /tmp/adv-p4-pip-head && ./forge render sprout-pip --fast && sha256sum out/sprout-pip/render.png' — identical SHA-256; temporary copies removed.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'build-graph scan /home/daniebo/Desktop/forge-worktrees/sprouts-redesign /home/daniebo/Desktop/forge-worktrees/sprouts-redesign/measure/runs/chibi_sprouts_redesign_20261123/adversarial-p4-r2-graph.db' — 22487 nodes and 25315 edges."
+  ],
+  "changed_files": [
+    "measure/runs/chibi_sprouts_redesign_20261123/adversarial-p4-366deff.json",
+    "measure/runs/chibi_sprouts_redesign_20261123/adversarial-p4-366deff.log",
+    "measure/runs/chibi_sprouts_redesign_20261123/adversarial-p4-366deff.diff",
+    "measure/runs/chibi_sprouts_redesign_20261123/adversarial-p4-r2-validation.log",
+    "measure/runs/chibi_sprouts_redesign_20261123/adversarial-p4-r2-mutants.log",
+    "measure/runs/chibi_sprouts_redesign_20261123/adversarial-p4-r2-corrupt-negative.log",
+    "measure/runs/chibi_sprouts_redesign_20261123/adversarial-p4-r2-real-mutants.log",
+    "measure/runs/chibi_sprouts_redesign_20261123/adversarial-p4-r2-corrupt-glb.log",
+    "measure/runs/chibi_sprouts_redesign_20261123/adversarial-p4-r2-checkrows.log",
+    "measure/runs/chibi_sprouts_redesign_20261123/adversarial-p4-r2-names.log",
+    "measure/runs/chibi_sprouts_redesign_20261123/adversarial-p4-r2-project-gate.log",
+    "measure/runs/chibi_sprouts_redesign_20261123/adversarial-p4-r2-pip-parity.log",
+    "measure/runs/chibi_sprouts_redesign_20261123/adversarial-p4-r2-graph.log",
+    "measure/runs/chibi_sprouts_redesign_20261123/adversarial-p4-r2-graph.db"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "escalate_human",
+  "confidence": "high",
+  "route": "openai/gpt-6-luna#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "The exact-bound table cases pass, all four real-asset mutants fail named checks, and all three corrupt-GLB forms exit 1 with a named error (adversarial-p4-r2-checkrows.log, adversarial-p4-r2-real-mutants.log, adversarial-p4-r2-corrupt-glb.log)."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "The four required mutants fail Red tests, but the corrupt-GLB test passes a wrong asset-name error because its regex matches the fixture name p4glb (adversarial-p4-r2-corrupt-negative.log)."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "No production or test file changed; the audit wrote only under measure/runs/chibi_sprouts_redesign_20261123."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "The project gate, phase tests, required mutation tests, real-asset mutations, corrupt-GLB cases, parity hashes, and build-graph scan have command logs under measure/runs/chibi_sprouts_redesign_20261123."
+    }
+  ]
+}

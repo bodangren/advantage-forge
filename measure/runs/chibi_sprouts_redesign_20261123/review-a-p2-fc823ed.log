@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: review-a
+status: complete
+track: chibi_sprouts_redesign_20261123
+phase: Phase 2: Green
+commits: none
+tests_run: Wrapped project gate: 3397 passed, 26 skipped. Alternate-checkout T2: 11 passed. All 48 render and sprite outputs match. Wrapped tsc: 51 unchanged diagnostics. Format and structure pass.
+files_changed: review-a-p2-fc823ed.json and .log
+plan_updates: none
+known_failures: F8 rejects a valid legacy cutout list. F9 can delete another asset's flat outputs. F1 and F2 are closed.
+handoff: Route F8 and F9 to Green in one fix round. Record F10 and F11 as tech debt. Correct the prior F7 plan record. No audit jobs remain.
+END_MEASURE_AGENT_RESULT

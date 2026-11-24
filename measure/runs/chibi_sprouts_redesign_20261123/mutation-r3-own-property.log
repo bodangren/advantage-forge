@@ -1,0 +1,75 @@
+
+ RUN  v5.1.1 /home/daniebo/Desktop/forge-worktrees/sprouts-redesign/measure/runs/chibi_sprouts_redesign_20261123/mutant-r3-own-property
+
+ ❯ tests/render-options.validation-r2.test.ts (5 tests | 2 failed) 21059ms
+   ❯ render validation round 2 (views, cutout list, linked output) (5)
+     × rejects inherited view names on render before the build 7661ms
+     × rejects inherited view names on animate and cutout before the build 3987ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/render-options.validation-r2.test.ts > render validation round 2 (views, cutout list, linked output) > rejects inherited view names on render before the build
+AssertionError: expected [ …(12) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "render --views constructor: exit 0, the name was accepted",
++   "render --views constructor: expected 1 error line, got 5",
++   "render --views constructor: build outputs appeared",
++   "render --views toString: exit 0, the name was accepted",
++   "render --views toString: expected 1 error line, got 5",
++   "render --views toString: build outputs appeared",
++   "render --views __proto__: exit 0, the name was accepted",
++   "render --views __proto__: expected 1 error line, got 5",
++   "render --views __proto__: build outputs appeared",
++   "render --views hasOwnProperty: exit 0, the name was accepted",
++   "render --views hasOwnProperty: expected 1 error line, got 5",
++   "render --views hasOwnProperty: build outputs appeared",
++ ]
+
+ ❯ tests/render-options.validation-r2.test.ts:163:24
+    161|         if (existsSync(outDir(pin))) problems.push(`${label}: build ou…
+    162|       }
+    163|       expect(problems).toEqual([]);
+       |                        ^
+    164|     } finally {
+    165|       removeFixture(pin);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/render-options.validation-r2.test.ts > render validation round 2 (views, cutout list, linked output) > rejects inherited view names on animate and cutout before the build
+AssertionError: expected [ …(7) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "animate: expected 1 error line, got 9",
++   "animate: stack trace frames present",
++   "animate: build outputs appeared",
++   "cutout: exit 0, the name was accepted",
++   "cutout: expected 1 error line, got 6",
++   "cutout: build outputs appeared",
++   "cutout: wrote to the out folder: _flat-render-r2b-26472/constructor.png, manifest.json",
++ ]
+
+ ❯ tests/render-options.validation-r2.test.ts:196:24
+    194|       if (snapshotFiles(probeOut).length > 0)
+    195|         problems.push(`cutout: wrote to the out folder: ${snapshotFile…
+    196|       expect(problems).toEqual([]);
+       |                        ^
+    197|     } finally {
+    198|       removeOwnedPath(probeOut);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 3 passed (5)
+   Start at  17:09:57
+   Duration  21.18s (tests 100%)
+

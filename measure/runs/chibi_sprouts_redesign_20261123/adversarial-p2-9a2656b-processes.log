@@ -1,0 +1,5 @@
+checked_pids=[45622, 164429, 197377]
+live_checked_pids=[]
+worktree_processes=none after the gate and probe runs completed
+owned_asset_fixtures=0
+unrelated heavy-run processes were not stopped

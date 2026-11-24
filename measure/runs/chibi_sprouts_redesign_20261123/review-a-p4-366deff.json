@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "role": "review-a",
+  "track": "chibi_sprouts_redesign_20261123",
+  "phase": "Phase 4: Green",
+  "phase_base_sha": "28ff79903552f5d8c2a8bf118775ee1dab7eb514",
+  "role_base_sha": "366deffb77b83c16a66a2c372b555aded82f87e4",
+  "baseline_sha": "28ff79903552f5d8c2a8bf118775ee1dab7eb514",
+  "audited_head_sha": "366deffb77b83c16a66a2c372b555aded82f87e4",
+  "status": "pass",
+  "summary": "The phase measurements and targeted tests pass. F1 is closed. The project gate has only the eight expected T5 failures because the T8 script is absent.",
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "evidence": [
+    "F1 withdrawn: scripts/proportion-check.mjs:918-955 now imports the asset and base before checking render paths; tests/sprout-mom-kim.validation.test.ts:102-127 proves the asset import marker precedes the missing-render error.",
+    "F1 withdrawn: scripts/proportion-check.mjs:918-955 checks the asset and GLB, imports the asset and base, then checks render paths; tests/sprout-mom-kim.validation.test.ts:102-127 verifies the asset-import marker before the missing-render error.",
+    "The phase measurement command returned all eleven planned values: 3.595144, 1.328305, 0.389427, 1.170666, -0.061303, 0.509578, 0.62944, 0.104263, 0.383495, 0.226744, and 0.459302; both palms passed.",
+    "The targeted phase command passed 61 tests across four files. The validation tests cover strict eleven-row shape checks and malformed row cases.",
+    "The project gate failed only the eight T5 sheet cases. Each fails because scripts/mom-kim-sheet.mjs is absent, as expected before T8.",
+    "Green changed scripts/proportion-check.mjs only; it changed no test or asset. The validation test file belongs to Red.",
+    "tsc --noEmit returned the 51 baseline errors; none names the changed Phase 4 source files.",
+    "measure/runs/chibi_sprouts_redesign_20261123/adversarial-p4-render-compare.log:26,47 records matching sprout-pip render.png SHA-256 values for the base/head comparison.",
+    "The assigned audited head was HEAD when review began. Later HEAD 75bb2b4231a5b4733d4340efa9284b7ebc214f68 adds only two lines to measure/tracks/chibi_sprouts_redesign_20261123/plan.md."
+  ],
+  "commands": [
+    "git -C /home/daniebo/Desktop/forge-worktrees/sprouts-redesign rev-parse HEAD at review start => 366deffb77b83c16a66a2c372b555aded82f87e4",
+    "git -C /home/daniebo/Desktop/forge-worktrees/sprouts-redesign diff --stat 366deffb77b83c16a66a2c372b555aded82f87e4 75bb2b4231a5b4733d4340efa9284b7ebc214f68 => plan.md only, 2 insertions",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'cd /home/daniebo/Desktop/forge-worktrees/sprouts-redesign && node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-mom-kim.test.ts tests/sprout-mom-kim.validation.test.ts tests/preset-colour.test.ts tests/render-options.test.ts' => exit 0, 61 tests passed",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'cd /home/daniebo/Desktop/forge-worktrees/sprouts-redesign && node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts' => exit 1, only eight tests in tests/mom-kim-sheet.test.ts failed on missing scripts/mom-kim-sheet.mjs",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'cd /home/daniebo/Desktop/forge-worktrees/sprouts-redesign && ./node_modules/.bin/tsx scripts/proportion-check.mjs --asset sprout-mom-kim' => exit 0, eleven rows pass and both palms pass"
+  ],
+  "changed_files": [
+    "assets/parts/humanoid-kim.ts",
+    "assets/sprout-mom-kim.ts",
+    "scripts/proportion-check.mjs",
+    "tests/fixtures/preset-pin.json",
+    "tests/mom-kim-sheet.test.ts",
+    "tests/sprout-mom-kim.test.ts",
+    "tests/sprout-mom-kim.validation.test.ts",
+    "measure/tracks/chibi_sprouts_redesign_20261123/plan.md",
+    "measure/generated/asset-inventory.json",
+    "measure/generated/status.md",
+    "docs/chibi-sprouts/redesign-2026-11-23.md"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "openai/gpt-6-luna#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "scripts/proportion-check.mjs:918-975 follows the required load order, and the real measurement output passes all eleven rows and both palms."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "The targeted test command passed 61 tests, including 19 validation cases for load order and strict row validation."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The phase diff contains the planned measurement script, base, Mom asset, pins, tests, and managed evidence."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "The measurement, targeted tests, project gate, tsc baseline, and sprout-pip hash comparison have recorded results."
+    }
+  ]
+}

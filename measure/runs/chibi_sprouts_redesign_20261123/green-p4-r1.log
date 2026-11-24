@@ -1,0 +1,52 @@
+MEASURE_AGENT_RESULT
+phase: Phase 4 Green, remediation round 1
+track: chibi_sprouts_redesign_20261123
+role: Measure Jr Green subagent
+green_model: opencode-go/hy4-flash-free (family hy4)
+red_model: opencode-go/muse-spark-1.3-contributor (family muse)
+worktree: /home/daniebo/Desktop/forge-worktrees/sprouts-redesign
+branch: chibi-sprouts-redesign
+phase_base_sha: 28ff79903552f5d8c2a8bf118775ee1dab7eb514
+role_base_sha: b0a7caada1582335db124b3729a6cd00ecd2cf25
+final_green_head: 366deffb77b83c16a66a2c372b555aded82f87e4
+red_commits_inside_phase_base: 2c774c62, ba8712f1, b0a7caad
+tasks_flipped_to_x: T6r
+tasks_flipped_to_b: none
+dispositions: F1=FIX; F2=FIX; N1=FIX; N3=FIX
+source_sha_T6r: b6d6605186ebb6f5726f59c0177eec5bdf7eeff7
+plan_evidence_sha_T6r: 9a32a32a35d25c6398090d9cf1e12afff6928eea
+generated_facts_sha: 366deffb77b83c16a66a2c372b555aded82f87e4
+
+STARTUP
+- HEAD at start equals role_base_sha. phase_base_sha verified as a commit; the three Red commits are inside phase_base_sha..HEAD.
+- No test file edited. No asset edited. Only scripts/proportion-check.mjs changed for the fix.
+- No question tool, no openchamber_image call, no paid call, no push.
+- Every vitest, tsc, render and forge check ran through HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '<cmd>'. Nothing of mine left running. No write through an out/ symlink.
+
+TARGETED RED BASELINE (before the fix)
+- node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-mom-kim.validation.test.ts
+- exit 1, Test Files 1 failed (1), Tests 18 failed | 1 passed (19). Every finding reproduced.
+
+FIXES IN scripts/proportion-check.mjs
+- F1: moved the four render-file existence checks to after the asset import and the base import. The original missing-asset line stays before those imports.
+- F2: checkRows now requires exactly eleven uniquely named expected rows, in this order: empty table, missing row, duplicate row, unknown row, length, then value validation. Exact value names are `not a number`, `not finite`, `negative`. Pass-table bounds unchanged.
+- N1: copied the checkAssetName rule from src/pipeline.ts (empty, absolute, separator or backslash, dot-dot segment). One line, exit 1, nothing imported. No src/ import, so the load order is unchanged.
+- N3: wrapped readGlb and readModel at the read site; a bad GLB prints one line `Invalid GLB: out/<name>/<name>.glb` with no stack and no measure.json write.
+
+GATES
+- validation: node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-mom-kim.validation.test.ts -> exit 0, Test Files 1 passed (1), Tests 19 passed (19).
+- three-file: node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-mom-kim.test.ts tests/preset-colour.test.ts tests/render-options.test.ts -> exit 0, Test Files 3 passed (3), Tests 42 passed (42).
+- real asset: ./node_modules/.bin/tsx scripts/proportion-check.mjs --asset sprout-mom-kim -> exit 0, eleven rows and both palms ok. Rows equal the T7 rows exactly:
+  heightInHeads 3.595144, armToTorso 1.328305, legShare 0.389427, headToShoulders 1.170666, wrist -0.061303, fingertips 0.509578, eyeLine 0.62944, eyeHeight 0.104263, spacingHead 0.383495, eyeWidthFace 0.226744, spacingFace 0.459302; palm L ok; palm R ok.
+- forge check: ./forge check sprout-mom-kim -> exit 0, ends `result ok: no held item passes through the head`; rest, idle and ground ok.
+- tsc: node node_modules/typescript/bin/tsc --noEmit -> exit 2, 51 errors (baseline 51), no error in scripts/proportion-check.mjs.
+- whole project: node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts -> exit 1, Test Files 1 failed | 237 passed | 4 skipped (242), Tests 8 failed | 3454 passed | 27 skipped (3489). The only failing file is tests/mom-kim-sheet.test.ts, with its 8 cases each failing on the absent scripts/mom-kim-sheet.mjs (T8).
+- prettier --check scripts/proportion-check.mjs -> exit 0.
+- node measure/tools/generate.mjs --check -> exit 0 after one regeneration; ./measure/doctor.sh --structural-only -> exit 0.
+
+NEW FILES
+- measure/runs/chibi_sprouts_redesign_20261123/green-p4-r1.log (this file, not committed). No other new file.
+
+NEXT ROLE
+- T8 Green owns scripts/mom-kim-sheet.mjs and the first full-suite gate. No cut-out and no sprite exist for the new base (AC6).
+END_MEASURE_AGENT_RESULT

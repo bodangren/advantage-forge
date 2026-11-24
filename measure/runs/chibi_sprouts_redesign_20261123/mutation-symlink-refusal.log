@@ -1,0 +1,43 @@
+
+ RUN  v5.1.1 /home/daniebo/Desktop/forge-worktrees/sprouts-redesign/measure/runs/chibi_sprouts_redesign_20261123/mutant-symlink-refusal
+
+ ❯ tests/render-options.adversarial-r2.test.ts (2 tests | 1 failed) 3418ms
+   ❯ flat output removal containment (2)
+     × preserves targets for a flat symlink and an output-directory symlink 1818ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/render-options.adversarial-r2.test.ts > flat output removal containment > preserves targets for a flat symlink and an output-directory symlink
+AssertionError: 
+BUILD FAILED: ENOENT: no such file or directory, mkdir '/home/daniebo/Desktop/forge-worktrees/sprouts-redesign/measure/runs/chibi_sprouts_redesign_20261123/mutant-symlink-refusal/out/_flat-symlink-adversarial-3527897/flat'
+    at mkdirSync (node:fs:1411:26)
+    at run (/home/daniebo/Desktop/forge-worktrees/sprouts-redesign/measure/runs/chibi_sprouts_redesign_20261123/mutant-symlink-refusal/src/cli/forge.ts:426:13)
+    at async runSafely (/home/daniebo/Desktop/forge-worktrees/sprouts-redesign/measure/runs/chibi_sprouts_redesign_20261123/mutant-symlink-refusal/src/cli/forge.ts:724:5)
+    at async main (/home/daniebo/Desktop/forge-worktrees/sprouts-redesign/measure/runs/chibi_sprouts_redesign_20261123/mutant-symlink-refusal/src/cli/forge.ts:693:5)
+: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ run src/cli/forge.ts:426:13
+ ❯ runSafely src/cli/forge.ts:724:5
+ ❯ main src/cli/forge.ts:693:5
+ ❯ tests/render-options.adversarial-r2.test.ts:106:62
+    104|
+    105|     const flatRun = runForge();
+    106|     expect(flatRun.status, flatRun.stderr || flatRun.stdout).toBe(0);
+       |                                                              ^
+    107|     expect(readFileSync(flatMarker, 'utf8')).toBe('keep-flat-target\n'…
+    108|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 passed (2)
+   Start at  15:50:29
+   Duration  3.51s (tests 100%)
+

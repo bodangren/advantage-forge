@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "role": "review-a",
+  "track": "chibi_sprouts_redesign_20261123",
+  "phase": "Phase 5: Green",
+  "baseline_sha": "75bb2b4231a5b4733d4340efa9284b7ebc214f68",
+  "phase_base_sha": "75bb2b4231a5b4733d4340efa9284b7ebc214f68",
+  "role_base_sha": "e4df76e1b25b78cd2e425c47460cd59f7f0c8112",
+  "audited_head_sha": "ca4e8d0c6d157f146c9cbe781b3e0a7af3e105a2",
+  "status": "pass",
+  "summary": "The three remediation fixes pass review. Both sheet tests and the project gate pass, normal render-measure-sheet order succeeds, and both PNG hashes remain unchanged.",
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "evidence": [
+    "HEAD is ca4e8d0c6d157f146c9cbe781b3e0a7af3e105a2; the audit used the exact phase_base_sha..audited_head_sha range.",
+    "The phase diff contains five paths: generated status, plan, sheet script, and the new adversarial test; the test diff after e4df76e1 is empty.",
+    "scripts/mom-kim-sheet.mjs:152-161 uses lstat on out/chibi-sprouts and out/chibi-sprouts/redesign before reads or writes; temporary probes refused symlinks at both levels without writing to either target.",
+    "scripts/mom-kim-sheet.mjs:184-251 rejects absent or invalid rows.lit data and rejects records older than either lit render; it derives missing view-keyed pairs from finite legacy crown and sole values.",
+    "tests/mom-kim-sheet.adversarial.test.ts:192-229 verifies the transparent Kim-sheet and missing rows.lit failures leave both PNGs absent.",
+    "Normal flat-render, lit-render, proportion-check, and sheet order passed; the measurement printed eleven passing rows and both palms passed.",
+    "The sheet output hash is 54e11c762a4d08f61172b57583d7dce10c4466a9438234bf4616c6670eb4ece0, unchanged from the expected value.",
+    "The Mom-only panel hash is b6cba32ac4515dc23dc3332d21cfd5f950289b01567574603076377af5d5135f, unchanged from the expected value.",
+    "Fresh image reads show the same two-row sheet, aligned figures, readable caption, and Mom-only judge panel.",
+    "Both sheet test files pass: 2 files and 13 tests.",
+    "The project suite exits 0 with 239 passing files, 4 skipped files, 3467 passing tests, and 27 skipped tests.",
+    "Wrapped tsc exits 2 with 51 baseline diagnostics; none names scripts/mom-kim-sheet.mjs."
+  ],
+  "commands": [
+    "git -C /home/daniebo/Desktop/forge-worktrees/sprouts-redesign rev-parse HEAD (ca4e8d0c6d157f146c9cbe781b3e0a7af3e105a2)",
+    "git -C /home/daniebo/Desktop/forge-worktrees/sprouts-redesign diff --stat 75bb2b4231a5b4733d4340efa9284b7ebc214f68..ca4e8d0c6d157f146c9cbe781b3e0a7af3e105a2 (5 paths; 684 insertions, 6 deletions)",
+    "git -C /home/daniebo/Desktop/forge-worktrees/sprouts-redesign diff e4df76e1..HEAD -- tests/ (empty)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './forge render sprout-mom-kim --fast --views front-level,side-level --ortho --flat --bg none --size 1024' (exit 0)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './forge render sprout-mom-kim --fast --views front-level,side-level --ortho --bg none --size 1024' (exit 0)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './node_modules/.bin/tsx scripts/proportion-check.mjs --asset sprout-mom-kim' (exit 0; eleven rows and both palms pass)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/mom-kim-sheet.mjs' (exit 0; Kim rows 100..1196, lit rows 46..977)",
+    "sha256sum /home/daniebo/Desktop/forge-worktrees/sprouts-redesign/out/chibi-sprouts/redesign/mom-kim-review.png /home/daniebo/Desktop/forge-worktrees/sprouts-redesign/out/chibi-sprouts/redesign/mom-panel.png (expected hashes match)",
+    "node -e temporary fixture probe for symlinks at out/chibi-sprouts and out/chibi-sprouts/redesign (both refused before target writes)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/mom-kim-sheet.test.ts tests/mom-kim-sheet.adversarial.test.ts' (exit 0; 2 files, 13 tests passed)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts' (exit 0; 239 files passed, 4 skipped; 3467 tests passed, 27 skipped)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/typescript/bin/tsc --noEmit --pretty false' (exit 2; 51 baseline diagnostics, none in the new script)"
+  ],
+  "changed_files": [
+    "scripts/mom-kim-sheet.mjs",
+    "tests/mom-kim-sheet.adversarial.test.ts",
+    "measure/tracks/chibi_sprouts_redesign_20261123/plan.md",
+    "measure/generated/status.md"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "openai/gpt-6-luna#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "scripts/mom-kim-sheet.mjs:152-251 enforces the link, row-validity, and freshness checks before writing."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "The wrapped two-file command passes 13 tests; manual probes cover both linked output levels and normal timestamp order."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The remediation changes the assigned sheet script and plan evidence, adds its adversarial tests, and changes no other production file."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "The full suite, focused tests, tsc, normal render-measure-sheet flow, hashes, and symlink probes were run on the verified HEAD."
+    }
+  ]
+}

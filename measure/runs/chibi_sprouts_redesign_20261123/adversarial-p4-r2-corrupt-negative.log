@@ -1,0 +1,11 @@
+corrupt-test negative-control launcher PID=3643653
+
+ RUN  v5.1.1 /tmp/adv-p4-corrupt-negative
+
+
+ Test Files  1 passed (1)
+      Tests  1 passed | 18 skipped (19)
+   Start at  23:02:45
+   Duration  314ms (tests 74%, import 15%, transform 10%, worker 1%)
+
+NEGATIVE_CONTROL_EXIT=0

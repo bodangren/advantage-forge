@@ -1,0 +1,95 @@
+MEASURE_AGENT_RESULT
+phase: Phase 4 Green
+track: chibi_sprouts_redesign_20261123
+role: Measure Jr Green subagent
+green_model: opencode-go/hy4-flash-free (family hy4)
+red_model: opencode-go/muse-spark-1.3-contributor (family muse)
+worktree: /home/daniebo/Desktop/forge-worktrees/sprouts-redesign
+branch: chibi-sprouts-redesign
+phase_base_sha: 28ff79903552f5d8c2a8bf118775ee1dab7eb514
+role_base_sha: 0540e6ce7e04216e375f0e2b1db129fbad2e8fbc
+committed_red_change_inside_phase_base: YES (ba884846, ef49fb70, 0540e6ce)
+tasks_flipped_to_x: T6, T7
+tasks_flipped_to_b: none
+dispositions: none
+implementation_sha_T6: 1f61d0f24cbdf5a9dd182a8620a8c419d099a993
+plan_evidence_sha_T6: 10a091fc2849d4831f1c9c43a17e426c69215a68
+implementation_sha_T7: aa9c9b74fce1438d60475c947b799dd5da263742
+plan_evidence_sha_T7: c2d3a1d8751f1ec64700033fd18c6569ebfbb57a
+generated_facts_sha: c2f8736e0756b91790f3fe98251851b199ec3499
+final_green_head: c2f8736e0756b91790f3fe98251851b199ec3499
+
+STARTUP
+- git status --short inspected before editing. Untracked artifacts already present: assets/wizard-argon-trial.ts and many measure/runs/chibi_sprouts_redesign_20261123/* files. None touched.
+- phase_base_sha verified as a commit and the three Phase 3 Red commits confirmed inside phase_base_sha..HEAD. role_base_sha equals HEAD at start.
+- Immutable Red tests left untouched: tests/sprout-mom-kim.test.ts, tests/mom-kim-sheet.test.ts, tests/preset-colour.test.ts.
+- No openchamber_image call, no paid call, no push, no test file edited, no scrapped source edited.
+- Every vitest, tsc, render and forge check ran through HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '<cmd>'. Nothing left running. No write through an out/ symlink.
+
+TARGETED RED BASELINE (before any Green code)
+- command: node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-mom-kim.test.ts
+- result: exit 1, Test Files 1 failed (1), Tests 28 failed | 1 passed (29). Only the AC1 skip guard passed. Matches the Phase 3 Red evidence.
+
+T6 MISSING-ASSET PROOF
+- command: ./node_modules/.bin/tsx scripts/proportion-check.mjs --asset sprout-mom-kim
+- output: "asset sprout-mom-kim: not built" then "missing: assets/sprout-mom-kim.ts"
+- exit: 1; no module-resolution error, no static import before the check.
+- T6 gate command: node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-mom-kim.test.ts
+- result: exit 1, Test Files 1 failed (1), Tests 2 failed | 27 passed (29). The only failures were
+  "end to end: the script passes sprout-mom-kim and writes measure.json" and
+  "real hand: both hands pass all seven checks", each on the absent-asset exit 1.
+- T6 prettier: node_modules/.bin/prettier --check scripts/proportion-check.mjs -> exit 0.
+- Synthetic palm mutation names at T6: check 4 "palm surface faces away from the declared normal",
+  check 7 "palm faces away from the body", check 6 "thumb not on the radial front edge".
+
+T7 SHAPE LOOK ROUNDS (read tool on the lit views; this route can see images)
+- Round 1: (1) eyes white (final repaint over the iris); (2) torso and sweater ended at hip height;
+  (3) hair mass oversized. Fixed (1) and (2).
+- Round 2: (1) head width 0.426 m, headToShoulders 1.489; (2) face width 0.241 m and eye width
+  0.050 m too small; (3) shoulder joint off the mask. Fixed all three.
+- Round 3: (1) hair reads as a helmet with a flat part and short waves; (2) eyes are large dark discs;
+  (3) hands are thin banded slabs. All eleven rows pass, so the loop stopped per the done-when.
+
+T7 MEASUREMENT ROWS (scripts/proportion-check.mjs --asset sprout-mom-kim, exit 0)
+heightInHeads 3.595144 3.54..3.74 pass
+armToTorso 1.328305 1.25..1.41 pass
+legShare 0.389427 0.36..0.42 pass
+headToShoulders 1.170666 1.11..1.27 pass
+wrist -0.061303 -0.16..0.04 pass
+fingertips 0.509578 0.41..0.61 pass
+eyeLine 0.62944 0.59..0.65 pass
+eyeHeight 0.104263 0.09..0.13 pass
+spacingHead 0.383495 0.35..0.41 pass
+eyeWidthFace 0.226744 0.22..0.24 pass
+spacingFace 0.459302 0.44..0.5 pass
+palm L: ok
+palm R: ok
+
+T7 GATES
+- vitest on tests/sprout-mom-kim.test.ts tests/preset-colour.test.ts tests/render-options.test.ts:
+  exit 0, Test Files 3 passed (3), Tests 42 passed (42), real-hand case green on both hands.
+- ./forge check sprout-mom-kim: exit 0, ends "result ok: no held item passes through the head",
+  rest and idle ok, ground ok.
+- tsc --noEmit: exit 2, 51 errors (baseline 51, TD-35 to TD-39), no error in a changed file.
+- prettier --check on the script, both new assets and the pin: exit 0.
+- pin key check: baseline 0540e6ce has 393 assets / 908 presets / 3190 slots; regenerated pin has
+  394 / 909 / 3194; added [sprout-mom-kim] alone, removed [], changed [] as parsed JSON.
+- node measure/tools/generate.mjs --check: exit 0, "Measure facts are current (4 files)."
+- ./measure/doctor.sh --structural-only: exit 0, "Measure doctor found no structural errors."
+
+NEW FILES ADDED (for reviewer scope)
+- scripts/proportion-check.mjs (T6; small T7 correction to palm sideDot and the landmark guard)
+- assets/parts/humanoid-kim.ts
+- assets/sprout-mom-kim.ts
+- measure/runs/chibi_sprouts_redesign_20261123/green-p4.log (this file, not committed)
+- outputs not in git: out/sprout-mom-kim/{flat,views}/*.png, out/chibi-sprouts/redesign/measure.json
+
+NOTES FOR NEXT ROLE
+- No cut-out and no sprite exist for the new base (AC6). T5 sheet test still fails until T8.
+- The spec derived-target wrist value 0.569 m disagrees with its pass table and the design page;
+  the base uses a hand.L joint at 0.601 m so the image-row wrist row is -0.06. Documented in plan.md.
+- The landmark-on-mask guard accepts one antialiased neighbour pixel because the fingertip vertex
+  rounds to a half-covered edge pixel. Documented in plan.md.
+- Phase 5 (T8) owns the sheet script and the first full-suite gate. The look judge (T10) must be on
+  a family other than hy4 and muse, and must see no Kim art.
+END_MEASURE_AGENT_RESULT

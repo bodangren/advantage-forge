@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: phase-acceptance
+status: complete
+track: chibi_sprouts_redesign_20261123
+phase: Phase 2: Green
+commits: none
+tests_run: phase test PASS 9; project gate PASS 3406 with 27 skipped; tsc PASS at 51 baseline diagnostics with none in changed files; Prettier PASS; generate PASS; doctor PASS; sprout-pip byte parity PASS
+files_changed: measure/runs/chibi_sprouts_redesign_20261123/phase-acceptance-p2-28ff799.json and .log
+plan_updates: none
+known_failures: none in the phase; /tmp/chibi-p2-accept-28ff799-opencode remains after a denied cleanup command
+handoff: Phase 2 accepted on 28ff79903552f5d8c2a8bf118775ee1dab7eb514. F1 and F2 withdrawn. Red family muse; Green family MiniMax; acceptance family Kimi. Owner cleanup: rm -r -- /tmp/chibi-p2-accept-28ff799-opencode.
+END_MEASURE_AGENT_RESULT

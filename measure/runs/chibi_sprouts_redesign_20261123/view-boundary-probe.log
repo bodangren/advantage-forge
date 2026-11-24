@@ -1,0 +1,7 @@
+unknown-among-valid-render: pid=3524146 exit=1 expected=preflight-failure result=PASS
+empty-render-list: pid=3524406 exit=1 expected=preflight-failure result=PASS
+duplicate-render-views: pid=3525448 exit=0 expected=success result=PASS
+valid-named-view-animate: pid=3526088 exit=0 expected=success result=PASS
+unknown-animate-view: pid=3526562 exit=1 expected=preflight-failure result=PASS
+irrelevant-view-list-sprites: pid=3526945 exit=0 expected=success result=PASS
+TOTAL=6 FAILED=0

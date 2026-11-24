@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "role": "measure-review-c-ux-api",
+  "track": "chibi_sprouts_redesign_20261123",
+  "phase": "Phase 2: Green",
+  "baseline_sha": "23e551df54b7996776a4bcb9e8ccfdb9f35a6083",
+  "phase_base_sha": "23e551df54b7996776a4bcb9e8ccfdb9f35a6083",
+  "role_base_sha": "9a2656ba8784a74e9011975e54fd9ee4867841a3",
+  "audited_head_sha": "9a2656ba8784a74e9011975e54fd9ee4867841a3",
+  "contract_applicability": "applicable",
+  "status": "pass",
+  "summary": "The CLI rejects inherited view names and linked output folders before the build. All three cutout lists produce byte-identical PNGs at the base and audited HEAD.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "C-P2-11 [Nit] review-c: src/cli/forge.ts:753–755 says every command reads its list from one source. Lines 464–466, 640, and 659 still repeat defaults. The current defaults match. Clarify the comment or use one source for the defaults.",
+    "C-P2-12 [Nit] review-c: plan.md:281–287 still lists the adversarial linked-output expectation as open. Commit 9a2656ba updates that test to expect refusal. Mark the note as historical or link the test fix."
+  ],
+  "evidence": [
+    "Git confirmed the supplied SHA as the current HEAD before and after the review. No tracked file changed.",
+    "test-strategy.md:57 marks Phase 2 applicable. The exact phase diff changes src/cli/forge.ts and src/render/page.ts.",
+    "C-P2-1 withdrawn: Wrapped render and cutout each rejected constructor, toString, __proto__, and hasOwnProperty with exit 1 and the full known-view list. Each emitted one stderr line, no stdout, and no build output.",
+    "C-P2-7 withdrawn: Wrapped cutout runs on 2a33c7c1 and 9a2656ba produced byte-identical PNGs for `front,`, `,front`, and `front,,side`. Wrapped render on the audited HEAD also emitted only the named PNGs.",
+    "C-P2-8 withdrawn: Wrapped flat renders refused linked out/ball and out/ball/flat before writing ball.glb. Each emitted exactly one output folder is a link line. Both links and target markers stayed unchanged until audit cleanup.",
+    "Wrapped help listed front-level, side-level, --ortho, and --flat with its required flags. The bad-name command returned exit 1 and one line with no stack. The diagnostic names the path separator, so the user can supply a bare asset name.",
+    "src/cli/forge.ts:773 uses own-property membership for a known view. The shared parser drops empty members. The output diagnostic identifies the path where an ordinary folder is required.",
+    "Late finding C-P2-11: tech-debt (duplicated defaults and an inaccurate comment do not change current behavior).",
+    "Late finding C-P2-12: tech-debt (a stale plan note does not change a delivered result).",
+    "The isolated base and HEAD copies and temporary links were removed. The process scan found no matching live processes."
+  ],
+  "commands": [
+    "git -C /home/daniebo/Desktop/forge-worktrees/sprouts-redesign rev-parse HEAD",
+    "git -C /home/daniebo/Desktop/forge-worktrees/sprouts-redesign diff --name-status 23e551df54b7996776a4bcb9e8ccfdb9f35a6083 9a2656ba8784a74e9011975e54fd9ee4867841a3 -- src/cli/forge.ts src/render/page.ts",
+    "git -C /home/daniebo/Desktop/forge-worktrees/sprouts-redesign diff --check fc823ed14104a6b81e942f6a9a5e8b507aab949f..9a2656ba8784a74e9011975e54fd9ee4867841a3",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '<Node probe: git archive the exact base and HEAD into this track runs folder; run forge --help, render and cutout with the inherited view names and comma lists, render with both linked folder locations, and render ../x; compare cutout PNG SHA-256 sums and remove scratch>'"
+  ],
+  "changed_files": [
+    "measure/generated/status.md",
+    "measure/tracks/chibi_sprouts_redesign_20261123/plan.md",
+    "src/cli/forge.ts",
+    "tests/render-options.adversarial-r2.test.ts",
+    "tests/render-options.validation-r2.test.ts"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "unknown",
+  "ratings": [
+    {"axis": "correctness", "score": 5, "evidence": "The wrapped CLI matrix proved both link checks, all eight inherited-view refusals, and byte parity for all three cutout lists."},
+    {"axis": "test_meaning", "score": 4, "evidence": "tests/render-options.validation-r2.test.ts:142–241 checks early rejection and verifies PNG output for each comma-list case."},
+    {"axis": "scope_discipline", "score": 4, "evidence": "The Green diff 0fbd781b changes only src/cli/forge.ts and applies the same comma normalization to all view commands."},
+    {"axis": "evidence_quality", "score": 5, "evidence": "The wrapped CLI probe recorded exit codes, exact diagnostics, file names, PNG hashes, and cleanup."}
+  ]
+}

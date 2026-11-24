@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "role": "measure-review-c-ux-api",
+  "track": "chibi_sprouts_redesign_20261123",
+  "phase": "Phase 4: Green",
+  "baseline_sha": "28ff79903552f5d8c2a8bf118775ee1dab7eb514",
+  "phase_base_sha": "28ff79903552f5d8c2a8bf118775ee1dab7eb514",
+  "role_base_sha": "c2f8736e0756b91790f3fe98251851b199ec3499",
+  "audited_head_sha": "c2f8736e0756b91790f3fe98251851b199ec3499",
+  "contract_applicability": "not_applicable",
+  "status": "pass",
+  "summary": "Not applicable: test-strategy.md:57: UX/API review applies to Phase 2 and Phase 9 only. The assigned Phase 4 HEAD is provenance-bound; later HEAD changes touched only plan and design records.",
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "evidence": [
+    "In the assigned worktree, git cat-file -t 28ff79903552f5d8c2a8bf118775ee1dab7eb514 returned commit.",
+    "The assigned audited HEAD c2f8736e0756b91790f3fe98251851b199ec3499 was current at review start. The later HEAD 0d4ff3364f6dcd0a924151599e34fb8d0114197a changes only docs/chibi-sprouts/redesign-2026-11-23.md and measure/tracks/chibi_sprouts_redesign_20261123/plan.md.",
+    "Applicability reason: test-strategy.md:57: UX/API review applies to Phase 2 and Phase 9 only.",
+    "The exact phase diff from 28ff79903552f5d8c2a8bf118775ee1dab7eb514 to c2f8736e0756b91790f3fe98251851b199ec3499 lists assets/parts/humanoid-kim.ts, assets/sprout-mom-kim.ts, measure/generated/asset-inventory.json, measure/generated/status.md, measure/tracks/chibi_sprouts_redesign_20261123/plan.md, scripts/proportion-check.mjs, tests/fixtures/preset-pin.json, tests/mom-kim-sheet.test.ts, and tests/sprout-mom-kim.test.ts. This phase does not meet the strategy's UX/API applicability rule.",
+    "Informational only: the wrapped three-file Vitest run passed 42 tests.",
+    "Informational only: both wrapped flat and lit render commands passed.",
+    "Informational only: proportion-check printed eleven passing rows and palm L/R ok; forge check ended with result ok.",
+    "Informational only: the wrapped missing-asset probe returned exit 1 with 'asset audit-nonexistent-asset: not built' and named the missing path.",
+    "Informational look observation, not a score or finding: the figure reads as an adult woman on compact chibi proportions. The hands hang beside the legs, but look like narrow, visibly banded slabs rather than clearly open hands; the side view does not make palm orientation visually clear."
+  ],
+  "commands": [
+    "git -C /home/daniebo/Desktop/forge-worktrees/sprouts-redesign cat-file -t 28ff79903552f5d8c2a8bf118775ee1dab7eb514 — commit",
+    "git -C /home/daniebo/Desktop/forge-worktrees/sprouts-redesign diff --name-status 28ff79903552f5d8c2a8bf118775ee1dab7eb514 c2f8736e0756b91790f3fe98251851b199ec3499",
+    "git -C /home/daniebo/Desktop/forge-worktrees/sprouts-redesign diff --stat c2f8736e0756b91790f3fe98251851b199ec3499 0d4ff3364f6dcd0a924151599e34fb8d0114197a",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'cd /home/daniebo/Desktop/forge-worktrees/sprouts-redesign && node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-mom-kim.test.ts tests/preset-colour.test.ts tests/render-options.test.ts' — exit 0, 42 tests passed",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'cd /home/daniebo/Desktop/forge-worktrees/sprouts-redesign && ./forge render sprout-mom-kim --fast --views front-level,side-level --ortho --flat --bg none --size 1024 && ./forge render sprout-mom-kim --fast --views front-level,side-level --ortho --bg none --size 1024' — exit 0",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'cd /home/daniebo/Desktop/forge-worktrees/sprouts-redesign && ./node_modules/.bin/tsx scripts/proportion-check.mjs --asset sprout-mom-kim && ./forge check sprout-mom-kim' — exit 0",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'cd /home/daniebo/Desktop/forge-worktrees/sprouts-redesign && ./node_modules/.bin/tsx scripts/proportion-check.mjs --asset audit-nonexistent-asset' — exit 1, named missing-asset output"
+  ],
+  "changed_files": [
+    "assets/parts/humanoid-kim.ts",
+    "assets/sprout-mom-kim.ts",
+    "measure/generated/asset-inventory.json",
+    "measure/generated/status.md",
+    "measure/tracks/chibi_sprouts_redesign_20261123/plan.md",
+    "scripts/proportion-check.mjs",
+    "tests/fixtures/preset-pin.json",
+    "tests/mom-kim-sheet.test.ts",
+    "tests/sprout-mom-kim.test.ts"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "openai/gpt-6-luna#high"
+}

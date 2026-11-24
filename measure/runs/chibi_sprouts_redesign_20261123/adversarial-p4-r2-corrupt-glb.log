@@ -1,0 +1,11 @@
+corrupt GLB launcher PID=3553750
+CASE=empty
+Invalid GLB: out/sprout-mom-kim/sprout-mom-kim.glb
+EXIT=1
+CASE=huge-length
+Invalid GLB: out/sprout-mom-kim/sprout-mom-kim.glb
+EXIT=1
+CASE=directory
+Invalid GLB: out/sprout-mom-kim/sprout-mom-kim.glb
+EXIT=1
+CORRUPT_GLB_EXIT=0

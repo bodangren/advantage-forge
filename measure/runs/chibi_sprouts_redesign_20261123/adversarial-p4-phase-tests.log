@@ -1,0 +1,11 @@
+phase command launcher PID=1397630
+
+ RUN  v5.1.1 /home/daniebo/Desktop/forge-worktrees/sprouts-redesign
+
+
+ Test Files  3 passed (3)
+      Tests  42 passed (42)
+   Start at  20:30:31
+   Duration  10.47s (tests 99%, import 1%)
+
+PHASE_EXIT=0

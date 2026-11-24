@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: adversarial-testing
+status: complete
+track: chibi_sprouts_redesign_20261123
+phase: Phase 4: Green
+commits: none
+tests_run: phase tests passed 4 files and 61 tests; project gate exited 1 only on expected T5 sheet cases (8 failed, 3454 passed, 27 skipped); four required script mutants were killed; four real-asset mutants and three corrupt-GLB forms were rejected
+files_changed: adversarial-p4-366deff.json, .log, .diff, and adversarial-p4-r2 evidence logs plus graph database under measure/runs/chibi_sprouts_redesign_20261123/
+plan_updates: none
+known_failures: ADV-R2-1 is a late test-only false positive routed to tech debt; the project gate retains only the expected 8 T5 sheet failures because scripts/mom-kim-sheet.mjs is not implemented yet
+handoff: F2 withdrawn: scripts/proportion-check.mjs now rejects the required malformed row tables, and the specified row boundaries pass. All four required mutants failed Red tests. Route ADV-R2-1 to tech debt, not Green: the corrupt-GLB Red test accepts a wrong one-line asset-name error because the fixture name contains p4glb; the current implementation still rejects empty, oversized-length, and directory GLBs with a named one-line error. This late finding does not meet the wrong-result exception because no user reaches a wrong measurement. Audited HEAD is 366deffb77b83c16a66a2c372b555aded82f87e4. HEAD later advanced to 75bb2b4231a5b4733d4340efa9284b7ebc214f68; only plan.md changed. No code or test files changed. No role processes remain.
+END_MEASURE_AGENT_RESULT

@@ -1,0 +1,11 @@
+phase validation launcher PID=3359634
+
+ RUN  v5.1.1 /home/daniebo/Desktop/forge-worktrees/sprouts-redesign
+
+
+ Test Files  4 passed (4)
+      Tests  61 passed (61)
+   Start at  22:44:23
+   Duration  11.58s (tests 99%, import 1%)
+
+PHASE_VALIDATION_EXIT=0

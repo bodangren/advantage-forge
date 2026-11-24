@@ -1,0 +1,17 @@
+MEASURE_AGENT_RESULT
+track: chibi_sprouts_redesign_20261123
+phase: Phase 5: Green (T8 remediation round 1, Red test side)
+role: measure-mid-red
+phase_base_sha: 75bb2b4231a5b4733d4340efa9284b7eb214f68
+role_base_sha: 75bb2b4231a5b4733d4340efa9284b7eb214f68
+resulting_head_sha: b8a4f1b216ec2e06c55c07a28f83c9fe18454683
+commits:
+- e10890f97a1d18d671da06aaa8b85c4bdaf3fdfa measure(chibi_sprouts_redesign): T5r Red fixes the right-cell index and re-checks every cell index (tests only: mom-kim-sheet.test.ts)
+- f27c00936b4e4fe0a41a4d523f070fc3fbcdab68 measure(chibi_sprouts_redesign): Phase 5 records T5r Red e10890f9 and T8 retry (plan only)
+- b8a4f1b216ec2e06c55c07a28f83c9fe18454683 measure(chibi_sprouts_redesign): refresh generated facts for T5r Red (measure bookkeeping only; run files not committed)
+fixed lines: tests/mom-kim-sheet.test.ts 'one baseline and the 700 px body scale' case — the right-cell span changed from the second separator band [c3, c4] to [c4, r.width] (end of the second separator band to the row right edge, per the brief); the 700 px figure assertion on the right cell now applies to row one only, because row two's right cell holds the `no side drawing` text (spec AC5 rule 2), whose text shape stays pinned by the `no side drawing` case; bounds unchanged ([698,700], sole within 2 px). Re-checked every other cell/band index against spec AC5: left cell [c0, c1], middle render cell [c2, c3], row-two render cell, row-two separators, mom-panel two cells — all correct as written, no other change.
+synthetic proof (/tmp/sheet-proof.mjs, uncommitted; no new test case added since the T5 count is fixed at 8): old logic rejects a correct spec-layout sheet (right height -699 on the all-white band); corrected logic accepts it and rejects a separator-bleed layout and a two-cell layout. PROOF OK.
+red run: node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/mom-kim-sheet.test.ts exits 0 with 8 passed of 8. The uncommitted draft script already emits the spec layout (two 700 px rows, three segments per row, text cell, caption strip, two-cell judge panel; verified by reading both output PNGs), and the old code could never pass for any layout, so the passing run validates the fix rather than vacating it. No case was weakened: every bound is unchanged.
+gates: prettier --check exits 0 on the test file and plan.md; tsc --noEmit names no new file (51 pre-existing errors stay); Green's scripts/mom-kim-sheet.mjs draft left untouched and unstaged; nothing of mine left running
+status: blocked_reason=none; T5r Red test fix done, T8 Green retry owns the script
+END_MEASURE_AGENT_RESULT

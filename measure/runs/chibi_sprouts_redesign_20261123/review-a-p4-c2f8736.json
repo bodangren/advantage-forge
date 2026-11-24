@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "role": "review-a",
+  "track": "chibi_sprouts_redesign_20261123",
+  "phase": "Phase 4: Green",
+  "phase_base_sha": "28ff79903552f5d8c2a8bf118775ee1dab7eb514",
+  "role_base_sha": "c2f8736e0756b91790f3fe98251851b199ec3499",
+  "baseline_sha": "28ff79903552f5d8c2a8bf118775ee1dab7eb514",
+  "audited_head_sha": "c2f8736e0756b91790f3fe98251851b199ec3499",
+  "status": "fail",
+  "summary": "The eleven measured values reproduce, but the script checks render files before importing the asset and base, against the required loading order.",
+  "blocking_findings": [
+    "F1 [Blocker] review-a: scripts/proportion-check.mjs:891-916 checks the flat and lit render paths before importing the asset and the base. The spec requires asset import, base existence check and import, then render reads. A missing render therefore exits before the required imports; move the render checks after the base import and cover this order with a test. Rationale: the measurement script violates the explicit AC2 input-loading contract."
+  ],
+  "nonblocking_findings": [],
+  "evidence": [
+    "HEAD verified as c2f8736e0756b91790f3fe98251851b199ec3499; audited diff was exactly 28ff79903552f5d8c2a8bf118775ee1dab7eb514..c2f8736e0756b91790f3fe98251851b199ec3499.",
+    "scripts/proportion-check.mjs:878-901 checks asset, GLB, and all four render files; imports occur at lines 904 and 916.",
+    "Measured run reproduced all eleven passing values: 3.595144, 1.328305, 0.389427, 1.170666, -0.061303, 0.509578, 0.62944, 0.104263, 0.383495, 0.226744, 0.459302; both palms reported ok.",
+    "Doctored-input probe in /tmp replaced the copied flat front render with a transparent image; the script then failed with eye components: found 0, expected 2 and silhouette guards. This confirms the measured result depends on image pixels.",
+    "The preset pin comparison against git show 28ff7990 found only the added nested asset key sprout-mom-kim; no baseline values changed.",
+    "No test source changed between Red base 0540e6ce and HEAD; the only path under tests/ is the planned preset-pin fixture.",
+    "No cut-out or sprites directory exists under out/sprout-mom-kim.",
+    "The targeted test command passed: 3 files and 42 tests.",
+    "The full project gate had only tests/mom-kim-sheet.test.ts fail: all eight cases report ERR_MODULE_NOT_FOUND for the absent scripts/mom-kim-sheet.mjs, as expected until T8.",
+    "tsc --noEmit exited 2 with 51 baseline errors and no error in the changed files.",
+    "build-graph scanned 22474 nodes and 25301 edges; it found buildKim, but no symbols for the .mjs measurement exports."
+  ],
+  "commands": [
+    "git -C /home/daniebo/Desktop/forge-worktrees/sprouts-redesign rev-parse HEAD — c2f8736e0756b91790f3fe98251851b199ec3499.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'cd /home/daniebo/Desktop/forge-worktrees/sprouts-redesign && node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-mom-kim.test.ts tests/preset-colour.test.ts tests/render-options.test.ts' — exit 0; 3 files, 42 tests passed.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'cd /home/daniebo/Desktop/forge-worktrees/sprouts-redesign && node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts' — exit 1; eight failures only in the absent sheet-script test.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'cd /home/daniebo/Desktop/forge-worktrees/sprouts-redesign && node node_modules/typescript/bin/tsc --noEmit' — exit 2; 51 pre-existing errors.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'cd /home/daniebo/Desktop/forge-worktrees/sprouts-redesign && ./node_modules/.bin/tsx scripts/proportion-check.mjs --asset sprout-mom-kim' — exit 0; all eleven rows and both palms pass.",
+    "Preset fixture parsed comparison against 28ff7990 — added sprout-mom-kim only; no removed or changed baseline keys.",
+    "build-graph scan /home/daniebo/Desktop/forge-worktrees/sprouts-redesign /tmp/sprout-redesign-graph.db — scanned 22474 nodes and 25301 edges."
+  ],
+  "changed_files": [
+    "scripts/proportion-check.mjs",
+    "assets/parts/humanoid-kim.ts",
+    "assets/sprout-mom-kim.ts",
+    "tests/fixtures/preset-pin.json",
+    "measure/tracks/chibi_sprouts_redesign_20261123/plan.md",
+    "measure/generated/asset-inventory.json",
+    "measure/generated/status.md",
+    "tests/sprout-mom-kim.test.ts",
+    "tests/mom-kim-sheet.test.ts"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "retry_implementation",
+  "confidence": "high",
+  "route": "openai/gpt-6-luna#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 3,
+      "evidence": "scripts/proportion-check.mjs:891-916 checks render paths before imports required at lines 904 and 916."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "tests/sprout-mom-kim.test.ts passes 29 cases; the doctored transparent render fails image-derived guards."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The committed diff contains the planned measurement script, base, Mom asset, pin, plan, generated facts, and Red test files."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "The heavy-run measurement command reproduced all eleven values and both palm results."
+    }
+  ]
+}

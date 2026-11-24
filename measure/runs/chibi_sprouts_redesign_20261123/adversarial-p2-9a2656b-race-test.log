@@ -1,0 +1,63 @@
+
+ RUN  v5.1.1 /home/daniebo/Desktop/forge-worktrees/sprouts-redesign
+
+ ❯ tests/render-options.adversarial-r3.test.ts (2 tests | 2 failed) 3632ms
+   ❯ flat output link race (2)
+     × rejects an explicit empty list for animate and inspect before the build 3629ms
+     × refuses a linked output swapped in after the preflight check 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/render-options.adversarial-r3.test.ts > flat output link race > rejects an explicit empty list for animate and inspect before the build
+AssertionError: expected [ …(7) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "animate: expected one empty-view error line, got mesh phases: band 19 nets 26 snap+color 12 seams 17 reduce 43 ms | _flat-symlink-race-156728: 32 triangles, 0.4 x 1 x 0.2 m, built in 303 ms | body                        32 tris  (118 ms) | texture  none (vertex colors) | glb      out/_flat-symlink-race-156728/_flat-symlink-race-156728.glb  (2 KB) | BUILD FAILED: '_flat-symlink-race-156728' has no animations. Add k.skeleton() and k.animation(). | at run (/home/daniebo/Desktop/forge-worktrees/sprouts-redesign/src/cli/forge.ts:677:17) | at async runSafely (/home/daniebo/Desktop/forge-worktrees/sprouts-redesign/src/cli/forge.ts:725:5) | at async main (/home/daniebo/Desktop/forge-worktrees/sprouts-redesign/src/cli/forge.ts:694:5)",
++   "animate: Vite started before refusal",
++   "animate: output folder appeared",
++   "inspect: accepted empty list with exit 0",
++   "inspect: expected one empty-view error line, got mesh phases: band 20 nets 27 snap+color 13 seams 15 reduce 43 ms | _flat-symlink-race-156728: 32 triangles, 0.4 x 1 x 0.2 m, built in 230 ms | body                        32 tris  (118 ms) | texture  none (vertex colors) | glb      out/_flat-symlink-race-156728/_flat-symlink-race-156728.glb  (2 KB) | # Inspection: _flat-symlink-race-156728 | Size 0.4 x 1 x 0.2 m (x y z); 32 triangles; lowest point y = 0 m. | ## Silhouette per view (fractions of the frame) | | view | width | height | coverage | | |---|---|---|---| | | front | 0.359 | 0.875 | 0.307 | | | three-quarter | 0.387 | 0.902 | 0.318 | | | side | 0.188 | 0.922 | 0.168 | | | back | 0.359 | 0.875 | 0.308 | | | top | 0.461 | 0.734 | 0.24 | | ## Visible share of the silhouette per part | | part | front | three-quarter | side | back | top | | |---|---|---|---|---|---| | | body | 100% | 100% | 100% | 100% | 100% | | ## Values and colors (shaded render) | Values: dark 0%, mid 100%, light 0%. | Dominant colors: #63aef4 43%, #5cabf2 22%, #55a7f0 11%, #46a0eb 11%, #3897e1 8%, #2e8bd1 6%. | ## Warnings | - Almost everything is mid-value: the asset will look flat. Add darker and lighter areas.",
++   "inspect: Vite started before refusal",
++   "inspect: output folder appeared",
++ ]
+
+ ❯ tests/render-options.adversarial-r3.test.ts:152:22
+    150|       removeOutputSafely(OUT_ASSET);
+    151|     }
+    152|     expect(problems).toEqual([]);
+       |                      ^
+    153|   });
+    154|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/render-options.adversarial-r3.test.ts > flat output link race > refuses a linked output swapped in after the preflight check
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ tests/render-options.adversarial-r3.test.ts:156:33
+    154|
+    155|   it('refuses a linked output swapped in after the preflight check', {…
+    156|     expect(existsSync(FIXTURE)).toBe(false);
+       |                                 ^
+    157|     expect(existsSync(OUT_ASSET)).toBe(false);
+    158|     expect(existsSync(MOVED_OUT)).toBe(false);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed (2)
+   Start at  17:39:12
+   Duration  3.76s (tests 99%, transform 1%)
+
+exit=1

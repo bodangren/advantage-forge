@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "role": "adversarial-testing",
+  "track": "chibi_sprouts_redesign_20261123",
+  "phase": "Phase 5: Green",
+  "baseline_sha": "75bb2b4231a5b4733d4340efa9284b7ebc214f68",
+  "phase_base_sha": "75bb2b4231a5b4733d4340efa9284b7ebc214f68",
+  "role_base_sha": "ca4e8d0c6d157f146c9cbe781b3e0a7af3e105a2",
+  "audited_head_sha": "ca4e8d0c6d157f146c9cbe781b3e0a7af3e105a2",
+  "status": "fail",
+  "summary": "The remediation closes F1-F3 for the tested paths. Two new late defects remain: validly shaped rows can disagree with alpha-mask rows, and output-file symlinks overwrite their targets.",
+  "blocking_findings": [
+    "F4 [Blocker] adversarial-testing: scripts/mom-kim-sheet.mjs accepts rows.lit pairs that disagree with the lit alpha masks, writes both sheets, and preserves the wrong values in measure.json. Fresh rows [0,0] and [1023,1023], plus duplicate front-level keys whose last value is [0,0], all exit 0. Rationale: measure.json is a delivered measurement record that downstream consumers can read; the wrong row values are a user-reachable wrong result. This late finding qualifies for one fix round.",
+    "F5 [Blocker] adversarial-testing: scripts/mom-kim-sheet.mjs does not reject a symlink at mom-panel.png or mom-kim-review.png. It follows each link and replaces the target contents with a PNG. Rationale: a normal script run can overwrite an unrelated user file through a pre-existing output link; this is a user-reachable wrong result. This late finding qualifies for one fix round."
+  ],
+  "nonblocking_findings": [],
+  "evidence": [
+    "Verified immutable audited HEAD ca4e8d0c6d157f146c9cbe781b3e0a7af3e105a2 and phase_base_sha 75bb2b4231a5b4733d4340efa9284b7ebc214f68. role_base_sha is ca4e8d0c6d157f146c9cbe781b3e0a7af3e105a2.",
+    "The phase-base-to-audited-head diff lists generated status, the phase plan, scripts/mom-kim-sheet.mjs, the earlier adversarial test, and the Red sheet test.",
+    "F1 withdrawn: missing rows.lit, unknown keys, object rows, and non-finite pairs now fail before sheet output; a rows.lit timestamp 1 ms older than either render also fails. New F4 records the remaining mismatch between a well-formed pair and its alpha mask.",
+    "F2 withdrawn: a fully transparent Kim sheet now exits 1 with `mom-kim-sheet: Kim sheet is transparent, not a usable reference` and writes no PNG.",
+    "F3 withdrawn: symlinks at out/chibi-sprouts, out/chibi-sprouts/redesign, and a dangling redesign-directory link exit 1 before output. New F5 covers symlinks at the two PNG file paths.",
+    "A row pair [0,0], a pair [1023,1023], and a duplicate front-level property whose last pair is [0,0] each exit 0 and remain in measure.json. The script also writes both PNGs.",
+    "The new row-mismatch test fails because the script exits 0 on a fresh [0,0] front-level pair and creates both PNGs.",
+    "A PNG symlink at mom-panel.png and another at mom-kim-review.png each exit 0. Each target's sentinel text is replaced by PNG bytes. The new symlink test fails on the panel-link case.",
+    "Parent-directory, redesign-directory, and dangling redesign-directory links each exit 1 with a named output-folder line and no panel output.",
+    "A deterministic temp-copy race inserted a delay after the directory checks, then replaced the checked output directory with a symlink. The script exited 0 and wrote measure.json and both PNGs to the new target. The Phase 2 PM decision classifies a local writer racing inside out/ as tech debt, so this is not routed as a finding.",
+    "Alpha 254, one transparent pixel, grayscale-plus-alpha, and palette PNG Kim inputs each exit 0. These inputs preserve the figure bands and do not show a wrong visual result. Fully transparent input is rejected.",
+    "Duplicate JSON keys are accepted by JSON.parse. Prototype row names __proto__ and constructor fail with named unknown-row errors. -0 is accepted as numeric zero. Object-for-array and an object-valued boxed-number representation fail with a named finite-pair error. JSON cannot encode a JavaScript Number wrapper.",
+    "A rows.lit timestamp 1 ms older than the renders fails with `mom-kim-sheet: measure.json lit rows are older than the lit renders`.",
+    "All six earlier mutants fail a test: dropped 4 px tolerance (1 test fails), baseline offset (3), 600 px scale (7), Mom side drawing (2), missing caption pass text (1), and Kim pasted into mom-panel.png (1).",
+    "The targeted sheet suites passed 13 of 13 tests before the new round-2 test file was added. The project gate passed 239 files, 3467 tests, and skipped 27 tests across 4 files.",
+    "The new round-2 adversarial test file has two tests and both fail against the audited implementation. The failures reproduce F4 and F5.",
+    "Build-graph update processed the changed TypeScript test file: 5 to 6 nodes and 6 to 7 edges. The scanner does not index the .mjs production script.",
+    "PIDs 2196252, 2279871, 2380556, 2383159, 2385249, 2386058, 2387441, 2388717, and 2390074 completed. The process check found no remaining adversarial test or temp-copy process.",
+    "Temporary fixture copies under /tmp/chibi-p5-r2-2316579 and /tmp/mom-kim-sheet.adversarial-r2.formatted.ts were removed."
+  ],
+  "commands": [
+    "git -C /home/daniebo/Desktop/forge-worktrees/sprouts-redesign rev-parse HEAD -> ca4e8d0c6d157f146c9cbe781b3e0a7af3e105a2 before audit work.",
+    "git -C /home/daniebo/Desktop/forge-worktrees/sprouts-redesign diff --name-status 75bb2b4231a5b4733d4340efa9284b7ebc214f68..ca4e8d0c6d157f146c9cbe781b3e0a7af3e105a2 -> phase paths verified.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/mom-kim-sheet.test.ts tests/mom-kim-sheet.adversarial.test.ts' -> exit 0; 2 files, 13 tests passed; PID 2196252.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts' -> exit 0; 239 files, 3467 tests passed, 27 skipped; PID 2279871.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/mom-kim-sheet.adversarial-r2.test.ts' -> exit 1; 2 tests failed, reproducing F4 and F5; PID 2380556.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/mom-kim-sheet.adversarial.test.ts' on dropped-tolerance mutant -> exit 1; shifted-row assertion failed; PID 2383159.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/mom-kim-sheet.test.ts' on baseline mutant -> exit 1; 3 failures; PID 2385249.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/mom-kim-sheet.test.ts' on 600 px mutant -> exit 1; 7 failures; PID 2386058.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/mom-kim-sheet.test.ts' on Mom-side-drawing mutant -> exit 1; 2 failures; PID 2387441.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/mom-kim-sheet.adversarial.test.ts' on caption mutant -> exit 1; caption assertion failed; PID 2388717.",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/mom-kim-sheet.adversarial.test.ts' on Kim-panel mutant -> exit 1; exact-render assertion failed; PID 2390074.",
+    "HEAVY_PRIORITY=p1 HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'build-graph update /home/daniebo/Desktop/forge-worktrees/sprouts-redesign/measure/runs/chibi_sprouts_redesign_20261123/adversarial-p5-2451d2c.db /home/daniebo/Desktop/forge-worktrees/sprouts-redesign/tests/mom-kim-sheet.adversarial.test.ts' -> updated 1 file, 5 to 6 nodes and 6 to 7 edges.",
+    "node_modules/.bin/prettier --check tests/mom-kim-sheet.adversarial-r2.test.ts -> exit 0.",
+    "git commit 56781137 added only tests/mom-kim-sheet.adversarial-r2.test.ts. The implementation audited remains at ca4e8d0c6d157f146c9cbe781b3e0a7af3e105a2."
+  ],
+  "changed_files": [
+    "tests/mom-kim-sheet.adversarial-r2.test.ts",
+    "measure/runs/chibi_sprouts_redesign_20261123/adversarial-p5-ca4e8d0.json",
+    "measure/runs/chibi_sprouts_redesign_20261123/adversarial-p5-ca4e8d0.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "retry_implementation",
+  "confidence": "high",
+  "route": "openai/gpt-6-luna#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 3,
+      "evidence": "The directory-link and malformed-shape cases are fixed, but mask-mismatched rows and file symlinks remain unsafe."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "The project gate passes, and two newly committed adversarial tests fail on reproducible wrong outputs."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The only committed source change is the new round-2 adversarial test file."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "The wrapped gates, fixture probes, symlink probes, and six mutation tests produced recorded outcomes."
+    }
+  ]
+}

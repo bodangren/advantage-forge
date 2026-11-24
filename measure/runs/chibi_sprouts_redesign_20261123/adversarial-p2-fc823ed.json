@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "role": "adversarial-testing",
+  "track": "chibi_sprouts_redesign_20261123",
+  "phase": "Phase 2: Green",
+  "baseline_sha": "23e551df54b7996776a4bcb9e8ccfdb9f35a6083",
+  "phase_base_sha": "23e551df54b7996776a4bcb9e8ccfdb9f35a6083",
+  "role_base_sha": "fc823ed14104a6b81e942f6a9a5e8b507aab949f",
+  "audited_head_sha": "fc823ed14104a6b81e942f6a9a5e8b507aab949f",
+  "status": "pass",
+  "summary": "The remediation passed adversarial checks and the required project gate. All three source mutations failed their Red tests, and visual outputs for avatar-base and barrel matched the phase base.",
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "evidence": [
+    "The requested audited HEAD was fc823ed14104a6b81e942f6a9a5e8b507aab949f, and phase_base_sha 23e551df54b7996776a4bcb9e8ccfdb9f35a6083 is its ancestor.",
+    "F1 withdrawn: tests/render-options.test.ts:127-144 now plants a collision at the actual PID fixture path, requires the named collision error, verifies the fixture remains unchanged, and confirms no render starts.",
+    "F2 withdrawn: adversarial-p2-fc823ed-project.log records the full project gate passing with 233 files passed, 4 skipped, 3399 tests passed, and 26 skipped.",
+    "The two existing renderer test files passed 11/11 cases through heavy-run; see adversarial-p2-fc823ed-targeted.log.",
+    "The new symlink and read-only-parent tests passed 2/2 cases; marker files remained unchanged. The test file is tests/render-options.adversarial-r2.test.ts.",
+    "The view probe passed 6/6 cases: unknown among valid names, empty views, duplicates, animate named views, unknown animate views, and irrelevant sprites views; see view-boundary-probe.log.",
+    "The asset probe passed 64/64 command/name combinations across render, build, sprites, animate, all, inspect, check, and cutout. Every invalid name exited before Vite started; see asset-boundary-probe.log.",
+    "A NUL byte cannot be passed in a POSIX process argument. Direct checkAssetName accepted it, but assetPath rejected it as a missing asset; see asset-name-function-probe.log.",
+    "Three source mutations failed the intended tests: moving view validation after build, dropping the path-separator check, and dropping the symlink refusal; see mutation-view-order.log, mutation-separator.log, and mutation-symlink-refusal.log.",
+    "All 32 render, view, and sprite image paths for avatar-base and barrel matched byte-for-byte between phase base and audited HEAD; see render-images-diff-r2.txt. The only differences in the 36-file output manifests were timing fields in stats.json.",
+    "build-graph updated src/cli/forge.ts and src/pipeline.ts, increasing indexed nodes from 42 to 52 and edges from 56 to 63.",
+    "Commit 3bc49ab1 adds only tests/render-options.adversarial-r2.test.ts. No production source changed after audited HEAD fc823ed.",
+    "The process check found no live PIDs among 79 recorded heavy-run or Forge processes; no owned fixture remained in assets/."
+  ],
+  "commands": [
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node /home/daniebo/Desktop/forge-worktrees/sprouts-redesign/node_modules/vitest/vitest.mjs run --maxWorkers=1 /home/daniebo/Desktop/forge-worktrees/sprouts-redesign/tests/render-options.test.ts /home/daniebo/Desktop/forge-worktrees/sprouts-redesign/tests/render-options.validation.test.ts'",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node /home/daniebo/Desktop/forge-worktrees/sprouts-redesign/node_modules/vitest/vitest.mjs run --maxWorkers=1 /home/daniebo/Desktop/forge-worktrees/sprouts-redesign/tests/render-options.adversarial-r2.test.ts'",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node /home/daniebo/Desktop/forge-worktrees/sprouts-redesign/node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude /home/daniebo/Desktop/forge-worktrees/sprouts-redesign/tests/storytime-book-pictures.test.ts'",
+    "node /home/daniebo/Desktop/forge-worktrees/sprouts-redesign/measure/runs/chibi_sprouts_redesign_20261123/asset-boundary-probe.mjs",
+    "node /home/daniebo/Desktop/forge-worktrees/sprouts-redesign/measure/runs/chibi_sprouts_redesign_20261123/view-boundary-probe.mjs",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'cd /home/daniebo/Desktop/forge-worktrees/sprouts-redesign/measure/runs/chibi_sprouts_redesign_20261123/base-23e551; run(){ ./forge \"$@\" & p=$!; echo \"forge_pid=$p command=$*\"; wait \"$p\"; }; run render avatar-base --fast && run sprites avatar-base --fast && run render barrel --fast && run sprites barrel --fast'",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'cd /home/daniebo/Desktop/forge-worktrees/sprouts-redesign/measure/runs/chibi_sprouts_redesign_20261123/head-fc823ed; run(){ ./forge \"$@\" & p=$!; echo \"forge_pid=$p command=$*\"; wait \"$p\"; }; run render avatar-base --fast && run sprites avatar-base --fast && run render barrel --fast && run sprites barrel --fast'",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'cd /home/daniebo/Desktop/forge-worktrees/sprouts-redesign/measure/runs/chibi_sprouts_redesign_20261123/mutant-view-order && HEAVY_RUN_PATH=/home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/render-options.validation.test.ts'",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'cd /home/daniebo/Desktop/forge-worktrees/sprouts-redesign/measure/runs/chibi_sprouts_redesign_20261123/mutant-separator && HEAVY_RUN_PATH=/home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/render-options.validation.test.ts'",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'cd /home/daniebo/Desktop/forge-worktrees/sprouts-redesign/measure/runs/chibi_sprouts_redesign_20261123/mutant-symlink-refusal && HEAVY_RUN_PATH=/home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/render-options.adversarial-r2.test.ts'",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'build-graph update /home/daniebo/Desktop/forge-worktrees/sprouts-redesign/measure/runs/chibi_sprouts_redesign_20261123/adversarial-graph.db /home/daniebo/Desktop/forge-worktrees/sprouts-redesign/src/cli/forge.ts /home/daniebo/Desktop/forge-worktrees/sprouts-redesign/src/pipeline.ts'",
+    "git -C /home/daniebo/Desktop/forge-worktrees/sprouts-redesign rev-parse HEAD"
+  ],
+  "changed_files": [
+    "tests/render-options.adversarial-r2.test.ts"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "unknown",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 5,
+      "evidence": "The targeted validation tests and 64 command/name probes reject invalid input before Vite starts, and the output containment cases preserve planted markers."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 5,
+      "evidence": "Each required mutation failed its corresponding test, and the full project gate passed with 3399 tests."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "Commit 3bc49ab1 changes only tests/render-options.adversarial-r2.test.ts; the renderer source remains unchanged after audited HEAD."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "The targeted runs, project gate, mutation runs, per-command boundary probes, process check, and image hash comparison have retained logs under measure/runs/chibi_sprouts_redesign_20261123/."
+    }
+  ]
+}

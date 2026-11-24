@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "role": "adversarial-testing",
+  "track": "chibi_sprouts_redesign_20261123",
+  "phase": "Phase 2: Green",
+  "baseline_sha": "23e551df54b7996776a4bcb9e8ccfdb9f35a6083",
+  "phase_base_sha": "23e551df54b7996776a4bcb9e8ccfdb9f35a6083",
+  "role_base_sha": "9a2656ba8784a74e9011975e54fd9ee4867841a3",
+  "audited_head_sha": "9a2656ba8784a74e9011975e54fd9ee4867841a3",
+  "status": "pass",
+  "summary": "Active normal-run checks passed. The PM decision classifies local-writer symlink races as tech debt, so the race case is skipped and no new finding remains.",
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "evidence": [
+    "The audited HEAD was 9a2656ba8784a74e9011975e54fd9ee4867841a3, the phase_base_sha is its ancestor, and role_base_sha records the current pre-adversarial HEAD.",
+    "The PM decision at plan.md:292 and the debt row at plan.md:299 record F12 and Review B N1 as tech debt; both require a local writer, and the PM states that no normal run gives a wrong result.",
+    "tests/render-options.adversarial-r3.test.ts:188-215 marks the output-folder swap case skipped with the exact PM reason. The explicit-empty default case and only-empty-members case remain active.",
+    "The owned adversarial test passed with 2 passed and 1 skipped; see adversarial-p2-9a2656b-r3-owned-test.log.",
+    "The final project gate passed with 235 files passed, 4 skipped, 3406 tests passed, and 27 skipped; see adversarial-p2-9a2656b-project-r3.log. Vitest PID 197377 exited 0.",
+    "The existing renderer test set passed 20/20 at the audited HEAD; see adversarial-p2-9a2656b-targeted.log.",
+    "All three source mutations were detected: removal of own-property membership, removal of the shared empty-member parser, and removal of linked-output preflight; see mutation-r3-own-property.log, mutation-r3-shared-parse.log, and mutation-r3-output-folder.log.",
+    "Boundary probes covered empty and comma-only lists, whitespace members, duplicates, case, Unicode, a 2500-member list, inherited property names, command defaults, and dangling output links; see view-boundary-r3.log and dangling-out-r3.log.",
+    "All 32 render, view, and sprite image paths for avatar-base and barrel matched byte-for-byte between phase_base_sha and audited HEAD; see render-images-diff-r3.txt.",
+    "build-graph updated src/cli/forge.ts. The active source diff is unchanged from audited HEAD.",
+    "Test-only commits since the audited HEAD are 8d923753 and 6950d7d0. The PM decision commit is 6faa4200. No owned process or fixture remained; see adversarial-p2-9a2656b-processes.log."
+  ],
+  "commands": [
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node /home/daniebo/Desktop/forge-worktrees/sprouts-redesign/node_modules/vitest/vitest.mjs run --maxWorkers=1 /home/daniebo/Desktop/forge-worktrees/sprouts-redesign/tests/render-options.adversarial-r3.test.ts'",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'bash /home/daniebo/Desktop/forge-worktrees/sprouts-redesign/measure/runs/chibi_sprouts_redesign_20261123/run-project-gate-r3.sh'",
+    "/home/daniebo/Desktop/forge-worktrees/sprouts-redesign/node_modules/.bin/prettier --check /home/daniebo/Desktop/forge-worktrees/sprouts-redesign/tests/render-options.adversarial-r3.test.ts",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'build-graph update /home/daniebo/Desktop/forge-worktrees/sprouts-redesign/measure/runs/chibi_sprouts_redesign_20261123/adversarial-graph.db /home/daniebo/Desktop/forge-worktrees/sprouts-redesign/src/cli/forge.ts'",
+    "git -C /home/daniebo/Desktop/forge-worktrees/sprouts-redesign rev-parse HEAD"
+  ],
+  "changed_files": [
+    "tests/render-options.adversarial-r3.test.ts",
+    "measure/runs/chibi_sprouts_redesign_20261123/adversarial-p2-9a2656b.json",
+    "measure/runs/chibi_sprouts_redesign_20261123/adversarial-p2-9a2656b.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "unknown",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 4,
+      "evidence": "The active edge cases pass, and plan.md:292 records that the remaining symlink race needs a local writer and does not affect normal runs."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 5,
+      "evidence": "The project gate passed 3406 tests, and the three targeted source mutations each failed their intended test."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The audit added only tests/render-options.adversarial-r3.test.ts and made no production-source change."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "The PM decision, test runs, mutation runs, render hash comparison, graph update, and process check have retained evidence files."
+    }
+  ]
+}
