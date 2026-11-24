@@ -837,7 +837,7 @@ scripts/proportion-check.mjs` exits 0.
 
 ## Phase 7: Look
 
-- [ ] T10 Measure (owner: the judge role): Run the independent look judge. File:
+- [x] T10 Measure (2325440f): Run the independent look judge. File:
       `measure/runs/chibi_sprouts_redesign_20261123/judge.json` (new, not in git).
   - The judge reads `out/chibi-sprouts/redesign/mom-panel.png` and the numeric rows. It reads no Kim
     image (decision k).
@@ -848,6 +848,48 @@ scripts/proportion-check.mjs` exits 0.
     local-only judge stops the task (AC4 rule 7).
   - Record: the panel SHA-256, the judge model id and family, both scores, and the verdict.
   - This task uploads nothing and writes no script.
+  - Evidence 2026-11-24. The line holds the SHA of the last commit that changed the panel script
+    (T8r2 Green, `2325440f`), because `judge.json` is not in git. The judge ran at
+    `2026-11-24T00:17:32Z`.
+  - Panel: `out/chibi-sprouts/redesign/mom-panel.png`, 1448 × 748, 302750 bytes, SHA-256
+    `b6cba32ac4515dc23dc3332d21cfd5f950289b01567574603076377af5d5135f`. A fresh `sha256sum` of the
+    file matches the value in `judge.json` and the T8 and T8r2 record.
+  - Judge model `opencode/nemotron-3.5-super-vl-free`, family nvidia. The route is the `ra-quota`
+    pick `vision-review --not-family muse --not-family openai`, taken after the free route cleared
+    at 07:14 on 2026-11-24. hy4 was the only other allowed route, and it is Green's family, so the
+    judge did not use it. The three families differ: Red is muse
+    (`opencode-go/muse-spark-1.3-contributor`), Green is hy4 (`opencode-go/hy4-flash-free`), and the
+    judge is nvidia.
+  - Scores: identity 7.5 and proportion 8.5. Verdict `pass`, because both scores are 7.5 or more.
+    Identity sits exactly on the 7.5 threshold. A score of 7.4 would return the track to T7.
+  - The two comments are the work list for a later round.
+  - Identity comment, verbatim:
+
+    > Reads as Mom through the cream sweater, blue jeans, brown flats, pearl studs, and brown hair.
+    > Not a full likeness: the face is neutral with oversized eyes and minimal brows instead of
+    > Daniel's warm smile, and the hair is swept into side masses rather than long loose waves. Fix
+    > the face and hair first.
+
+  - Proportion comment, verbatim:
+
+    > All eleven measured rows pass: 3.60 heads tall, legs 39 %, open palms-to-legs hands, wrist just
+    > above hip. The chibi adult reads as Kim-proportioned. Visually the hands look like small dowels
+    > and the side nose is a tiny bump, but the body and face follow the numbers. No change needed
+    > for proportion.
+
+  - In short, the work list holds four items: the neutral face with oversized eyes and minimal
+    brows, the hair in side masses instead of long loose waves, the hands that look like small
+    dowels, and the tiny side nose.
+  - The judge could not judge four things: the cable-knit sweater texture, the freckles, the exact
+    smile shape, and the back-of-head hair detail. The render scale does not resolve them. Mom has
+    no side drawing to compare. The idle clip and any animation stay unjudged, because a still
+    panel holds no motion.
+  - Difference between AC4 item 2 and the built panel: the panel holds Mom's two lit renders only,
+    in two cells, as T5 and AC5 rule 2 pin it. The judge got Daniel's drawing
+    `docs/sprout-mockups/mom.jpg` as a second file, which AC4 item 7 allows. No Kim image, no
+    review sheet, and no LATO.2 file reached the judge.
+  - The judge ran before the Phase 5 acceptance. The acceptance waits for an `ra-quota` route. The
+    panel is final unless that acceptance finds a change.
 
 ## Phase 8: PM stop
 
