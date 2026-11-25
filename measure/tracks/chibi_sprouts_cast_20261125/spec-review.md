@@ -23,3 +23,18 @@ The reviewer should test these three claims first:
    identity source only.
 
 No paid call was made and no image tool was called to create this track.
+
+## Amendment round 1 (2026-11-25)
+
+The spec review on `b58aad2` returned F1 to F13 (status fail). Amendment round 1 answers every
+finding in `spec.md`, `plan.md`, `test-strategy.md`, and `metadata.json`; the commit is
+`measure(chibi_sprouts_cast): amend spec and plan after spec review r1` on `master`, and its SHA is
+in the orchestrator's return. F1: build plus the two level renders, no `forge all`. F2: T0 prepares
+the Mom inputs in the worktree `out/`. F3: `TABLES` as ordered `{name, lo, hi}` arrays with the
+selected table authoritative. F4: rounded crown, one-sided mask guard, and two fixtures. F5: panel
+command line, layout, headroom, and relative-height sheet. F6: destination checks on every parent and
+file. F7: fixed versus measured landmarks, tolerances, and the inventory pin. F8: the asset face
+layer and the `faceMarks` eye exclusion. F9: three-family separation, verdict binding, two rounds, and
+escalation. F10: adversarial pass before Phase 2, T19 as a PM-owned human gate, `lane` in metadata.
+F11: the Mom sheet conventions. F12: the correct Mom shape citation. F13: the baseline isolation pin
+and table-based row comparison. No paid call was made and no image tool was called.

@@ -2,12 +2,13 @@
   "track_id": "chibi_sprouts_cast_20261125",
   "type": "feature",
   "status": "new",
+  "lane": "light",
   "created_at": "2026-11-25T00:00:00Z",
   "updated_at": "2026-11-25T00:00:00Z",
   "description": "Finish the Chibi Sprouts release 1 cast on the approved Kim base: Dad, Grandma and Grandpa as adult variants, and Tom and Lily on a new child base, with one proportion pin and one independent look judge per character, and no customer-facing claim",
-  "estimated_tasks": 19,
+  "estimated_tasks": 20,
   "actual_tasks": null,
-  "deviation_notes": "Created 2026-11-25 from QUEUE.md item 3 and the PM approval of Mom at identity 7.5 on 2026-11-25. The track takes the lightest gates of the PM rule of 2026-11-25: one phase per group, one proportion pin and one look judge per character, no Review A, B or C, and one adversarial round because two scripts change. No character work starts at track creation. The spec review is not run in this delegated session; the reason is in spec-review.md.",
+  "deviation_notes": "Created 2026-11-25 from QUEUE.md item 3 and the Mom shape approval (redesign plan T12; judge.json identity 7.5 and proportion 8.5). The track takes the lightest gates of the PM rule of 2026-11-25: one phase per group, one proportion pin and one look judge per character, no Review A, B or C, and one adversarial round because two scripts change. Amendment round 1 answers every finding F1 to F13 of the spec review b58aad2: one build plus the two level renders and no forge all, a prepared worktree output tree, TABLES as ordered name-lo-hi arrays with the selected table authoritative, a rounded projected crown with a one-sided mask guard and two new fixtures, a defined panel command line and layout with a 56 px headroom and a relative-height cast sheet, destination checks on every parent and file, fixed versus measured landmarks with tolerances and an inventory pin, an asset face layer with a faceMarks eye exclusion, three-family judge separation with verdict binding and a two-round limit, an adversarial pass before Phase 2, T19 as a PM-owned human gate, the light lane in metadata, the Mom sheet rendering conventions, the correct Mom shape citation, and the baseline isolation pin. No character work starts at track creation. The spec review was not run in this delegated session; the orchestrator ran it on b58aad2 and amendment round 1 answers it.",
   "workstream": "assets",
   "retrospective": false,
   "evidence": [
@@ -21,7 +22,11 @@
     "assets/parts/humanoid-kim.ts",
     "assets/sprout-mom-kim.ts",
     "scripts/proportion-check.mjs",
-    "measure/runs/chibi_sprouts_redesign_20261123/judge-p9-bf4158a.json"
+    "scripts/mom-kim-sheet.mjs",
+    "measure/runs/chibi_sprouts_redesign_20261123/judge.json",
+    "measure/runs/chibi_sprouts_redesign_20261123/judge-p9-bf4158a.json",
+    "measure/runs/chibi_sprouts_cast_20261125/spec-review-b58aad2.json",
+    "measure/tracks/chibi_sprouts_cast_20261125/test-strategy.md"
   ],
   "dependencies": ["asset_chibi_sprouts_r1_20261022", "chibi_sprouts_redesign_20261123"]
 }
