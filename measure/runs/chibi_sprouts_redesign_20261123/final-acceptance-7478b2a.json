@@ -1,0 +1,143 @@
+{
+  "schema_version": 1,
+  "role": "final-acceptance",
+  "track": "chibi_sprouts_redesign_20261123",
+  "phase": "track review",
+  "track_base_sha": "17ee504a86f5f8562f4a5fd593d2c3c96edca38a",
+  "role_base_sha": "7478b2af5e5d58a6a33c1758859da50596c83f61",
+  "baseline_sha": "7478b2af5e5d58a6a33c1758859da50596c83f61",
+  "audited_head_sha": "7478b2af5e5d58a6a33c1758859da50596c83f61",
+  "route": "claude-agent/sonnet#xhigh",
+  "status": "fail",
+  "summary": "FAIL. The delivered work is correct. A clean rebuild from HEAD reproduces the cut-out, the sprites, the review sheet and the panel byte for byte. All eleven proportion rows and both palms pass. Two blockers remain, and both are process blockers. First, no phase acceptance covers Phases 6 to 9, and the Phase 9 asset commit bf4158a5 is not covered by the latest result. Second, plan.md T14 names five SHA-256 values and a pivot that do not match the delivered sprites. No implementation change is needed.",
+  "blocking_findings": [
+    "F1 [Blocker] final-acceptance: Phase acceptance does not cover Phases 6 to 9, and the latest result does not cover commit bf4158a5. The passing results name Phases 1 to 2 (28ff7990), Phases 3 to 4 (75bb2b42) and Phase 5 (67cc8ce1). No result names Phase 6, 7, 8 or 9. The latest result audited 67cc8ce1. The command `git diff --name-only 67cc8ce1 HEAD` lists assets/parts/humanoid-kim.ts and assets/sprout-mom-kim.ts. Track commit aa9c9b74 (T7) changed both files inside the track range, so both are track paths. Neither file is a plan file or an evidence file. The contract forbids a pass in this case. Fix: after the F2 record fix, run measure-phase-acceptance once on Phases 6 to 9, bound to the new HEAD, then run final acceptance again. Precedent: p2 spans Phases 1 to 2 and p4 spans Phases 3 to 4.",
+    "F2 [Blocker] final-acceptance: plan.md T14 and T13 name evidence that no longer matches the delivered files (anti-pattern A5 class; closeout standard 'plan text is honest'; test-strategy.md:685 and :687, the Phase 9 A5 and A11 defenses). plan.md:990-994 lists five SHA-256 values of the sprite set before bf4158a5: idle/S_0.png bb524236, idle/sheet.png a663a983, idle/preview.png 41639bf2, idle/idle.gif b1dbd230 and static preview.png a14099b8. The delivered files hold 8c6049a8, f6e8754c, daa3d46f, 4b2bd2e4 and b1451082. plan.md:983 names the pivot (64, 109). The delivered idle/metrics.json holds (64, 110). plan.md:947-949 cites 4471 soft edge pixels for the first cut-out. The accepted cut-out has soft 4927 and edge 4561 in the cutout-check output. Fix: replace the five hashes and the pivot, and label the 4471 value as the first cut-out. A plan-only commit covers the fix."
+  ],
+  "nonblocking_findings": [
+    "F3 [Major] final-acceptance: Phase 9 regenerated mom-kim-review.png and mom-panel.png, so the Phase 7 records name files that no longer exist. plan.md T8, T8r and T8r2 bind the review sheet 54e11c76 and the panel b6cba32a. plan.md T10 and judge.json bind the panel b6cba32a. The files on disk hold e63cbdc1 (review) and 0165b36d (panel). A clean rebuild from HEAD gives the same on-disk bytes. The Phase 7 judge never scored the new panel. The Phase 9 judge scored the cut-out and the sprite of the final shape (identity 8, proportion 7.5). The final shape differs from the sheet that the PM approved at T12: smaller nose, new smile, cut waist, crown cover. Fix: add one Phase 9 plan line with the new hashes. Send the new sheet to Daniel, because the last look gate stays with Daniel.",
+    "F4 [Major] final-acceptance: The AC7 deliverable and two spec-review records are not in git. measure/runs/chibi_sprouts_redesign_20261123/lato2-gpu/trial-result.md (8076 bytes), spec-review-86fee8d.json and spec-review-86fee8d.log are untracked. Commit them before closeout. AC7 rule 2 names trial-log.tsv. The file was lost on 2026-11-24. plan.md T9 amends the rule to use the step table of trial-result.md. spec.md keeps the original wording.",
+    "F5 [Nit] final-acceptance: test-strategy.md:57 lists Phase 9 for UX/API review. The brief waives Reviews A, B and C. The plan does not say that judge-p9-bf4158a.json serves as the Phase 9 UX/API review. Record that ruling in plan.md, or run Review C.",
+    "F6 [Nit] final-acceptance: AC6 rule 3 and test-strategy.md section 13 ask the amendment to add the walk-clip Red task and Green task. The 2026-11-25 amendment adds T13 and T14 only. plan.md T14 defers the walk pair to a later amendment. spec.md is not amended. The PM approved the idle output only.",
+    "F7 [Nit] final-acceptance: Two small blue flecks sit at the sweater hem at both hips. They show on the cut-out (about x 398 and x 625, y 872) and on the sprites. They look like the jeans waistband showing through the sweater. The look judge did not name them. AGENTS.md requires that nothing pokes through anything.",
+    "F8 [Nit] final-acceptance: judge-p9-bf4158a.json notes four faults: pigtails reach the hips, eyes large, sprite face marks small at native 128 px, and back view hair is one block. Both proportion scores sit on the 7.5 line. These are risks for Daniel's look gate.",
+    "F9 [Nit] final-acceptance: PROJECT_LINT (./measure/doctor.sh --structural-only) and bash measure/doctor.sh both exit 1 with one error: 'in_progress track has no unchecked task'. The brief names this error as expected, and closeout clears it. The role-gate for final-acceptance runs PROJECT_LINT and reports this error until the track status changes.",
+    "F10 [Nit] final-acceptance: A clean checkout of HEAD fails the pinned-table test in tests/preset-colour.test.ts (3182 of 3194 pinned slots). The pin has listed wizard-argon-trial since the track base 17ee504a. The source file assets/wizard-argon-trial.ts is untracked. This is not a defect of this track. It stays open outside this track.",
+    "F11 [Nit] final-acceptance: T11 has no commit SHA by design, because no file changed. The T12 line says '(no file, this plan)', but its record landed in commit 817e838d. Cite 817e838d on the T12 line. metadata.json has no lane key (plan.md says Lane: light), actual_tasks is null, and deviation_notes stop at spec review r2. Closeout updates these fields.",
+    "F12 [Nit] final-acceptance: Model deviation. This role ran on claude-agent/sonnet#xhigh (Anthropic). The Phase 5 acceptance ran on claude-agent/sonnet#max (Anthropic). Model Selection requires a family other than the phase acceptance. The PM note of 2026-11-24 says ra-quota picks the route. Record the deviation. Use another family for the re-run when ra-quota offers one."
+  ],
+  "evidence": [
+    "git rev-parse HEAD -> 7478b2af5e5d58a6a33c1758859da50596c83f61. Tracked tree clean (git status --short shows untracked files only). track_base_sha 17ee504a86f5f8562f4a5fd593d2c3c96edca38a is the parent of 6b41e907, the track creation commit.",
+    "Acceptance records (python3 with git merge-base --is-ancestor): phase-acceptance-p2-28ff799 pass, phase-acceptance-p4-75bb2b4 pass, phase-acceptance-p5-67cc8ce pass. In each: baseline_sha is an ancestor of audited_head_sha, phase_base_sha is an ancestor of audited_head_sha, and audited_head_sha is an ancestor of HEAD. No audited HEAD equals HEAD. phase-acceptance-p2-6950d7d is a fail that p2-28ff799 supersedes.",
+    "Path diff: `git diff --name-only 67cc8ce1 HEAD` lists 208 paths. After removal of measure/runs/chibi_sprouts_redesign_20261123/*, plan.md, measure/archive/old_browser*, the paths left are: QUEUE.md; assets/parts/humanoid-kim.ts; assets/sprout-mom-kim.ts; measure/generated/status.md; measure/lessons-learned.md; measure/runs/old_browser_builtins_20261122/* (8 files); measure/tech-debt-archive.md; measure/tech-debt.md; measure/tracks.md. The two asset files are track paths (changed by aa9c9b74 in track_base..67cc8ce1). Commit bf4158a5 changes only those two files. Result: not covered (F1).",
+    "Track path set (union of non-measure paths changed by commits of the track in 17ee504a..67cc8ce1): assets/parts/humanoid-kim.ts, assets/sprout-mom-kim.ts, docs/chibi-sprouts/redesign-2026-11-23.md, scripts/mom-kim-sheet.mjs, scripts/proportion-check.mjs, src/cli/forge.ts, src/pipeline.ts, src/render/page.ts, tests/apk3d/no-unpolyfilled-builtins.test.ts, tests/fixtures/preset-pin.json, tests/mom-kim-sheet*.test.ts, tests/render-options*.test.ts, tests/sprout-*.test.ts.",
+    "Phase 9 commits since 67cc8ce1: bf4158a5 (assets/parts/humanoid-kim.ts, assets/sprout-mom-kim.ts), 266b82f7, 817e838d, e98b13f5, 0867316a (plan and status records, judge-p9-bf4158a.json), 9e6f3bfe and 6ecf1478 (QUEUE.md), and the merge 7478b2af. bf4158a5 changes the face marks, the nose, the brows, the mouth, the torso profile (waist) and the hair crown. It adds 136 lines and removes 86.",
+    "Scope: `git diff --stat 17ee504a HEAD` over assets/sprout-*.ts (14 scrapped sources), assets/parts/sprout-gestures.ts, assets/parts/humanoid-kind.ts, assets/hero.ts and assets/avatar-base.ts is empty. The scrapped sources and the hero stay byte for byte.",
+    "Plan state: 23 task lines, all `- [x]`. grep for `[ ]`, `[~]` and `[b]` finds none. Every task SHA in the task lines is an ancestor of HEAD (git merge-base --is-ancestor: 4c8dded7 d02c8fa9 c916af45 6b3a0781 4f43e67c 0fbd781b c69a5b73 ba884846 2c774c62 b6d66051 1f61d0f2 aa9c9b74 e10890f9 e2c70f6d 976144e8 2325440f 0d4ff336 bf4158a5, all yes). T11 and T12 carry no SHA (F11).",
+    "AC1: describe.skip counts 1, 1 and 2 in tests/sprout-base.test.ts, tests/sprout-gestures.test.ts and tests/sprout-gesture-offset.test.ts; 'hero clip contracts' count 1; the reason comment count is 2, 2 and 3. The targeted run shows 3 hero tests active and 15 skipped, plus 3 skipped adversarial-r3 cases. Pass.",
+    "AC2: `tsx scripts/proportion-check.mjs --asset sprout-mom-kim` exit 0 on a clean rebuild from HEAD: heightInHeads 3.552657 (3.54..3.74), armToTorso 1.328305, legShare 0.387632, headToShoulders 1.233173 (1.11..1.27), wrist -0.061303, fingertips 0.509578, eyeLine 0.636311, eyeHeight 0.108755, spacingHead 0.365741, eyeWidthFace 0.229412, spacingFace 0.464706. All eleven rows pass. The delivered measure.json in the worktree holds the same eleven values. tests/sprout-mom-kim.test.ts and tests/sprout-mom-kim.validation.test.ts pass. Pass.",
+    "AC3: palm L: ok and palm R: ok in the same run. The synthetic palm mutation cases pass in tests/sprout-mom-kim.test.ts. ./forge check sprout-mom-kim ends 'result ok: no held item passes through the head' and 'ground ok'. Pass.",
+    "AC4: judge.json holds model id, family, Green and Red families, panel path and SHA-256, both scores (7.5, 8.5), comments and verdict pass. judge-p9-bf4158a.json (route nvidia/nvidia/nemotron-3.5-super-vl-120b-a12b, family nvidia; not muse, not hy4, not OpenAI) holds cut-out identity 8 and proportion 7.5, sprite identity 8, proportion 7.5 and face reads 8, against a pass line of 7.5. Its cutout_sha256 and sprite_preview_sha256 equal the files that I hashed. Pass, with F3.",
+    "AC5: tests/mom-kim-sheet.test.ts and the three adversarial sheet files pass. The sheet script on the clean rebuild writes mom-kim-review.png e63cbdc1291aefd6f92ab683594f84c9b870b47f75d0748f8ca9b875a8bfbc2a and mom-panel.png 0165b36d73239438ea1bf92cf1594fc285ec3111fe9cfdf1e064d0a436b219ff. Both equal the worktree files. I read mom-panel.png with the read tool: two Mom renders, no Kim figure. Pass, with F3.",
+    "AC6: commit 817e838d (the T12 approval record) is dated 2026-11-25 18:39. The cut-out folder was created at 18:52:16. Before the approval no cut-out or sprite existed (phase-acceptance-p5 evidence). Pass, with F6.",
+    "AC7: lato2-gpu/trial-result.md holds the step table with the delete and the verify rows ('Listed 0 items.' for instances and disks), the mesh counts, the body rows, the artifact paths (mesh-front.png, mesh-side.png, lato2-review.png) and the face-row note. Spend USD 0.58 of the USD 5 cap. trial-log.tsv is lost and plan.md T9 amends the rule. Pass, with F4.",
+    "Deliverable SHA-256 in /home/daniebo/Desktop/forge-worktrees/sprouts-redesign/out: cutout/sprout-mom-kim/front.png b229114baee38db845983c84520f0cff44f112938125978c49ead24d577c5859 (equals the recorded value); sprout-mom-kim/sprites/preview.png b1451082705893b2903c74f4960517e05522e4b454844fd4018b253dd558afc6 (equals the recorded value); sprites/idle/preview.png daa3d46f; sprites/idle/sheet.png f6e8754c; sprites/idle/S_0.png 8c6049a8; sprites/idle/idle.gif 4b2bd2e4; mom-kim-review.png e63cbdc1; mom-panel.png 0165b36d.",
+    "Clean rebuild: git archive HEAD into /tmp/opencode/fa-7478b2a, then ./forge cutout, ./forge sprites and ./forge sprites --clip idle --cell through the heavy runner. All eight hashes above equal the worktree files (final-acceptance-7478b2a-verify.mjs prints 'A vs B hashes: cutout:SAME preview:SAME idlePreview:SAME idleSheet:SAME idleS0:SAME idleGif:SAME'). The sheet tests rebuilt both sheet PNGs with the same bytes.",
+    "Cut-out checks: node scripts/cutout-check.mjs ends 'result ok' ('ok sprout-mom-kim/front.png 1024x1500 soft 4927 edge 4561 worstDrop 40% rows 119..1488 cols 317..706'; 1370 px tall, above 900). The probe final-acceptance-7478b2a-verify.mjs reports: size 1024x1500; corners alpha 0,0,0,0; outer ring 0 pixels; 1 component at alpha 1 and at alpha 128; 0 colour pixels under alpha 0; opaque rows 120..1487 at alpha 128 or more.",
+    "Sprite checks (same probe): 64 idle frames, all 128x128, outer ring empty in each, one alpha component in each. The 8 static sprites are 128x128 with a clean ring and one component each. I read sprites/preview.png and the cut-out with the read tool: the face reads (eyes, brows, nose, mouth, blush) at 128 px. Two small blue flecks sit at the hips (F7).",
+    "A5: grep for 'PASS=N ... FAIL=0', 'all checks pass', 'completely fixed' and 'fully solved' in plan.md finds nothing. The stale hash claims of F2 are the same class and block.",
+    "A6: the active row of measure/tracks.md (line 73) reads '- [~] **Track: Chibi Sprouts: new adult base on Teacher Kim, with Mom as the first trial**'. It holds no status or test claim. Pass.",
+    "A9: tests/*.sh does not exist. grep of tests, scripts and src for 'measure/tracks/chibi_sprouts_redesign' finds nothing. Two tests name measure/runs/chibi_sprouts_redesign_20261123, and that folder stays after the archive move. Pass.",
+    "PROJECT_CHECKS: `node measure/tools/generate.mjs --check` exit 0, 'Measure facts are current (4 files).' PROJECT_LINT: `./measure/doctor.sh --structural-only` exit 1 with the one error in F9. `bash measure/doctor.sh` exit 1 with the same one error.",
+    "PROJECT_TESTS: `node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts` in the clean scratch checkout: Test Files 11 failed | 230 passed | 4 skipped (245); Tests 22 failed | 3448 passed | 30 skipped (3500). All 22 failures are scratch artifacts. (a) 14 failures in 5 tests/render-options*.test.ts files: the runner fallback resolves /tmp/advantage-pr (plan.md names it as C-P2-10). With HEAVY_RUN_PATH set, the 6 render-options files give 22 passed | 1 skipped. (b) 8 failures in 6 tests/storytime-*.test.ts files: the scratch tree has no untracked out/ references and no git. In /home/daniebo/Desktop/advantage-forge those 6 files give 75 passed. A grep of their write calls shows mkdtemp roots under os.tmpdir, and git status shows no tracked change after the run. The combined count equals the Phase 5 gate: 241 files and 3470 tests passed, 4 files and 30 tests skipped. A single clean exit 0 of the whole gate was not observed in one environment.",
+    "tsc: `node node_modules/typescript/bin/tsc --noEmit --pretty false` through the heavy runner in the main checkout gives 51 error lines, the TD-35 to TD-39 baseline. No line names assets/parts/humanoid-kim.ts or assets/sprout-mom-kim.ts.",
+    "Debt and memory: measure/tech-debt.md rows TD-51 to TD-55 record the Phase 2, 4 and 5 late findings. measure/lessons-learned.md holds the out/ lesson of 2026-11-24 (committed in 7b616ab0).",
+    "No paid call: out/chibi-sprouts/redesign/costs.tsv in the worktree dates from 2026-11-23 10:21. This role made no image call, no edit outside measure/runs, and no commit. Probes ran under /tmp/opencode. The production out/ paths were read only (hash and read tool).",
+    "Cleanup: the scratch tree /tmp/opencode/fa-7478b2a (657 MB on tmpfs) holds a node_modules symlink and a teacher-kim-sheet.png symlink. `rm -r -- /tmp/opencode/fa-7478b2a` removes the links and never their targets."
+  ],
+  "commands": [
+    "python3 ~/.agents/skills/measure-orchestrator/scripts/measure_interphase_checks.py status --repo .",
+    "git rev-parse HEAD; git merge-base --is-ancestor <sha> HEAD (acceptance records)",
+    "git diff --name-only 67cc8ce1 HEAD",
+    "git diff --stat bf4158a5^ bf4158a5; git diff-tree -r --root --no-renames --name-status <commit> for the Phase 9 commits",
+    "git archive HEAD | tar -x -C /tmp/opencode/fa-7478b2a (then a node_modules symlink and a Kim sheet symlink)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './forge render sprout-mom-kim --fast --views front-level,side-level --ortho --flat --bg none --size 1024' (exit 0)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash .../heavy-run.sh -c './forge render sprout-mom-kim --fast --views front-level,side-level --ortho --bg none --size 1024' (exit 0)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash .../heavy-run.sh -c './node_modules/.bin/tsx scripts/proportion-check.mjs --asset sprout-mom-kim' (exit 0, eleven rows pass, palm L and R ok)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash .../heavy-run.sh -c './forge check sprout-mom-kim' (exit 0, result ok)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash .../heavy-run.sh -c './forge cutout sprout-mom-kim --out out/chibi-sprouts/redesign/cutout --views front --ppm 900 --canvas 1024x1500' (exit 0); -c 'node scripts/cutout-check.mjs out/chibi-sprouts/redesign/cutout' (exit 0, result ok)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash .../heavy-run.sh -c './forge sprites sprout-mom-kim' (exit 0); -c './forge sprites sprout-mom-kim --clip idle --cell' (exit 0)",
+    "node measure/runs/chibi_sprouts_redesign_20261123/final-acceptance-7478b2a-verify.mjs /tmp/opencode/fa-7478b2a /home/daniebo/Desktop/forge-worktrees/sprouts-redesign (exit 0, all six hashes SAME, alpha and size checks pass)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash .../heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-mom-kim.test.ts tests/sprout-mom-kim.validation.test.ts tests/mom-kim-sheet*.test.ts tests/preset-colour.test.ts tests/sprout-base.test.ts tests/sprout-gestures.test.ts tests/sprout-gesture-offset.test.ts' (scratch; 2 failures in tests/preset-colour.test.ts: missing out/ball textures and the untracked wizard-argon-trial source; both explained in F10 and fixed in the scratch by a ball, kite, paint-splash, paint-pot build and a copy of the source)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash .../heavy-run.sh -c './measure/doctor.sh --structural-only' (exit 1, F9); -c 'node measure/tools/generate.mjs --check' (exit 0); -c 'bash measure/doctor.sh' (exit 1, F9)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash .../heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 --exclude tests/storytime-book-pictures.test.ts' (scratch; exit 1, 22 environment failures, see evidence)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash .../heavy-run.sh -c 'HEAVY_RUN_PATH=/home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/render-options*.test.ts' (scratch; exit 0, 22 passed | 1 skipped)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash .../heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/storytime-{card-fixtures,card-specs,cover-specs,family-word-specs,u2-family-words,u2-specs}.test.ts' (main checkout; exit 0, 75 passed)",
+    "grep and ls checks for A5, A6, A9, AC1 and task markers"
+  ],
+  "changed_files": [
+    "measure/runs/chibi_sprouts_redesign_20261123/final-acceptance-7478b2a.json",
+    "measure/runs/chibi_sprouts_redesign_20261123/final-acceptance-7478b2a.log",
+    "measure/runs/chibi_sprouts_redesign_20261123/final-acceptance-7478b2a-verify.mjs"
+  ],
+  "test_strategy_violations": [
+    "test-strategy.md:685 and :687 (Phase 9 A5 and A11 defenses): plan.md T14 names five SHA-256 values and a pivot that do not match the delivered sprite files (F2)."
+  ],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "retry_audit",
+  "confidence": "high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 4,
+      "evidence": "Eleven proportion rows and both palms pass on a clean rebuild from HEAD, and all eight deliverable hashes reproduce; two blue flecks at the hips remain (F7)."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 3,
+      "evidence": "tests/sprout-mom-kim.test.ts pins the pass table and the palm mutations, but no committed test pins the cut-out or the 128 px sprite, and the alpha checks of T13 and T14 ran from a scratch script outside git."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 4,
+      "evidence": "git diff --stat 17ee504a HEAD over the scrapped sources and the hero is empty, and bf4158a5 changes only assets/parts/humanoid-kim.ts and assets/sprout-mom-kim.ts; the reshape after the PM sheet is the one extra."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 3,
+      "evidence": "plan.md:990-994 lists five SHA-256 values that differ from the delivered files, and judge.json binds a panel hash that Phase 9 replaced, although the T13 and judge-p9 hashes are right."
+    }
+  ],
+  "reviewer_ratings": [
+    {
+      "reviewer_role": "review-a",
+      "reviewer_route": "openai/gpt-6-luna#high",
+      "agreed": true,
+      "score": 4,
+      "evidence": "Latest result review-a-p5-ca4e8d0 passes the sheet script; tests/mom-kim-sheet*.test.ts pass at HEAD and the rebuilt sheet PNGs keep their bytes (earlier rounds read at summary level only)."
+    },
+    {
+      "reviewer_role": "review-b",
+      "reviewer_route": "kimi-code-plan-cn/kimi-for-coding",
+      "agreed": true,
+      "score": 3,
+      "evidence": "Latest result review-b-p4-c2f8736 reports no blocker; the real asset passes all eleven rows at HEAD, and I did not re-check its probe list."
+    },
+    {
+      "reviewer_role": "review-c",
+      "reviewer_route": "openai/gpt-6-luna#high",
+      "agreed": true,
+      "score": 3,
+      "evidence": "Latest result review-c-p4-c2f8736 marks Phase 4 not applicable under test-strategy.md:57; I agree, and no review-c result exists for Phase 9, which that line names (F5)."
+    },
+    {
+      "reviewer_role": "adversarial",
+      "reviewer_route": "openai/gpt-6-luna#high",
+      "agreed": true,
+      "score": 4,
+      "evidence": "Latest result adversarial-p5-3941af5 passes and sends F6 and F7 to debt (TD-52, TD-53); the sheet tests and the byte-identical rebuild at HEAD confirm the fixed paths."
+    }
+  ]
+}

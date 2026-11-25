@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "role": "spec-review",
+  "track": "chibi_sprouts_redesign_20261123",
+  "phase": "track setup",
+  "baseline_sha": "86fee8d1a21f8531074d29640b386f43f2ea3e6c",
+  "audited_head_sha": "86fee8d1a21f8531074d29640b386f43f2ea3e6c",
+  "status": "fail",
+  "summary": "The delta closes the merged-eye and Kim-art findings. The palm mutations and task gates still conflict.",
+  "blocking_findings": [
+    "F4 [Blocker] spec.md The three palm mutations: Mirroring positions while retaining triangle indices reverses the geometric winding normal relative to the reflected direction. Check 4 therefore fails before the expected check 7. Reverse the mirrored indices and define a turned-hand fixture that proves the expected first failure. Rationale: Red and Green cannot obtain the specified named result from the stated mirror mutation.",
+    "F19 [Blocker] plan.md T4 and T6: T4 requires the palm cases to load the real hand from the GLB, but T6 requires those cases to pass before T7 creates that GLB. Move those cases to the T7 gate or give T6 a separate synthetic fixture. Rationale: T6 cannot satisfy its stated test result in the planned order."
+  ],
+  "nonblocking_findings": [
+    "F22 [Major] spec.md decision m and plan.md T9: The standard L4 fallback remains an orchestrator decision, while the supplied approval names one Spot L4. Keep the fallback outside the approved trial until the owner approves it. Rationale: Informing the PM does not establish approval of the alternate compute choice.",
+    "F23 [Major] plan.md T2: Exclusive creation prevents an overwrite, but the unconditional finally cleanup can still remove an existing file after wx fails. Remove the path only when this test successfully created it. Rationale: A collision must leave the existing file unchanged."
+  ],
+  "evidence": [
+    "F20 withdrawn: The merged-eye blob is 0.124 / 0.341 = 0.364 of head width, below the 0.40 limit; the expected component count is one.",
+    "F21 withdrawn: The amended exclusion permits the approved own-VM LATO.2 trial while prohibiting remote models, hosted demos, and third parties.",
+    "F4 partially resolved: palmCheck now receives mesh indices, positions, and landmarks. The empty-patch failure is reachable when no triangle centre meets the patch limits.",
+    "F19 partially resolved: The full-suite gate moved from T7 to T8, after the sheet script is created.",
+    "F23 partially resolved: Per-process names and wx prevent overwrites, but cleanup needs an ownership guard.",
+    "HEAD at start equals 86fee8d1a21f8531074d29640b386f43f2ea3e6c. The track diff from b2b24527 to HEAD is empty.",
+    "Review scope was the spec.md and plan.md delta from de232c05 to b2b24527."
+  ],
+  "commands": ["git rev-parse HEAD", "git diff --stat b2b24527 HEAD -- measure/tracks/chibi_sprouts_redesign_20261123", "git diff de232c05 b2b24527 -- measure/tracks/chibi_sprouts_redesign_20261123/spec.md measure/tracks/chibi_sprouts_redesign_20261123/plan.md"],
+  "changed_files": ["measure/runs/chibi_sprouts_redesign_20261123/spec-review-86fee8d.json", "measure/runs/chibi_sprouts_redesign_20261123/spec-review-86fee8d.log"],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "escalate_human",
+  "confidence": "high",
+  "paraphrase": {
+    "proposes": "The track builds and measures a new SDF adult base with Mom as its first trial. A separate approved GPU trial informs the PM review before any cut-out or sprite.",
+    "current_system": "The current Sprout base has the proportion and palm faults reported by the owner. Forge currently renders perspective views above level, and the tests include scrapped Sprout contracts and active hero contracts."
+  }
+}
