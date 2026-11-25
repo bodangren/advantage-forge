@@ -1,0 +1,27 @@
+{
+  "track_id": "chibi_sprouts_cast_20261125",
+  "type": "feature",
+  "status": "new",
+  "created_at": "2026-11-25T00:00:00Z",
+  "updated_at": "2026-11-25T00:00:00Z",
+  "description": "Finish the Chibi Sprouts release 1 cast on the approved Kim base: Dad, Grandma and Grandpa as adult variants, and Tom and Lily on a new child base, with one proportion pin and one independent look judge per character, and no customer-facing claim",
+  "estimated_tasks": 19,
+  "actual_tasks": null,
+  "deviation_notes": "Created 2026-11-25 from QUEUE.md item 3 and the PM approval of Mom at identity 7.5 on 2026-11-25. The track takes the lightest gates of the PM rule of 2026-11-25: one phase per group, one proportion pin and one look judge per character, no Review A, B or C, and one adversarial round because two scripts change. No character work starts at track creation. The spec review is not run in this delegated session; the reason is in spec-review.md.",
+  "workstream": "assets",
+  "retrospective": false,
+  "evidence": [
+    "QUEUE.md",
+    "docs/chibi-sprouts/redesign-2026-11-23.md",
+    "docs/sprout-mockups/dad.jpg",
+    "docs/sprout-mockups/grandma.jpg",
+    "docs/sprout-mockups/grandpa.jpg",
+    "docs/sprout-mockups/tom.jpg",
+    "docs/sprout-mockups/lily.jpg",
+    "assets/parts/humanoid-kim.ts",
+    "assets/sprout-mom-kim.ts",
+    "scripts/proportion-check.mjs",
+    "measure/runs/chibi_sprouts_redesign_20261123/judge-p9-bf4158a.json"
+  ],
+  "dependencies": ["asset_chibi_sprouts_r1_20261022", "chibi_sprouts_redesign_20261123"]
+}

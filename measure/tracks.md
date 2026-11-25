@@ -73,6 +73,9 @@ This registry gives each historical, current, and planned work item one Measure 
 - [~] **Track: Chibi Sprouts: new adult base on Teacher Kim, with Mom as the first trial**
   *Link: [./tracks/chibi_sprouts_redesign_20261123/](./tracks/chibi_sprouts_redesign_20261123/)*
 
+- [ ] **Track: Chibi Sprouts cast on the Kim base: Dad, Grandma, Grandpa, Tom and Lily**
+  *Link: [./tracks/chibi_sprouts_cast_20261125/](./tracks/chibi_sprouts_cast_20261125/)*
+
 ## Games
 
 - [~] **Track: Remove the legacy games from the monorepo**
