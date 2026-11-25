@@ -909,10 +909,10 @@ scripts/proportion-check.mjs` exits 0.
     two AC3 palm results, the `mom-panel.png` path, the LATO.2 result note, and the fact that no
     cut-out and no sprite exist.
   - Done-when: the PM holds the handoff. The upload to Daniel waits for the PM's word (AC5 rule 7).
-  - Record: nothing in this task. T12 records the handoff and the answer.
+  - Record: nothing in this task. T12 (817e838d) is its record.
   - Evidence 2026-11-25: the PM (Daniel) holds the handoff. No file changed and no command ran.
 
-- [x] T12 Measure (no file, this plan): Record the handoff and the PM answer.
+- [x] T12 Measure (plan 817e838d): Record the handoff and the PM answer.
   - It records the handoff date, the PM's word, and the next step. A PM answer that asks for a shape
     change returns the track to T7 with the change as the work list. An approval opens Phase 9 by
     amendment (AC6 rule 3). The LATO.2 result informs the answer.
