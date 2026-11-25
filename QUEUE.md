@@ -2,8 +2,8 @@
 
 Ordered next product work. One line each. Product only.
 
-- [ ] Mom Kim song cut-out, 900 px or taller, transparent, for chibi_sprouts_redesign (Phase 9, T13)
-- [ ] Mom Kim 128 px idle sprite in out/sprout-mom-kim/sprites/ (Phase 9, T14)
+- [x] Mom Kim song cut-out, 900 px or taller, transparent, for chibi_sprouts_redesign (Phase 9, T13)
+- [x] Mom Kim 128 px idle sprite in out/sprout-mom-kim/sprites/ (Phase 9, T14)
 - [ ] Chibi Sprouts release 1 art: finish the remaining characters (asset_chibi_sprouts_r1)
 - [ ] Chibi Quest 45 second battle teaser: finish and render (showcase_battle_teaser)
 - [ ] Rune Match game: finish the dual renderer port for the Advantage Play Kit
