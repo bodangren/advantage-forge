@@ -1,0 +1,32 @@
+Phase acceptance, Phases 6 to 9, track chibi_sprouts_redesign_20261123
+Audited HEAD 06b03ed096a3c325577658f91c923bc52673d14b (phase_base_sha 67cc8ce1d184b2797ea64b00fd95cf5e4c137b9f)
+Route claude-agent/sonnet#xhigh (family Anthropic; Red muse, Green hy4)
+Result file: measure/runs/chibi_sprouts_redesign_20261123/phase-acceptance-p6-p9-06b03ed.json
+
+Verdict: PASS. Blocking findings: none. Nonblocking: F1 and F2 (Major), F3 to F9 (Nit).
+
+Key results (clean rebuild at HEAD in /tmp/opencode/pa-p6p9-06b03ed, no production out/ path written):
+- proportion check exit 0: eleven rows pass, palm L ok, palm R ok
+- forge check sprout-mom-kim: result ok, ground ok
+- cut-out: cutout-check result ok (rows 119..1488, soft 4927, edge 4561); SHA-256 b229114b...5859
+- sprites: static preview SHA-256 b1451082...afc6; idle set 64 frames, all 128x128, ring clean
+- worktree deliverables equal the rebuild and the brief values (cut-out, sprites/preview.png, idle files, sheet, panel)
+- vitest (scratch): 8 files passed, 2 skipped; 76 tests passed, 18 skipped
+- preset-colour (scratch): 3 passed, 1 failed on missing out/ball textures of the scratch copy (unrelated assets)
+- tsc: 51 baseline error lines, none in the changed files; prettier exit 0 on both Phase 9 asset files
+- generate --check exit 0; doctor --structural-only exit 1 (the one closeout-state error)
+- gcloud (read-only): 0 instances and 0 disks in reading-advantage; ssh-keys metadata key still present (F4)
+
+MEASURE_AGENT_RESULT
+role: phase-acceptance
+status: complete
+track: chibi_sprouts_redesign_20261123
+phase: Phase 6-9
+commits: none
+tests_run: heavy-run proportion-check (exit 0, 11 rows pass, both palms ok); forge check sprout-mom-kim (exit 0, result ok); forge cutout plus cutout-check (exit 0, result ok); forge sprites static and idle --cell (exit 0, hashes equal the worktree); vitest on 10 asset test files in a scratch copy (exit 0, 8 files passed, 2 skipped, 76 tests passed, 18 skipped); vitest preset-colour in the scratch copy (exit 1, 3 passed, 1 failed on the missing out/ball textures of the scratch copy); tsc --noEmit (51 baseline error lines, none in changed files); prettier --check on the two Phase 9 assets (exit 0); generate --check (exit 0); doctor --structural-only (exit 1, closeout-state error only)
+files_changed: measure/runs/chibi_sprouts_redesign_20261123/phase-acceptance-p6-p9-06b03ed.json, measure/runs/chibi_sprouts_redesign_20261123/phase-acceptance-p6-p9-06b03ed.log
+plan_updates: none (gate-only role; findings F1 to F9 route to a plan.md record fix by the build session)
+known_failures: none in the delivered work; no blocker; F1 and F2 are Major record gaps (no Review B or adversarial result for Phases 6 and 7, and no record of the failed Phase 9 judge round); F3 to F9 are Nits (blue hem flecks, ssh-keys leftover, stale SHA citations, VM hours arithmetic, scratch-script citation, spec amendments, T12 SHA)
+handoff: Final acceptance F1 is met by this result. Cite phase-acceptance-p6-p9-06b03ed.json in the next final acceptance, which runs on the HEAD after any record fix, and use a model family other than Anthropic (this role and the earlier final acceptance both ran on Anthropic). Record a waiver for the Phase 6 and Phase 7 security review and adversarial testing in plan.md, or run them (F1). Add the failed Phase 9 judge round to the T13 and T14 evidence (F2). Daniel's look gate is open on the Phase 9 shape: the face, hair and waist changed after the T12 approval, and two small blue flecks sit at the sweater hem (F3). The ssh-keys metadata entry of the LATO.2 trial still exists in reading-advantage (F4). Doctor exit 1 clears at closeout.
+dispositions: none
+END_MEASURE_AGENT_RESULT
