@@ -938,15 +938,18 @@ These tasks started by amendment after the PM (Daniel) approved the shape at T12
     (1024 x 1500, 329,299 bytes, SHA-256
     `fc4327034bce6bb54239cf2bee4b62391a7c76d9495b1b18ab52e0122c02a688`) and `manifest.json`
     (ppm 900, canvas 1024 x 1500, elevation 0, footPoint 512, 1484).
-  - `node scripts/cutout-check.mjs out/chibi-sprouts/redesign/cutout` ends `result ok`:
-    `ok sprout-mom-kim/front.png 1024x1500 soft 4471 edge 4158 worstDrop 40% rows 126..1488 cols 317..706`.
-    The first cut-out was 1363 px tall (rows 126 to 1488). The accepted cut-out at commit bf4158a5
-    is 1370 px tall and has SHA-256
-    `b229114baee38db845983c84520f0cff44f112938125978c49ead24d577c5859`. Both are above the 900 px
-    line.
+  - `node scripts/cutout-check.mjs out/chibi-sprouts/redesign/cutout` on the first cut-out ends
+    `result ok`: `ok sprout-mom-kim/front.png 1024x1500 soft 4471 edge 4158 worstDrop 40% rows
+    126..1488 cols 317..706`. The first cut-out was 1363 px tall (rows 126 to 1488). The accepted
+    cut-out at commit bf4158a5 is 1370 px tall and its check run ends `result ok` with
+    `soft 4927 edge 4561 worstDrop 40% rows 119..1488 cols 317..706`. The accepted cut-out has
+    SHA-256 `b229114baee38db845983c84520f0cff44f112938125978c49ead24d577c5859`. Both cut-outs are
+    above the 900 px line.
   - Alpha check (scratch script `/tmp/opencode/verify-mom-delivery.mjs`, not in git): the corners are
     0, 0, 0, 0; the outer 1 px ring holds 0 opaque pixels; 0 alpha-0 pixels hold colour; the figure is
-    one 8-connected alpha component, so there are 0 stray pixels; 4471 soft alpha pixels sit on the edge.
+    one 8-connected alpha component, so there are 0 stray pixels. The 4471 soft alpha pixels belong
+    to the first cut-out. The accepted cut-out holds 4927 soft alpha pixels on the edge
+    (final-acceptance-7478b2a.json, cut-out checks).
   - Scale note: `--ppm 1024` fails the foot-row row of `cutout-check` with
     `lowest opaque row 1589, foot row 1584`. The approved asset's lowest point is y = -0.005 m (the
     rounded toe of the flats), which is 5 px at 1024 px/m. The check allows 4 px. At 900 px/m the same
@@ -980,22 +983,36 @@ These tasks started by amendment after the PM (Daniel) approved the shape at T12
     `out/sprout-mom-kim/sprites/`.
   - Cell note: `--clip idle` alone gives a 132 px cell, because the idle sway widens the box that
     frames the clip. The delivered command adds `--cell`, which keeps the 128 px cell of the done-when
-    at one scale and one pivot (64, 109).
+    at one scale and one pivot. The delivered `metrics.json` holds the pivot (64, 110).
   - Alpha and size check (`verify-mom-delivery.mjs`): all 64 idle frames are 128 x 128; the outer 1 px
     ring of every frame is empty; each frame holds one alpha component; `metrics.json` reports size
     128, clip idle, 8 frames, 8 directions.
   - Face check with the `read` tool: `out/sprout-mom-kim/sprites/preview.png` (3x cells) shows the
     eyes, brows, mouth, and blush. `sprites/idle/preview.png` (1024 x 1024, 1:1) shows two dark eyes
     and a mouth on the face.
-  - SHA-256: `idle/S_0.png` `bb5242364f86dd2f15041f54f58e20a9d07287f01df0393b6689c4cc7027739d`,
-    `idle/sheet.png` `a663a9835cf36a4ca80c9f79e841fcd672caafcfef3d8a9bae848204d1bdc7c6`,
-    `idle/preview.png` `41639bf26d3af9c194eb2fa46b24efdd968f0fee66e959803eacf71fffaff1d6`,
-    `idle/idle.gif` `b1dbd2300db4b38571853c93da4e44ef09c99ac65e85c62ecd2568640302f17d`,
-    static `preview.png` `a14099b8ec3b3b66d9e2a5e21b413b24de28d6520007f05c7c284ac5294fcce2`.
+  - SHA-256 of the delivered files (commit bf4158a5):
+    `idle/S_0.png` `8c6049a8e093f915fdfbaf3605783057e2947a03b5970d233259b8ef48a3b6ef`,
+    `idle/sheet.png` `f6e8754cc7e411ef56542681c07e9757d7259ac3002bb76ef2e2ec132e34fc0d`,
+    `idle/preview.png` `daa3d46ffbd85065ccc5fa1acb227e4f681d697b2215af058e638a82437603a4`,
+    `idle/idle.gif` `4b2bd2e4e63e3c105bdb8437af4964fffb2cb87684316130daa10f2061650b54`,
+    static `preview.png` `b1451082705893b2903c74f4960517e05522e4b454844fd4018b253dd558afc6`.
+    A clean rebuild of HEAD 7478b2af gives the same five values.
   - Judge 2026-11-25 (route `nvidia/nvidia/nemotron-3.5-super-vl-120b-a12b`, family nvidia) gave
     identity 8, proportion 7.5 and face reads 8, so the look judge passed at 7.5 or higher at commit
     bf4158a5. The sprite is 128 px, made with `--clip idle --cell`. File:
     `measure/runs/chibi_sprouts_redesign_20261123/judge-p9-bf4158a.json`.
+  - Phase 9 review sheet (finding F3). The Phase 9 rebuild replaced the T8 and T10 sheet and panel.
+    The files on disk at HEAD 7478b2af hold
+    `out/chibi-sprouts/redesign/mom-kim-review.png` SHA-256
+    `e63cbdc1291aefd6f92ab683594f84c9b870b47f75d0748f8ca9b875a8bfbc2a` and
+    `out/chibi-sprouts/redesign/mom-panel.png` SHA-256
+    `0165b36d73239438ea1bf92cf1594fc285ec3111fe9cfdf1e064d0a436b219ff`.
+    The earlier sheet 54e11c76 and panel b6cba32a belong to the Phase 7 record. A clean rebuild of
+    HEAD gives the same bytes. The Phase 9 judge scored the cut-out and the idle sprite of the
+    final shape, not the sheet. Daniel's look gate stays open on the new sheet.
+  - Phase 9 review ruling (finding F5). `test-strategy.md:57` lists Phase 9 for UX/API review. The
+    track brief waives Reviews A, B and C. The Phase 9 look judge
+    (`judge-p9-bf4158a.json`) serves as the Phase 9 UX/API review. No separate Review C runs.
 
 ## Known limits
 
