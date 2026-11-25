@@ -1,7 +1,7 @@
 # Chibi Sprouts: new adult base on Teacher Kim, with Mom as the first trial
 
-Status: new. The plan records execution state. `spec.md` holds the acceptance criteria and the
-measurement method.
+Status: in progress (started 2026-11-23). The plan records execution state. `spec.md` holds the
+acceptance criteria and the measurement method.
 
 PM decisions 1 to 3, decision L, and the authoring decisions (d) to (m): `spec.md`. The source is
 `docs/chibi-sprouts/redesign-2026-11-23.md` (approved 2026-11-23).
@@ -45,8 +45,8 @@ names every test that still fails at that point.
 | T10  | `judge.json` with both scores                                                                                                                                                 | none                                                                                      |
 | T11  | the handoff, no command                                                                                                                                                       | none                                                                                      |
 | T12  | the plan record                                                                                                                                                               | none                                                                                      |
-| T13  | deferred; starts by amendment                                                                                                                                                 | none                                                                                      |
-| T14  | deferred; starts by amendment                                                                                                                                                 | none                                                                                      |
+| T13  | the cut-out file, its size and its clean alpha border, and the judge score                                                                                                    | none                                                                                      |
+| T14  | the idle sprite set at 128 px, its clean alpha border, and the judge score                                                                                                    | none                                                                                      |
 
 Files this track touches:
 
@@ -893,43 +893,60 @@ scripts/proportion-check.mjs` exits 0.
 
 ## Phase 8: PM stop
 
-- [ ] T11 Measure: Hand the sheet to the PM. No file changes, and no command runs.
+- [x] T11 Measure (no file): Hand the sheet to the PM. No file changes, and no command runs.
   - The handoff names: the sheet path, its SHA-256, the eleven measured rows, the judge record, the
     two AC3 palm results, the `mom-panel.png` path, the LATO.2 result note, and the fact that no
     cut-out and no sprite exist.
   - Done-when: the PM holds the handoff. The upload to Daniel waits for the PM's word (AC5 rule 7).
   - Record: nothing in this task. T12 records the handoff and the answer.
+  - Evidence 2026-11-25: the PM (Daniel) holds the handoff. No file changed and no command ran.
 
-- [ ] T12 Measure: Record the handoff and the PM answer. File: this plan.
+- [x] T12 Measure (no file, this plan): Record the handoff and the PM answer.
   - It records the handoff date, the PM's word, and the next step. A PM answer that asks for a shape
     change returns the track to T7 with the change as the work list. An approval opens Phase 9 by
     amendment (AC6 rule 3). The LATO.2 result informs the answer.
   - Done-when: this plan holds the handoff date, the PM's word, and the next task.
   - This line runs after T11, so T11 keeps its no-write rule.
+  - Record 2026-11-25: the PM (Daniel) received the handoff on 2026-11-25. The PM approved the
+    Phase 9 output, which is the song cut-out and the idle sprite. The judge identity score is 7.5,
+    and that score is the pass line. The next task is T13.
 
-## Phase 9: deferred:pm
+## Phase 9: cut-out and sprite (amended 2026-11-25 after the T12 approval)
 
-These tasks start only by an amendment after the PM approves the shape at T12. No earlier task
-builds their output (AC6).
+These tasks started by amendment after the PM (Daniel) approved the shape at T12 (AC6 rule 3).
 
-- [ ] T13 (deferred:pm) Measure: One 900 px or taller song cut-out of Mom on the new base. Files: a
-      cut-out step on the existing cut-out path, and `out/chibi-sprouts/redesign/cutout/`.
-  - trigger: after T12 PM approval.
-  - Every render run uses the wrapper:
+- [ ] T13 Measure: One 900 px or taller song cut-out of Mom on the new base. Files: a cut-out step on
+      the existing cut-out path, and `out/chibi-sprouts/redesign/cutout/`.
+  - trigger: the T12 PM approval of 2026-11-25. It is met.
+  - Every render and every heavy command uses the wrapper:
     `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '<command>'`.
     The cut-out command takes a build slot.
-  - Done-when: the amendment lands, the cut-out is transparent at 900 px or taller, and a second
-    look judge rates it 7.5 or more. The plan records the command, the file size, and the score.
+  - No role touches a production `out/` path outside this worktree. Every probe and every fixture
+    stays inside this worktree or under `/tmp` (lesson 2026-11-24).
+  - Done-when:
+    - The cut-out file exists.
+    - The cut-out is 900 px or taller.
+    - The alpha border is clean.
+    - A look judge gives 7.5 or more. The judge route is an `ra-quota` vision route that is not
+      muse, not hy4, and not OpenAI.
+  - Record: the command, the file path, the pixel size, and the judge score.
 
-- [ ] T14 (deferred:pm) Measure: One 128 px idle sprite sample of Mom on the new base. Files:
+- [ ] T14 Measure: One 128 px idle sprite sample of Mom on the new base. Files:
       `out/sprout-mom-kim/sprites/` and its preview.
-  - trigger: after T12 PM approval.
+  - trigger: the T12 PM approval of 2026-11-25. It is met.
   - The sample is idle only. The walk clip comes from a later amendment task pair (AC6 rule 3).
-  - Every render run uses the wrapper:
+  - Every heavy command uses the wrapper:
     `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c './forge sprites sprout-mom-kim --clip idle'`.
-  - Done-when: the amendment lands, the idle sprites exist at 128 px, the face reads in
-    `sprites/preview.png`, and a second look judge rates them 7.5 or more. The plan records the
-    command, the preview path, and the score.
+  - No role touches a production `out/` path outside this worktree. Every probe and every fixture
+    stays inside this worktree or under `/tmp` (lesson 2026-11-24).
+  - Done-when:
+    - The idle sprite files exist in `out/sprout-mom-kim/sprites/`.
+    - The sprites are 128 px.
+    - The alpha border is clean.
+    - The face reads in `sprites/preview.png`.
+    - A look judge gives 7.5 or more. The judge route is an `ra-quota` vision route that is not
+      muse, not hy4, and not OpenAI.
+  - Record: the command, the folder path, the pixel size, and the judge score.
 
 ## Known limits
 
