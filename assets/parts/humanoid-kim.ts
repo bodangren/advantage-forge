@@ -96,35 +96,42 @@ function kimHead(k: AssetContext) {
   const skull = sdf.ellipsoid([KIM.headRX, KIM.headRY, KIM.headRZ]).at(0, KIM.headY, 0);
   const chin = sdf.ellipsoid([0.062, 0.04, 0.07]).at(0, KIM.chin + 0.038, 0.05);
   const jaw = sdf.smoothUnion(0.03, skull, chin);
-  const nose = sdf.ellipsoid([0.014, 0.018, 0.03]).at(0, 1.16, 0.135);
-  const face = jaw.smoothUnion(0.015, nose).bone('head');
+  const nose = sdf.ellipsoid([0.011, 0.014, 0.02]).at(0, 1.178, 0.127);
+  const face = jaw.smoothUnion(0.012, nose).bone('head');
   const neck = sdf.capsule([0, KIM.neck0 - 0.02, -0.008], [0, KIM.neck1 + 0.04, -0.008], 0.052).bone('neck');
 
-  const eye = (sx: number) => sdf.ellipsoid([0.044, 0.028, 0.09]).at(sx * KIM.eyeX, KIM.eyeY, 0.128);
-  const irisDark = (sx: number) =>
-    sdf.ellipsoid([0.033, 0.022, 0.09]).at(sx * KIM.eyeX, KIM.eyeY - 0.002, 0.13);
-  const pupil = (sx: number) => sdf.ellipsoid([0.014, 0.014, 0.09]).at(sx * KIM.eyeX, KIM.eyeY, 0.132);
-  const glint = (sx: number) => sdf.sphere(0.006).at(sx * KIM.eyeX + 0.011, KIM.eyeY + 0.007, 0.15);
+  // The marks use crisp paint edges (soft 0): the mesher cuts them into exact seams, so the eye
+  // and mouth keep a clean outline at 128 px. The iris holds the measured 0.066 x 0.048 m opening.
+  const eyeWhite = (sx: number) => sdf.ellipsoid([0.05, 0.03, 0.09]).at(sx * KIM.eyeX, KIM.eyeY, 0.124);
+  const iris = (sx: number) => sdf.ellipsoid([0.033, 0.024, 0.09]).at(sx * KIM.eyeX, KIM.eyeY - 0.002, 0.13);
+  const pupil = (sx: number) =>
+    sdf.ellipsoid([0.015, 0.015, 0.09]).at(sx * KIM.eyeX, KIM.eyeY - 0.002, 0.134);
+  const glint = (sx: number) => sdf.sphere(0.0065).at(sx * (KIM.eyeX + 0.011), KIM.eyeY + 0.008, 0.142);
   const brow = (sx: number) =>
     sdf
-      .box([0.052, 0.009, 0.12], 0.004)
-      .rotate(0, 0, sx * 9)
-      .at(sx * KIM.eyeX, KIM.eyeY + 0.055, 0.12);
-  const mouth = sdf.ellipsoid([0.036, 0.009, 0.09]).at(0, KIM.chin + 0.055, 0.13);
-  const blush = (sx: number) => sdf.ellipsoid([0.024, 0.014, 0.06]).at(sx * 0.09, 1.16, 0.112);
+      .box([0.057, 0.012, 0.1], 0.004)
+      .rotate(0, 0, sx * 6)
+      .at(sx * KIM.eyeX, KIM.eyeY + 0.058, 0.115);
+  // A small closed smile: the lower part of one oval, cut by a wider oval above it.
+  const mouth = sdf
+    .ellipsoid([0.031, 0.02, 0.09])
+    .at(0, KIM.chin + 0.062, 0.128)
+    .subtract(sdf.ellipsoid([0.042, 0.027, 0.09]).at(0, KIM.chin + 0.093, 0.131));
+  const blush = (sx: number) => sdf.ellipsoid([0.021, 0.012, 0.04]).at(sx * 0.088, 1.168, 0.106);
 
   let painted = face
-    .paintWhere(sdf.union(eye(-1), eye(1)), '#f7f1e8', 0.002)
-    .paintWhere(sdf.union(irisDark(-1), irisDark(1)), '#3a2412', 0.001)
-    .paintWhere(sdf.union(pupil(-1), pupil(1)), '#15100e', 0.001)
-    .paintWhere(sdf.union(glint(-1), glint(1)), '#ffffff', 0.001)
-    .paintWhere(sdf.union(brow(-1), brow(1)), '#4a2b1c', 0.002)
-    .paintWhere(mouth, '#a4503f', 0.002)
+    .paintWhere(sdf.union(eyeWhite(-1), eyeWhite(1)), '#f8f2e9')
+    .paintWhere(sdf.union(iris(-1), iris(1)), '#4a2e18')
+    .paintWhere(sdf.union(pupil(-1), pupil(1)), '#14100e')
+    .paintWhere(sdf.union(glint(-1), glint(1)), '#ffffff')
+    .paintWhere(sdf.union(brow(-1), brow(1)), '#5a3623')
+    .paintWhere(mouth, '#a8503e')
     .paintWhere(sdf.union(blush(-1), blush(1)), '#e29580', 0.004);
 
   k.body('head-skin', sdf.smoothUnion(0.02, painted, neck), {
     color: '#f2c7a4',
-    detail: 0.0035,
+    detail: 0.0025,
+    paintWeight: 2,
     textureDensity: 2,
   });
 }
@@ -133,17 +140,24 @@ function kimHead(k: AssetContext) {
 function kimLimbs(k: AssetContext) {
   const torsoProfile = [
     [0, 1.0],
-    [0.07, 0.995],
-    [0.11, 0.975],
-    [0.13, 0.94],
-    [0.14, 0.88],
-    [0.136, 0.79],
-    [0.13, 0.71],
-    [0.138, 0.63],
-    [0.132, 0.585],
+    [0.06, 0.996],
+    [0.095, 0.98],
+    [0.118, 0.945],
+    [0.128, 0.9],
+    [0.122, 0.85],
+    [0.106, 0.8],
+    [0.096, 0.775],
+    [0.099, 0.745],
+    [0.11, 0.7],
+    [0.124, 0.66],
+    [0.13, 0.63],
+    [0.125, 0.588],
     [0, 0.585],
   ] as [number, number][];
-  const torso = sdf.revolve(profile.polygon(torsoProfile, { smooth: true })).bone('chest');
+  const torso = sdf
+    .revolve(profile.polygon(torsoProfile, { smooth: true }))
+    .scale([1, 1, 0.78])
+    .bone('chest');
   k.body('torso-skin', torso, { color: '#f2c7a4', detail: 0.006 });
 
   const upper = (sx: number) =>
