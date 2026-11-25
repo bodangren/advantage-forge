@@ -835,6 +835,13 @@ scripts/proportion-check.mjs` exits 0.
     the PM ruled LATO.2 out. No GPU re-run happens.
   - Closed by the orchestrator after verification, 2026-11-24, on the `trial-result.md` evidence.
 
+- Gate waiver 2026-11-25 (PM rule): the security review and the adversarial testing for Phases 6
+  and 7 are waived. The PM rule of 2026-11-25 asks for the lightest gates the risk allows, as
+  Daniel's new way of work. The Phase 6 to 9 acceptance checked the substance instead: the VM and
+  the disk are deleted, the panel holds no Kim art, and the judge family differs from Green and Red.
+  Record: `measure/runs/chibi_sprouts_redesign_20261123/phase-acceptance-p6-p9-06b03ed.json`,
+  finding F1.
+
 ## Phase 7: Look
 
 - [x] T10 Measure (2325440f): Run the independent look judge. File:
@@ -890,6 +897,10 @@ scripts/proportion-check.mjs` exits 0.
     review sheet, and no LATO.2 file reached the judge.
   - The judge ran before the Phase 5 acceptance. The acceptance waits for an `ra-quota` route. The
     panel is final unless that acceptance finds a change.
+
+- Gate waiver 2026-11-25 (PM rule): the security review and the adversarial testing for Phase 7 are
+  waived under the Phase 6 waiver note. The Phase 6 to 9 acceptance checked the substance instead:
+  the panel holds no Kim art, and the judge family differs from Green and Red.
 
 ## Phase 8: PM stop
 
@@ -1013,6 +1024,19 @@ These tasks started by amendment after the PM (Daniel) approved the shape at T12
   - Phase 9 review ruling (finding F5). `test-strategy.md:57` lists Phase 9 for UX/API review. The
     track brief waives Reviews A, B and C. The Phase 9 look judge
     (`judge-p9-bf4158a.json`) serves as the Phase 9 UX/API review. No separate Review C runs.
+
+- Phase 9 failed judge round (record, 2026-11-25). Before commit bf4158a5, a first look-judge round
+  on the same route (`nvidia/nvidia/nemotron-3.5-super-vl-120b-a12b`, family nvidia) failed the
+  cut-out and the sprite. Cut-out: identity 8, proportion 8. Sprite: identity 7, proportion 7, face
+  reads 5. The faults were a bald crown, a face that does not read at 128 px, and no waist. The
+  reshape in bf4158a5 answered it. Record:
+  `measure/runs/chibi_sprouts_redesign_20261123/phase-acceptance-p6-p9-06b03ed.json`, finding F2.
+
+- Hem flecks (record, 2026-11-25). Two small blue wedges show at the sweater hem on the cut-out and
+  on the sprites, one at each hip. The owner rule says nothing pokes through anything. They stay
+  for Daniel's look gate. The fix is a lower jeans seat or a higher sweater hem, and it moves every
+  Phase 9 hash. Record:
+  `measure/runs/chibi_sprouts_redesign_20261123/phase-acceptance-p6-p9-06b03ed.json`, finding F3.
 
 ## Known limits
 
