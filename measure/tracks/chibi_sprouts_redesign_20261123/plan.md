@@ -940,7 +940,10 @@ These tasks started by amendment after the PM (Daniel) approved the shape at T12
     (ppm 900, canvas 1024 x 1500, elevation 0, footPoint 512, 1484).
   - `node scripts/cutout-check.mjs out/chibi-sprouts/redesign/cutout` ends `result ok`:
     `ok sprout-mom-kim/front.png 1024x1500 soft 4471 edge 4158 worstDrop 40% rows 126..1488 cols 317..706`.
-    The figure is 1363 px tall (rows 126 to 1488), so it is above the 900 px line.
+    The first cut-out was 1363 px tall (rows 126 to 1488). The accepted cut-out at commit bf4158a5
+    is 1370 px tall and has SHA-256
+    `b229114baee38db845983c84520f0cff44f112938125978c49ead24d577c5859`. Both are above the 900 px
+    line.
   - Alpha check (scratch script `/tmp/opencode/verify-mom-delivery.mjs`, not in git): the corners are
     0, 0, 0, 0; the outer 1 px ring holds 0 opaque pixels; 0 alpha-0 pixels hold colour; the figure is
     one 8-connected alpha component, so there are 0 stray pixels; 4471 soft alpha pixels sit on the edge.
