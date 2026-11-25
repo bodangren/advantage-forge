@@ -915,8 +915,8 @@ scripts/proportion-check.mjs` exits 0.
 
 These tasks started by amendment after the PM (Daniel) approved the shape at T12 (AC6 rule 3).
 
-- [~] T13 Measure: One 900 px or taller song cut-out of Mom on the new base. Files: a cut-out step on
-  the existing cut-out path, and `out/chibi-sprouts/redesign/cutout/`.
+- [x] T13 Measure (bf4158a5): One 900 px or taller song cut-out of Mom on the new base. Files: a
+  cut-out step on the existing cut-out path, and `out/chibi-sprouts/redesign/cutout/`.
   - trigger: the T12 PM approval of 2026-11-25. It is met.
   - Every render and every heavy command uses the wrapper:
     `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '<command>'`.
@@ -948,10 +948,12 @@ These tasks started by amendment after the PM (Daniel) approved the shape at T12
     `lowest opaque row 1589, foot row 1584`. The approved asset's lowest point is y = -0.005 m (the
     rounded toe of the flats), which is 5 px at 1024 px/m. The check allows 4 px. At 900 px/m the same
     5 mm is 4 px, so the check passes. The asset is unchanged.
-  - Remaining: the look judge of the done-when (an `ra-quota` vision route that is not muse, not hy4,
-    and not OpenAI). This role did not run it, so the task stays `[~]`.
+  - Judge 2026-11-25 (route `nvidia/nvidia/nemotron-3.5-super-vl-120b-a12b`, family nvidia) gave
+    identity 8 and proportion 7.5, so the look judge passed at 7.5 or higher at commit bf4158a5. The
+    cut-out is 900 px per metre, 1024x1500, and the figure is 1370 px tall. File:
+    `measure/runs/chibi_sprouts_redesign_20261123/judge-p9-bf4158a.json`.
 
-- [~] T14 Measure: One 128 px idle sprite sample of Mom on the new base. Files:
+- [x] T14 Measure (bf4158a5): One 128 px idle sprite sample of Mom on the new base. Files:
   `out/sprout-mom-kim/sprites/` and its preview.
   - trigger: the T12 PM approval of 2026-11-25. It is met.
   - The sample is idle only. The walk clip comes from a later amendment task pair (AC6 rule 3).
@@ -987,8 +989,10 @@ These tasks started by amendment after the PM (Daniel) approved the shape at T12
     `idle/preview.png` `41639bf26d3af9c194eb2fa46b24efdd968f0fee66e959803eacf71fffaff1d6`,
     `idle/idle.gif` `b1dbd2300db4b38571853c93da4e44ef09c99ac65e85c62ecd2568640302f17d`,
     static `preview.png` `a14099b8ec3b3b66d9e2a5e21b413b24de28d6520007f05c7c284ac5294fcce2`.
-  - Remaining: the look judge of the done-when, as in T13. This role did not run it, so the task stays
-    `[~]`.
+  - Judge 2026-11-25 (route `nvidia/nvidia/nemotron-3.5-super-vl-120b-a12b`, family nvidia) gave
+    identity 8, proportion 7.5 and face reads 8, so the look judge passed at 7.5 or higher at commit
+    bf4158a5. The sprite is 128 px, made with `--clip idle --cell`. File:
+    `measure/runs/chibi_sprouts_redesign_20261123/judge-p9-bf4158a.json`.
 
 ## Known limits
 
