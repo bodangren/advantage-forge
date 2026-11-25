@@ -915,8 +915,8 @@ scripts/proportion-check.mjs` exits 0.
 
 These tasks started by amendment after the PM (Daniel) approved the shape at T12 (AC6 rule 3).
 
-- [ ] T13 Measure: One 900 px or taller song cut-out of Mom on the new base. Files: a cut-out step on
-      the existing cut-out path, and `out/chibi-sprouts/redesign/cutout/`.
+- [~] T13 Measure: One 900 px or taller song cut-out of Mom on the new base. Files: a cut-out step on
+  the existing cut-out path, and `out/chibi-sprouts/redesign/cutout/`.
   - trigger: the T12 PM approval of 2026-11-25. It is met.
   - Every render and every heavy command uses the wrapper:
     `HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '<command>'`.
@@ -930,9 +930,29 @@ These tasks started by amendment after the PM (Daniel) approved the shape at T12
     - A look judge gives 7.5 or more. The judge route is an `ra-quota` vision route that is not
       muse, not hy4, and not OpenAI.
   - Record: the command, the file path, the pixel size, and the judge score.
+  - Evidence 2026-11-25 (maker role; the look judge is not part of this role): no source change was
+    needed. The existing cut-out path (`src/cli/forge.ts`, `src/render/cutout.ts`) gave the delivery
+    from options alone. Command, through the wrapper:
+    `./forge cutout sprout-mom-kim --out out/chibi-sprouts/redesign/cutout --views front --ppm 900 --canvas 1024x1500`.
+    It exits 0 and writes `out/chibi-sprouts/redesign/cutout/sprout-mom-kim/front.png`
+    (1024 x 1500, 329,299 bytes, SHA-256
+    `fc4327034bce6bb54239cf2bee4b62391a7c76d9495b1b18ab52e0122c02a688`) and `manifest.json`
+    (ppm 900, canvas 1024 x 1500, elevation 0, footPoint 512, 1484).
+  - `node scripts/cutout-check.mjs out/chibi-sprouts/redesign/cutout` ends `result ok`:
+    `ok sprout-mom-kim/front.png 1024x1500 soft 4471 edge 4158 worstDrop 40% rows 126..1488 cols 317..706`.
+    The figure is 1363 px tall (rows 126 to 1488), so it is above the 900 px line.
+  - Alpha check (scratch script `/tmp/opencode/verify-mom-delivery.mjs`, not in git): the corners are
+    0, 0, 0, 0; the outer 1 px ring holds 0 opaque pixels; 0 alpha-0 pixels hold colour; the figure is
+    one 8-connected alpha component, so there are 0 stray pixels; 4471 soft alpha pixels sit on the edge.
+  - Scale note: `--ppm 1024` fails the foot-row row of `cutout-check` with
+    `lowest opaque row 1589, foot row 1584`. The approved asset's lowest point is y = -0.005 m (the
+    rounded toe of the flats), which is 5 px at 1024 px/m. The check allows 4 px. At 900 px/m the same
+    5 mm is 4 px, so the check passes. The asset is unchanged.
+  - Remaining: the look judge of the done-when (an `ra-quota` vision route that is not muse, not hy4,
+    and not OpenAI). This role did not run it, so the task stays `[~]`.
 
-- [ ] T14 Measure: One 128 px idle sprite sample of Mom on the new base. Files:
-      `out/sprout-mom-kim/sprites/` and its preview.
+- [~] T14 Measure: One 128 px idle sprite sample of Mom on the new base. Files:
+  `out/sprout-mom-kim/sprites/` and its preview.
   - trigger: the T12 PM approval of 2026-11-25. It is met.
   - The sample is idle only. The walk clip comes from a later amendment task pair (AC6 rule 3).
   - Every heavy command uses the wrapper:
@@ -947,6 +967,28 @@ These tasks started by amendment after the PM (Daniel) approved the shape at T12
     - A look judge gives 7.5 or more. The judge route is an `ra-quota` vision route that is not
       muse, not hy4, and not OpenAI.
   - Record: the command, the folder path, the pixel size, and the judge score.
+  - Evidence 2026-11-25 (maker role; the look judge is not part of this role): command, through the
+    wrapper: `./forge sprites sprout-mom-kim --clip idle --cell`. It exits 0 and writes
+    `out/sprout-mom-kim/sprites/idle/` with 64 frame PNGs (8 directions x 8 frames), `sheet.png`,
+    `preview.png`, `idle.gif`, and `metrics.json`. The static command
+    `./forge sprites sprout-mom-kim` exits 0 and writes the 128 px set and `preview.png` at
+    `out/sprout-mom-kim/sprites/`.
+  - Cell note: `--clip idle` alone gives a 132 px cell, because the idle sway widens the box that
+    frames the clip. The delivered command adds `--cell`, which keeps the 128 px cell of the done-when
+    at one scale and one pivot (64, 109).
+  - Alpha and size check (`verify-mom-delivery.mjs`): all 64 idle frames are 128 x 128; the outer 1 px
+    ring of every frame is empty; each frame holds one alpha component; `metrics.json` reports size
+    128, clip idle, 8 frames, 8 directions.
+  - Face check with the `read` tool: `out/sprout-mom-kim/sprites/preview.png` (3x cells) shows the
+    eyes, brows, mouth, and blush. `sprites/idle/preview.png` (1024 x 1024, 1:1) shows two dark eyes
+    and a mouth on the face.
+  - SHA-256: `idle/S_0.png` `bb5242364f86dd2f15041f54f58e20a9d07287f01df0393b6689c4cc7027739d`,
+    `idle/sheet.png` `a663a9835cf36a4ca80c9f79e841fcd672caafcfef3d8a9bae848204d1bdc7c6`,
+    `idle/preview.png` `41639bf26d3af9c194eb2fa46b24efdd968f0fee66e959803eacf71fffaff1d6`,
+    `idle/idle.gif` `b1dbd2300db4b38571853c93da4e44ef09c99ac65e85c62ecd2568640302f17d`,
+    static `preview.png` `a14099b8ec3b3b66d9e2a5e21b413b24de28d6520007f05c7c284ac5294fcce2`.
+  - Remaining: the look judge of the done-when, as in T13. This role did not run it, so the task stays
+    `[~]`.
 
 ## Known limits
 
