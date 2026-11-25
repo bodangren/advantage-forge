@@ -18,95 +18,131 @@ const C = {
   pearl: '#fbf7ee',
 };
 
-/** Long waves: a close cap at the eye line (the head-width band) and falling curtains below it. */
+/**
+ * Long waves whose mass covers the whole crown: a close shell over the skull, a crown volume, a
+ * back mass, and two falling curtains. The face opening rises above the brow in the middle and
+ * drops past the temples, so the hairline frames the face instead of leaving a bald crown.
+ */
 function momHair(k: AssetContext) {
-  const cap = sdf.ellipsoid([0.15, 0.21, 0.152]).at(0, KIM.headY + 0.004, -0.012);
-  const faceOpen = sdf
-    .ellipsoid([0.146, 0.12, 0.2])
-    .at(0, 1.235, 0.12)
-    .intersect(sdf.halfSpace([0, 1, 0], 1.355));
-  const shell = cap.subtract(faceOpen);
+  const cap = sdf.ellipsoid([0.174, 0.216, 0.152]).at(0, KIM.headY + 0.005, -0.012);
+  const crown = sdf.ellipsoid([0.166, 0.142, 0.15]).at(0, 1.348, -0.03);
+  // The mane tapers from the nape to the shoulder blades instead of ending as a ball.
+  const fall = [
+    sdf.ellipsoid([0.152, 0.11, 0.085]).at(0, 1.22, -0.06),
+    sdf.ellipsoid([0.146, 0.12, 0.078]).at(0, 1.12, -0.07),
+    sdf.ellipsoid([0.122, 0.1, 0.062]).at(0, 1.02, -0.075),
+    sdf.ellipsoid([0.078, 0.062, 0.046]).at(0, 0.955, -0.08),
+  ];
+  // The face opening leaves the whole face bare: it reaches past the temples, so the measured
+  // face keeps its width, and it rises above the brow at the centre.
+  const faceOpen = sdf.ellipsoid([0.185, 0.17, 0.19]).at(0, 1.17, 0.09);
+  // The curtains start below the eye line, outside the cheek, so they never narrow the face.
   const wave = (sx: number) =>
     sdf.chain(
       [
-        [sx * 0.13, 1.24, -0.02, 0.035],
-        [sx * 0.135, 1.12, -0.01, 0.038],
-        [sx * 0.14, 0.99, 0.012, 0.032],
-        [sx * 0.135, 0.9, 0.03, 0.026],
+        [sx * 0.148, 1.15, -0.005, 0.036],
+        [sx * 0.15, 1.06, 0.012, 0.039],
+        [sx * 0.146, 0.98, 0.03, 0.032],
+        [sx * 0.133, 0.92, 0.044, 0.022],
       ],
       0.03,
     );
-  const back = sdf.ellipsoid([0.14, 0.19, 0.09]).at(0, 1.12, -0.13);
-  const hair = sdf.smoothUnion(0.026, shell, wave(-1), wave(1), back);
+  const hair = sdf.smoothUnion(
+    0.024,
+    sdf.smoothUnion(0.028, cap, crown, ...fall).subtract(faceOpen),
+    wave(-1),
+    wave(1),
+  );
   k.body('hair', hair, { color: '#7a5230', detail: 0.006, textureDensity: 1 });
 }
 
-/** The knit sweater: body, long sleeves, collar, cuffs and hem. */
+/** The knit sweater: a fitted body with a waist, long sleeves, collar, cuffs and ribbed hem. */
 function momSweater(k: AssetContext) {
   const sweaterProfile: [number, number][] = [
-    [0, 1.025],
-    [0.075, 1.02],
-    [0.132, 1.0],
-    [0.155, 0.96],
-    [0.158, 0.89],
-    [0.148, 0.79],
-    [0.14, 0.71],
-    [0.15, 0.63],
-    [0.152, 0.595],
-    [0, 0.595],
+    [0, 1.02],
+    [0.055, 1.016],
+    [0.101, 1.0],
+    [0.133, 0.972],
+    [0.148, 0.93],
+    [0.15, 0.9],
+    [0.137, 0.85],
+    [0.117, 0.806],
+    [0.104, 0.778],
+    [0.107, 0.748],
+    [0.12, 0.705],
+    [0.137, 0.668],
+    [0.147, 0.645],
+    [0.145, 0.63],
+    [0, 0.63],
   ];
-  let bodyShape = sdf.revolve(profile.polygon(sweaterProfile, { smooth: true })).bone('chest');
-  // A few shallow ribs give the knit its repeated form without changing the silhouette rows.
-  for (let i = 0; i < 7; i++) {
-    const y = 0.625 + i * 0.052;
-    bodyShape = bodyShape.smoothUnion(0.004, sdf.torus(0.142, 0.004).at(0, y, 0).bone('chest'));
-  }
+  const bodyShape = sdf
+    .revolve(profile.polygon(sweaterProfile, { smooth: true }))
+    .scale([1, 1, 0.78])
+    .bone('chest');
+  const shoulder = (sx: number) =>
+    sdf
+      .ellipsoid([0.072, 0.076, 0.058])
+      .at(sx * 0.126, 0.99, 0)
+      .bone('chest');
   const sleeve = (sx: number) =>
     sdf
       .smoothUnion(
-        0.02,
-        sdf.cone(
-          [sx * KIM.shoulderX, KIM.shoulderY + 0.02, 0],
-          [sx * KIM.elbowX, KIM.elbowY, 0.006],
-          0.064,
-          0.05,
-        ),
-        sdf.cone(
-          [sx * KIM.elbowX, KIM.elbowY, 0.006],
-          [sx * KIM.wristX, KIM.wristY + 0.02, 0.015],
-          0.05,
-          0.04,
-        ),
+        0.022,
+        sdf.cone([sx * 0.132, 0.988, 0], [sx * 0.152, KIM.elbowY, 0.006], 0.062, 0.05),
+        sdf.cone([sx * 0.152, KIM.elbowY, 0.006], [sx * 0.17, 0.641, 0.014], 0.05, 0.039),
       )
       .bone(sx > 0 ? 'upperarm.L' : 'upperarm.R');
   const collar = sdf
-    .torus(0.066, 0.014)
-    .at(0, KIM.neck1 + 0.03, -0.006)
+    .torus(0.062, 0.013)
+    .scale([1, 1, 0.85])
+    .at(0, KIM.neck1 + 0.028, -0.006)
     .bone('neck');
-  const hem = sdf.torus(0.15, 0.01).at(0, 0.605, 0).bone('chest');
-  k.body('sweater', sdf.union(bodyShape, sleeve(-1), sleeve(1), collar, hem), {
-    color: '#f2e7d0',
-    detail: 0.006,
-  });
+  const hem = sdf.torus(0.144, 0.009).scale([1, 1, 0.78]).at(0, 0.634, 0).bone('chest');
+  const cuff = (sx: number) =>
+    sdf
+      .torus(0.038, 0.008)
+      .at(sx * 0.17, 0.646, 0.014)
+      .bone(sx > 0 ? 'forearm.L' : 'forearm.R');
+  k.body(
+    'sweater',
+    sdf.union(bodyShape, shoulder(-1), shoulder(1), sleeve(-1), sleeve(1), collar, hem, cuff(-1), cuff(1)),
+    {
+      color: '#f2e7d0',
+      detail: 0.006,
+    },
+  );
 }
 
-/** Jeans over the hips, thighs and shins. */
+/** Jeans over the seat, hips, thighs and shins: a high seat, then slim legs to the ankle. */
 function momJeans(k: AssetContext) {
-  const hips = sdf.ellipsoid([0.146, 0.1, 0.11]).at(0, 0.58, -0.004).bone('hips');
+  const seatProfile: [number, number][] = [
+    [0, 0.7],
+    [0.07, 0.694],
+    [0.11, 0.678],
+    [0.13, 0.652],
+    [0.141, 0.612],
+    [0.143, 0.585],
+    [0.137, 0.552],
+    [0, 0.552],
+  ];
+  const seat = sdf
+    .revolve(profile.polygon(seatProfile, { smooth: true }))
+    .scale([1, 1, 0.8])
+    .bone('hips');
   const leg = (sx: number) =>
     sdf
       .smoothUnion(
         0.02,
-        sdf.cone([sx * KIM.hipX, KIM.hipY + 0.04, 0], [sx * KIM.kneeX, KIM.kneeY, 0], 0.066, 0.052),
-        sdf.cone([sx * KIM.kneeX, KIM.kneeY, 0], [sx * KIM.ankleX, 0.075, 0.01], 0.052, 0.038),
+        sdf.cone([sx * KIM.hipX, KIM.hipY + 0.06, 0], [sx * KIM.kneeX, KIM.kneeY, 0], 0.07, 0.05),
+        sdf.cone([sx * KIM.kneeX, KIM.kneeY, 0], [sx * KIM.ankleX, 0.075, 0.01], 0.05, 0.035),
       )
       .bone(sx > 0 ? 'leg.L' : 'leg.R');
   const cuff = (sx: number) =>
     sdf
-      .torus(0.04, 0.007)
+      .torus(0.038, 0.007)
       .at(sx * KIM.ankleX, 0.078, 0.01)
       .bone(sx > 0 ? 'shin.L' : 'shin.R');
-  k.body('jeans', sdf.union(hips, leg(-1), leg(1), cuff(-1), cuff(1)), { color: '#41608c', detail: 0.006 });
+  k.body('jeans', sdf.union(seat, leg(-1), leg(1), cuff(-1), cuff(1)), { color: '#41608c', detail: 0.006 });
 }
 
 function momShoes(k: AssetContext) {
@@ -120,8 +156,8 @@ function momShoes(k: AssetContext) {
   k.body('flats', sdf.union(shoe(-1), shoe(1)), { color: '#7a4a2c', detail: 0.005 });
   const stud = (sx: number) =>
     sdf
-      .sphere(0.008)
-      .at(sx * 0.152, 1.245, 0.012)
+      .sphere(0.0075)
+      .at(sx * 0.145, 1.2, 0.03)
       .bone('head');
   k.body('studs', sdf.union(stud(-1), stud(1)), { color: '#fbf7ee', detail: 0.003 });
 }
