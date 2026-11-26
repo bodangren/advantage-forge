@@ -397,7 +397,10 @@ export const castMeta: CastMeta = { faceMarks: { glasses: '#3b2a1e' } };
    `variants.eyes` and from the pupil `#14100e`. A closer mark fails with
    `faceMarks <name>: too close to the eye paint`. Without that rule a frame colour could delete the
    iris from the eye mask.
-3. The script drops every pixel within 24 (Chebyshev) of a declared colour from the eye mask, and it
+3. The script drops the exact declared colour and a 1 px edge around it from the eye mask. The 1 px
+   edge holds the blend pixels that touch a pixel of the exact colour. The guard keeps any other
+   pixel that sits in an eye-shaped blob of the mark-free mask. A cast asset must paint its mark
+   with exactly the declared hex. A mark painted off the declared hex is not excluded. The script
    copies the declared object into the record's `faceMarks`. The eye window, the two-component rule,
    and the face-component seed do not change. Grandpa declares his glasses colour.
 4. The fixture `glasses-frame` draws two eyes and a frame that joins them in the declared glasses

@@ -199,7 +199,9 @@ amendment round 2 answer every finding before Red. After round 2, Red starts wit
         The `wrong-crown` fixture fails with `GUARD top on mask`.
     13. The `glasses-frame` fixture finds two eye components with `castMeta.faceMarks.glasses` and
         fails with `eye components: found 1, expected 2` without it. A mark colour within 24 of the
-        iris colour fails with `faceMarks glasses: too close to the eye paint`.
+        iris colour fails with `faceMarks glasses: too close to the eye paint`. The pixel exclusion
+        drops the exact declared hex and a 1 px edge, so the fixture paints the frame with exactly
+        that hex (spec rule 3).
     14. The Lily hair fixtures produce the three named Lily guards, and a planted hair row across the
         chin gives `GUARD lily chin: hair crosses the chin at row <r>`. A missing `variants.hair`
         exits 1 with `hair colour: not declared`.
@@ -631,6 +633,21 @@ destination is refused without changing its target` exits 0 and overwrites the t
     two open Red findings are in the T2 notes above. F5 and F12 are the PM decisions of commit
     `9fee6e88`. F4 and F12 stay open for the next round, because the Red pin and the adversarial
     finding ask for opposite results.
+  - Adversarial round 2 (2026-11-26, audited commit `70ebbfbe05ea910e3893154f2e66caabf22073ec`,
+    verdict `fail`). The result block is
+    `measure/runs/chibi_sprouts_cast_20261125/adversarial-70ebbfb.json` and its log.
+    - F1, F2, F8, F9, F10, and F11 are closed on real input. F6 is closed except for an empty
+      option value.
+    - F3 stays open as a Blocker. The sheet caption clips the crop state of the fifth cell, and the
+      sheet head-fit tests the 424 px panel limit on a 280 px cell.
+    - PM decision F4 (2026-11-26): the code reading is the contract. Rule 3 of "The asset metadata
+      and the eye mask" now writes the guard as the exact declared colour plus a 1 px edge. The
+      guard keeps any other pixel that sits in an eye-shaped blob. A cast asset must paint its mark
+      with exactly the declared hex, and a mark painted off the declared hex is not excluded. The
+      same commit writes the same rule in this plan and in the test strategy.
+    - New findings: F18 (Major, the temp file of the atomic write), F7 (Major, the head-fit reads
+      the median row width), F19 and F20 (Nit). F13 to F17 are carried.
+    - T3 stays `[~]`. Phase 2 waits for the close of F3, F18, and F7 and for a passing round.
 
 - [ ] T4 Measure: The Phase 1 gate.
   - Done-when:

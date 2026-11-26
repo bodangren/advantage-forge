@@ -1,0 +1,51 @@
+Adversarial re-run, Phase 1: the measuring tools. Track chibi_sprouts_cast_20261125.
+Audited HEAD 70ebbfbe05ea910e3893154f2e66caabf22073ec. Phase base 5356e78730daefd5225f9733f190dc6bb631b90d.
+Remediation under audit: 77fad41f (Green log green-77fad41f.log). Earlier round: adversarial-9adcc72e.json.
+Route claude-agent/sonnet#xhigh (family anthropic).
+Result file: measure/runs/chibi_sprouts_cast_20261125/adversarial-70ebbfb.json
+
+Verdict: FAIL. One Blocker stays open (F3). Eleven nonblocking findings.
+
+Closed on real input
+  F1  The five real drawings write five panels and the sheet. The head union lies inside the window.
+  F2  The Lily side-chin guard fires at alpha 255 down to 128. No false positive on real edge pixels.
+  F6  Unknown, equals-form, repeated and missing-value options fail with one line. Empty values still pass (Nit).
+  F8  Validate-first and temp-plus-rename hold. The planted temp symlink is a new hole (F18).
+  F9  A record without the eleven rows in order is refused. The caption reads /11.
+  F10 A regular-file parent gives a named line without a stack. The catch-all name is a Nit (F20).
+  F11 A hard-linked record, panel and sheet are refused. The outside file stays intact.
+
+Still open
+  F3  (Blocker) The sheet caption clips Lily's crop state at the sheet edge on the real sheet.
+      The sheet head-fit uses the 424 px panel limit for a 280 px cell.
+  F4  (Major) Ruling: Green's reading is NOT spec-consistent. Rule 2 stays as written. Rule 3 ("drops every
+      pixel within 24 of a declared colour") is replaced by an exact-colour region plus protected eye blobs.
+      The spec needs an amendment. The behavior is better than the literal text on the real iris.
+  F7  (Major) The head-fit reads a median row width, 68 to 89 percent of the widest run on the real drawings.
+      The crop state reads "no" for an off-axis figure whose arm is cut.
+  F18 (Major) New. A symlink planted at <panel>.tmp-<pid> is followed. An outside file is overwritten.
+  F6, F19, F20 (Nit) and F13 to F17 (Nit, carried unchanged).
+
+Not re-raised
+  F5 and F12 are PM decisions (commit 9fee6e88).
+
+What held
+  96 of 96 cases pass over five files. Mom's rows and five artifact hashes are unchanged.
+  The crown rule, table selection and the symbolic-link destination checks show no regression.
+
+T3 is report-only. This round adds no test and commits nothing.
+The worktree shows modified measure/generated files and red-9adcc72e.log that this round did not touch.
+Round count: this run is round 2. A re-run after a further fix is round 3, so the Late-finding stop rule applies.
+
+MEASURE_AGENT_RESULT
+role: adversarial-testing
+status: complete
+track: chibi_sprouts_cast_20261125
+phase: Phase 1
+commits: none
+tests_run: vitest 5 files (proportion-cast-options, sprout-cast-panel, cast-isolation, sprout-mom-kim, sprout-mom-kim.validation) via heavy-run exit 0, 96 of 96 (the recorded passing cases reproduce); panel script on the five real drawings via heavy-run exit 0 (five panels and the sheet); 8 re-run probe scripts under /tmp/opencode/adv - verdict FAIL
+files_changed: measure/runs/chibi_sprouts_cast_20261125/adversarial-70ebbfb.json, measure/runs/chibi_sprouts_cast_20261125/adversarial-70ebbfb.log
+plan_updates: none (the orchestrator records the verdict, the findings and the dispositions in plan T3)
+known_failures: F3 Blocker (sheet caption clips the fifth cell; sheet head-fit uses the 424 px panel limit); F4, F7, F18 Major; F6, F19, F20 and F13 to F17 Nit (see the result JSON)
+handoff: Verdict FAIL, retry_recommendation retry_implementation. F1, F2, F8, F9, F10 and F11 are closed on real input; F6 is closed except empty values. Route F3 to Green with a Red case first (the caption last ink column; a 100 source px head on the sheet). F7 and F18 sit in the lines Green must touch for F3 and carry a one-line fix each; the orchestrator may send F7, F18 and the Nits to the same round or to tech-debt. F4 needs a spec decision (PM or spec owner): Green's reading keeps rule 2 but replaces rule 3, so amend rule 3 (exact declared colour plus a 1 px edge, eye-shaped blobs kept) and state that the painted hex must equal the declared hex. The head-axis centring and the unclamped window also need a line in spec 'The horizontal crop' rule 1. Round count: this run is round 2; a re-run after the next fix is round 3, so new findings from it go to measure/tech-debt.md unless they can hide a wrong result in a delivered product file. Phase 2 does not start before a pass verdict with F3 closed.
+END_MEASURE_AGENT_RESULT
