@@ -83,7 +83,7 @@ Tracks by workstream: assets: 34; games: 41; foundation: 3.
 | [riven_scenes_20261009](../tracks/riven_scenes_20261009/) | new | assets | 0/8 | 8 | — |
 | [riven_vehicles_20261009](../tracks/riven_vehicles_20261009/) | new | assets | 0/9 | 9 | — |
 | [riven_wildlife_20261009](../tracks/riven_wildlife_20261009/) | new | assets | 0/9 | 9 | — |
-| [showcase_battle_teaser_20260930](../tracks/showcase_battle_teaser_20260930/) | in_progress | assets | 6/7 | 5 | — |
+| [showcase_battle_teaser_20260930](../tracks/showcase_battle_teaser_20260930/) | in_progress | assets | 6/8 | 5 | — |
 
 ## Project health
 
