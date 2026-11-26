@@ -954,7 +954,7 @@ limit` gets exit 0 for a 350 px head.
     - No adult case remains failing. The result block is
       `measure/runs/chibi_sprouts_cast_20261125/red-2d5808a7.log`.
 
-- [ ] T6 Green: Dad. File: `assets/sprout-dad-kim.ts` (new).
+- [~] T6 Green: Dad. File: `assets/sprout-dad-kim.ts` (new).
   - Build the identity of the spec: black swept-back hair, square jaw, thick brows, open smile, a
     red-and-black plaid shirt over a white tee, dark blue jeans, and brown boots. Import `buildKim`
     and `KIM`. Add the face layer that recreates the two eyes, the jaw and brow body, and the mouth
@@ -974,6 +974,41 @@ limit` gets exit 0 for a 350 px head.
     - `tsc --noEmit` has the baseline count and no error in the new file.
   - Record: the eleven rows, each look round's three differences, the Green model id and family, the
     GLB stats, the pin key check, the panel path, and the panel SHA-256.
+  - Evidence (2026-11-26, worktree `/home/daniebo/Desktop/forge-worktrees/sprouts-cast`, branch
+    `chibi-sprouts-cast`, phase base `b48c3df3235d69337aecc90da7db6cd178455eed`, role base
+    `d519ae1fcb4ee305813f0fe04ba5c8bc54b2c957`, Green route
+    `minimax-cn-coding-plan/MiniMax-M3.1-Flash`, family minimax):
+    - The eleven rows of `TABLES.kim` from `out/chibi-sprouts/cast/sprout-dad-kim-measure.json`:
+      `heightInHeads 3.661998`, `armToTorso 1.328305`, `legShare 0.392931`,
+      `headToShoulders 1.181256`, `wrist -0.061303`, `fingertips 0.509578`, `eyeLine 0.620879`,
+      `eyeHeight 0.114685`, `spacingHead 0.381643`, `eyeWidthFace 0.222857`, `spacingFace 0.451429`.
+      Every row sits inside the table, every row limit equals the table, both palms are ok, and no
+      guard fired.
+    - The four look rounds and their three largest differences: 1) the hair was a helmet with black
+      speckles on the forehead, the shirt's shoulders were detached pads, and the mouth was a small
+      blob; 2) the hairline cut speckled, the shirt's top was too narrow, and the smile was too
+      small, so the face opening became a ball in front of the face, the shirt grew a collar, and
+      the smile arc widened; 3) the square jaw stayed invisible and the plaid read as a harlequin,
+      so the jaw body grew to 0.184 m and the stripes halved; 4) the cut moved after the quiff union
+      and the jeans' seat rose to 0.71 m, which removed the last speckles and the bare waist band.
+    - The GLB stats: `sprout-dad-kim: 52,475 triangles, 0.419 x 1.514 x 0.308 m`, 17 bones, one
+      `idle` clip of 2.4 s, 15 bodies (`head-skin`, `torso-skin`, `arms-skin`, `legs-skin`,
+      `feet-skin`, `hands`, `face`, `jaw`, `hair`, `plaid`, `collar`, `tee`, `jeans`, `boots`,
+      `boot-sole`). The GLB SHA-256 is
+      `6de052e7346d61aad7dc5280443e48f20b0539ff158b02edb2b75c3559e40753`; the four level renders are
+      `84e4238bd08a95693b17006e22e90f7d72577f6e6db76915e89db1b748c37c38` (flat front),
+      `ef82f331d9019c7bb7762de9a822d5f2c1a1e76b7c0e5f930a0be779fda4a10f` (flat side),
+      `2c51d7969c14cd5c2c553e9dc8f71201f64b51d0748f5f27aadc2541078d1aca` (lit front), and
+      `2ac61c4a96f39b25c93ec75a4511d0dfcade2dfad7dc13c3ca6cf3a740e43cb8` (lit side).
+    - The pin key check: `scripts/make-preset-pin.mjs` adds exactly the key `sprout-dad-kim`, with the
+      `dad` preset (`skin fair`, `hair black`, `eyes brown`, `cloth plaid`), and changes no other
+      value. The stale `wizard-argon-trial` key stays, because its asset file is gone and the pin
+      must keep every baseline key.
+    - The panel: `out/chibi-sprouts/cast/sprout-dad-kim-panel.png`, 1416 x 900, SHA-256
+      `7455dbeadd0357f883f22fbead6eb1379fc0572ca56213533a8b35c5dc19f244`.
+    - The gates: `tests/sprout-dad-kim.test.ts` exits 0, `./forge check sprout-dad-kim` ends
+      `result ok`, `prettier --check` exits 0, and `tsc --noEmit` holds the 51 baseline diagnostics
+      with none in the new file.
 
 - [ ] T7 Green: Grandma. File: `assets/sprout-grandma-kim.ts` (new).
   - Build the identity of the spec: white hair in a high bun, round cheeks, smile lines, pearl studs,

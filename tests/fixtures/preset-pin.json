@@ -19700,6 +19700,37 @@
         }
       }
     },
+    "sprout-dad-kim": {
+      "file": "sprout-dad-kim.ts",
+      "presets": {
+        "dad": {
+          "skin": {
+            "option": "fair",
+            "ratio": [1, 1, 1],
+            "default": "#f2c7a4",
+            "shade": "#d5af90"
+          },
+          "hair": {
+            "option": "black",
+            "ratio": [1, 1, 1],
+            "default": "#241c18",
+            "shade": "#1e1714"
+          },
+          "eyes": {
+            "option": "brown",
+            "ratio": [1, 1, 1],
+            "default": "#6e4020",
+            "shade": "#60371b"
+          },
+          "cloth": {
+            "option": "plaid",
+            "ratio": [1, 1, 1],
+            "default": "#a8322c",
+            "shade": "#932b25"
+          }
+        }
+      }
+    },
     "sprout-dad": {
       "file": "sprout-dad.ts",
       "presets": {
