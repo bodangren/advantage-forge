@@ -334,10 +334,9 @@ amendment round 2 answer every finding before Red. After round 2, Red starts wit
     - No Green finding remains. The corrected tests pass against the implementation at `3aabca1c`.
       The full result block is `measure/runs/chibi_sprouts_cast_20261125/red-3aabca1c.log`.
 
-- [~] T2 Green: Add the options, the tables, the rounded crown, the destinations, the face-mark
-  exclusion, and the panel script.
-  Files: `scripts/proportion-check.mjs`, `scripts/sprout-cast-panel.mjs` (new),
-  `assets/parts/humanoid-kim.ts` (three aliases).
+- [x] T2 Green: Add the options, the tables, the rounded crown, the destinations, the face-mark exclusion, and the panel script. Commits `41458a54a0282af2e062a1ed8a213f71856d7a40`, `3aabca1cb6ae0e35eced8048ad30414db55ba8fd`, and `8b2509512584dd1896fc04908bead332017f024e`.
+      Files: `scripts/proportion-check.mjs`, `scripts/sprout-cast-panel.mjs` (new),
+      `assets/parts/humanoid-kim.ts` (three aliases).
   - `scripts/proportion-check.mjs`: add `--base <stem>`, `--table <name>`, and `--record <path>`,
     the `TABLES` export of ordered `{ name, lo, hi }` arrays, `checkRows(rows, table = 'kim')` with
     the selected table authoritative and the row-limit check, the rounded `projectedCrownRow` and
@@ -375,13 +374,15 @@ amendment round 2 answer every finding before Red. After round 2, Red starts wit
     already exist from the redesign track.
 
   - Evidence (2026-11-26, worktree `/home/daniebo/Desktop/forge-worktrees/sprouts-cast`, branch
-    `chibi-sprouts-cast`, phase base `5356e78730daefd5225f9733f190dc6bb631b90d`, role base
-    `ad43039a073d5cf61f5c3ebac787856e9970d7a4`, implementation commit
-    `41458a54a0282af2e062a1ed8a213f71856d7a40`, Green route
-    `minimax-cn-coding-plan/MiniMax-M3.1-Flash`, family minimax):
+    `chibi-sprouts-cast`, phase base `5356e78730daefd5225f9733f190dc6bb631b90d`, role bases
+    `ad43039a073d5cf61f5c3ebac787856e9970d7a4` and `ba0b353b9d965e4e94b078da4949311f87ef504f`,
+    implementation commits `41458a54a0282af2e062a1ed8a213f71856d7a40`,
+    `3aabca1cb6ae0e35eced8048ad30414db55ba8fd`, and `8b2509512584dd1896fc04908bead332017f024e`,
+    Green route `minimax-cn-coding-plan/MiniMax-M3.1-Flash`, family minimax):
 
-    - Implementation commit `41458a54a0282af2e062a1ed8a213f71856d7a40`, three files:
-      `scripts/proportion-check.mjs`, `scripts/sprout-cast-panel.mjs` (new),
+    - Implementation commits `41458a54a0282af2e062a1ed8a213f71856d7a40`,
+      `3aabca1cb6ae0e35eced8048ad30414db55ba8fd`, and `8b2509512584dd1896fc04908bead332017f024e`,
+      three files: `scripts/proportion-check.mjs`, `scripts/sprout-cast-panel.mjs` (new),
       `assets/parts/humanoid-kim.ts`.
     - Exported symbols of `scripts/proportion-check.mjs`: `TABLES`, `TABLE_NAMES`, `checkRows(rows,
 table = 'kim')`, `measureFigure(figure, table = 'kim')`, `palmCheck(side, mesh, landmarks)`,
@@ -462,8 +463,55 @@ in `#241812`, which is 23 in Chebyshev distance from the declared `#3b2a1e`, so 
           mask, and the eye-width limit is 0.6 of the head width instead of 0.4. The measured eye
           width still comes from the undilated pixels, so the Mom rows do not move. The case passes
           with those changes.
-    - The T2 gate is not met, so T2 stays `[~]`. The next role is a Mid Red retry for R1 and R2,
-      then a Green re-run on the same implementation commit.
+    - The panel cells and the sheet cells use a nearest-neighbour mapping, not `sharp.extract` plus
+      `resize({ height, fit: 'fill' })`. The mapping puts the source crown row on the panel row 80
+      and the source sole row on the baseline, so the three cells share one baseline to the pixel.
+      The `sharp` resize cuts the last source row of the crop, so it cannot hold that alignment.
+    - The eye-width limit of the eye-component filter is 0.6 of the head width, not 0.4. A blob
+      that joins the two eyes is then one eye component, so an undeclared face mark fails the run
+      with the named error of the spec instead of vanishing from the count. The measured rows do not
+      move, because the eye width comes from the eye blobs alone.
+    - The T2 gate is met after the Red repair of R1 and R2. The Green re-run of 2026-11-26 records
+      the following. The role base of that round is
+      `ba0b353b9d965e4e94b078da4949311f87ef504f`, the repaired Red commit. The full result block is
+      `measure/runs/chibi_sprouts_cast_20261125/green-8b250951.log`.
+      - The repaired fixture holds the spec rules on its own, so the implementation gives back the
+        two changes it made for the broken fixture. Commit
+        `8b2509512584dd1896fc04908bead332017f024e` restores the Chebyshev distance of 24 for the
+        face-mark exclusion and the plain eye-mask component search, with no dilation. One change
+        stays: the eye-width limit is 0.6 of the head width instead of 0.4, so a blob that joins
+        the two eyes counts as one eye component and an undeclared face mark fails the run with the
+        named error `eye components: found 1, expected 2` of the spec.
+      - The commands and their exit codes:
+
+        ```bash
+        HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/proportion-cast-options.test.ts tests/sprout-cast-panel.test.ts tests/cast-isolation.test.ts tests/sprout-mom-kim.test.ts tests/sprout-mom-kim.validation.test.ts'
+        # exit 0: 81 of 81 cases pass over 5 files
+        HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/proportion-cast-options.test.ts'
+        # exit 0: 15 of 15 cases pass
+        HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-cast-panel.test.ts'
+        # exit 0: 15 of 15 cases pass
+        HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/cast-isolation.test.ts'
+        # exit 0: 3 of 3 cases pass
+        HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-mom-kim.test.ts'
+        # exit 0: 29 of 29 cases pass
+        HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-mom-kim.validation.test.ts'
+        # exit 0: 19 of 19 cases pass
+        node_modules/.bin/prettier --check scripts/proportion-check.mjs scripts/sprout-cast-panel.mjs assets/parts/humanoid-kim.ts measure/tracks/chibi_sprouts_cast_20261125/plan.md
+        # exit 0: all matched files use Prettier code style
+        node node_modules/typescript/bin/tsc --noEmit
+        # exit 2: 54 errors in 15 files; the five TD-35 groups hold their baseline counts (38 errors)
+        # and no error sits in the three changed files
+        ```
+
+      - Mom's eleven rows after the re-run are the rows of the first Green round: `heightInHeads
+3.653929`, `armToTorso 1.328305`, `legShare 0.391841`, `headToShoulders 1.233173`, `wrist
+-0.061303`, `fingertips 0.509578`, `eyeLine 0.621882`, `eyeHeight 0.113069`, `spacingHead
+0.365741`, `eyeWidthFace 0.229412`, `spacingFace 0.464706`. Both palms ok. The five artifact
+        hashes and the raw stats hash are unchanged.
+      - The `mom-kim-sheet` tests read `out/storytime-review/muse-cast/teacher-kim-sheet.png`, which
+        this worktree does not hold. They fail on that missing file before and after the change, and
+        they are not a Phase 1 gate.
 
 - [ ] T3 Measure: One adversarial round on the two scripts.
   - It reads the T2 commit and attacks the table selection, the row-limit rule, the base name, the
