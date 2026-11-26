@@ -9625,9 +9625,9 @@
     }
   ],
   "asset_source_coverage": {
-    "listed": 1086,
+    "listed": 1087,
     "catalog_matched": 809,
-    "off_catalog": 277
+    "off_catalog": 278
   },
   "asset_sources": [
     {
@@ -16578,6 +16578,11 @@
         "enemies/humanoid/witch",
         "heroes/magic/witch"
       ]
+    },
+    {
+      "id": "wizard-argon-trial",
+      "source_path": "assets/wizard-argon-trial.ts",
+      "catalog_source_ids": []
     },
     {
       "id": "wizard-hat",
