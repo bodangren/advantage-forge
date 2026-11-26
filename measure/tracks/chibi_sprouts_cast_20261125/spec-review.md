@@ -38,3 +38,12 @@ layer and the `faceMarks` eye exclusion. F9: three-family separation, verdict bi
 escalation. F10: adversarial pass before Phase 2, T19 as a PM-owned human gate, `lane` in metadata.
 F11: the Mom sheet conventions. F12: the correct Mom shape citation. F13: the baseline isolation pin
 and table-based row comparison. No paid call was made and no image tool was called.
+
+## Amendment round 2 (2026-11-26)
+
+The second spec review on `82a2a26` returned F4, F5, F7, F8, F9, F10, F14, F15, F16, F17, and F18.
+The PM approved one more amendment round. Amendment round 2 answers every finding in `spec.md`,
+`plan.md`, `test-strategy.md`, and `metadata.json`, and the commit is
+`measure(chibi_sprouts_cast): amend spec and plan after spec review r2` on `master`. After round 2,
+Red starts with no third review. No review gate is added and the four phases stay. No paid call was
+made and no image tool was called.
