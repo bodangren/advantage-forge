@@ -1,0 +1,15 @@
+MEASURE_AGENT_RESULT
+role: mid-red
+status: complete
+track: chibi_sprouts_cast_20261125
+phase: Phase 1: The measuring tools
+baseline_sha: 5356e78730daefd5225f9733f190dc6bb631b90d
+role_base_sha: 3aabca1cb6ae0e35eced8048ad30414db55ba8fd
+audited_head_sha: ba0b353b9d965e4e94b078da4949311f87ef504f
+commits: ba0b353b
+tests_run: tests/proportion-cast-options.test.ts exit 0; tests/sprout-cast-panel.test.ts exit 0; tests/cast-isolation.test.ts exit 0; tests/sprout-mom-kim.test.ts exit 0; tests/sprout-mom-kim.validation.test.ts exit 0; Prettier check exit 0
+files_changed: tests/proportion-cast-options.test.ts; tests/sprout-cast-panel.test.ts; measure/tracks/chibi_sprouts_cast_20261125/plan.md
+plan_updates: T1 records R1, R2, corrected fixture bodies, per-file exit codes, and no remaining Green finding; the pre-existing T2 plan edit stays unstaged
+known_failures: none in the targeted tests
+handoff: Green can re-run the same implementation at 3aabca1c. R1 now reads real Sharp pixels. R2 now joins both eyes while keeping eye paint more than 24 Chebyshev from the declared mark. No Green finding remains.
+END_MEASURE_AGENT_RESULT

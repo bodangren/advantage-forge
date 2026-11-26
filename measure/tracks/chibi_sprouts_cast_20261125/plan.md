@@ -375,6 +375,9 @@ amendment round 2 answer every finding before Red. After round 2, Red starts wit
     projection, the five artifact hashes, the raw stats hash, and the two test runs.
   - Note: this task changes no renderer option and no existing render path. The two new named views
     already exist from the redesign track.
+  - PM decision F5 (2026-11-26, adversarial round 1): the eye-component width limit is 0.60 of the
+    head width for both cast tables. Mom's rows are identical under 0.40 and 0.60, so they do not
+    move (this task and the round-1 `measurePixels()` probe).
 
   - Evidence (2026-11-26, worktree `/home/daniebo/Desktop/forge-worktrees/sprouts-cast`, branch
     `chibi-sprouts-cast`, phase base `5356e78730daefd5225f9733f190dc6bb631b90d`, role bases
@@ -469,7 +472,8 @@ in `#241812`, which is 23 in Chebyshev distance from the declared `#3b2a1e`, so 
     - The panel cells and the sheet cells use a nearest-neighbour mapping, not `sharp.extract` plus
       `resize({ height, fit: 'fill' })`. The mapping puts the source crown row on the panel row 80
       and the source sole row on the baseline, so the three cells share one baseline to the pixel.
-      The `sharp` resize cuts the last source row of the crop, so it cannot hold that alignment.
+      A literal `sharp.extract` takes a negative top on Dad's crown row 80, which sits above 8 % of
+      the band, and throws; the mean difference to the extract-plus-resize path is 1.6 of 255.
     - The eye-width limit of the eye-component filter is 0.6 of the head width, not 0.4. A blob
       that joins the two eyes is then one eye component, so an undeclared face mark fails the run
       with the named error of the spec instead of vanishing from the count. The measured rows do not
@@ -516,7 +520,7 @@ in `#241812`, which is 23 in Chebyshev distance from the declared `#3b2a1e`, so 
         this worktree does not hold. They fail on that missing file before and after the change, and
         they are not a Phase 1 gate.
 
-- [ ] T3 Measure: One adversarial round on the two scripts.
+- [~] T3 Measure: One adversarial round on the two scripts.
   - It reads the T2 commit and attacks the table selection, the row-limit rule, the base name, the
     record and panel destinations, the crown rounding and mask tolerance, the face-mark exclusion,
     the Lily guards, the panel scale and headroom, the horizontal crop and the head-fit rule, the

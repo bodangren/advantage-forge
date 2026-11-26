@@ -88,7 +88,7 @@ These decisions are fixed here. Green decides nothing.
 | j   | Look judge route           | The judge route is `nvidia/nvidia/nemotron-3.5-super-vl-120b-a12b`, family nvidia. The route is not muse, not hy4, and not OpenAI. The judge family differs from the Red family and the Green family. A separate role on a shared family is not an independent judge. A missing route waits; the track does not substitute.                                       | This route passed Mom. The PM rule names it. A same-family judge can repeat a same-family error.                                                  |
 | k   | Judge input                | Each panel holds the character's lit front render, its lit side render, and its drawing at one 700 px scale. The judge brief holds the eleven rows as text. No Kim sheet, no Mom panel, and no LATO.2 image is an input. The panel PNG is the only file that leaves the worktree.                                                                                    | The judge must see the character, not the reference sheet.                                                                                        |
 | l   | Judge scores               | The judge rates identity and proportion out of 10. Both scores are 7.5 or more. A lower score returns the phase to Green with the comment as the work list. A verdict binds to one asset revision, one base revision, one record hash, one render set, and one panel hash. At most two judge rounds run per character. A second round runs only after a failing score or after a changed input voids the first verdict; a passing asset with unchanged inputs gets one judgment. A second failure, a third round, or a route that is still absent at the phase gate escalates to the PM. | This is the Mom pass line and the owner bar for characters. An unbound score proves nothing about the final bytes.                                |
-| m   | Panels and sheet           | `scripts/sprout-cast-panel.mjs` writes one panel per character at `out/chibi-sprouts/cast/<name>-panel.png` and one cast sheet at `out/chibi-sprouts/cast/cast-sheet.png`. It reads local files only. It copies the `maskSpan`, `panel`, and `textSvg` conventions of `scripts/mom-kim-sheet.mjs` and imports nothing from it. It takes `--asset`, `--all`, `--sheet`, `--date`, and `--root`. `--sheet` writes the sheet alone and no panel. It refuses a linked or outside destination before any write. | The PM needs one panel per character and one sheet. The sheet must be writable at Phase 4 without a new panel date or a voided judge record.     |
+| m   | Panels and sheet           | `scripts/sprout-cast-panel.mjs` writes one panel per character at `out/chibi-sprouts/cast/<name>-panel.png` and one cast sheet at `out/chibi-sprouts/cast/cast-sheet.png`. It reads local files only. It copies the `maskSpan` and `textSvg` conventions of `scripts/mom-kim-sheet.mjs`, maps a panel cell by clamped nearest-neighbour sampling, and imports nothing from it. A literal `sharp.extract` takes a negative top on Dad's crown row 80, which sits above 8 % of the band, and throws; the mean difference to the extract-plus-resize path is 1.6 of 255. It takes `--asset`, `--all`, `--sheet`, `--date`, and `--root`. `--sheet` writes the sheet alone and no panel. It refuses a linked or outside destination before any write. | The PM needs one panel per character and one sheet. The sheet must be writable at Phase 4 without a new panel date or a voided judge record.     |
 | n   | Drawing rows               | The panel scales each drawing by the page's pixel pair: Dad 80–1525, Grandma 143–1520, Grandpa 83–1520, Tom 87–1521, Lily 83–1522. The crop keeps 8 % of the band above the crown, so a bun stays visible above the band.                                                                                                                                         | The page measured these rows. A background scan would catch the cast shadow.                                                                      |
 | o   | Gates                      | One phase per group. No Review A, B, or C. One adversarial round runs in Phase 1, because two scripts change. Phase 2 starts only after a passing adversarial verdict with every blocking finding closed. No other phase runs an adversarial round.                                                                                                               | The PM rule of 2026-11-25 asks for the lightest gates. A failed round must not read as a passed gate.                                             |
 | p   | Identity source            | The drawing is the identity source. The page's direction line names the main features. Green adds no feature that the drawing does not show.                                                                                                                                                                                                                      | The owner rejected a model that did not look like its drawing.                                                                                    |
@@ -404,6 +404,22 @@ export const castMeta: CastMeta = { faceMarks: { glasses: '#3b2a1e' } };
    colour. With the declaration the run finds two eye components. Without it the run fails with
    `eye components: found 1, expected 2`.
 
+### The eye-component width limit
+
+1. The eye-component width limit is 0.60 of the head width for the cast tables, `kim` and `child`.
+   The cast script applies the one limit of 0.60 to every asset it measures.
+2. The archived redesign spec fixes the limit at 0.40
+   (`measure/archive/chibi_sprouts_redesign_20261123/spec.md`, "Evaluation order" step 7). That
+   0.40 stays the measured rule of Mom's table, and the archived spec does not change.
+3. Mom's results under both limits are identical. Green recorded her eleven Mom rows unchanged in
+   the T2 re-run, with the 0.60 limit in place (plan T2). The Phase 1 adversarial round found
+   `measurePixels()` identical under 0.40 and 0.60. No Mom row moves.
+4. The joined glasses blob of the `glasses-frame` fixture is 0.57 of the head width. Under 0.40 the
+   undeclared run finds 0 components. Under 0.60 it finds 1 and fails with
+   `eye components: found 1, expected 2`, which this spec requires.
+5. A dark bar of 0.41 to 0.59 of the head width qualifies as an eye component. A bar of 0.61 or more
+   is still dropped.
+
 ## The pass tables
 
 The script holds both tables. The adult table is the current table, unchanged.
@@ -550,12 +566,14 @@ a production `out/`.
 
 ## The look judge and the panels
 
-`scripts/sprout-cast-panel.mjs` writes two kinds of file. It copies three conventions from
-`scripts/mom-kim-sheet.mjs`:
+`scripts/sprout-cast-panel.mjs` writes two kinds of file. It copies two conventions from
+`scripts/mom-kim-sheet.mjs` and changes the third (decision (m)):
 
 - `maskSpan`: the alpha-128 bounding box of a render, the same rule the measurement uses.
-- `panel`: `sharp.extract(box)` then `resize({ height, fit: 'fill' })`, so the width follows the
-  source ratio and the figure is not stretched.
+- `panel`: clamped nearest-neighbour sampling, so the source crown row lands on panel row 80 and the
+  source sole row lands on the baseline, and the width follows the source ratio. Why not
+  `sharp.extract` plus `resize`: Dad's crown row 80 sits above 8 % of the band, so a literal extract
+  takes a negative top and throws. The mean difference to the resize path is 1.6 of 255.
 - `textSvg`: DejaVu Sans text lines at fill `#1c1c1c`, font sizes 22 and 20.
 
 The script does not import `scripts/mom-kim-sheet.mjs`, because that module runs its `main` on

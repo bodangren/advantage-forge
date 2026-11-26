@@ -1,0 +1,46 @@
+Adversarial round, Phase 1: the measuring tools. Track chibi_sprouts_cast_20261125.
+Audited HEAD 9adcc72e79e2184eaa391c39bf1d1dc7b95ba980. Phase base 5356e78730daefd5225f9733f190dc6bb631b90d.
+Route claude-agent/sonnet#xhigh (family anthropic). Red hungerg. Green minimax.
+Result file: measure/runs/chibi_sprouts_cast_20261125/adversarial-9adcc72e.json
+
+Verdict: FAIL. Three blocking findings. Fourteen nonblocking findings.
+
+Blocking
+  F1 The panel script refuses Grandma, Grandpa and Lily on the real drawings. Its head band is the whole figure.
+  F2 The Lily side-chin guard misses hair when the frontmost pixel has alpha below 250.
+  F3 The cast sheet skips the head-fit rule and records no crop state.
+
+Nonblocking
+  F4 to F11 (Major): face-mark guard misses the real iris colour #4a2e18; deviation 1 (eye width 0.6) breaks a stated
+  rule; unknown options fall back to destructive defaults; a mask asymmetry crops the head; --all writes
+  partially; the caption reads 0/0; a regular-file parent prints a stack trace; a hard link is overwritten.
+  F12 to F17 (Nit): deviation 2 (nearest-neighbour) breaks the convention text only; --date; table fallback;
+  malformed mark colour; base without exports; path edge cases.
+
+Deviation decisions
+  Deviation 1, eye-width limit 0.6 instead of 0.4: breaks a stated rule (archived redesign spec 239-241 and cast
+  spec rule 3). The Red fixture forces it: the joined blob is 0.57 of the head width. No false pass exists.
+  Deviation 2, nearest-neighbour mapping: breaks the convention text of decision (m) only. Green's reason is wrong.
+  The real reason is Dad's crown row 80, which a literal extract cannot take. The visual cost is negligible.
+
+What held
+  The 81 recorded passing cases reproduce. Mom's rows before and after, and the five artifact hashes, match the plan.
+  The crown rounding and the one-sided mask guard hold at the 2 px and 3 px boundary and for a bun 500 px high.
+  Table selection and the named option errors hold. Symbolic-link, directory, outside, and dangling-link
+  destinations refuse with a named line and an unchanged tree.
+
+T3 says "Report-only. It changes no file". This round adds no test and commits nothing.
+Repro probes live under /tmp/opencode/adv. No probe wrote to the audited out/ tree.
+
+MEASURE_AGENT_RESULT
+role: adversarial-testing
+status: complete
+track: chibi_sprouts_cast_20261125
+phase: Phase 1
+commits: none
+tests_run: vitest 5 files (proportion-cast-options, sprout-cast-panel, cast-isolation, sprout-mom-kim, sprout-mom-kim.validation) via heavy-run exit 0 (the recorded passing cases reproduce); prettier --check exit 0; 14 probe scripts under /tmp/opencode/adv (real-input panel run: dad 0, grandma 1, grandpa 1, tom 0, lily 1) - verdict FAIL
+files_changed: measure/runs/chibi_sprouts_cast_20261125/adversarial-9adcc72e.json, measure/runs/chibi_sprouts_cast_20261125/adversarial-9adcc72e.log
+plan_updates: none (the orchestrator records the verdict, the findings and the dispositions in plan T3; the plan names the result file adversarial-p1-<sha>.json, this round wrote adversarial-9adcc72e.json as the brief asked)
+known_failures: F1 panel script refuses 3 of 5 real drawings; F2 Lily side-chin guard misses antialiased hair; F3 sheet skips head-fit and crop state; F4 to F17 nonblocking (see the result JSON)
+handoff: Verdict FAIL, retry_recommendation retry_implementation. Route F1, F2 and F3 to Green with a Red case first for each (real or noisy opaque JPEG drawings; alpha 200 and 128 hair fixtures; a sheet head-fit and crop-state case). Phase 2 does not start before a pass verdict with every Blocker closed and a new round on the new HEAD. Send F4, F5 and F12 to the spec owner: F5 and F12 are the two Green deviations (eye width 0.6; nearest-neighbour), neither a Blocker and neither a false pass; F4 changes the spec example glasses colour #3b2a1e. F6 to F11 are Major and carry a one-line fix each. The first round of the adversarial pass is this one; a re-run after the Green fix is the next round for the Late-finding count.
+END_MEASURE_AGENT_RESULT
