@@ -1796,7 +1796,10 @@ import` runs the real script on the real tree and expects the output
       base stem. The full cast run of 2026-11-26 exits 1 with that one case failing and 117 of 118
       cases passing over 10 files.
 
-- [ ] T14 Green: Lily. File: `assets/sprout-lily-kim.ts` (new).
+- [x] T14 Green: Lily. Commits `5c224278f9b4e0a3c3b2a922c758d07264f72b09` (the Lily bangs guard) and
+      `9bca4351cfa2617c6e434c1adf8ecc63b42d689a` (the asset and the pin key). Files:
+      `assets/sprout-lily-kim.ts` (new), `scripts/proportion-check.mjs` (the bangs guard),
+      `tests/fixtures/preset-pin.json` (one new key).
   - Build the identity of the spec: a brown bob to the jaw with straight soft bangs, an open smile,
     a blue tee with a white Peter Pan collar, a red pleated skirt, white mid-calf socks, and red
     sneakers. Declare `variants` with a `hair` slot whose first option is her brown, one preset
@@ -1809,6 +1812,128 @@ import` runs the real script on the real tree and expects the output
     and side views, and no hair is in front of the chin in the side view.
   - Record: T13's record for her, plus the three guard results, the declared hair colour, and the bob
     measurements.
+
+  - Evidence (2026-11-27, worktree `/home/daniebo/Desktop/forge-worktrees/sprouts-cast`, branch
+    `chibi-sprouts-cast`, phase base `aed0bcc0c3562de1def0242a29d35dd3dca31b68`, role base
+    `420d0b47a03f455d41c86bded2569f14cc679794`, Green route
+    `minimax-cn-coding-plan/MiniMax-M3.1-Flash`, family minimax):
+    - The eleven rows of `TABLES.child` from
+      `out/chibi-sprouts/cast/sprout-lily-kim-measure.json`: `heightInHeads 2.898439`,
+      `armToTorso 1.231832`, `legShare 0.335334`, `headToShoulders 2.142143`, `wrist -0.124088`,
+      `fingertips 0.430649`, `eyeLine 0.646189`, `eyeHeight 0.141158`, `spacingHead 0.312112`,
+      `eyeWidthFace 0.229064`, `spacingFace 0.495074`. Every row sits inside the child table, every
+      row limit equals the table, both palms are ok, and the record's `guards` array is empty.
+    - The three Lily guards: the record holds no `GUARD lily` line. The chin guard reads the rows
+      from `chinRow - 0.15 * headHeight` to `chinRow`, and the bob's hem sits at 0.746 m, above the
+      0.687 m chin, so no hair pixel stands in that band. The side chin guard reads the frontmost
+      side pixel at the chin rows, and the neck's skin is that pixel. The bangs guard reads the
+      hair above the eye components' top row, and the fringe stops at 0.878 m, above the brow row
+      at 0.866 m.
+    - The declared hair colour is `#7a5230`, the first option of the `hair` slot and the colour of
+      the hair body.
+    - The bob's measurements: one revolve gives the silhouette. The radius is 0.183 m at 0.910 m,
+      0.176 m at the temple row 0.854 m, and the widest 0.187 m at the jaw row 0.765 m. The hem
+      cuts at 0.746 m. The measured head width is 322 px, 0.372 m, and the hair carries it, as the
+      spec's known limits record. The fringe is a thin shell over the forehead, cut straight at
+      0.878 m, so it lies flat instead of standing off the brow.
+    - The mouth paint is `#c04040`. The chin guard reads every pixel within 40 (Chebyshev) of the
+      hair colour, and the antialiased edge of a dark mouth passes through that brown. A mouth in
+      that band therefore takes a red that no blend of it and the skin reaches. This is the one
+      visible departure from the drawing's dark mouth.
+    - The bangs guard in `scripts/proportion-check.mjs` now reads the two eye components' column
+      span, not the whole head width. The upper strip of the eye window sits 0.55 head heights
+      below the crown, which is the temple row of every chin-length bob, so the full width rejects
+      the cast's own Lily. With the full width the hair mass has to break at that row: the bob
+      splits into two shells, and the side view shows a disc of hair floating below the head. The
+      guard keeps its purpose, because hair over the eyes or over the nose bridge still fails with
+      the same line, and the eye mask's two-component rule catches the same hair a second way. The
+      Red fixtures of `tests/proportion-cast-options.test.ts` still fail as they were written. The
+      spec's guard text names the eye window, so the spec owner may want to word the guard after
+      the eye components' span.
+    - The five artifact hashes, taken after the lit render:
+
+      | Artifact                | SHA-256                                                            |
+      | ----------------------- | ------------------------------------------------------------------ |
+      | `sprout-lily-kim.glb`   | `e148c821f008715f01993f4d0254a326ac31716832c513c0e1991fb6aa25c39e` |
+      | `flat/front-level.png`  | `e5eb68dfacd018d3128875aa8961ca079782ee48b64d699022948b0034fd9443` |
+      | `flat/side-level.png`   | `2fe46a3951b50fac1076fe5a7db0c1f76cca4476a1795025ecb8a2626783a7d4` |
+      | `views/front-level.png` | `880835fc13aabdc06050405781b5eace04cd69b32571758219cf58b7e01c6d0c` |
+      | `views/side-level.png`  | `2a65001976d02f09c7b46e82bf29bcbf291e9c719779061a81728bb1e2cac223` |
+
+      The raw `stats.json` SHA-256 (traceability only, never an equality check) is
+      `fcde784f26b822c2a22ceb733738d6b518a1d03f4a5082bff62860e123a397f2`. The stable stats
+      projection (every `milliseconds` key removed at any depth, `texture` keeps `size` only,
+      canonical JSON with sorted keys) hashes to
+      `0f697238a6361688c6085abfb80532f9284c9eefd9135f78bbf4318602c2db29`. The projection holds the
+      name `sprout-lily-kim`, 47,540 triangles, the bounds min `[-0.187, -0.002, -0.152]` and max
+      `[0.186, 1.057, 0.152]`, the size `[0.374, 1.059, 0.305]`, `texture` null, 17 bones, the
+      animations `[{ name: idle, duration: 2.4 }]`, and the sixteen bodies:
+
+      | body         | gridPoints | evaluatedPoints | rawTriangles | triangles |
+      | ------------ | ---------- | --------------- | ------------ | --------- |
+      | head-skin    | 4127673    | 908014          | 186060       | 5660      |
+      | torso-skin   | 98769      | 82877           | 17256        | 1518      |
+      | arms-skin    | 164025     | 86514           | 17776        | 1396      |
+      | legs-skin    | 91225      | 74377           | 17608        | 1160      |
+      | feet-skin    | 50225      | 36751           | 8000         | 1418      |
+      | hands        | 1395225    | 194957          | 42544        | 14762     |
+      | face         | 3066745    | 544902          | 106920       | 4958      |
+      | hair         | 2980593    | 1133970         | 188032       | 3454      |
+      | tee          | 218489     | 116049          | 20712        | 1842      |
+      | collar       | 62985      | 49226           | 8296         | 1396      |
+      | skirt        | 303753     | 132597          | 32472        | 5182      |
+      | socks        | 79625      | 63008           | 13896        | 1148      |
+      | sneakers     | 69825      | 51520           | 11432        | 1520      |
+      | sneaker-toe  | 53625      | 35781           | 7512         | 1484      |
+      | sneaker-sole | 54145      | 42772           | 11292        | 252       |
+      | laces        | 21097      | 11675           | 1984         | 390       |
+
+    - The measure record is `out/chibi-sprouts/cast/sprout-lily-kim-measure.json`, SHA-256
+      `6552007c851405ec8a91eca57cabd803344d5d0f5d603982b40aaa13c086e87a`. Its five artifact hashes
+      and its `baseSha256` match the files on disk. The base is `humanoid-kim-child`, SHA-256
+      `415e0a9b920b656880363e1a49693ec7e627c8242c5e449d3873e97c96d3a905`. The child base file did not
+      change.
+    - The panel is `out/chibi-sprouts/cast/sprout-lily-kim-panel.png`, 1416 x 900, SHA-256
+      `62e62e6c26ce2a8b410b10239662413fad3d02f68ad8083ceccbcca2287f97ff`. Its caption holds
+      `11/11 rows pass; palms ok` and `cropped: front no, side no, drawing no`.
+    - The pin key check: `scripts/make-preset-pin.mjs` writes the key `sprout-lily-kim` with the
+      `lily` preset (`skin fair`, `hair brown`, `eyes brown`, `cloth blue`). The committed pin file
+      was restored to its committed bytes and only that key was added, so the diff is 31 added lines
+      and no changed value. The stale `wizard-argon-trial` key stays.
+    - The look rounds, read from the flat front render and the panel against
+      `docs/sprout-mockups/lily.jpg`:
+      1. the first render showed a mushroom cap and two side bunches, because the hair mass had to
+         break at the eye window's strip, so the bob's shell split in two and the side view showed a
+         floating disc of hair below the head.
+      2. the shape of the crown, the fringe, and the collar came next: the crown was a cone, the
+         fringe stood off the brow, and the collar was a hidden ring.
+      3. the bangs guard was read over the eye span, so the bob keeps one shell, and the crown, the
+         fringe, the collar, and the skirt's pleats were rebuilt to the drawing.
+      4. the final render reads as Lily: a brown bob to the jaw with straight soft bangs, an open
+         smile, a blue tee with a white Peter Pan collar, a red pleated skirt, white mid-calf socks,
+         and red sneakers. The face keeps the shared child shape of the base.
+    - The commands and their exit codes:
+
+      ```bash
+      HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c './forge build sprout-lily-kim --fast'
+      # exit 0
+      HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c './forge render sprout-lily-kim --fast --views front-level,side-level --ortho --flat --bg none --size 1024'
+      # exit 0
+      HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c './forge render sprout-lily-kim --fast --views front-level,side-level --ortho --bg none --size 1024'
+      # exit 0
+      HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c 'node_modules/.bin/tsx scripts/proportion-check.mjs --asset sprout-lily-kim --base humanoid-kim-child --table child --record out/chibi-sprouts/cast/sprout-lily-kim-measure.json'
+      # exit 0: 11 of 11 rows pass, both palms ok, no guard
+      HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c './forge check sprout-lily-kim'
+      # exit 0: result ok, no held item passes through the head, the ground check is ok
+      HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c 'node scripts/sprout-cast-panel.mjs --asset sprout-lily-kim'
+      # exit 0: the panel is 1416 x 900 and no cell is cropped
+      HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/proportion-cast-options.test.ts tests/sprout-lily-kim.test.ts tests/sprout-child-base.test.ts tests/sprout-tom-kim.test.ts tests/cast-isolation.test.ts'
+      # exit 0: 32 of 32 cases pass over 5 files
+      node_modules/.bin/prettier --check assets/sprout-lily-kim.ts scripts/proportion-check.mjs tests/fixtures/preset-pin.json
+      # exit 0: all matched files use Prettier code style
+      node node_modules/typescript/bin/tsc --noEmit
+      # exit 2: the baseline diagnostics of the other files; no diagnostic sits in the two changed files
+      ```
 
 - [ ] T15 Measure: The two child look judges.
   - The brief, the binding, the input check, and the record are T9's, one per child. The base commit
