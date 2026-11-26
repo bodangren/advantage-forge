@@ -55,7 +55,7 @@ export const VOICE = [
   { id: 'vo2', t: 8.3, text: 'ศัตรูหกสิบแปดแบบ รอท้าทายอยู่ค่ะ' },
   { id: 'vo3', t: 18.9, text: 'ฮีโร่สิบห้าคลาส พร้อมออกผจญภัยค่ะ' },
   { id: 'vo4', t: 24.15, text: 'พร้อมหรือยังคะ' },
-  { id: 'vo5', t: 38.55, text: 'เร็ว ๆ นี้ ใน ไพรมารี แอดแวนเทจ และ ทิวเตอร์ แอดแวนเทจนะคะ' },
+  { id: 'vo5', t: 38.55, text: 'เล่นได้แล้ว ใน ไพรมารี แอดแวนเทจนะคะ' },
 ] as { id: string; t: number; text: string; speed?: number }[];
 
 /** Jingle sections: video from..to plays the jingle from `src` seconds. */

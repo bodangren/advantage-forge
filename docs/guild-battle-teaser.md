@@ -1,7 +1,7 @@
 # Chibi Quest: The Great Battle (teaser storyboards)
 
-**Version:** 1.3
-**Date:** 2026-09-30
+**Version:** 1.4
+**Date:** 2026-11-27
 **Status:** Approved for production (owner decisions of 2026-09-30)
 **Track:** [showcase_battle_teaser_20260930](../measure/tracks/showcase_battle_teaser_20260930/)
 
@@ -44,7 +44,7 @@ accent at 36.77 s. From 34.54 s to the impact, the world runs at 0.3x (slow moti
 | 8.3 | ศัตรูหกสิบแปดแบบ รอท้าทายอยู่ค่ะ | 68 kinds of enemies are waiting to challenge you. |
 | 18.9 | ฮีโร่สิบห้าคลาส พร้อมออกผจญภัยค่ะ | 15 hero classes are ready for adventure. |
 | 24.15 | พร้อมหรือยังคะ | Are you ready? |
-| 38.55 | เร็ว ๆ นี้ ใน ไพรมารี แอดแวนเทจ และ ทิวเตอร์ แอดแวนเทจนะคะ | Coming soon in Primary Advantage and Tutor Advantage. |
+| 38.55 | เล่นได้แล้ว ใน ไพรมารี แอดแวนเทจนะคะ | Play it now in Primary Advantage. |
 
 The charge has no voice; the jingle and the sound effects carry it. The last line does not say
 "ชิบิ เควสต์": with the name, the take was 6.2 s long and passed the end of the video. The end
@@ -109,7 +109,8 @@ side free of text.
 ## End card
 
 - CHIBI QUEST
-- "เร็ว ๆ นี้ ใน" (coming soon in), the Primary Advantage and Tutor Advantage logos.
+- "เล่นได้แล้วใน" / "ไพรมารี แอดแวนเทจ" (play it now in Primary Advantage), the Primary
+  Advantage and Tutor Advantage logos.
 - The company LINE QR code with "สอบถามทาง LINE" (from the website's contact page).
 - No launch date.
 
@@ -134,7 +135,7 @@ win?"
 ```text
 ฮีโร่ 15 คลาส ปะทะ ศัตรู 68 แบบ! อัศวินกับจอมทัพออร์ค ใครจะชนะคะ?
 
-Chibi Quest โลกเกมผจญภัยสำหรับเด็กประถม มาเร็ว ๆ นี้ ใน Primary Advantage และ Tutor Advantage นะคะ
+Chibi Quest โลกเกมผจญภัยสำหรับเด็กประถม เล่นได้แล้วใน Primary Advantage นะคะ
 
 สอบถามทาง LINE ได้เลยค่ะ (สแกน QR ท้ายคลิป)
 
@@ -142,15 +143,15 @@ Chibi Quest โลกเกมผจญภัยสำหรับเด็ก�
 ```
 
 Meaning: "15 hero classes against 68 kinds of enemies! The knight against the orc warlord. Who
-will win? Chibi Quest, an adventure game world for primary-school children, comes soon in
-Primary Advantage and Tutor Advantage. Ask us on LINE (scan the QR code at the end of the
-clip)." On Shorts, remove "(สแกน QR ท้ายคลิป)" if the end card is cropped.
+will win? Chibi Quest, an adventure game world for primary-school children, is playable now in
+Primary Advantage. Ask us on LINE (scan the QR code at the end of the clip)." On Shorts, remove
+"(สแกน QR ท้ายคลิป)" if the end card is cropped.
 
 **Tags (YouTube):** Chibi Quest, ชิบิ เควสต์, Primary Advantage, Tutor Advantage, เกมผจญภัย
 
 **Thumbnail:** `out/battle/thumb-16x9.jpg` (1280 x 720, 0.32 MB). The knight and the orc warlord in
 the air just before the impact, with "VS", the two counters, "ใครจะชนะ?!" (who will win?!),
-"เร็ว ๆ นี้!" (coming soon!), and a red arrow at the orc warlord. The bottom-right corner
+"เล่นได้แล้ว!" (play it now!), and a red arrow at the orc warlord. The bottom-right corner
 stays clear for the YouTube time stamp.
 
 **Reels cover:** `out/battle/thumb-9x16.jpg` (1080 x 1920). The same still, cut on a diagonal:
@@ -190,3 +191,4 @@ node --import tsx scripts/battle.ts thumb 9x16 '?bg=/out/battle/thumb-bg-16x9.pn
 | 1.1 | 2026-09-30 | Enemy count 54 to 68 (counter and voice line vo2); S3 ends lower and closer. After the still review: S2 and S4 stop at the ends of the front rank; parade cuts hide the units in front; the slime stays clear of the end card. |
 | 1.2 | 2026-09-30 | Publishing: titles, description, tags, the thumbnail, and the Reels cover (`battle.ts thumb`; the page takes `?cam=` and `?turn=` for the still). |
 | 1.3 | 2026-09-30 | The owner checks the Thai; no separate native-speaker review. |
+| 1.4 | 2026-11-27 | The owner said the teaser claimed a future launch, but Chibi Quest is live. The voice line vo5, the end card, the description, and the thumbnail now say play it now in Primary Advantage. Thai and English copy in this document match the new media. |

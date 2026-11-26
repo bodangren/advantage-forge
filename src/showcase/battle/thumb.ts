@@ -41,7 +41,7 @@ root.innerHTML = `
   <div class="burst"></div>
   <div class="vignette"></div>
   <div class="logo title-text">CHIBI QUEST</div>
-  <div class="soon"><span>เร็ว ๆ นี้!</span></div>
+  <div class="soon"><span>เล่นได้แล้ว!</span></div>
   <div class="vs">VS</div>
   <div class="badge hero"><span class="pre">ฮีโร่</span><span class="num">${HERO_CLASSES}</span><span class="post">คลาส</span></div>
   <div class="badge enemy"><span class="pre">ศัตรู</span><span class="num">${ENEMY_KINDS}</span><span class="post">แบบ</span></div>

@@ -638,7 +638,7 @@ function buildOverlay(): void {
     else if (cap.kind === 'endcard')
       el.innerHTML = `
         <div class="end-title">CHIBI QUEST</div>
-        <div class="end-soon">เร็ว ๆ นี้ ใน</div>
+        <div class="end-soon">เล่นได้แล้วใน<br>ไพรมารี แอดแวนเทจ</div>
         <div class="end-logos"><img src="${primaryLogo}" alt="Primary Advantage" /><img src="${tutorLogo}" alt="Tutor Advantage" /></div>
         <div class="end-line"><img src="${lineQr}" alt="LINE" /><span>สอบถามทาง LINE</span></div>`;
     overlay.append(el);

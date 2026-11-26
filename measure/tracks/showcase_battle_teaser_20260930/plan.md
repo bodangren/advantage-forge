@@ -4,16 +4,16 @@ Status: in progress. The plan records execution state. The storyboard document r
 
 ## Phase 1: Storyboards
 
-- [x] Task: Save both storyboards with the owner decisions in `docs/guild-battle-teaser.md`.
+- [x] Task: Save both storyboards with the owner decisions in `docs/guild-battle-teaser.md`. Commit 421debdf.
 
 ## Phase 2: Page and choreography
 
-- [x] Task: Generate the roster and build the battlefield page with both formats.
+- [x] Task: Generate the roster and build the battlefield page with both formats. Commit 421debdf.
   - `scripts/battle.ts roster`: 15 heroes, 58 enemies, 8 monsters; frozen copy in `out/battle/cast/`.
     Not committed at copy time (crowd only, no close-ups): banshee, highwayman, living-statue,
     mercenary, ogre-brute, plague-bearer, raider, wood-golem.
   - The page loads all 172 units (50 heroes, 121 horde, 1 slime) in about 4 minutes.
-- [x] Task: Write the shared choreography and both shot lists; review stills of every shot.
+- [x] Task: Write the shared choreography and both shot lists; review stills of every shot. Commit 421debdf.
   - Reviewed 16:9 stills at 3.0, 8.0, 14.5, and 17.0 s: title, horde front (front light, counter,
     name tags) are good. S3 ends too high: the horde reads small and flat; lower and closer.
   - 2026-09-30 08:40: the still run for the other shots was stopped by Claude Code because the
@@ -42,14 +42,14 @@ Status: in progress. The plan records execution state. The storyboard document r
 
 ## Phase 3: Sound
 
-- [x] Task: Generate the Thai voice-over with mmx and mix it with the jingle and sound effects.
+- [x] Task: Generate the Thai voice-over with mmx and mix it with the jingle and sound effects. Commit 421debdf.
   - `out/battle/vo/vo1..vo5.mp3` and `out/battle/soundtrack.wav` (-13 LUFS). Not yet reviewed by ear.
   - 2026-09-30 11:10: vo2 made again for 68 ("ศัตรูหกสิบแปดแบบ รอท้าทายอยู่ค่ะ", 3.84 s); the
     54 take is in `out/battle/vo-archive/`. Soundtrack rebuilt: -13.0 LUFS, peak -1.5 dBFS.
 
 ## Phase 4: Record and review
 
-- [x] Task: Record the 16:9 and 9:16 videos and review contact sheets of both.
+- [x] Task: Record the 16:9 and 9:16 videos and review contact sheets of both. Commit 421debdf.
   - The first 16:9 run in a Claude background task stopped at the 2 h limit (frame 240 of
     1350): the forge builds made it slow (up to 14.9 s per frame). The owner recorded both
     formats in a terminal.
@@ -58,15 +58,16 @@ Status: in progress. The plan records execution state. The storyboard document r
   - `sheet-16x9.png` and `sheet-9x16.png` agree with the still review; no new defects.
   - Open: the owner listens to the audio and checks the Thai (voice-over, counters, end card,
     and the publishing copy).
-- [x] Task: Title, description, and thumbnail.
+- [x] Task: Title, description, and thumbnail. Commit 421debdf.
   - Copy: `docs/guild-battle-teaser.md`, "Publishing" (v1.2).
   - Thumbnail: `out/battle/thumb-16x9.jpg` (1280 x 720, 0.32 MB): the leap at 36.15 s from a
     closer camera, with the leaders turned toward it (`?cam=...&turn=30,65`), and the dressing
     from `thumb.html`.
   - Reels cover: `out/battle/thumb-9x16.jpg` (1080 x 1920, 0.51 MB), made from the same still
     (no second 3D render): the orc warlord above a diagonal cut, the knight below it.
-- [b] Task: Owner review of the audio and the Thai text (voice-over, counters, end card, and the
+- [~] Task: Owner review of the audio and the Thai text (voice-over, counters, end card, and the
   publishing copy). (Added 2026-10-02: the open item of the recording task, as a task.)
+  2026-11-27: live wording change in progress (vo5, end card, thumbnail, description).
   deferred:thai Task aEQ0ak45X0RkbzNlT3VXbg.
 - [ ] Task: Publish the teaser after the owner passes the audio and Thai check. The copy waits in
   `docs/guild-battle-teaser.md` ("Publishing").
