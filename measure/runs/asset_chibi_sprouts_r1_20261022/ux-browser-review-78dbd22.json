@@ -1,0 +1,165 @@
+{
+  "schema_version": 1,
+  "role": "ux-browser-review",
+  "track": "asset_chibi_sprouts_r1_20261022",
+  "phase": "Phase 5: The rest of the inventory (after the look check)",
+  "phase_base_sha": "e43ccce0",
+  "role_base_sha": "78dbd2284571a05f2bf63f9212940f1a01ad748c",
+  "audited_head": "78dbd2284571a05f2bf63f9212940f1a01ad748c",
+  "status": "pass",
+  "summary": "All seven characters meet the 7.5 character bar. No confirmed critical fault was seen in 32 inspected PNGs: seven static renders with references, point-up for all six gesture-bearing characters, stretch-up and hug-self for Lily and Mom, and three to eight gestures per adult. F1 is closed: point-up sleeves no longer expose skin and Mom's sweater hem no longer points. F2 is closed: Lily's fringe reads as separate soft locks and the dark face rim is reduced. F3 is closed: both base SHAs were supplied and verified. One small brown patch on Grandpa's sweater in listen is recorded as a nonblocking item for confirmation.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "Grandpa: a small brown oval appears on the side of the green sweater in gestures-adult/grandpa/listen.png. It is not visible in point-up, stretch-up, hug-self, reach, eat-lift, count-fingers-high or turn-side. Confirm whether it is trouser fabric or skin through the sweater, and remove it either way.",
+    "The requested clap frames do not exist for Lily or Mom in week2-7; only week1 adventurer has clap-apart and clap-together. hug-self and stretch-up were inspected as substitutes. No fault was seen in them.",
+    "The named style differences from the references are recorded per character below. None reaches the critical-fault bar."
+  ],
+  "evidence": [
+    "HEAD at start was 78dbd2284571a05f2bf63f9212940f1a01ad748c, matching the supplied audited_head and role_base_sha. HEAD is current; no commit after 554b61c4 touches the sprout assets or this track.",
+    "phase_base_sha e43ccce0 is the commit that renamed the heading to '## Phase 5: The rest of the inventory (after the look check)' in plan.md. F3 is closed.",
+    "Fix commits confirmed: ef5be6c4 (adult sleeves cover the arm), 4fa91ee8 (Grandma cuffs close on the wrist), 4f7a6776 (Lily fringe locks r5). All fall inside the phase range e43ccce0..HEAD.",
+    "Read plan.md lines 280-339 and spec.md. The spec requires an independent review at the 7.5 character bar and a G rating with no combat, injury or weapon.",
+    "Inspected seven static renders, each with its reference: out/sprout-{lily,adult-base,mom,dad,grandma,grandpa,tom}/render.png.",
+    "Inspected point-up.png for Lily, Tom, Mom, Dad, Grandma and Grandpa. Every raised arm is covered to the wrist; the hand emerges at the cuff with no jagged skin patches. Mom's sweater hem is flat with no sharp point. F1 is closed.",
+    "Inspected stretch-up.png and hug-self.png for Lily, Mom, Dad, Grandma and Grandpa; listen.png for Lily, Dad, Grandma and Grandpa; plus Grandpa reach, eat-lift, count-fingers-high and turn-side. No hand or skin passes through a garment or hair in these frames.",
+    "Lily's fringe now shows five separate soft bangs with different depths in front, three-quarter and gesture views. The dark inner face rim is reduced. F2 is closed.",
+    "No character wears a hat, helmet or head covering in this cast, and no accessory faces the wrong way. Grandpa's glasses and mustache face front; the white shape at the back of his head is a hair band, not a reversed mustache. All characters are clothed, friendly and rated G.",
+    "No builds or renders were run. Only existing PNG files were inspected with the read tool. PROJECT_DEV_URL was not used because this review is image-only by task instruction."
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "git log --oneline -1 ef5be6c4",
+    "git log --oneline -1 4fa91ee8",
+    "git log --oneline -1 4f7a6776",
+    "git log --oneline -1 e43ccce0",
+    "git log --oneline -1 554b61c4",
+    "git log --oneline e43ccce0..HEAD -- assets/ measure/tracks/asset_chibi_sprouts_r1_20261022/",
+    "git log --oneline 554b61c4..HEAD -- assets/ measure/tracks/asset_chibi_sprouts_r1_20261022/",
+    "git show --format= --unified=0 e43ccce0 -- measure/tracks/asset_chibi_sprouts_r1_20261022/plan.md | grep -n 'Phase 5'",
+    "find out/chibi-sprouts -iname '*clap*' -type f"
+  ],
+  "changed_files": [],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "medium",
+  "route": "none",
+  "webbridge_status": "not_run",
+  "webbridge_evidence": {
+    "screenshots": [
+      "out/sprout-lily/render.png",
+      "out/sprout-adult-base/render.png",
+      "out/sprout-mom/render.png",
+      "out/sprout-dad/render.png",
+      "out/sprout-grandma/render.png",
+      "out/sprout-grandpa/render.png",
+      "out/sprout-tom/render.png",
+      "out/chibi-sprouts/r1/week2-7/gestures/lily/point-up.png",
+      "out/chibi-sprouts/r1/week2-7/gestures/lily/stretch-up.png",
+      "out/chibi-sprouts/r1/week2-7/gestures/lily/hug-self.png",
+      "out/chibi-sprouts/r1/week2-7/gestures/lily/listen.png",
+      "out/chibi-sprouts/r1/week2-7/gestures/tom/point-up.png",
+      "out/chibi-sprouts/r1/week2-7/gestures-adult/mom/point-up.png",
+      "out/chibi-sprouts/r1/week2-7/gestures-adult/mom/stretch-up.png",
+      "out/chibi-sprouts/r1/week2-7/gestures-adult/mom/hug-self.png",
+      "out/chibi-sprouts/r1/week2-7/gestures-adult/dad/point-up.png",
+      "out/chibi-sprouts/r1/week2-7/gestures-adult/dad/stretch-up.png",
+      "out/chibi-sprouts/r1/week2-7/gestures-adult/dad/hug-self.png",
+      "out/chibi-sprouts/r1/week2-7/gestures-adult/dad/listen.png",
+      "out/chibi-sprouts/r1/week2-7/gestures-adult/grandma/point-up.png",
+      "out/chibi-sprouts/r1/week2-7/gestures-adult/grandma/stretch-up.png",
+      "out/chibi-sprouts/r1/week2-7/gestures-adult/grandma/hug-self.png",
+      "out/chibi-sprouts/r1/week2-7/gestures-adult/grandma/listen.png",
+      "out/chibi-sprouts/r1/week2-7/gestures-adult/grandpa/point-up.png",
+      "out/chibi-sprouts/r1/week2-7/gestures-adult/grandpa/stretch-up.png",
+      "out/chibi-sprouts/r1/week2-7/gestures-adult/grandpa/hug-self.png",
+      "out/chibi-sprouts/r1/week2-7/gestures-adult/grandpa/listen.png",
+      "out/chibi-sprouts/r1/week2-7/gestures-adult/grandpa/reach.png",
+      "out/chibi-sprouts/r1/week2-7/gestures-adult/grandpa/count-fingers-high.png",
+      "out/chibi-sprouts/r1/week2-7/gestures-adult/grandpa/eat-lift.png",
+      "out/chibi-sprouts/r1/week2-7/gestures-adult/grandpa/turn-side.png"
+    ],
+    "accessibility_snapshots": [],
+    "interactions": []
+  },
+  "ux_applicability": "applicable",
+  "characters": [
+    {
+      "name": "Lily",
+      "rating": 7.5,
+      "verdict": "PASS",
+      "critical": "None seen. No hand through hair in point-up, stretch-up, hug-self or listen.",
+      "defects": [
+        {"name": "Inner side-hair edge", "fix": "Lift the warm paint along the inner side cut a little more so the jaw edge reads less dark."},
+        {"name": "Bang tips", "fix": "Vary the five bang tips further toward the soft strands of the reference."},
+        {"name": "Bob length", "fix": "Lengthen the side locks slightly toward the chin-length reference hem."}
+      ]
+    },
+    {
+      "name": "Adult base",
+      "rating": 7.5,
+      "verdict": "PASS",
+      "critical": "None seen in the four static views. The base has no individual gesture set.",
+      "defects": [
+        {"name": "Rigid hair shapes", "fix": "Soften the separate hair locks if this base is ever used as a finished character."},
+        {"name": "Plain sweater", "fix": "Add knit detail only if a finished character uses this base."}
+      ]
+    },
+    {
+      "name": "Mom",
+      "rating": 7.5,
+      "verdict": "PASS",
+      "critical": "None seen. Point-up and stretch-up sleeves cover the arm; the hem is flat.",
+      "defects": [
+        {"name": "Cable-knit pattern", "fix": "Add the reference's cable-knit relief to the cream sweater without changing the silhouette."},
+        {"name": "Hair waves", "fix": "Shape the long curtains into the softer waves of the reference."},
+        {"name": "Hem centre notch", "fix": "Close the small triangular notch at the centre of the sweater hem."}
+      ]
+    },
+    {
+      "name": "Dad",
+      "rating": 7.5,
+      "verdict": "PASS",
+      "critical": "None seen in point-up, stretch-up, hug-self or listen.",
+      "defects": [
+        {"name": "Helmet hair", "fix": "Shape the short hair into the swept locks of the reference."},
+        {"name": "Tee hem notch", "fix": "Close the small centre notch at the bottom of the white tee."},
+        {"name": "Plaid scale", "fix": "Reduce the plaid squares slightly to match the reference check."}
+      ]
+    },
+    {
+      "name": "Grandma",
+      "rating": 7.5,
+      "verdict": "PASS",
+      "critical": "None seen. The cuffs close on the wrist in point-up, stretch-up, hug-self and listen.",
+      "defects": [
+        {"name": "Cardigan neck strips", "fix": "Replace the two long hanging strips with the open cardigan neckline of the reference."},
+        {"name": "Hair cap", "fix": "Add the parted white locks while keeping the round bun."},
+        {"name": "Skirt hem edge", "fix": "Smooth the jagged lower edge of the long skirt."}
+      ]
+    },
+    {
+      "name": "Grandpa",
+      "rating": 7.5,
+      "verdict": "PASS",
+      "critical": "No confirmed critical fault. The small brown patch on the sweater in listen is recorded as nonblocking for confirmation.",
+      "defects": [
+        {"name": "Sweater side patch", "fix": "Confirm the brown oval in listen.png and remove the fabric or skin breakthrough."},
+        {"name": "Collar strips", "fix": "Replace the long hanging strips with a small collar and V-neck as in the reference."},
+        {"name": "Brow contrast", "fix": "Remove the dark brows beneath the white tufts so the brows match the reference."}
+      ]
+    },
+    {
+      "name": "Tom",
+      "rating": 7.5,
+      "verdict": "PASS",
+      "critical": "None seen. The raised hand rests beside the ear and does not pass through the hair.",
+      "defects": [
+        {"name": "Smooth hair cap", "fix": "Add distinct swept locks to match the reference."},
+        {"name": "Young proportions", "fix": "Keep the eight-year-old silhouette a little less rounded while retaining the Sprout style."}
+      ]
+    }
+  ]
+}

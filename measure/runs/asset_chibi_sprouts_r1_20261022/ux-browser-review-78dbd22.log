@@ -1,0 +1,14 @@
+MEASURE_AGENT_RESULT
+status: complete
+verdict: PASS
+audited_head: 78dbd2284571a05f2bf63f9212940f1a01ad748c
+phase_base_sha: e43ccce0
+role_base_sha: 78dbd2284571a05f2bf63f9212940f1a01ad748c
+checks: Lily 7.5 PASS; adult base 7.5 PASS; Mom 7.5 PASS; Dad 7.5 PASS; Grandma 7.5 PASS; Grandpa 7.5 PASS; Tom 7.5 PASS. The character bar is 7.5. F1 closed, F2 closed, F3 closed. No confirmed critical fault.
+blocking_findings: none
+nonblocking_findings: Grandpa has a small brown patch on the sweater side in listen.png; confirm its source and remove it. Lily and Mom have no clap frames in week2-7, so hug-self and stretch-up were inspected instead. Named style differences are recorded per character in the JSON.
+evidence: HEAD matched the supplied audited_head and role_base_sha and is current. Phase base e43ccce0 added the Phase 5 heading. Fix commits ef5be6c4, 4fa91ee8 and 4f7a6776 fall inside the phase range. Seven static renders with references plus point-up for six characters, stretch-up and hug-self for Lily and Mom, and three to eight gestures per adult were inspected. No build or render was run; only existing PNG files were read. Clap does not exist for Lily or Mom in week2-7.
+retry_recommendation: none
+handoff: No routing to Green. The two base SHAs were supplied and verified. Keep the Grandpa listen patch and the absent clap frames as nonblocking notes for later confirmation.
+result_artifact: measure/runs/asset_chibi_sprouts_r1_20261022/ux-browser-review-78dbd22.json
+END_MEASURE_AGENT_RESULT
