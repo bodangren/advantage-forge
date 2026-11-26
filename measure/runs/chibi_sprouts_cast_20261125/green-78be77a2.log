@@ -1,0 +1,99 @@
+Green role log: Chibi Sprouts cast, Phase 2 "The adult variants", tasks T6, T7 and T8.
+
+Worktree: /home/daniebo/Desktop/forge-worktrees/sprouts-cast
+Branch: chibi-sprouts-cast
+Phase base: b48c3df3235d69337aecc90da7db6cd178455eed
+Role base (this round): d519ae1fcb4ee305813f0fe04ba5c8bc54b2c957
+Green route: minimax-cn-coding-plan/MiniMax-M3.1-Flash (family minimax)
+Red model of this phase: opencode-go/hungerg-free (family hungerg)
+
+Every command ran through the heavy runner:
+HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '<cmd>'
+
+1. The three adult assets (new files)
+
+- assets/sprout-dad-kim.ts: black swept-back hair with a quiff, a square jaw body, thick brows, an
+  open smile, a red-and-black plaid shirt over a white tee, dark blue jeans, brown boots. The face
+  layer rebuilds the KIM head volume, adds the base nose, inflates it by 0.002 m and keeps the
+  front half (z >= 0.02 m), so it covers the paint of the base head. castMeta holds no marks.
+- assets/sprout-grandma-kim.ts: white hair in a high bun above the crown, round cheeks, smile lines,
+  pearl studs, a green cardigan over a pale green dress, a mid-calf skirt, brown flats. castMeta
+  holds no marks.
+- assets/sprout-grandpa-kim.ts: a bald crown with white side hair, round dark-brown glasses and a
+  white moustache as paint, an open smile, a green V-neck sweater over a pale green collared shirt,
+  brown trousers, brown shoes. castMeta declares faceMarks.glasses #3b2a1e.
+- assets/parts/humanoid-kim.ts was not changed. No base module, no scrapped source, no Mom asset and
+  no other file under assets/ changed.
+
+2. The eleven rows of TABLES.kim (out/chibi-sprouts/cast/<name>-measure.json)
+
+sprout-dad-kim: heightInHeads 3.661998, armToTorso 1.328305, legShare 0.392931,
+  headToShoulders 1.181256, wrist -0.061303, fingertips 0.509578, eyeLine 0.620879,
+  eyeHeight 0.114685, spacingHead 0.381643, eyeWidthFace 0.222857, spacingFace 0.451429
+sprout-grandma-kim: heightInHeads 3.650215, armToTorso 1.328305, legShare 0.391679,
+  headToShoulders 1.174204, wrist -0.061303, fingertips 0.509578, eyeLine 0.620495,
+  eyeHeight 0.114329, spacingHead 0.382653, eyeWidthFace 0.228395, spacingFace 0.462963
+sprout-grandpa-kim: heightInHeads 3.660733, armToTorso 1.328305, legShare 0.392729,
+  headToShoulders 1.233947, wrist -0.061303, fingertips 0.509578, eyeLine 0.620947,
+  eyeHeight 0.112184, spacingHead 0.364679, eyeWidthFace 0.235119, spacingFace 0.473214
+Every row sits inside the table, every row limit equals the table, both palms are ok, and no guard
+fired for the three assets.
+
+3. The commands and their exit codes
+
+node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-dad-kim.test.ts        exit 0
+node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-grandma-kim.test.ts    exit 0
+node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-grandpa-kim.test.ts    exit 0
+node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/proportion-cast-options.test.ts exit 0
+node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-cast-panel.test.ts     exit 0
+node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/cast-isolation.test.ts        exit 0
+node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-mom-kim.test.ts        exit 0
+node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-mom-kim.validation.test.ts exit 0
+./forge build <name> --fast, then the flat and the lit level renders, then
+  node_modules/.bin/tsx scripts/proportion-check.mjs --asset <name> --table kim
+  --record out/chibi-sprouts/cast/<name>-measure.json                                  exit 0 for the three names
+./forge check sprout-dad-kim | sprout-grandma-kim | sprout-grandpa-kim                  result ok for the three names
+node scripts/sprout-cast-panel.mjs --asset <name> --date 2026-11-26                    1416 x 900 panel per name
+node_modules/.bin/tsx scripts/make-preset-pin.mjs                                      three new keys, no changed value
+node_modules/.bin/prettier --check <the three assets, the pin, plan.md>                exit 0
+node node_modules/typescript/bin/tsc --noEmit                                          51 baseline diagnostics, none in the new files
+
+4. The panels
+
+out/chibi-sprouts/cast/sprout-dad-kim-panel.png      1416 x 900
+  7455dbeadd0357f883f22fbead6eb1379fc0572ca56213533a8b35c5dc19f244
+out/chibi-sprouts/cast/sprout-grandma-kim-panel.png  1416 x 900
+  0317a6fc3662d05437c8a7a29c969df87d0cffb60abd2289c474c843ab4b9d45
+out/chibi-sprouts/cast/sprout-grandpa-kim-panel.png  1416 x 900
+  09c9dc6dc2f61fee5b9421e00472e2d62be34a78ca824fe8dd037fd7f4ad84d8
+Every panel caption reads "11/11 rows pass; palms ok" and "cropped: front no, side no, drawing no".
+
+5. The commits
+
+bae2072671011b3115fa54d29ea81e62eddaeec6  feat(chibi_sprouts_cast): dad adult variant
+096f82dbfedbe6722b5f19a7ac2ea1632ee9db08  measure(chibi_sprouts_cast): dad green evidence
+6ce871edee5ac74a28e2b8486d0213ac03fd1610  feat(chibi_sprouts_cast): grandma adult variant
+d920e57e11467387c39e473c812d78b013a44401  measure(chibi_sprouts_cast): grandma green evidence
+78be77a2af409704e5d132018d4d4c30e6e85169  feat(chibi_sprouts_cast): grandpa adult variant
+05be5aa0476247e446b73dd7a13ff12547739890  measure(chibi_sprouts_cast): grandpa green evidence
+
+6. The Red finding that the first Green round reported
+
+The three adult pins pinned the head joint at exactly 1.178 m, while the immutable base computes
+KIM.chin + 0.09 = 1.1780000000000002. The pins also pin assets/parts/humanoid-kim.ts as
+byte-identical, so no Green change could satisfy both. Red repaired the assertion in d519ae1f by
+comparing every joint element with toBeCloseTo(..., 6). No other assertion changed, and all three
+pins exit 0 against the assets of this round.
+
+MEASURE_AGENT_RESULT
+role: jr-green
+status: complete
+track: chibi_sprouts_cast_20261125
+phase: Phase 2: The adult variants
+commits: bae20726, 096f82db, 6ce871ed, d920e57e, 78be77a2, 05be5aa0
+tests_run: tests/sprout-dad-kim.test.ts exit 0; tests/sprout-grandma-kim.test.ts exit 0; tests/sprout-grandpa-kim.test.ts exit 0; tests/proportion-cast-options.test.ts exit 0; tests/sprout-cast-panel.test.ts exit 0; tests/cast-isolation.test.ts exit 0; tests/sprout-mom-kim.test.ts exit 0; tests/sprout-mom-kim.validation.test.ts exit 0; proportion-check for sprout-dad-kim, sprout-grandma-kim and sprout-grandpa-kim exit 0; forge check result ok for the three names; prettier --check exit 0; the TypeScript check holds the 51 baseline diagnostics with none in the new files
+files_changed: assets/sprout-dad-kim.ts (new), assets/sprout-grandma-kim.ts (new), assets/sprout-grandpa-kim.ts (new), tests/fixtures/preset-pin.json (three new keys), measure/tracks/chibi_sprouts_cast_20261125/plan.md (T6, T7, T8 evidence)
+plan_updates: T6, T7 and T8 are marked [x] with their implementation commit SHAs and hold the eleven rows, the look-round notes, the GLB stats, the pin-key check, and the panel path and SHA-256
+known_failures: none; T9 (the three adult look judges) and T10 (the Phase 2 gate) stay open, and T5 stays [~] for the Red role that owns it
+handoff: The three adult assets are built, rendered, measured and pinned. The panels are at out/chibi-sprouts/cast/<name>-panel.png with the SHA-256 sums recorded in the plan, the records at out/chibi-sprouts/cast/<name>-measure.json, and the GLB and render hashes in each record match the files on disk. The judge inputs of spec "The gate check of the judge inputs" can be computed from those files. T9 runs the look judge once per character against the panel and the drawing; the judge route and the record shape stay as the spec and the plan describe. The phase still holds the open Measure tasks T9 and T10, so the jr-green role gate reports the open tasks of the phase. Do not regenerate a panel after its judge, because the panel caption holds the date and the judge binds to the panel hash.
+END_MEASURE_AGENT_RESULT
