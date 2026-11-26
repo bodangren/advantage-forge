@@ -63,6 +63,7 @@ const CHILD_TABLE = [
 ];
 
 type Row = { name: string; value: number; lo: number; hi: number };
+type TableRow = Omit<Row, 'value'>;
 type RunResult = { status: number | null; output: string };
 
 function scriptUrl(): string {
@@ -119,7 +120,7 @@ function makeMomFixture(prefix: string): { root: string; script: string } {
   return { root, script };
 }
 
-function rowsFor(table: Row[]): Row[] {
+function rowsFor(table: TableRow[]): Row[] {
   return table.map((row) => ({ ...row, value: (row.lo + row.hi) / 2 }));
 }
 

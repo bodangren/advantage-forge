@@ -781,6 +781,13 @@ limit` gets exit 0 for a 350 px head.
 
     - No Green finding remains in these cases. The full result block is
       `measure/runs/chibi_sprouts_cast_20261125/red-62258e9.log`.
+  - Type correction after phase acceptance F2 (2026-11-26, role base
+    `ede60f0812c31584037b337485b203ae11b8edb8`): `rowsFor` now takes `TableRow[]`, where
+    `TableRow = Omit<Row, 'value'>`. No assertion changes.
+    - `tsc --noEmit` exits 2 with 51 existing diagnostics and no diagnostic in
+      `tests/proportion-cast-options.test.ts`.
+    - The five Phase 1 test files and `prettier --check` each exit 0.
+    - The full result block is `measure/runs/chibi_sprouts_cast_20261125/red-ede60f08.log`.
 
   - T3 record (2026-11-26). The audited scripts are `scripts/proportion-check.mjs` and
     `scripts/sprout-cast-panel.mjs`. Three rounds ran. The JSON and the log of each round are in

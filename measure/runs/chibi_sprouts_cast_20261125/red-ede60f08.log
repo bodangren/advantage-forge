@@ -1,0 +1,15 @@
+MEASURE_AGENT_RESULT
+role: mid-red
+status: partial
+track: chibi_sprouts_cast_20261125
+phase: Phase 1: The measuring tools
+baseline_sha: 5356e78730daefd5225f9733f190dc6bb631b90d
+role_base_sha: ede60f0812c31584037b337485b203ae11b8edb8
+audited_head_sha: ede60f0812c31584037b337485b203ae11b8edb8
+commits: none; type correction commit pending
+tests_run: tsc --noEmit exit 2 with 51 existing diagnostics and zero in tests/proportion-cast-options.test.ts; proportion exit 0; panel exit 0; isolation exit 0; Mom exit 0; Mom validation exit 0; Prettier exit 0
+files_changed: tests/proportion-cast-options.test.ts; measure/tracks/chibi_sprouts_cast_20261125/plan.md; measure/runs/chibi_sprouts_cast_20261125/red-ede60f08.log
+plan_updates: one T3 note records TableRow, the unchanged assertions, tsc result, and test exit codes
+known_failures: none in tests/proportion-cast-options.test.ts
+handoff: Commit only the test, plan, and this log. Leave the untracked adversarial and acceptance run files alone.
+END_MEASURE_AGENT_RESULT
