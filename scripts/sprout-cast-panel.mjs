@@ -40,6 +40,7 @@ export const NAMES = Object.keys(DRAWING_ROWS);
 const PAD = 24;
 const HEADROOM = 56;
 const BODY = 700;
+const CELL_H = HEADROOM + BODY; // the cell rows: the headroom band above the body band
 const CAPTION_H = 96;
 const CELL_W = 440;
 const PANEL_W = 1416;
@@ -378,14 +379,18 @@ async function writePanel(root, panel, date) {
   const layers = [];
   for (let i = 0; i < panel.cells.length; i++) {
     const cell = panel.cells[i];
+    const x = PAD + i * (CELL_W + PAD);
+    // The cell background of the Mom sheet: 254, so the 24 px pure-white bands stay the only
+    // separators.
+    layers.push({ input: await cellBuffer(CELL_W, CELL_H), left: x, top: PAD });
     layers.push({
       input: await sharp(cell.input, {
         raw: { width: cell.width, height: cell.height, channels: 4 },
       })
         .png()
         .toBuffer(),
-      left: PAD + i * (CELL_W + PAD) + cell.left,
-      top: cell.top,
+      left: x + cell.left,
+      top: PAD,
     });
   }
   layers.push({ input: panelCaption(panel, date), left: 0, top: PANEL_H - CAPTION_H });
@@ -422,14 +427,16 @@ async function writeSheet(root, date) {
       top: BASELINE - contentH,
       ink: false,
     });
+    const x = PAD + i * (SHEET_CELL_W + PAD);
+    layers.push({ input: await cellBuffer(SHEET_CELL_W, CELL_H), left: x, top: PAD });
     layers.push({
       input: await sharp(cell.input, {
         raw: { width: cell.width, height: cell.height, channels: 4 },
       })
         .png()
         .toBuffer(),
-      left: PAD + i * (SHEET_CELL_W + PAD) + cell.left,
-      top: cell.top,
+      left: x + cell.left,
+      top: PAD,
     });
   }
   const caption = textSvg(SHEET_W, CAPTION_H, [
