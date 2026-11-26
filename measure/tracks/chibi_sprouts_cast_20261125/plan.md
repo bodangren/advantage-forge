@@ -1527,7 +1527,7 @@ limit` gets exit 0 for a 350 px head.
 
 ## Phase 3: The children
 
-- [~] T11 Red: Pin the child base, Tom, and Lily.
+- [x] T11 Red: Pin the child base, Tom, and Lily. Commit `5d436c4545c86cad1d08bf9928aae89b8cbb68bb`.
       Files: `tests/sprout-child-base.test.ts`, `tests/sprout-tom-kim.test.ts`,
       `tests/sprout-lily-kim.test.ts` (all new).
   - `tests/sprout-child-base.test.ts` asserts the fixed landmarks of spec "The landmarks and the
