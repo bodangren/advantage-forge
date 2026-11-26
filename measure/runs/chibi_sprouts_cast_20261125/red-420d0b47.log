@@ -1,0 +1,15 @@
+MEASURE_AGENT_RESULT
+role: mid-red
+status: complete
+track: chibi_sprouts_cast_20261125
+phase: Phase 3: The children
+baseline_sha: aed0bcc0c3562de1def0242a29d35dd3dca31b68
+role_base_sha: 420d0b47a03f455d41c86bded2569f14cc679794
+audited_head_sha: f9c3981182e55445dc0d5b26e0ac0ce129615ad3
+commits: f9c3981182e55445dc0d5b26e0ac0ce129615ad3
+tests_run: pre-repair targeted case exit 1 with palm and eye failures; post-repair targeted case exit 0; requested ten-file cast set exit 0 with 118 passing tests; Prettier exit 0; tsc exit 2 with 51 pre-existing diagnostics and zero in tests/proportion-cast-options.test.ts
+files_changed: tests/proportion-cast-options.test.ts
+plan_updates: no plan edit; this log holds the bounded repair note so the concurrent Green plan work stays untouched
+known_failures: tests/sprout-lily-kim.test.ts remains outside the requested set because T14 has not delivered assets/sprout-lily-kim.ts or out/sprout-lily-kim/sprout-lily-kim.glb; tsc retains 51 pre-existing diagnostics
+handoff: The missing-base case now uses humanoid-kim-missing-fixture and still proves the file check runs before import or measurement. No other Phase 1 or Phase 2 case depends on the child base being absent. The test repair is committed; this log is the only remaining owned path.
+END_MEASURE_AGENT_RESULT
