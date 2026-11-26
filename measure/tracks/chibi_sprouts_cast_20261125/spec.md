@@ -317,8 +317,13 @@ one `hair` slot whose first option is her brown. The check adds three guards, an
    color sits inside the face component's column span, inset by 1 px at each edge.
 2. `GUARD lily side chin: hair at the front` — on the side mask, the frontmost column at the rows
    `chinRow - 2` to `chinRow` is a skin pixel, not a hair pixel.
-3. `GUARD lily bangs: hair in the eye window` — no hair pixel sits inside the eye window above the
-   eye components' top row.
+3. `GUARD lily bangs: hair in the eye window` — the guard reads the two eye components of the flat
+   front render, not the whole head width. It scans the rows from the eye window top row `r0` (the
+   crown row plus 0.55 head heights, floored) up to, but not including, the higher top row `y0` of
+   the two components (the smaller row number). It scans the columns from the smaller `x0` of the
+   two components to the larger `x1`, both included. One hair pixel in that rectangle fails. A hair
+   pixel has alpha 250 or more and a Chebyshev distance of 40 or less from the declared hair color.
+   Hair over an eye, or over the nose bridge between the eyes, still fails this line.
 
 Pass means zero of these guards. A synthetic fixture plants one hair row across the chin and expects
 the first named line.
@@ -372,7 +377,11 @@ over the base head. The rules are fixed:
 5. The mouth, brows, smile lines, freckles, glasses, and moustache are paint on the face layer, made
    by the extruded-stencil method of the AGENTS recipe. No mouth is a separate dark body.
 6. The child base builds its own open smile, because the base is new. Tom's freckles are paint on the
-   child face. Lily's hair is her own body.
+   child face. Lily's hair is her own body. Lily's mouth paint is `#c04040`. The chin guard matches
+   every pixel within 40 (Chebyshev) of the hair color `#7a5230`, and the antialiased edge of a dark
+   mouth blends through that brown. Each blend of the mouth color with the skin must therefore stay
+   more than 40 (Chebyshev) from the hair color. This is the one intended departure from the dark
+   mouth of her drawing.
 7. Mom is unchanged. Her asset declares no face layer and no `castMeta`, so her geometry, her paint,
    and her measurement are those of the redesign track. Her pin must pass unchanged.
 
