@@ -3,9 +3,9 @@
   "model_family": "nvidia",
   "red_family": "hungerg",
   "green_family": "minimax",
-  "asset_path": null,
+  "asset_path": "assets/sprout-dad-kim.ts",
   "asset_commit": "3cd8582a1cd6a5d0c5a154e84d87f2d7fb29de98",
-  "base_path": null,
+  "base_path": "assets/parts/humanoid-kim.ts",
   "base_commit": "41458a54a0282af2e062a1ed8a213f71856d7a40",
   "base_sha256": "769a80a9b3f5c30ec2fb6a10691b022aafa4b840180f99b054fd39b41b45e268",
   "asset_sha256": "896d889b3e2db721a647b371b97f714e0e6a2151787ad9c4bd5b21b19d1fea61",
@@ -16,12 +16,12 @@
     "litFront": "9d6c98d9b373debfdca8245041e49158c7413a2c417e7743ee2c12d34a5f5270",
     "litSide": "3817f50ea82ee88a19b8e324706b08f927b379ac6f8462e86d0c6e5b72639153"
   },
-  "panel_path": null,
+  "panel_path": "out/chibi-sprouts/cast/sprout-dad-kim-panel.png",
   "panel_sha256": "26513ebbcafa31e1646444e4c68d983b2f52b9473a4fd2c02378ec989b12993e",
   "identity_score": 7.7,
-  "identity_comment": null,
+  "identity_comment": "The face is simplified, the swept-up hair differs from the drawing, and the flannel has no pockets.",
   "proportion_score": 8.2,
-  "proportion_comment": null,
+  "proportion_comment": "The round faults name no proportion fault, and the proportional rows stay inside the Kim table.",
   "round": 2,
   "verdict": "pass",
   "judged_at": "2026-11-26",
@@ -75,5 +75,5 @@
       ]
     }
   ],
-  "note": "Null fields were not supplied by the task: asset_path, base_path, panel_path, identity_comment, proportion_comment. The faults list is recorded as given, without a per-score comment split."
+  "note": "Round 2 is the final round. Each comment is one sentence from the final-round faults. The round faults name no proportion fault."
 }

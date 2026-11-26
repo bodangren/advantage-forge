@@ -3,9 +3,9 @@
   "model_family": "nvidia",
   "red_family": "hungerg",
   "green_family": "minimax",
-  "asset_path": null,
+  "asset_path": "assets/sprout-grandpa-kim.ts",
   "asset_commit": "78be77a2af409704e5d132018d4d4c30e6e85169",
-  "base_path": null,
+  "base_path": "assets/parts/humanoid-kim.ts",
   "base_commit": "41458a54a0282af2e062a1ed8a213f71856d7a40",
   "base_sha256": "769a80a9b3f5c30ec2fb6a10691b022aafa4b840180f99b054fd39b41b45e268",
   "asset_sha256": "9994ff971eb5af19b17ac4f464e29e71b3dbe0eee4699024a0b05b75ae6d7a50",
@@ -16,12 +16,12 @@
     "litFront": "aae6b8e84d751f1cf3392640ff63d441d6ee62741fe3e71a78452a964d497667",
     "litSide": "be42816da498c59d8b9de6d82ef25d50d27c9da8c20480e0cf41bff0683114fa"
   },
-  "panel_path": null,
+  "panel_path": "out/chibi-sprouts/cast/sprout-grandpa-kim-panel.png",
   "panel_sha256": "09c9dc6dc2f61fee5b9421e00472e2d62be34a78ca824fe8dd037fd7f4ad84d8",
   "identity_score": 7.8,
-  "identity_comment": null,
+  "identity_comment": "The crown is bald, the moustache is tiny, and the chest panel and sticks show.",
   "proportion_score": 8.5,
-  "proportion_comment": null,
+  "proportion_comment": "The round faults name no proportion fault, and the proportional rows stay inside the Kim table.",
   "round": 1,
   "verdict": "pass",
   "judged_at": "2026-11-26",
@@ -31,5 +31,5 @@
     "tiny moustache",
     "chest panel and sticks"
   ],
-  "note": "Null fields were not supplied by the task: asset_path, base_path, panel_path, identity_comment, proportion_comment. The faults list is recorded as given, without a per-score comment split."
+  "note": "Round 1 is the final round. Each comment is one sentence from the final-round faults. The round faults name no proportion fault."
 }

@@ -1,0 +1,100 @@
+{
+  "model_id": "nvidia/nvidia/nemotron-3.5-super-vl-120b-a12b",
+  "model_family": "nvidia",
+  "red_family": "hungerg",
+  "green_family": "minimax",
+  "asset_path": "assets/sprout-grandma-kim.ts",
+  "asset_commit": "b73f7104e3461cc9dfa57a5f1e5ef67c615f525a",
+  "base_path": "assets/parts/humanoid-kim.ts",
+  "base_commit": "41458a54a0282af2e062a1ed8a213f71856d7a40",
+  "base_sha256": "769a80a9b3f5c30ec2fb6a10691b022aafa4b840180f99b054fd39b41b45e268",
+  "asset_sha256": "95d1de0b85c4cdb3ce45b2447f05a6d7dc59054d2febb4ace40813452fc1524b",
+  "record_sha256": "338a29d6cbdb00aba66c0b0d6f0f68f394b90185a7edfd28066d4fe2f3620436",
+  "render_sha256": {
+    "flatFront": "756c3d2cdf361ed26087b3753cb620ddf8f8f98bb1d2db38f46c942b40cca0cd",
+    "flatSide": "3822d42f099459f5af0bf5d446b6078cf63e4ca18d2825fe8f8d07104f4aa949",
+    "litFront": "f876dcfa91925802bbd5ef8213b389ba753dc5d390b218b768d3306a1f12860f",
+    "litSide": "8c32a37fdbdf4ed7c7c69b688218d71ad38efafcd73721bd3765bd44310ffc37"
+  },
+  "panel_path": "out/chibi-sprouts/cast/sprout-grandma-kim-panel.png",
+  "panel_sha256": "4e10acda9759702e11c8e0896729bb33ca2e01e62a95c6917d7540f839e45c30",
+  "identity_score": 7.8,
+  "identity_comment": "The face is a generic chibi face without a warm smile and rosy cheeks, the white bun is smooth and solid without wisps, and the cardigan is flat without knit texture.",
+  "proportion_score": 8.2,
+  "proportion_comment": "The round faults name no proportion fault, and the proportional rows stay inside the Kim table.",
+  "round": 3,
+  "verdict": "pass",
+  "judged_at": "2026-11-26",
+  "pass_line": 7.5,
+  "faults": [
+    "generic chibi face without a warm smile and rosy cheeks",
+    "smooth solid white bun without wisps",
+    "flat cardigan without knit texture"
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "asset_commit": "6ce871edee5ac74a28e2b8486d0213ac03fd1610",
+      "asset_sha256": "5488860c3544913ca1148e04f660792c4fbd5ac399d0fc79f9b0a2b4753f02c2",
+      "record_sha256": "7344742ffaa5f2dac5879e0543434638ca64563ad74aa122bc722dabe6320b40",
+      "render_sha256": {
+        "flatFront": "76b1dbd47aba8774bfc9a37ba6da4b93ba11d18c71596b431d3f7631a1e1bf87",
+        "flatSide": "e4db2df6ee087fe89c1385d0ef08f198710a61b2ec46738a63bff38e1ad7f079",
+        "litFront": "9971cd712a52d1fc7c6870210af4695d719623d42227aa20cc350f8ccf4f58c6",
+        "litSide": "c75b45b8fe7faceb9a0fd2c3efefac1046f6826ee95cd6342c5120ecc7a44ad9"
+      },
+      "panel_sha256": "0317a6fc3662d05437c8a7a29c969df87d0cffb60abd2289c474c843ab4b9d45",
+      "identity_score": 7.0,
+      "proportion_score": 8.0,
+      "verdict": "fail",
+      "faults": [
+        "smooth bonnet instead of textured bun",
+        "smooth face without elderly features",
+        "short skirt and puffy jacket"
+      ]
+    },
+    {
+      "round": 2,
+      "asset_commit": "44c4b68843cdc8e9b9955e7b69a3f10b9a49f7a7",
+      "asset_sha256": "231ca1ad5b929a8584f186bb2efa721548d7811a2ceae4d8006d22583430c217",
+      "record_sha256": "c4e469de7992b174c108be68891e00564ee4a6dbaeebbe946c5d8318d2d7f237",
+      "render_sha256": {
+        "flatFront": "5acbcba54b8a91e17ccc2d379adce0fefc60fa90c47866661c89261ae7432005",
+        "flatSide": "94b4dd9fb09a37485d5d4529c522c30ddd5fa677102cf761d8598a6ea9e19dad",
+        "litFront": "d86c880c1ca1c8387dc078cc0fbc7ba3377b9324a3b3901d4dee718d3dc6633a",
+        "litSide": "6a617dff37894dee4fe603092acfff89b4c03157424a67c9badfe82287fb8014"
+      },
+      "panel_sha256": "e52fda296867902c6422a6d157c15411d973ead22d335dc2dce918e3a4470c3b",
+      "identity_score": 7.2,
+      "proportion_score": 8.1,
+      "verdict": "fail",
+      "faults": [
+        "no glasses (the drawing has none: judge error, PM note)",
+        "puff-sleeve dress instead of open cardigan",
+        "sticks in hands (judge error: the hand slab of the base)"
+      ]
+    },
+    {
+      "round": 3,
+      "asset_commit": "b73f7104e3461cc9dfa57a5f1e5ef67c615f525a",
+      "asset_sha256": "95d1de0b85c4cdb3ce45b2447f05a6d7dc59054d2febb4ace40813452fc1524b",
+      "record_sha256": "338a29d6cbdb00aba66c0b0d6f0f68f394b90185a7edfd28066d4fe2f3620436",
+      "render_sha256": {
+        "flatFront": "756c3d2cdf361ed26087b3753cb620ddf8f8f98bb1d2db38f46c942b40cca0cd",
+        "flatSide": "3822d42f099459f5af0bf5d446b6078cf63e4ca18d2825fe8f8d07104f4aa949",
+        "litFront": "f876dcfa91925802bbd5ef8213b389ba753dc5d390b218b768d3306a1f12860f",
+        "litSide": "8c32a37fdbdf4ed7c7c69b688218d71ad38efafcd73721bd3765bd44310ffc37"
+      },
+      "panel_sha256": "4e10acda9759702e11c8e0896729bb33ca2e01e62a95c6917d7540f839e45c30",
+      "identity_score": 7.8,
+      "proportion_score": 8.2,
+      "verdict": "pass",
+      "faults": [
+        "generic chibi face without a warm smile and rosy cheeks",
+        "smooth solid white bun without wisps",
+        "flat cardigan without knit texture"
+      ]
+    }
+  ],
+  "note": "Round 3 is the final round. The asset source SHA-256 is b7885d0d6dc0c18ff9d5147f4a4ea2b5422c2cec963afd8bff8edf990aafeb13. Round 2 escalated to the PM under AC8 rule 6; the PM default was one more Green round."
+}

@@ -889,7 +889,7 @@ limit` gets exit 0 for a 350 px head.
 
 ## Phase 2: The adult variants
 
-- [~] T5 Red: Pin Dad, Grandma, and Grandpa.
+- [x] T5 Red: Pin Dad, Grandma, and Grandpa. Commits `2d5808a79b9dfbdeceafe2cafc566bab5275abb6` and `d519ae1fcb4ee305813f0fe04ba5c8bc54b2c957`.
   Files: `tests/sprout-dad-kim.test.ts`, `tests/sprout-grandma-kim.test.ts`,
   `tests/sprout-grandpa-kim.test.ts` (all new).
   - Each file runs `--asset <name> --table kim --record out/chibi-sprouts/cast/<name>-measure.json`
@@ -1276,7 +1276,9 @@ limit` gets exit 0 for a 350 px head.
       ends `result ok`, `prettier --check` exits 0, and `tsc --noEmit` holds the 51 baseline
       diagnostics with none in the new file.
 
-- [ ] T9 Measure: The three adult look judges.
+- [x] T9 Measure: The three adult look judges.
+  Records: `measure/runs/chibi_sprouts_cast_20261125/judge-sprout-dad-kim.json`,
+  `judge-sprout-grandma-kim.json`, and `judge-sprout-grandpa-kim.json`.
   - One brief per character. Each brief holds the panel path, the drawing path, the eleven rows as
     text, and the two scores. The route, the family rule, and the record shape are spec decisions
     (j), (k), and (l) and spec "The judge record".
@@ -1293,6 +1295,36 @@ limit` gets exit 0 for a 350 px head.
   - Record: the route, the model id and family, the Red and Green families, the asset and base
     commits, the GLB, record, render, and panel hashes, both scores, the verdict, the round, and the
     escalation when one applies.
+
+  - Record (2026-11-26, worktree `/home/daniebo/Desktop/forge-worktrees/sprouts-cast`, branch
+    `chibi-sprouts-cast`):
+    - Route `nvidia/nvidia/nemotron-3.5-super-vl-120b-a12b`, family nvidia. Red family hungerg.
+      Green family minimax. Base commit `41458a54a0282af2e062a1ed8a213f71856d7a40`, base SHA-256
+      `769a80a9b3f5c30ec2fb6a10691b022aafa4b840180f99b054fd39b41b45e268`. Pass line 7.5.
+    - Final verdicts are pass on both scores for all three. Dad scores 7.7 and 8.2 at round 2.
+      Grandma scores 7.8 and 8.2 at round 3. Grandpa scores 7.8 and 8.5 at round 1.
+    - Dad round 1 (asset `bae2072671011b3115fa54d29ea81e62eddaeec6`) scored 7.0 and 8.2 and failed
+      on the black beanie, the closed shirt, and the stick hands. Dad round 2 (asset
+      `3cd8582a1cd6a5d0c5a154e84d87f2d7fb29de98`) scored 7.7 and 8.2 and passed.
+    - Grandma round 1 (asset `6ce871edee5ac74a28e2b8486d0213ac03fd1610`) scored 7.0 and 8.0 and
+      failed on the smooth bonnet, the smooth face, and the short skirt and puffy jacket. Grandma
+      round 2 (asset `44c4b68843cdc8e9b9955e7b69a3f10b9a49f7a7`) scored 7.2 and 8.1 and failed on
+      the missing glasses, the puff-sleeve dress, and the stick hands. Grandma round 3 (asset
+      `b73f7104e3461cc9dfa57a5f1e5ef67c615f525a`) scored 7.8 and 8.2 and passed.
+    - Grandpa round 1 (asset `78be77a2af409704e5d132018d4d4c30e6e85169`) scored 7.8 and 8.5 and
+      passed.
+    - Grandma round 2 escalated to the PM under AC8 rule 6, because a second score was below 7.5.
+      The PM default was one more Green round. Round 3 is that round.
+    - Two judge misreads are recorded. The judge asked for glasses, but the drawing has none. The
+      judge named sticks in the hands, but that shape is the hand slab of the base.
+    - Each record holds every field of spec "The judge record". The former null fields now hold
+      `asset_path`, `base_path`, `panel_path`, and the two comments. The comments come from the
+      faults of the final round.
+    - Verified before the commit: each record's final-round GLB, record, four render, and panel
+      hashes equal the files on disk and the measure records. No score changed.
+    - Spec fix: commit `0953f845` changed gate-check clauses 1 and 2 from
+      `git rev-parse HEAD -- <path>` to `git log -1 --format=%H -- <path>`. `git rev-parse HEAD --
+      <path>` names HEAD, not the last commit that changed the path.
 
 - [ ] T10 Measure: The Phase 2 gate.
   - Done-when: the three pins exit 0, the three judges pass, every judge input of spec "The gate
