@@ -2217,13 +2217,62 @@ blue`), and the stale `wizard-argon-trial` key stays.
     - T16 checks every input again at the gate HEAD. A base change after this record voids both
       child verdicts.
 
-- [ ] T16 Measure: The Phase 3 gate.
+- [x] T16 Measure: The Phase 3 gate.
   - Done-when: the two pins exit 0, the two judges pass, every judge input of spec "The gate check of
     the judge inputs" is verified at the gate HEAD, including the shared child base commit and hash,
     `./forge check` ends `result ok` for each asset, the preset pin holds two new keys and no changed
     value, the child base imports only `src/index.js`, `./measure/generate.sh` exits 0, and
     `./measure/doctor.sh --structural-only` exits 0.
   - Record: the commands, the verdicts, each verified input, the hash pairs, and the pin diff.
+
+  - Record (2026-11-27, worktree `/home/daniebo/Desktop/forge-worktrees/sprouts-cast`, branch
+    `chibi-sprouts-cast`, phase base `aed0bcc0c3562de1def0242a29d35dd3dca31b68`, gate HEAD
+    `969c4fe89c40fd4b3d4f3bbabf4b391478206095`):
+    - Phase acceptance is `pass` at `969c4fe8`. The role-start and audited HEAD equal the gate HEAD,
+      and the phase base is `aed0bcc0`. The records are
+      `measure/runs/chibi_sprouts_cast_20261125/phase-acceptance-p3-969c4fe.json` and
+      `phase-acceptance-p3-969c4fe.log`. The acceptance record holds no blocking finding and one
+      nonblocking finding, F1.
+    - The adversarial round is `pass`, bound to `969c4fe8`. The records are
+      `adversarial-p3-969c4fe.json` and its log. The earlier round at `acb3afbb` is `pass` too, with
+      records `adversarial-p3-acb3afb.json` and its log. The two results carry no Blocker.
+    - Both child judges pass in round 2: Tom identity 8.0 and proportion 8.5; Lily identity 7.8 and
+      proportion 8.0. Round 1 was `fail` for both at identity 7.0 and proportion 8.0. The records are
+      `judge-sprout-tom-kim.json` and `judge-sprout-lily-kim.json`.
+    - The eleven judge inputs of spec "The gate check of the judge inputs" match at `969c4fe8`. The
+      hash triples (measure record, judge record, file on disk) are equal:
+      - Shared child base commit `1e1d3ab7a13445f9c58f129521c03a400310ea4c`, base hash
+        `415e0a9b920b656880363e1a49693ec7e627c8242c5e449d3873e97c96d3a905`.
+      - Tom asset commit `58c66c25e8020c5bd948cc3a67c6a975d9cd74d0`; GLB
+        `3958d9e788f194825a068ebbe69470760f34a82a452d9e95b3476495c79ac000`; record
+        `8a27e45b0cba2e9cd7bc6d6ce400c6453682125b5068269db6f383abb9427795`; panel
+        `734670c7f6856b97f3c5fd43795227000b612782f9712f88917a7d1aad2c5fa0`.
+      - Lily asset commit `fc22048b17dd02d31169ff192071293ee571ab3e`; GLB
+        `fbe2232826445103c59a04b8f9bcf7b34a84780123a827bd83dd25b26b48265d`; record
+        `e43dd124ab5d200f5e44c5e5b20a7272b1ac761c5516cb1dd555906a9b11435d`; panel
+        `00455629846d6bc70ef506e73098d4d4a62bfd7ebd45e3963e63dbbc2e1c9307`.
+    - The gates:
+      - The eleven-file cast suite exits 0 with 119 passing cases, and Prettier exits 0.
+      - The Tom and Lily proportion commands exit 0 with eleven rows in range, both palms ok, and no
+        guard. Tom rows: `2.896611 1.231832 0.335215 2.175515 -0.124088 0.430649 0.645125 0.138702
+0.308917 0.233503 0.492386`. Lily rows: `2.920782 1.231832 0.340370 2.144920 -0.124088 0.430649
+0.645638 0.140665 0.309375 0.227723 0.490099`.
+      - `./forge check sprout-tom-kim` and `./forge check sprout-lily-kim` end `result ok`.
+      - The preset pin adds exactly the keys `sprout-tom-kim` and `sprout-lily-kim`. All prior values
+        stay equal.
+      - `assets/parts/humanoid-kim-child.ts` imports only `src/index.js`.
+      - `./measure/generate.sh` exits 0 and leaves no tracked diff.
+    - Deviation: `./measure/doctor.sh --structural-only` exits 1 for two baseline links. The links are
+      the archived Kim sheet and the TD-43 run record. Both exist at the phase base, and commit
+      `d287b6cb` adds the missing record on master. Phase 2 acceptance accepted the same two limits in
+      `phase-acceptance-p2-556694d.json`. The links are outside this track and unchanged in Phase 3.
+    - The commit list of the Phase 3 diff from the phase base:
+      - Red: `5d436c45`, `f9c39811`.
+      - Green: `09966d9e`, `1e1d3ab7`, `5c224278`, `9bca4351`, `58c66c25`, `fc22048b`.
+      - Records and docs: `d58a7b54`, `8e12dee1`, `02b824e6`, `42d21c2a`, `76bfcfe7`, `420d0b47`,
+        `f859e742`, `213a9549`, `29201aac`, `80aa39f0`, `acb3afbb`, `fb3a5fa7`, `39f74a79`,
+        `fc3f5d46`, `58591de0`, `5f7bc587`, `b37133ff`, `969c4fe8`.
+      - Full SHA-1 for each commit is in `git log aed0bcc0..969c4fe8`.
 
 ## Phase 4: The panels and the handoff
 
