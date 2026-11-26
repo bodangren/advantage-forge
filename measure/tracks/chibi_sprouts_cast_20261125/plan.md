@@ -1527,7 +1527,7 @@ limit` gets exit 0 for a 350 px head.
 
 ## Phase 3: The children
 
-- [ ] T11 Red: Pin the child base, Tom, and Lily.
+- [~] T11 Red: Pin the child base, Tom, and Lily.
       Files: `tests/sprout-child-base.test.ts`, `tests/sprout-tom-kim.test.ts`,
       `tests/sprout-lily-kim.test.ts` (all new).
   - `tests/sprout-child-base.test.ts` asserts the fixed landmarks of spec "The landmarks and the
@@ -1546,6 +1546,52 @@ limit` gets exit 0 for a 350 px head.
   - Done-when: each file exits 1 inside its case on the absent module or asset, with no collection
     error. `prettier --check` exits 0.
   - Record: the case names, which cases are new failing cases, and the failure text.
+
+  - Red evidence (2026-11-26, worktree `/home/daniebo/Desktop/forge-worktrees/sprouts-cast`, branch
+    `chibi-sprouts-cast`, phase base `aed0bcc0c3562de1def0242a29d35dd3dca31b68`, role base
+    `aed0bcc0c3562de1def0242a29d35dd3dca31b68`):
+    - The child-base file keeps the fixed-module cases and the built-Tom-GLB cases in one file.
+      The fixed cases use the spec tolerances: crown and chin ±0.002 m, fixed joints and fingertip
+      ±0.005 m, built joints ±0.002 m, and built fingertip ±0.005 m. No computed float uses exact
+      equality.
+    - The Tom and Lily pins run the child base and child table with the named cast record. Lily also
+      checks the three named hair guards, `variants.hair`, `detail.chinRow`, and `detail.headHeight`.
+    - No production file and no Phase 1 or Phase 2 test changed.
+    - Command and result:
+
+      ```bash
+      HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-child-base.test.ts tests/sprout-tom-kim.test.ts tests/sprout-lily-kim.test.ts'
+      # exit 1: every new case fails inside its case on the absent module or asset
+      ```
+
+    - New failing cases and exact causes:
+
+      | File                              | Case                                                                          | Red failure                                                                                                                                                     |
+      | --------------------------------- | ----------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+      | `tests/sprout-child-base.test.ts` | `pins the crown, chin, and left fingertip landmarks`                          | `base humanoid-kim-child: not built: /home/daniebo/Desktop/forge-worktrees/sprouts-cast/assets/parts/humanoid-kim-child.ts`; expected `true`, received `false`. |
+      | `tests/sprout-child-base.test.ts` | `pins all 17 BASE_JOINTS and the five fixed joint heights`                    | `base humanoid-kim-child: not built: /home/daniebo/Desktop/forge-worktrees/sprouts-cast/assets/parts/humanoid-kim-child.ts`; expected `true`, received `false`. |
+      | `tests/sprout-child-base.test.ts` | `imports only src/index.js`                                                   | `base humanoid-kim-child: not built: /home/daniebo/Desktop/forge-worktrees/sprouts-cast/assets/parts/humanoid-kim-child.ts`; expected `true`, received `false`. |
+      | `tests/sprout-child-base.test.ts` | `Tom GLB holds the 17 joints, one idle clip, and one hands body`              | `asset sprout-tom-kim: not built: /home/daniebo/Desktop/forge-worktrees/sprouts-cast/out/sprout-tom-kim/sprout-tom-kim.glb`; expected `true`, received `false`. |
+      | `tests/sprout-child-base.test.ts` | `Tom GLB joint heights match BASE_JOINTS within 0.002 m`                      | `base humanoid-kim-child: not built: /home/daniebo/Desktop/forge-worktrees/sprouts-cast/assets/parts/humanoid-kim-child.ts`; expected `true`, received `false`. |
+      | `tests/sprout-child-base.test.ts` | `Tom GLB lowest left-hand vertex matches BASE_HANDS within 0.005 m`           | `base humanoid-kim-child: not built: /home/daniebo/Desktop/forge-worktrees/sprouts-cast/assets/parts/humanoid-kim-child.ts`; expected `true`, received `false`. |
+      | `tests/sprout-tom-kim.test.ts`    | `measures eleven child rows, both palms, and the named record`                | `asset sprout-tom-kim: not built`; `missing: assets/sprout-tom-kim.ts`; expected exit 0, received 1.                                                            |
+      | `tests/sprout-lily-kim.test.ts`   | `measures child rows and palms with hair declared and all Lily guards absent` | `asset sprout-lily-kim: not built`; `missing: assets/sprout-lily-kim.ts`; expected exit 0, received 1.                                                          |
+
+    - No collection, syntax, or module-import error occurs. Each missing module or asset check runs
+      inside its case before an import or read.
+    - `node_modules/.bin/prettier --check tests/sprout-child-base.test.ts tests/sprout-tom-kim.test.ts tests/sprout-lily-kim.test.ts`
+      exits 0.
+    - `node node_modules/typescript/bin/tsc --noEmit` through the heavy runner exits 2 with 51
+      existing diagnostics. None sits in the three new files.
+    - The existing cast regression command exits 0:
+
+      ```bash
+      HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/proportion-cast-options.test.ts tests/sprout-cast-panel.test.ts tests/cast-isolation.test.ts tests/sprout-mom-kim.test.ts tests/sprout-mom-kim.validation.test.ts tests/sprout-dad-kim.test.ts tests/sprout-grandma-kim.test.ts tests/sprout-grandpa-kim.test.ts'
+      # exit 0
+      ```
+
+    - Full command output and the result block:
+      `measure/runs/chibi_sprouts_cast_20261125/red-aed0bcc.log`.
 
 - [ ] T12 Green: The child base. File: `assets/parts/humanoid-kim-child.ts` (new).
   - Build the base of spec "The child base": the derived targets at 1.050 m, the 17 adult bone names,
