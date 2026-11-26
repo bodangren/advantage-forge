@@ -19762,6 +19762,37 @@
         }
       }
     },
+    "sprout-grandma-kim": {
+      "file": "sprout-grandma-kim.ts",
+      "presets": {
+        "grandma": {
+          "skin": {
+            "option": "fair",
+            "ratio": [1, 1, 1],
+            "default": "#f2c7a4",
+            "shade": "#d5af90"
+          },
+          "hair": {
+            "option": "white",
+            "ratio": [1, 1, 1],
+            "default": "#f0ece4",
+            "shade": "#d3d0c9"
+          },
+          "eyes": {
+            "option": "brown",
+            "ratio": [1, 1, 1],
+            "default": "#6e4020",
+            "shade": "#60371b"
+          },
+          "cloth": {
+            "option": "sage",
+            "ratio": [1, 1, 1],
+            "default": "#6f8f5e",
+            "shade": "#617d52"
+          }
+        }
+      }
+    },
     "sprout-grandma": {
       "file": "sprout-grandma.ts",
       "presets": {

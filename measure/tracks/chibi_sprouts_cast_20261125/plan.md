@@ -1010,7 +1010,7 @@ limit` gets exit 0 for a 350 px head.
       `result ok`, `prettier --check` exits 0, and `tsc --noEmit` holds the 51 baseline diagnostics
       with none in the new file.
 
-- [ ] T7 Green: Grandma. File: `assets/sprout-grandma-kim.ts` (new).
+- [~] T7 Green: Grandma. File: `assets/sprout-grandma-kim.ts` (new).
   - Build the identity of the spec: white hair in a high bun, round cheeks, smile lines, pearl studs,
     a green cardigan over a pale green dress, a mid-calf skirt, and brown flats. The bun may rise
     above the skull. The measured crown is the base crown. Add the face layer that recreates the two
@@ -1021,6 +1021,46 @@ limit` gets exit 0 for a 350 px head.
     from the rounded projected crown and sit in the adult table, her bun stays in the side
     silhouette, and her mask top is above `detail.projectedCrownRow` in the record.
   - Record: T6's record for her, plus the mask top, the projected crown, and the head height.
+  - Evidence (2026-11-26, worktree `/home/daniebo/Desktop/forge-worktrees/sprouts-cast`, branch
+    `chibi-sprouts-cast`, phase base `b48c3df3235d69337aecc90da7db6cd178455eed`, role base
+    `d519ae1fcb4ee305813f0fe04ba5c8bc54b2c957`, Green route
+    `minimax-cn-coding-plan/MiniMax-M3.1-Flash`, family minimax):
+    - The eleven rows of `TABLES.kim` from
+      `out/chibi-sprouts/cast/sprout-grandma-kim-measure.json`: `heightInHeads 3.650215`,
+      `armToTorso 1.328305`, `legShare 0.391679`, `headToShoulders 1.174204`,
+      `wrist -0.061303`, `fingertips 0.509578`, `eyeLine 0.620495`, `eyeHeight 0.114329`,
+      `spacingHead 0.382653`, `eyeWidthFace 0.228395`, `spacingFace 0.462963`. Every row sits inside
+      the table, every row limit equals the table, both palms are ok, and no guard fired.
+    - The bun and the head: the mask top `detail.crownRow` 46 sits above the rounded projected crown
+      `detail.projectedCrownRow` 99, and the head height is `chinRow - projectedCrownRow` = 240.53
+      px. The white bun pixels sit above the projected crown in the flat front view and in the flat
+      side view, so the bun stays in the side silhouette and the panel keeps it inside the 56 px
+      headroom (`cropped: no`).
+    - The five look rounds and their three largest differences: 1) the bun was a separate ball on a
+      tall cone, the knit ribs read as a plaid grid, and the skirt was a short mini; 2) the bun
+      joined the cap with one soft blend, the cardigan closed with a V-neck, and the skirt reached
+      mid-calf; 3) the smile lines read as a moustache, the cardigan's hem showed a pale sliver, and
+      the vertical ribs read as straps, so the lines became steep strokes and the hem tapered; 4)
+      the waist still showed skin and dress slivers, so the cardigan's hem fell to 0.56 m and the
+      dress and skirt profiles changed; 5) the shirt still showed a skin patch in the V-neck, so the
+      dress grew at the chest.
+    - The GLB stats: `sprout-grandma-kim: 52,333 triangles, 0.415 x 1.595 x 0.309 m`, 17 bones, one
+      `idle` clip of 2.4 s, 13 bodies (`head-skin`, `torso-skin`, `arms-skin`, `legs-skin`,
+      `feet-skin`, `hands`, `face`, `cheeks`, `hair`, `cardigan`, `dress`, `flats`, `studs`). The GLB
+      SHA-256 is `5488860c3544913ca1148e04f660792c4fbd5ac399d0fc79f9b0a2b4753f02c2`; the four level
+      renders are `76b1dbd47aba8774bfc9a37ba6da4b93ba11d18c71596b431d3f7631a1e1bf87` (flat front),
+      `e4db2df6ee087fe89c1385d0ef08f198710a61b2ec46738a63bff38e1ad7f079` (flat side),
+      `9971cd712a52d1fc7c6870210af4695d719623d42227aa20cc350f8ccf4f58c6` (lit front), and
+      `c75b45b8fe7faceb9a0fd2c3efefac1046f6826ee95cd6342c5120ecc7a44ad9` (lit side).
+    - The pin key check: `scripts/make-preset-pin.mjs` adds exactly the key `sprout-grandma-kim`,
+      with the `grandma` preset (`skin fair`, `hair white`, `eyes brown`, `cloth sage`), and changes
+      no other value. The stale `wizard-argon-trial` key stays, because its asset file is gone and
+      the pin must keep every baseline key.
+    - The panel: `out/chibi-sprouts/cast/sprout-grandma-kim-panel.png`, 1416 x 900, SHA-256
+      `0317a6fc3662d05437c8a7a29c969df87d0cffb60abd2289c474c843ab4b9d45`.
+    - The gates: `tests/sprout-grandma-kim.test.ts` exits 0, `./forge check sprout-grandma-kim`
+      ends `result ok`, `prettier --check` exits 0, and `tsc --noEmit` holds the 51 baseline
+      diagnostics with none in the new file.
 
 - [ ] T8 Green: Grandpa. File: `assets/sprout-grandpa-kim.ts` (new).
   - Build the identity of the spec: a bald crown with white side hair, round dark-brown glasses, a
