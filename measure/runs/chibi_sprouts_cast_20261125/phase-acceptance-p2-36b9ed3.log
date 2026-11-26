@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: phase-acceptance
+status: blocked
+track: chibi_sprouts_cast_20261125
+phase: Phase 2: The adult variants
+commits: none
+tests_run: 111 targeted tests pass; three proportion runs and forge checks pass; prettier passes; tsc baseline 51; generate --check passes; doctor two baseline links; role gate fails for F1, F2 and open T10
+files_changed: result JSON and log
+plan_updates: none; T10 stays open
+known_failures: F1 historic stats projection missing; F2 required escalation record missing; doctor two pre-existing links
+handoff: Recover or re-establish the pin-time stats projection with unchanged judge hashes. Record the existing PM escalation in the required file. Rerun acceptance at the resulting HEAD.
+END_MEASURE_AGENT_RESULT

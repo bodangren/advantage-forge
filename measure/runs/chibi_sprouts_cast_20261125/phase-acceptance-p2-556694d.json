@@ -1,0 +1,111 @@
+{
+  "schema_version": 1,
+  "role": "phase-acceptance",
+  "track": "chibi_sprouts_cast_20261125",
+  "phase": "Phase 2: The adult variants",
+  "baseline_sha": "b48c3df3235d69337aecc90da7db6cd178455eed",
+  "phase_base_sha": "b48c3df3235d69337aecc90da7db6cd178455eed",
+  "role_base_sha": "556694dee53873783ac0033d37462e0cc17ebacd",
+  "audited_head_sha": "556694dee53873783ac0033d37462e0cc17ebacd",
+  "status": "pass",
+  "summary": "Phase 2 acceptance passes at 556694de. Both previously missing records are present and independently verified. All runtime and judge inputs pass.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F3 [Nit] phase-acceptance: Doctor exits 1 for two pre-existing links, not one. The Kim sheet is absent in this worktree. The TD-43 run record is absent because d287b6cb is not an ancestor of HEAD. Phase 1 accepted these environment limits; neither is a Phase 2 change."
+  ],
+  "evidence": [
+    "F1 withdrawn: commit 556694de records the full final-build stable projections at T6-T8 from the preceding gate. The earlier acceptance recorded the same projections with a passing pin and unchanged judge hashes. The fresh pin and independent file comparison reproduce every stable hash and body row. Superseded builds lack historic projections; they are not the accepted inputs.",
+    "F2 withdrawn: escalation-sprout-grandma-kim.json is committed at 556694de. All three scores and verdicts, both failed comments, the PM decision and outcome match the judge record.",
+    "Role-start and audited HEAD: 556694dee53873783ac0033d37462e0cc17ebacd. Phase base b48c3df3235d69337aecc90da7db6cd178455eed. git diff --name-only 36b9ed3b HEAD lists only plan.md and the escalation record. No code, test, judge record, table, panel script or base changed.",
+    "T5-T9 remain complete and T10 is open. The previous audit verifies commit ancestry, source scope, prerequisite Phase 1 pass, and absence of framework changes. All results remain applicable because the remediation changes only records.",
+    "Fresh targeted Vitest: eight files, 111 tests pass including Mom validation and isolation. All three independent proportions give eleven passing rows, both palms ok. Each forge check ends result ok with rest, idle and ground ok. A5 passes. No panel was regenerated.",
+    "The three scores remain Dad 7.7/8.2 round 2, Grandma 7.8/8.2 round 3, Grandpa 7.8/8.5 round 1. Model families remain nvidia, hungerg and minimax. The prior visual inspection verified the two factual corrections to Grandma\u2019s brief and panel captions. No input bytes changed.",
+    "Stable stats plan/current pairs: Dad 19eba13496778ff03d57cb92c4ccf0592f0888175fec7e351de123fe25756494 = 19eba13496778ff03d57cb92c4ccf0592f0888175fec7e351de123fe25756494; Grandma 0edfe64317b2b1ae4e940677ddab17c2b0a514e3d082e05d0ee752ee63634b67 = 0edfe64317b2b1ae4e940677ddab17c2b0a514e3d082e05d0ee752ee63634b67; Grandpa c80900021f99fb872a2944f39ffba836287be65912c1716d48d06720e22f79bc = c80900021f99fb872a2944f39ffba836287be65912c1716d48d06720e22f79bc.",
+    "All stable projection body rows match in order (Dad 15, Grandma 14, Grandpa 15). Top-level name, bounds, texture, bones, triangles and animation metadata match. Raw hashes for traceability also match: Dad 4c79e54e3ab5b1dcae03b573a9fa36a599146953db77c92ac4cab4647b3f4d99; Grandma e8cab83758955f98de39e44c8024f506a9a81ec1cb4ede807bb270f7241814ce; Grandpa 63c3f3ecdbff905db2a02b2b589aa62aa151422a5d1dc77bfcbda3e4610bce7c.",
+    "Fresh independent judge input pairs follow. Each value pair or triple matches at this HEAD.",
+    "Dad asset commit: 3cd8582a1cd6a5d0c5a154e84d87f2d7fb29de98 = 3cd8582a1cd6a5d0c5a154e84d87f2d7fb29de98.",
+    "Grandma asset commit: b73f7104e3461cc9dfa57a5f1e5ef67c615f525a = b73f7104e3461cc9dfa57a5f1e5ef67c615f525a.",
+    "Grandpa asset commit: 78be77a2af409704e5d132018d4d4c30e6e85169 = 78be77a2af409704e5d132018d4d4c30e6e85169.",
+    "All three base commits: 41458a54a0282af2e062a1ed8a213f71856d7a40 = 41458a54a0282af2e062a1ed8a213f71856d7a40.",
+    "All three base hashes: 769a80a9b3f5c30ec2fb6a10691b022aafa4b840180f99b054fd39b41b45e268 = 769a80a9b3f5c30ec2fb6a10691b022aafa4b840180f99b054fd39b41b45e268 = 769a80a9b3f5c30ec2fb6a10691b022aafa4b840180f99b054fd39b41b45e268.",
+    "Dad GLB: 896d889b3e2db721a647b371b97f714e0e6a2151787ad9c4bd5b21b19d1fea61 = 896d889b3e2db721a647b371b97f714e0e6a2151787ad9c4bd5b21b19d1fea61 = 896d889b3e2db721a647b371b97f714e0e6a2151787ad9c4bd5b21b19d1fea61.",
+    "Dad record: f36096cc1cf8a3180fbeffa1362222a234451fae1e5e2543b09d7a87bc7b420d = f36096cc1cf8a3180fbeffa1362222a234451fae1e5e2543b09d7a87bc7b420d.",
+    "Dad flatFront: 7c50a8adfe311f2744f8635749ff32e97b7407d5e42ad6134f837836b4536450 = 7c50a8adfe311f2744f8635749ff32e97b7407d5e42ad6134f837836b4536450 = 7c50a8adfe311f2744f8635749ff32e97b7407d5e42ad6134f837836b4536450.",
+    "Dad flatSide: f8f483e3688fd45295a2c493851ca5013ea3cf9c907dba476db70a3ba8a9af8b = f8f483e3688fd45295a2c493851ca5013ea3cf9c907dba476db70a3ba8a9af8b = f8f483e3688fd45295a2c493851ca5013ea3cf9c907dba476db70a3ba8a9af8b.",
+    "Dad litFront: 9d6c98d9b373debfdca8245041e49158c7413a2c417e7743ee2c12d34a5f5270 = 9d6c98d9b373debfdca8245041e49158c7413a2c417e7743ee2c12d34a5f5270 = 9d6c98d9b373debfdca8245041e49158c7413a2c417e7743ee2c12d34a5f5270.",
+    "Dad litSide: 3817f50ea82ee88a19b8e324706b08f927b379ac6f8462e86d0c6e5b72639153 = 3817f50ea82ee88a19b8e324706b08f927b379ac6f8462e86d0c6e5b72639153 = 3817f50ea82ee88a19b8e324706b08f927b379ac6f8462e86d0c6e5b72639153.",
+    "Dad panel: 26513ebbcafa31e1646444e4c68d983b2f52b9473a4fd2c02378ec989b12993e = 26513ebbcafa31e1646444e4c68d983b2f52b9473a4fd2c02378ec989b12993e.",
+    "Grandma GLB: 95d1de0b85c4cdb3ce45b2447f05a6d7dc59054d2febb4ace40813452fc1524b = 95d1de0b85c4cdb3ce45b2447f05a6d7dc59054d2febb4ace40813452fc1524b = 95d1de0b85c4cdb3ce45b2447f05a6d7dc59054d2febb4ace40813452fc1524b.",
+    "Grandma record: 338a29d6cbdb00aba66c0b0d6f0f68f394b90185a7edfd28066d4fe2f3620436 = 338a29d6cbdb00aba66c0b0d6f0f68f394b90185a7edfd28066d4fe2f3620436.",
+    "Grandma flatFront: 756c3d2cdf361ed26087b3753cb620ddf8f8f98bb1d2db38f46c942b40cca0cd = 756c3d2cdf361ed26087b3753cb620ddf8f8f98bb1d2db38f46c942b40cca0cd = 756c3d2cdf361ed26087b3753cb620ddf8f8f98bb1d2db38f46c942b40cca0cd.",
+    "Grandma flatSide: 3822d42f099459f5af0bf5d446b6078cf63e4ca18d2825fe8f8d07104f4aa949 = 3822d42f099459f5af0bf5d446b6078cf63e4ca18d2825fe8f8d07104f4aa949 = 3822d42f099459f5af0bf5d446b6078cf63e4ca18d2825fe8f8d07104f4aa949.",
+    "Grandma litFront: f876dcfa91925802bbd5ef8213b389ba753dc5d390b218b768d3306a1f12860f = f876dcfa91925802bbd5ef8213b389ba753dc5d390b218b768d3306a1f12860f = f876dcfa91925802bbd5ef8213b389ba753dc5d390b218b768d3306a1f12860f.",
+    "Grandma litSide: 8c32a37fdbdf4ed7c7c69b688218d71ad38efafcd73721bd3765bd44310ffc37 = 8c32a37fdbdf4ed7c7c69b688218d71ad38efafcd73721bd3765bd44310ffc37 = 8c32a37fdbdf4ed7c7c69b688218d71ad38efafcd73721bd3765bd44310ffc37.",
+    "Grandma panel: 4e10acda9759702e11c8e0896729bb33ca2e01e62a95c6917d7540f839e45c30 = 4e10acda9759702e11c8e0896729bb33ca2e01e62a95c6917d7540f839e45c30.",
+    "Grandpa GLB: 9994ff971eb5af19b17ac4f464e29e71b3dbe0eee4699024a0b05b75ae6d7a50 = 9994ff971eb5af19b17ac4f464e29e71b3dbe0eee4699024a0b05b75ae6d7a50 = 9994ff971eb5af19b17ac4f464e29e71b3dbe0eee4699024a0b05b75ae6d7a50.",
+    "Grandpa record: 8155f52ffed1770ea9e4d97f260e309d9e48c3e21c478e3a88ae95371b0875a3 = 8155f52ffed1770ea9e4d97f260e309d9e48c3e21c478e3a88ae95371b0875a3.",
+    "Grandpa flatFront: dc3b26cc11b3619a64e2369aa0f302f232eff2145bcea7d9fe7214b5940618ea = dc3b26cc11b3619a64e2369aa0f302f232eff2145bcea7d9fe7214b5940618ea = dc3b26cc11b3619a64e2369aa0f302f232eff2145bcea7d9fe7214b5940618ea.",
+    "Grandpa flatSide: d7a625b0dca94f0b080b36f011adcaf03d6575131b03e114f1b23c097a496d68 = d7a625b0dca94f0b080b36f011adcaf03d6575131b03e114f1b23c097a496d68 = d7a625b0dca94f0b080b36f011adcaf03d6575131b03e114f1b23c097a496d68.",
+    "Grandpa litFront: aae6b8e84d751f1cf3392640ff63d441d6ee62741fe3e71a78452a964d497667 = aae6b8e84d751f1cf3392640ff63d441d6ee62741fe3e71a78452a964d497667 = aae6b8e84d751f1cf3392640ff63d441d6ee62741fe3e71a78452a964d497667.",
+    "Grandpa litSide: be42816da498c59d8b9de6d82ef25d50d27c9da8c20480e0cf41bff0683114fa = be42816da498c59d8b9de6d82ef25d50d27c9da8c20480e0cf41bff0683114fa = be42816da498c59d8b9de6d82ef25d50d27c9da8c20480e0cf41bff0683114fa.",
+    "Grandpa panel: 09c9dc6dc2f61fee5b9421e00472e2d62be34a78ca824fe8dd037fd7f4ad84d8 = 09c9dc6dc2f61fee5b9421e00472e2d62be34a78ca824fe8dd037fd7f4ad84d8.",
+    "Mom rows match T2: 3.653929, 1.328305, 0.391841, 1.233173, -0.061303, 0.509578, 0.621882, 0.113069, 0.365741, 0.229412, 0.464706. Both palms pass. Stable stats projection matches T0: c93209cc3d9095c8376c96308ad5bb92e1dedacf0a7a1644bc77fa5c6aa95a6e.",
+    "Mom's five current hashes equal T0: GLB 6f972378e357035cf94bbbe80af82f7173bde38a0223a61dcc4160e763b4311a; flat front 0c6201ae1b9f2502cda207561676e58e6744c2a8f50df07e782aba534f07f43b; flat side 93bea38cdf28b3cd71898cca958918b99637c7cc9c22c1568a31f2f206a3abbf; lit front 2abd3f55642c851818552e5025284c42dd7e5b78441c7683b8de02680de5b851; lit side 48fc3c2f3bb7443f8024cccadc438a8a9043fca1c9995eb55a144319cec93212.",
+    "Parsed preset diff adds exactly sprout-dad-kim, sprout-grandma-kim and sprout-grandpa-kim. No changed or removed baseline value. Isolation passes for scrapped sources, ADULT, AGE5, HERO and Mom preset.",
+    "Previous audit prettier and tsc results apply to the unchanged six TypeScript files and preset JSON. The current generator freshness check exits 0 for four facts. Write-mode generation is left to the orchestrator to preserve the audit-only write scope.",
+    "Doctor structural-only exits 1 for the same two declared worktree limits. Commit d287b6cb is not in this branch. Neither link changed in Phase 2.",
+    "No code or judge input changed in the remediation. No new blocker or violation. No separate current-phase review, UX or adversarial result is required in the light lane.",
+    "The mechanical role gate exits 1 with exactly one failure: current phase still has 1 non-deferred incomplete tasks. T10 is the only remaining task. HEAD remains 556694de; the two pairs of acceptance files are untracked."
+  ],
+  "commands": [
+    "git rev-parse HEAD; git status --short; git diff --name-only 36b9ed3b HEAD; git diff 36b9ed3b HEAD -- measure/tracks/chibi_sprouts_cast_20261125/plan.md; git diff --check 36b9ed3b HEAD (exit 0)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c \"node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-dad-kim.test.ts tests/sprout-grandma-kim.test.ts tests/sprout-grandpa-kim.test.ts tests/proportion-cast-options.test.ts tests/sprout-cast-panel.test.ts tests/cast-isolation.test.ts tests/sprout-mom-kim.test.ts tests/sprout-mom-kim.validation.test.ts\" (exit 0; 111 tests)",
+    "Heavy runner: node_modules/.bin/tsx scripts/proportion-check.mjs --asset <name> --table kim --record out/chibi-sprouts/cast/<name>-measure.json; ./forge check <name> (each asset exits 0)",
+    "Python: compare judge paths, commits, all SHA-256 pairs, stable stats projection and body table, Mom hashes, preset diff and escalation comments (exit 0)",
+    "./measure/generate.sh --check (exit 0)",
+    "./measure/doctor.sh --structural-only (exit 1; two baseline links)",
+    "python3 -I /home/daniebo/.agents/skills/measure-orchestrator/scripts/measure_interphase_checks.py role-gate --repo . --role phase-acceptance --track chibi_sprouts_cast_20261125 --phase 'Phase 2: The adult variants' --baseline b48c3df3235d69337aecc90da7db6cd178455eed --result-file measure/runs/chibi_sprouts_cast_20261125/phase-acceptance-p2-556694d.json --log-file measure/runs/chibi_sprouts_cast_20261125/phase-acceptance-p2-556694d.log (exit 1; only open T10)"
+  ],
+  "changed_files": [
+    "measure/runs/chibi_sprouts_cast_20261125/phase-acceptance-p2-556694d.json",
+    "measure/runs/chibi_sprouts_cast_20261125/phase-acceptance-p2-556694d.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "route": "openai/gpt-6.2-sol#high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 4,
+      "evidence": "All three live proportion and clearance checks pass; model evidence does not replace Daniel\u2019s look gate."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "111 targeted cases and independent proportion checks pass at the current HEAD."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "The remediation diff changes only plan.md and one escalation record."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "Every judge input and all three stable stats hashes reproduce; the escalation comments match the judge record."
+    }
+  ],
+  "reviewer_ratings": [
+    {
+      "reviewer_role": "adversarial",
+      "reviewer_route": "claude-agent/sonnet#xhigh",
+      "agreed": true,
+      "score": 5,
+      "evidence": "The prior Phase 1 passing record is valid at 54e7b15 and current Phase 1 tests pass without script changes."
+    }
+  ]
+}

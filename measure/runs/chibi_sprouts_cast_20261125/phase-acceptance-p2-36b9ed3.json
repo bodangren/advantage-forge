@@ -1,0 +1,108 @@
+{
+  "schema_version": 1,
+  "role": "phase-acceptance",
+  "track": "chibi_sprouts_cast_20261125",
+  "phase": "Phase 2: The adult variants",
+  "baseline_sha": "b48c3df3235d69337aecc90da7db6cd178455eed",
+  "phase_base_sha": "b48c3df3235d69337aecc90da7db6cd178455eed",
+  "role_base_sha": "36b9ed3b764d9a98fce06c234fbeeef2538ee966",
+  "audited_head_sha": "36b9ed3b764d9a98fce06c234fbeeef2538ee966",
+  "status": "fail",
+  "summary": "The adult pins, clearance checks, scores and artifact hashes pass. Two required records are missing. T10 cannot close.",
+  "blocking_findings": [
+    "F1 [Blocker] phase-acceptance: spec.md:707 requires the stable stats projection to equal the projection recorded at the pin. No adult pin-time projection or hash exists in the Phase 2 plan, Green logs, judge records or measure records. The current projections and partial inventory summaries do not prove this equality.",
+    "F2 [Blocker] phase-acceptance: spec.md:687-691 and test-strategy.md section 3.3 require escalation-sprout-grandma-kim.json after a second failure or third round. T9 and the judge record state the PM default and round scores. The separate escalation file is absent. Record the PM decision and both failed comments in the required file."
+  ],
+  "nonblocking_findings": [
+    "F3 [Nit] phase-acceptance: Doctor exits 1 for two pre-existing links, not one. The Kim sheet is absent in this worktree. The TD-43 run record is absent because d287b6cb is not an ancestor of HEAD. Phase 1 accepted these environment limits; neither is a Phase 2 change."
+  ],
+  "evidence": [
+    "HEAD at role start and after checks: 36b9ed3b764d9a98fce06c234fbeeef2538ee966. Branch chibi-sprouts-cast. The phase base is an ancestor.",
+    "Phase 1 acceptance and adversarial results at 54e7b15f both pass. The adversarial audit-result checker exits 0. T4 closed at 673f59da; b48c3df3 commits the records. No Phase 2 script or base change invalidates that prior phase.",
+    "Test strategy section 2 and AC8 exempt Phase 2 from Review A, B, C, adversarial and browser gates. No current-phase prerequisite review is missing.",
+    "T5 through T9 are [x]; T10 is open. All named commits are ancestors: 2d5808a7, d519ae1f, bae20726, 096f82db, 6ce871ed, d920e57e, 78be77a2, 05be5aa0, eefaeba9, 3cd8582a, 44c4b688, cd3bd7ae, c1f44ad4, e8b733e0, b73f7104, f5bb9710, fa7a1255, 34a6e90d. T9 judge records last changed at 34a6e90d.",
+    "The phase diff changes three adult assets, three adult tests, the preset pin, plan, spec command correction, run records and generated inventory/status. No script, base, registry or other product change. git diff --check exits 0.",
+    "T5 Red logs record nine case-local missing-asset failures with no collection error. The six-digit joint tolerance correction covers floating point values. The pins invoke the real proportion script and inspect real raster and GLB data.",
+    "Vitest: seven files, 92 tests pass. The separate Mom validation file passes 19 tests. Total 111 tests, eight files. No intentional Red case remains in these suites. A5 current Green pass claims reproduce.",
+    "Each independent proportion command exits 0 with exactly eleven labeled pass rows and both palms ok. Each forge check exits 0 with result ok, rest and idle ok, ground ok. No panel was regenerated.",
+    "Dad lines 44-91 and Grandma lines 45-104 implement the painted face layer and separate jaw or cheek body. Grandpa lines 22 and 46-86 declare and paint glasses and moustache. The glasses fixture and real Grandpa pin pass.",
+    "All three panels show the actual front, side and drawing. Each caption reads 2026-11-26, 11/11 rows pass, palms ok; no crop. Grandma bun fits the headroom.",
+    "Grandma's drawing has no glasses and holds no object. The render hands are the base slabs. Correcting those two misreads is factual, not a score instruction. The final judge still names other faults.",
+    "All judge records contain the required fields and non-empty comments. Dad 7.7/8.2 round 2; Grandma 7.8/8.2 round 3; Grandpa 7.8/8.5 round 1. All verdicts pass. Judge nvidia differs from both Red hungerg and Green minimax. T9 and the Grandma judge note record PM escalation and one more Green round.",
+    "Hash pairs below list the declared judge value and the independently computed file value. For the GLB and renders the third value is the measure record field. Each set matches.",
+    "Dad asset commit: 3cd8582a1cd6a5d0c5a154e84d87f2d7fb29de98 = 3cd8582a1cd6a5d0c5a154e84d87f2d7fb29de98.",
+    "Grandma asset commit: b73f7104e3461cc9dfa57a5f1e5ef67c615f525a = b73f7104e3461cc9dfa57a5f1e5ef67c615f525a.",
+    "Grandpa asset commit: 78be77a2af409704e5d132018d4d4c30e6e85169 = 78be77a2af409704e5d132018d4d4c30e6e85169.",
+    "All three base commits: 41458a54a0282af2e062a1ed8a213f71856d7a40 = 41458a54a0282af2e062a1ed8a213f71856d7a40.",
+    "All three base hashes: 769a80a9b3f5c30ec2fb6a10691b022aafa4b840180f99b054fd39b41b45e268 = 769a80a9b3f5c30ec2fb6a10691b022aafa4b840180f99b054fd39b41b45e268 = 769a80a9b3f5c30ec2fb6a10691b022aafa4b840180f99b054fd39b41b45e268.",
+    "Dad GLB: 896d889b3e2db721a647b371b97f714e0e6a2151787ad9c4bd5b21b19d1fea61 = 896d889b3e2db721a647b371b97f714e0e6a2151787ad9c4bd5b21b19d1fea61 = 896d889b3e2db721a647b371b97f714e0e6a2151787ad9c4bd5b21b19d1fea61.",
+    "Dad record: f36096cc1cf8a3180fbeffa1362222a234451fae1e5e2543b09d7a87bc7b420d = f36096cc1cf8a3180fbeffa1362222a234451fae1e5e2543b09d7a87bc7b420d.",
+    "Dad flatFront: 7c50a8adfe311f2744f8635749ff32e97b7407d5e42ad6134f837836b4536450 = 7c50a8adfe311f2744f8635749ff32e97b7407d5e42ad6134f837836b4536450 = 7c50a8adfe311f2744f8635749ff32e97b7407d5e42ad6134f837836b4536450.",
+    "Dad flatSide: f8f483e3688fd45295a2c493851ca5013ea3cf9c907dba476db70a3ba8a9af8b = f8f483e3688fd45295a2c493851ca5013ea3cf9c907dba476db70a3ba8a9af8b = f8f483e3688fd45295a2c493851ca5013ea3cf9c907dba476db70a3ba8a9af8b.",
+    "Dad litFront: 9d6c98d9b373debfdca8245041e49158c7413a2c417e7743ee2c12d34a5f5270 = 9d6c98d9b373debfdca8245041e49158c7413a2c417e7743ee2c12d34a5f5270 = 9d6c98d9b373debfdca8245041e49158c7413a2c417e7743ee2c12d34a5f5270.",
+    "Dad litSide: 3817f50ea82ee88a19b8e324706b08f927b379ac6f8462e86d0c6e5b72639153 = 3817f50ea82ee88a19b8e324706b08f927b379ac6f8462e86d0c6e5b72639153 = 3817f50ea82ee88a19b8e324706b08f927b379ac6f8462e86d0c6e5b72639153.",
+    "Dad panel: 26513ebbcafa31e1646444e4c68d983b2f52b9473a4fd2c02378ec989b12993e = 26513ebbcafa31e1646444e4c68d983b2f52b9473a4fd2c02378ec989b12993e.",
+    "Grandma GLB: 95d1de0b85c4cdb3ce45b2447f05a6d7dc59054d2febb4ace40813452fc1524b = 95d1de0b85c4cdb3ce45b2447f05a6d7dc59054d2febb4ace40813452fc1524b = 95d1de0b85c4cdb3ce45b2447f05a6d7dc59054d2febb4ace40813452fc1524b.",
+    "Grandma record: 338a29d6cbdb00aba66c0b0d6f0f68f394b90185a7edfd28066d4fe2f3620436 = 338a29d6cbdb00aba66c0b0d6f0f68f394b90185a7edfd28066d4fe2f3620436.",
+    "Grandma flatFront: 756c3d2cdf361ed26087b3753cb620ddf8f8f98bb1d2db38f46c942b40cca0cd = 756c3d2cdf361ed26087b3753cb620ddf8f8f98bb1d2db38f46c942b40cca0cd = 756c3d2cdf361ed26087b3753cb620ddf8f8f98bb1d2db38f46c942b40cca0cd.",
+    "Grandma flatSide: 3822d42f099459f5af0bf5d446b6078cf63e4ca18d2825fe8f8d07104f4aa949 = 3822d42f099459f5af0bf5d446b6078cf63e4ca18d2825fe8f8d07104f4aa949 = 3822d42f099459f5af0bf5d446b6078cf63e4ca18d2825fe8f8d07104f4aa949.",
+    "Grandma litFront: f876dcfa91925802bbd5ef8213b389ba753dc5d390b218b768d3306a1f12860f = f876dcfa91925802bbd5ef8213b389ba753dc5d390b218b768d3306a1f12860f = f876dcfa91925802bbd5ef8213b389ba753dc5d390b218b768d3306a1f12860f.",
+    "Grandma litSide: 8c32a37fdbdf4ed7c7c69b688218d71ad38efafcd73721bd3765bd44310ffc37 = 8c32a37fdbdf4ed7c7c69b688218d71ad38efafcd73721bd3765bd44310ffc37 = 8c32a37fdbdf4ed7c7c69b688218d71ad38efafcd73721bd3765bd44310ffc37.",
+    "Grandma panel: 4e10acda9759702e11c8e0896729bb33ca2e01e62a95c6917d7540f839e45c30 = 4e10acda9759702e11c8e0896729bb33ca2e01e62a95c6917d7540f839e45c30.",
+    "Grandpa GLB: 9994ff971eb5af19b17ac4f464e29e71b3dbe0eee4699024a0b05b75ae6d7a50 = 9994ff971eb5af19b17ac4f464e29e71b3dbe0eee4699024a0b05b75ae6d7a50 = 9994ff971eb5af19b17ac4f464e29e71b3dbe0eee4699024a0b05b75ae6d7a50.",
+    "Grandpa record: 8155f52ffed1770ea9e4d97f260e309d9e48c3e21c478e3a88ae95371b0875a3 = 8155f52ffed1770ea9e4d97f260e309d9e48c3e21c478e3a88ae95371b0875a3.",
+    "Grandpa flatFront: dc3b26cc11b3619a64e2369aa0f302f232eff2145bcea7d9fe7214b5940618ea = dc3b26cc11b3619a64e2369aa0f302f232eff2145bcea7d9fe7214b5940618ea = dc3b26cc11b3619a64e2369aa0f302f232eff2145bcea7d9fe7214b5940618ea.",
+    "Grandpa flatSide: d7a625b0dca94f0b080b36f011adcaf03d6575131b03e114f1b23c097a496d68 = d7a625b0dca94f0b080b36f011adcaf03d6575131b03e114f1b23c097a496d68 = d7a625b0dca94f0b080b36f011adcaf03d6575131b03e114f1b23c097a496d68.",
+    "Grandpa litFront: aae6b8e84d751f1cf3392640ff63d441d6ee62741fe3e71a78452a964d497667 = aae6b8e84d751f1cf3392640ff63d441d6ee62741fe3e71a78452a964d497667 = aae6b8e84d751f1cf3392640ff63d441d6ee62741fe3e71a78452a964d497667.",
+    "Grandpa litSide: be42816da498c59d8b9de6d82ef25d50d27c9da8c20480e0cf41bff0683114fa = be42816da498c59d8b9de6d82ef25d50d27c9da8c20480e0cf41bff0683114fa = be42816da498c59d8b9de6d82ef25d50d27c9da8c20480e0cf41bff0683114fa.",
+    "Grandpa panel: 09c9dc6dc2f61fee5b9421e00472e2d62be34a78ca824fe8dd037fd7f4ad84d8 = 09c9dc6dc2f61fee5b9421e00472e2d62be34a78ca824fe8dd037fd7f4ad84d8.",
+    "Current stable stats projections, with milliseconds removed recursively and texture limited to size: Dad 19eba13496778ff03d57cb92c4ccf0592f0888175fec7e351de123fe25756494; Grandma 0edfe64317b2b1ae4e940677ddab17c2b0a514e3d082e05d0ee752ee63634b67; Grandpa c80900021f99fb872a2944f39ffba836287be65912c1716d48d06720e22f79bc. No historical adult pin-time projection was recorded in the phase evidence.",
+    "Mom rows match T2: 3.653929, 1.328305, 0.391841, 1.233173, -0.061303, 0.509578, 0.621882, 0.113069, 0.365741, 0.229412, 0.464706. Both palms pass. Stable stats projection matches T0: c93209cc3d9095c8376c96308ad5bb92e1dedacf0a7a1644bc77fa5c6aa95a6e.",
+    "Mom's five current hashes equal T0: GLB 6f972378e357035cf94bbbe80af82f7173bde38a0223a61dcc4160e763b4311a; flat front 0c6201ae1b9f2502cda207561676e58e6744c2a8f50df07e782aba534f07f43b; flat side 93bea38cdf28b3cd71898cca958918b99637c7cc9c22c1568a31f2f206a3abbf; lit front 2abd3f55642c851818552e5025284c42dd7e5b78441c7683b8de02680de5b851; lit side 48fc3c2f3bb7443f8024cccadc438a8a9043fca1c9995eb55a144319cec93212.",
+    "Parsed preset diff adds exactly sprout-dad-kim, sprout-grandma-kim and sprout-grandpa-kim. No changed or removed baseline value. Isolation passes for scrapped sources, ADULT, AGE5, HERO and Mom preset.",
+    "Prettier exits 0 for all six changed TypeScript files and preset JSON. tsc exits 2 with the 51 baseline diagnostics, none in changed files.",
+    "Generator freshness check exits 0 for four files. The write-mode generator writes all four managed files; the report-only role leaves that invocation to the orchestrator.",
+    "Doctor structural-only reports two pre-existing links: measure/archive/chibi_sprouts_redesign_20261123/spec.md -> ../../../out/storytime-review/muse-cast/teacher-kim-sheet.png; measure/tech-debt.md -> ./runs/asset_chibi_sprouts_r1_20261022/ux-browser-review-78dbd22.json. git show d287b6cb names the latter record, but merge-base --is-ancestor returns 1.",
+    "A3, A4, A6 and A7 framework surfaces did not change. No customer-facing file or claim added. No paid call by this role.",
+    "The role gate reports the fail verdict for F1 and F2, and one non-deferred incomplete task. T10 is not its only failure. HEAD still equals 36b9ed3; only the two audit files are untracked."
+  ],
+  "commands": [
+    "git rev-parse HEAD; git status --short; git branch --show-current; git diff --name-status b48c3df..HEAD; git diff --check b48c3df..HEAD; git log --oneline b48c3df..HEAD",
+    "git merge-base --is-ancestor for each named commit (all exit 0)",
+    "python3 -I /home/daniebo/.agents/skills/measure-orchestrator/scripts/measure_interphase_checks.py audit-result --role adversarial-testing --file measure/runs/chibi_sprouts_cast_20261125/adversarial-54e7b15.json (exit 0)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-dad-kim.test.ts tests/sprout-grandma-kim.test.ts tests/sprout-grandpa-kim.test.ts tests/proportion-cast-options.test.ts tests/sprout-cast-panel.test.ts tests/cast-isolation.test.ts tests/sprout-mom-kim.test.ts' (exit 0; 92 passed)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-mom-kim.validation.test.ts' (exit 0; 19 passed)",
+    "Heavy runner: node_modules/.bin/tsx scripts/proportion-check.mjs --asset <name> --table kim --record out/chibi-sprouts/cast/<name>-measure.json; ./forge check <name> (each of three assets exits 0)",
+    "node_modules/.bin/prettier --check assets/sprout-{dad,grandma,grandpa}-kim.ts tests/sprout-{dad,grandma,grandpa}-kim.test.ts tests/fixtures/preset-pin.json (exit 0)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/typescript/bin/tsc --noEmit --pretty false' (exit 2; baseline 51)",
+    "Python SHA-256, JSON stable projection, git log path checks and parsed preset diff (all specified hash pairs match; no historic adult stats comparison possible)",
+    "./measure/generate.sh --check (exit 0)",
+    "./measure/doctor.sh --structural-only (exit 1, two prior links)",
+    "git ls-files measure/runs/chibi_sprouts_cast_20261125/escalation-* (no records)",
+    "python3 -I /home/daniebo/.agents/skills/measure-orchestrator/scripts/measure_interphase_checks.py role-gate --repo . --role phase-acceptance --track chibi_sprouts_cast_20261125 --phase 'Phase 2: The adult variants' --baseline b48c3df3235d69337aecc90da7db6cd178455eed --result-file measure/runs/chibi_sprouts_cast_20261125/phase-acceptance-p2-36b9ed3.json --log-file measure/runs/chibi_sprouts_cast_20261125/phase-acceptance-p2-36b9ed3.log (exit 1)"
+  ],
+  "changed_files": [
+    "measure/runs/chibi_sprouts_cast_20261125/phase-acceptance-p2-36b9ed3.json",
+    "measure/runs/chibi_sprouts_cast_20261125/phase-acceptance-p2-36b9ed3.log"
+  ],
+  "test_strategy_violations": [
+    "Section 3.3 requires a separate escalation record after the Grandma second failure and third round; it is absent."
+  ],
+  "live_contract_violations": [
+    "Spec gate-check clause 7 cannot be verified for any adult because the recorded pin-time stable projection is absent."
+  ],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "retry_audit",
+  "confidence": "high",
+  "route": "openai/gpt-6.2-sol#high",
+  "ratings": [
+    {"axis": "correctness", "score": 4, "evidence": "The three real proportion and forge check commands exit 0; look acceptance remains with Daniel."},
+    {"axis": "test_meaning", "score": 4, "evidence": "Nine adult pin cases pass and inspect real artifacts; the historical stats equality is not pinned."},
+    {"axis": "scope_discipline", "score": 5, "evidence": "The exact diff contains only the three assets and tests, the pin and Measure files."},
+    {"axis": "evidence_quality", "score": 3, "evidence": "All three judge hash sets reproduce, but no pin-time stats projection or escalation file exists."}
+  ],
+  "reviewer_ratings": [
+    {"reviewer_role": "adversarial", "reviewer_route": "claude-agent/sonnet#xhigh", "agreed": true, "score": 5, "evidence": "The prior Phase 1 passing record is valid at 54e7b15 and current Phase 1 tests pass without script changes."}
+  ]
+}
