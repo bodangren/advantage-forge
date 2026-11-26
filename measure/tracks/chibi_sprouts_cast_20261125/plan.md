@@ -1062,7 +1062,61 @@ limit` gets exit 0 for a 350 px head.
       `result ok`, `prettier --check` exits 0, and `tsc --noEmit` holds the 51 baseline diagnostics
       with none in the changed file.
 
-- [~] T7 Green: Grandma. File: `assets/sprout-grandma-kim.ts` (new). Commits `6ce871edee5ac74a28e2b8486d0213ac03fd1610` and `44c4b68843cdc8e9b9955e7b69a3f10b9a49f7a7`. Look remediation round 3 in progress.
+- [x] T7 Green: Grandma. File: `assets/sprout-grandma-kim.ts` (new). Commits `6ce871edee5ac74a28e2b8486d0213ac03fd1610`, `44c4b68843cdc8e9b9955e7b69a3f10b9a49f7a7`, and `b73f7104e3461cc9dfa57a5f1e5ef67c615f525a`.
+  - Look remediation round 3 (2026-11-26): the look judge gave identity 7.2 and proportion 8.1 in
+    round 2. The brief named three faults: the skin holes at the shoulders, the puffy-shoulder
+    buttoned dress with a pale panel, and the short skirt. All three are fixed. The hair stays as it
+    was, no glasses are added, and the hands stay as the base builds them.
+  - Evidence (2026-11-26, worktree `/home/daniebo/Desktop/forge-worktrees/sprouts-cast`, branch
+    `chibi-sprouts-cast`, phase base `b48c3df3235d69337aecc90da7db6cd178455eed`, role base
+    `e8b733e0332a19ff101b7859eda334cecb4b47ec`, implementation commit
+    `b73f7104e3461cc9dfa57a5f1e5ef67c615f525a`, Green route
+    `minimax-cn-coding-plan/MiniMax-M3.1-Flash`, family minimax):
+    - The three largest differences of each look round: 1) the sleeve left the outer edge of the
+      base upper arm bare, so the skin showed at both shoulders; the cardigan read as a buttoned
+      dress with a pale panel at the neck; the shoulders read as two puffed balls; 2) the sleeve
+      moved onto the base arm axis with an 8 mm clearance, so the skin no longer showed; the
+      cardigan got a front opening with the knit top behind it; the puff balls went and the
+      shoulder came from the sleeve cap alone; the knit top ended above the base waist, so the base
+      skin showed under the opening; 3) the opening now ends at the knit top hem, so no skin shows
+      under it, and the knit texture got weaker, so the hem edge reads straighter.
+    - The shoulder fix: the sleeve cap sits on the base shoulder joint with an 8 mm clearance in
+      every direction, so the base upper arm never shows through the knit. The flat front render
+      holds no skin pixel in the shoulder band outside the neck, and the flat side render holds none
+      outside the face.
+    - The clothes fix: the cardigan hangs open from the collar to the waist over a matching green
+      knit top with a ribbed round neck and a ribbed hem, the shoulder line is smooth, the hem
+      carries a ribbed band at the hip, the cuffs carry ribbed bands at the wrists, the buttons run
+      down the right placket, and the skirt reaches lower and flares wider than in round 2.
+    - The eleven rows of `TABLES.kim` from
+      `out/chibi-sprouts/cast/sprout-grandma-kim-measure.json`: `heightInHeads 3.648823`,
+      `armToTorso 1.328305`, `legShare 0.391624`, `headToShoulders 1.16905`, `wrist -0.061303`,
+      `fingertips 0.509578`, `eyeLine 0.620548`, `eyeHeight 0.111699`, `spacingHead 0.382653`,
+      `eyeWidthFace 0.22561`, `spacingFace 0.457317`. Every row sits inside the table, every row
+      limit equals the table, both palms are ok, and no guard fired.
+    - The bun and the head: the mask top `detail.crownRow` 46 sits above the rounded projected crown
+      `detail.projectedCrownRow` 95, and the head height is 241.72 px. The white bun pixels sit
+      above the projected crown in the flat front view and in the flat side view, so the bun stays
+      in the side silhouette and the panel keeps it inside the 56 px headroom (`cropped: no`).
+    - The GLB stats: `sprout-grandma-kim: 50,430 triangles, 0.428 x 1.588 x 0.345 m`, 17 bones, one
+      `idle` clip of 2.4 s, 14 bodies (`head-skin`, `torso-skin`, `arms-skin`, `legs-skin`,
+      `feet-skin`, `hands`, `face`, `cheeks`, `hair`, `cardigan`, `dress`, `skirt`, `flats`, `studs`).
+      The GLB SHA-256 is `95d1de0b85c4cdb3ce45b2447f05a6d7dc59054d2febb4ace40813452fc1524b`. The
+      four level renders are `756c3d2cdf361ed26087b3753cb620ddf8f8f98bb1d2db38f46c942b40cca0cd`
+      (flat front), `3822d42f099459f5af0bf5d446b6078cf63e4ca18d2825fe8f8d07104f4aa949` (flat side),
+      `f876dcfa91925802bbd5ef8213b389ba753dc5d390b218b768d3306a1f12860f` (lit front), and
+      `8c32a37fdbdf4ed7c7c69b688218d71ad38efafcd73721bd3765bd44310ffc37` (lit side). The build
+      prints no warning line.
+    - The measure record: `out/chibi-sprouts/cast/sprout-grandma-kim-measure.json`, SHA-256
+      `338a29d6cbdb00aba66c0b0d6f0f68f394b90185a7edfd28066d4fe2f3620436`.
+    - The preset pin: the remediation changes no variant colour and no preset, so the pin key
+      `sprout-grandma-kim` stays byte-identical and the commit holds no pin change.
+    - The panel: `out/chibi-sprouts/cast/sprout-grandma-kim-panel.png`, 1416 x 900, SHA-256
+      `4e10acda9759702e11c8e0896729bb33ca2e01e62a95c6917d7540f839e45c30`. The caption reads
+      `11/11 rows pass; palms ok` and `cropped: front no, side no, drawing no`.
+    - The gates: `tests/sprout-grandma-kim.test.ts` and `tests/cast-isolation.test.ts` exit 0 with
+      six tests, `./forge check sprout-grandma-kim` ends `result ok`, `prettier --check` exits 0, and
+      `tsc --noEmit` holds the 51 baseline diagnostics with none in the changed file.
   - Look remediation round 2 (2026-11-26): the look judge gave identity 7.0 and proportion 8.0 in round 1.
   - Build the identity of the spec: white hair in a high bun, round cheeks, smile lines, pearl studs,
     a green cardigan over a pale green dress, a mid-calf skirt, and brown flats. The bun may rise
