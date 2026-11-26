@@ -2296,8 +2296,8 @@ blue`), and the stale `wizard-argon-trial` key stays.
   - Record: the paths, the SHA-256 sums, the panel sizes, the baselines, the crop states, and the
     note path.
   - Evidence (2026-11-27, at `91e4cf40`, the merge of master `d287b6cb` into `3fccaf44`):
-    - Command: `HEAVY_MIN_AVAIL_MB=1500 bash …/heavy-run.sh -c 'node scripts/sprout-cast-panel.mjs
-      --sheet'` exits 0. Output: five `sheet cell: <name> cropped: no` lines and
+    - Command: `HEAVY_MIN_AVAIL_MB=1500 bash …/heavy-run.sh -c 'node scripts/sprout-cast-panel.mjs --sheet'`
+      exits 0. Output: five `sheet cell: <name> cropped: no` lines and
       `sheet: out/chibi-sprouts/cast/cast-sheet.png 1544x900`. The command wrote no panel.
     - Panels, with the hash before and after the command (equal to each other and to the judge
       `panel_sha256`), size 1416 × 900:
@@ -2316,8 +2316,8 @@ blue`), and the stale `wizard-argon-trial` key stays.
     - Crop states: every panel cell reads `cropped: front no, side no, drawing no`.
     - Sheet: `out/chibi-sprouts/cast/cast-sheet.png`,
       `ed4ea5aa9515fe1a469d6904eb97365de798d378d4ae9e379c82935070b9b725`, 1544 × 900,
-      466.667 px per metre, one baseline at row 780, crop `dad no, grandma no, grandpa no, tom no,
-      lily no`. The projected body height is 703 px for Dad, 702 px for Grandma, 703 px for
+      466.667 px per metre, one baseline at row 780, crop `dad no, grandma no, grandpa no, tom no, lily no`.
+      The projected body height is 703 px for Dad, 702 px for Grandma, 703 px for
       Grandpa, 491 px for Tom, and 494 px for Lily. The caption names the five and `sprout-mom-kim`.
     - A reader looked at the sheet and at the five panels. The sheet holds five whole figures on one
       baseline: Dad in a red plaid jacket and blue trousers, Grandma with a white bun and a green
@@ -2384,21 +2384,39 @@ blue`), and the stale `wizard-argon-trial` key stays.
       therefore do not close the project gate. The merge of this branch into `advantage-forge`
       `master` re-runs `./measure/generate.sh`, `./measure/doctor.sh`, and the configured project
       gates through the heavy runner. The PM receives their exit codes and counts.
-    - T19 stays `[b]` with the PM as its owner. It is human-gated, so it does not count as an
-      incomplete task of the phase. The PM's approval opens the closeout.
+    - T19 stayed `[b]` with the PM as its owner at this gate. It is human-gated, so it did not count
+      as an incomplete task of the phase. The PM answered it at T19, and that answer opens the
+      closeout.
     - The judge inputs of spec "The gate check of the judge inputs" match at `c8544050`. All five
       records hold eleven rows in range and both palms ok. The five panel hashes equal their
       `panel_sha256` values. The sheet hash is
       `ed4ea5aa9515fe1a469d6904eb97365de798d378d4ae9e379c82935070b9b725` at 1544 × 900.
 
-- [b] T19 Measure: Record the PM's answer. deferred:pm trigger: event the PM answers. Human gate.
-  - This task is blocked until the PM answers. No role starts it. The PM owns the answer.
+- [x] T19 Measure: Record the PM's answer. Human gate. Owner PM.
   - The task records the handoff date, the PM's word, and the next step. An approval closes the
     character work and opens the closeout. A change list returns the named character to its Green
     task and to a fresh judge.
   - Done-when: this plan holds the handoff date, the PM's word, and the next task. The PM's word
     gates any external use of the five assets.
   - Record: the date, the answer, and the closeout or the return.
+
+  - Record (2026-11-27). Owner PM. The PM answered on 2026-11-27.
+    - The PM accepts the five cast panels and the cast sheet. The word is accepted. Daniel need not
+      see the panels or the sheet first.
+    - The approval closes the character work. The next step is closeout. No character returns to
+      Green, and no fresh judge runs.
+    - The PM grants the main-checkout test exception. This is the only test exception of the track.
+      - 18 of the 119 cast cases fail in the main checkout. All 119 cases pass in the worktree
+        `/home/daniebo/Desktop/forge-worktrees/sprouts-cast`.
+      - The cause is a git-ignored input. Mom's `flat/front-level.png`, the five cast GLBs, and the
+        five cast `stats.json` files live only in that worktree.
+      - One case also fails with `TestTimeoutError`. It is the destination-refusal case of
+        `tests/proportion-cast-options.test.ts`. It hashes a 24 GB `out/` tree.
+      - The exception covers the main checkout only. It does not change a test, a gate, or an
+        acceptance criterion.
+    - The doctor keeps one error alone. It is the line `in_progress track has no unchecked task` for
+      this plan. Every counted task is `[x]` and `metadata.json` stays `in_progress` until closeout.
+      Closeout clears the line.
 
 ## Known limits
 
