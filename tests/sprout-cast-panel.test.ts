@@ -157,8 +157,9 @@ async function writeRender(
   file: string,
   colour: number[],
   bun: boolean,
-  left = 80,
-  right = 176,
+  // 75 source px = 262.5 sheet px, below the 264 px sheet head-fit limit.
+  left = 90,
+  right = 164,
 ): Promise<void> {
   const width = 256;
   const height = 256;
@@ -539,12 +540,14 @@ describe('sprout cast panel and sheet (Red pin)', () => {
 
   it('F3 sheet prints and captions cropped state for every cell', async () => {
     const file = join(castDir, 'cast-sheet.png');
+    const dad = join(root, 'out', 'sprout-dad-kim', 'views', 'front-level.png');
+    await writeCropStateRender(dad, true);
     const first = runPanel(['--sheet', '--date', DATE]);
     expect(first.status, first.output).toBe(0);
     for (const name of NAMES) expect(first.output).toMatch(new RegExp(`${name}.*cropped: (yes|no)`));
     const caption = await captionBuffer(file, 1544);
 
-    await writeRender(join(root, 'out', 'sprout-dad-kim', 'views', 'front-level.png'), RED, false, 110, 146);
+    await writeCropStateRender(dad, false);
     const second = runPanel(['--sheet', '--date', DATE]);
     expect(second.status, second.output).toBe(0);
     for (const name of NAMES) expect(second.output).toMatch(new RegExp(`${name}.*cropped: (yes|no)`));

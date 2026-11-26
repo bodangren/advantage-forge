@@ -754,6 +754,33 @@ limit` gets exit 0 for a 350 px head.
       ```
 
     - The full result block is `measure/runs/chibi_sprouts_cast_20261125/red-70ebbfb.log`.
+  - Sheet fixture repair (2026-11-26, PM Option A, role base
+    `62258e9ee684e887724a6b5ad72e85bc8c94dbed`): the spec keeps the 264 px sheet head-fit limit.
+    - The default lit render now spans x 90 to x 164, a 75 source px head. At the adult sheet scale,
+      the head is 262.5 px, inside the 264 px limit. The panel limit stays 424 px.
+    - The refusal fixtures stay separate: the 100 source px head is 350 px at the sheet scale, and
+      the 236 source px Tom head stays above both limits.
+    - The crop-state caption case uses a 40 source px head with a wide or narrow body. It changes the
+      crop state without breaking the sheet head-fit rule.
+    - Commands and exit codes:
+
+      ```bash
+      HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-cast-panel.test.ts'
+      # exit 0
+      HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/proportion-cast-options.test.ts'
+      # exit 0
+      HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/cast-isolation.test.ts'
+      # exit 0
+      HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-mom-kim.test.ts'
+      # exit 0
+      HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-mom-kim.validation.test.ts'
+      # exit 0
+      node_modules/.bin/prettier --check tests/sprout-cast-panel.test.ts tests/proportion-cast-options.test.ts tests/cast-isolation.test.ts
+      # exit 0
+      ```
+
+    - No Green finding remains in these cases. The full result block is
+      `measure/runs/chibi_sprouts_cast_20261125/red-62258e9.log`.
 
 - [ ] T4 Measure: The Phase 1 gate.
   - Done-when:
