@@ -529,6 +529,46 @@ in `#241812`, which is 23 in Chebyshev distance from the declared `#3b2a1e`, so 
     `measure/runs/chibi_sprouts_cast_20261125/adversarial-p1-<sha>.json` with one finding per fault,
     a severity per finding, and a verdict. It names the audited commit.
   - Record: the audited commit, the findings, the severity of each, and the dispositions.
+  - Red fix pins (2026-11-26, role base `9adcc72e79e2184eaa391c39bf1d1dc7b95ba980`):
+    - F1: `F1 all five committed drawings produce panels` fails for Grandma, Grandpa, and Lily with
+      `figure wider than its cell`. `F1 noisy JPEG uses the fixed chin, drops stray ink, and centres
+on the head` fails with the same line. The fixture uses the committed crown, chin, and sole rows
+      from `docs/chibi-sprouts/redesign-2026-11-23.md`.
+    - F2: `F2 Lily side chin rejects antialiased hair at alpha 200 and 128` and `F2 Lily side chin
+requires skin at the frontmost mask pixel` both miss the named guard.
+    - F3: `F3 sheet refuses a head wider than its 280 px cell` gets exit 0. `F3 sheet prints and
+captions cropped state for every cell` gets no per-cell crop line and no caption change.
+    - F4: `F4 base iris paint survives the spec example glasses mark` fails with
+      `eye components: found 0, expected 2`.
+    - F6: `F6 equals-form and unknown options fail before any write` and `F6 unknown panel options
+fail before any write` both exit 0 and write output.
+    - F8: `F8 --all validates every input before writing any panel` overwrites the existing Dad panel
+      before the missing Grandpa record stops the run.
+    - F9: `F9 a record with no rows is refused and writes no panel` exits 0 and writes a panel.
+    - F10: `F10 record destination reports a regular-file parent without throwing` throws `ENOTDIR`.
+      `F10 a regular-file parent gives a named line without a stack trace` prints the raw `ENOTDIR`
+      line.
+    - F11: `F11 record destination refuses a hard link` returns null. `F11 a hard-linked panel
+destination is refused without changing its target` exits 0 and overwrites the target.
+    - Commands and exit codes:
+
+      ```bash
+      HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/proportion-cast-options.test.ts'
+      # exit 1: the new F2, F4, F6, F10, and F11 cases fail for the named reasons
+      HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-cast-panel.test.ts'
+      # exit 1: the new F1, F3, F6, F8, F9, F10, and F11 cases fail for the named reasons
+      HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/cast-isolation.test.ts'
+      # exit 0
+      HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-mom-kim.test.ts'
+      # exit 0
+      HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-mom-kim.validation.test.ts'
+      # exit 0
+      node_modules/.bin/prettier --check tests/proportion-cast-options.test.ts tests/sprout-cast-panel.test.ts tests/cast-isolation.test.ts
+      # exit 0
+      ```
+
+    - F5 and F12 to F17 stay skipped for the spec owner. This role does not stage the adversarial
+      JSON or log. The full result block is `measure/runs/chibi_sprouts_cast_20261125/red-9adcc72e.log`.
 
 - [ ] T4 Measure: The Phase 1 gate.
   - Done-when:

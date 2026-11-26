@@ -2,7 +2,9 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import {
+  copyFileSync,
   existsSync,
+  linkSync,
   lstatSync,
   mkdirSync,
   mkdtempSync,
@@ -42,6 +44,13 @@ const DRAWING_ROWS = {
   'sprout-grandpa-kim': [83, 1520],
   'sprout-tom-kim': [87, 1521],
   'sprout-lily-kim': [83, 1522],
+};
+const DRAWING_CHINS = {
+  'sprout-dad-kim': 435,
+  'sprout-grandma-kim': 572,
+  'sprout-grandpa-kim': 495,
+  'sprout-tom-kim': 583,
+  'sprout-lily-kim': 574,
 };
 const ROW_NAMES = [
   'heightInHeads',
@@ -129,11 +138,17 @@ function fillRect(
       put(data, width, height, x, y, colour);
 }
 
-async function writeRender(file: string, colour: number[], bun: boolean): Promise<void> {
+async function writeRender(
+  file: string,
+  colour: number[],
+  bun: boolean,
+  left = 80,
+  right = 176,
+): Promise<void> {
   const width = 256;
   const height = 256;
   const data = Buffer.alloc(width * height * 4);
-  fillRect(data, width, height, 80, 40, 176, 240, colour);
+  fillRect(data, width, height, left, 40, right, 240, colour);
   if (bun) fillRect(data, width, height, 120, 24, 136, 39, PURPLE);
   await sharp(data, { raw: { width, height, channels: 4 } })
     .png()
@@ -160,6 +175,56 @@ async function writeDrawing(
   fillRect(data, width, height, cx + bodyHalf * 0.2, chin, cx + bodyHalf * 0.55, sole, BLUE);
   await sharp(data, { raw: { width, height, channels: 4 } })
     .png()
+    .toFile(file);
+}
+
+async function writeWideHeadRender(file: string): Promise<void> {
+  const width = 256;
+  const height = 256;
+  const data = Buffer.alloc(width * height * 4);
+  fillRect(data, width, height, 10, 40, 246, 120, RED);
+  fillRect(data, width, height, 100, 120, 156, 240, RED);
+  await sharp(data, { raw: { width, height, channels: 4 } })
+    .png()
+    .toFile(file);
+}
+
+/** Opaque JPEG paper with isolated dark noise and an off-centre chibi head. */
+async function writeNoisyDrawing(file: string): Promise<void> {
+  const width = 1600;
+  const height = 1600;
+  const data = Buffer.alloc(width * height * 4);
+  for (let i = 0; i < data.length; i += 4) {
+    data[i] = 250;
+    data[i + 1] = 250;
+    data[i + 2] = 250;
+    data[i + 3] = 255;
+  }
+  const cx = width / 2;
+  fillRect(
+    data,
+    width,
+    height,
+    800,
+    DRAWING_ROWS['sprout-lily-kim'][0]!,
+    1599,
+    DRAWING_CHINS['sprout-lily-kim'],
+    RED,
+  );
+  fillRect(
+    data,
+    width,
+    height,
+    cx - 100,
+    DRAWING_CHINS['sprout-lily-kim'],
+    cx + 100,
+    650,
+    [242, 199, 164, 255],
+  );
+  fillRect(data, width, height, 400, 650, 899, DRAWING_ROWS['sprout-lily-kim'][1]!, BLUE);
+  fillRect(data, width, height, 50, 100, 54, 104, [80, 80, 80, 255]);
+  await sharp(data, { raw: { width, height, channels: 4 } })
+    .jpeg({ quality: 90 })
     .toFile(file);
 }
 
@@ -258,8 +323,8 @@ const isGreen = (r: number, g: number, b: number) => g > 140 && r < 100 && b < 1
 const isBlue = (r: number, g: number, b: number) => b > 170 && r < 110 && g < 150;
 const isPurple = (r: number, g: number, b: number) => b > 150 && r > 90 && g < 110;
 
-async function captionBuffer(file: string): Promise<Buffer> {
-  return await sharp(file).extract({ left: 0, top: 804, width: 1416, height: 96 }).raw().toBuffer();
+async function captionBuffer(file: string, width = 1416): Promise<Buffer> {
+  return await sharp(file).extract({ left: 0, top: 804, width, height: 96 }).raw().toBuffer();
 }
 
 function captionInk(buffer: Buffer): number {
@@ -367,9 +432,60 @@ describe('sprout cast panel and sheet (Red pin)', () => {
     }
   });
 
+  it('F3 sheet refuses a head wider than its 280 px cell', async () => {
+    await writeWideHeadRender(join(root, 'out', 'sprout-tom-kim', 'views', 'front-level.png'));
+    const result = runPanel(['--sheet', '--date', DATE]);
+    expect(result.status, result.output).toBe(1);
+    expect(result.output).toContain('figure wider than its cell: sprout-tom-kim');
+    expectOneLine(result.output);
+    expect(existsSync(join(castDir, 'cast-sheet.png'))).toBe(false);
+  });
+
+  it('F3 sheet prints and captions cropped state for every cell', async () => {
+    const file = join(castDir, 'cast-sheet.png');
+    const first = runPanel(['--sheet', '--date', DATE]);
+    expect(first.status, first.output).toBe(0);
+    for (const name of NAMES) expect(first.output).toMatch(new RegExp(`${name}.*cropped: (yes|no)`));
+    const caption = await captionBuffer(file, 1544);
+
+    await writeRender(join(root, 'out', 'sprout-dad-kim', 'views', 'front-level.png'), RED, false, 110, 146);
+    const second = runPanel(['--sheet', '--date', DATE]);
+    expect(second.status, second.output).toBe(0);
+    for (const name of NAMES) expect(second.output).toMatch(new RegExp(`${name}.*cropped: (yes|no)`));
+    expect((await captionBuffer(file, 1544)).equals(caption)).toBe(false);
+  });
+
   it('DRAWING_ROWS exports the five fixed drawing pairs', async () => {
     const mod = await import(pathToFileURL(SCRIPT).href);
     expect(mod.DRAWING_ROWS).toEqual(DRAWING_ROWS);
+  });
+
+  it('F1 all five committed drawings produce panels', () => {
+    const failures: string[] = [];
+    for (const name of NAMES) {
+      const stem = name.replace('sprout-', '').replace('-kim', '');
+      copyFileSync(
+        join(ROOT, 'docs', 'sprout-mockups', `${stem}.jpg`),
+        join(root, 'docs', 'sprout-mockups', `${stem}.jpg`),
+      );
+      const result = runPanel(['--asset', name, '--date', DATE]);
+      if (result.status !== 0) failures.push(`${name}: exit ${result.status}: ${result.output.trim()}`);
+    }
+    expect(failures).toEqual([]);
+  });
+
+  it('F1 noisy JPEG uses the fixed chin, drops stray ink, and centres on the head', async () => {
+    await writeNoisyDrawing(join(root, 'docs', 'sprout-mockups', 'lily.jpg'));
+    const result = runPanel(['--asset', 'sprout-lily-kim', '--date', DATE]);
+    expect(result.status, result.output).toBe(0);
+    const raw = await rawPanel(join(castDir, 'sprout-lily-kim-panel.png'));
+    const head = colourBounds(raw, 952, 1391, 80, 280, isRed);
+    const expected = Math.round((800 * 700) / (1522 - 83));
+    expect(head.count).toBeGreaterThan(0);
+    expect(head.maxX - head.minX + 1).toBeGreaterThanOrEqual(expected - 4);
+    expect(head.maxX - head.minX + 1).toBeLessThanOrEqual(expected + 4);
+    expect(head.minX).toBeGreaterThanOrEqual(960);
+    expect(head.maxX).toBeLessThanOrEqual(1383);
   });
 
   it('1600 px drawing crops to 440 px while its head band fits', async () => {
@@ -457,6 +573,74 @@ describe('sprout cast panel and sheet (Red pin)', () => {
     rmSync(castDir);
     rmSync(outsideDir, { recursive: true, force: true });
     renameSync(realCast, castDir);
+  });
+
+  it('F6 unknown panel options fail before any write', () => {
+    const before = hashTree(root);
+    const result = runPanel(['--sheat', '--date', DATE]);
+    expect(result.status, result.output).toBe(1);
+    expect(result.output).toContain('unknown option --sheat');
+    expectOneLine(result.output);
+    expect(hashTree(root)).toBe(before);
+    expect(readdirSync(castDir).filter((name) => name.endsWith('-panel.png'))).toEqual([]);
+    expect(existsSync(join(castDir, 'cast-sheet.png'))).toBe(false);
+  });
+
+  it('F8 --all validates every input before writing any panel', () => {
+    const sentinel = Buffer.from('existing Dad panel\n');
+    const dadPanel = join(castDir, 'sprout-dad-kim-panel.png');
+    writeFileSync(dadPanel, sentinel);
+    rmSync(join(castDir, 'sprout-grandpa-kim-measure.json'));
+    const before = hashTree(root);
+    const result = runPanel(['--all', '--date', DATE]);
+    expect(result.status, result.output).toBe(1);
+    expect(result.output).toContain('record sprout-grandpa-kim: not built');
+    expect(readFileSync(dadPanel).equals(sentinel)).toBe(true);
+    expect(existsSync(join(castDir, 'sprout-grandma-kim-panel.png'))).toBe(false);
+    expect(existsSync(join(castDir, 'cast-sheet.png'))).toBe(false);
+    expect(hashTree(root)).toBe(before);
+  });
+
+  it('F9 a record with no rows is refused and writes no panel', () => {
+    const recordPath = join(castDir, 'sprout-dad-kim-measure.json');
+    const record = JSON.parse(readFileSync(recordPath, 'utf8'));
+    record.rows = {};
+    writeFileSync(recordPath, `${JSON.stringify(record, null, 2)}\n`);
+    const result = runPanel(['--asset', 'sprout-dad-kim', '--date', DATE]);
+    expect(result.status, result.output).toBe(1);
+    expect(result.output).toContain('record sprout-dad-kim: rows incomplete');
+    expectOneLine(result.output);
+    expect(existsSync(join(castDir, 'sprout-dad-kim-panel.png'))).toBe(false);
+  });
+
+  it('F10 a regular-file parent gives a named line without a stack trace', () => {
+    const parent = join(root, 'out', 'chibi-sprouts');
+    const realParent = join(root, 'out', 'chibi-sprouts-real');
+    renameSync(parent, realParent);
+    writeFileSync(parent, 'keep\n');
+    const before = hashTree(root);
+    const result = runPanel(['--asset', 'sprout-dad-kim', '--date', DATE]);
+    expect(result.status, result.output).toBe(1);
+    expect(result.output).toContain('destination parent is a file: out/chibi-sprouts');
+    expectOneLine(result.output);
+    expect(result.output).not.toMatch(/\n\s+at /);
+    expect(hashTree(root)).toBe(before);
+  });
+
+  it('F11 a hard-linked panel destination is refused without changing its target', () => {
+    const outside = join(SCRATCH, `sprout-panel-hardlink-${process.pid}.png`);
+    outsideArtifacts.push(outside);
+    writeFileSync(outside, 'keep\n');
+    const dest = join(castDir, 'sprout-dad-kim-panel.png');
+    linkSync(outside, dest);
+    const before = hashTree(root);
+    const targetBefore = sha256(outside);
+    const result = runPanel(['--asset', 'sprout-dad-kim', '--date', DATE]);
+    expect(result.status, result.output).toBe(1);
+    expect(result.output).toContain('destination is a link: out/chibi-sprouts/cast/sprout-dad-kim-panel.png');
+    expectOneLine(result.output);
+    expect(hashTree(root)).toBe(before);
+    expect(sha256(outside)).toBe(targetBefore);
   });
 
   it('--asset writes one panel and no sheet', () => {

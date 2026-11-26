@@ -4,6 +4,7 @@ import { createHash } from 'node:crypto';
 import {
   copyFileSync,
   existsSync,
+  linkSync,
   lstatSync,
   mkdirSync,
   mkdtempSync,
@@ -85,6 +86,37 @@ function runScript(args: string[], script = SCRIPT, cwd = ROOT): RunResult {
 
 function runMom(args: string[]): RunResult {
   return runScript(['--asset', MOM, ...args]);
+}
+
+/** A disposable repository tree with the real script and T0 Mom inputs. */
+function makeMomFixture(prefix: string): { root: string; script: string } {
+  mkdirSync(SCRATCH, { recursive: true });
+  const root = mkdtempSync(join(SCRATCH, prefix));
+  mkdirSync(join(root, 'scripts'), { recursive: true });
+  mkdirSync(join(root, 'assets', 'parts'), { recursive: true });
+  mkdirSync(join(root, 'out', MOM, 'flat'), { recursive: true });
+  mkdirSync(join(root, 'out', MOM, 'views'), { recursive: true });
+  const script = join(root, 'scripts', 'proportion-check.mjs');
+  copyFileSync(SCRIPT, script);
+  symlinkSync(join(ROOT, 'node_modules'), join(root, 'node_modules'), 'dir');
+  writeFileSync(
+    join(root, 'assets', 'parts', 'humanoid-kim.ts'),
+    `export * from ${JSON.stringify(pathToFileURL(BASE).href)};\n`,
+  );
+  writeFileSync(
+    join(root, 'assets', `${MOM}.ts`),
+    `export { default } from ${JSON.stringify(pathToFileURL(join(ROOT, 'assets', `${MOM}.ts`)).href)};\n`,
+  );
+  for (const file of [
+    `${MOM}.glb`,
+    'stats.json',
+    'flat/front-level.png',
+    'flat/side-level.png',
+    'views/front-level.png',
+    'views/side-level.png',
+  ])
+    copyFileSync(join(ROOT, 'out', MOM, file), join(root, 'out', MOM, file));
+  return { root, script };
 }
 
 function rowsFor(table: Row[]): Row[] {
@@ -237,10 +269,10 @@ function wrongCrown(): any {
   return figure;
 }
 
-function glassesFrame(colour = '#3b2a1e'): any {
+function glassesFrame(colour = '#3b2a1e', eyeColourHex = '#6e4020'): any {
   const figure = baseFigure();
   const { row, col, eyeY, eyeHalf } = figure.projection;
-  const eyeColour = hexToRgb('#6e4020');
+  const eyeColour = hexToRgb(eyeColourHex);
   for (const sx of [-1, 1]) {
     const ex = (sx * 0.13) / 2;
     rect(figure.front, col(ex - eyeHalf), row(eyeY + 0.0225), col(ex + eyeHalf), row(eyeY - 0.0225), [
@@ -248,7 +280,6 @@ function glassesFrame(colour = '#3b2a1e'): any {
       255,
     ]);
   }
-  figure.eyeRgb = eyeColour;
   const left = col(-0.13 / 2 + eyeHalf);
   const right = col(0.13 / 2 - eyeHalf);
   rect(figure.front, left, row(eyeY) - 1, right, row(eyeY) + 1, [...hexToRgb(colour), 255]);
@@ -272,6 +303,17 @@ function lilyHair(kind: 'clean' | 'chin' | 'side-chin' | 'bangs'): any {
     const eyeTop = Math.round(row(eyeY + 0.0225));
     rect(figure.front, 504, eyeTop - 4, 520, eyeTop - 2, hair);
   }
+  return figure;
+}
+
+function lilySideChin(alpha: number, colour = '#7a5230'): any {
+  const figure = baseFigure();
+  const rgb = hexToRgb(colour);
+  figure.assetName = 'sprout-lily-kim';
+  figure.hairRgb = hexToRgb('#7a5230');
+  const frontmost = Math.round(figure.side.width / 2 - 0.1 * figure.ppm);
+  const chin = Math.round(figure.chinRow);
+  for (let y = chin - 2; y <= chin; y += 1) setPx(figure.side, frontmost, y, [...rgb, alpha]);
   return figure;
 }
 
@@ -299,6 +341,23 @@ describe('cast proportion options and fixtures (Red pin)', () => {
       expect(result.status, `${JSON.stringify(stem)}: ${result.output}`).toBe(1);
       expect(result.output).toContain(`unknown base ${stem}`);
       expectOneLine(result.output);
+    }
+  });
+
+  it('F6 equals-form and unknown options fail before any write', () => {
+    const { root, script } = makeMomFixture('sprout-option-reject-');
+    try {
+      const before = hashTree(root);
+      const recordArg = '--record=out/chibi-sprouts/cast/equals.json';
+      const result = runScript(['--asset', MOM, recordArg], script, root);
+      expect(result.status, result.output).toBe(1);
+      expect(result.output).toContain(`unknown option ${recordArg}`);
+      expectOneLine(result.output);
+      expect(hashTree(root)).toBe(before);
+      expect(existsSync(join(root, 'out', 'chibi-sprouts', 'cast', 'equals.json'))).toBe(false);
+      expect(existsSync(join(root, 'out', 'chibi-sprouts', 'redesign', 'measure.json'))).toBe(false);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
     }
   });
 
@@ -444,6 +503,11 @@ describe('cast proportion options and fixtures (Red pin)', () => {
     expect(close.failures).toContain('faceMarks glasses: too close to the eye paint');
   });
 
+  it('F4 base iris paint survives the spec example glasses mark', async () => {
+    const mod = await loadScript();
+    expectFigurePasses(mod, glassesFrame('#3b2a1e', '#4a2e18'));
+  });
+
   it('Lily fixtures produce all three named hair guards', async () => {
     const mod = await loadScript();
     const clean = mod.measureFigure(lilyHair('clean'));
@@ -455,6 +519,20 @@ describe('cast proportion options and fixtures (Red pin)', () => {
     expect(side.guards).toContain('GUARD lily side chin: hair at the front');
     const bangs = mod.measureFigure(lilyHair('bangs'));
     expect(bangs.guards).toContain('GUARD lily bangs: hair in the eye window');
+  });
+
+  it('F2 Lily side chin rejects antialiased hair at alpha 200 and 128', async () => {
+    const mod = await loadScript();
+    for (const alpha of [200, 128]) {
+      const result = mod.measureFigure(lilySideChin(alpha));
+      expect(result.guards, `alpha ${alpha}`).toContain('GUARD lily side chin: hair at the front');
+    }
+  });
+
+  it('F2 Lily side chin requires skin at the frontmost mask pixel', async () => {
+    const mod = await loadScript();
+    const result = mod.measureFigure(lilySideChin(255, '#2850c8'));
+    expect(result.guards).toContain('GUARD lily side chin: hair at the front');
   });
 
   it('missing variants.hair exits with hair colour not declared', () => {
@@ -542,6 +620,36 @@ describe('cast proportion options and fixtures (Red pin)', () => {
     } finally {
       rmSync(fixture, { recursive: true, force: true });
       rmSync(outside, { force: true });
+    }
+  });
+
+  it('F10 record destination reports a regular-file parent without throwing', async () => {
+    const mod = await loadScript();
+    const root = mkdtempSync(join(SCRATCH, 'sprout-parent-file-'));
+    try {
+      mkdirSync(join(root, 'out'), { recursive: true });
+      writeFileSync(join(root, 'out', 'parent'), 'keep\n');
+      const dest = join(root, 'out', 'parent', 'record.json');
+      expect(mod.destinationError(root, dest, 'out/')).toBe('destination parent is a file: out/parent');
+      expect(readFileSync(join(root, 'out', 'parent'), 'utf8')).toBe('keep\n');
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  it('F11 record destination refuses a hard link', async () => {
+    const mod = await loadScript();
+    const root = mkdtempSync(join(SCRATCH, 'sprout-hardlink-'));
+    try {
+      mkdirSync(join(root, 'out'), { recursive: true });
+      const outside = join(root, 'outside.json');
+      const dest = join(root, 'out', 'record.json');
+      writeFileSync(outside, 'keep\n');
+      linkSync(outside, dest);
+      expect(mod.destinationError(root, dest, 'out/')).toBe('destination is a link: out/record.json');
+      expect(readFileSync(outside, 'utf8')).toBe('keep\n');
+    } finally {
+      rmSync(root, { recursive: true, force: true });
     }
   });
 
