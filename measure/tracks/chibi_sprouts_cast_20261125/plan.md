@@ -954,9 +954,7 @@ limit` gets exit 0 for a 350 px head.
     - No adult case remains failing. The result block is
       `measure/runs/chibi_sprouts_cast_20261125/red-2d5808a7.log`.
 
-- [x] T6 Green: Dad. File: `assets/sprout-dad-kim.ts` (new). Commits
-      `bae2072671011b3115fa54d29ea81e62eddaeec6` and
-      `3cd8582a1cd6a5d0c5a154e84d87f2d7fb29de98`.
+- [x] T6 Green: Dad. File: `assets/sprout-dad-kim.ts` (new). Commits `bae2072671011b3115fa54d29ea81e62eddaeec6` and `3cd8582a1cd6a5d0c5a154e84d87f2d7fb29de98`.
   - Look remediation round 2 (2026-11-26): the look judge gave identity 7.0 and proportion 8.2 in round 1.
   - Build the identity of the spec: black swept-back hair, square jaw, thick brows, open smile, a
     red-and-black plaid shirt over a white tee, dark blue jeans, and brown boots. Import `buildKim`
@@ -1064,9 +1062,7 @@ limit` gets exit 0 for a 350 px head.
       `result ok`, `prettier --check` exits 0, and `tsc --noEmit` holds the 51 baseline diagnostics
       with none in the changed file.
 
-- [x] T7 Green: Grandma. File: `assets/sprout-grandma-kim.ts` (new). Commits
-      `6ce871edee5ac74a28e2b8486d0213ac03fd1610` and
-      `44c4b68843cdc8e9b9955e7b69a3f10b9a49f7a7`.
+- [x] T7 Green: Grandma. File: `assets/sprout-grandma-kim.ts` (new). Commits `6ce871edee5ac74a28e2b8486d0213ac03fd1610` and `44c4b68843cdc8e9b9955e7b69a3f10b9a49f7a7`.
   - Look remediation round 2 (2026-11-26): the look judge gave identity 7.0 and proportion 8.0 in round 1.
   - Build the identity of the spec: white hair in a high bun, round cheeks, smile lines, pearl studs,
     a green cardigan over a pale green dress, a mid-calf skirt, and brown flats. The bun may rise
