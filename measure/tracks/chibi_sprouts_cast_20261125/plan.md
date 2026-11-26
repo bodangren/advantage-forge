@@ -1909,8 +1909,9 @@ import` runs the real script on the real tree and expects the output
       # exit 2: 51 diagnostics in the baseline files; none sits in the changed file
       ```
 
-- [x] T14 Green: Lily. Commits `5c224278f9b4e0a3c3b2a922c758d07264f72b09` (the Lily bangs guard) and
-      `9bca4351cfa2617c6e434c1adf8ecc63b42d689a` (the asset and the pin key). Files:
+- [x] T14 Green: Lily. Commits `5c224278f9b4e0a3c3b2a922c758d07264f72b09` (the Lily bangs guard),
+      `9bca4351cfa2617c6e434c1adf8ecc63b42d689a` (the asset and the pin key), and
+      `fc22048b17dd02d31169ff192071293ee571ab3e` (the look round 2). Files:
       `assets/sprout-lily-kim.ts` (new), `scripts/proportion-check.mjs` (the bangs guard),
       `tests/fixtures/preset-pin.json` (one new key).
   - Build the identity of the spec: a brown bob to the jaw with straight soft bangs, an open smile,
@@ -2046,6 +2047,119 @@ import` runs the real script on the real tree and expects the output
       # exit 0: all matched files use Prettier code style
       node node_modules/typescript/bin/tsc --noEmit
       # exit 2: the baseline diagnostics of the other files; no diagnostic sits in the two changed files
+      ```
+
+  - Look round 2 evidence (2026-11-27, worktree `/home/daniebo/Desktop/forge-worktrees/sprouts-cast`,
+    branch `chibi-sprouts-cast`, phase base `aed0bcc0c3562de1def0242a29d35dd3dca31b68`, role base
+    `acb3afbbd924626a708a1d6cef64b9a3ba63d12a`, implementation commit
+    `fc22048b17dd02d31169ff192071293ee571ab3e`, Green route
+    `minimax-cn-coding-plan/MiniMax-M3.1-Flash`, family minimax):
+    - The look judge of round 1 scored identity 7.0 and proportion 8.0. It named three faults: the
+      shirt had no white collar, the shoes had no laces and the wrong shape, and the skirt was not
+      pleated. Round 2 changes `assets/sprout-lily-kim.ts` only. The child base, the scripts, the
+      tests, the adults, and the preset pin stay as they were.
+    - The eleven rows of `TABLES.child` from `out/chibi-sprouts/cast/sprout-lily-kim-measure.json`:
+      `heightInHeads 2.920782`, `armToTorso 1.231832`, `legShare 0.34037`, `headToShoulders
+2.14492`, `wrist -0.124088`, `fingertips 0.430649`, `eyeLine 0.645638`, `eyeHeight 0.140665`,
+      `spacingHead 0.309375`, `eyeWidthFace 0.227723`, `spacingFace 0.490099`. Every row sits inside
+      the child table, every row limit equals the table, both palms are ok, and the `guards` array is
+      empty. The three Lily guards pass, so the bob, the bangs, and the chin hold.
+    - The three fixes of the judge:
+      - The white Peter Pan collar sits at the neckline. It is a flat ring round the neck at 0.640 m
+        with two rounded lobes that hang over the chest at 0.634 m.
+      - The red skirt carries ten pleats. The fold is a radial ripple of 9 mm, and it starts below
+        the hem of the tee, so the waist keeps a round edge. The ripple uses the Lipschitz factor of
+        1.8, so the distance field keeps its true size and the triangle reduction succeeds.
+      - The red sneakers carry a white toe cap at the front, a white sole, and two white lace bands
+        over the instep. Each lace band is the shoe inflated by 8 mm and cut by a slab of 16 mm, so
+        the band follows the curve of the shoe.
+    - The two look rounds, read from the flat front render, the lit front render, and the flat side
+      render against `docs/sprout-mockups/lily.jpg`:
+      1. the first build of round 2 gave a white crescent on the chest instead of a collar, a saw
+         tooth of skirt under the hem of the tee, and a build warning that the triangle reduction of
+         the skirt failed; so the collar moved to the neckline, the fold grew below the hem of the
+         tee, and the ripple took its Lipschitz factor.
+      2. the final render reads as Lily: a brown bob with straight soft bangs, a blue tee with a
+         white Peter Pan collar, a red pleated skirt, white mid-calf socks, and red sneakers with
+         white toe caps, white soles, and white lace bands.
+    - The known limit of round 2: the lace bands lie on the top of the shoe, so they read as white
+      marks in the side cell and not in the front cell, where the top of a shoe is edge-on. The
+      judge sees both cells.
+    - The GLB stats: `sprout-lily-kim: 51,352 triangles, 0.374 x 1.067 x 0.31 m`, 17 bones, one
+      `idle` clip of 2.4 s, 16 bodies (`head-skin`, `torso-skin`, `arms-skin`, `legs-skin`,
+      `feet-skin`, `hands`, `face`, `hair`, `tee`, `collar`, `skirt`, `socks`, `sneakers`,
+      `sneaker-toe`, `sneaker-sole`, `laces`). The build prints no `warning:` line.
+    - The five artifact hashes, taken after the lit render:
+
+      | Artifact                | SHA-256                                                            |
+      | ----------------------- | ------------------------------------------------------------------ |
+      | `sprout-lily-kim.glb`   | `fbe2232826445103c59a04b8f9bcf7b34a84780123a827bd83dd25b26b48265d` |
+      | `flat/front-level.png`  | `6cf942bd02ed177ace1eca68be06bc52ad279dddf4c93285ec711210286044d9` |
+      | `flat/side-level.png`   | `aa30fcff6bc2a84ffb1b95060c66bd6e39796267aacb426565de6b4c496e6f70` |
+      | `views/front-level.png` | `a70c366309e80b70bd981bce0ae98b5b94d9b18973bf0bcfb955fba1559fedf9` |
+      | `views/side-level.png`  | `7305e1c592c96f3577995dd856354fdcab8235914c71a9e94be32aa15d2e707d` |
+
+      The raw `stats.json` SHA-256 (traceability only, never an equality check) is
+      `177540183d1fdded653c895a26ce32da9c7ee08424ecd79c845fe7f60b25240c`. The stable stats projection
+      (every `milliseconds` key removed at any depth, `texture` keeps `size` only, canonical JSON with
+      sorted keys) hashes to
+      `613ca8417caa5023f229ccc271c5798bbc97fe9ca464b2c2fde540d12d5658aa`. The projection holds the name
+      `sprout-lily-kim`, 51,352 triangles, the bounds min `[-0.187, -0.01, -0.155]` and max
+      `[0.186, 1.057, 0.155]`, the size `[0.374, 1.067, 0.31]`, `texture` null, 17 bones, the
+      animations `[{ name: idle, duration: 2.4 }]`, and the sixteen bodies:
+
+      | body         | gridPoints | evaluatedPoints | rawTriangles | triangles |
+      | ------------ | ---------- | --------------- | ------------ | --------- |
+      | head-skin    | 4127673    | 908014          | 186060       | 5660      |
+      | torso-skin   | 98769      | 82877           | 17256        | 1518      |
+      | arms-skin    | 164025     | 86514           | 17776        | 1396      |
+      | legs-skin    | 91225      | 74377           | 17608        | 1160      |
+      | feet-skin    | 50225      | 36751           | 8000         | 1418      |
+      | hands        | 1395225    | 194957          | 42544        | 14762     |
+      | face         | 3066745    | 544902          | 106920       | 4958      |
+      | hair         | 2980593    | 1133970         | 188032       | 3454      |
+      | tee          | 218489     | 116049          | 20712        | 1842      |
+      | collar       | 92625      | 54936           | 9792         | 1500      |
+      | skirt        | 514865     | 246787          | 42564        | 5234      |
+      | socks        | 79625      | 63008           | 13896        | 1148      |
+      | sneakers     | 69825      | 49925           | 11384        | 1590      |
+      | sneaker-toe  | 40625      | 27986           | 5904         | 1194      |
+      | sneaker-sole | 62985      | 47603           | 11832        | 250       |
+      | laces        | 169785     | 149834          | 36880        | 4268      |
+
+    - The measure record is `out/chibi-sprouts/cast/sprout-lily-kim-measure.json`, SHA-256
+      `e43dd124ab5d200f5e44c5e5b20a7272b1ac761c5516cb1dd555906a9b11435d`. Its five artifact hashes
+      match the files on disk. The base is `humanoid-kim-child`, SHA-256
+      `415e0a9b920b656880363e1a49693ec7e627c8242c5e449d3873e97c96d3a905`. The child base file did not
+      change.
+    - The panel is `out/chibi-sprouts/cast/sprout-lily-kim-panel.png`, 1416 x 900, SHA-256
+      `00455629846d6bc70ef506e73098d4d4a62bfd7ebd45e3963e63dbbc2e1c9307`. Its caption holds
+      `11/11 rows pass; palms ok` and `cropped: front no, side no, drawing no`.
+    - The pin key check: the preset pin changes no key and no value, because the variants and the
+      preset of T14 did not change. The file `tests/fixtures/preset-pin.json` holds the key
+      `sprout-lily-kim` with the `lily` preset (`skin fair`, `hair brown`, `eyes brown`, `cloth
+blue`), and the stale `wizard-argon-trial` key stays.
+    - The commands and their exit codes:
+
+      ```bash
+      HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c './forge build sprout-lily-kim --fast'
+      # exit 0: no warning line, 51,352 triangles
+      HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c './forge render sprout-lily-kim --fast --views front-level,side-level --ortho --flat --bg none --size 1024'
+      # exit 0
+      HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c './forge render sprout-lily-kim --fast --views front-level,side-level --ortho --bg none --size 1024'
+      # exit 0
+      HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c 'node_modules/.bin/tsx scripts/proportion-check.mjs --asset sprout-lily-kim --base humanoid-kim-child --table child --record out/chibi-sprouts/cast/sprout-lily-kim-measure.json'
+      # exit 0: 11 of 11 rows pass, both palms ok, no guard
+      HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c './forge check sprout-lily-kim'
+      # exit 0: result ok, no held item passes through the head, the ground check is ok
+      HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c 'node scripts/sprout-cast-panel.mjs --asset sprout-lily-kim'
+      # exit 0: the panel is 1416 x 900 and no cell is cropped
+      HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-child-base.test.ts tests/sprout-tom-kim.test.ts tests/sprout-lily-kim.test.ts tests/cast-isolation.test.ts tests/proportion-cast-options.test.ts'
+      # exit 0: 32 of 32 cases pass over 5 files
+      node_modules/.bin/prettier --check assets/sprout-lily-kim.ts
+      # exit 0: all matched files use Prettier code style
+      node node_modules/typescript/bin/tsc --noEmit
+      # exit 2: 51 diagnostics in the baseline files; none sits in the changed file
       ```
 
 - [ ] T15 Measure: The two child look judges.
