@@ -1,0 +1,184 @@
+# Green log: chibi_sprouts_cast_20261125, Phase 1, T2 remediation (round 3)
+
+Role: `jr-green`. Green route: `minimax-cn-coding-plan/MiniMax-M3.1-Flash`, family minimax.
+Red model of this phase: `opencode-go/hungerg-free`, family hungerg.
+Worktree: `/home/daniebo/Desktop/forge-worktrees/sprouts-cast`. Branch: `chibi-sprouts-cast`.
+Phase base SHA: `5356e78730daefd5225f9733f190dc6bb631b90d`.
+Role base SHA of this round: `ba0b353b9d965e4e94b078da4949311f87ef504f` (the repaired Red commit of
+round 2). The adversarial round 1 audited `9adcc72e79e2184eaa391c39bf1d1dc7b95ba980` and wrote
+`measure/runs/chibi_sprouts_cast_20261125/adversarial-9adcc72e.json`.
+Implementation commit of this round: `77fad41f80da3aa6d77be879bb1461116766275c`.
+Earlier Green commits: `41458a54a0282af2e062a1ed8a213f71856d7a40`,
+`3aabca1cb6ae0e35eced8048ad30414db55ba8fd`, `8b2509512584dd1896fc04908bead332017f024e`.
+
+Every command that runs a test uses the heavy runner:
+
+```
+HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '<cmd>'
+```
+
+## 1. What this round does
+
+The adversarial round 1 returned `fail` with three blocking findings and fourteen other findings.
+Red pinned failing cases for F1, F2, F3, F4, F6, F8, F9, F10, and F11 in commit `622a0fa5`. The PM
+decided F5 and F12 in commit `9fee6e88`. This round fixes the nine pinned findings in the two
+scripts, keeps Mom's rows and her five artifact hashes unchanged, and records the map.
+
+## 2. The finding-to-fix map
+
+| Finding | The fix |
+| -------- | ------ |
+| F1 | `scripts/sprout-cast-panel.mjs` holds `DRAWING_CHINS`, the chin row of each drawing from `docs/chibi-sprouts/redesign-2026-11-23.md` (Dad 435, Grandma 572, Grandpa 495, Tom 583, Lily 574). The head band of a drawing runs from its crown row to its chin row, so the head never reads the body. The drawing mask drops the stray ink of a scanned page, the window is centred on the head axis, and the five committed drawings write their panels. |
+| F2 | The Lily side-chin guard reads the colour of the frontmost pixel of the alpha-128 side mask at any alpha, and the guard fires unless that pixel is skin. An antialiased hair edge and a coloured pixel both fail. |
+| F3 | The cast sheet applies the head-fit rule and the figure-top rule to every sheet cell, and every sheet cell prints and captions its crop state. The sheet reads the same lit front renders as the panel, so it uses the same head limit. |
+| F4 | The face-mark exclusion drops the mark's own region, the pixels of the declared colour and the one-pixel blend edge around them. The eye blobs of the mask without that region stay in the eye mask, so a painted iris that sits close to the mark colour in the palette still reads as an eye. |
+| F6 | Both scripts accept only their known options, each with its own value. An unknown argument, a repeated option, or a missing value is refused with one named line before any read or write. |
+| F8 | Every record, render, and drawing of every target is read before the first write, and every PNG is written by a temporary file and a rename. |
+| F9 | A record must hold the eleven table rows in table order plus `rows.lit`, or the run exits 1 with `record <name>: rows incomplete`. The caption prints `/11`. |
+| F10 | The destination walk catches `ENOTDIR` and names the parent that is a regular file. |
+| F11 | The destination walk refuses a file with more than one name, so a hard link is refused as `destination is a link`. |
+
+F5 and F12 are the PM decisions of commit `9fee6e88`: the eye-component width limit stays at 0.60
+of the head width, and the cell scale stays the clamped nearest-neighbour sampling.
+
+## 3. The test runs and their exit codes
+
+```
+HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/proportion-cast-options.test.ts tests/sprout-cast-panel.test.ts tests/cast-isolation.test.ts tests/sprout-mom-kim.test.ts tests/sprout-mom-kim.validation.test.ts'
+```
+
+Exit 0. 96 of 96 cases pass over 5 files.
+
+```
+HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/proportion-cast-options.test.ts'
+```
+
+Exit 0. 21 of 21 cases pass. The new F2, F4, F6, F10, and F11 cases pass.
+
+```
+HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-cast-panel.test.ts'
+```
+
+Exit 0. 24 of 24 cases pass. The new F1, F3, F6, F8, F9, F10, and F11 cases pass. The case
+`F1 all five committed drawings produce panels` runs the five real drawings from
+`docs/sprout-mockups` and every one of them writes its panel.
+
+```
+HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/cast-isolation.test.ts'
+```
+
+Exit 0. 3 of 3 cases pass. The scrapped sources, the `ADULT`, `AGE5`, and `HERO` values, and Mom's
+preset match the T0 baseline.
+
+```
+HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-mom-kim.test.ts'
+```
+
+Exit 0. 29 of 29 cases pass. The Mom pin holds.
+
+```
+HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-mom-kim.validation.test.ts'
+```
+
+Exit 0. 19 of 19 cases pass. This file also reads `scripts/proportion-check.mjs`.
+
+```
+node_modules/.bin/prettier --check scripts/proportion-check.mjs scripts/sprout-cast-panel.mjs assets/parts/humanoid-kim.ts measure/tracks/chibi_sprouts_cast_20261125/plan.md
+```
+
+Exit 0. All matched files use Prettier code style.
+
+```
+node node_modules/typescript/bin/tsc --noEmit
+```
+
+Exit 2. 54 errors in 15 files. The five TD-35 groups hold their baseline counts: P3 vehicles 17,
+P2 items 13, Storytime unit 1 5, Castle defense 2, Equipment parts 1, so 38 in total. The other 16
+errors sit in `tests/storytime-faces-r2-guards.test.ts` (13, a later debt) and in
+`tests/proportion-cast-options.test.ts` (3, the committed Red file). No error sits in the three
+changed files.
+
+The `mom-kim-sheet` test files read `out/storytime-review/muse-cast/teacher-kim-sheet.png`. This
+worktree does not hold that file, so those tests fail on the missing Kim sheet before and after the
+change. They are not a Phase 1 gate.
+
+## 4. Mom's rows, the stats, and the hashes
+
+Mom's eleven rows after the remediation, from the script of `77fad41f` on the T0 outputs. They are
+the rows of the first Green round:
+
+```
+heightInHeads 3.653929  armToTorso 1.328305  legShare 0.391841  headToShoulders 1.233173
+wrist -0.061303  fingertips 0.509578  eyeLine 0.621882  eyeHeight 0.113069  spacingHead 0.365741
+eyeWidthFace 0.229412  spacingFace 0.464706
+```
+
+Every row stays inside the adult table, and both palms are ok.
+
+The five artifact hashes are unchanged, and the raw `stats.json` hash is unchanged for traceability
+only:
+
+| Artifact                | SHA-256                                                            |
+| ----------------------- | ------------------------------------------------------------------ |
+| `sprout-mom-kim.glb`    | `6f972378e357035cf94bbbe80af82f7173bde38a0223a61dcc4160e763b4311a` |
+| `flat/front-level.png`  | `0c6201ae1b9f2502cda207561676e58e6744c2a8f50df07e782aba534f07f43b` |
+| `flat/side-level.png`   | `93bea38cdf28b3cd71898cca958918b99637c7cc9c22c1568a31f2f206a3abbf` |
+| `views/front-level.png` | `2abd3f55642c851818552e5025284c42dd7e5b78441c7683b8de02680de5b851` |
+| `views/side-level.png`  | `48fc3c2f3bb7443f8024cccadc438a8a9043fca1c9995eb55a144319cec93212` |
+
+The raw `stats.json` hash is `de17e20a53fd47dc2a93cdae7324d2e0eaa6c012a2ce1dea4b3b1199f5255bb7`.
+The stable stats projection is the projection of T0, because the build inputs did not change.
+
+## 5. The two findings that stay open
+
+### F4: the Red pin and the adversarial finding ask for opposite results
+
+The Red case `F4 base iris paint survives the spec example glasses mark` builds a figure whose eyes
+are painted in the base iris colour `#4a2e18` and whose declared mark is the spec example
+`#3b2a1e`, and it requires the run to pass. The two colours are 15 apart in Chebyshev distance.
+
+The finding asks the guard to compare the mark with the rendered iris colour. That comparison
+fails the run with `faceMarks glasses: too close to the eye paint`, so the Red case would fail. The
+implementation keeps the iris in the eye mask instead: the exclusion drops the mark's own region
+and keeps the eye blobs. The Red case passes, the `glasses-frame` case passes, and the undeclared
+mark still fails with `eye components: found 1, expected 2`.
+
+The spec of "The asset metadata and the eye mask" rule 2 still compares the mark with the eye
+colours of `variants.eyes` and with the pupil `#14100e`. The rule stays as it is written.
+
+### F12: the plan reason was wrong
+
+The plan reason of the nearest-neighbour sampling was wrong, as the finding shows. The correct
+reason is in decision (m) of the PM decision of commit `9fee6e88`: a literal `sharp.extract` takes
+a negative top on Dad's crown row 80, which sits above 8 % of the band, and sharp throws.
+
+## 6. The plan and the metadata
+
+The plan holds the finding-to-fix map, the exit codes of every command, and the two open findings
+in the T2 notes, and the T3 section points at them. The metadata status moved from `new` to
+`in_progress`.
+
+## 7. The gate
+
+```
+python3 -I /home/daniebo/.agents/skills/measure-orchestrator/scripts/measure_interphase_checks.py role-gate \
+  --repo /home/daniebo/Desktop/forge-worktrees/sprouts-cast --role measure-jr-green \
+  --track chibi_sprouts_cast_20261125 --phase "Phase 1: The measuring tools" \
+  --baseline 5356e78730daefd5225f9733f190dc6bb631b90d \
+  --log-file measure/runs/chibi_sprouts_cast_20261125/green-77fad41f.log
+```
+
+The gate output is in the handoff of this round.
+
+MEASURE_AGENT_RESULT
+role: jr-green
+status: complete
+track: chibi_sprouts_cast_20261125
+phase: Phase 1: The measuring tools
+commits: 77fad41f
+tests_run: tests/proportion-cast-options.test.ts exit 0 (21 of 21); tests/sprout-cast-panel.test.ts exit 0 (24 of 24); tests/cast-isolation.test.ts exit 0 (3 of 3); tests/sprout-mom-kim.test.ts exit 0 (29 of 29); tests/sprout-mom-kim.validation.test.ts exit 0 (19 of 19); the five files together exit 0 with 96 of 96 cases; prettier --check on the three changed files and plan.md exit 0; tsc --noEmit exit 2 with 54 errors, the TD-35 groups at their 38-error baseline and no error in the changed files
+files_changed: scripts/proportion-check.mjs; scripts/sprout-cast-panel.mjs; measure/tracks/chibi_sprouts_cast_20261125/plan.md; measure/tracks/chibi_sprouts_cast_20261125/metadata.json; measure/runs/chibi_sprouts_cast_20261125/green-77fad41f.log (new)
+plan_updates: the T2 notes hold the finding-to-fix map of F1, F2, F3, F4, F6, F8, F9, F10, and F11, the exit code of every command, Mom's unchanged rows and hashes, and the two open findings F4 and F12; the T3 section points at the remediation; the metadata status moved from new to in_progress
+known_failures: none in the Phase 1 gate. The four mom-kim-sheet test files fail on the missing out/storytime-review/muse-cast/teacher-kim-sheet.png of this worktree, before and after the change, and they are not a Phase 1 gate.
+handoff: The remediation commit is 77fad41f. The role base of this round is ba0b353b and the phase base is 5356e787. All nine pinned Red cases pass: F1, F2, F3, F4, F6, F8, F9, F10, and F11. Mom's eleven rows and her five artifact hashes are unchanged, and the 96 cases of the five files pass. F5 and F12 are the PM decisions of commit 9fee6e88 and need no work. Two findings stay open for the next adversarial round. F4: the Red case F4 base iris paint survives the spec example glasses mark requires the run to pass with the declared #3b2a1e mark and the base iris paint #4a2e18, while the finding asks the guard to compare the mark with the rendered iris colour, which fails that run with faceMarks glasses: too close to the eye paint. The implementation keeps the iris in the eye mask, so the Red case passes and the guard stays as the spec writes it. F12: the plan reason of the nearest-neighbour sampling was wrong, and the correct reason is in decision (m) of commit 9fee6e88. The next role is the T3 adversarial round 2 on the commit 77fad41f.
+END_MEASURE_AGENT_RESULT

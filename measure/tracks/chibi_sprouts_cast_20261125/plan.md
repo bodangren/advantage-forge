@@ -162,12 +162,12 @@ amendment round 2 answer every finding before Red. After round 2, Red starts wit
     and every `sources` hash equals the worktree file at `b58aad2`.
 
 - [x] T1 Red: Pin the measuring options, the tables, the fixtures, the panel script, and the
-  isolation baseline. Commits `ad43039a073d5cf61f5c3ebac787856e9970d7a4` and
-  `ba0b353b9d965e4e94b078da4949311f87ef504f`. Logs
-  `measure/runs/chibi_sprouts_cast_20261125/red-c562992.log` and
-  `measure/runs/chibi_sprouts_cast_20261125/red-3aabca1c.log`.
-  Files: `tests/proportion-cast-options.test.ts`, `tests/sprout-cast-panel.test.ts`,
-  `tests/cast-isolation.test.ts` (all new).
+      isolation baseline. Commits `ad43039a073d5cf61f5c3ebac787856e9970d7a4` and
+      `ba0b353b9d965e4e94b078da4949311f87ef504f`. Logs
+      `measure/runs/chibi_sprouts_cast_20261125/red-c562992.log` and
+      `measure/runs/chibi_sprouts_cast_20261125/red-3aabca1c.log`.
+      Files: `tests/proportion-cast-options.test.ts`, `tests/sprout-cast-panel.test.ts`,
+      `tests/cast-isolation.test.ts` (all new).
   - `tests/proportion-cast-options.test.ts` asserts:
     1. `--base humanoid-kim-child` reads `assets/parts/humanoid-kim-child.ts`; an absent file exits 1
        with `base humanoid-kim-child: not built` before any import.
@@ -520,6 +520,64 @@ in `#241812`, which is 23 in Chebyshev distance from the declared `#3b2a1e`, so 
         this worktree does not hold. They fail on that missing file before and after the change, and
         they are not a Phase 1 gate.
 
+  - Remediation after the adversarial round 1 (2026-11-26, role base
+    `ba0b353b9d965e4e94b078da4949311f87ef504f`, Red fix commit
+    `622a0fa5af8a19a0646b18cc8d7ae75ce7b1901d`, the Red cases of F1, F2, F3, F4, F6, F8, F9, F10,
+    and F11):
+    - The finding-to-fix map:
+
+      | Finding | The fix in the two scripts                                                                                                                                                                                                                                                                                                                                    |
+      | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+      | F1      | `scripts/sprout-cast-panel.mjs` holds `DRAWING_CHINS`, the chin row of each drawing from `docs/chibi-sprouts/redesign-2026-11-23.md`. The head band of a drawing runs from its crown row to its chin row. The drawing mask drops the stray ink of a scanned page, the window is centred on the head axis, and the five committed drawings write their panels. |
+      | F2      | The Lily side-chin guard reads the colour of the frontmost pixel of the alpha-128 side mask at any alpha, and the guard fires unless that pixel is skin.                                                                                                                                                                                                      |
+      | F3      | The cast sheet applies the head-fit rule and the figure-top rule to every sheet cell, and every sheet cell prints and captions its crop state.                                                                                                                                                                                                                |
+      | F4      | The face-mark exclusion drops the mark's own region, the pixels of the declared colour and the one-pixel blend edge around them. The eye blobs of the mask without that region stay in the eye mask, so a painted iris that sits close to the mark colour in the palette still reads as an eye.                                                               |
+      | F6      | Both scripts accept only their known options, each with its own value. An unknown argument, a repeated option, or a missing value is refused with one named line before any read or write.                                                                                                                                                                    |
+      | F8      | Every record, render, and drawing of every target is read before the first write, and every PNG is written by a temporary file and a rename.                                                                                                                                                                                                                  |
+      | F9      | A record must hold the eleven table rows in table order plus `rows.lit`, or the run exits 1 with `record <name>: rows incomplete`. The caption prints `/11`.                                                                                                                                                                                                  |
+      | F10     | The destination walk catches `ENOTDIR` and names the parent that is a regular file.                                                                                                                                                                                                                                                                           |
+      | F11     | The destination walk refuses a file with more than one name, so a hard link is refused as `destination is a link`.                                                                                                                                                                                                                                            |
+
+    - F5 and F12 are the PM decisions of commit `9fee6e88`. The eye-component width limit stays at
+      0.60 of the head width, which the spec of that commit records in "The eye-component width
+      limit", and the cell scale stays the clamped nearest-neighbour sampling, which the same commit
+      records in decision (m) and in "The look judge and the panels".
+    - The commands and their exit codes:
+
+      ```bash
+      HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/proportion-cast-options.test.ts tests/sprout-cast-panel.test.ts tests/cast-isolation.test.ts tests/sprout-mom-kim.test.ts tests/sprout-mom-kim.validation.test.ts'
+      # exit 0: 96 of 96 cases pass over 5 files
+      HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/proportion-cast-options.test.ts'
+      # exit 0: 21 of 21 cases pass
+      HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-cast-panel.test.ts'
+      # exit 0: 24 of 24 cases pass
+      HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/cast-isolation.test.ts'
+      # exit 0: 3 of 3 cases pass
+      HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-mom-kim.test.ts'
+      # exit 0: 29 of 29 cases pass
+      HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-mom-kim.validation.test.ts'
+      # exit 0: 19 of 19 cases pass
+      node_modules/.bin/prettier --check scripts/proportion-check.mjs scripts/sprout-cast-panel.mjs assets/parts/humanoid-kim.ts measure/tracks/chibi_sprouts_cast_20261125/plan.md
+      # exit 0: all matched files use Prettier code style
+      node node_modules/typescript/bin/tsc --noEmit
+      # exit 2: 54 errors in 15 files; the five TD-35 groups hold their baseline counts (38 errors)
+      # and no error sits in the three changed files
+      ```
+
+    - Mom's eleven rows and her five artifact hashes are unchanged by the remediation. The rows are
+      the rows of the first Green round, and the hashes are the hashes of T0.
+    - Two Red findings stay open for the next round, because the Red pin and the adversarial
+      finding ask for opposite results:
+      - **F4 (the Red pin against the finding).** The Red case `F4 base iris paint survives the spec
+example glasses mark` requires the run to pass with the declared `#3b2a1e` mark and the base
+        iris paint `#4a2e18`. The finding asks the guard to compare the mark with the rendered iris
+        colour, which would fail that run with `faceMarks glasses: too close to the eye paint`. The
+        implementation keeps the iris in the eye mask and leaves the guard as the spec of "The asset
+        metadata and the eye mask" writes it, so the Red case passes.
+      - **F12 (the plan reason).** The plan reason of the nearest-neighbour sampling was wrong, as
+        the finding shows. The correct reason is in decision (m) of the PM decision of commit
+        `9fee6e88`: a literal `sharp.extract` takes a negative top on Dad's crown row 80.
+
 - [~] T3 Measure: One adversarial round on the two scripts.
   - It reads the T2 commit and attacks the table selection, the row-limit rule, the base name, the
     record and panel destinations, the crown rounding and mask tolerance, the face-mark exclusion,
@@ -569,6 +627,11 @@ destination is refused without changing its target` exits 0 and overwrites the t
 
     - F5 and F12 to F17 stay skipped for the spec owner. This role does not stage the adversarial
       JSON or log. The full result block is `measure/runs/chibi_sprouts_cast_20261125/red-9adcc72e.log`.
+  - Green remediation (2026-11-26, role base
+    `ba0b353b9d965e4e94b078da4949311f87ef504f`): the finding-to-fix map, the exit codes, and the
+    two open Red findings are in the T2 notes above. F5 and F12 are the PM decisions of commit
+    `9fee6e88`. F4 and F12 stay open for the next round, because the Red pin and the adversarial
+    finding ask for opposite results.
 
 - [ ] T4 Measure: The Phase 1 gate.
   - Done-when:
