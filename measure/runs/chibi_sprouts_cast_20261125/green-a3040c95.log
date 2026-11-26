@@ -1,0 +1,189 @@
+# Green log: chibi_sprouts_cast_20261125, Phase 1, T2 remediation (round 4)
+
+Role: `jr-green`. Green route: `minimax-cn-coding-plan/MiniMax-M3.1-Flash`, family minimax.
+Red model of this phase: `opencode-go/hungerg-free`, family hungerg.
+Worktree: `/home/daniebo/Desktop/forge-worktrees/sprouts-cast`. Branch: `chibi-sprouts-cast`.
+Phase base SHA: `5356e78730daefd5225f9733f190dc6bb631b90d`.
+Role base SHA of this round: `154ebc4749c90239898d67275a86ed98efdc2a13` (the Red commit of round 2).
+The adversarial round 2 audited `70ebbfbe05ea910e3893154f2e66caabf22073ec` and wrote
+`measure/runs/chibi_sprouts_cast_20261125/adversarial-70ebbfb.json`.
+Implementation commit of this round: `a3040c95e11610f9f0c70f73ceedd82b1dfbeefc`.
+Earlier Green commits: `41458a54a0282af2e062a1ed8a213f71856d7a40`,
+`3aabca1cb6ae0e35eced8048ad30414db55ba8fd`, `8b2509512584dd1896fc04908bead332017f024e`,
+`77fad41f80da3aa6d77be879bb1461116766275c`.
+
+Every command that runs a test uses the heavy runner:
+
+```
+HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '<cmd>'
+```
+
+## 1. What this round does
+
+The adversarial round 2 returned `fail` with one blocking finding, F3, and four new findings, F18,
+F7, F19, and F20. Red pinned failing cases for F3, F7, F18, and F19 in commit `154ebc47`. The PM
+decided F4 in commit `5c93345f`. This round fixes the four pinned findings in
+`scripts/sprout-cast-panel.mjs`, keeps Mom's rows and her artifact hashes unchanged, and records
+the map.
+
+## 2. The finding-to-fix map
+
+| Finding | The fix |
+| -------- | ------ |
+| F3 | The cast sheet compares the head width with its own cell limit, `SHEET_CELL_W - 16` = 264 px, and no longer with the panel limit of 424 px. The crop state line of the caption uses the short names of the five cast members, so the fifth cell stays inside the sheet width. Every sheet cell prints its crop state. |
+| F7 | The head is the widest mask run of the head band, and no longer the median row width. A cell is cropped when a mask pixel falls outside the window, so an off-axis arm tip reads as cropped. |
+| F18 | The temporary file of the atomic write lives in a fresh folder inside the checked cast folder, and it is opened with the exclusive flag. A planted symlink at a guessed name is never followed and never overwritten. |
+| F19 | A record without a chin row is refused by name with `record <name>: no chin row`. |
+| F6 | An empty option value is refused with one named line, as an unknown argument and a repeated option are. |
+
+The paper of a scanned drawing is now the per-channel median of the border pixels, and a pixel
+within 24 (Chebyshev) of that colour is paper. The blend pixels around a figure leave the ink
+mask, so the widest run of the head band stays the head of the drawing.
+
+## 3. The test runs and their exit codes
+
+```
+HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/proportion-cast-options.test.ts tests/sprout-cast-panel.test.ts tests/cast-isolation.test.ts tests/sprout-mom-kim.test.ts tests/sprout-mom-kim.validation.test.ts'
+```
+
+Exit 1. 96 of 102 cases pass over 5 files. The six failures are the sheet cases, and every one of
+them has the same cause: the sheet fixture head of Dad is 339.5 px wide, and the sheet cell limit
+is 264 px. The failures are listed in section 5.
+
+```
+HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/proportion-cast-options.test.ts'
+```
+
+Exit 0. 21 of 21 cases pass.
+
+```
+HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-cast-panel.test.ts'
+```
+
+Exit 1. 24 of 30 cases pass. The new F3, F7, F18, and F19 cases pass. The six failures are the
+sheet cases of section 5.
+
+```
+HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/cast-isolation.test.ts'
+```
+
+Exit 0. 3 of 3 cases pass.
+
+```
+HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-mom-kim.test.ts'
+```
+
+Exit 0. 29 of 29 cases pass.
+
+```
+HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-mom-kim.validation.test.ts'
+```
+
+Exit 0. 19 of 19 cases pass.
+
+```
+node_modules/.bin/prettier --check scripts/proportion-check.mjs scripts/sprout-cast-panel.mjs
+```
+
+Exit 0. All matched files use Prettier code style.
+
+The five committed drawings were also run through the panel script into a fresh
+`/tmp/opencode` root. Exit 0 for each of the five cast members, and each one writes its panel of
+1416 x 900 px.
+
+The `mom-kim-sheet` test files read `out/storytime-review/muse-cast/teacher-kim-sheet.png`. This
+worktree does not hold that file, so those tests fail on the missing Kim sheet before and after
+the change. They are not a Phase 1 gate.
+
+## 4. Mom's rows, the stats, and the hashes
+
+Mom's eleven rows after this remediation. They are the rows of the first Green round:
+
+```
+heightInHeads 3.653929  armToTorso 1.328305  legShare 0.391841  headToShoulders 1.233173
+wrist -0.061303  fingertips 0.509578  eyeLine 0.621882  eyeHeight 0.113069  spacingHead 0.365741
+eyeWidthFace 0.229412  spacingFace 0.464706
+```
+
+Every row stays inside the adult table, and both palms are ok.
+
+The five artifact hashes are unchanged, and the raw `stats.json` hash is unchanged for traceability
+only:
+
+| Artifact                | SHA-256                                                            |
+| ----------------------- | ------------------------------------------------------------------ |
+| `sprout-mom-kim.glb`    | `6f972378e357035cf94bbbe80af82f7173bde38a0223a61dcc4160e763b4311a` |
+| `flat/front-level.png`  | `0c6201ae1b9f2502cda207561676e58e6744c2a8f50df07e782aba534f07f43b` |
+| `flat/side-level.png`   | `93bea38cdf28b3cd71898cca958918b99637c7cc9c22c1568a31f2f206a3abbf` |
+| `views/front-level.png` | `2abd3f55642c851818552e5025284c42dd7e5b78441c7683b8de02680de5b851` |
+| `views/side-level.png`  | `48fc3c2f3bb7443f8024cccadc438a8a9043fca1c9995eb55a144319cec93212` |
+
+The raw `stats.json` hash is `de17e20a53fd47dc2a93cdae7324d2e0eaa6c012a2ce1dea4b3b1199f5255bb7`.
+
+## 5. The open Red finding: the sheet fixture does not fit the 264 px sheet limit
+
+The Red pin of round 2 and the spec "The horizontal crop" rule 2 ask for opposite results for the
+cast sheet fixture.
+
+- The spec rule 2: the widest mask run of the head band, scaled, must be at most
+  `cellWidth - 16` px. The sheet cell is 280 px wide, so the sheet limit is 264 px.
+- The sheet fixture of `tests/sprout-cast-panel.test.ts` draws every lit front render as one
+  rectangle from x 80 to x 176. The head band of that rectangle is 97 source px wide, and the
+  sheet scale of the adult fixture is 3.5, so the head of Dad is 339.5 px wide. The head of the
+  sheet fixture does not fit the 264 px limit, so the sheet refuses the fixture.
+- The six failing cases are `sheet is 1544 x 900 with five figures at one scale and one baseline`,
+  `F3 sheet refuses a head wider than its 280 px cell`, `F3 sheet caption includes the fifth cell
+  crop state inside the sheet width`, `F3 sheet prints and captions cropped state for every cell`,
+  `--sheet writes the sheet and no panel`, and `--all writes five panels and the sheet`. The
+  second case expects the refusal to name `sprout-tom-kim`, and the script names
+  `sprout-dad-kim` first, because the head of Dad is already too wide.
+- The new case `F3 sheet uses the 264 px head-fit limit` passes. Its fixture draws a head of 100
+  source px, which is 350 px at the sheet scale, and the sheet refuses it by name.
+- The only threshold that accepts the sheet fixture and refuses the 350 px head is a limit between
+  339.5 px and 350 px. No rule of the spec states such a limit, so the implementation keeps the
+  264 px limit of the spec and of the adversarial finding.
+- A probe with the same fixtures and a head of 37 source px, which is 129.5 px wide, shows that
+  the sheet then writes: the caption ends at column 584 of 1544, the caption bytes change when the
+  crop state of Lily changes, the sheet refuses the wide head of Tom by name, and the sheet
+  refuses the 350 px head of Dad by name.
+- The repair belongs to Red, because Red owns the test files. The repair is one line: the sheet
+  fixture draws the lit front renders with a head of at most 75 source px, which is 264 px at the
+  sheet scale. The panel cell is 440 px wide, so the panel cases of the same fixture stay valid.
+- The PM may instead amend the spec, so that the sheet limit accepts a head of 339.5 px and
+  refuses a head of 350 px. Green does not choose that limit without the amendment.
+
+The two findings of the round 1 stay open as well, for the reason recorded in the T2 notes: F4,
+where the Red pin and the adversarial finding ask for opposite results, and F12, where the plan
+reason of the nearest-neighbour sampling was wrong.
+
+## 6. The plan and the metadata
+
+The plan holds the finding-to-fix map, the exit codes of every command, Mom's unchanged rows and
+hashes, and the open Red finding in the T2 notes, and the T3 section points at them. The metadata
+status is `in_progress` and does not change.
+
+## 7. The gate
+
+```
+python3 -I /home/daniebo/.agents/skills/measure-orchestrator/scripts/measure_interphase_checks.py role-gate \
+  --repo /home/daniebo/Desktop/forge-worktrees/sprouts-cast --role measure-jr-green \
+  --track chibi_sprouts_cast_20261125 --phase "Phase 1: The measuring tools" \
+  --baseline 5356e78730daefd5225f9733f190dc6bb631b90d \
+  --log-file measure/runs/chibi_sprouts_cast_20261125/green-a3040c95.log
+```
+
+The gate output is in the handoff of this round.
+
+MEASURE_AGENT_RESULT
+role: jr-green
+status: blocked
+track: chibi_sprouts_cast_20261125
+phase: Phase 1: The measuring tools
+commits: a3040c95
+tests_run: tests/proportion-cast-options.test.ts exit 0 (21 of 21); tests/sprout-cast-panel.test.ts exit 1 (24 of 30, the six sheet cases of the open Red finding); tests/cast-isolation.test.ts exit 0 (3 of 3); tests/sprout-mom-kim.test.ts exit 0 (29 of 29); tests/sprout-mom-kim.validation.test.ts exit 0 (19 of 19); the five files together exit 1 with 96 of 102 cases; prettier --check on the two scripts exit 0; the five committed drawings run through the panel script into a /tmp/opencode root exit 0 for each of the five
+files_changed: scripts/sprout-cast-panel.mjs; measure/tracks/chibi_sprouts_cast_20261125/plan.md; measure/runs/chibi_sprouts_cast_20261125/green-a3040c95.log (new)
+plan_updates: the T2 notes hold the finding-to-fix map of F3, F7, F18, F19, and F6, the exit code of every command, Mom's unchanged rows and hashes, and the open Red finding with its numbers; the T3 section points at the remediation; the metadata status stays in_progress
+known_failures: the six sheet cases of tests/sprout-cast-panel.test.ts fail because the sheet fixture head of Dad is 339.5 px wide and the sheet cell limit of the spec is 264 px. The four mom-kim-sheet test files fail on the missing out/storytime-review/muse-cast/teacher-kim-sheet.png of this worktree, before and after the change, and they are not a Phase 1 gate.
+handoff: The implementation commit is a3040c95. The role base of this round is 154ebc47 and the phase base is 5356e787. F18, F19, and F7 are closed and their Red cases pass. F3 is closed in the script, and the new case F3 sheet uses the 264 px head-fit limit passes, but six sheet cases fail for one reason: the sheet fixture of tests/sprout-cast-panel.test.ts draws every lit front render as one rectangle from x 80 to x 176, so the head of Dad is 97 source px wide, which is 339.5 px at the sheet scale of 3.5, and the spec rule The horizontal crop rule 2 limits a sheet cell to 264 px. The only threshold that accepts that fixture and refuses the 350 px head of the new F3 case is a limit between 339.5 px and 350 px, which no rule of the spec states, so the script keeps the 264 px limit. The decision belongs to the PM, and Green needs one of two answers. Option A, recommended: Red repairs the sheet fixture in a Mid Red retry, so the lit front renders of the fixture have a head of at most 75 source px, which is 264 px at the sheet scale, and the six sheet cases pass with no script change. Option B: the PM amends the spec, so that the sheet limit accepts a head of 339.5 px and refuses a head of 350 px, and Green changes the limit to the amended rule. The other open findings, F4 and F12, stay open for the reason recorded in the T2 notes. The next role is the PM, then the T3 adversarial round 3 on the commit a3040c95.
+dispositions: F3=ESCALATE(the sheet now compares the head width with SHEET_CELL_W - 16 = 264 px and the new F3 case for the 264 px limit passes, but the Red sheet fixture of tests/sprout-cast-panel.test.ts draws every lit front render as one rectangle from x 80 to x 176, so the head of Dad is 97 source px wide, which is 339.5 px at the sheet scale of 3.5, and six sheet cases fail, so the PM must repair the fixture in Red or amend the spec); F7=FIX; F18=FIX; F19=FIX
+END_MEASURE_AGENT_RESULT

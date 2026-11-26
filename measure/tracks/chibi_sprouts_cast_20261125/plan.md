@@ -579,6 +579,77 @@ example glasses mark` requires the run to pass with the declared `#3b2a1e` mark 
         the finding shows. The correct reason is in decision (m) of the PM decision of commit
         `9fee6e88`: a literal `sharp.extract` takes a negative top on Dad's crown row 80.
 
+  - Remediation after the adversarial round 2 (2026-11-26, role base
+    `154ebc4749c90239898d67275a86ed98efdc2a13`, the Red commit of round 2, implementation commit
+    `a3040c95e11610f9f0c70f73ceedd82b1dfbeefc`):
+    - The finding-to-fix map:
+
+      | Finding | The fix in `scripts/sprout-cast-panel.mjs`                                                                                                                                                                                                                                                                            |
+      | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+      | F3      | The cast sheet compares the head width with its own cell limit, `SHEET_CELL_W - 16` = 264 px, and no longer with the panel limit of 424 px. The crop state line of the caption uses the short names of the five cast members, so the fifth cell stays inside the sheet width. Every sheet cell prints its crop state. |
+      | F7      | The head is the widest mask run of the head band, and no longer the median row width. A cell is cropped when a mask pixel falls outside the window, so an off-axis arm tip reads as cropped.                                                                                                                          |
+      | F18     | The temporary file of the atomic write lives in a fresh folder inside the checked cast folder, and it is opened with the exclusive flag. A planted symlink at a guessed name is never followed and never overwritten.                                                                                                 |
+      | F19     | A record without a chin row is refused by name with `record <name>: no chin row`.                                                                                                                                                                                                                                     |
+      | F6      | An empty option value is refused with one named line, as an unknown argument and a repeated option are.                                                                                                                                                                                                               |
+
+    - The paper of a scanned drawing is now the per-channel median of the border pixels, and a
+      pixel within 24 (Chebyshev) of that colour is paper. The blend pixels around a figure leave
+      the ink mask, so the widest run of the head band stays the head of the drawing.
+    - The commands and their exit codes:
+
+      ```bash
+      HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/proportion-cast-options.test.ts tests/sprout-cast-panel.test.ts tests/cast-isolation.test.ts tests/sprout-mom-kim.test.ts tests/sprout-mom-kim.validation.test.ts'
+      # exit 1: 96 of 102 cases pass. The six failures are the sheet cases, and every one of them
+      # has the same cause: the sheet fixture head of Dad is 339.5 px wide, and the sheet cell
+      # limit is 264 px.
+      HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/proportion-cast-options.test.ts'
+      # exit 0: 21 of 21 cases pass
+      HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-cast-panel.test.ts'
+      # exit 1: 24 of 30 cases pass. The six failures are the sheet cases named below.
+      HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/cast-isolation.test.ts'
+      # exit 0: 3 of 3 cases pass
+      HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-mom-kim.test.ts'
+      # exit 0: 29 of 29 cases pass
+      HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-mom-kim.validation.test.ts'
+      # exit 0: 19 of 19 cases pass
+      node_modules/.bin/prettier --check scripts/proportion-check.mjs scripts/sprout-cast-panel.mjs
+      # exit 0: all matched files use Prettier code style
+      node scripts/sprout-cast-panel.mjs --asset <name> --date 2026-11-26 --root <a /tmp/opencode root>
+      # exit 0 for each of the five cast members: the five committed drawings write their panels
+      ```
+
+    - Mom's eleven rows and her six artifact hashes are unchanged by this remediation. The rows are
+      the rows of the first Green round, and the hashes are the hashes of T0.
+    - **One Red finding stays open, and it needs the PM.** The Red pin of round 2 and the spec
+      "The horizontal crop" rule 2 ask for opposite results for the cast sheet fixture.
+      - The spec rule 2: the widest mask run of the head band, scaled, must be at most
+        `cellWidth - 16` px. The sheet cell is 280 px wide, so the sheet limit is 264 px.
+      - The sheet fixture of `tests/sprout-cast-panel.test.ts` draws every lit front render as one
+        rectangle from x 80 to x 176. The head band of that rectangle is 97 source px wide, and the
+        sheet scale of the adult fixture is 3.5, so the head of Dad is 339.5 px wide. The head of
+        the sheet fixture does not fit the 264 px limit, so the sheet refuses the fixture.
+      - The six failing cases are `sheet is 1544 x 900 with five figures at one scale and one
+baseline`, `F3 sheet refuses a head wider than its 280 px cell`, `F3 sheet caption includes
+the fifth cell crop state inside the sheet width`, `F3 sheet prints and captions cropped
+state for every cell`, `--sheet writes the sheet and no panel`, and `--all writes five
+panels and the sheet`. The second case expects the refusal to name `sprout-tom-kim`, and
+        the script names `sprout-dad-kim` first, because the head of Dad is already too wide.
+      - The new case `F3 sheet uses the 264 px head-fit limit` passes. Its fixture draws a head of
+        100 source px, which is 350 px at the sheet scale, and the sheet refuses it by name.
+      - The only threshold that accepts the sheet fixture and refuses the 350 px head is a limit
+        between 339.5 px and 350 px. No rule of the spec states such a limit, so the implementation
+        keeps the 264 px limit of the spec and the adversarial finding.
+      - A probe with the same fixtures and a head of 37 source px, which is 129.5 px wide, shows
+        that the sheet then writes: the caption ends at column 584 of 1544, the caption bytes
+        change when the crop state of Lily changes, the sheet refuses the wide head of Tom by
+        name, and the sheet refuses the 350 px head of Dad by name.
+      - The repair belongs to Red, because Red owns the test files. The repair is one line: the
+        sheet fixture draws the lit front renders with a head of at most 75 source px, which is
+        264 px at the sheet scale. The panel cell is 440 px wide, so the panel cases of the same
+        fixture stay valid.
+      - The PM may instead amend the spec, so that the sheet limit accepts a head of 339.5 px and
+        refuses a head of 350 px. Green does not choose that limit without the amendment.
+
 - [~] T3 Measure: One adversarial round on the two scripts.
   - It reads the T2 commit and attacks the table selection, the row-limit rule, the base name, the
     record and panel destinations, the crown rounding and mask tolerance, the face-mark exclusion,
@@ -633,6 +704,13 @@ destination is refused without changing its target` exits 0 and overwrites the t
     two open Red findings are in the T2 notes above. F5 and F12 are the PM decisions of commit
     `9fee6e88`. F4 and F12 stay open for the next round, because the Red pin and the adversarial
     finding ask for opposite results.
+  - Green remediation after the adversarial round 2 (2026-11-26, role base
+    `154ebc4749c90239898d67275a86ed98efdc2a13`, implementation commit
+    `a3040c95e11610f9f0c70f73ceedd82b1dfbeefc`): the finding-to-fix map of F3, F7, F18, F19, and
+    F6, the exit codes, and the open Red finding are in the T2 notes above. F18, F19, and F7 are
+    closed. F3 is closed in the script, and the sheet fixture of the Red pin does not fit the
+    264 px sheet limit of the spec, so the six sheet cases fail until Red repairs the fixture. The
+    PM owns the choice between the Red repair and a spec amendment.
   - Adversarial round 2 (2026-11-26, audited commit `70ebbfbe05ea910e3893154f2e66caabf22073ec`,
     verdict `fail`). The result block is
     `measure/runs/chibi_sprouts_cast_20261125/adversarial-70ebbfb.json` and its log.
