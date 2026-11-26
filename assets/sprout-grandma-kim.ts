@@ -4,10 +4,10 @@ import { buildKim, KIM } from './parts/humanoid-kim.js';
 
 /**
  * Grandma on the Teacher Kim adult base. Identity from docs/sprout-mockups/grandma.jpg: white hair
- * in a high bun, round cheeks, smile lines, pearl stud earrings, a green cardigan over a pale green
- * dress, a mid-calf skirt, and brown flats. The proportions, the skeleton, the hands and the idle
- * clip come from `buildKim`. Her face is her own layer over the base head (spec "The face layer and
- * the paint"). No cut-out and no sprite.
+ * in a high bun, round cheeks, smile lines, pearl stud earrings, a green knit cardigan that hangs
+ * open over a matching green knit top, a long flared skirt, and brown flats. The proportions, the
+ * skeleton, the hands and the idle clip come from `buildKim`. Her face is her own layer over the
+ * base head (spec "The face layer and the paint"). No cut-out and no sprite.
  */
 
 export type CastMeta = {
@@ -27,7 +27,9 @@ const C = {
   mouth: '#a8503e',
   cardigan: '#6f8f5e',
   cardiganDark: '#577349',
-  dress: '#86a473',
+  top: '#7c9a6a',
+  topDark: '#68855a',
+  skirt: '#7f9d6c',
   flats: '#7a4a2c',
   sole: '#4a2e1e',
   pearl: '#fbf7ee',
@@ -168,144 +170,187 @@ function grandmaHair(k: AssetContext) {
   });
 }
 
-/** The green cardigan over the torso and the arms, buttoned at the front. */
+/**
+ * The cardigan: a loose knit cardigan that hangs open at the front over the matching knit top.
+ * The shoulder line is flat, the hem is ribbed, and the cuffs are ribbed. The front opening is cut
+ * out of the cardigan, so the knit top shows between the two front panels.
+ */
 function grandmaCardigan(k: AssetContext) {
   const cardiganProfile: [number, number][] = [
-    [0, 1.05],
-    [0.056, 1.044],
-    [0.088, 1.026],
-    [0.124, 1.0],
-    [0.15, 0.94],
-    [0.153, 0.9],
-    [0.14, 0.85],
-    [0.12, 0.806],
-    [0.107, 0.778],
-    [0.11, 0.748],
-    [0.123, 0.7],
-    [0.14, 0.668],
-    [0.15, 0.645],
+    [0, 1.068],
+    [0.072, 1.066],
+    [0.095, 1.063],
+    [0.115, 1.06],
+    [0.135, 1.055],
+    [0.15, 1.04],
+    [0.157, 1.01],
+    [0.159, 0.97],
+    [0.159, 0.92],
+    [0.154, 0.87],
+    [0.142, 0.816],
+    [0.124, 0.78],
+    [0.126, 0.75],
+    [0.134, 0.702],
+    [0.143, 0.668],
+    [0.149, 0.645],
     [0.146, 0.62],
     [0.14, 0.59],
-    [0.13, 0.57],
-    [0.09, 0.56],
-    [0, 0.56],
+    [0.132, 0.576],
+    [0.12, 0.57],
+    [0.06, 0.568],
+    [0, 0.566],
+    [0, 0.62],
+    [0, 1.0],
   ];
   const torso = sdf
     .revolve(profile.polygon(cardiganProfile, { smooth: true }))
     .scale([1, 1, 0.78])
     .bone('chest');
-  // The shoulder is a soft ball that blends into the sleeve, so the cardigan has a shoulder and
-  // not a padded pad on the arm.
-  const shoulder = (sx: number) =>
-    sdf
-      .ellipsoid([0.072, 0.078, 0.06])
-      .at(sx * 0.124, 0.988, 0)
-      .bone('chest');
-  const sleeve = (sx: number) =>
-    sdf
-      .smoothUnion(
-        0.026,
-        sdf.cone([sx * 0.128, 0.988, 0], [sx * 0.15, KIM.elbowY, 0.006], 0.06, 0.05),
-        sdf.cone([sx * 0.15, KIM.elbowY, 0.006], [sx * 0.166, 0.64, 0.014], 0.05, 0.038),
-      )
-      .bone(sx > 0 ? 'upperarm.L' : 'upperarm.R');
-  // The cardigan is buttoned at the front. Only the neck opening shows the dress under it.
+  // The shoulder is the sleeve cap, centred on the base upper arm. The cap is 8 mm wider than the
+  // arm, so no skin shows at the shoulder, and the shoulder line stays smooth.
+  const sleeveCone = (sx: number) =>
+    sdf.smoothUnion(
+      0.02,
+      sdf.cone([sx * 0.143, 1.0037, 0], [sx * 0.156, KIM.elbowY, 0.006], 0.056, 0.046),
+      sdf.cone([sx * 0.156, KIM.elbowY, 0.006], [sx * 0.176, 0.592, 0.015], 0.046, 0.038),
+    );
+  const sleeve = (sx: number) => sleeveCone(sx).bone(sx > 0 ? 'upperarm.L' : 'upperarm.R');
+  // The cardigan hangs open at the front. The opening is cut from the front, so the knit top shows
+  // between the two front panels, and the panels meet again at the waist.
   const opening = sdf
     .extrude(
       profile.polygon(
         [
-          [-0.055, 1.005],
-          [0.055, 1.005],
-          [0.055, 0.975],
-          [0.03, 0.952],
-          [0, 0.945],
-          [-0.03, 0.952],
-          [-0.055, 0.975],
+          [-0.046, 1.075],
+          [0.046, 1.075],
+          [0.052, 1.01],
+          [0.058, 0.94],
+          [0.062, 0.87],
+          [0.062, 0.82],
+          [0.05, 0.755],
+          [-0.05, 0.755],
+          [-0.062, 0.82],
+          [-0.062, 0.87],
+          [-0.058, 0.94],
+          [-0.052, 1.01],
         ],
         { smooth: false },
       ),
       0.3,
     )
     .at(0, 0, 0.16);
-  const cardigan = sdf.union(torso, shoulder(-1), shoulder(1), sleeve(-1), sleeve(1)).subtract(opening);
+  // Knit ribs: a ribbed band at the hip hem and a ribbed cuff at each wrist. The sleeve stops
+  // above the hem, so the hem band stays on the body of the cardigan.
+  const hemRib = sdf.box([1.2, 0.03, 1.2]).at(0, 0.59, 0);
+  const cuffRib = (sx: number) =>
+    sdf.cone([sx * 0.1745, 0.64, 0.015], [sx * 0.176, 0.588, 0.015], 0.05, 0.045);
+  const cardigan = sdf.union(torso, sleeve(-1), sleeve(1)).subtract(opening);
 
-  // Knit ribs: darker bands at the hem and at the cuffs.
-  const hrib = (y: number) => sdf.box([1.2, 0.014, 1.2]).at(0, y, 0);
-  const bands = sdf.union(hrib(0.6), hrib(0.655));
-
-  // The buttons of the front placket.
-  const button = (y: number, z: number) => sdf.sphere(0.0085).at(0.028, y, z);
+  // The buttons run down the right front placket.
+  const button = (y: number, z: number) => sdf.sphere(0.0085).at(0.07, y, z);
   const buttons = sdf.union(
-    button(0.93, 0.1154),
-    button(0.87, 0.1122),
-    button(0.81, 0.0916),
-    button(0.75, 0.0832),
-    button(0.68, 0.1008),
+    button(0.94, 0.107),
+    button(0.88, 0.109),
+    button(0.82, 0.098),
+    button(0.76, 0.081),
+    button(0.71, 0.087),
   );
 
   const knit = cardigan.displace(
-    0.0012,
-    (x, y, z) => noise.fbm(x * 34, y * 34, z * 34, 2) * 0.6 + Math.sin(y * 120) * 0.4,
+    0.0008,
+    (x, y, z) => noise.fbm(x * 38, y * 38, z * 38, 2) * 0.7 + Math.sin(y * 190) * 0.3,
     1.3,
   );
 
-  k.body('cardigan', knit.paintWhere(bands, C.cardiganDark).paintWhere(buttons, C.cardiganDark), {
-    color: C.cardigan,
-    detail: 0.006,
+  k.body(
+    'cardigan',
+    knit
+      .paintWhere(hemRib, C.cardiganDark)
+      .paintWhere(cuffRib(-1), C.cardiganDark)
+      .paintWhere(cuffRib(1), C.cardiganDark)
+      .paintWhere(buttons, C.cardiganDark),
+    {
+      color: C.cardigan,
+      detail: 0.005,
+      paintWeight: 2,
+      textureDensity: 1,
+    },
+  );
+}
+
+/**
+ * The knit top under the cardigan: the same green as the cardigan, with a ribbed round neck and a
+ * ribbed hem at the waist. The cardigan hangs open over it, so the top shows between the panels.
+ */
+function grandmaDress(k: AssetContext) {
+  const topProfile: [number, number][] = [
+    [0, 1.058],
+    [0.06, 1.056],
+    [0.072, 1.04],
+    [0.086, 1.02],
+    [0.106, 0.992],
+    [0.13, 0.95],
+    [0.14, 0.9],
+    [0.134, 0.852],
+    [0.119, 0.81],
+    [0.107, 0.78],
+    [0.113, 0.766],
+    [0.12, 0.752],
+    [0.117, 0.742],
+    [0.1, 0.738],
+    [0, 0.736],
+    [0, 0.74],
+    [0, 1.0],
+  ];
+  const top = sdf
+    .revolve(profile.polygon(topProfile, { smooth: true }))
+    .scale([1, 1, 0.78])
+    .bone('chest');
+  // The ribbed round neck and the ribbed hem at the waist.
+  const neckRib = sdf.box([1.2, 0.022, 1.2]).at(0, 1.05, 0);
+  const hemRib = sdf.box([1.2, 0.026, 1.2]).at(0, 0.762, 0);
+  const knit = top.displace(
+    0.001,
+    (x, y, z) => noise.fbm(x * 40, y * 40, z * 40, 2) * 0.8 + Math.sin(y * 210) * 0.2,
+    1.2,
+  );
+  k.body('dress', knit.paintWhere(sdf.union(neckRib, hemRib), C.topDark), {
+    color: C.top,
+    detail: 0.005,
     paintWeight: 2,
-    textureDensity: 1,
   });
 }
 
-/** The pale green dress: the torso under the cardigan and the mid-calf skirt. */
-function grandmaDress(k: AssetContext) {
-  const dressProfile: [number, number][] = [
-    [0, 1.035],
-    [0.04, 1.03],
-    [0.068, 1.012],
-    [0.106, 0.985],
-    [0.132, 0.94],
-    [0.134, 0.9],
-    [0.126, 0.85],
-    [0.1, 0.806],
-    [0.086, 0.778],
-    [0.089, 0.748],
-    [0.102, 0.7],
-    [0.112, 0.68],
-    [0, 0.68],
-  ];
-  const torso = sdf
-    .revolve(profile.polygon(dressProfile, { smooth: true }))
-    .scale([1, 1, 0.78])
-    .bone('chest');
-  // The skirt falls from the waist to the mid-calf and flares out. Its hem dips in the middle.
+/**
+ * The skirt: a long skirt that flares out below the hip, in the same green as the knit top. The
+ * hem sits low, near the ankle, and the cloth falls in vertical folds.
+ */
+function grandmaSkirt(k: AssetContext) {
   const skirtProfile: [number, number][] = [
     [0.112, 0.66],
     [0.118, 0.63],
     [0.125, 0.58],
     [0.135, 0.52],
     [0.149, 0.45],
-    [0.164, 0.38],
-    [0.176, 0.315],
-    [0.184, 0.27],
-    [0.184, 0.25],
-    [0.16, 0.238],
-    [0.11, 0.232],
-    [0, 0.23],
+    [0.168, 0.385],
+    [0.184, 0.315],
+    [0.196, 0.255],
+    [0.196, 0.228],
+    [0.17, 0.208],
+    [0.115, 0.202],
+    [0, 0.2],
   ];
   const skirt = sdf
     .revolve(profile.polygon(skirtProfile, { smooth: true }))
     .scale([1, 1, 0.82])
     .bone('hips');
   // Cloth folds: the skirt falls in vertical folds.
-  const folded = sdf
-    .smoothUnion(0.02, torso, skirt)
-    .displace(
-      0.0024,
-      (x, y, z) => Math.sin(Math.atan2(x, z + 0.02) * 9) * 0.6 + noise.fbm(x * 18, y * 18, z * 18, 2) * 0.4,
-      1.5,
-    );
-  k.body('dress', folded, { color: C.dress, detail: 0.006, maxError: 0.003 });
+  const folded = skirt.displace(
+    0.0024,
+    (x, y, z) => Math.sin(Math.atan2(x, z + 0.02) * 9) * 0.6 + noise.fbm(x * 18, y * 18, z * 18, 2) * 0.4,
+    1.5,
+  );
+  k.body('skirt', folded, { color: C.skirt, detail: 0.006, maxError: 0.003 });
 }
 
 /** Brown flats on the feet, with a dark sole. */
@@ -329,7 +374,7 @@ function grandmaFlats(k: AssetContext) {
 export default defineAsset({
   name: 'sprout-grandma-kim',
   description:
-    'Grandma on the Teacher Kim adult base: white hair in a high bun, round cheeks, smile lines, pearl studs, a green cardigan over a pale green dress, a mid-calf skirt and brown flats.',
+    'Grandma on the Teacher Kim adult base: white hair in a high bun, round cheeks, smile lines, pearl studs, a green knit cardigan open over a matching knit top, a long flared skirt and brown flats.',
   reference: 'docs/sprout-mockups/grandma.jpg',
   detail: 0.005,
   texture: false,
@@ -349,6 +394,7 @@ export default defineAsset({
     grandmaHair(k);
     grandmaCardigan(k);
     grandmaDress(k);
+    grandmaSkirt(k);
     grandmaFlats(k);
   },
 });
