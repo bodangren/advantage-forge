@@ -1010,7 +1010,7 @@ limit` gets exit 0 for a 350 px head.
       `result ok`, `prettier --check` exits 0, and `tsc --noEmit` holds the 51 baseline diagnostics
       with none in the new file.
 
-- [~] T7 Green: Grandma. File: `assets/sprout-grandma-kim.ts` (new).
+- [x] T7 Green: Grandma. File: `assets/sprout-grandma-kim.ts` (new). Commit `6ce871edee5ac74a28e2b8486d0213ac03fd1610`.
   - Build the identity of the spec: white hair in a high bun, round cheeks, smile lines, pearl studs,
     a green cardigan over a pale green dress, a mid-calf skirt, and brown flats. The bun may rise
     above the skull. The measured crown is the base crown. Add the face layer that recreates the two
