@@ -1,8 +1,10 @@
 # Rebuild Paladin's Twin Soul as a chapel shooter
 
 Status: new (2026-10-29). The [specification](./spec.md) owns the scope and the acceptance gates.
-Ready on Forge master on 2026-11-07 if Daniel picks the look by 2026-10-31. Each day of delay moves
-the date by one day.
+Look pick 2026-11-27, owner PM (a PM decision, not a Daniel gate): mockup c2,
+`out/a28-mockups/2-paladins-twin-soul-c2.png` (higher camera, raised above the hero's head and
+looking slightly down). Phase 2 is open. The earlier readiness note named 2026-11-07, with the look
+pick due by 2026-10-31. This record replaces that gate.
 
 ## Method and ownership
 
@@ -294,9 +296,11 @@ keep the type check clean. No sync goes to the monorepo before Phase 2 ends.
 
 ## Phase 2: Views
 
-Status: blocked until Daniel picks the look of Paladin's Twin Soul from the A-28 mockups
-(`out/a28-mockups/`, PNG files outside git). The PM relays the pick. Record the pick, its date, and
-the mockup file name here before the first task starts.
+Status: open from 2026-11-27. The PM picked mockup c2,
+`out/a28-mockups/2-paladins-twin-soul-c2.png` (higher camera, raised above the hero's head and
+looking slightly down). The PM owns the look pick as a PM decision, not a Daniel gate. The A-28
+mockups stay outside git in `out/a28-mockups/`. Phase 1 is closed, so the first task below is ready
+for Red.
 
 Roles: Red writes the failing view tests. Green builds both views, runs the QC bot, renders the
 frames, updates the design, and sends the report.
