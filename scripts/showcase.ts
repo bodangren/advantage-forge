@@ -122,7 +122,7 @@ function writeScripts(): void {
     '',
     '## Description',
     '',
-    'A brand-new world is coming to your learning apps! Meet seven heroes, explore a village, a forest,',
+    'A brand-new world, now live in Primary Advantage! Meet seven heroes, explore a village, a forest,',
     'and a spooky vault, solve quests with math, words, and science, and team up against a fire dragon.',
     'Pause at each quest and try to answer before the countdown ends!',
     '',

@@ -115,7 +115,7 @@ captions.push(
 fx(9.25, 'whoosh');
 fx(9.8, 'sparkle');
 fx(15.9, 'pop');
-say(9.6, 14.4, 'Welcome to Chibi Quest! A brand-new world that is coming to your learning apps!');
+say(9.6, 14.4, 'Welcome to Chibi Quest! A brand-new world, now live in Primary Advantage!');
 say(14.6, 19.0, "It's full of heroes, monsters, puzzles, and adventure. Let's take a look!");
 music.push({ start: 5.3, end: 19.2, mood: 'bright' });
 
@@ -793,13 +793,13 @@ party.forEach(([id, asset, at, move], i) => {
 });
 captions.push(
   { start: 183.2, end: 190.2, kind: 'title', text: 'LEARN. EXPLORE. LEVEL UP!', top: 18 },
-  { start: 191.4, end: 199.2, kind: 'endcard', text: 'CHIBI QUEST', sub: 'Coming soon to your learning apps!' },
+  { start: 191.4, end: 199.2, kind: 'endcard', text: 'CHIBI QUEST', sub: 'Play it now in Primary Advantage!' },
 );
 fx(182.5, 'sparkle');
 fx(183.3, 'fanfare');
 fx(191.4, 'sparkle');
 say(183.2, 190.2, 'In Chibi Quest, you learn, you explore, and you level up!');
-say(191.4, 199.0, 'Chibi Quest is coming soon to your learning apps. See you there, heroes!');
+say(191.4, 199.0, 'Chibi Quest is now live in Primary Advantage. See you there, heroes!');
 fades.push({ t: 200, half: 0.8, color: '#000000' });
 music.push({ start: 182.4, end: 200, mood: 'finale' });
 
@@ -812,7 +812,7 @@ const chapters = [
   { t: 98.8, title: 'The Old Oak Forest' },
   { t: 133.6, title: 'The Sunken Vault' },
   { t: 171.0, title: 'Boss battle: the Fire Dragon' },
-  { t: 182.4, title: 'Coming soon' },
+  { t: 182.4, title: 'Play it now' },
 ];
 
 const lessons = [

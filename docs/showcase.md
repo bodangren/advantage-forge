@@ -16,7 +16,7 @@ Old Oak Forest, and the Sunken Vault) and all 28 characters with their own anima
 | 1:50 | The Old Oak Forest | A dire wolf, a horned boar, a slime, a goblin camp, a giant spider, the druid's nature quest. |
 | 2:27 | The Sunken Vault | Skeletons and zombies rise, armor awakens, bats and an imp, the altar guards, teamwork, a number door. |
 | 3:07 | Boss battle | The fire dragon lands, the seven heroes team up, the dragon flies away. |
-| 3:18 | Coming soon | Heroes and villagers celebrate; the end card. |
+| 3:18 | Play it now | Heroes and villagers celebrate; the end card. |
 
 Each quest shows its question with time to read, then a 3-2-1 countdown so viewers can answer out
 loud, then the answer with a check mark (`out/showcase/youtube.md` lists the skill and grades).
@@ -49,6 +49,12 @@ Output in `out/showcase/`: `chibi-quest-tour.mp4` (1920 x 1080, 30 fps, with sou
 `chibi-quest-tour.silent.mp4`, `soundtrack.wav`, `chibi-quest-tour.srt` (narration captions),
 `voiceover.md` (the narration script with times), and `youtube.md` (title, description,
 chapters, learning moments).
+
+**2026-11-27: the video must be recorded again.** Chibi Quest is live in Primary Advantage, so
+the source text now says "Play it now in Primary Advantage" (the end card, the chapter card,
+the narration, and the YouTube description). The video in `out/showcase/` is older and still
+shows the old wording on screen. Run `node --import tsx scripts/showcase.ts record` before anyone
+publishes it.
 
 ## Editing the tour
 
