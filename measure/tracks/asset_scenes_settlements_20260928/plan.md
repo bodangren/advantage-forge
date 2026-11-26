@@ -14,7 +14,7 @@ Status: in_progress. This plan owns execution status. Source documents retain de
 
 ## Phase 3: Assembly
 
-- [~] Task: Review existing examples and complete missing components.
+- [ ] Task: Review existing examples and complete missing components. Marker reset 2026-11-27: no session works on this task.
 - [ ] Task: Assemble the selected scene without duplicating reusable sources.
 
 ## Phase 4: Verification

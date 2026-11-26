@@ -33,6 +33,12 @@ Status: in progress. The plan records execution state. The storyboard document r
     - 9:16 Ghost: its name tag overlapped the counter. The Ghost now sits higher in the frame.
     - End card: the card covered the slime's face. 16:9 looks right of the slime (look x 2.2);
       9:16 card moved up (top 33%, was 39.5%) and the camera tilts up (look y 2.1, was 0.95).
+  - Evidence 2026-11-27: `src/showcase/battle/script.ts` holds the shared choreography and both
+    shot lists. `docs/guild-battle-teaser.md` names that file in its files table. The stills are
+    `out/battle/frames/16x9-t<seconds>.png` (18) and `out/battle/frames/9x16-t<seconds>.png` (30).
+    The contact sheets are `out/battle/sheet-16x9.png` and `out/battle/sheet-9x16.png`. Commit
+    `421debdf` shipped the choreography, the shot lists, and the documents. The v1.1 changelog
+    entry records the still-review fixes.
 
 ## Phase 3: Sound
 

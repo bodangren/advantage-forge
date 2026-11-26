@@ -13,7 +13,11 @@ Status: in progress. The plan records execution state. `docs/sound-library.md` r
 
 - [x] Task: Add SoundBible and Wikimedia Commons: `find <site> <words>` searches live and adds the hits with a permitted license to the site's catalog (Commons pronunciation files are skipped: spoken words). Tested: `wildlife/rooster#1` from SoundBible (CC-BY 3.0).
 - [x] Task: OpenGameArt CC-BY and OGA-BY entries: `find opengameart <words>` (a keyword search, not a full crawl) adds them to `oga-by.json` and to the list that `catalog` rebuilds from.
-- [ ] Task: Freesound (needs an API key from the owner).
+- [x] Task: Freesound (needs an API key from the owner). Closed by PM decision 2026-11-27 (owner PM): no Freesound key exists in our secrets or env files, and nobody waits for one. The missing effects come from `mmx` at 0 USD on the MiniMax plan, or from CC0 sounds already on disk.
+  - The installed `mmx` 1.0.29 calls audio as `mmx speech synthesize` (models `speech-2.8-hd`, `speech-2.6`, `speech-02`). It has no `music` resource, so the skill command `mmx music generate` needs a CLI update. `mmx quota show` reports plan call counts, not USD.
+  - CC0 sounds on disk: `audio/manifest/*.tsv` holds the takes. `audio/sources/oga-cc0.json` (1521 CC0 entries), `oga-by.json`, and `elvgames.json` (268 local sounds) hold the sources. `node scripts/sfx-library.mjs status` reports 356 rows: 204 full, 115 some, 37 missing, 0 open.
+  - This decision covers the 37 missing rows: ambience/castle, ambience/fireplace, ambience/magic-hum, ambience/ship, ambience/smithy, ambience/snow, ambience/windmill, enemy/chant, hero/armor-move, hero/footstep-water, hero/whistle, item/craft-success, monster/fire-roar, monster/frost-breath, monster/giant-step, monster/ice-crackle, monster/shadow-whoosh, npc/bellows, npc/crowd-gasp, npc/greet, npc/grindstone, npc/hand-drum, npc/loom, npc/shop-bell, vehicle/airship, vehicle/carpet, vehicle/cart, vehicle/rowboat, vehicle/sleigh-bells, wildlife/bird-flutter, wildlife/hooves-gallop, wildlife/horse-snort, world/candle-out, world/ladder, world/notice-board, world/portal-open, world/rope. It covers the 115 rows with fewer takes than wanted too.
+  - No new task needs a key. No generation runs in this session.
 
 ## Phase 3: Fill and review
 

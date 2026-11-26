@@ -252,7 +252,7 @@ Workbooks does not wait for it.
   cost.
   - PM decision 2026-11-19 (S26 interim): build the six week-4 characters now with a new adult
     base; Daniel's S26 answer has no date and must not be asked. Due 11-24.
-- [~] Task: The remaining cast (an adult base for Mom, Dad, Grandma, Grandpa; Tom at about eight).
+- [x] Task: The remaining cast (an adult base for Mom, Dad, Grandma, Grandpa; Tom at about eight).
   - PM decision 2026-11-19 (S26 interim): build the six week-4 characters now (Lily, Tom, Mom,
     Dad, Grandma, Grandpa) with a new adult base, in the normal Forge flow and look rules. Due 11-24.
   - VOID 2026-11-23 (see Void and scrapped): the adult base and the models built on it are
@@ -748,6 +748,13 @@ Workbooks does not wait for it.
     (blue/jeans oval at the side edge in the roll); their files keep the old
     rigid construction and are out of scope here. Log green-p5-adult-base.log.
   - [x] Tom (nine-year-old boy, one of the tallest children, due 11-25; feat c402738f, fix 71c48a26)
+  - Result 2026-11-27: done. Mom: `assets/sprout-mom-kim.ts` and the adult base
+    `assets/parts/humanoid-kim.ts` in `chibi_sprouts_redesign_20261123` (T7 Green `aa9c9b74`;
+    shape approved at T12 `817e838d`; judge identity 7.5, proportion 8.5). Dad, Grandma,
+    Grandpa, Tom, and Lily: `chibi_sprouts_cast_20261125`, archived 2026-11-27 after PM
+    acceptance (closeout `18172b63`; Dad `3cd8582a`, Grandma `b73f7104`, Grandpa `78be77a2`,
+    Tom `1e1d3ab7`, Lily `5c224278`; look judges `34a6e90d` and `b37133ff`). The cut-outs and
+    the 128 px idle sprites run in `chibi_sprouts_cast_art_20261127`.
 - [b] Task: Faces r2 and the Muse likeness test (Daniel 2026-11-22) — blocked: base model scrapped 2026-11-23 — VOID 2026-11-23 (see Void and scrapped)
   - Source: Daniel's look reply of 2026-11-22, relayed by the PM: "Can we meet more details, especially
     in the faces? Then check passing the 3D model to Muse as a reference in a scene (the way we will in
@@ -938,8 +945,9 @@ Workbooks does not wait for it.
 - [x] Task: The remaining gesture key frames (20 gestures in use, inventory section 3): the (0bb18f6e, 697ae4a9)
   week 2 to 7 set above covers set 2 and `turn`; only the week 4 family cast gestures wait for S26.
   Commits: 0bb18f6e (set 2), 697ae4a9 (`turn`).
-- [~] Task: Scenes (inventory section 4) and the 30 props and animals (section 5): fit-check reused
+- [ ] Task: Scenes (inventory section 4) and the 30 props and animals (section 5): fit-check reused
   assets, build the new ones, and review in batches. Week 7 waits for its new song.
+  Marker reset 2026-11-27: no session works on this task (last commit 2026-11-23).
   - First prop batch (5 of the 15 new): commit 1dcca329; cutout-check "result ok"; cards at out/prop-cards/
   - Briefs: briefs/<name>.md (sources per value; audit 2026-11-17 F-D5).
   - paint-pot r2 (audit 2026-11-17 item 2): commit b51f0ae7; mech-check ok; cutout-check result ok; card out/prop-cards/paint-pot.png
