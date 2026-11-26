@@ -214,8 +214,16 @@ async function buildFixture(): Promise<string> {
   return fixture;
 }
 
-async function rawPanel(file: string): Promise<any> {
-  return await sharp(file).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+type RawPanel = { data: Buffer; width: number; height: number; channels: number };
+
+async function rawPanel(file: string): Promise<RawPanel> {
+  const { data, info } = await sharp(file).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+  return {
+    data: Buffer.from(data),
+    width: info.width!,
+    height: info.height!,
+    channels: info.channels!,
+  };
 }
 
 function colourBounds(

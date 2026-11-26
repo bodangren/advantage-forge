@@ -242,9 +242,10 @@ amendment round 2 answer every finding before Red. After round 2, Red starts wit
     - Fixture bodies: the proportion cases build a 1024 px front and side figure with explicit
       `projectedTop`, `projectedSole`, `chinRow`, and landmarks. The bun mask top is 24 px above the
       projected crown. The wrong-crown projection is 20 px above the mask top. The glasses frame
-      joins the eyes in `#3b2a1e`; the close-colour case uses `#6e4020`. Lily hair is `#7a5230` at
-      the chin, side chin, or eye window. The missing-hair CLI case runs a copied script in
-      `/tmp/opencode` with copied Mom outputs.
+      touches both eyes in `#3b2a1e`; the eye paint `#6e4020` is more than 24 Chebyshev away. The
+      close-colour case uses `#6e4020` as the mark. Lily hair is `#7a5230` at the chin, side chin, or
+      eye window. The missing-hair CLI case runs a copied script in `/tmp/opencode` with copied Mom
+      outputs.
     - Panel fixtures: each temporary `--root` tree holds two 256 × 256 alpha renders per asset,
       800 × 1600 drawings, one 1600 × 1600 Grandma drawing, and one measure record per asset. The
       Grandma render plants a bun 16 source px above the crown, which is 56 output px. Destination
@@ -305,6 +306,33 @@ amendment round 2 answer every finding before Red. After round 2, Red starts wit
       Vitest reformats function source text. Functions use the baseline `fn:<source>` format.
     - Full command output and the final result block:
       `measure/runs/chibi_sprouts_cast_20261125/red-c562992.log`.
+
+  - Red remediation (2026-11-26, role base `3aabca1cb6ae0e35eced8048ad30414db55ba8fd`,
+    implementation HEAD `3aabca1cb6ae0e35eced8048ad30414db55ba8fd`):
+    - R1: `rawPanel` now destructures Sharp's `{ data, info }` result and returns `data`, `width`,
+      `height`, and `channels`. The four pixel cases read real panel pixels.
+    - R2: the `glasses-frame` fixture now touches both eyes with the frame. Its eye paint is
+      `#6e4020`, more than 24 Chebyshev from the declared `#3b2a1e` mark. The close-colour case still
+      uses `#6e4020` as the mark.
+    - Commands and exit codes:
+
+      ```bash
+      HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/proportion-cast-options.test.ts'
+      # exit 0
+      HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-cast-panel.test.ts'
+      # exit 0
+      HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/cast-isolation.test.ts'
+      # exit 0
+      HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-mom-kim.test.ts'
+      # exit 0
+      HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-mom-kim.validation.test.ts'
+      # exit 0
+      node_modules/.bin/prettier --check tests/proportion-cast-options.test.ts tests/sprout-cast-panel.test.ts tests/cast-isolation.test.ts
+      # exit 0
+      ```
+
+    - No Green finding remains. The corrected tests pass against the implementation at `3aabca1c`.
+      The full result block is `measure/runs/chibi_sprouts_cast_20261125/red-3aabca1c.log`.
 
 - [~] T2 Green: Add the options, the tables, the rounded crown, the destinations, the face-mark
   exclusion, and the panel script.

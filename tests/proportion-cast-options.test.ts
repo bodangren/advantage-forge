@@ -240,8 +240,17 @@ function wrongCrown(): any {
 function glassesFrame(colour = '#3b2a1e'): any {
   const figure = baseFigure();
   const { row, col, eyeY, eyeHalf } = figure.projection;
-  const left = col(-0.13 / 2 + eyeHalf) + 1;
-  const right = col(0.13 / 2 - eyeHalf) - 1;
+  const eyeColour = hexToRgb('#6e4020');
+  for (const sx of [-1, 1]) {
+    const ex = (sx * 0.13) / 2;
+    rect(figure.front, col(ex - eyeHalf), row(eyeY + 0.0225), col(ex + eyeHalf), row(eyeY - 0.0225), [
+      ...eyeColour,
+      255,
+    ]);
+  }
+  figure.eyeRgb = eyeColour;
+  const left = col(-0.13 / 2 + eyeHalf);
+  const right = col(0.13 / 2 - eyeHalf);
   rect(figure.front, left, row(eyeY) - 1, right, row(eyeY) + 1, [...hexToRgb(colour), 255]);
   figure.castMeta = { faceMarks: { glasses: colour } };
   return figure;
