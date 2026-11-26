@@ -1062,7 +1062,7 @@ limit` gets exit 0 for a 350 px head.
       ends `result ok`, `prettier --check` exits 0, and `tsc --noEmit` holds the 51 baseline
       diagnostics with none in the new file.
 
-- [ ] T8 Green: Grandpa. File: `assets/sprout-grandpa-kim.ts` (new).
+- [~] T8 Green: Grandpa. File: `assets/sprout-grandpa-kim.ts` (new).
   - Build the identity of the spec: a bald crown with white side hair, round dark-brown glasses, a
     white moustache, an open smile, a green V-neck sweater over a pale green collared shirt, brown
     trousers, and brown shoes. The glasses and the moustache are paint. Declare `variants`, one preset
@@ -1072,6 +1072,45 @@ limit` gets exit 0 for a 350 px head.
   - Done-when: T6's list for `sprout-grandpa-kim`, plus no warning line from the glasses paint, two
     eye components separate from the frame and the moustache, and the record's `faceMarks`.
   - Record: T6's record for him, plus the eye-component result and the declared face marks.
+  - Evidence (2026-11-26, worktree `/home/daniebo/Desktop/forge-worktrees/sprouts-cast`, branch
+    `chibi-sprouts-cast`, phase base `b48c3df3235d69337aecc90da7db6cd178455eed`, role base
+    `d519ae1fcb4ee305813f0fe04ba5c8bc54b2c957`, Green route
+    `minimax-cn-coding-plan/MiniMax-M3.1-Flash`, family minimax):
+    - The eleven rows of `TABLES.kim` from
+      `out/chibi-sprouts/cast/sprout-grandpa-kim-measure.json`: `heightInHeads 3.660733`,
+      `armToTorso 1.328305`, `legShare 0.392729`, `headToShoulders 1.233947`,
+      `wrist -0.061303`, `fingertips 0.509578`, `eyeLine 0.620947`, `eyeHeight 0.112184`,
+      `spacingHead 0.364679`, `eyeWidthFace 0.235119`, `spacingFace 0.473214`. Every row sits inside
+      the table, every row limit equals the table, both palms are ok, and no guard fired.
+    - The eye and the marks: the record holds `faceMarks.glasses` `#3b2a1e`, the declared colour of
+      the painted round frame. The measure run found exactly two eye components and no
+      `eye components:` error, so the two eyes stay separate from the frame and the moustache. The
+      declared colour stays more than 24 in Chebyshev distance from every eye colour and from the
+      pupil `#14100e`. The bald crown holds no white hair, the white side hair frames it, and the
+      white moustache shows under the eyes.
+    - The five look rounds and their three largest differences: 1) the moustache was a small
+      crescent, the shirt showed as a wide tie, and the sweater's hem showed a brown line; 2) the
+      moustache widened, the V-neck narrowed, the sweater's hem tapered, and the trousers grew; 3)
+      the moustache arched like a smile, so it became an arch and the temple arms left the face; 4) the moustache broke the face measurement, because the skin seed landed in the pocket under
+      it, so the moustache, the mouth and the teeth moved and the frame shrank to a 0.048 m radius; 5) the moustache widened once more and every row passed.
+    - The GLB stats: `sprout-grandpa-kim: 50,427 triangles, 0.424 x 1.507 x 0.284 m`, 17 bones, one
+      `idle` clip of 2.4 s, 15 bodies (`head-skin`, `torso-skin`, `arms-skin`, `legs-skin`,
+      `feet-skin`, `hands`, `face`, `hair`, `sweater`, `shirt`, `collar`, `trousers`,
+      `trouser-crease`, `shoes`, `shoe-sole`). The GLB SHA-256 is
+      `9994ff971eb5af19b17ac4f464e29e71b3dbe0eee4699024a0b05b75ae6d7a50`; the four level renders are
+      `dc3b26cc11b3619a64e2369aa0f302f232eff2145bcea7d9fe7214b5940618ea` (flat front),
+      `d7a625b0dca94f0b080b36f011adcaf03d6575131b03e114f1b23c097a496d68` (flat side),
+      `aae6b8e84d751f1cf3392640ff63d441d6ee62741fe3e71a78452a964d497667` (lit front), and
+      `be42816da498c59d8b9de6d82ef25d50d27c9da8c20480e0cf41bff0683114fa` (lit side).
+    - The pin key check: `scripts/make-preset-pin.mjs` adds exactly the key `sprout-grandpa-kim`,
+      with the `grandpa` preset (`skin fair`, `hair white`, `eyes brown`, `cloth forest`), and
+      changes no other value. The stale `wizard-argon-trial` key stays, because its asset file is
+      gone and the pin must keep every baseline key.
+    - The panel: `out/chibi-sprouts/cast/sprout-grandpa-kim-panel.png`, 1416 x 900, SHA-256
+      `09c9dc6dc2f61fee5b9421e00472e2d62be34a78ca824fe8dd037fd7f4ad84d8`.
+    - The gates: `tests/sprout-grandpa-kim.test.ts` exits 0, `./forge check sprout-grandpa-kim`
+      ends `result ok`, `prettier --check` exits 0, and `tsc --noEmit` holds the 51 baseline
+      diagnostics with none in the new file.
 
 - [ ] T9 Measure: The three adult look judges.
   - One brief per character. Each brief holds the panel path, the drawing path, the eleven rows as
