@@ -1,0 +1,99 @@
+Green round for Phase 3 of chibi_sprouts_cast_20261125, tasks T12 (the child base) and T13
+(Tom). Worktree /home/daniebo/Desktop/forge-worktrees/sprouts-cast, branch chibi-sprouts-cast.
+Phase base aed0bcc0c3562de1def0242a29d35dd3dca31b68. Role base 8e12dee1d28cabad5a67cd0891a496fcf0b763c1.
+Green route minimax-cn-coding-plan/MiniMax-M3.1-Flash, family minimax. The Red model of this
+phase is opencode-go/hungerg-free, family hungerg. No coder subagent ran, so no other model family
+touched the work.
+
+T12, the child base, assets/parts/humanoid-kim-child.ts (new), commit 09966d9e:
+
+    HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-child-base.test.ts -t "pins|imports only"'
+    # exit 0: 3 of 3 fixed-value cases pass; the 3 built-GLB cases stay skipped until T13
+
+    node_modules/.bin/prettier --check assets/parts/humanoid-kim-child.ts
+    # exit 0
+
+    node node_modules/typescript/bin/tsc --noEmit
+    # exit 2: 51 diagnostics in the baseline files; none sits in the new file
+
+The module exports BASE_CROWN_Y 1.05, BASE_CHIN_Y 0.687, BASE_HANDS and BASE_JOINTS with the 17
+adult bone names. It imports only ../../src/index.js and no asset module.
+
+T13, Tom, assets/sprout-tom-kim.ts (new), commit 1e1d3ab7. The commit also changes
+assets/parts/humanoid-kim-child.ts and adds one key to tests/fixtures/preset-pin.json.
+
+    HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c './forge build sprout-tom-kim --fast'
+    # exit 0: sprout-tom-kim: 43,252 triangles, 0.37 x 1.071 x 0.297 m
+
+    HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c './forge render sprout-tom-kim --fast --views front-level,side-level --ortho --flat --bg none --size 1024'
+    # exit 0
+
+    HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c './forge render sprout-tom-kim --fast --views front-level,side-level --ortho --bg none --size 1024'
+    # exit 0
+
+    HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c 'node_modules/.bin/tsx scripts/proportion-check.mjs --asset sprout-tom-kim --base humanoid-kim-child --table child --record out/chibi-sprouts/cast/sprout-tom-kim-measure.json'
+    # exit 0
+    heightInHeads 2.896269 2.79..3.03 pass
+    armToTorso 1.231832 1.08..1.51 pass
+    legShare 0.335199 0.3..0.39 pass
+    headToShoulders 2.133754 1.83..2.35 pass
+    wrist -0.124088 -0.3..0.16 pass
+    fingertips 0.430649 0.25..0.71 pass
+    eyeLine 0.647224 0.61..0.68 pass
+    eyeHeight 0.141011 0.12..0.16 pass
+    spacingHead 0.310345 0.28..0.36 pass
+    eyeWidthFace 0.228856 0.22..0.24 pass
+    spacingFace 0.492537 0.45..0.51 pass
+    palm L: ok
+    palm R: ok
+
+    HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-child-base.test.ts tests/sprout-tom-kim.test.ts'
+    # exit 0: 7 of 7 cases pass over 2 files
+
+    HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c './forge check sprout-tom-kim'
+    # exit 0: result ok: no held item passes through the head; the ground check is ok
+
+    HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c 'node scripts/sprout-cast-panel.mjs --asset sprout-tom-kim'
+    # exit 0: panel out/chibi-sprouts/cast/sprout-tom-kim-panel.png 1416x900, no cell cropped
+
+    node_modules/.bin/prettier --check assets/parts/humanoid-kim-child.ts assets/sprout-tom-kim.ts tests/fixtures/preset-pin.json measure/tracks/chibi_sprouts_cast_20261125/plan.md
+    # exit 0
+
+    node node_modules/typescript/bin/tsc --noEmit
+    # exit 2: 51 diagnostics in the baseline files; none sits in the two asset files
+
+The eleven rows above are in TABLES.child, every row limit equals the table, both palms are ok, and
+no guard fired. The five artifact hashes, taken after the lit render, are in the plan. The panel is
+out/chibi-sprouts/cast/sprout-tom-kim-panel.png, 1416 x 900, SHA-256
+727eaa71914c2f1aad8f5dd91ca81ccd8ac41a682f4acfebec616e20aa025bc4. The measure record is
+out/chibi-sprouts/cast/sprout-tom-kim-measure.json, SHA-256
+2f1ddec8effac72f4e7eb77a612dfd304b039184569af698864caf06b10055d8.
+
+The base edits that the render forced, all in assets/parts/humanoid-kim-child.ts: the drawing's
+501 px head width covers the hair and its 325 px face width covers the bare face, so the base head
+is the narrow face (headRX 0.1327, headRY 0.1815, headRZ 0.11 at headY 0.8685) and the hair mass
+carries the 0.367 m head width; the neck is a capsule of radius 0.055 m; the upper arm cone starts
+at y 0.600 m; and the hand landmarks use the measured mesh, so palmCentre is the mesh centroid and
+fingerTip is the lowest vertex of each side.
+
+One Red finding stays open, and it is not a Green defect. The Phase 1 case
+`child base is checked as a file before any import` of tests/proportion-cast-options.test.ts runs
+the real script on the real tree and expects the output `base humanoid-kim-child: not built`. T12
+delivers assets/parts/humanoid-kim-child.ts, so the case now reaches the measurement and fails with
+`hand L: palm patch: empty`. The case proves the spec rule "the base file is checked before any
+import" only while the child base is absent. The test file is Red's, and the spec AC1 rule 10 asks
+for the absent case, so Green did not touch it. The full cast run of 2026-11-26 exits 1 with that
+one case failing and 117 of 118 cases passing over 10 files.
+
+MEASURE_AGENT_RESULT
+role: jr-green
+status: complete
+track: chibi_sprouts_cast_20261125
+phase: Phase 3: The children
+commits: 09966d9e, 02b824e6, 1e1d3ab7, 42d21c2a
+tests_run: tests/sprout-child-base.test.ts -t "pins|imports only" exit 0 (3 of 3 fixed-value cases, the 3 built-GLB cases skipped until T13); tests/sprout-child-base.test.ts and tests/sprout-tom-kim.test.ts together exit 0 (7 of 7 cases over 2 files); the measure script on sprout-tom-kim exits 0 with 11 of 11 child rows in range, the row limits equal to the table, both palms ok, and no guard; forge build and both level renders exit 0; forge check sprout-tom-kim exits 0 with result ok; the panel script exits 0 and writes a 1416 x 900 panel with no cropped cell; prettier --check on the two asset files, the pin file, and plan.md exits 0; tsc --noEmit exits 2 with 51 diagnostics, the baseline count, and no error in the two asset files; the full cast run of ten files exits 1 with the one stale Phase 1 case failing and 117 of 118 cases passing
+files_changed: assets/parts/humanoid-kim-child.ts (new at T12, then the base edits of T13); assets/sprout-tom-kim.ts (new); tests/fixtures/preset-pin.json (one new key, no changed value); measure/tracks/chibi_sprouts_cast_20261125/plan.md; measure/runs/chibi_sprouts_cast_20261125/green-42d21c2a.log (new)
+plan_updates: T12 and T13 are flipped to [x] with their implementation commit SHAs on the task lines; the plan holds the derived targets, the 17 bone names and their BASE_JOINTS values, the four export values, the eleven rows of Tom, the four look rounds and their three differences, the base edits that the render forced, the five artifact hashes, the stable stats projection and its hash, the raw stats hash for traceability, the panel path and SHA-256, the pin key check, every command and its exit code, and the Red finding F1
+known_failures: one Red case fails. tests/proportion-cast-options.test.ts case `child base is checked as a file before any import` expects `base humanoid-kim-child: not built`, which only holds while the child base file is absent. T12 delivers that file, so the case now reaches the measurement and fails with `hand L: palm patch: empty`. The test file is Red's and the spec AC1 rule 10 asks for the absent case, so Green did not repair it. It needs a scratch tree without the child base or another absent base stem. No Green gate command fails.
+handoff: T12 and T13 are closed. The implementation commits are 09966d9e (the child base module) and 1e1d3ab7 (Tom, the base edits that the render forced, and the pin key); the plan evidence commits are 02b824e6 and 42d21c2a. The phase base is aed0bcc0c3562de1def0242a29d35dd3dca31b68 and the final Green HEAD is 42d21c2a. The next tasks are T14 (Lily, on the same child base) and T15 (the two child look judges). Before the Phase 3 gate, the orchestrator should route Red finding F1 to a Mid Red round, because the Phase 1 case now contradicts the delivered child base. The child base changed inside Phase 3, so any judge bound to an earlier base revision is void; the judge inputs of T15 must be taken at the HEAD that carries 1e1d3ab7. The look judge for Tom reads out/chibi-sprouts/cast/sprout-tom-kim-panel.png, SHA-256 727eaa71914c2f1aad8f5dd91ca81ccd8ac41a682f4acfebec616e20aa025bc4, against docs/sprout-mockups/tom.jpg.
+END_MEASURE_AGENT_RESULT
