@@ -20243,6 +20243,37 @@
         }
       }
     },
+    "sprout-tom-kim": {
+      "file": "sprout-tom-kim.ts",
+      "presets": {
+        "tom": {
+          "skin": {
+            "option": "fair",
+            "ratio": [1, 1, 1],
+            "default": "#f2c7a4",
+            "shade": "#d5af90"
+          },
+          "hair": {
+            "option": "brown",
+            "ratio": [1, 1, 1],
+            "default": "#6b4426",
+            "shade": "#5d3b20"
+          },
+          "eyes": {
+            "option": "brown",
+            "ratio": [1, 1, 1],
+            "default": "#6e4020",
+            "shade": "#60371b"
+          },
+          "cloth": {
+            "option": "blue",
+            "ratio": [1, 1, 1],
+            "default": "#3f6fb5",
+            "shade": "#36619f"
+          }
+        }
+      }
+    },
     "sprout-tom": {
       "file": "sprout-tom.ts",
       "presets": {

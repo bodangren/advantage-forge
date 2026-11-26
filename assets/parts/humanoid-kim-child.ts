@@ -17,8 +17,8 @@ export const CHILD = {
   chin: 0.687,
   eyeY: 0.815,
   eyeX: 0.0575,
-  eyeRX: 0.0265,
-  eyeRY: 0.0255,
+  eyeRX: 0.0275,
+  eyeRY: 0.026,
   neck0: 0.6,
   neck1: 0.655,
   shoulderY: 0.623,
@@ -34,18 +34,18 @@ export const CHILD = {
   hipX: 0.042,
   kneeX: 0.046,
   ankleX: 0.048,
-  headRX: 0.1835,
-  headRY: 0.151,
-  headRZ: 0.152,
-  headY: 0.899,
-  chinRX: 0.05,
-  chinRY: 0.033,
-  chinRZ: 0.058,
-  chinZ: 0.042,
+  headRX: 0.1327,
+  headRY: 0.1815,
+  headRZ: 0.11,
+  headY: 0.8685,
+  chinRX: 0.085,
+  chinRY: 0.04,
+  chinRZ: 0.085,
+  chinZ: 0.01,
   noseY: 0.755,
-  noseZ: 0.118,
-  mouthY: 0.759,
-  mouthZ: 0.1,
+  noseZ: 0.082,
+  mouthY: 0.766,
+  mouthZ: 0.085,
 } as const;
 
 /**
@@ -86,14 +86,14 @@ export type ChildHand = {
  */
 export const CHILD_HANDS: { L: ChildHand; R: ChildHand } = {
   L: {
-    palmCentre: [0.132, 0.3452, 0.0325],
+    palmCentre: [0.132, 0.341429, 0.032526],
     thumbTip: [0.148, 0.352, 0.0705],
-    fingerTip: [0.139, 0.292, 0.032],
+    fingerTip: [0.136998, 0.292001, 0.017898],
   },
   R: {
-    palmCentre: [-0.132, 0.3452, 0.0325],
+    palmCentre: [-0.132, 0.341691, 0.032795],
     thumbTip: [-0.148, 0.352, 0.0705],
-    fingerTip: [-0.139, 0.292, 0.032],
+    fingerTip: [-0.136595, 0.292017, 0.017898],
   },
 };
 
@@ -144,28 +144,28 @@ function childHead(k: AssetContext) {
   const chin = sdf
     .ellipsoid([CHILD.chinRX, CHILD.chinRY, CHILD.chinRZ])
     .at(0, CHILD.chin + CHILD.chinRY, CHILD.chinZ);
-  const jaw = sdf.smoothUnion(0.018, skull, chin);
+  const jaw = sdf.smoothUnion(0.02, skull, chin);
   const nose = sdf.ellipsoid([0.009, 0.012, 0.017]).at(0, CHILD.noseY, CHILD.noseZ);
   const face = jaw.smoothUnion(0.009, nose).bone('head');
   const neck = sdf
-    .capsule([0, CHILD.neck0 - 0.02, -0.006], [0, CHILD.neck1 + 0.04, -0.006], 0.038)
+    .capsule([0, CHILD.neck0 - 0.01, -0.006], [0, CHILD.neck1 + 0.045, -0.006], 0.055)
     .bone('neck');
 
   // The eye pair: a white, an iris, a pupil, and a glint. The iris holds the measured
   // 0.053 x 0.051 m opening, and the two irises stay apart in the flat front view.
-  const eyeWhite = (sx: number) => sdf.ellipsoid([0.038, 0.032, 0.09]).at(sx * CHILD.eyeX, CHILD.eyeY, 0.125);
+  const eyeWhite = (sx: number) => sdf.ellipsoid([0.042, 0.034, 0.09]).at(sx * CHILD.eyeX, CHILD.eyeY, 0.1);
   const iris = (sx: number) =>
-    sdf.ellipsoid([CHILD.eyeRX, CHILD.eyeRY, 0.09]).at(sx * CHILD.eyeX, CHILD.eyeY, 0.131);
-  const pupil = (sx: number) => sdf.ellipsoid([0.011, 0.011, 0.09]).at(sx * CHILD.eyeX, CHILD.eyeY, 0.135);
-  const glint = (sx: number) => sdf.sphere(0.005).at(sx * (CHILD.eyeX + 0.009), CHILD.eyeY + 0.008, 0.143);
+    sdf.ellipsoid([CHILD.eyeRX, CHILD.eyeRY, 0.09]).at(sx * CHILD.eyeX, CHILD.eyeY, 0.102);
+  const pupil = (sx: number) => sdf.ellipsoid([0.011, 0.011, 0.09]).at(sx * CHILD.eyeX, CHILD.eyeY, 0.106);
+  const glint = (sx: number) => sdf.sphere(0.005).at(sx * (CHILD.eyeX + 0.009), CHILD.eyeY + 0.008, 0.092);
   const brow = (sx: number) =>
     sdf
       .box([0.04, 0.009, 0.1], 0.003)
       .rotate(0, 0, sx * 6)
-      .at(sx * CHILD.eyeX, CHILD.eyeY + 0.05, 0.115);
+      .at(sx * CHILD.eyeX, CHILD.eyeY + 0.05, 0.095);
   // The open smile of the child base: a dark crescent with a band of teeth under the upper lip.
-  const smile = sdf.extrude(profile.arc(0.047, 0.016, 228, 312), 0.3).at(0, CHILD.mouthY, CHILD.mouthZ);
-  const teeth = sdf.extrude(profile.arc(0.04, 0.005, 240, 300), 0.3).at(0, CHILD.mouthY, CHILD.mouthZ);
+  const smile = sdf.extrude(profile.arc(0.06, 0.016, 228, 312), 0.3).at(0, CHILD.mouthY, CHILD.mouthZ);
+  const teeth = sdf.extrude(profile.arc(0.052, 0.005, 240, 300), 0.3).at(0, CHILD.mouthY, CHILD.mouthZ);
 
   const painted = face
     .paintWhere(sdf.union(eyeWhite(-1), eyeWhite(1)), '#f8f2e9')
@@ -209,12 +209,7 @@ function childLimbs(k: AssetContext) {
 
   const upper = (sx: number) =>
     sdf
-      .cone(
-        [sx * CHILD.shoulderX, CHILD.shoulderY + 0.01, 0],
-        [sx * CHILD.elbowX, CHILD.elbowY, 0.006],
-        0.034,
-        0.027,
-      )
+      .cone([sx * CHILD.shoulderX, 0.6, 0], [sx * CHILD.elbowX, CHILD.elbowY, 0.006], 0.034, 0.027)
       .bone(sx > 0 ? 'upperarm.L' : 'upperarm.R');
   const fore = (sx: number) =>
     sdf
