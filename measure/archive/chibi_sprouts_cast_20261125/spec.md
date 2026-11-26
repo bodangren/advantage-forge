@@ -951,7 +951,7 @@ evidence. No separate final-acceptance role runs for a light-lane track.
 - [Mom on the adult base](../../../assets/sprout-mom-kim.ts)
 - [The proportion script](../../../scripts/proportion-check.mjs)
 - [The Mom sheet script](../../../scripts/mom-kim-sheet.mjs)
-- [The cast queue](../../../QUEUE.md)
+- [The cast queue](../QUEUE-2026-11-27.md)
 - [Dad's drawing](../../../docs/sprout-mockups/dad.jpg)
 - [Grandma's drawing](../../../docs/sprout-mockups/grandma.jpg)
 - [Grandpa's drawing](../../../docs/sprout-mockups/grandpa.jpg)

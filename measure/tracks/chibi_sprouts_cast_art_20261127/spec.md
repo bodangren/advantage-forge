@@ -17,7 +17,8 @@ ten deliverables stay in the worktree and the handoff. Daniel's look gate stays 
 
 ## Context
 
-- The PM decision is `QUEUE.md` item 3. The cast model work is done; the two deliverables remain.
+- The PM decision is item 3 of the retired `QUEUE.md` of 2026-11-27. The cast model work is done;
+  the two deliverables remain. The board now holds the priority order.
 - The cast track records the accepted builds in
   `measure/archive/chibi_sprouts_cast_20261125/plan.md` (T6 to T8 and T13 to T14).
 - The cast worktree is `/home/daniebo/Desktop/forge-worktrees/sprouts-cast` on branch
@@ -280,4 +281,4 @@ Any mismatch voids the verdict, and the gate fails with `judge input <field> cha
 - [Mom's Phase 9 judge record](../../runs/chibi_sprouts_redesign_20261123/judge-p9-bf4158a.json)
 - [The cut-out command](../../../src/cli/forge.ts)
 - [The cut-out check](../../../scripts/cutout-check.mjs)
-- [The queue](../../../QUEUE.md)
+- [The queue of 2026-11-27](../../archive/QUEUE-2026-11-27.md)

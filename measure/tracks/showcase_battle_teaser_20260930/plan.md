@@ -59,5 +59,8 @@ Status: in progress. The plan records execution state. The storyboard document r
     from `thumb.html`.
   - Reels cover: `out/battle/thumb-9x16.jpg` (1080 x 1920, 0.51 MB), made from the same still
     (no second 3D render): the orc warlord above a diagonal cut, the knight below it.
-- [ ] Task: Owner review of the audio and the Thai text (voice-over, counters, end card, and the
+- [b] Task: Owner review of the audio and the Thai text (voice-over, counters, end card, and the
   publishing copy). (Added 2026-10-02: the open item of the recording task, as a task.)
+  deferred:thai Task aEQ0ak45X0RkbzNlT3VXbg.
+- [ ] Task: Publish the teaser after the owner passes the audio and Thai check. The copy waits in
+  `docs/guild-battle-teaser.md` ("Publishing").

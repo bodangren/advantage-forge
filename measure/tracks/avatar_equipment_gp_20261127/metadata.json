@@ -1,0 +1,25 @@
+{
+  "track_id": "avatar_equipment_gp_20261127",
+  "type": "feature",
+  "status": "new",
+  "lane": "light",
+  "created_at": "2026-11-27T00:00:00Z",
+  "updated_at": "2026-11-27T00:00:00Z",
+  "description": "Avatar system: fit the remaining equipment pieces and set the GP price of each shop item for Primary Advantage",
+  "estimated_tasks": 3,
+  "actual_tasks": null,
+  "deviation_notes": "Light card created 2026-11-27 from open item 6 of QUEUE.md, when the QUEUE retired into measure/tracks.md. The archived avatar_system_20261001 delivered the base, the fit contract, the pack, and the composer on 2026-10-04 and closed on 2026-11-19. This card holds only the two results that the item names: the equipment fit of the remaining rows and the GP price of the shop items. No spec, no gates, no review. GP is in-game currency, not money, and no price is public before Daniel approves it.",
+  "workstream": "games",
+  "retrospective": false,
+  "evidence": [
+    "measure/archive/QUEUE-2026-11-27.md",
+    "docs/avatar-system.md",
+    "docs/chibi-quest-progression.md",
+    "docs/equipment-fit.md",
+    "docs/equipment-parts.md",
+    "docs/avatar-catalog.tsv",
+    "src/apk3d/avatar/price.ts",
+    "scripts/avatar-price.ts"
+  ],
+  "dependencies": ["avatar_system_20261001"]
+}

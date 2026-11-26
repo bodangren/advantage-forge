@@ -4,10 +4,75 @@ This registry gives each historical, current, and planned work item one Measure 
 
 ## Contents
 
+- [Priority order](#priority-order)
 - [Foundation and history](#foundation-and-history)
 - [Asset production](#asset-production)
 - [Games](#games)
 - [Riven Lands pack](#riven-lands-pack)
+
+## Priority order
+
+The order of this list is the priority order (Daniel, 2026-11-27). These rows carry the open items of the retired `QUEUE.md` ([archive](./archive/QUEUE-2026-11-27.md)), in item order. The sections below keep their earlier order.
+
+- [~] **Track: Chibi Sprouts, release 1 art**
+  *Link: [./tracks/asset_chibi_sprouts_r1_20261022/](./tracks/asset_chibi_sprouts_r1_20261022/)*
+  *QUEUE item 1: finish the remaining characters of release 1.*
+
+- [~] **Track: Chibi Sprouts cast art: the five cut-outs and the 128 px idle sprites**
+  *Link: [./tracks/chibi_sprouts_cast_art_20261127/](./tracks/chibi_sprouts_cast_art_20261127/)*
+  *QUEUE item 1: the cut-outs and the 128 px idle sprites of the five cast characters.*
+
+- [~] **Track: Chibi Quest battle teaser videos (16:9 and 9:16)**
+  *Link: [./tracks/showcase_battle_teaser_20260930/](./tracks/showcase_battle_teaser_20260930/)*
+  *QUEUE item 2: finish and render the 45 second teaser.*
+
+- [~] **Track: Rebuild Magic Defense as a missile defense game**
+  *Link: [./tracks/game_magic_defense_rebuild_20261029/](./tracks/game_magic_defense_rebuild_20261029/)*
+  *QUEUE item 3 (A-28): mockup c2 picked by the PM on 2026-11-27; one rebuild track at a time, first.*
+
+- [~] **Track: Rebuild Paladin's Twin Soul as a chapel shooter**
+  *Link: [./tracks/game_paladins_twin_soul_rebuild_20261029/](./tracks/game_paladins_twin_soul_rebuild_20261029/)*
+  *QUEUE item 3 (A-28): mockup c2 picked by the PM on 2026-11-27; second.*
+
+- [~] **Track: Rebuild Archer's Revenge as an aim and shoot game**
+  *Link: [./tracks/game_archers_revenge_rebuild_20261029/](./tracks/game_archers_revenge_rebuild_20261029/)*
+  *QUEUE item 3 (A-28): mockup c1 picked by the PM on 2026-11-27; third.*
+
+- [~] **Track: Rebuild Castle Defense as a tower defense game**
+  *Link: [./tracks/game_castle_defense_rebuild_20261029/](./tracks/game_castle_defense_rebuild_20261029/)*
+  *QUEUE item 3 (A-28): mockup c2 picked by the PM on 2026-11-27; fourth.*
+
+- [~] **Track: Rewrite Rune Match as a dual renderer game**
+  *Link: [./tracks/game_rune_match_20260928/](./tracks/game_rune_match_20260928/)*
+  *QUEUE item 4: finish the dual renderer port for the Advantage Play Kit.*
+
+- [~] **Track: Rewrite Labyrinth Goblin King as a dual renderer game**
+  *Link: [./tracks/game_labyrinth_goblin_king_20260928/](./tracks/game_labyrinth_goblin_king_20260928/)*
+  *QUEUE item 5: finish the dual renderer port.*
+
+- [ ] **Track: Avatar system: fit the remaining equipment and set the GP price of the shop items**
+  *Link: [./tracks/avatar_equipment_gp_20261127/](./tracks/avatar_equipment_gp_20261127/)*
+  *QUEUE item 6: equipment fit and the GP-price shop items for Primary Advantage.*
+
+- [ ] **Track: Riven Lands base character, fit contract, and porting recipe**
+  *Link: [./tracks/riven_base_character_20261009/](./tracks/riven_base_character_20261009/)*
+  *QUEUE item 7: the Riven Lands base character.*
+
+- [ ] **Track: Riven Lands equipment: 27 catalog rows outside the game set**
+  *Link: [./tracks/riven_equipment_20261009/](./tracks/riven_equipment_20261009/)*
+  *QUEUE item 7: the first Riven Lands equipment family.*
+
+- [~] **Track: Port Devourer Slime to the monorepo**
+  *Link: [./tracks/game_devourer_slime_port_20260928/](./tracks/game_devourer_slime_port_20260928/)*
+  *QUEUE item 8: one of the remaining P0 game ports.*
+
+- [~] **Track: Port Dragon Flight to the monorepo**
+  *Link: [./tracks/game_dragon_flight_port_20260928/](./tracks/game_dragon_flight_port_20260928/)*
+  *QUEUE item 8: one of the remaining P0 game ports.*
+
+- [~] **Track: Port Potion Rush to the monorepo**
+  *Link: [./tracks/game_potion_rush_port_20260928/](./tracks/game_potion_rush_port_20260928/)*
+  *QUEUE item 8: one of the remaining P0 game ports.*
 
 ## Foundation and history
 
@@ -58,20 +123,11 @@ This registry gives each historical, current, and planned work item one Measure 
 - [~] **Track: Plan and accept wilderness scenes**
   *Link: [./tracks/asset_scenes_wilderness_20260928/](./tracks/asset_scenes_wilderness_20260928/)*
 
-- [~] **Track: Chibi Quest battle teaser videos (16:9 and 9:16)**
-  *Link: [./tracks/showcase_battle_teaser_20260930/](./tracks/showcase_battle_teaser_20260930/)*
-
 - [~] **Track: Sound library: CC0 sound effects and music for the asset catalog and the games**
   *Link: [./tracks/audio_sfx_library_20261013/](./tracks/audio_sfx_library_20261013/)*
 
 - [~] **Track: Sound library sources: ElvGames packs, CC-BY sites, and credits**
   *Link: [./tracks/audio_sources_expand_20261014/](./tracks/audio_sources_expand_20261014/)*
-
-- [~] **Track: Chibi Sprouts, release 1 art**
-  *Link: [./tracks/asset_chibi_sprouts_r1_20261022/](./tracks/asset_chibi_sprouts_r1_20261022/)*
-
-- [~] **Track: Chibi Sprouts cast art: the five cut-outs and the 128 px idle sprites**
-  *Link: [./tracks/chibi_sprouts_cast_art_20261127/](./tracks/chibi_sprouts_cast_art_20261127/)*
 
 ## Games
 
@@ -93,23 +149,11 @@ This registry gives each historical, current, and planned work item one Measure 
 - [~] **Track: Rewrite Archers Revenge as a dual renderer game**
   *Link: [./tracks/game_archers_revenge_20260928/](./tracks/game_archers_revenge_20260928/)*
 
-- [~] **Track: Rebuild Archer's Revenge as an aim and shoot game**
-  *Link: [./tracks/game_archers_revenge_rebuild_20261029/](./tracks/game_archers_revenge_rebuild_20261029/)*
-
 - [~] **Track: Rewrite Astral Mage as a dual renderer game**
   *Link: [./tracks/game_astral_mage_20260928/](./tracks/game_astral_mage_20260928/)*
 
 - [~] **Track: Rewrite Castle Defense as a dual renderer game**
   *Link: [./tracks/game_castle_defense_20260928/](./tracks/game_castle_defense_20260928/)*
-
-- [~] **Track: Rebuild Castle Defense as a tower defense game**
-  *Link: [./tracks/game_castle_defense_rebuild_20261029/](./tracks/game_castle_defense_rebuild_20261029/)*
-
-- [~] **Track: Port Devourer Slime to the monorepo**
-  *Link: [./tracks/game_devourer_slime_port_20260928/](./tracks/game_devourer_slime_port_20260928/)*
-
-- [~] **Track: Port Dragon Flight to the monorepo**
-  *Link: [./tracks/game_dragon_flight_port_20260928/](./tracks/game_dragon_flight_port_20260928/)*
 
 - [~] **Track: Rewrite Dragon Rider as a dual renderer game**
   *Link: [./tracks/game_dragon_rider_20260928/](./tracks/game_dragon_rider_20260928/)*
@@ -135,14 +179,8 @@ This registry gives each historical, current, and planned work item one Measure 
 - [~] **Track: Port Hero vs. Zombie to the monorepo**
   *Link: [./tracks/game_hero_vs_zombie_port_20260928/](./tracks/game_hero_vs_zombie_port_20260928/)*
 
-- [~] **Track: Rewrite Labyrinth Goblin King as a dual renderer game**
-  *Link: [./tracks/game_labyrinth_goblin_king_20260928/](./tracks/game_labyrinth_goblin_king_20260928/)*
-
 - [~] **Track: Rewrite Magic Defense as a dual renderer game**
   *Link: [./tracks/game_magic_defense_20260928/](./tracks/game_magic_defense_20260928/)*
-
-- [~] **Track: Rebuild Magic Defense as a missile defense game**
-  *Link: [./tracks/game_magic_defense_rebuild_20261029/](./tracks/game_magic_defense_rebuild_20261029/)*
 
 - [~] **Track: Port Monster Encounters to the monorepo**
   *Link: [./tracks/game_monster_encounters_port_20260928/](./tracks/game_monster_encounters_port_20260928/)*
@@ -150,17 +188,11 @@ This registry gives each historical, current, and planned work item one Measure 
 - [~] **Track: Rewrite Paladins Twin Soul as a dual renderer game**
   *Link: [./tracks/game_paladins_twin_soul_20260928/](./tracks/game_paladins_twin_soul_20260928/)*
 
-- [~] **Track: Rebuild Paladin's Twin Soul as a chapel shooter**
-  *Link: [./tracks/game_paladins_twin_soul_rebuild_20261029/](./tracks/game_paladins_twin_soul_rebuild_20261029/)*
-
 - [ ] **Track: Map variants and randomized maps**
   *Link: [./tracks/map_variants_randomized_20261003/](./tracks/map_variants_randomized_20261003/)*
 
 - [~] **Track: Port the dual renderer into the monorepo**
   *Link: [./tracks/game_platform_port_20260928/](./tracks/game_platform_port_20260928/)*
-
-- [~] **Track: Port Potion Rush to the monorepo**
-  *Link: [./tracks/game_potion_rush_port_20260928/](./tracks/game_potion_rush_port_20260928/)*
 
 - [~] **Track: Rewrite Realm Carver as a dual renderer game**
   *Link: [./tracks/game_realm_carver_20260928/](./tracks/game_realm_carver_20260928/)*
@@ -170,9 +202,6 @@ This registry gives each historical, current, and planned work item one Measure 
 
 - [~] **Track: Rewrite Rune Forge Chamber as a dual renderer game**
   *Link: [./tracks/game_rune_forge_chamber_20260928/](./tracks/game_rune_forge_chamber_20260928/)*
-
-- [~] **Track: Rewrite Rune Match as a dual renderer game**
-  *Link: [./tracks/game_rune_match_20260928/](./tracks/game_rune_match_20260928/)*
 
 - [~] **Track: Rewrite Shadow Gate Dungeon as a dual renderer game**
   *Link: [./tracks/game_shadow_gate_dungeon_20260928/](./tracks/game_shadow_gate_dungeon_20260928/)*
@@ -202,9 +231,6 @@ Execution order. The overview, the decisions, and the dependencies are in [riven
 - [ ] **Track: Riven Lands pack layout stage 1: packs/riven-lands and the --pack option**
   *Link: [./tracks/riven_pack_layout_20261009/](./tracks/riven_pack_layout_20261009/)*
 
-- [ ] **Track: Riven Lands base character, fit contract, and porting recipe**
-  *Link: [./tracks/riven_base_character_20261009/](./tracks/riven_base_character_20261009/)*
-
 - [ ] **Track: Riven Lands game set: 89 game rows, 142 avatar pieces, and the sunken vault, before any other production**
   *Link: [./tracks/riven_game_set_20261009/](./tracks/riven_game_set_20261009/)*
 
@@ -222,9 +248,6 @@ Execution order. The overview, the decisions, and the dependencies are in [riven
 
 - [ ] **Track: Riven Lands NPCs: 110 catalog rows outside the game set**
   *Link: [./tracks/riven_npcs_20261009/](./tracks/riven_npcs_20261009/)*
-
-- [ ] **Track: Riven Lands equipment: 27 catalog rows outside the game set**
-  *Link: [./tracks/riven_equipment_20261009/](./tracks/riven_equipment_20261009/)*
 
 - [ ] **Track: Riven Lands props: 101 catalog rows outside the game set**
   *Link: [./tracks/riven_props_20261009/](./tracks/riven_props_20261009/)*
