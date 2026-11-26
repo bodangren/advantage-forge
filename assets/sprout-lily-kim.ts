@@ -223,14 +223,21 @@ function lilyTee(k: AssetContext) {
   k.body('tee', tee, { color: C.tee, detail: 0.005, textureDensity: 1 });
 }
 
-/** The white Peter Pan collar: a flat band round the neck with two rounded lobes at the front. */
+/**
+ * The white Peter Pan collar: a band round the neck at the neckline of the tee, with two rounded
+ * lobes that hang over the chest. The band sits at the neck, so the collar reads as a white collar
+ * and not as a line on the chest.
+ */
 function lilyCollar(k: AssetContext) {
-  const band = sdf.torus(0.058, 0.012).scale([1, 0.5, 0.92]).at(0, 0.634, -0.004).bone('neck');
+  // The band at the neckline: a flat ring round the neck.
+  const band = sdf.torus(0.06, 0.013).scale([1, 0.6, 0.92]).at(0, 0.64, -0.004).bone('neck');
+  // The two rounded lobes of the Peter Pan collar at the front. They meet in the middle and hang
+  // over the chest.
   const lobe = (sx: number) =>
     sdf
-      .ellipsoid([0.032, 0.007, 0.02])
+      .ellipsoid([0.03, 0.008, 0.022])
       .rotate(0, 0, sx * 12)
-      .at(sx * 0.022, 0.634, 0.045)
+      .at(sx * 0.026, 0.634, 0.042)
       .bone('neck');
   k.body('collar', sdf.smoothUnion(0.006, band, lobe(-1), lobe(1)), {
     color: C.collar,
@@ -238,7 +245,12 @@ function lilyCollar(k: AssetContext) {
   });
 }
 
-/** The red pleated skirt. Ten pleats run from the waist under the tee to the hem above the knee. */
+/**
+ * The red pleated skirt. Ten pleats run from the waist under the tee to the hem above the knee. The
+ * pleats are a radial ripple of 9 mm, so they read as folds and not as a smooth cone. The ripple
+ * starts below the hem of the tee, so the waist keeps a round edge. The ripple stops clear of the
+ * hands, so the hands stay outside the skirt.
+ */
 function lilySkirt(k: AssetContext) {
   const skirtProfile: [number, number][] = [
     [0, 0.418],
@@ -256,9 +268,18 @@ function lilySkirt(k: AssetContext) {
   ];
   const skirt = sdf
     .revolve(profile.polygon(skirtProfile, { smooth: true }))
-    .displace(0.006, (x, y, z) => Math.cos(Math.atan2(z, x) * 10))
+    .displace(
+      0.009,
+      (x, y, z) => {
+        // The fold grows below the hem of the tee and keeps the full depth at the hem of the skirt.
+        const fold = Math.max(0, Math.min(1, (0.402 - y) / 0.06));
+        return Math.cos(Math.atan2(z, x) * 10) * fold;
+      },
+      // The ripple is steep, so the field needs the Lipschitz factor of the fold.
+      1.8,
+    )
     .bone('hips');
-  k.body('skirt', skirt, { color: C.skirt, detail: 0.0045 });
+  k.body('skirt', skirt, { color: C.skirt, detail: 0.004 });
 }
 
 /** The white mid-calf socks over the lower legs. */
@@ -270,35 +291,38 @@ function lilySocks(k: AssetContext) {
   k.body('socks', sock(-1).union(sock(1)), { color: C.sock, detail: 0.004 });
 }
 
-/** The red sneakers over the feet, with a white toe cap, a pale sole, and lace bars. */
+/**
+ * The red sneakers over the feet, with a white toe cap, a pale sole, and two white lace bands over
+ * the instep. The toe cap sits low at the front, so the red upper shows above it, and the lace
+ * bands follow the shoe, so they read as laces.
+ */
 function lilySneakers(k: AssetContext) {
+  const bone = (sx: number) => (sx > 0 ? 'foot.L' : 'foot.R');
   const shoe = (sx: number) =>
     sdf
-      .smoothUnion(
-        0.012,
-        sdf.ellipsoid([0.04, 0.034, 0.068]).at(sx * CHILD.ankleX, 0.032, 0.032),
-        sdf.ellipsoid([0.036, 0.024, 0.05]).at(sx * CHILD.ankleX, 0.03, 0.072),
-      )
-      .bone(sx > 0 ? 'foot.L' : 'foot.R');
+      .ellipsoid([0.042, 0.036, 0.075])
+      .at(sx * CHILD.ankleX, 0.034, 0.038)
+      .bone(bone(sx));
   const toeCap = (sx: number) =>
     sdf
-      .ellipsoid([0.033, 0.024, 0.034])
-      .at(sx * CHILD.ankleX, 0.031, 0.088)
-      .bone(sx > 0 ? 'foot.L' : 'foot.R');
+      .ellipsoid([0.033, 0.02, 0.028])
+      .at(sx * CHILD.ankleX, 0.022, 0.09)
+      .bone(bone(sx));
   k.body('sneakers', shoe(-1).union(shoe(1)), { color: C.shoe, detail: 0.004 });
   k.body('sneaker-toe', toeCap(-1).union(toeCap(1)), { color: C.sole, detail: 0.003 });
   const sole = (sx: number) =>
     sdf
-      .box([0.076, 0.014, 0.13], 0.005)
-      .at(sx * CHILD.ankleX, 0.007, 0.034)
-      .bone(sx > 0 ? 'foot.L' : 'foot.R');
+      .box([0.076, 0.014, 0.14], 0.005)
+      .at(sx * CHILD.ankleX, 0.007, 0.042)
+      .bone(bone(sx));
   k.body('sneaker-sole', sole(-1).union(sole(1)), { color: C.sole, detail: 0.003 });
-  const lace = (sx: number, y: number) =>
-    sdf
-      .box([0.034, 0.005, 0.008], 0.002)
-      .at(sx * CHILD.ankleX, y, 0.062)
-      .bone(sx > 0 ? 'foot.L' : 'foot.R');
-  k.body('laces', lace(-1, 0.052).union(lace(1, 0.052)).union(lace(-1, 0.04)).union(lace(1, 0.04)), {
+  // The laces: two bands that sit on the instep of the shoe and follow its curve.
+  const lace = (sx: number, z: number) =>
+    shoe(sx)
+      .round(0.008)
+      .intersect(sdf.box([0.3, 0.3, 0.016]).at(sx * CHILD.ankleX, 0.034, z))
+      .bone(bone(sx));
+  k.body('laces', lace(-1, 0.02).union(lace(1, 0.02)).union(lace(-1, 0.05)).union(lace(1, 0.05)), {
     color: C.sole,
     detail: 0.002,
   });
