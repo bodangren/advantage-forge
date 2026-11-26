@@ -735,10 +735,18 @@ export function measureFigure(figure, table = 'kim') {
     }
     guard('lily side chin', !sideHit, 'hair at the front');
     // 3. no hair hangs into the eye window above the eyes
+    // The guard reads the eye components' column span, not the whole head width. The eye window's
+    // upper strip sits 0.55 head heights below the crown, which is the temple row of every
+    // chin-length bob, so the full width rejects the cast's own Lily (spec "The five identities").
+    // The span of the two eye components keeps the guard's purpose: hair over the eyes, or over the
+    // nose bridge between them, still fails with this line. The two-component rule of the eye mask
+    // catches the same hair a second way.
     const eyeTop = Math.min(eyeComps[0].y0, eyeComps[1].y0);
+    const bangLeft = Math.min(eyeComps[0].x0, eyeComps[1].x0);
+    const bangRight = Math.max(eyeComps[0].x1, eyeComps[1].x1);
     let bangHit = false;
     for (let y = r0; y < eyeTop && !bangHit; y++)
-      for (let x = c0; x <= c1; x++)
+      for (let x = bangLeft; x <= bangRight; x++)
         if (isHair(px(front, x, y))) {
           bangHit = true;
           break;
