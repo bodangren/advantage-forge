@@ -889,9 +889,9 @@ limit` gets exit 0 for a 350 px head.
 
 ## Phase 2: The adult variants
 
-- [ ] T5 Red: Pin Dad, Grandma, and Grandpa.
-      Files: `tests/sprout-dad-kim.test.ts`, `tests/sprout-grandma-kim.test.ts`,
-      `tests/sprout-grandpa-kim.test.ts` (all new).
+- [~] T5 Red: Pin Dad, Grandma, and Grandpa.
+  Files: `tests/sprout-dad-kim.test.ts`, `tests/sprout-grandma-kim.test.ts`,
+  `tests/sprout-grandpa-kim.test.ts` (all new).
   - Each file runs `--asset <name> --table kim --record out/chibi-sprouts/cast/<name>-measure.json`
     on the build and renders that the Green task wrote. It requires exit 0, `Object.keys(record.rows)`
     equal to the eleven table names plus `lit`, each value inside `TABLES.kim`, each row limit equal
@@ -903,6 +903,45 @@ limit` gets exit 0 for a 350 px head.
   - Done-when: each file exits 1 inside its case on the absent asset, with no collection error.
     `prettier --check` exits 0 on the three files.
   - Record: the case names and the failure text.
+
+  - Red evidence (2026-11-26, worktree `/home/daniebo/Desktop/forge-worktrees/sprouts-cast`, branch
+    `chibi-sprouts-cast`, phase base `b48c3df3235d69337aecc90da7db6cd178455eed`, role base
+    `b48c3df3235d69337aecc90da7db6cd178455eed`):
+    - The pins cover the exact Kim table, the record rows and palms, the 1.500 m adult landmarks,
+      the 17-bone and `idle` inventory, the base bodies, the face layer, and the preset pin.
+    - Dad's pin covers the black swept hair and the jaw, brow, smile, plaid, tee, jeans, and boots.
+    - Grandma's pin covers the white bun above the projected crown in both flat views.
+    - Grandpa's pin covers the bald crown, white side hair, glasses declaration, and moustache paint.
+    - Every pin compares the adult base and every existing preset value with the phase base.
+    - Command and result:
+
+      ```bash
+      HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-dad-kim.test.ts tests/sprout-grandma-kim.test.ts tests/sprout-grandpa-kim.test.ts'
+      # exit 1: every case fails inside its case on the absent adult asset
+      ```
+
+    - Failing cases and exact causes:
+
+      | File                               | Case                                                                             | Red failure                                                                                                                                        |
+      | ---------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+      | `tests/sprout-dad-kim.test.ts`     | `measures eleven Kim rows, both palms, and the black swept hair`                 | `asset sprout-dad-kim: not built`; `missing: assets/sprout-dad-kim.ts`; expected exit 0, received 1.                                               |
+      | `tests/sprout-dad-kim.test.ts`     | `keeps the adult base, absolute landmarks, face layer, and built inventory`      | `asset sprout-dad-kim: not built: /home/daniebo/Desktop/forge-worktrees/sprouts-cast/assets/sprout-dad-kim.ts`; expected `true`, received `false`. |
+      | `tests/sprout-dad-kim.test.ts`     | `pins the Dad identity, castMeta, and preset without moving existing values`     | `asset sprout-dad-kim: not built`; expected `true`, received `false`.                                                                              |
+      | `tests/sprout-grandma-kim.test.ts` | `measures eleven Kim rows, both palms, and the high white bun`                   | `asset sprout-grandma-kim: not built`; `missing: assets/sprout-grandma-kim.ts`; expected exit 0, received 1.                                       |
+      | `tests/sprout-grandma-kim.test.ts` | `keeps the adult base, absolute landmarks, face layer, and built inventory`      | `asset sprout-grandma-kim: not built`; expected `true`, received `false`.                                                                          |
+      | `tests/sprout-grandma-kim.test.ts` | `pins the Grandma identity, castMeta, and preset without moving existing values` | `asset sprout-grandma-kim: not built`; expected `true`, received `false`.                                                                          |
+      | `tests/sprout-grandpa-kim.test.ts` | `measures eleven Kim rows, both palms, glasses, moustache, and side hair`        | `asset sprout-grandpa-kim: not built`; `missing: assets/sprout-grandpa-kim.ts`; expected exit 0, received 1.                                       |
+      | `tests/sprout-grandpa-kim.test.ts` | `keeps the adult base, absolute landmarks, face layer, and built inventory`      | `asset sprout-grandpa-kim: not built`; expected `true`, received `false`.                                                                          |
+      | `tests/sprout-grandpa-kim.test.ts` | `pins the Grandpa identity, castMeta, and preset without moving existing values` | `asset sprout-grandpa-kim: not built`; expected `true`, received `false`.                                                                          |
+
+    - No collection, syntax, or module-import error occurs. Each dynamic asset load checks the file
+      inside the case before import.
+    - `node_modules/.bin/prettier --check tests/sprout-dad-kim.test.ts tests/sprout-grandma-kim.test.ts tests/sprout-grandpa-kim.test.ts`
+      exits 0.
+    - `node node_modules/typescript/bin/tsc --noEmit --pretty false` exits 2 with 51 existing
+      diagnostics. None sits in the three new files.
+    - The Phase 1 tools, isolation baseline, Mom pin, and Mom validation command exits 0.
+    - Result block: `measure/runs/chibi_sprouts_cast_20261125/red-b48c3df3.log`.
 
 - [ ] T6 Green: Dad. File: `assets/sprout-dad-kim.ts` (new).
   - Build the identity of the spec: black swept-back hair, square jaw, thick brows, open smile, a
