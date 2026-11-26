@@ -1,0 +1,109 @@
+Green remediation, look round 2, for T13 (Tom) and T14 (Lily) of Phase 3 of the track
+chibi_sprouts_cast_20261125.
+
+Worktree: /home/daniebo/Desktop/forge-worktrees/sprouts-cast
+Branch: chibi-sprouts-cast
+Phase base: aed0bcc0c3562de1def0242a29d35dd3dca31b68
+Role base: acb3afbbd924626a708a1d6cef64b9a3ba63d12a
+Green route: minimax-cn-coding-plan/MiniMax-M3.1-Flash, family minimax
+Look judge of round 1: nvidia
+
+The look judge of round 1 scored identity 7.0 and proportion 8.0 for both children. It named
+three faults for Tom and three for Lily. Green changed only the two asset files. The child base,
+the scripts, the tests, the adults, and the preset pin stay as they were.
+
+Tom, the three faults and the fixes:
+- The hair was a smooth dome. The hair now carries ten pointed locks: four sweep up to the
+  character's left, one cowlick points up to the character's right, one side lock breaks the round
+  dome at the top left, one back lock breaks the round mass in the side view, two fringe locks
+  sweep over the brow, and two side locks fall in front of the ears. The blend radius is 0.006 m,
+  so the locks keep their points.
+- The mouth was a closed dark red line. The mouth is now an open toothy smile: a filled mouth
+  cavity and a band of teeth, both painted profiles on the face layer. The mouth is 0.104 m wide
+  and 0.034 m deep.
+- The face lacked defined eyebrows and a rosy cheek blush. The brows are 0.050 m long and 0.019 m
+  thick, and each cheek carries a rosy blush of #e8786a over smaller freckles. The blush keeps a
+  relative luminance of 0.56, so it stays out of the eye window of the proportion script.
+
+Lily, the three faults and the fixes:
+- The shirt had no white collar. The white Peter Pan collar sits at the neckline: a flat ring round
+  the neck at 0.640 m with two rounded lobes that hang over the chest at 0.634 m.
+- The shoes had no laces and the wrong shape. The red sneakers carry a white toe cap at the front,
+  a white sole, and two white lace bands over the instep. Each lace band is the shoe inflated by
+  8 mm and cut by a slab of 16 mm, so the band follows the curve of the shoe.
+- The skirt was not pleated. The red skirt carries ten pleats. The fold is a radial ripple of
+  9 mm, and it starts below the hem of the tee, so the waist keeps a round edge. The ripple uses
+  the Lipschitz factor of 1.8, so the distance field keeps its true size and the triangle
+  reduction succeeds. The build prints no warning line.
+
+The eleven rows of TABLES.child.
+
+Tom, from out/chibi-sprouts/cast/sprout-tom-kim-measure.json:
+  heightInHeads 2.896611, armToTorso 1.231832, legShare 0.335215, headToShoulders 2.175515,
+  wrist -0.124088, fingertips 0.430649, eyeLine 0.645125, eyeHeight 0.138702,
+  spacingHead 0.308917, eyeWidthFace 0.233503, spacingFace 0.492386
+Lily, from out/chibi-sprouts/cast/sprout-lily-kim-measure.json:
+  heightInHeads 2.920782, armToTorso 1.231832, legShare 0.34037, headToShoulders 2.14492,
+  wrist -0.124088, fingertips 0.430649, eyeLine 0.645638, eyeHeight 0.140665,
+  spacingHead 0.309375, eyeWidthFace 0.227723, spacingFace 0.490099
+
+Every row of both assets sits inside the child table, every row limit equals the table, both palms
+are ok, and the guards array of both records is empty. The three Lily guards pass.
+
+The commands and their exit codes, all through the heavy runner:
+  HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c './forge build sprout-tom-kim --fast'   # exit 0
+  HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c './forge render sprout-tom-kim --fast --views front-level,side-level --ortho --flat --bg none --size 1024'   # exit 0
+  HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c './forge render sprout-tom-kim --fast --views front-level,side-level --ortho --bg none --size 1024'   # exit 0
+  HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c 'node_modules/.bin/tsx scripts/proportion-check.mjs --asset sprout-tom-kim --base humanoid-kim-child --table child --record out/chibi-sprouts/cast/sprout-tom-kim-measure.json'   # exit 0
+  HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c './forge check sprout-tom-kim'   # exit 0, result ok
+  HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c 'node scripts/sprout-cast-panel.mjs --asset sprout-tom-kim'   # exit 0
+  HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c './forge build sprout-lily-kim --fast'   # exit 0, no warning line
+  HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c './forge render sprout-lily-kim --fast --views front-level,side-level --ortho --flat --bg none --size 1024'   # exit 0
+  HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c './forge render sprout-lily-kim --fast --views front-level,side-level --ortho --bg none --size 1024'   # exit 0
+  HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c 'node_modules/.bin/tsx scripts/proportion-check.mjs --asset sprout-lily-kim --base humanoid-kim-child --table child --record out/chibi-sprouts/cast/sprout-lily-kim-measure.json'   # exit 0
+  HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c './forge check sprout-lily-kim'   # exit 0, result ok
+  HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c 'node scripts/sprout-cast-panel.mjs --asset sprout-lily-kim'   # exit 0
+  HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-child-base.test.ts tests/sprout-tom-kim.test.ts tests/sprout-lily-kim.test.ts tests/cast-isolation.test.ts tests/proportion-cast-options.test.ts'   # exit 0, 32 of 32 cases pass over 5 files
+  node_modules/.bin/prettier --check assets/sprout-tom-kim.ts assets/sprout-lily-kim.ts measure/tracks/chibi_sprouts_cast_20261125/plan.md   # exit 0
+  node node_modules/typescript/bin/tsc --noEmit   # exit 2, 51 diagnostics in the baseline files, none in the two changed files
+
+The panels for the next judges:
+  out/chibi-sprouts/cast/sprout-tom-kim-panel.png, 1416 x 900,
+    SHA-256 734670c7f6856b97f3c5fd43795227000b612782f9712f88917a7d1aad2c5fa0
+  out/chibi-sprouts/cast/sprout-lily-kim-panel.png, 1416 x 900,
+    SHA-256 00455629846d6bc70ef506e73098d4d4a62bfd7ebd45e3963e63dbbc2e1c9307
+  Both captions hold "11/11 rows pass; palms ok" and "cropped: front no, side no, drawing no".
+
+The artifact hashes, taken after the lit render of each asset:
+  Tom, sprout-tom-kim.glb 3958d9e788f194825a068ebbe69470760f34a82a452d9e95b3476495c79ac000
+  Tom, flat/front 838166a61aabc54e823d143eb59110c07e4fad70529b7ae4225aaf5901aad6c1
+  Tom, flat/side 424ecb2d3e8e77b1e12065d1149b295acb4a8644cd05c22ec1dabc282048252c
+  Tom, lit/front 26b3ca271b7df8751d14240e2524605b4dfc0c3db7c7fc3795ddb5db84dc085e
+  Tom, lit/side 3369b7d050f1bea520fcf657dfdf8a445b83327cd6276ec957f78810a53d8e35
+  Tom, raw stats.json 4a977e63ab08afe0013113b96d1ccafc5e3160e95c364fc43e0c93f797521251
+  Tom, stable stats projection 9776ad8174f88f91b7292db2afcb80871ff2afcbda7c3f0f743858b2dcd46e83
+  Tom, measure record 8a27e45b0cba2e9cd7bc6d6ce400c6453682125b5068269db6f383abb9427795
+  Lily, sprout-lily-kim.glb fbe2232826445103c59a04b8f9bcf7b34a84780123a827bd83dd25b26b48265d
+  Lily, flat/front 6cf942bd02ed177ace1eca68be06bc52ad279dddf4c93285ec711210286044d9
+  Lily, flat/side aa30fcff6bc2a84ffb1b95060c66bd6e39796267aacb426565de6b4c496e6f70
+  Lily, lit/front a70c366309e80b70bd981bce0ae98b5b94d9b18973bf0bcfb955fba1559fedf9
+  Lily, lit/side 7305e1c592c96f3577995dd856354fdcab8235914c71a9e94be32aa15d2e707d
+  Lily, raw stats.json 177540183d1fdded653c895a26ce32da9c7ee08424ecd79c845fe7f60b25240c
+  Lily, stable stats projection 613ca8417caa5023f229ccc271c5798bbc97fe9ca464b2c2fde540d12d5658aa
+  Lily, measure record e43dd124ab5d200f5e44c5e5b20a7272b1ac761c5516cb1dd555906a9b11435d
+  The shared child base, humanoid-kim-child, SHA-256
+    415e0a9b920b656880363e1a49693ec7e627c8242c5e449d3873e97c96d3a905, did not change.
+
+MEASURE_AGENT_RESULT
+role: jr-green
+status: complete
+track: chibi_sprouts_cast_20261125
+phase: Phase 3: The children
+commits: 58c66c25, fb3a5fa7, fc22048b, 39f74a79
+tests_run: ./forge build sprout-tom-kim --fast (exit 0); ./forge render sprout-tom-kim --fast --views front-level,side-level --ortho --flat --bg none --size 1024 (exit 0); ./forge render sprout-tom-kim --fast --views front-level,side-level --ortho --bg none --size 1024 (exit 0); proportion-check --asset sprout-tom-kim --base humanoid-kim-child --table child (exit 0, 11 of 11 rows pass, both palms ok, no guard); ./forge check sprout-tom-kim (exit 0, result ok); sprout-cast-panel.mjs --asset sprout-tom-kim (exit 0); ./forge build sprout-lily-kim --fast (exit 0, no warning line); ./forge render sprout-lily-kim --fast --views front-level,side-level --ortho --flat --bg none --size 1024 (exit 0); ./forge render sprout-lily-kim --fast --views front-level,side-level --ortho --bg none --size 1024 (exit 0); proportion-check --asset sprout-lily-kim --base humanoid-kim-child --table child (exit 0, 11 of 11 rows pass, both palms ok, no guard); ./forge check sprout-lily-kim (exit 0, result ok); sprout-cast-panel.mjs --asset sprout-lily-kim (exit 0); vitest run of tests/sprout-child-base.test.ts, tests/sprout-tom-kim.test.ts, tests/sprout-lily-kim.test.ts, tests/cast-isolation.test.ts, tests/proportion-cast-options.test.ts (exit 0, 32 of 32 cases pass over 5 files); prettier --check of the two assets and plan.md (exit 0); tsc --noEmit (exit 2, 51 baseline diagnostics, none in the changed files)
+files_changed: assets/sprout-tom-kim.ts; assets/sprout-lily-kim.ts; measure/tracks/chibi_sprouts_cast_20261125/plan.md; measure/runs/chibi_sprouts_cast_20261125/green-39f74a7.log
+plan_updates: T13 is [x] again with commit 58c66c25e8020c5bd948cc3a67c6a975d9cd74d0 and the look round 2 evidence; T14 is [x] with commit fc22048b17dd02d31169ff192071293ee571ab3e and the look round 2 evidence; both blocks hold the eleven rows, the look rounds, the five artifact hashes, the stable stats projection, the raw stats hash, the panel hash, and the exit codes
+known_failures: none in the two assets; the jr-green role gate of Phase 3 reports 3 non-deferred incomplete tasks, and none of them belongs to the Green task of this round: T11 is the Red task and still carries the [~] marker although its commit and its evidence are already in the plan, and T15 and T16 are the Measure tasks of the two child look judges and of the phase gate; one known limit of round 2: the lace bands of Lily's sneakers lie on the top of the shoe, so they read as white marks in the side cell of the panel and not in the front cell, where the top of a shoe is edge-on
+handoff: the two look judges of T15 read the panels out/chibi-sprouts/cast/sprout-tom-kim-panel.png (SHA-256 734670c7f6856b97f3c5fd43795227000b612782f9712f88917a7d1aad2c5fa0) and out/chibi-sprouts/cast/sprout-lily-kim-panel.png (SHA-256 00455629846d6bc70ef506e73098d4d4a62bfd7ebd45e3963e63dbbc2e1c9307), both dated 2026-11-27, both 1416 x 900, both captioned "11/11 rows pass; palms ok" and "cropped: front no, side no, drawing no"; the shared child base commit is unchanged, so the base hash 415e0a9b920b656880363e1a49693ec7e627c8242c5e449d3873e97c96d3a905 still binds; the orchestrator owns the T11 marker and the T15 and T16 tasks, so the jr-green role gate of the phase waits for them; nothing changed after the last commit
+dispositions: TOM-HAIR=FIX; TOM-MOUTH=FIX; TOM-FACE=FIX; LILY-COLLAR=FIX; LILY-SHOES=FIX; LILY-SKIRT=FIX
+END_MEASURE_AGENT_RESULT

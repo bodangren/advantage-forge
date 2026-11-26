@@ -1,0 +1,36 @@
+{
+  "name": "sprout-grandma-kim",
+  "date": "2026-11-26",
+  "rounds": [
+    {
+      "round": 1,
+      "identity_score": 7.0,
+      "proportion_score": 8.0,
+      "verdict": "fail",
+      "comment": [
+        "smooth bonnet instead of textured bun",
+        "smooth face without elderly features",
+        "short skirt and puffy jacket"
+      ]
+    },
+    {
+      "round": 2,
+      "identity_score": 7.2,
+      "proportion_score": 8.1,
+      "verdict": "fail",
+      "comment": [
+        "no glasses (the drawing has none: judge error, PM note)",
+        "puff-sleeve dress instead of open cardigan",
+        "sticks in hands (judge error: the hand slab of the base)"
+      ]
+    },
+    {
+      "round": 3,
+      "identity_score": 7.8,
+      "proportion_score": 8.2,
+      "verdict": "pass"
+    }
+  ],
+  "pm_decision": "one more Green round",
+  "outcome": "Round 3 passed at identity 7.8 and proportion 8.2."
+}

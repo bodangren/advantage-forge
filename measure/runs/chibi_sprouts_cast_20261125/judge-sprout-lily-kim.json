@@ -1,0 +1,79 @@
+{
+  "model_id": "nvidia/nvidia/nemotron-3.5-super-vl-120b-a12b",
+  "model_family": "nvidia",
+  "red_family": "hungerg",
+  "green_family": "minimax",
+  "asset_path": "assets/sprout-lily-kim.ts",
+  "asset_commit": "fc22048b17dd02d31169ff192071293ee571ab3e",
+  "base_path": "assets/parts/humanoid-kim-child.ts",
+  "base_commit": "1e1d3ab7a13445f9c58f129521c03a400310ea4c",
+  "base_sha256": "415e0a9b920b656880363e1a49693ec7e627c8242c5e449d3873e97c96d3a905",
+  "asset_sha256": "fbe2232826445103c59a04b8f9bcf7b34a84780123a827bd83dd25b26b48265d",
+  "record_sha256": "e43dd124ab5d200f5e44c5e5b20a7272b1ac761c5516cb1dd555906a9b11435d",
+  "render_sha256": {
+    "flatFront": "6cf942bd02ed177ace1eca68be06bc52ad279dddf4c93285ec711210286044d9",
+    "flatSide": "aa30fcff6bc2a84ffb1b95060c66bd6e39796267aacb426565de6b4c496e6f70",
+    "litFront": "a70c366309e80b70bd981bce0ae98b5b94d9b18973bf0bcfb955fba1559fedf9",
+    "litSide": "7305e1c592c96f3577995dd856354fdcab8235914c71a9e94be32aa15d2e707d"
+  },
+  "panel_path": "out/chibi-sprouts/cast/sprout-lily-kim-panel.png",
+  "panel_sha256": "00455629846d6bc70ef506e73098d4d4a62bfd7ebd45e3963e63dbbc2e1c9307",
+  "identity_score": 7.8,
+  "identity_comment": "The bob is shorter than the drawing's hair, the shoes are plain slip-ons instead of lace-ups, and the collar trim is thin instead of a Peter Pan collar.",
+  "proportion_score": 8.0,
+  "proportion_comment": "The round faults name no proportion fault, and the proportional rows stay inside the child table.",
+  "round": 2,
+  "verdict": "pass",
+  "judged_at": "2026-11-27",
+  "pass_line": 7.5,
+  "faults": [
+    "bob shorter than the drawing's hair",
+    "plain slip-on shoes instead of lace-ups",
+    "thin collar trim instead of a Peter Pan collar"
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "asset_commit": "9bca4351cfa2617c6e434c1adf8ecc63b42d689a",
+      "asset_sha256": "e148c821f008715f01993f4d0254a326ac31716832c513c0e1991fb6aa25c39e",
+      "record_sha256": "6552007c851405ec8a91eca57cabd803344d5d0f5d603982b40aaa13c086e87a",
+      "render_sha256": {
+        "flatFront": "e5eb68dfacd018d3128875aa8961ca079782ee48b64d699022948b0034fd9443",
+        "flatSide": "2fe46a3951b50fac1076fe5a7db0c1f76cca4476a1795025ecb8a2626783a7d4",
+        "litFront": "880835fc13aabdc06050405781b5eace04cd69b32571758219cf58b7e01c6d0c",
+        "litSide": "2a65001976d02f09c7b46e82bf29bcbf291e9c719779061a81728bb1e2cac223"
+      },
+      "panel_sha256": "62e62e6c26ce2a8b410b10239662413fad3d02f68ad8083ceccbcca2287f97ff",
+      "identity_score": 7.0,
+      "proportion_score": 8.0,
+      "verdict": "fail",
+      "faults": [
+        "missing white collar",
+        "shoes without laces and wrong shape",
+        "skirt not pleated"
+      ]
+    },
+    {
+      "round": 2,
+      "asset_commit": "fc22048b17dd02d31169ff192071293ee571ab3e",
+      "asset_sha256": "fbe2232826445103c59a04b8f9bcf7b34a84780123a827bd83dd25b26b48265d",
+      "record_sha256": "e43dd124ab5d200f5e44c5e5b20a7272b1ac761c5516cb1dd555906a9b11435d",
+      "render_sha256": {
+        "flatFront": "6cf942bd02ed177ace1eca68be06bc52ad279dddf4c93285ec711210286044d9",
+        "flatSide": "aa30fcff6bc2a84ffb1b95060c66bd6e39796267aacb426565de6b4c496e6f70",
+        "litFront": "a70c366309e80b70bd981bce0ae98b5b94d9b18973bf0bcfb955fba1559fedf9",
+        "litSide": "7305e1c592c96f3577995dd856354fdcab8235914c71a9e94be32aa15d2e707d"
+      },
+      "panel_sha256": "00455629846d6bc70ef506e73098d4d4a62bfd7ebd45e3963e63dbbc2e1c9307",
+      "identity_score": 7.8,
+      "proportion_score": 8.0,
+      "verdict": "pass",
+      "faults": [
+        "bob shorter than the drawing's hair",
+        "plain slip-on shoes instead of lace-ups",
+        "thin collar trim instead of a Peter Pan collar"
+      ]
+    }
+  ],
+  "note": "Round 2 is the final round. Each comment is one sentence from the final-round faults. The round faults name no proportion fault. The brief told the judge that the hands are the base slab and hold nothing."
+}

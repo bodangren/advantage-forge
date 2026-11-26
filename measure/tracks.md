@@ -70,7 +70,7 @@ This registry gives each historical, current, and planned work item one Measure 
 - [~] **Track: Chibi Sprouts, release 1 art**
   *Link: [./tracks/asset_chibi_sprouts_r1_20261022/](./tracks/asset_chibi_sprouts_r1_20261022/)*
 
-- [ ] **Track: Chibi Sprouts cast on the Kim base: Dad, Grandma, Grandpa, Tom and Lily**
+- [~] **Track: Chibi Sprouts cast on the Kim base: Dad, Grandma, Grandpa, Tom and Lily**
   *Link: [./tracks/chibi_sprouts_cast_20261125/](./tracks/chibi_sprouts_cast_20261125/)*
 
 ## Games

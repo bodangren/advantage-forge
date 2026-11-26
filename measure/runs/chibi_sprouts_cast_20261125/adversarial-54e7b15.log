@@ -1,0 +1,50 @@
+Adversarial re-verification, Phase 1: the measuring tools. Track chibi_sprouts_cast_20261125.
+Audited HEAD 54e7b15f05bbdb1187cc95c2f89b73e9a5826f07. Phase base 5356e78730daefd5225f9733f190dc6bb631b90d.
+Earlier pass: adversarial-ede60f0.json audited ede60f08. Two commits landed since: 42f40ba7 and 54e7b15f.
+Route claude-agent/sonnet#xhigh (family anthropic).
+Result file: measure/runs/chibi_sprouts_cast_20261125/adversarial-54e7b15.json (untracked, as asked)
+
+Verdict: PASS, bound to 54e7b15. No code changed. Every probe repeats. No new defect.
+
+1. Code identity (git diff ede60f08 HEAD)
+   Files: measure/runs/chibi_sprouts_cast_20261125/red-ede60f08.log, measure/tracks/chibi_sprouts_cast_20261125/plan.md,
+          tests/proportion-cast-options.test.ts.
+   scripts/ and assets/: 0 diff lines.
+   The test diff has two changes and no assertion:
+     + type TableRow = Omit<Row, 'value'>;
+     - function rowsFor(table: Row[]): Row[]
+     + function rowsFor(table: TableRow[]): Row[]
+
+2. Tests, format and types (heavy runner)
+   The five Phase 1 test files: exit 0, 102 of 102 cases.
+   prettier --check on both scripts and tests/proportion-cast-options.test.ts: exit 0.
+   tsc --noEmit: exit 2 with 51 'error TS' lines in 14 files. 0 in tests/proportion-cast-options.test.ts.
+   0 in scripts/proportion-check.mjs and scripts/sprout-cast-panel.mjs. The plan note of 42f40ba7 reproduces.
+
+3. Probes on the five real drawings and Mom's real renders
+   --all writes five panels and the sheet (exit 0). Every cell reads "cropped: no". The sheet caption ends at column 603.
+   F3  Five cropped cells end the caption at column 652 of 1544. Adult head 75 px passes and 76 px is refused.
+       Child head 107 px passes and 108 px is refused. The 350 px head is refused on --sheet.
+   F7  The 472 px head is refused. The off-axis arm reads "cropped: yes". On the real drawings the widest run
+       equals the head union.
+   F18 Planted temp symlinks change nothing. No temp folder stays behind.
+   F19 A record without a usable chinRow is refused by name. --all writes nothing.
+   F6  Empty values for --asset, --date and --root are refused with one line.
+   Mom: the eleven rows equal the plan, both palms ok, and the five artifact hashes are unchanged.
+
+Not re-raised: F4, F5, F12 (PM decisions) and TD-57 to TD-65.
+T3 is report-only. This round adds no test and commits nothing.
+The worktree shows untracked adversarial-ede60f0 and phase-acceptance-p1-* files that this round did not write.
+
+MEASURE_AGENT_RESULT
+role: adversarial-testing
+status: complete
+track: chibi_sprouts_cast_20261125
+phase: Phase 1
+commits: none
+tests_run: vitest 5 files (proportion-cast-options, sprout-cast-panel, cast-isolation, sprout-mom-kim, sprout-mom-kim.validation) via heavy-run exit 0, 102 of 102; prettier --check on scripts/proportion-check.mjs, scripts/sprout-cast-panel.mjs and tests/proportion-cast-options.test.ts via heavy-run exit 0; tsc --noEmit via heavy-run exit 2 with 51 baseline diagnostic lines and 0 in tests/proportion-cast-options.test.ts and the two scripts; panel script --all on the five real drawings via heavy-run exit 0 (five panels and the sheet); probes S1, S2, R1 and the real-drawing head probe repeat under /tmp/opencode/adv - verdict PASS
+files_changed: measure/runs/chibi_sprouts_cast_20261125/adversarial-54e7b15.json, measure/runs/chibi_sprouts_cast_20261125/adversarial-54e7b15.log
+plan_updates: none (the orchestrator records the verdict in plan T3 and T4)
+known_failures: none; the findings already logged in tech-debt (TD-57 to TD-65) are not re-raised
+handoff: Verdict PASS bound to 54e7b15. git diff ede60f08 HEAD shows scripts/ and assets/ unchanged (0 lines) and a test change of two type-annotation lines that touches no assertion, so the pass of ede60f08 holds for this HEAD. The five test files pass 102 of 102, prettier passes, tsc gives the 51 baseline lines and none in tests/proportion-cast-options.test.ts, every key probe repeats on the five real drawings and Mom's real renders, and Mom's rows and five artifact hashes did not move. No new defect. The result files are untracked on purpose. A script, asset or test change after this result invalidates it and needs a new round.
+END_MEASURE_AGENT_RESULT

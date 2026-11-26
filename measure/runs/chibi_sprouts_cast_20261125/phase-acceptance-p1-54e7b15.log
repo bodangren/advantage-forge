@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: phase-acceptance
+status: complete
+track: chibi_sprouts_cast_20261125
+phase: Phase 1: The measuring tools
+commits: none
+tests_run: adversarial audit-result pass at 54e7b15; vitest five files 102/102 exit 0; tsc exit 2 with 51 baseline diagnostics and none in changed files; Prettier exit 0; Mom rows, stable stats and five hashes match; real drawing panel run exit 0; freshness check exit 0; doctor exit 1 for two declared environment limits; role-gate exit 1 (T4 incomplete only)
+files_changed: measure/runs/chibi_sprouts_cast_20261125/phase-acceptance-p1-54e7b15.json, measure/runs/chibi_sprouts_cast_20261125/phase-acceptance-p1-54e7b15.log
+plan_updates: none
+known_failures: no blockers; F2 and F4 withdrawn; F3 two pre-existing doctor links explicitly treated as environment limits
+handoff: Acceptance PASS on 54e7b15. The orchestrator runs generate, records the evidence and dispositions, marks T4 [x], and reruns the mechanical role gate.
+END_MEASURE_AGENT_RESULT

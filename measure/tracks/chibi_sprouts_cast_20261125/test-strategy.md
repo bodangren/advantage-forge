@@ -139,8 +139,9 @@ it unchanged.
   2. `wrong-crown`: projected crown 20 px above the mask top. It fails with `GUARD top on mask`.
   3. `glasses-frame`: two eyes joined by a frame in the declared glasses colour. With
      `castMeta.faceMarks.glasses` it finds two eye components. Without it, it fails with
-     `eye components: found 1, expected 2`. A mark colour within 24 of the iris fails with
-     `faceMarks glasses: too close to the eye paint`.
+     `eye components: found 1, expected 2`. The exclusion drops the exact declared hex and a 1 px
+     edge, so the fixture paints the frame with exactly that hex (spec rule 3). A declaration within
+     24 of the iris fails with `faceMarks glasses: too close to the eye paint`.
   4. `lily-hair-chin`: one hair row across the chin. It fails with
      `GUARD lily chin: hair crosses the chin at row <r>`.
 - `tests/sprout-cast-panel.test.ts` builds a temporary tree under `--root`: two 256 × 256 renders

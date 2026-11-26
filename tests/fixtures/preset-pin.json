@@ -19700,6 +19700,37 @@
         }
       }
     },
+    "sprout-dad-kim": {
+      "file": "sprout-dad-kim.ts",
+      "presets": {
+        "dad": {
+          "skin": {
+            "option": "fair",
+            "ratio": [1, 1, 1],
+            "default": "#f2c7a4",
+            "shade": "#d5af90"
+          },
+          "hair": {
+            "option": "black",
+            "ratio": [1, 1, 1],
+            "default": "#241c18",
+            "shade": "#1e1714"
+          },
+          "eyes": {
+            "option": "brown",
+            "ratio": [1, 1, 1],
+            "default": "#6e4020",
+            "shade": "#60371b"
+          },
+          "cloth": {
+            "option": "plaid",
+            "ratio": [1, 1, 1],
+            "default": "#a8322c",
+            "shade": "#932b25"
+          }
+        }
+      }
+    },
     "sprout-dad": {
       "file": "sprout-dad.ts",
       "presets": {
@@ -19731,6 +19762,37 @@
         }
       }
     },
+    "sprout-grandma-kim": {
+      "file": "sprout-grandma-kim.ts",
+      "presets": {
+        "grandma": {
+          "skin": {
+            "option": "fair",
+            "ratio": [1, 1, 1],
+            "default": "#f2c7a4",
+            "shade": "#d5af90"
+          },
+          "hair": {
+            "option": "white",
+            "ratio": [1, 1, 1],
+            "default": "#f0ece4",
+            "shade": "#d3d0c9"
+          },
+          "eyes": {
+            "option": "brown",
+            "ratio": [1, 1, 1],
+            "default": "#6e4020",
+            "shade": "#60371b"
+          },
+          "cloth": {
+            "option": "sage",
+            "ratio": [1, 1, 1],
+            "default": "#6f8f5e",
+            "shade": "#617d52"
+          }
+        }
+      }
+    },
     "sprout-grandma": {
       "file": "sprout-grandma.ts",
       "presets": {
@@ -19758,6 +19820,68 @@
             "ratio": [1, 1, 1],
             "default": "#a9c79b",
             "shade": "#94af88"
+          }
+        }
+      }
+    },
+    "sprout-grandpa-kim": {
+      "file": "sprout-grandpa-kim.ts",
+      "presets": {
+        "grandpa": {
+          "skin": {
+            "option": "fair",
+            "ratio": [1, 1, 1],
+            "default": "#f2c7a4",
+            "shade": "#d5af90"
+          },
+          "hair": {
+            "option": "white",
+            "ratio": [1, 1, 1],
+            "default": "#f0ece4",
+            "shade": "#d3d0c9"
+          },
+          "eyes": {
+            "option": "brown",
+            "ratio": [1, 1, 1],
+            "default": "#6e4020",
+            "shade": "#60371b"
+          },
+          "cloth": {
+            "option": "forest",
+            "ratio": [1, 1, 1],
+            "default": "#4f7a4a",
+            "shade": "#446b40"
+          }
+        }
+      }
+    },
+    "sprout-lily-kim": {
+      "file": "sprout-lily-kim.ts",
+      "presets": {
+        "lily": {
+          "skin": {
+            "option": "fair",
+            "ratio": [1, 1, 1],
+            "default": "#f2c7a4",
+            "shade": "#d5af90"
+          },
+          "hair": {
+            "option": "brown",
+            "ratio": [1, 1, 1],
+            "default": "#7a5230",
+            "shade": "#6b4729"
+          },
+          "eyes": {
+            "option": "brown",
+            "ratio": [1, 1, 1],
+            "default": "#6e4020",
+            "shade": "#60371b"
+          },
+          "cloth": {
+            "option": "blue",
+            "ratio": [1, 1, 1],
+            "default": "#3f6fb5",
+            "shade": "#36619f"
           }
         }
       }
@@ -20146,6 +20270,37 @@
             "ratio": [1, 1, 1],
             "default": "#d03a32",
             "shade": "#b7322b"
+          }
+        }
+      }
+    },
+    "sprout-tom-kim": {
+      "file": "sprout-tom-kim.ts",
+      "presets": {
+        "tom": {
+          "skin": {
+            "option": "fair",
+            "ratio": [1, 1, 1],
+            "default": "#f2c7a4",
+            "shade": "#d5af90"
+          },
+          "hair": {
+            "option": "brown",
+            "ratio": [1, 1, 1],
+            "default": "#6b4426",
+            "shade": "#5d3b20"
+          },
+          "eyes": {
+            "option": "brown",
+            "ratio": [1, 1, 1],
+            "default": "#6e4020",
+            "shade": "#60371b"
+          },
+          "cloth": {
+            "option": "blue",
+            "ratio": [1, 1, 1],
+            "default": "#3f6fb5",
+            "shade": "#36619f"
           }
         }
       }

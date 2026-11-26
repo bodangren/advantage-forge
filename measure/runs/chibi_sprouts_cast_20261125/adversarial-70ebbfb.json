@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "role": "adversarial-testing",
+  "track": "chibi_sprouts_cast_20261125",
+  "phase": "Phase 1",
+  "baseline_sha": "5356e78730daefd5225f9733f190dc6bb631b90d",
+  "audited_head_sha": "70ebbfbe05ea910e3893154f2e66caabf22073ec",
+  "route": "claude-agent/sonnet#xhigh",
+  "status": "fail",
+  "summary": "FAIL. One Blocker stays open. F3 (the cast sheet) is not closed: the caption clips the crop state of the last cell on the real sheet, and the sheet head-fit uses the 424 px panel limit for a 280 px cell. F1 (the real drawings), F2 (the Lily side-chin guard), F8, F9, F10 and F11 are closed on real input, and F6 is closed except empty values. F4 is a ruling: Green's reading keeps rule 2 but not rule 3, so the spec needs an amendment (PM or spec owner). The fixes opened four new items: the temp file of the atomic write can be hijacked by a planted symlink (F18, Major), the head-fit reads a median row width (F7, Major), a record without chinRow passes the head-fit (F19), and a catch-all error name (F20). F5 and F12 are PM decisions and are not re-raised. The 96 recorded passing cases reproduce. No test was added: T3 is report-only.",
+  "blocking_findings": [
+    "F3 [Blocker] adversarial-testing: not closed. The cast sheet still breaks two rules of spec 'The horizontal crop' and AC7.5. (a) The caption clips the crop state of the last cell: scripts/sprout-cast-panel.mjs:555 prints 'cropped: ' plus one 'sprout-<name> cropped: yes|no' entry for each of five cells (about 215 characters at 20 px) into a 1544 px line; on the five real lit front renders the line ends at column 1543 with the text 'sprout-lily-kim c', so Lily's state is not in the sheet bytes (stdout lists all five). (b) The sheet head-fit reuses the panel limit: line 526 tests 'cell.headWidth > CELL_W - 16' (424 px) for a 280 px sheet cell, so a head between 265 and 424 px is not refused. Probe: an adult front render with a 100 source px head (350 px at the 3.5 scale) gives exit 0 for the panel and exit 0 for '--sheet', and the sheet cell shows the head cut to the 280 px cell with 'cropped: yes'; the comment at lines 523-525 says the panel refuses such a head first, but '--sheet' runs alone. Real heads are far narrower (the widest head run on the five real drawings is 138 to 259 px), so (b) needs a synthetic head; (a) occurs on every real sheet. Fix: (a) write short states ('cropped: dad no, grandma no, grandpa no, tom no, lily no') or wrap onto two lines, and pin the last ink column of the caption below the sheet width minus 24 px; (b) compare 'cell.headWidth' with 'SHEET_CELL_W - 16' in the sheet and pin a head of 100 source px."
+  ],
+  "nonblocking_findings": [
+    "F4 [Major] adversarial-testing: ruling on the part Green left as the spec writes it: it is NOT a spec-consistent reading, so the spec needs an amendment. Rule 2 of 'The asset metadata and the eye mask' (compare a mark with variants.eyes and #14100e) is unchanged in the code and is consistent. Rule 3 says the script 'drops every pixel within 24 (Chebyshev) of a declared colour from the eye mask'; the code (scripts/proportion-check.mjs:620-652) drops only the exact-colour pixels of the mark plus a 1 px blend edge, and keeps any within-24 pixel that sits in an eye-shaped blob of the mark-free mask. Real-render runs (Mom's flat eyes, castMeta glasses #3b2a1e): no frame drawn, exit 0 and the eleven rows equal the baseline; a frame bridge joining the eyes, exit 0 and the rows equal the baseline; a ring plus bridge touching the iris, exit 0 and eyeWidth 39 to 38, spacingHead 0.3657 to 0.3704, eyeWidthFace 0.2294 to 0.2235 (still in 0.22 to 0.24); undeclared, 'eye components: found 1, expected 2'. The user-visible failure of the first round (found 0 on the spec example colour) is closed. Residual: a frame painted #3d2b20 against a declared #3b2a1e (2 off, within 24) is not excluded and gives 'found 1', which rule 3 as written would exclude; and a mark equal to the rendered iris (#4a2e18) is not named by the guard and gives 'found 0'. Fix: the spec owner amends rule 3 (exact declared colour plus a 1 px edge, eye-shaped blobs kept), states that the painted hex must equal the declared hex, and adds a Red case for the 2-off colour; the PM or spec owner decides, as for F5.",
+    "F7 [Major] adversarial-testing: not closed for two inputs. (a) The head-fit reads the median row width, not the widest run: scripts/sprout-cast-panel.mjs:217-250 and line 338. Spec 'The horizontal crop' rule 2 says 'the widest mask run from the crown row to the chin row'. On the five real drawings the median is 68 to 89 percent of the widest run (Dad 227 against 285, Grandma 312 against 426, Grandpa 291 against 425, Tom 432 against 510, Lily 471 against 532), so the check admits a head up to about 1.5 times the limit. Probe: an elliptical head 472 px wide in the 440 px cell gives exit 0 and the head touches both cell edges (cropped). (b) 'cropped' (line 370) still compares the window with the mask width while the window now centres on the head axis: an arm that stretches to one side, with a mask narrower than the window, gives 'cropped: no' while the arm tip loses 42 px at the cell edge. The code centres on the head axis without clamping, but spec 'The horizontal crop' rule 1 still says centre on the mask and clamp, so the spec text is out of date. Fix: take the widest run and drop stray ink by the component filter instead of the median; require the head extent inside the window; compute 'cropped' as any mask pixel outside the window; the spec owner records the head-axis centring.",
+    "F18 [Major] adversarial-testing: the temp file of the new atomic write opens a hole in the destination rule. scripts/sprout-cast-panel.mjs:568-577 writes '<file>.tmp-<pid>' and renames it, but that name never passes destinationError and sharp opens it without an exclusive flag. Probe: a symlink planted at '<panel>.png.tmp-<pid>' that points to an outside file gave exit 0, the outside file was overwritten, and the panel path became a symlink to it. A pre-planted link at a pid-named path is needed, the same class as F11. Fix: encode to a buffer and write the temp with the flag 'wx' (refuse an existing temp) inside a fresh mkdtemp folder under the checked cast folder, then rename; refuse a temp that exists.",
+    "F6 [Nit] adversarial-testing: partly closed. Both scripts now refuse an unknown option, an equals form, a repeated option and a missing value with one named line before any read or write (tree hash unchanged in 20 cases). Empty values still pass: scripts/sprout-cast-panel.mjs:607-608 accepts '--root \"\"' (path.resolve gives the working directory, and a panel was written there) and '--date \"\"' (silent local date). Fix: refuse an empty value in both scripts with 'option <arg> needs a value'.",
+    "F19 [Nit] adversarial-testing: a record without detail.chinRow turns the head-fit into a vacuous pass. scripts/sprout-cast-panel.mjs:419 falls back to chin = crown, so the head band holds no rows and the width is 0: the 236 px head that exits 1 with its record exits 0 without chinRow. The F9 check requires the eleven rows but not the chin row. A tool-written record always holds the chin row, so a hand-edited record is needed. Fix: require a finite detail.chinRow that lies between detail.projectedCrownRow and detail.soleRow, else exit 1 with 'record <name>: no chin row'.",
+    "F20 [Nit] adversarial-testing: the ENOTDIR catch in destinationError and folderError (scripts/proportion-check.mjs:1129, scripts/sprout-cast-panel.mjs:265 and 295) catches every lstat error. A directory without search permission (EACCES) and a 300-character component (ENAMETOOLONG) are both reported as 'destination parent is a file: <rel>'. The line is one line and nothing is written, so the result is fail-closed but misnamed. Fix: test err.code === 'ENOTDIR' and name other errors as 'destination unreadable: <rel>'.",
+    "F13 [Nit] adversarial-testing: carried unchanged, not fixed and not re-raised: --date accepts 'tomorrow', '2026-13-45' and caption markup; '&' still crashes sharp with an XML parse error.",
+    "F14 [Nit] adversarial-testing: carried unchanged: checkRows() and measureFigure() fall back to kim for an unknown table name, throw on 'constructor', and TABLES is not frozen.",
+    "F15 [Nit] adversarial-testing: carried unchanged: a malformed face-mark colour ('red') skips the guard and the exclusion; the run on Mom's real renders exits 0 with no error.",
+    "F16 [Nit] adversarial-testing: carried unchanged: a base module without BASE_HANDS exits 1 with 'TypeError: Cannot read properties of undefined (reading L)' and a stack line.",
+    "F17 [Nit] adversarial-testing: carried unchanged: a symlinked --root exits 1 with 'destination is a link:' and an empty path; '--record out/newdir/' writes a file named newdir; inputs are read through links."
+  ],
+  "evidence": [
+    "Claim check holds: the five files pass 96 of 96 cases (log /tmp/opencode/adv/vitest-claim-2.log: Test Files 5 passed, Tests 96 passed, exit 0) as green-77fad41f.log records; Mom's eleven rows from a copy-root run equal the plan (3.6539, 1.3283, 0.3918, 1.2332, -0.0613, 0.5096, 0.6219, 0.1131, 0.3657, 0.2294, 0.4647) and the five Mom artifact hashes (6f972378, 0c6201ae, 93bea38c, 2abd3f55, 48fc3c2f) are unchanged.",
+    "F1 withdrawn: node scripts/sprout-cast-panel.mjs --all on the five real drawings and Mom's real lit renders (scratch root /tmp/opencode/adv/rootR) exits 0 with five panels and the sheet; Grandma, Grandpa and Lily no longer exit 1. On each real drawing the head band union lies inside the 440 px window (probe-r4.mjs) and the whole figure fits; the Grandpa panel (read as a PNG) shows the head centred and the 'x = 0' noise pixel gone.",
+    "F2 withdrawn: hair-coloured frontmost pixels at alpha 255, 250, 249, 200 and 128 give 'GUARD lily side chin: hair at the front' (probe-i.mjs), and a blue frontmost pixel gives it too. No false positive on real input: the real flat side render of Mom at the chin rows holds frontmost pixels of straight-alpha skin colour (alpha 191 or 128, distance 0 to 2 from #f2c7a4), and the Lily guards on Mom's real renders print only the chin and bangs lines that the first round also printed. The old guard saw alpha 250 or more, which none of the nine chin rows had.",
+    "F8 withdrawn: '--all' with the Grandpa record missing exits 1 with 'record sprout-grandpa-kim: not built', writes no panel and leaves the Dad panel byte-identical; a missing last drawing writes nothing; a failing encode ('&' in --date) leaves the old panel byte-identical and no temp file. F18 is the new hole in the same code.",
+    "F9 withdrawn: a record with zero numeric rows, two rows, eleven rows in the wrong order and twelve rows each exit 1 with 'record <name>: rows incomplete'; '--sheet' refuses the same records; real panels read '11/11 rows pass; palms ok'.",
+    "F10 withdrawn: a regular-file parent gives 'destination parent is a file: out/chibi-sprouts/cast' (record) and 'destination parent is a file: out/chibi-sprouts' (panel), one line and no stack. F20 is the narrow residual.",
+    "F11 withdrawn: a hard-linked record, panel and cast-sheet.png each exit 1 with 'destination is a link: <rel>' and the outside file stays intact; a normal run and a re-run over its own record or panels still exit 0.",
+    "Regression checks hold: linked parent, linked out and dangling-link destinations still refuse with the named line; the crown and mask guards give the same results (probe-a.mjs: 2 px passes, 3 px fails, a bun 500 px high passes); the baseline rows 80 and 780 hold in the real Dad panel.",
+    "Decisions F5 and F12 are PM decisions (9fee6e88) and are not re-raised; spec.md now records them ('The eye-component width limit', decision (m)).",
+    "Round count: the first round audited 9adcc72e; this run on 70ebbfbe is round 2. A re-run after a further fix is round 3, so the Late-finding stop rule applies to its new findings.",
+    "Probe files: /tmp/opencode/adv/probe-r1.mjs (sheet and head-fit), probe-r2.mjs (F4 on real eyes), probe-r3.mjs (options, destinations, temp race), probe-r4.mjs (real drawing heads), probe-r5.mjs and probe-r6.mjs (chin row, carried Nits, F8 and F9). T3 allows no new test: nothing was added or committed. The worktree shows modified measure/generated files and red-9adcc72e.log that this round did not touch."
+  ],
+  "commands": [
+    "git rev-parse HEAD (70ebbfbe05ea910e3893154f2e66caabf22073ec)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/proportion-cast-options.test.ts tests/sprout-cast-panel.test.ts tests/cast-isolation.test.ts tests/sprout-mom-kim.test.ts tests/sprout-mom-kim.validation.test.ts' (exit 0, 96 of 96)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/sprout-cast-panel.mjs --all --date 2026-11-27 --root /tmp/opencode/adv/rootR' (exit 0, five panels and the sheet)",
+    "node /tmp/opencode/adv/probe-a.mjs, probe-i.mjs, probe-r1.mjs, probe-r2.mjs, probe-r3.mjs, probe-r4.mjs, probe-r5.mjs, probe-r6.mjs (scratch roots under /tmp/opencode/adv/roots2)"
+  ],
+  "changed_files": [
+    "measure/runs/chibi_sprouts_cast_20261125/adversarial-70ebbfb.json",
+    "measure/runs/chibi_sprouts_cast_20261125/adversarial-70ebbfb.log"
+  ],
+  "test_strategy_violations": [
+    "tests/sprout-cast-panel.test.ts ('F3 sheet prints and captions cropped state for every cell') compares caption bytes before and after a change, so a caption that clips the last cell passes; no test reads the last ink column or the caption text.",
+    "tests/sprout-cast-panel.test.ts ('F3 sheet refuses a head wider than its 280 px cell') uses a 236 px source head that exceeds both the 424 px and the 264 px limit, so the wrong limit constant is not pinned; no case holds a head between 265 and 424 px.",
+    "tests/sprout-cast-panel.test.ts ('F1 all five committed drawings produce panels') asserts exit 0 only; it does not assert the head centre or the head-fit value, and the median-against-widest difference is not pinned.",
+    "tests/proportion-cast-options.test.ts ('F4 base iris paint survives the spec example glasses mark') passes with a frame painted exactly #3b2a1e; no case paints a frame within 24 but not equal to the declared colour, so the exact-colour requirement is not pinned.",
+    "tests/sprout-cast-panel.test.ts has no case for a symlink planted at the temp path, and none for the crop state of an off-axis figure."
+  ],
+  "live_contract_violations": [
+    "F3: on the five real lit front renders the sheet caption ends at 'sprout-lily-kim c'; the crop state of the fifth cell is not in the caption."
+  ],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "retry_implementation",
+  "confidence": "high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 3,
+      "evidence": "Real run: node scripts/sprout-cast-panel.mjs --all writes all five panels, but the sheet caption ends at the text sprout-lily-kim c (scripts/sprout-cast-panel.mjs:555)."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 3,
+      "evidence": "The F1, F2, F8, F10 and F11 cases are real (the noisy JPEG and hard-link cases fail without the fix), but the F3 caption case compares bytes only (tests/sprout-cast-panel.test.ts)."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 4,
+      "evidence": "git diff --stat 9adcc72e..HEAD lists the two scripts, the two Red tests, plan.md, spec.md, metadata.json and logs; the head-axis centring and the unclamped window are unplanned spec changes (scripts/sprout-cast-panel.mjs:337-341)."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "Every closure claim reproduces: 96 of 96 cases, five real drawings exit 0, Mom rows and hashes unchanged (green-77fad41f.log sections 3 and 4)."
+    }
+  ]
+}

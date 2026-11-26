@@ -1,0 +1,63 @@
+Targeted adversarial re-verification, Phase 3: The children. Track chibi_sprouts_cast_20261125.
+Audited HEAD 969c4fe89c40fd4b3d4f3bbabf4b391478206095. Phase base aed0bcc0c3562de1def0242a29d35dd3dca31b68.
+Earlier pass: adversarial-p3-acb3afb.json audited acb3afbb. Since then: Green look round 2 (Tom 58c66c25, Lily fc22048b),
+plan, tech-debt, generated files, judge records and run logs.
+Route claude-agent/sonnet#xhigh (family anthropic).
+Result file: measure/runs/chibi_sprouts_cast_20261125/adversarial-p3-969c4fe.json (untracked, as asked)
+
+Verdict: PASS, bound to 969c4fe8. No script changed. Every probe repeats. No new defect.
+
+1. Code identity (git diff acb3afbb HEAD)
+   Twelve files: assets/sprout-lily-kim.ts, assets/sprout-tom-kim.ts, measure/generated (2), adversarial-p3-acb3afb (2),
+   green-39f74a7.log, judge-sprout-lily-kim.json, judge-sprout-tom-kim.json, red-aed0bcc.log, tech-debt.md, plan.md.
+   scripts/, tests/ and assets/parts/: 0 diff lines. tests/fixtures/preset-pin.json: 0 diff lines.
+   Lily changes collar, skirt, shoes and laces. Her hair, face layer and mouth #c04040 are unchanged.
+   Tom changes mouth, blush, brows, freckles and hair locks.
+
+2. Tests, format and types (heavy runner)
+   Eleven cast test files: exit 0, 119 of 119. prettier on both scripts and both assets: exit 0.
+   tsc --noEmit: exit 2, 51 baseline lines, none in the changed files.
+
+3. Build warning check, in a git-archive copy under /tmp/opencode (the worktree out/ was not touched)
+   Tom and Lily: build, flat render and lit render, six invocations, all exit 0. No line with "warning".
+   The GLB and the four renders of both are byte-identical to the real out/ and to the recorded hashes.
+   The stable stats projections are equal. The real outputs are current for the HEAD assets.
+
+4. Real Tom and Lily through proportion-check (--base humanoid-kim-child --table child)
+   Fresh runs exit 0 and reproduce both real records exactly. Rows equal TABLES.child, 11 of 11 pass,
+   both palms ok, no guard. Base and hashes equal the files. Chin row and head height are present.
+
+5. The three Lily guards on the new Lily (33 painted-render probes)
+   Bangs rectangle: rows 226 to 234, columns 440 to 584 (9 by 145 px). Edges as the spec states.
+   Alpha 250 is hair and 249 is not. Chebyshev 40 is hair and 41 is not. Hair over an eye fails the eye rule.
+   Chin and side-chin guards fire at their edges and at alpha 255, 191 and 128.
+   Mouth #c04040 against the Chebyshev-40 rule: nearest mouth blend 70.5 away (margin 30). Nearest chin-band
+   colour 58 away (margin 18). A dark mouth would cross the radius; the real mouth does not.
+
+6. Regression
+   Dad, Grandma, Grandpa and Mom reproduce their real records exactly. Mom's five hashes are unchanged.
+   --all writes five panels (Tom and Lily included) and the sheet. Every cell reads "cropped: no".
+   The sheet caption ends at column 603. Real heads are 154 to 174 px at the sheet scale (limit 264).
+   F3, F6, F7, F18 and F19 hold on the real five.
+
+7. Pre-existing, not raised
+   tests/preset-colour.test.ts (outside the requested set) fails two of four cases in this worktree.
+   One needs out/ball/textures, which was never built here. The other counts 3202 against 3214 pinned slots because
+   the pin has held wizard-argon-trial (12 slots) since the master base 5356e787, while that source is untracked in
+   the main checkout. With the file supplied in the clean copy the pin comparison passes.
+
+Not re-raised: P3-F1 to P3-F3 (TD-66 to TD-68), TD-57 to TD-65, F4, F5, F12.
+T3 is report-only. This round adds no test and commits nothing.
+
+MEASURE_AGENT_RESULT
+role: adversarial-testing
+status: complete
+track: chibi_sprouts_cast_20261125
+phase: Phase 3: The children
+commits: none
+tests_run: vitest 11 cast test files (proportion-cast-options, sprout-cast-panel, cast-isolation, sprout-child-base, sprout-tom-kim, sprout-lily-kim, sprout-dad-kim, sprout-grandma-kim, sprout-grandpa-kim, sprout-mom-kim, sprout-mom-kim.validation) via heavy-run exit 0, 119 of 119; prettier --check on both scripts and both changed assets via heavy-run exit 0; tsc --noEmit via heavy-run exit 2 with 51 baseline lines and none in the changed files; clean-copy build, flat render and lit render of Tom and Lily via heavy-run exit 0 with no warning line and byte-identical outputs; panel script --all on the real five via heavy-run exit 0 (five panels and the sheet); probes p3-a, p3-b, p3-c5, p3-d, p3-e, p3-f, p3-g, probe-s2 and probe-r1 repeat under /tmp/opencode/adv - verdict PASS
+files_changed: measure/runs/chibi_sprouts_cast_20261125/adversarial-p3-969c4fe.json, measure/runs/chibi_sprouts_cast_20261125/adversarial-p3-969c4fe.log
+plan_updates: none (the orchestrator records the verdict in plan T3 and the Phase 3 gate)
+known_failures: none; P3-F1 to P3-F3 (TD-66 to TD-68) and TD-57 to TD-65 are not re-raised; tests/preset-colour.test.ts fails two cases for causes that pre-date the track and is outside the requested set
+handoff: Verdict PASS bound to 969c4fe8. git diff acb3afbb HEAD shows scripts/, tests/ and assets/parts/ unchanged (0 lines) and only assets/sprout-tom-kim.ts and assets/sprout-lily-kim.ts changed in code, so the pass of acb3afbb holds for the scripts. The eleven cast test files pass 119 of 119, prettier passes, tsc gives the 51 baseline lines and none in the changed files, and a clean-copy rebuild of Tom and Lily prints no warning line and matches the real out/ and the record hashes byte for byte. The real Tom and Lily reproduce their records (child table 11 of 11, palms ok, no guard), every Lily guard probe repeats on the new Lily, the adult records and Mom's hashes are unchanged, and the five panels and the sheet are written with no crop. No new defect. The result files are untracked on purpose. A script, asset or test change after this result invalidates it and needs a new round.
+END_MEASURE_AGENT_RESULT

@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: phase-acceptance
+status: complete
+track: chibi_sprouts_cast_20261125
+phase: Phase 2: The adult variants
+commits: none
+tests_run: 111 tests pass; three proportion and clearance checks pass; judge input and stats hashes match; generator freshness passes; doctor two baseline links; role gate fails only on open T10
+files_changed: phase-acceptance-p2-556694d.json and .log
+plan_updates: none; T10 open for orchestrator
+known_failures: doctor two declared environment links; no acceptance blocker
+handoff: F1 and F2 withdrawn. Acceptance passes at 556694de. The orchestrator can mark T10 complete.
+END_MEASURE_AGENT_RESULT

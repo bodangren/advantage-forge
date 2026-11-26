@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "role": "phase-acceptance",
+  "track": "chibi_sprouts_cast_20261125",
+  "phase": "Phase 1: The measuring tools",
+  "baseline_sha": "5356e78730daefd5225f9733f190dc6bb631b90d",
+  "audited_head_sha": "ede60f0812c31584037b337485b203ae11b8edb8",
+  "route": "openai/gpt-6.2-sol#high",
+  "status": "fail",
+  "summary": "The revision-bound adversarial result and all targeted runtime tests pass. The phase still has three TypeScript errors in a new test file. The specification requires no errors in changed files.",
+  "blocking_findings": [
+    "F2 [Blocker] phase-acceptance: tsc --noEmit exits 2 with TS2345 at tests/proportion-cast-options.test.ts:420, :424 and :432. The rowsFor helper at line 122 requires Row[] but its table inputs omit value. This file first appears in ad43039a. The Green logs already record these three errors, but spec.md:725-727 and plan.md:1049-1050 require no errors in changed files. The phase does not meet this requirement."
+  ],
+  "nonblocking_findings": [
+    "F3 [Nit] phase-acceptance: Doctor exits 1 for two broken links, not one. The missing teacher-kim-sheet.png is the declared worktree limit. The missing TD-43 run record also predates the phase base; it is unrelated framework debt."
+  ],
+  "evidence": [
+    "Phase base and requested role-gate baseline: 5356e78730daefd5225f9733f190dc6bb631b90d. The role-start HEAD and audited HEAD are both ede60f0812c31584037b337485b203ae11b8edb8.",
+    "F1 withdrawn: audit-result validates adversarial-ede60f0.json. Its audited_head_sha is ede60f0812c31584037b337485b203ae11b8edb8, status is pass, and all blocker and violation arrays are empty. No HEAD exception is necessary.",
+    "git status --short lists only the four untracked adversarial and acceptance run files. HEAD is still ede60f08 after testing.",
+    "T0 commit c562992b and every named Red and Green commit are ancestors of HEAD: ad43039a, ba0b353b, 622a0fa5, 154ebc47, 766c2655, 41458a54, 3aabca1c, 8b250951, 77fad41f and a3040c95.",
+    "T1 log red-c562992.log records intended case failures and passing isolation. The Red remediation logs and plan record the cause and repair of the failing fixtures.",
+    "The exact phase diff changes two scripts, three aliases in humanoid-kim.ts, three test files and their baseline, plus Measure records. No original Mom asset or preset changed.",
+    "T2 runtime tests: all five specified files pass, 102 of 102. This verifies the current T3 count claim (A5). The targeted suite has no intentional Red cases.",
+    "The live Mom end-to-end test invokes the script and reads the resulting record. The eleven rows from that run match plan T2 to six decimals: heightInHeads 3.653929; armToTorso 1.328305; legShare 0.391841; headToShoulders 1.233173; wrist -0.061303; fingertips 0.509578; eyeLine 0.621882; eyeHeight 0.113069; spacingHead 0.365741; eyeWidthFace 0.229412; spacingFace 0.464706. Every row passes; both palms are ok.",
+    "T0 and T2 artifact hashes match the worktree files: GLB 6f972378e357035cf94bbbe80af82f7173bde38a0223a61dcc4160e763b4311a; flat front 0c6201ae1b9f2502cda207561676e58e6744c2a8f50df07e782aba534f07f43b; flat side 93bea38cdf28b3cd71898cca958918b99637c7cc9c22c1568a31f2f206a3abbf; lit front 2abd3f55642c851818552e5025284c42dd7e5b78441c7683b8de02680de5b851; lit side 48fc3c2f3bb7443f8024cccadc438a8a9043fca1c9995eb55a144319cec93212.",
+    "The canonical stable stats projection with milliseconds removed and texture limited to size has SHA-256 c93209cc3d9095c8376c96308ad5bb92e1dedacf0a7a1644bc77fa5c6aa95a6e. It equals T0. Raw traceability hash is de17e20a53fd47dc2a93cdae7324d2e0eaa6c012a2ce1dea4b3b1199f5255bb7.",
+    "The three isolation tests pass. They compare all 18 source hashes, ADULT, AGE5 and HERO, and Mom's preset with the T0 fixture.",
+    "A fresh /tmp/opencode/sprouts-cast-acceptance-z5529yfd tree uses the five actual drawing JPEGs and copies of the real Mom renders and record. --all exits 0. All five panels have 1416x900 dimensions, the sheet has 1544x900 dimensions, and all crop states print no. The sheet image shows five fixture Mom figures and the complete caption. This is tool proof, not proof of future cast assets.",
+    "T3 earlier result files name F1, F2 and F3 as blockers. The two passing adversarial results record closure of all three, and the current runtime suite includes the corresponding regression cases. PM decisions F4, F5 and F12 are in ancestor commits 5c93345f and 9fee6e88. The nine late findings have debt rows TD-57 to TD-65.",
+    "Prettier passes on all changed code and the baseline. tsc --noEmit yields the 38 TD-35 baseline diagnostics, 13 existing storytime diagnostics and three phase test diagnostics. Green-41458a54.log:60-64, green-8b250951.log:88-92 and green-77fad41f.log:95 record the same Red-file errors. This is not a new late product finding.",
+    "Generator freshness check passes for four files. The write-mode generator writes all four managed files, so this report-only role leaves that command to the orchestrator.",
+    "Doctor reports the archived Kim sheet link and the TD-43 link only. Both link strings exist at 5356e787; neither target is changed by this phase. The user exempts the Kim sheet worktree limit. The second broken link needs an independent repair.",
+    "The registry diff changes only the track marker from [ ] to [~]. It makes no claim of resolved findings (A6).",
+    "Spec AC8 and test strategy section 2 exempt reviews A, B, C and browser review for this light lane. The adversarial verdict is mandatory.",
+    "Plan T0 to T3 are marked [x], and T4 is marked [ ]. A3, A4 and A7 framework surfaces did not change. The registry marker alone changed, so A6 has no resolution claim to test.",
+    "The test helper diagnostics block acceptance under the existing changed-file requirement even though production files and runtime tests pass. The orchestrator must not mark T4 complete on this verdict.",
+    "The mechanical role gate exits 1. It reports the fail verdict for F2 and one non-deferred incomplete task. T4 is not the only failure."
+  ],
+  "commands": [
+    "git rev-parse HEAD",
+    "git status --short",
+    "python3 -I /home/daniebo/.agents/skills/measure-orchestrator/scripts/measure_interphase_checks.py audit-result --role adversarial-testing --file measure/runs/chibi_sprouts_cast_20261125/adversarial-ede60f0.json (exit 0)",
+    "git diff --stat 5356e78730daefd5225f9733f190dc6bb631b90d HEAD",
+    "git merge-base --is-ancestor for each T0, Red, Green and PM commit (exit 0 for each)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/proportion-cast-options.test.ts tests/sprout-cast-panel.test.ts tests/cast-isolation.test.ts tests/sprout-mom-kim.test.ts tests/sprout-mom-kim.validation.test.ts' (exit 0; 102 tests)",
+    "node_modules/.bin/prettier --check scripts/proportion-check.mjs scripts/sprout-cast-panel.mjs assets/parts/humanoid-kim.ts tests/proportion-cast-options.test.ts tests/sprout-cast-panel.test.ts tests/cast-isolation.test.ts tests/fixtures/cast-baseline.json (exit 0)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/typescript/bin/tsc --noEmit' (exit 2; three phase test errors)",
+    "sha256sum out/sprout-mom-kim/sprout-mom-kim.glb out/sprout-mom-kim/flat/{front-level,side-level}.png out/sprout-mom-kim/views/{front-level,side-level}.png out/sprout-mom-kim/stats.json (all match)",
+    "Python JSON canonical stable projection and SHA-256 (matches T0)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/sprout-cast-panel.mjs --all --date 2026-11-26 --root /tmp/opencode/sprouts-cast-acceptance-z5529yfd' (exit 0; six PNGs)",
+    "./measure/generate.sh --check (exit 0)",
+    "./measure/doctor.sh --structural-only (exit 1; two pre-existing broken links)",
+    "python3 -I /home/daniebo/.agents/skills/measure-orchestrator/scripts/measure_interphase_checks.py role-gate --repo /home/daniebo/Desktop/forge-worktrees/sprouts-cast --role phase-acceptance --track chibi_sprouts_cast_20261125 --phase 'Phase 1: The measuring tools' --baseline 5356e78730daefd5225f9733f190dc6bb631b90d --result-file measure/runs/chibi_sprouts_cast_20261125/phase-acceptance-p1-ede60f0.json --log-file measure/runs/chibi_sprouts_cast_20261125/phase-acceptance-p1-ede60f0.log (exit 1)"
+  ],
+  "changed_files": [
+    "measure/runs/chibi_sprouts_cast_20261125/phase-acceptance-p1-ede60f0.json",
+    "measure/runs/chibi_sprouts_cast_20261125/phase-acceptance-p1-ede60f0.log"
+  ],
+  "test_strategy_violations": [
+    "Three TypeScript diagnostics remain in a phase-added test. Spec.md:725-727 and plan.md:1049-1050 require no error in changed files."
+  ],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "escalate_human",
+  "confidence": "high",
+  "ratings": [
+    {"axis": "correctness", "score": 4, "evidence": "All five targeted test files and the independent real-drawing panel run exit 0; TD-57 to TD-65 remain."},
+    {"axis": "test_meaning", "score": 4, "evidence": "The live Mom test measures real renders, and tests/sprout-cast-panel.test.ts:562 covers committed drawings; the new helper has three static errors."},
+    {"axis": "scope_discipline", "score": 5, "evidence": "git diff from 5356e787 lists only the planned scripts, aliases, tests, fixture and Measure records."},
+    {"axis": "evidence_quality", "score": 4, "evidence": "The 102-test result and artifact hashes reproduce, but the no-diagnostics requirement is not met."}
+  ],
+  "reviewer_ratings": [
+    {"reviewer_role": "adversarial", "reviewer_route": "claude-agent/sonnet#xhigh", "agreed": true, "score": 4, "evidence": "The blocker descriptions in adversarial-9adcc72e.json match the later F1, F2 and F3 regression cases."},
+    {"reviewer_role": "adversarial", "reviewer_route": "claude-agent/sonnet#xhigh", "agreed": true, "score": 4, "evidence": "The remaining sheet blocker in adversarial-70ebbfb.json matches the later caption and 264 px tests."},
+    {"reviewer_role": "adversarial", "reviewer_route": "claude-agent/sonnet#xhigh", "agreed": true, "score": 5, "evidence": "The round 3 pass agrees with the current test and panel runs; the script diff from 9af8f652 is empty."},
+    {"reviewer_role": "adversarial", "reviewer_route": "claude-agent/sonnet#xhigh", "agreed": true, "score": 5, "evidence": "The current adversarial verdict for the two scripts agrees with the independent 102-test and real-drawing runs."}
+  ]
+}

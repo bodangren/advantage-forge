@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "role": "adversarial-testing",
+  "track": "chibi_sprouts_cast_20261125",
+  "phase": "Phase 3: The children",
+  "baseline_sha": "aed0bcc0c3562de1def0242a29d35dd3dca31b68",
+  "audited_head_sha": "969c4fe89c40fd4b3d4f3bbabf4b391478206095",
+  "route": "claude-agent/sonnet#xhigh",
+  "status": "pass",
+  "summary": "PASS, bound to 969c4fe8. No script, test or child-base file changed since the acb3afbb pass: the diff of scripts/, tests/ and assets/parts/ is 0 lines, and only assets/sprout-tom-kim.ts and assets/sprout-lily-kim.ts changed in code (look round 2). The eleven cast test files pass 119 of 119, prettier passes and tsc gives the 51 baseline lines with none in the changed files. A clean-copy rebuild of both assets prints no 'warning' line and is byte-identical to the real out/ and to the recorded hashes. The real Tom and Lily reproduce their records exactly (child table 11 of 11, both palms ok, no guard). Every probe of the three Lily guards repeats on the new Lily, including the Chebyshev-40 chin rule against the unchanged mouth #c04040 (margin 30 px to the mouth blends, 18 px to the nearest chin-band colour) and the bangs rectangle (rows 226 to 234, columns 440 to 584). The adult records and Mom's rows and five hashes are unchanged, the five real panels and the sheet are written with no crop, and F3, F6, F7, F18 and F19 hold. No new defect. P3-F1 to P3-F3, TD-57 to TD-65, F4, F5 and F12 are not re-raised.",
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "evidence": [
+    "Code identity: git diff --name-only acb3afbbd924626a708a1d6cef64b9a3ba63d12a HEAD lists twelve files: assets/sprout-lily-kim.ts, assets/sprout-tom-kim.ts, measure/generated/asset-inventory.json, measure/generated/status.md, measure/runs/chibi_sprouts_cast_20261125/adversarial-p3-acb3afb.json, adversarial-p3-acb3afb.log, green-39f74a7.log, judge-sprout-lily-kim.json, judge-sprout-tom-kim.json, red-aed0bcc.log, measure/tech-debt.md and measure/tracks/chibi_sprouts_cast_20261125/plan.md. The diff of scripts/, tests/ and assets/parts/ is 0 lines (tests/fixtures/preset-pin.json is inside tests/, so its diff is 0 lines too). The nine commits since acb3afbb are 58c66c25, fb3a5fa7, fc22048b, 39f74a79, fc3f5d46, 58591de0, 5f7bc587, b37133ff and 969c4fe8.",
+    "What the two asset changes are: Lily (fc22048b) changes the collar band and lobes, the skirt ripple (9 mm with a fold factor and a Lipschitz factor 1.8), the sneaker shapes and laces; her hair body, her face layer, C.mouth '#c04040' (unchanged since acb3afb) and C.blush '#e29580' are not touched. Tom (58c66c25) changes the mouth shape, C.mouth '#6d2622', C.blush '#e8786a', the brows, the freckle size and the hair locks. Neither change touches a script, the child base or a table.",
+    "Tests and format (heavy runner): the eleven cast test files (proportion-cast-options, sprout-cast-panel, cast-isolation, sprout-child-base, sprout-tom-kim, sprout-lily-kim, sprout-dad-kim, sprout-grandma-kim, sprout-grandpa-kim, sprout-mom-kim, sprout-mom-kim.validation) pass 119 of 119 (log /tmp/opencode/adv/vitest-p3b.log, exit 0), the same count as the acb3afbb pass. prettier --check exits 0 on scripts/proportion-check.mjs, scripts/sprout-cast-panel.mjs, assets/sprout-tom-kim.ts and assets/sprout-lily-kim.ts. tsc --noEmit exits 2 with 51 'error TS' lines (the baseline) and none in the two changed assets, the child base, the two scripts or the Tom and Lily tests (log /tmp/opencode/adv/tsc-p3b.log).",
+    "Build warning check (item 4), done without touching the worktree out/: a git-archive copy of HEAD at /tmp/opencode/adv/p3b/repo built both assets through the heavy runner (./forge build <name> --fast, then the flat and the lit level render of each, six invocations, all exit 0). The output holds no line with 'warning' (count 0; Tom 41,529 triangles at 0.366 x 1.09 x 0.294 m; Lily 51,352 triangles at 0.374 x 1.067 x 0.31 m). The GLB, the two flat renders and the two lit renders of the clean copy are byte-identical to the real out/ files and equal the hash fields of both real records, and the stable stats projections are equal, so the real outputs are current for the HEAD assets.",
+    "Child tools on the real Tom and Lily: a fresh run of the HEAD script with --base humanoid-kim-child --table child exits 0 and reproduces both real records exactly (asset, base, baseSha256, the five hashes, rows, detail, guards, palms, ppm, imageSize). The eleven rows equal TABLES.child in name, order, lo and hi and all lie in range (11 of 11), both palms ok, no guard, base 'humanoid-kim-child', baseSha256 equals the child base file, detail.chinRow 389.02 and 369.35 with headHeight 310.02 and 316.35 (chinRow minus projectedCrownRow).",
+    "The three Lily guards on the new Lily (flat renders, real script, hair colour #7a5230 painted onto copies): geometry of the bangs rectangle is rows 226 to 234 and columns 440 to 584 (9 by 145 px, 1305 px; eye components x 440-485 and 539-584, tops 235 and 236), and it holds only skin and eye white, as before. The unmodified Lily gives no guard (exit 0). A bridge strip gives the bangs line at alpha 255, 251 and 250 and none at 249 and 128; colour distance 40 gives it and 41 does not on R, G and B; a pixel at row 226 and row 234 fires, rows 225 and 235 do not; columns 440 and 584 fire, 439 and 585 do not; a temple pixel 30 px outside and a fringe above the window pass; a fringe over one eye, both eyes, the upper half of both eyes or the upper third of one eye fails the eye-component rule. The chin band (rows 322 to 369) fires for hair at its top row 322 and not at row 321, and not at alpha 249; the side guard fires for hair at the frontmost chin pixel at alpha 255, 191 and 128 and for a mouth-coloured one, and not for skin at alpha 191. The real frontmost side chin pixels are skin (#f1c5a3 at alpha 128 and #f2c7a4 at alpha 191).",
+    "Chin guard against the mouth colour (Chebyshev 40 rule): the mouth is still #c04040 and 1015 px of it lie in the chin band; the nearest chin-band colour to the hair #7a5230 is 58 away (a freckle-range #b4703d), and the nearest mouth-skin blend is 70.5 away, so the margin is 18 and 30 px beyond the 40 radius. A dark mouth (skin-to-#6a3028, #5a2a2a, #8a3a30 blends within 11, 15 and 20) would cross it, which is the spec rule 6 reason, and the real mouth does not.",
+    "Adults and Mom: fresh runs of the HEAD script on the real Dad, Grandma, Grandpa and Mom outputs reproduce their real records exactly (asset, base, hashes, rows, detail, guards, palms, ppm, faceMarks, handEdge, sideSign), both palms ok, no guard. Mom's five artifact hashes are 6f972378, 0c6201ae, 93bea38c, 2abd3f55 and 48fc3c2f, equal plan T0.",
+    "Panel script on the real five (real drawings, real lit renders including the new Tom and Lily, real records, scratch root /tmp/opencode/adv/p3/panel-real): HEAVY_MIN_AVAIL_MB=1500 ... heavy-run.sh -c 'node scripts/sprout-cast-panel.mjs --all --date 2026-11-27 --root <root>' exits 0 and writes five 1416 by 900 panels and the sheet; every panel and sheet cell reads 'cropped: no'; the sheet caption ends at column 603 of 1544; the widest head runs are 154, 156, 165, 172 and 174 px at the sheet scale (limit 264) and 153 to 247 px at the panel scale (limit 424). The Phase 1 findings repeat: F19 (real Tom record with no, null, too-high or too-low chinRow exits 1 with 'record sprout-tom-kim: no chin row' and writes nothing), F6 (empty --date, --asset or --root, '--asset=...' and '--sheat' exit 1 with one line), F18 (planted temp symlinks leave the outside file intact and the Lily panel a real file), F3 (75 px head passes and 76 px is refused on the sheet; child 107 and 108 px likewise; the 350 px head is refused) and F7 (the 472 px head is refused; the off-axis arm reads 'cropped: yes').",
+    "Pre-existing, not new and not raised: tests/preset-colour.test.ts, which is outside the requested set, fails two of four cases in this worktree for causes that pre-date the track. One needs out/ball/textures/tint-mask.png, which this worktree never built. The other counts 3202 compared slots against 3214 pinned because tests/fixtures/preset-pin.json has carried 'wizard-argon-trial' (12 slots) since the master base 5356e787 while assets/wizard-argon-trial.ts is untracked in the main checkout and absent here. With that file copied into the clean copy, the pin comparison case passes, so the pin values of Tom and Lily after look round 2 are unchanged.",
+    "Not re-raised, per the brief: P3-F1 to P3-F3 (TD-66 to TD-68), TD-57 to TD-65, F4, F5 and F12. No new defect was found. T3 allows no new test: nothing was added or committed, and the result files stay untracked. Probes are /tmp/opencode/adv/p3-a.mjs, p3-b.mjs, p3-c5.mjs, p3-d.mjs, p3-e.mjs, p3-f.mjs, p3-g.mjs, probe-s2.mjs, probe-r1.mjs and the build script /tmp/opencode/adv/p3b/build.sh (scratch roots under /tmp/opencode/adv)."
+  ],
+  "commands": [
+    "git rev-parse HEAD (969c4fe89c40fd4b3d4f3bbabf4b391478206095)",
+    "git diff --name-only acb3afbbd924626a708a1d6cef64b9a3ba63d12a HEAD; git diff acb3afbbd924626a708a1d6cef64b9a3ba63d12a HEAD -- scripts tests assets/parts",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/proportion-cast-options.test.ts tests/sprout-cast-panel.test.ts tests/cast-isolation.test.ts tests/sprout-child-base.test.ts tests/sprout-tom-kim.test.ts tests/sprout-lily-kim.test.ts tests/sprout-dad-kim.test.ts tests/sprout-grandma-kim.test.ts tests/sprout-grandpa-kim.test.ts tests/sprout-mom-kim.test.ts tests/sprout-mom-kim.validation.test.ts' (exit 0, 119 of 119)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/prettier --check scripts/proportion-check.mjs scripts/sprout-cast-panel.mjs assets/sprout-tom-kim.ts assets/sprout-lily-kim.ts' (exit 0)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/typescript/bin/tsc --noEmit' (exit 2, 51 baseline lines, none in the changed files)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'bash /tmp/opencode/adv/p3b/build.sh' (build, flat render and lit render of sprout-tom-kim and sprout-lily-kim in a git-archive copy under /tmp/opencode; six invocations, all exit 0, no warning line)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/sprout-cast-panel.mjs --all --date 2026-11-27 --root /tmp/opencode/adv/p3/panel-real' (exit 0, five panels and the sheet)",
+    "node /tmp/opencode/adv/p3-a.mjs, p3-b.mjs, p3-c5.mjs, p3-d.mjs, p3-e.mjs, p3-f.mjs, p3-g.mjs, probe-s2.mjs, probe-r1.mjs (scratch roots under /tmp/opencode/adv/p3)"
+  ],
+  "changed_files": [
+    "measure/runs/chibi_sprouts_cast_20261125/adversarial-p3-969c4fe.json",
+    "measure/runs/chibi_sprouts_cast_20261125/adversarial-p3-969c4fe.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 4,
+      "evidence": "Fresh runs reproduce the real Tom and Lily records exactly and every Lily guard probe repeats on the new Lily (p3-c5.mjs, 33 cases)."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "The eleven cast files pass 119 of 119 (vitest-p3b.log); the TD-66 to TD-68 gaps stay logged."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "git diff --name-only acb3afbb HEAD shows only the two look-round assets in code; scripts/, tests/ and assets/parts/ show 0 diff lines."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "A clean-copy build prints 0 warning lines and its GLB and four renders are byte-identical to out/ and to the record hashes."
+    }
+  ]
+}

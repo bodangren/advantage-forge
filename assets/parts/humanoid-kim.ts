@@ -64,6 +64,15 @@ export const KIM_HANDS: { L: KimHand; R: KimHand } = {
   },
 };
 
+/**
+ * The measured-base contract of spec decision (d). The three names are aliases of the measured
+ * landmarks, so a base module and a measurement script read the same numbers. The `KIM_*` names
+ * stay, and the child base exports the same three names with its own values.
+ */
+export const BASE_CROWN_Y = KIM.crown;
+export const BASE_CHIN_Y = KIM_CHIN_Y;
+export const BASE_HANDS = KIM_HANDS;
+
 const mirrorX = (s: import('../../src/index.js').sdf.Shape) => s.mirror('x', 0);
 
 /** The rest skeleton: every bone name the plan lists, with joints on the derived targets. */

@@ -1,0 +1,15 @@
+MEASURE_AGENT_RESULT
+role: mid-red
+status: complete
+track: chibi_sprouts_cast_20261125
+phase: Phase 1: The measuring tools
+baseline_sha: 5356e78730daefd5225f9733f190dc6bb631b90d
+role_base_sha: 9adcc72e79e2184eaa391c39bf1d1dc7b95ba980
+audited_head_sha: 622a0fa5af8a19a0646b18cc8d7ae75ce7b1901d
+commits: 622a0fa5
+tests_run: tests/proportion-cast-options.test.ts exit 1 with the new F2, F4, F6, F10, and F11 cases failing; tests/sprout-cast-panel.test.ts exit 1 with the new F1, F3, F6, F8, F9, F10, and F11 cases failing; tests/cast-isolation.test.ts exit 0; tests/sprout-mom-kim.test.ts exit 0; tests/sprout-mom-kim.validation.test.ts exit 0; Prettier check exit 0
+files_changed: tests/proportion-cast-options.test.ts; tests/sprout-cast-panel.test.ts; measure/tracks/chibi_sprouts_cast_20261125/plan.md
+plan_updates: T3 records every routed finding, failing case name, command, and exit code; F5 and F12 to F17 stay skipped; concurrent generated-file edits stay unstaged
+known_failures: intended Red only: F1 real and noisy drawings; F2 alpha-128 and skin-pixel guards; F3 sheet head-fit and crop state; F4 base iris; F6 option rejection; F8 prevalidation; F9 empty rows; F10 file parent; F11 hard links
+handoff: Green fixes F1, F2, F3, F4, F6, F8, F9, F10, and F11. F5 and F12 to F17 remain with the spec owner. The adversarial artifacts were not staged by this role.
+END_MEASURE_AGENT_RESULT

@@ -1,0 +1,15 @@
+MEASURE_AGENT_RESULT
+role: mid-red
+status: complete
+track: chibi_sprouts_cast_20261125
+phase: Phase 1: The measuring tools
+baseline_sha: 5356e78730daefd5225f9733f190dc6bb631b90d
+role_base_sha: c562992b18be32bb60a756b63158d713a706aefb
+audited_head_sha: ad43039a073d5cf61f5c3ebac787856e9970d7a4
+commits: ad43039a
+tests_run: combined proportion and panel Red command exit 1, expected Red; cast isolation exit 0; Prettier check exit 0; existing Mom pin exit 0; mid-red role-gate PASS
+files_changed: tests/proportion-cast-options.test.ts; tests/sprout-cast-panel.test.ts; tests/cast-isolation.test.ts; measure/tracks/chibi_sprouts_cast_20261125/plan.md
+plan_updates: T1 marked in progress; phase and role bases, fixture bodies, commands, exit codes, failing case names, and Red reasons recorded
+known_failures: intended Red only: measurement options are ignored; TABLES, table-aware checkRows, measureFigure, adult aliases, and Lily guards are absent; scripts/sprout-cast-panel.mjs is absent
+handoff: Green implements scripts/proportion-check.mjs, scripts/sprout-cast-panel.mjs, and the three adult-base aliases. The isolation regression and existing Mom pin pass. Phase 3 owns tests/sprout-child-base.test.ts. Full output is in measure/runs/chibi_sprouts_cast_20261125/red-c562992.log.
+END_MEASURE_AGENT_RESULT

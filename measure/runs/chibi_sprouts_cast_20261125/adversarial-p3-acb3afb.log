@@ -1,0 +1,58 @@
+Targeted adversarial round, Phase 3: The children. Track chibi_sprouts_cast_20261125.
+Audited HEAD acb3afbbd924626a708a1d6cef64b9a3ba63d12a. Phase base aed0bcc0c3562de1def0242a29d35dd3dca31b68.
+Script change under audit: Green commit 5c224278 (Lily bangs guard reads the eye span); spec commit acb3afbb.
+Route claude-agent/sonnet#xhigh (family anthropic).
+Result file: measure/runs/chibi_sprouts_cast_20261125/adversarial-p3-acb3afb.json (untracked, as asked)
+
+Verdict: PASS. No Blocker. Three findings for measure/tech-debt.md (one Major, two Nit).
+
+1. The changed bangs guard (scripts/proportion-check.mjs:737-753, 10 lines)
+   Real Lily: window top 228, higher eye top 237, eye span x 439 to 585. The rectangle is 9 rows by 147 columns
+   (1323 px). The old one was 323 columns and held 849 temple-hair pixels. The real Lily passes. No false refusal.
+   Painted fringes on the real flat front, measured by the real script:
+     hair above the eyes or on the bridge (rows 228-236): refused with the bangs line.
+     hair over or touching an eye: refused by the eye-component rule (found 1, or touches the window).
+     alpha 250 is hair and 249 is not; Chebyshev 40 is hair and 41 is not; span and row edges as the spec states.
+     a fringe above the window, a pixel outside the span and a temple pixel pass, as the spec allows.
+   No real violation passes. No real input is refused.
+
+2. Chin and side-chin guards on the real chin-length bob
+   No chin-band colour is within 40 of the hair (nearest: freckles at 59, mouth blends at 70 or more).
+   The real mouth #c04040 keeps a 30 px margin. A dark mouth would cross the radius (spec rule 6 reason).
+   The real side render's frontmost chin pixels are skin. Hair there at alpha 255, 191 and 128 is refused.
+   Hair edit: with a different first option in variants.hair the guards go blind or refuse the real Lily (P3-F1).
+
+3. Child tools and regression
+   Fresh runs on the real Tom and Lily reproduce both real records exactly. The rows equal TABLES.child.
+   Both palms are ok. The base and the five hashes equal the files. Chin row and head height are present.
+   Fresh runs on the real Dad, Grandma, Grandpa and Mom reproduce their real records exactly.
+   Mom's five artifact hashes are unchanged.
+   Tests: 11 files, 119 of 119. prettier exit 0. tsc: 51 baseline lines, none in the Phase 3 files.
+
+4. Phase 1 findings on the real five
+   --all writes five panels (Tom and Lily included) and the sheet. Every cell reads "cropped: no".
+   The sheet caption ends at column 603. Real heads are 154 to 174 px at the sheet scale (limit 264).
+   F19, F6 and F18 repeat on the real root. F3 and F7 repeat on the synthetic probes.
+
+Findings
+  P3-F1 (Major) The Lily guards read the declared first hair option, not the painted colour. A reorder of
+        variants.hair gives a false pass (dark first: chin hair passes with exit 0). No test pins the link.
+  P3-F2 (Nit)   The spec sentence about hair over an eye names the wrong line. Hair on the bridge at or below
+        the eye top passes.
+  P3-F3 (Nit)   No test pins the edges of the changed rectangle.
+
+Not re-raised: TD-57 to TD-65, F4, F5, F12.
+T3 is report-only. This round adds no test and commits nothing.
+
+MEASURE_AGENT_RESULT
+role: adversarial-testing
+status: complete
+track: chibi_sprouts_cast_20261125
+phase: Phase 3: The children
+commits: none
+tests_run: vitest 11 files (the five Phase 1 files, sprout-child-base, sprout-tom-kim, sprout-lily-kim, sprout-dad-kim, sprout-grandma-kim, sprout-grandpa-kim) via heavy-run exit 0, 119 of 119; prettier --check on the two scripts, the child base, Tom, Lily and four test files via heavy-run exit 0; tsc --noEmit via heavy-run exit 2 with 51 baseline lines and none in the Phase 3 files; panel script --all on the real five via heavy-run exit 0 (five panels and the sheet); probes p3-a to p3-h2 under /tmp/opencode/adv (real Tom, Lily, Dad, Grandma, Grandpa and Mom records reproduce) - verdict PASS
+files_changed: measure/runs/chibi_sprouts_cast_20261125/adversarial-p3-acb3afb.json, measure/runs/chibi_sprouts_cast_20261125/adversarial-p3-acb3afb.log
+plan_updates: none (the orchestrator records the verdict in plan T3 and logs the findings in measure/tech-debt.md)
+known_failures: none blocking; P3-F1 Major, P3-F2 Nit, P3-F3 Nit for measure/tech-debt.md
+handoff: Verdict PASS bound to acb3afbb with no Blocker. The Phase 3 bangs-guard change meets the spec as built: no real violation passes and the real Lily is not refused. Route P3-F1 (Major: verify the declared hair colour occurs in the render and pin first option equals painted colour), P3-F2 (Nit: reword the spec sentence) and P3-F3 (Nit: add edge cases for x0-1, x0, x1, x1+1 and rows r0-1, r0, eyeTop-1, eyeTop) to measure/tech-debt.md. TD-57 to TD-65, F4, F5 and F12 were not re-raised. A script, asset or test change after this result invalidates it and needs a new round.
+END_MEASURE_AGENT_RESULT

@@ -1,0 +1,79 @@
+{
+  "model_id": "nvidia/nvidia/nemotron-3.5-super-vl-120b-a12b",
+  "model_family": "nvidia",
+  "red_family": "hungerg",
+  "green_family": "minimax",
+  "asset_path": "assets/sprout-tom-kim.ts",
+  "asset_commit": "58c66c25e8020c5bd948cc3a67c6a975d9cd74d0",
+  "base_path": "assets/parts/humanoid-kim-child.ts",
+  "base_commit": "1e1d3ab7a13445f9c58f129521c03a400310ea4c",
+  "base_sha256": "415e0a9b920b656880363e1a49693ec7e627c8242c5e449d3873e97c96d3a905",
+  "asset_sha256": "3958d9e788f194825a068ebbe69470760f34a82a452d9e95b3476495c79ac000",
+  "record_sha256": "8a27e45b0cba2e9cd7bc6d6ce400c6453682125b5068269db6f383abb9427795",
+  "render_sha256": {
+    "flatFront": "838166a61aabc54e823d143eb59110c07e4fad70529b7ae4225aaf5901aad6c1",
+    "flatSide": "424ecb2d3e8e77b1e12065d1149b295acb4a8644cd05c22ec1dabc282048252c",
+    "litFront": "26b3ca271b7df8751d14240e2524605b4dfc0c3db7c7fc3795ddb5db84dc085e",
+    "litSide": "3369b7d050f1bea520fcf657dfdf8a445b83327cd6276ec957f78810a53d8e35"
+  },
+  "panel_path": "out/chibi-sprouts/cast/sprout-tom-kim-panel.png",
+  "panel_sha256": "734670c7f6856b97f3c5fd43795227000b612782f9712f88917a7d1aad2c5fa0",
+  "identity_score": 8.0,
+  "identity_comment": "The hair shape differs from the drawing, the shoes lack laces and detail, and the shirt neckband is not defined.",
+  "proportion_score": 8.5,
+  "proportion_comment": "The round faults name no proportion fault, and the proportional rows stay inside the child table.",
+  "round": 2,
+  "verdict": "pass",
+  "judged_at": "2026-11-27",
+  "pass_line": 7.5,
+  "faults": [
+    "hair shape differs from the drawing",
+    "shoes lack laces and detail",
+    "shirt neckband not defined"
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "asset_commit": "1e1d3ab7a13445f9c58f129521c03a400310ea4c",
+      "asset_sha256": "c34ad6cf7b37100c2bb21409cd4a39e747c3e72455d20ddc2ddfe7879c859dc0",
+      "record_sha256": "2f1ddec8effac72f4e7eb77a612dfd304b039184569af698864caf06b10055d8",
+      "render_sha256": {
+        "flatFront": "4808126d83087077fd72ea34ca40cc03699d576f96b3c6d3c9ae1e1a7afe1863",
+        "flatSide": "4ab16981fbab029517dabbf0a0d961bd16bed6a6eba957574e34a4050c0febc3",
+        "litFront": "5467eabd57beb572e74c4ee93aae0402799b019b8fc7c8cbf454d268e4c11ee5",
+        "litSide": "20e686f643bba772eed37ff46edc996fef4fd78b43492c1f875851d71427ce54"
+      },
+      "panel_sha256": "727eaa71914c2f1aad8f5dd91ca81ccd8ac41a682f4acfebec616e20aa025bc4",
+      "identity_score": 7.0,
+      "proportion_score": 8.0,
+      "verdict": "fail",
+      "faults": [
+        "smooth dome hair instead of spiky swept-up hair",
+        "closed dark red mouth instead of an open toothy smile",
+        "no defined brows or cheek blush"
+      ]
+    },
+    {
+      "round": 2,
+      "asset_commit": "58c66c25e8020c5bd948cc3a67c6a975d9cd74d0",
+      "asset_sha256": "3958d9e788f194825a068ebbe69470760f34a82a452d9e95b3476495c79ac000",
+      "record_sha256": "8a27e45b0cba2e9cd7bc6d6ce400c6453682125b5068269db6f383abb9427795",
+      "render_sha256": {
+        "flatFront": "838166a61aabc54e823d143eb59110c07e4fad70529b7ae4225aaf5901aad6c1",
+        "flatSide": "424ecb2d3e8e77b1e12065d1149b295acb4a8644cd05c22ec1dabc282048252c",
+        "litFront": "26b3ca271b7df8751d14240e2524605b4dfc0c3db7c7fc3795ddb5db84dc085e",
+        "litSide": "3369b7d050f1bea520fcf657dfdf8a445b83327cd6276ec957f78810a53d8e35"
+      },
+      "panel_sha256": "734670c7f6856b97f3c5fd43795227000b612782f9712f88917a7d1aad2c5fa0",
+      "identity_score": 8.0,
+      "proportion_score": 8.5,
+      "verdict": "pass",
+      "faults": [
+        "hair shape differs from the drawing",
+        "shoes lack laces and detail",
+        "shirt neckband not defined"
+      ]
+    }
+  ],
+  "note": "Round 2 is the final round. Each comment is one sentence from the final-round faults. The round faults name no proportion fault. The brief told the judge that the hands are the base slab and hold nothing."
+}

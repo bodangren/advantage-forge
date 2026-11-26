@@ -1,0 +1,159 @@
+Measure Green log: chibi_sprouts_cast_20261125, Phase 2, look remediation round 2 (Dad, Grandma)
+
+Role: jr-green. Green route: minimax-cn-coding-plan/MiniMax-M3.1-Flash, family minimax.
+Red model of this phase: opencode-go/hungerg-free, family opencode-go. The judge is a separate
+role on nvidia. No role in this round called a paid tool or `openchamber_image`.
+
+Worktree: /home/daniebo/Desktop/forge-worktrees/sprouts-cast. Branch: chibi-sprouts-cast.
+Immutable phase base: b48c3df3235d69337aecc90da7db6cd178455eed.
+Role base at the start of the round: eefaeba94aa38f4efe944b488ac8924e43ea8532.
+Implementation commits: 3cd8582a1cd6a5d0c5a154e84d87f2d7fb29de98 (Dad) and
+44c4b68843cdc8e9b9955e7b69a3f10b9a49f7a7 (Grandma). Plan evidence commits: cd3bd7ae and c1f44ad4.
+The final Green HEAD is the commit that holds this log.
+
+The round 1 look judge (nvidia) scored Dad at identity 7.0 and proportion 8.2, and Grandma at
+identity 7.0 and proportion 8.0. The gate needs 7.5 on both. Grandpa passed at identity 7.8 and
+proportion 8.5, so `assets/sprout-grandpa-kim.ts` was not touched in this round.
+
+The round 1 work list, and the outcome of each item:
+
+1. Dad: the render wears a black beanie or cap. The drawing has full dark hair with no hat.
+   FIX. The hairline cut moved up to the forehead, the quiff lifts and sweeps back over the skull,
+   the sides fall in front of the ears, and fine combed ridges run over the surface. The ridges
+   come before the cut, so the hairline stays a clean edge.
+2. Dad: the plaid shirt is buttoned closed. The drawing shows the shirt open over a white tee.
+   FIX. The open front is a V cut from 1.03 m to the hem, so the white tee shows from the neck
+   down to the hem. The plaid carries thin vertical stripes and thin horizontal bands, and two
+   chest pockets sit on the shirt fronts.
+3. Dad: the hands look like they hold small stick-like items. The drawing shows empty hands.
+   CONTEST. The hands are the base hand of `buildKim` (`assets/parts/humanoid-kim.ts`, the `hands`
+   body): a slab of 16 mm thickness, 135 mm length and 60 mm depth. The flat and the lit renders
+   carry no held item, so the round 1 reading is a misread of a thin base hand and not a geometry
+   fault. The brief says to fix the hands only when the geometry carries something, and the base
+   file is out of scope for this round, so the base stays unchanged.
+4. Grandma: a smooth white cap or bonnet instead of the drawing's textured white bun with loose
+   wispy strands framing the face and ears. FIX. The cap sits clear of the face layer, the
+   hairline is a parted arch that is high at the parting and low at the temples, the bun is a wide
+   mass with a wrap ring and fine grooves, loose wisps frame the face and the ears, and eight
+   painted strands fan out from the parting.
+5. Grandma: a smooth chibi face without elderly features. FIX. The cheek bodies are flatter and
+   wider and carry the rosy cheek paint, and the two smile lines run from the side of the nose to
+   the corner of the mouth. The smile lines and the blush are paint on the face layer or on the
+   cheek body, so no undeclared face mark enters the eye mask.
+6. Grandma: a short pale-green skirt and a puffy-shoulder jacket with a pale centre panel, where
+   the drawing has a longer fuller green skirt and a button-front green cardigan over a matching
+   green dress. FIX. The cardigan closes at the front with a neck opening, a row of five buttons
+   and knit ribs at the hem and the cuffs. The dress is a light green that matches the cardigan,
+   and the skirt falls to the mid-calf with vertical folds and a hem that dips in the middle.
+
+Files changed by this round:
+
+- `assets/sprout-dad-kim.ts` (modified). Commit 3cd8582a1cd6a5d0c5a154e84d87f2d7fb29de98.
+- `assets/sprout-grandma-kim.ts` (modified). Commit 44c4b68843cdc8e9b9955e7b69a3f10b9a49f7a7.
+- `measure/tracks/chibi_sprouts_cast_20261125/plan.md` (plan evidence).
+  Commit cd3bd7ae61ee7ecb8dd7f07e4e8f07737e2ec9a8.
+- `measure/runs/chibi_sprouts_cast_20261125/green-44c4b68.log` (this log, new file).
+
+No new asset, test, script or fixture file was added. No test file was edited. The base module
+`assets/parts/humanoid-kim.ts`, Mom, Grandpa, and every game or delivery file are unchanged.
+
+The eleven rows of `TABLES.kim` per character, from
+`out/chibi-sprouts/cast/<name>-measure.json`:
+
+Dad, `heightInHeads 3.660059`, `armToTorso 1.328305`, `legShare 0.392696`, `headToShoulders
+1.150488`, `wrist -0.061303`, `fingertips 0.509578`, `eyeLine 0.620109`, `eyeHeight 0.113114`,
+`spacingHead 0.391414`, `eyeWidthFace 0.226471`, `spacingFace 0.455882`. Every row sits inside
+the table, every row limit equals the table, both palms are ok, and no guard fired.
+
+Grandma, `heightInHeads 3.648823`, `armToTorso 1.328305`, `legShare 0.391624`, `headToShoulders
+1.16905`, `wrist -0.061303`, `fingertips 0.509578`, `eyeLine 0.620548`, `eyeHeight 0.111699`,
+`spacingHead 0.382653`, `eyeWidthFace 0.22561`, `spacingFace 0.457317`. Every row sits inside the
+table, every row limit equals the table, both palms are ok, and no guard fired.
+
+Grandma's bun and head: the mask top `detail.crownRow` is 46, the rounded projected crown
+`detail.projectedCrownRow` is 95, and the head height is 241.72 px. The white bun pixels sit above
+the projected crown in the flat front view and in the flat side view, so the bun stays in the side
+silhouette and the panel keeps it inside the 56 px headroom. The panel caption reads `cropped: no`.
+
+The artifact hashes, taken after the lit render:
+
+| Artifact                            | SHA-256                                                            |
+| ----------------------------------- | ------------------------------------------------------------------ |
+| `sprout-dad-kim.glb`                | `896d889b3e2db721a647b371b97f714e0e6a2151787ad9c4bd5b21b19d1fea61` |
+| `sprout-dad-kim flat/front-level.png`  | `7c50a8adfe311f2744f8635749ff32e97b7407d5e42ad6134f837836b4536450` |
+| `sprout-dad-kim flat/side-level.png`   | `f8f483e3688fd45295a2c493851ca5013ea3cf9c907dba476db70a3ba8a9af8b` |
+| `sprout-dad-kim views/front-level.png` | `9d6c98d9b373debfdca8245041e49158c7413a2c417e7743ee2c12d34a5f5270` |
+| `sprout-dad-kim views/side-level.png`  | `3817f50ea82ee88a19b8e324706b08f927b379ac6f8462e86d0c6e5b72639153` |
+| `sprout-grandma-kim.glb`            | `231ca1ad5b929a8584f186bb2efa721548d7811a2ceae4d8006d22583430c217` |
+| `sprout-grandma-kim flat/front-level.png`  | `5acbcba54b8a91e17ccc2d379adce0fefc60fa90c47866661c89261ae7432005` |
+| `sprout-grandma-kim flat/side-level.png`   | `94b4dd9fb09a37485d5d4529c522c30ddd5fa677102cf761d8598a6ea9e19dad` |
+| `sprout-grandma-kim views/front-level.png` | `d86c880c1ca1c8387dc078cc0fbc7ba3377b9324a3b3901d4dee718d3dc6633a` |
+| `sprout-grandma-kim views/side-level.png`  | `6a617dff37894dee4fe603092acfff89b4c03157424a67c9badfe82287fb8014` |
+
+The measure records: `out/chibi-sprouts/cast/sprout-dad-kim-measure.json` has SHA-256
+`f36096cc1cf8a3180fbeffa1362222a234451fae1e5e2543b09d7a87bc7b420d`, and
+`out/chibi-sprouts/cast/sprout-grandma-kim-measure.json` has SHA-256
+`c4e469de7992b174c108be68891e00564ee4a6dbaeebbe946c5d8318d2d7f237`.
+
+The new panels, at the exact panel path of the spec:
+
+- `out/chibi-sprouts/cast/sprout-dad-kim-panel.png`, 1416 x 900, SHA-256
+  `26513ebbcafa31e1646444e4c68d983b2f52b9473a4fd2c02378ec989b12993e`.
+- `out/chibi-sprouts/cast/sprout-grandma-kim-panel.png`, 1416 x 900, SHA-256
+  `e52fda296867902c6422a6d157c15411d973ead22d335dc2dce918e3a4470c3b`.
+
+The build and render sequence of the spec, for each asset, through the heavy runner:
+`./forge build <name> --fast`, then the flat level render, then the lit level render. No
+`./forge all` ran. The build of Dad wrote 51,623 triangles and the build of Grandma wrote 48,246
+triangles. Neither build prints a warning line.
+
+The commands and their exit codes:
+
+```
+HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c 'node_modules/.bin/tsx scripts/proportion-check.mjs --asset sprout-dad-kim --table kim --record out/chibi-sprouts/cast/sprout-dad-kim-measure.json'
+# exit 0: eleven of eleven rows pass, both palms ok, no guard
+HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c 'node_modules/.bin/tsx scripts/proportion-check.mjs --asset sprout-grandma-kim --table kim --record out/chibi-sprouts/cast/sprout-grandma-kim-measure.json'
+# exit 0: eleven of eleven rows pass, both palms ok, no guard
+HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-dad-kim.test.ts tests/sprout-grandma-kim.test.ts tests/cast-isolation.test.ts'
+# exit 0: 9 of 9 cases pass over 3 files
+HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c './forge check sprout-dad-kim'
+# result ok: no held item passes through the head
+HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c './forge check sprout-grandma-kim'
+# result ok: no held item passes through the head
+node_modules/.bin/prettier --check assets/sprout-dad-kim.ts assets/sprout-grandma-kim.ts measure/tracks/chibi_sprouts_cast_20261125/plan.md
+# exit 0: all matched files use Prettier code style
+node node_modules/typescript/bin/tsc --noEmit --pretty false
+# exit 2: 51 diagnostics, the baseline count, none in the two changed asset files
+node scripts/sprout-cast-panel.mjs --asset sprout-dad-kim
+# exit 0: panel 1416 x 900, cropped: no, no, no
+node scripts/sprout-cast-panel.mjs --asset sprout-grandma-kim
+# exit 0: panel 1416 x 900, cropped: no, no, no
+node_modules/.bin/tsx scripts/make-preset-pin.mjs
+# writes the pin; a parsed comparison with the committed pin covers 397 assets and no value
+# changes, so tests/fixtures/preset-pin.json stays byte-identical and the commits hold no pin
+# change. The stale wizard-argon-trial key stays, because its asset file is gone and the pin must
+# keep every baseline key.
+```
+
+The plan updates: T6 and T7 carry the round 2 evidence and the implementation commit SHAs, and
+both tasks hold the `[x]` marker again. No other plan line changed. The track stays in its active
+folder, and no registry or metadata file changed.
+
+Known failures: none in the Phase 2 gate. The two untracked Red logs
+`measure/runs/chibi_sprouts_cast_20261125/red-b48c3df3.log` and
+`measure/runs/chibi_sprouts_cast_20261125/red-2d5808a7.log` stay untracked, because they belong
+to the Red role and are not in this role's write scope.
+
+MEASURE_AGENT_RESULT
+role: jr-green
+status: complete
+track: chibi_sprouts_cast_20261125
+phase: Phase 2: The adult variants
+commits: 3cd8582a, 44c4b688, cd3bd7ae, c1f44ad4
+tests_run: proportion-check sprout-dad-kim exit 0; proportion-check sprout-grandma-kim exit 0; vitest sprout-dad-kim, sprout-grandma-kim and cast-isolation exit 0 (9 of 9 cases); forge check sprout-dad-kim result ok; forge check sprout-grandma-kim result ok; prettier --check exit 0; tsc --noEmit exit 2 with the 51 baseline diagnostics and none in the changed files; panel script exit 0 for both assets
+files_changed: assets/sprout-dad-kim.ts, assets/sprout-grandma-kim.ts, measure/tracks/chibi_sprouts_cast_20261125/plan.md, measure/runs/chibi_sprouts_cast_20261125/green-44c4b68.log
+plan_updates: T6 and T7 carry the round 2 evidence with the implementation SHAs 3cd8582a and 44c4b688 and both hold the [x] marker; no other plan line changed
+known_failures: none
+dispositions: dad-hair=FIX; dad-shirt=FIX; dad-hands=CONTEST(the hands body of assets/parts/humanoid-kim.ts is a 16 mm slab and the render carries no held item); grandma-hair=FIX; grandma-face=FIX; grandma-clothes=FIX
+handoff: The immutable phase base is b48c3df3235d69337aecc90da7db6cd178455eed and the role base is eefaeba94aa38f4efe944b488ac8924e43ea8532. The final Green HEAD is the commit that holds this log. Dad's implementation commit is 3cd8582a1cd6a5d0c5a154e84d87f2d7fb29de98 and Grandma's is 44c4b68843cdc8e9b9955e7b69a3f10b9a49f7a7. The plan evidence commits are cd3bd7ae61ee7ecb8dd7f07e4e8f07737e2ec9a8 and c1f44ad4ebf4d7dfe57847452eb414509ad9c744. The judge reads the two panels next: out/chibi-sprouts/cast/sprout-dad-kim-panel.png with SHA-256 26513ebbcafa31e1646444e4c68d983b2f52b9473a4fd2c02378ec989b12993e and out/chibi-sprouts/cast/sprout-grandma-kim-panel.png with SHA-256 e52fda296867902c6422a6d157c15411d973ead22d335dc2dce918e3a4470c3b. Both panels are 1416 x 900 and both caption 11/11 rows pass with palms ok and cropped: no. The eleven rows per character are in this log and in the plan. The preset pin changes no value, so tests/fixtures/preset-pin.json is byte-identical to the commit before this round. Grandpa, Mom, the base module, and every test file are unchanged. The judge input check of the spec still holds for both assets: the asset commits, the base commit, the GLB hash, the record hash, the four render hashes, and the panel hashes above are the bytes on disk after this round. Nothing changed after the last commit. The jr-green role gate on this phase reports two findings that this role cannot close: the phase still has three open tasks, which are the Red task T5 marked [~] by the Red role and the Measure tasks T9 and T10 that the judge round 2 and the Phase 2 gate own, and GREEN_TEST_COMMAND is unset in the environment. The SHA evidence finding of the first gate run is closed by the plan commit c1f44ad4.
+END_MEASURE_AGENT_RESULT

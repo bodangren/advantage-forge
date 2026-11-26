@@ -9625,9 +9625,9 @@
     }
   ],
   "asset_source_coverage": {
-    "listed": 1081,
+    "listed": 1086,
     "catalog_matched": 809,
-    "off_catalog": 272
+    "off_catalog": 277
   },
   "asset_sources": [
     {
@@ -14007,6 +14007,11 @@
       "catalog_source_ids": []
     },
     {
+      "id": "humanoid-kim-child",
+      "source_path": "assets/parts/humanoid-kim-child.ts",
+      "catalog_source_ids": []
+    },
+    {
       "id": "humanoid-kim",
       "source_path": "assets/parts/humanoid-kim.ts",
       "catalog_source_ids": []
@@ -15496,8 +15501,18 @@
       "catalog_source_ids": []
     },
     {
+      "id": "sprout-dad-kim",
+      "source_path": "assets/sprout-dad-kim.ts",
+      "catalog_source_ids": []
+    },
+    {
       "id": "sprout-dad",
       "source_path": "assets/sprout-dad.ts",
+      "catalog_source_ids": []
+    },
+    {
+      "id": "sprout-grandma-kim",
+      "source_path": "assets/sprout-grandma-kim.ts",
       "catalog_source_ids": []
     },
     {
@@ -15506,8 +15521,18 @@
       "catalog_source_ids": []
     },
     {
+      "id": "sprout-grandpa-kim",
+      "source_path": "assets/sprout-grandpa-kim.ts",
+      "catalog_source_ids": []
+    },
+    {
       "id": "sprout-grandpa",
       "source_path": "assets/sprout-grandpa.ts",
+      "catalog_source_ids": []
+    },
+    {
+      "id": "sprout-lily-kim",
+      "source_path": "assets/sprout-lily-kim.ts",
       "catalog_source_ids": []
     },
     {
@@ -15553,6 +15578,11 @@
     {
       "id": "sprout-sam",
       "source_path": "assets/sprout-sam.ts",
+      "catalog_source_ids": []
+    },
+    {
+      "id": "sprout-tom-kim",
+      "source_path": "assets/sprout-tom-kim.ts",
       "catalog_source_ids": []
     },
     {
@@ -16548,11 +16578,6 @@
         "enemies/humanoid/witch",
         "heroes/magic/witch"
       ]
-    },
-    {
-      "id": "wizard-argon-trial",
-      "source_path": "assets/wizard-argon-trial.ts",
-      "catalog_source_ids": []
     },
     {
       "id": "wizard-hat",

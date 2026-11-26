@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "role": "adversarial-testing",
+  "track": "chibi_sprouts_cast_20261125",
+  "phase": "Phase 1",
+  "baseline_sha": "5356e78730daefd5225f9733f190dc6bb631b90d",
+  "audited_head_sha": "54e7b15f05bbdb1187cc95c2f89b73e9a5826f07",
+  "route": "claude-agent/sonnet#xhigh",
+  "status": "pass",
+  "summary": "PASS, bound to 54e7b15. Nothing changed in code since ede60f08: the diff of scripts/ and assets/ is 0 lines, and the only test change is a two-line type annotation (TableRow = Omit<Row, 'value'>) with no assertion touched. The five Phase 1 test files pass 102 of 102, prettier passes, and tsc exits 2 with the 51 baseline lines and none in tests/proportion-cast-options.test.ts or the two scripts. Every key probe repeats on the five real drawings and Mom's real renders: F3 (caption inside the sheet, 264 px limit, 350 px head refused), F7, F18, F19 and the F6 empty values. Mom's eleven rows and five artifact hashes did not move. No new defect. F4, F5, F12 and TD-57 to TD-65 are not re-raised.",
+  "blocking_findings": [],
+  "nonblocking_findings": [],
+  "evidence": [
+    "Code identity: git diff --name-only ede60f0812c31584037b337485b203ae11b8edb8 HEAD lists three files: measure/runs/chibi_sprouts_cast_20261125/red-ede60f08.log, measure/tracks/chibi_sprouts_cast_20261125/plan.md and tests/proportion-cast-options.test.ts. The diff of scripts/ and assets/ is 0 lines. The two commits are 42f40ba7 and 54e7b15f.",
+    "The test diff changes no assertion: it adds the line \"type TableRow = Omit<Row, 'value'>;\" and changes the parameter type of rowsFor from 'Row[]' to 'TableRow[]' (the return type stays Row[] and the body is unchanged). Two lines changed in total; the diff holds no expect call.",
+    "Tests: the five Phase 1 files pass 102 of 102 cases through the heavy runner (log /tmp/opencode/adv/vitest-claim-5.log: Test Files 5 passed, Tests 102 passed, exit 0), the same count as the earlier passes. prettier --check on scripts/proportion-check.mjs, scripts/sprout-cast-panel.mjs and tests/proportion-cast-options.test.ts exits 0 through the heavy runner.",
+    "Types: tsc --noEmit through the heavy runner (log /tmp/opencode/adv/tsc-54e7b15.log) exits 2 with 51 'error TS' lines in 14 files (tests/storytime-faces-r2-guards.test.ts 13, assets/rowboat.ts 8, assets/airship.ts 7, assets/plank.ts 6, and ten smaller groups). None sit in tests/proportion-cast-options.test.ts (0) or in the two Phase 1 scripts (0). The plan note of 42f40ba7 ('51 existing diagnostics and no diagnostic in tests/proportion-cast-options.test.ts') reproduces.",
+    "Real input: HEAVY_MIN_AVAIL_MB=1500 ... heavy-run.sh -c 'node scripts/sprout-cast-panel.mjs --all --date 2026-11-30 --root /tmp/opencode/adv/rootR' exits 0 and writes five panels and cast-sheet.png from the five real drawings and Mom's real lit renders; every panel and sheet cell prints 'cropped: no'. The third sheet caption line ends at column 603 of 1544.",
+    "F3 repeats: five cropped cells give a caption ending at column 652 of 1544; an adult head of 75 source px passes and 76 px is refused; a child head of 107 px passes and 108 px is refused; the 350 px head exits 1 with 'figure wider than its cell: sprout-dad-kim' on '--sheet'. F7 repeats: the 472 px head is refused, the off-axis arm gives 'cropped: yes', and on the five real drawings the widest run equals the head union (Dad 283 against 284, Grandma 421 against 436, Grandpa 416 against 425, Tom 509 against 509, Lily 514 against 536 source px).",
+    "F18, F19 and F6 repeat: symlinks planted at the old temp name and at guessed '.tmp-' names leave the outside file intact and the panel a real file, and no script-made temp folder stays behind; a record with no usable chinRow is refused with 'record <name>: no chin row' and '--all' writes nothing; an empty value for --asset, --date or --root exits 1 with 'option <arg> needs a value' and an unchanged tree.",
+    "Mom did not move: the script on Mom's real outputs gives the eleven rows of the plan (3.653929, 1.328305, 0.391841, 1.233173, -0.061303, 0.509578, 0.621882, 0.113069, 0.365741, 0.229412, 0.464706) with both palms ok, and the five artifact hashes equal plan T0 (6f972378, 0c6201ae, 93bea38c, 2abd3f55, 48fc3c2f).",
+    "Not re-raised, per the brief: F4, F5 and F12 (PM decisions) and TD-57 to TD-65. No new defect was found. T3 allows no new test: nothing was added or committed, and the result files stay untracked. Probes are /tmp/opencode/adv/probe-s1.mjs, probe-s2.mjs and probe-r1.mjs. The worktree shows untracked adversarial-ede60f0 and phase-acceptance-p1-* files that this round did not write."
+  ],
+  "commands": [
+    "git rev-parse HEAD (54e7b15f05bbdb1187cc95c2f89b73e9a5826f07)",
+    "git diff --name-only ede60f0812c31584037b337485b203ae11b8edb8 HEAD; git diff ede60f0812c31584037b337485b203ae11b8edb8 HEAD -- scripts assets; git diff ede60f0812c31584037b337485b203ae11b8edb8 HEAD -- tests",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/proportion-cast-options.test.ts tests/sprout-cast-panel.test.ts tests/cast-isolation.test.ts tests/sprout-mom-kim.test.ts tests/sprout-mom-kim.validation.test.ts' (exit 0, 102 of 102)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/typescript/bin/tsc --noEmit' (exit 2, 51 'error TS' lines, 0 in tests/proportion-cast-options.test.ts)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/prettier --check scripts/proportion-check.mjs scripts/sprout-cast-panel.mjs tests/proportion-cast-options.test.ts' (exit 0)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/sprout-cast-panel.mjs --all --date 2026-11-30 --root /tmp/opencode/adv/rootR' (exit 0, five panels and the sheet)",
+    "node /tmp/opencode/adv/probe-s1.mjs, probe-s2.mjs, probe-r1.mjs (scratch roots under /tmp/opencode/adv)"
+  ],
+  "changed_files": [
+    "measure/runs/chibi_sprouts_cast_20261125/adversarial-54e7b15.json",
+    "measure/runs/chibi_sprouts_cast_20261125/adversarial-54e7b15.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 4,
+      "evidence": "Real run: node scripts/sprout-cast-panel.mjs --all writes five panels and the sheet with a caption that ends at column 603 of 1544."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "The five files pass 102 of 102 (vitest-claim-5.log) and the key probes repeat on real input; the TD-57 to TD-65 gaps stay logged."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "git diff ede60f08 HEAD changes only plan.md, a red log and two type-annotation lines in tests/proportion-cast-options.test.ts."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "tsc gives 51 baseline lines and 0 in the test file (tsc-54e7b15.log); Mom rows and the five artifact hashes equal plan T0."
+    }
+  ]
+}
