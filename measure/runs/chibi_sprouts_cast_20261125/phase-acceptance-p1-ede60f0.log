@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: phase-acceptance
+status: blocked
+track: chibi_sprouts_cast_20261125
+phase: Phase 1: The measuring tools
+commits: none
+tests_run: adversarial audit-result pass; vitest five files exit 0 (102 tests); real drawings and Mom fixture panels exit 0; Prettier exit 0; Mom rows, stable stats and five hashes match; tsc exit 2 (three phase test errors); generate --check exit 0; doctor exit 1 (two pre-existing broken links); role-gate exit 1 (audit fail and T4 incomplete)
+files_changed: measure/runs/chibi_sprouts_cast_20261125/phase-acceptance-p1-ede60f0.json, measure/runs/chibi_sprouts_cast_20261125/phase-acceptance-p1-ede60f0.log
+plan_updates: none
+known_failures: F1 withdrawn; F2 three TypeScript errors in tests/proportion-cast-options.test.ts:420,424,432; F3 two pre-existing doctor link failures
+handoff: Do not mark T4 complete. The two-round limit requires a PM decision. Should the PM authorize a test-only correction to the rowsFor input type, or amend the changed-file diagnostic requirement explicitly? Options: authorize the test-only correction; amend the requirement with an explicit exception; stop the phase. Rerun acceptance after the decision and required record changes.
+END_MEASURE_AGENT_RESULT

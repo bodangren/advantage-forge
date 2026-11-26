@@ -1,0 +1,54 @@
+Adversarial re-verification, Phase 1: the measuring tools. Track chibi_sprouts_cast_20261125.
+Audited HEAD ede60f0812c31584037b337485b203ae11b8edb8. Phase base 5356e78730daefd5225f9733f190dc6bb631b90d.
+Earlier pass: adversarial-9af8f65.json audited 9af8f652. Phase acceptance refused it because the HEAD is older.
+Route claude-agent/sonnet#xhigh (family anthropic).
+Result file: measure/runs/chibi_sprouts_cast_20261125/adversarial-ede60f0.json
+
+Verdict: PASS, bound to ede60f08. No code changed. Every probe repeats. No new defect.
+
+1. Code identity
+   git diff --name-only 9af8f652 HEAD lists nine files:
+     measure/generated/asset-inventory.json
+     measure/generated/status.md
+     measure/runs/chibi_sprouts_cast_20261125/adversarial-9af8f65.json
+     measure/runs/chibi_sprouts_cast_20261125/adversarial-9af8f65.log
+     measure/runs/chibi_sprouts_cast_20261125/red-70ebbfb.log
+     measure/runs/chibi_sprouts_cast_20261125/red-9adcc72e.log
+     measure/tech-debt.md
+     measure/tracks.md
+     measure/tracks/chibi_sprouts_cast_20261125/plan.md
+   No file under scripts/, assets/ or tests/ is listed. The diff of the two scripts is 0 lines.
+   The commits since 9af8f652 are 67da9cfd, de7a2555 and ede60f08.
+
+2. Tests and format (heavy runner)
+   The five Phase 1 test files: exit 0, 102 of 102 cases.
+   prettier --check on scripts/proportion-check.mjs and scripts/sprout-cast-panel.mjs: exit 0.
+
+3. Probes on the five real drawings and Mom's real renders
+   --all writes five panels and the sheet (exit 0). Every cell reads "cropped: no".
+   F3  The real sheet caption ends at column 603 of 1544. Five cropped cells end at column 652.
+       Adult head 75 px passes and 76 px is refused. Child head 107 px passes and 108 px is refused.
+       The 350 px head is refused on --sheet.
+   F7  The 472 px head is refused. The off-axis arm reads "cropped: yes". On the real drawings the widest
+       run equals the head union and the axis is within 5 source px of the head centre.
+   F18 Planted temp symlinks change nothing. No temp folder stays behind.
+   F19 A record without a usable chinRow is refused by name. --all writes nothing.
+   F6  Empty values for --asset, --date and --root are refused with one line.
+   Mom: the eleven rows equal the plan, both palms ok, and the five artifact hashes are unchanged.
+
+Not re-raised: F4, F5, F12 (PM decisions) and TD-57 to TD-65.
+T3 is report-only. This round adds no test and commits nothing.
+Two untracked phase-acceptance-p1-ede60f0 files in the worktree are not from this round.
+
+MEASURE_AGENT_RESULT
+role: adversarial-testing
+status: complete
+track: chibi_sprouts_cast_20261125
+phase: Phase 1
+commits: none
+tests_run: vitest 5 files (proportion-cast-options, sprout-cast-panel, cast-isolation, sprout-mom-kim, sprout-mom-kim.validation) via heavy-run exit 0, 102 of 102; prettier --check on scripts/proportion-check.mjs and scripts/sprout-cast-panel.mjs via heavy-run exit 0; panel script --all on the five real drawings via heavy-run exit 0 (five panels and the sheet); probes S1, S2, R1 and the real-drawing head probe repeat under /tmp/opencode/adv - verdict PASS
+files_changed: measure/runs/chibi_sprouts_cast_20261125/adversarial-ede60f0.json, measure/runs/chibi_sprouts_cast_20261125/adversarial-ede60f0.log
+plan_updates: none (the orchestrator records the verdict in plan T3 and T4)
+known_failures: none; the findings already logged in tech-debt (TD-57 to TD-65) are not re-raised
+handoff: Verdict PASS bound to ede60f08. git diff --name-only 9af8f652 HEAD lists no file under scripts/, assets/ or tests/, and the diff of both scripts is 0 lines, so the round-3 verification of 9af8f652 holds for this HEAD. The five test files pass 102 of 102, prettier passes, every key probe repeats on the five real drawings and Mom's real renders, and Mom's rows and five artifact hashes did not move. No new defect. A script, asset or test change after this result invalidates it and needs a new round.
+END_MEASURE_AGENT_RESULT
