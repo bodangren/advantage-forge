@@ -161,9 +161,8 @@ amendment round 2 answer every finding before Red. After round 2, Red starts wit
     `assets["sprout-mom-kim"]` entry of `tests/fixtures/preset-pin.json`). Prettier check passes,
     and every `sources` hash equals the worktree file at `b58aad2`.
 
-- [x] T1 Red: Pin the measuring options, the tables, the fixtures, the panel script, and the
-      isolation baseline. Commits `ad43039a073d5cf61f5c3ebac787856e9970d7a4` and
-      `ba0b353b9d965e4e94b078da4949311f87ef504f`. Logs
+- [x] T1 Red: Pin the measuring options, the tables, the fixtures, the panel script, and the isolation baseline. Commits `ad43039a073d5cf61f5c3ebac787856e9970d7a4` and `ba0b353b9d965e4e94b078da4949311f87ef504f`.
+      Logs
       `measure/runs/chibi_sprouts_cast_20261125/red-c562992.log` and
       `measure/runs/chibi_sprouts_cast_20261125/red-3aabca1c.log`.
       Files: `tests/proportion-cast-options.test.ts`, `tests/sprout-cast-panel.test.ts`,
