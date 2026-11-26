@@ -307,24 +307,6 @@ const px = (img, x, y) => {
 
 const REL_LUM = (r, g, b) => 0.2126 * (r / 255) + 0.7152 * (g / 255) + 0.0722 * (b / 255);
 const dist255 = (a, b) => Math.max(Math.abs(a[0] - b[0]), Math.abs(a[1] - b[1]), Math.abs(a[2] - b[2]));
-const distEuclid = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]);
-
-/** A one-pixel 8-connected dilation of a boolean grid. */
-function dilate(mask, w, h) {
-  const out = new Uint8Array(w * h);
-  for (let y = 0; y < h; y++)
-    for (let x = 0; x < w; x++) {
-      if (!mask[y * w + x]) continue;
-      for (let dy = -1; dy <= 1; dy++)
-        for (let dx = -1; dx <= 1; dx++) {
-          const nx = x + dx,
-            ny = y + dy;
-          if (nx < 0 || ny < 0 || nx >= w || ny >= h) continue;
-          out[ny * w + nx] = 1;
-        }
-    }
-  return out;
-}
 
 /** 8-connected components of a boolean grid; returns arrays of [col,row]. */
 function components(mask, w, h) {
@@ -589,31 +571,21 @@ export function measureFigure(figure, table = 'kim') {
       const p = px(front, x, y);
       if (p[3] < 250 || dist255(p, skinRgb) <= 60 || REL_LUM(p[0], p[1], p[2]) >= 0.45) continue;
       // A declared face mark leaves the eye mask, so a glasses frame cannot join the two eyes.
-      // The distance is the Euclidean one: the Chebyshev separation rule of spec "The asset
-      // metadata and the eye mask" keeps the mark more than 24 away from the eye paint in
-      // Chebyshev distance, and the Euclidean distance is never smaller than the Chebyshev one.
-      if (marks.some((m) => distEuclid(p, m.rgb) <= 24)) continue;
+      if (marks.some((m) => dist255(p, m.rgb) <= 24)) continue;
       eyeMask[y * W + x] = 1;
     }
-  // The component search runs on a one-pixel dilated mask, so a one-pixel gap in the paint does
-  // not split one eye. The measured width, height, and area come from the undilated pixels, so a
-  // declared mark never changes a measured row.
-  const eyeComps = components(dilate(eyeMask, W, H), W, H)
+  const eyeComps = components(eyeMask, W, H)
     .map((cells) => {
       let x0 = W,
         x1 = 0,
         y0 = H,
-        y1 = 0,
-        area = 0;
+        y1 = 0;
       for (const [x, y] of cells) {
-        if (!eyeMask[y * W + x]) continue;
-        area++;
         if (x < x0) x0 = x;
         if (x > x1) x1 = x;
         if (y < y0) y0 = y;
         if (y > y1) y1 = y;
       }
-      if (area === 0) return null;
       return {
         x0,
         x1,
@@ -621,15 +593,16 @@ export function measureFigure(figure, table = 'kim') {
         y1,
         w: x1 - x0 + 1,
         h: y1 - y0 + 1,
-        area,
+        area: cells.length,
         cx: (x0 + x1) / 2,
         cy: (y0 + y1) / 2,
       };
     })
-    .filter((e) => e !== null)
     .filter(
       (e) =>
         e.w >= 0.4 * e.h &&
+        // A blob that joins the two eyes is one eye component, so an undeclared face mark fails
+        // the run with the named error instead of vanishing from the count.
         e.w <= 0.6 * headWidth &&
         e.area >= 0.02 * windowArea &&
         Math.abs(e.cx - W / 2) <= 0.35 * headWidth,
