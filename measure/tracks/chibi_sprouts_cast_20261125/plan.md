@@ -161,10 +161,10 @@ amendment round 2 answer every finding before Red. After round 2, Red starts wit
     `assets["sprout-mom-kim"]` entry of `tests/fixtures/preset-pin.json`). Prettier check passes,
     and every `sources` hash equals the worktree file at `b58aad2`.
 
-- [ ] T1 Red: Pin the measuring options, the tables, the fixtures, the panel script, and the
-      isolation baseline.
-      Files: `tests/proportion-cast-options.test.ts`, `tests/sprout-cast-panel.test.ts`,
-      `tests/cast-isolation.test.ts` (all new).
+- [~] T1 Red: Pin the measuring options, the tables, the fixtures, the panel script, and the
+  isolation baseline.
+  Files: `tests/proportion-cast-options.test.ts`, `tests/sprout-cast-panel.test.ts`,
+  `tests/cast-isolation.test.ts` (all new).
   - `tests/proportion-cast-options.test.ts` asserts:
     1. `--base humanoid-kim-child` reads `assets/parts/humanoid-kim-child.ts`; an absent file exits 1
        with `base humanoid-kim-child: not built` before any import.
@@ -235,6 +235,76 @@ amendment round 2 answer every finding before Red. After round 2, Red starts wit
     passes. `prettier --check` exits 0 on the three files.
   - Record: the case names, which cases are new failing cases and which case is the passing
     regression case, the fixture bodies, and the failure text.
+
+  - Evidence (2026-11-26, worktree `/home/daniebo/Desktop/forge-worktrees/sprouts-cast`, branch
+    `chibi-sprouts-cast`, phase base `5356e78730daefd5225f9733f190dc6bb631b90d`, role base
+    `c562992b18be32bb60a756b63158d713a706aefb`):
+    - Fixture bodies: the proportion cases build a 1024 px front and side figure with explicit
+      `projectedTop`, `projectedSole`, `chinRow`, and landmarks. The bun mask top is 24 px above the
+      projected crown. The wrong-crown projection is 20 px above the mask top. The glasses frame
+      joins the eyes in `#3b2a1e`; the close-colour case uses `#6e4020`. Lily hair is `#7a5230` at
+      the chin, side chin, or eye window. The missing-hair CLI case runs a copied script in
+      `/tmp/opencode` with copied Mom outputs.
+    - Panel fixtures: each temporary `--root` tree holds two 256 × 256 alpha renders per asset,
+      800 × 1600 drawings, one 1600 × 1600 Grandma drawing, and one measure record per asset. The
+      Grandma render plants a bun 16 source px above the crown, which is 56 output px. Destination
+      cases plant links, a directory, and an outside target, then hash the tree.
+    - Commands and results:
+
+      ```bash
+      HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/proportion-cast-options.test.ts tests/sprout-cast-panel.test.ts'
+      # exit 1: both new files fail inside their named cases
+      HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/cast-isolation.test.ts'
+      # exit 0: the isolation regression passes
+      node_modules/.bin/prettier --check tests/proportion-cast-options.test.ts tests/sprout-cast-panel.test.ts tests/cast-isolation.test.ts
+      # exit 0: all matched files use Prettier code style
+      HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-mom-kim.test.ts'
+      # exit 0: the existing Mom pin still passes
+      ```
+
+    - New failing cases in `tests/proportion-cast-options.test.ts`:
+
+      | Case                                                                            | Red failure at `c562992b`                                   |
+      | ------------------------------------------------------------------------------- | ----------------------------------------------------------- |
+      | `child base is checked as a file before any import`                             | `--base` is ignored, so Mom exits 0.                        |
+      | `invalid base stems fail with unknown base before measurement`                  | `--base` is ignored, so Mom exits 0.                        |
+      | `child table is selected and unknown table names are refused`                   | `--table` is ignored, so Mom exits 0 on `kim`.              |
+      | `named record path holds the table rows, lit pairs, base and final hashes`      | `--record` is ignored, so the named file is absent.         |
+      | `TABLES exports the two ordered spec tables`                                    | `TABLES` is undefined.                                      |
+      | `selected table decides 3.00 for child and 3.60 for kim`                        | `checkRows` ignores its table argument and uses `kim`.      |
+      | `row limits cannot override the selected table`                                 | `checkRows` accepts the loose row limits.                   |
+      | `projected crown drives the head rows and the mask guard is one-sided`          | `measureFigure` is not exported.                            |
+      | `measurePixels keeps five figures and measureFigure is the direct fixture seam` | `measureFigure` is not exported.                            |
+      | `bun-above-crown passes and wrong-crown fails the named mask guard`             | `measureFigure` is not exported.                            |
+      | `glasses-frame excludes the declared mark and rejects a close mark colour`      | `measureFigure` is not exported.                            |
+      | `Lily fixtures produce all three named hair guards`                             | `measureFigure` is not exported.                            |
+      | `missing variants.hair exits with hair colour not declared`                     | The Lily hair guard is absent, so copied Mom exits 0.       |
+      | `record links, directories and outside paths are refused without tree changes`  | `--record` is ignored, so Mom exits 0.                      |
+      | `adult base exports the three measured landmark aliases`                        | `BASE_CROWN_Y`, `BASE_CHIN_Y`, and `BASE_HANDS` are absent. |
+
+    - New failing cases in `tests/sprout-cast-panel.test.ts`:
+      `writes one 1416 x 900 panel at the exact cast path`;
+      `three cells share the 700 px band, row 780 baseline and row 80 crown`;
+      `caption changes with the date, row result and crop state`;
+      `bun pixels stay above the body band inside the 56 px headroom`;
+      `sheet is 1544 x 900 with five figures at one scale and one baseline`;
+      `DRAWING_ROWS exports the five fixed drawing pairs`;
+      `1600 px drawing crops to 440 px while its head band fits`;
+      `a head wider than its cell fails with the named line`;
+      `missing render fails with render view not built`;
+      `linked and directory destinations are refused without changing the tree`;
+      `an outside cast target is never followed`;
+      `--asset writes one panel and no sheet`;
+      `--sheet writes the sheet and no panel`;
+      `--all writes five panels and the sheet`;
+      `two mode options fail with the choose-one line`.
+      Every case fails inside the case because `scripts/sprout-cast-panel.mjs` is absent. Node reports
+      `MODULE_NOT_FOUND`; no file-scope import error occurs.
+    - Passing regression: `tests/cast-isolation.test.ts` compares every source SHA-256, the
+      `ADULT`, `AGE5`, and `HERO` values, and Mom's preset. The contract loader uses `tsx`, because
+      Vitest reformats function source text. Functions use the baseline `fn:<source>` format.
+    - Full command output and the final result block:
+      `measure/runs/chibi_sprouts_cast_20261125/red-c562992.log`.
 
 - [ ] T2 Green: Add the options, the tables, the rounded crown, the destinations, the face-mark
       exclusion, and the panel script.
