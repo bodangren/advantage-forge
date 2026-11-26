@@ -9625,9 +9625,9 @@
     }
   ],
   "asset_source_coverage": {
-    "listed": 1083,
+    "listed": 1086,
     "catalog_matched": 809,
-    "off_catalog": 274
+    "off_catalog": 277
   },
   "asset_sources": [
     {
@@ -14007,6 +14007,11 @@
       "catalog_source_ids": []
     },
     {
+      "id": "humanoid-kim-child",
+      "source_path": "assets/parts/humanoid-kim-child.ts",
+      "catalog_source_ids": []
+    },
+    {
       "id": "humanoid-kim",
       "source_path": "assets/parts/humanoid-kim.ts",
       "catalog_source_ids": []
@@ -15526,6 +15531,11 @@
       "catalog_source_ids": []
     },
     {
+      "id": "sprout-lily-kim",
+      "source_path": "assets/sprout-lily-kim.ts",
+      "catalog_source_ids": []
+    },
+    {
       "id": "sprout-lily",
       "source_path": "assets/sprout-lily.ts",
       "catalog_source_ids": []
@@ -15568,6 +15578,11 @@
     {
       "id": "sprout-sam",
       "source_path": "assets/sprout-sam.ts",
+      "catalog_source_ids": []
+    },
+    {
+      "id": "sprout-tom-kim",
+      "source_path": "assets/sprout-tom-kim.ts",
       "catalog_source_ids": []
     },
     {

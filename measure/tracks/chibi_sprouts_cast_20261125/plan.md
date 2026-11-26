@@ -1527,9 +1527,11 @@ limit` gets exit 0 for a 350 px head.
 
 ## Phase 3: The children
 
-- [~] T11 Red: Pin the child base, Tom, and Lily. Commit `5d436c4545c86cad1d08bf9928aae89b8cbb68bb`.
-  Files: `tests/sprout-child-base.test.ts`, `tests/sprout-tom-kim.test.ts`,
-  `tests/sprout-lily-kim.test.ts` (all new).
+- [x] T11 Red: Pin the child base, Tom, and Lily. Commits `5d436c4545c86cad1d08bf9928aae89b8cbb68bb`,
+      `d58a7b5447b4c37448cb847720f750e2a3f165ec`, `8e12dee1d28cabad5a67cd0891a496fcf0b763c1`,
+      `f9c3981182e55445dc0d5b26e0ac0ce129615ad3`, and `f859e7421fdae8bc05f818e332386cf0703a5262`.
+      Files: `tests/sprout-child-base.test.ts`, `tests/sprout-tom-kim.test.ts`,
+      `tests/sprout-lily-kim.test.ts` (all new).
   - `tests/sprout-child-base.test.ts` asserts the fixed landmarks of spec "The landmarks and the
     tolerances" through `BASE_CROWN_Y`, `BASE_CHIN_Y`, `BASE_JOINTS`, and `BASE_HANDS`. Its fixed
     value cases fail on the absent module. Its built-GLB cases — the 17 joints, the built joints
@@ -1592,6 +1594,20 @@ limit` gets exit 0 for a 350 px head.
 
     - Full command output and the result block:
       `measure/runs/chibi_sprouts_cast_20261125/red-aed0bcc.log`.
+
+  - T11 record (2026-11-27):
+    - The five Red commits: `5d436c45` adds the three new pins and the plan record, `d58a7b54`
+      records the T11 completion, `8e12dee1` keeps T11 active for the role gate, `f9c39811` checks
+      the missing base before any import, and `f859e742` records the bounded Red repair.
+    - The logs are `measure/runs/chibi_sprouts_cast_20261125/red-aed0bcc.log` and
+      `measure/runs/chibi_sprouts_cast_20261125/red-420d0b47.log`.
+    - `red-aed0bcc.log` records the three new pins, the expected Red failures on the absent base and
+      the absent assets, Prettier exit 0, `tsc --noEmit` exit 2 with the 51 existing diagnostics,
+      the existing cast regression exit 0, and the mid-Red role gate PASS.
+    - `red-420d0b47.log` records the bounded repair of the missing-base case. The case now uses
+      `humanoid-kim-missing-fixture`, so the file check runs before the import and the measurement.
+      The ten-file cast set exits 0 with 118 passing cases. The Lily pin stays outside that set until
+      T14 delivers her asset.
 
 - [x] T12 Green: The child base. Commit `09966d9ef4763344ea7db77b1077a641f5e22bc4`. File: `assets/parts/humanoid-kim-child.ts` (new).
   - Build the base of spec "The child base": the derived targets at 1.050 m, the 17 adult bone names,
@@ -2162,7 +2178,7 @@ blue`), and the stale `wizard-argon-trial` key stays.
       # exit 2: 51 diagnostics in the baseline files; none sits in the changed file
       ```
 
-- [ ] T15 Measure: The two child look judges.
+- [x] T15 Measure: The two child look judges.
   - The brief, the binding, the input check, and the record are T9's, one per child. The base commit
     and base hash are the shared child base, so a base change voids both child verdicts.
   - Done-when: `judge-<name>.json` exists for Tom and Lily, every judge input of spec "The gate
@@ -2170,6 +2186,36 @@ blue`), and the stale `wizard-argon-trial` key stays.
     phase to the Green task of that character. Round 2 runs only after a failing score or a changed
     input. A second score below 7.5 escalates to the PM.
   - Record: T9's record for each.
+
+  - Record (2026-11-27):
+    - Tom: `measure/runs/chibi_sprouts_cast_20261125/judge-sprout-tom-kim.json`. Round 1 gave
+      identity 7.0 and proportion 8.0, verdict `fail`. Round 2 gave identity 8.0 and proportion 8.5,
+      verdict `pass`.
+    - Lily: `measure/runs/chibi_sprouts_cast_20261125/judge-sprout-lily-kim.json`. Round 1 gave
+      identity 7.0 and proportion 8.0, verdict `fail`. Round 2 gave identity 7.8 and proportion 8.0,
+      verdict `pass`.
+    - Round 2 is the final round for each child, so the round limit of spec decision (l) holds. The
+      round 1 faults are kept in each record, next to the round 2 faults and scores.
+    - Both judges bound the child base commit `1e1d3ab7a13445f9c58f129521c03a400310ea4c`, the base
+      `assets/parts/humanoid-kim-child.ts`, and the base hash
+      `415e0a9b920b656880363e1a49693ec7e627c8242c5e449d3873e97c96d3a905`. That commit equals
+      `git log -1 --format=%H -- assets/parts/humanoid-kim-child.ts`. The base is the base the judges
+      bound.
+    - Tom's asset commit is `58c66c25e8020c5bd948cc3a67c6a975d9cd74d0`. His GLB is
+      `3958d9e788f194825a068ebbe69470760f34a82a452d9e95b3476495c79ac000`, his record is
+      `8a27e45b0cba2e9cd7bc6d6ce400c6453682125b5068269db6f383abb9427795`, and his panel is
+      `734670c7f6856b97f3c5fd43795227000b612782f9712f88917a7d1aad2c5fa0`.
+    - Lily's asset commit is `fc22048b17dd02d31169ff192071293ee571ab3e`. Her GLB is
+      `fbe2232826445103c59a04b8f9bcf7b34a84780123a827bd83dd25b26b48265d`, her record is
+      `e43dd124ab5d200f5e44c5e5b20a7272b1ac761c5516cb1dd555906a9b11435d`, and her panel is
+      `00455629846d6bc70ef506e73098d4d4a62bfd7ebd45e3963e63dbbc2e1c9307`.
+    - Each asset commit equals `git log -1 --format=%H -- assets/<name>.ts`. Each final-round hash
+      equals the file on disk and the field of the measure record. Both records hold 11 of 11 rows,
+      both palms ok, and an empty `guards` array.
+    - The brief told the judge that the hands are the base slab and hold nothing. No round named a
+      proportion fault, and the proportional rows stay inside the child table.
+    - T16 checks every input again at the gate HEAD. A base change after this record voids both
+      child verdicts.
 
 - [ ] T16 Measure: The Phase 3 gate.
   - Done-when: the two pins exit 0, the two judges pass, every judge input of spec "The gate check of
