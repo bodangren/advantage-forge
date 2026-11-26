@@ -1,0 +1,15 @@
+MEASURE_AGENT_RESULT
+role: mid-red
+status: complete
+track: chibi_sprouts_cast_20261125
+phase: Phase 2: The adult variants
+baseline_sha: b48c3df3235d69337aecc90da7db6cd178455eed
+role_base_sha: b48c3df3235d69337aecc90da7db6cd178455eed
+audited_head_sha: 2d5808a79b9dfbdeceafe2cafc566bab5275abb6
+commits: 2d5808a7
+tests_run: targeted adult Red command exit 1 with all cases failing on absent assets; Phase 1 tools, isolation, Mom pin, and Mom validation exit 0; Prettier exit 0; tsc exit 2 with 51 baseline diagnostics and zero in the three new files; mid-red role-gate PASS
+files_changed: tests/sprout-dad-kim.test.ts; tests/sprout-grandma-kim.test.ts; tests/sprout-grandpa-kim.test.ts; measure/tracks/chibi_sprouts_cast_20261125/plan.md; measure/runs/chibi_sprouts_cast_20261125/red-b48c3df3.log
+plan_updates: T5 is marked in progress and records the commands, exit codes, case names, and absent-asset causes
+known_failures: Dad, Grandma, and Grandpa measurement cases exit 1 with asset <name>: not built; each inventory and identity/preset case fails on the absent assets/<name>.ts; tsc retains 51 baseline diagnostics and none in the new files
+handoff: Green owns T6 to T8. The tests require the exact Kim table, absolute adult landmarks, base and preset isolation, built inventory, face layer, hair cases, Grandma bun, and Grandpa glasses and moustache. No production file changed. The mid-red role-gate passes at 2d5808a7.
+END_MEASURE_AGENT_RESULT

@@ -1,0 +1,15 @@
+MEASURE_AGENT_RESULT
+role: mid-red
+status: complete
+track: chibi_sprouts_cast_20261125
+phase: Phase 2: The adult variants
+baseline_sha: b48c3df3235d69337aecc90da7db6cd178455eed
+role_base_sha: 2d5808a79b9dfbdeceafe2cafc566bab5275abb6
+audited_head_sha: d519ae1fcb4ee305813f0fe04ba5c8bc54b2c957
+commits: d519ae1f
+tests_run: adult pins exit 0 with all cases passing against Green's uncommitted assets; Phase 1 tools, isolation, Mom pin, and Mom validation exit 0; Prettier exit 0; tsc exit 2 with 51 baseline diagnostics and zero in the three repaired files
+files_changed: tests/sprout-dad-kim.test.ts; tests/sprout-grandma-kim.test.ts; tests/sprout-grandpa-kim.test.ts; measure/tracks/chibi_sprouts_cast_20261125/plan.md; measure/runs/chibi_sprouts_cast_20261125/red-2d5808a7.log
+plan_updates: T5 records the tolerance repair and verification; Green's uncommitted T6 marker stays unstaged
+known_failures: none in the adult, Phase 1, isolation, or Mom tests; tsc retains 51 baseline diagnostics and none in the repaired files
+handoff: The Red defect is closed. Each joint element now uses toBeCloseTo with six digits, including the immutable head value 1.1780000000000002. No Green defect remains in the run. Green's assets, preset pin, and T6 marker were preserved and not staged.
+END_MEASURE_AGENT_RESULT
