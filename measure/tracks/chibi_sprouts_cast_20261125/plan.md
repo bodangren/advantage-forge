@@ -650,7 +650,7 @@ panels and the sheet`. The second case expects the refusal to name `sprout-tom-k
       - The PM may instead amend the spec, so that the sheet limit accepts a head of 339.5 px and
         refuses a head of 350 px. Green does not choose that limit without the amendment.
 
-- [~] T3 Measure: One adversarial round on the two scripts.
+- [x] T3 Measure: One adversarial round on the two scripts.
   - It reads the T2 commit and attacks the table selection, the row-limit rule, the base name, the
     record and panel destinations, the crown rounding and mask tolerance, the face-mark exclusion,
     the Lily guards, the panel scale and headroom, the horizontal crop and the head-fit rule, the
@@ -781,6 +781,35 @@ limit` gets exit 0 for a 350 px head.
 
     - No Green finding remains in these cases. The full result block is
       `measure/runs/chibi_sprouts_cast_20261125/red-62258e9.log`.
+
+  - T3 record (2026-11-26). The audited scripts are `scripts/proportion-check.mjs` and
+    `scripts/sprout-cast-panel.mjs`. Three rounds ran. The JSON and the log of each round are in
+    `measure/runs/chibi_sprouts_cast_20261125/`.
+    - Round 1: `adversarial-9adcc72e.json`, audited commit
+      `9adcc72e79e2184eaa391c39bf1d1dc7b95ba980`, verdict `fail`, with Blockers F1, F2, and F3.
+      The round also raised F4 to F17.
+    - Round 2: `adversarial-70ebbfb.json`, audited commit
+      `70ebbfbe05ea910e3893154f2e66caabf22073ec`, verdict `fail`, with Blocker F3 and the new
+      findings F18, F19, and F20.
+    - Round 3: `adversarial-9af8f65.json`, audited commit
+      `9af8f652f99ea0e0e872806e1cf0f65660d1e774`, verdict `pass`, no Blocker.
+    - Round 3 closed F3, F7, F18, F19, and the empty option value of F6 on real input. F1, F2, and
+      F8 to F11 did not regress. The evidence: 102 of 102 cases pass, the five real drawings write
+      five panels and the sheet, Mom's eleven rows and her five artifact hashes did not move, and
+      Prettier exits 0.
+  - The Red commits are `ad43039a`, `ba0b353b`, `622a0fa5`, `154ebc47`, and `766c2655`. The Green
+    commits are `41458a54`, `3aabca1c`, `8b250951`, `77fad41f`, and `a3040c95`. The commit
+    `9af8f652` records the Red fixture repair of `766c2655`.
+  - The PM decisions:
+    - F4 (commit `5c93345f`) makes the code reading the contract of the face-mark exclusion.
+    - F5 and F12 (commit `9fee6e88`) keep the eye-component width limit at 0.60 of the head width
+      and the clamped nearest-neighbour sampling.
+    - Option A (`766c2655`, T3 note) keeps the 264 px sheet head-fit limit of the spec and fits the
+      Red sheet fixture to it.
+  - The nine late findings F13 to F17, F20, F21, F22, and F23 are not closed in Phase 1. They are
+    the rows TD-57 to TD-65 of `measure/tech-debt.md`, and their fix is out of scope for this phase.
+  - T3 is `[x]`. T4 stays open, because the Phase 1 gate needs its own gate run, generate run, and
+    doctor run.
 
 - [ ] T4 Measure: The Phase 1 gate.
   - Done-when:
