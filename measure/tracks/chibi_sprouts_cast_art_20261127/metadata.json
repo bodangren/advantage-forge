@@ -1,0 +1,26 @@
+{
+  "track_id": "chibi_sprouts_cast_art_20261127",
+  "type": "feature",
+  "status": "in_progress",
+  "lane": "light",
+  "created_at": "2026-11-27T00:00:00Z",
+  "updated_at": "2026-11-27T00:00:00Z",
+  "description": "Produce the Chibi Sprouts release 1 cut-outs (900 px or taller, transparent, front view) and the 128 px idle sprites for Dad, Grandma, Grandpa, Tom and Lily, with one look judge per character at 7.5 and no customer-facing claim",
+  "estimated_tasks": 10,
+  "actual_tasks": null,
+  "deviation_notes": "Created 2026-11-27 from QUEUE.md item 3 and the PM decision that the cast model work is done and merged. The cast track chibi_sprouts_cast_20261125 was accepted by the PM at T19 on 2026-11-27 and its closeout is in flight. Mom's cut-out and 128 px idle sprite are the precedent (redesign track Phase 9, T13 and T14). This track reuses the same tools and gates: ./forge cutout at 900 px per metre with a 1024x1500 canvas, ./forge sprites with --clip idle --cell, scripts/cutout-check.mjs, the nvidia/nvidia/nemotron-3.5-super-vl-120b-a12b look judge at a 7.5 pass line, and the heavy runner for every textured command. It changes no source, no script, and no test, so it runs no Red, Green, adversarial, or review role. New builds and outputs go in a new worktree /home/daniebo/Desktop/forge-worktrees/sprouts-cast-art on branch chibi-sprouts-cast-art, prepared by T0; the cast builds exist only in the sprouts-cast worktree. The known limit is the cut-out check's 4 px foot row: Dad and Grandpa reach -0.007 m (6 px) and Lily reaches -0.010 m (9 px) at 900 px per metre, so decision (f) accepts that one line alone with its arithmetic recorded. No character is reshaped without the PM. No customer-facing claim is made.",
+  "workstream": "assets",
+  "retrospective": false,
+  "evidence": [
+    "QUEUE.md",
+    "measure/archive/chibi_sprouts_cast_20261125/plan.md",
+    "measure/archive/chibi_sprouts_redesign_20261123/plan.md",
+    "measure/runs/chibi_sprouts_redesign_20261123/judge-p9-bf4158a.json",
+    "src/cli/forge.ts",
+    "src/render/cutout.ts",
+    "scripts/cutout-check.mjs",
+    "assets/parts/humanoid-kim.ts",
+    "assets/parts/humanoid-kim-child.ts"
+  ],
+  "dependencies": ["chibi_sprouts_cast_20261125", "chibi_sprouts_redesign_20261123"]
+}

@@ -70,6 +70,9 @@ This registry gives each historical, current, and planned work item one Measure 
 - [~] **Track: Chibi Sprouts, release 1 art**
   *Link: [./tracks/asset_chibi_sprouts_r1_20261022/](./tracks/asset_chibi_sprouts_r1_20261022/)*
 
+- [~] **Track: Chibi Sprouts cast art: the five cut-outs and the 128 px idle sprites**
+  *Link: [./tracks/chibi_sprouts_cast_art_20261127/](./tracks/chibi_sprouts_cast_art_20261127/)*
+
 ## Games
 
 - [~] **Track: Remove the legacy games from the monorepo**
