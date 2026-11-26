@@ -648,6 +648,34 @@ destination is refused without changing its target` exits 0 and overwrites the t
     - New findings: F18 (Major, the temp file of the atomic write), F7 (Major, the head-fit reads
       the median row width), F19 and F20 (Nit). F13 to F17 are carried.
     - T3 stays `[~]`. Phase 2 waits for the close of F3, F18, and F7 and for a passing round.
+  - Red fix pins after adversarial round 2 (2026-11-26, role base
+    `70ebbfbe05ea910e3893154f2e66caabf22073ec`):
+    - F3: `F3 sheet caption includes the fifth cell crop state inside the sheet width` leaves the
+      caption bytes unchanged when only Lily's crop state changes. `F3 sheet uses the 264 px head-fit
+limit` gets exit 0 for a 350 px head.
+    - F7: `F7 head-fit uses the widest run rather than the median row` gets exit 0 for the 472 px
+      widest row. `F7 crop state reads yes when an off-axis arm tip is cut` prints `cropped: no`.
+    - F18: `F18 a planted temp-path symlink never overwrites the outside target` overwrites the
+      outside target through the predictable temporary name.
+    - F19: `F19 a record without chinRow is refused by name` gets exit 0 and writes a panel.
+    - Commands and exit codes:
+
+      ```bash
+      HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-cast-panel.test.ts'
+      # exit 1: the new F3, F7, F18, and F19 cases fail for the named reasons
+      HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/proportion-cast-options.test.ts'
+      # exit 0
+      HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/cast-isolation.test.ts'
+      # exit 0
+      HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-mom-kim.test.ts'
+      # exit 0
+      HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-mom-kim.validation.test.ts'
+      # exit 0
+      node_modules/.bin/prettier --check tests/sprout-cast-panel.test.ts tests/proportion-cast-options.test.ts tests/cast-isolation.test.ts
+      # exit 0
+      ```
+
+    - The full result block is `measure/runs/chibi_sprouts_cast_20261125/red-70ebbfb.log`.
 
 - [ ] T4 Measure: The Phase 1 gate.
   - Done-when:

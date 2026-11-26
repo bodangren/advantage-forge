@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
-import { spawnSync } from 'node:child_process';
+import { spawn, spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import {
   copyFileSync,
@@ -77,12 +77,12 @@ let root: string;
 let castDir: string;
 const outsideArtifacts: string[] = [];
 
-function runPanel(args: string[]): RunResult {
+function runPanel(args: string[], extraEnv: NodeJS.ProcessEnv = {}): RunResult {
   const result = spawnSync(process.execPath, [SCRIPT, ...args, '--root', root], {
     cwd: ROOT,
     encoding: 'utf8',
     timeout: 300_000,
-    env: { ...process.env, HEAVY_MIN_AVAIL_MB: '1500' },
+    env: { ...process.env, ...extraEnv, HEAVY_MIN_AVAIL_MB: '1500' },
   });
   const error = result.error ? `\n${result.error.message}` : '';
   return { status: result.status, output: `${result.stdout || ''}${result.stderr || ''}${error}` };
@@ -138,6 +138,21 @@ function fillRect(
       put(data, width, height, x, y, colour);
 }
 
+function fillEllipse(
+  data: Buffer,
+  width: number,
+  height: number,
+  cx: number,
+  cy: number,
+  rx: number,
+  ry: number,
+  colour: number[],
+): void {
+  for (let y = Math.max(0, Math.ceil(cy - ry)); y <= Math.min(height - 1, Math.floor(cy + ry)); y += 1)
+    for (let x = Math.max(0, Math.ceil(cx - rx)); x <= Math.min(width - 1, Math.floor(cx + rx)); x += 1)
+      if (((x - cx) / rx) ** 2 + ((y - cy) / ry) ** 2 <= 1) put(data, width, height, x, y, colour);
+}
+
 async function writeRender(
   file: string,
   colour: number[],
@@ -184,6 +199,52 @@ async function writeWideHeadRender(file: string): Promise<void> {
   const data = Buffer.alloc(width * height * 4);
   fillRect(data, width, height, 10, 40, 246, 120, RED);
   fillRect(data, width, height, 100, 120, 156, 240, RED);
+  await sharp(data, { raw: { width, height, channels: 4 } })
+    .png()
+    .toFile(file);
+}
+
+async function writeSheetLimitHeadRender(file: string): Promise<void> {
+  const width = 256;
+  const height = 256;
+  const data = Buffer.alloc(width * height * 4);
+  fillRect(data, width, height, 78, 40, 177, 120, RED);
+  fillRect(data, width, height, 118, 120, 138, 240, RED);
+  await sharp(data, { raw: { width, height, channels: 4 } })
+    .png()
+    .toFile(file);
+}
+
+/** The median row is 409 px, but the widest row is 472 px at the panel scale. */
+async function writeMedianTrapRender(file: string): Promise<void> {
+  const width = 256;
+  const height = 256;
+  const data = Buffer.alloc(width * height * 4);
+  fillEllipse(data, width, height, 128, 80, 67.5, 40, RED);
+  fillRect(data, width, height, 118, 120, 138, 240, RED);
+  await sharp(data, { raw: { width, height, channels: 4 } })
+    .png()
+    .toFile(file);
+}
+
+async function writeCropStateRender(file: string, wide: boolean): Promise<void> {
+  const width = 256;
+  const height = 256;
+  const data = Buffer.alloc(width * height * 4);
+  fillRect(data, width, height, 108, 40, 148, 120, RED);
+  fillRect(data, width, height, wide ? 58 : 108, 120, wide ? 198 : 148, 240, RED);
+  await sharp(data, { raw: { width, height, channels: 4 } })
+    .png()
+    .toFile(file);
+}
+
+/** The whole mask is narrower than the window, but the off-axis arm tip is cut. */
+async function writeOffAxisArmRender(file: string): Promise<void> {
+  const width = 256;
+  const height = 256;
+  const data = Buffer.alloc(width * height * 4);
+  fillRect(data, width, height, 190, 40, 230, 120, RED);
+  fillRect(data, width, height, 120, 120, 230, 240, RED);
   await sharp(data, { raw: { width, height, channels: 4 } })
     .png()
     .toFile(file);
@@ -318,6 +379,16 @@ function colourBounds(
   return { minX, maxX, minY, maxY, count };
 }
 
+function lastInkColumn(raw: RawPanel, y0: number, y1: number): number {
+  let last = -1;
+  for (let y = y0; y <= y1; y += 1)
+    for (let x = 0; x < raw.width; x += 1) {
+      const i = (y * raw.width + x) * raw.channels;
+      if (raw.data[i]! < 254 || raw.data[i + 1]! < 254 || raw.data[i + 2]! < 254) last = x;
+    }
+  return last;
+}
+
 const isRed = (r: number, g: number, b: number) => r > 180 && g < 90 && b < 90;
 const isGreen = (r: number, g: number, b: number) => g > 140 && r < 100 && b < 120;
 const isBlue = (r: number, g: number, b: number) => b > 170 && r < 110 && g < 150;
@@ -441,6 +512,31 @@ describe('sprout cast panel and sheet (Red pin)', () => {
     expect(existsSync(join(castDir, 'cast-sheet.png'))).toBe(false);
   });
 
+  it('F3 sheet caption includes the fifth cell crop state inside the sheet width', async () => {
+    const file = join(castDir, 'cast-sheet.png');
+    const lily = join(root, 'out', 'sprout-lily-kim', 'views', 'front-level.png');
+    await writeCropStateRender(lily, true);
+    const first = runPanel(['--sheet', '--date', DATE]);
+    expect(first.status, first.output).toBe(0);
+    const caption = await captionBuffer(file, 1544);
+    const raw = await rawPanel(file);
+    expect(lastInkColumn(raw, 804, 899)).toBeLessThanOrEqual(1519);
+
+    await writeCropStateRender(lily, false);
+    const second = runPanel(['--sheet', '--date', DATE]);
+    expect(second.status, second.output).toBe(0);
+    expect((await captionBuffer(file, 1544)).equals(caption)).toBe(false);
+  });
+
+  it('F3 sheet uses the 264 px head-fit limit', async () => {
+    await writeSheetLimitHeadRender(join(root, 'out', 'sprout-dad-kim', 'views', 'front-level.png'));
+    const result = runPanel(['--sheet', '--date', DATE]);
+    expect(result.status, result.output).toBe(1);
+    expect(result.output).toContain('figure wider than its cell: sprout-dad-kim');
+    expectOneLine(result.output);
+    expect(existsSync(join(castDir, 'cast-sheet.png'))).toBe(false);
+  });
+
   it('F3 sheet prints and captions cropped state for every cell', async () => {
     const file = join(castDir, 'cast-sheet.png');
     const first = runPanel(['--sheet', '--date', DATE]);
@@ -486,6 +582,21 @@ describe('sprout cast panel and sheet (Red pin)', () => {
     expect(head.maxX - head.minX + 1).toBeLessThanOrEqual(expected + 4);
     expect(head.minX).toBeGreaterThanOrEqual(960);
     expect(head.maxX).toBeLessThanOrEqual(1383);
+  });
+
+  it('F7 head-fit uses the widest run rather than the median row', async () => {
+    await writeMedianTrapRender(join(root, 'out', 'sprout-dad-kim', 'views', 'front-level.png'));
+    const result = runPanel(['--asset', 'sprout-dad-kim', '--date', DATE]);
+    expect(result.status, result.output).toBe(1);
+    expect(result.output).toContain('figure wider than its cell: sprout-dad-kim');
+    expectOneLine(result.output);
+  });
+
+  it('F7 crop state reads yes when an off-axis arm tip is cut', async () => {
+    await writeOffAxisArmRender(join(root, 'out', 'sprout-dad-kim', 'views', 'front-level.png'));
+    const result = runPanel(['--asset', 'sprout-dad-kim', '--date', DATE]);
+    expect(result.status, result.output).toBe(0);
+    expect(result.output).toMatch(/panel cell: sprout-dad-kim cropped: yes,/);
   });
 
   it('1600 px drawing crops to 440 px while its head band fits', async () => {
@@ -641,6 +752,54 @@ describe('sprout cast panel and sheet (Red pin)', () => {
     expectOneLine(result.output);
     expect(hashTree(root)).toBe(before);
     expect(sha256(outside)).toBe(targetBefore);
+  });
+
+  it('F18 a planted temp-path symlink never overwrites the outside target', async () => {
+    const outside = join(SCRATCH, `sprout-panel-temp-target-${process.pid}.png`);
+    outsideArtifacts.push(outside);
+    writeFileSync(outside, 'keep\n');
+    const dest = join(castDir, 'sprout-dad-kim-panel.png');
+    const targetBefore = sha256(outside);
+    const child = spawn(
+      process.execPath,
+      [SCRIPT, '--asset', 'sprout-dad-kim', '--date', DATE, '--root', root],
+      {
+        cwd: ROOT,
+        env: { ...process.env, HEAVY_MIN_AVAIL_MB: '1500' },
+        stdio: ['ignore', 'pipe', 'pipe'],
+      },
+    );
+    expect(child.pid).toBeTypeOf('number');
+    symlinkSync(outside, `${dest}.tmp-${child.pid}`);
+    let stdout = '';
+    let stderr = '';
+    child.stdout.on('data', (chunk) => (stdout += chunk));
+    child.stderr.on('data', (chunk) => (stderr += chunk));
+    const status = await new Promise<number | null>((resolve, reject) => {
+      child.on('error', reject);
+      child.on('close', resolve);
+    });
+    const output = `${stdout}${stderr}`;
+    const targetAfter = sha256(outside);
+    const panelIsLink = existsSync(dest) && lstatSync(dest).isSymbolicLink();
+    const safeSuccess = status === 0 && targetAfter === targetBefore && !panelIsLink;
+    const namedRejection =
+      status === 1 && /destination is a link|temp.*(exists|link)|refuse.*temp/i.test(output);
+    expect(targetAfter, output).toBe(targetBefore);
+    expect(safeSuccess || namedRejection, output).toBe(true);
+  });
+
+  it('F19 a record without chinRow is refused by name', async () => {
+    await writeWideHeadRender(join(root, 'out', 'sprout-dad-kim', 'views', 'front-level.png'));
+    const recordPath = join(castDir, 'sprout-dad-kim-measure.json');
+    const record = JSON.parse(readFileSync(recordPath, 'utf8'));
+    delete record.detail.chinRow;
+    writeFileSync(recordPath, `${JSON.stringify(record, null, 2)}\n`);
+    const result = runPanel(['--asset', 'sprout-dad-kim', '--date', DATE]);
+    expect(result.status, result.output).toBe(1);
+    expect(result.output).toContain('record sprout-dad-kim: no chin row');
+    expectOneLine(result.output);
+    expect(existsSync(join(castDir, 'sprout-dad-kim-panel.png'))).toBe(false);
   });
 
   it('--asset writes one panel and no sheet', () => {
