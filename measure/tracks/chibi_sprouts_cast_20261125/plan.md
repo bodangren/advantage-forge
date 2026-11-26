@@ -90,8 +90,7 @@ amendment round 2 answer every finding before Red. After round 2, Red starts wit
 
 ## Phase 1: The measuring tools
 
-- [x] T0 Measure: Prepare the worktree outputs and the baselines. Commit
-      `c562992b18be32bb60a756b63158d713a706aefb`.
+- [x] T0 Measure: Prepare the worktree outputs and the baselines. Commit `c562992b18be32bb60a756b63158d713a706aefb`.
   - Build and render Mom in the worktree `out/`, in this order (spec "The output tree"):
     `./forge build sprout-mom-kim --fast`, then the flat level render, then the lit level render.
   - Write `tests/fixtures/cast-baseline.json` from the track base commit `b58aad2`: one SHA-256 per
