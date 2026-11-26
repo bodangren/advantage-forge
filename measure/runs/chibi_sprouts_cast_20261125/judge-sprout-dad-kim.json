@@ -1,0 +1,79 @@
+{
+  "model_id": "nvidia/nvidia/nemotron-3.5-super-vl-120b-a12b",
+  "model_family": "nvidia",
+  "red_family": "hungerg",
+  "green_family": "minimax",
+  "asset_path": null,
+  "asset_commit": "3cd8582a1cd6a5d0c5a154e84d87f2d7fb29de98",
+  "base_path": null,
+  "base_commit": "41458a54a0282af2e062a1ed8a213f71856d7a40",
+  "base_sha256": "769a80a9b3f5c30ec2fb6a10691b022aafa4b840180f99b054fd39b41b45e268",
+  "asset_sha256": "896d889b3e2db721a647b371b97f714e0e6a2151787ad9c4bd5b21b19d1fea61",
+  "record_sha256": "f36096cc1cf8a3180fbeffa1362222a234451fae1e5e2543b09d7a87bc7b420d",
+  "render_sha256": {
+    "flatFront": "7c50a8adfe311f2744f8635749ff32e97b7407d5e42ad6134f837836b4536450",
+    "flatSide": "f8f483e3688fd45295a2c493851ca5013ea3cf9c907dba476db70a3ba8a9af8b",
+    "litFront": "9d6c98d9b373debfdca8245041e49158c7413a2c417e7743ee2c12d34a5f5270",
+    "litSide": "3817f50ea82ee88a19b8e324706b08f927b379ac6f8462e86d0c6e5b72639153"
+  },
+  "panel_path": null,
+  "panel_sha256": "26513ebbcafa31e1646444e4c68d983b2f52b9473a4fd2c02378ec989b12993e",
+  "identity_score": 7.7,
+  "identity_comment": null,
+  "proportion_score": 8.2,
+  "proportion_comment": null,
+  "round": 2,
+  "verdict": "pass",
+  "judged_at": "2026-11-26",
+  "pass_line": 7.5,
+  "faults": [
+    "face simplification",
+    "hair silhouette (short rounded vs swept-up)",
+    "flannel without pockets"
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "asset_commit": "bae2072671011b3115fa54d29ea81e62eddaeec6",
+      "asset_sha256": "6de052e7346d61aad7dc5280443e48f20b0539ff158b02edb2b75c3559e40753",
+      "record_sha256": "7242eb08c14416e96dc054162c4d13bce38ea1faa6df15f0877af349f947e80f",
+      "render_sha256": {
+        "flatFront": "84e4238bd08a95693b17006e22e90f7d72577f6e6db76915e89db1b748c37c38",
+        "flatSide": "ef82f331d9019c7bb7762de9a822d5f2c1a1e76b7c0e5f930a0be779fda4a10f",
+        "litFront": "2c51d7969c14cd5c2c553e9dc8f71201f64b51d0748f5f27aadc2541078d1aca",
+        "litSide": "2ac61c4a96f39b25c93ec75a4511d0dfcade2dfad7dc13c3ca6cf3a740e43cb8"
+      },
+      "panel_sha256": "7455dbeadd0357f883f22fbead6eb1379fc0572ca56213533a8b35c5dc19f244",
+      "identity_score": 7.0,
+      "proportion_score": 8.2,
+      "verdict": "fail",
+      "faults": [
+        "black beanie",
+        "closed shirt",
+        "hands read as sticks"
+      ]
+    },
+    {
+      "round": 2,
+      "asset_commit": "3cd8582a1cd6a5d0c5a154e84d87f2d7fb29de98",
+      "asset_sha256": "896d889b3e2db721a647b371b97f714e0e6a2151787ad9c4bd5b21b19d1fea61",
+      "record_sha256": "f36096cc1cf8a3180fbeffa1362222a234451fae1e5e2543b09d7a87bc7b420d",
+      "render_sha256": {
+        "flatFront": "7c50a8adfe311f2744f8635749ff32e97b7407d5e42ad6134f837836b4536450",
+        "flatSide": "f8f483e3688fd45295a2c493851ca5013ea3cf9c907dba476db70a3ba8a9af8b",
+        "litFront": "9d6c98d9b373debfdca8245041e49158c7413a2c417e7743ee2c12d34a5f5270",
+        "litSide": "3817f50ea82ee88a19b8e324706b08f927b379ac6f8462e86d0c6e5b72639153"
+      },
+      "panel_sha256": "26513ebbcafa31e1646444e4c68d983b2f52b9473a4fd2c02378ec989b12993e",
+      "identity_score": 7.7,
+      "proportion_score": 8.2,
+      "verdict": "pass",
+      "faults": [
+        "face simplification",
+        "hair silhouette (short rounded vs swept-up)",
+        "flannel without pockets"
+      ]
+    }
+  ],
+  "note": "Null fields were not supplied by the task: asset_path, base_path, panel_path, identity_comment, proportion_comment. The faults list is recorded as given, without a per-score comment split."
+}

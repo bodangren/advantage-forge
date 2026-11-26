@@ -695,8 +695,8 @@ rounds and both comments and reports to the PM. No third family substitutes.
 Every phase gate that accepts a judge re-reads the final inputs and compares them with the record,
 at the gate HEAD:
 
-1. `git rev-parse HEAD -- <asset_path>` equals `asset_commit`.
-2. `git rev-parse HEAD -- <base_path>` equals `base_commit`, and the SHA-256 of the base file equals
+1. `git log -1 --format=%H -- <asset_path>` equals `asset_commit`.
+2. `git log -1 --format=%H -- <base_path>` equals `base_commit`, and the SHA-256 of the base file equals
    `base_sha256`. This clause covers the shared child base, so a base change after Tom cannot leave a
    stale Tom verdict.
 3. The SHA-256 of the GLB equals `asset_sha256` and `record.glbSha256`.
