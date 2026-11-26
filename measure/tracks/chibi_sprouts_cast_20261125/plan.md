@@ -943,6 +943,17 @@ limit` gets exit 0 for a 350 px head.
     - The Phase 1 tools, isolation baseline, Mom pin, and Mom validation command exits 0.
     - Result block: `measure/runs/chibi_sprouts_cast_20261125/red-b48c3df3.log`.
 
+  - Red repair (2026-11-26, role base `2d5808a79b9dfbdeceafe2cafc566bab5275abb6`):
+    - The three pins now compare every joint element with `toBeCloseTo(..., 6)`.
+    - This accepts the immutable base value `KIM.chin + 0.09 = 1.1780000000000002`.
+    - No other assertion changed. The built-joint checks use the same six-digit tolerance.
+    - The adult command exits 0 with Green's uncommitted assets and preset pin in the worktree.
+    - The Phase 1 tools, isolation baseline, Mom pin, and Mom validation command exits 0.
+    - Prettier exits 0 on the three test files.
+    - `tsc --noEmit` exits 2 with 51 existing diagnostics and none in the three test files.
+    - No adult case remains failing. The result block is
+      `measure/runs/chibi_sprouts_cast_20261125/red-2d5808a7.log`.
+
 - [ ] T6 Green: Dad. File: `assets/sprout-dad-kim.ts` (new).
   - Build the identity of the spec: black swept-back hair, square jaw, thick brows, open smile, a
     red-and-black plaid shirt over a white tee, dark blue jeans, and brown boots. Import `buildKim`

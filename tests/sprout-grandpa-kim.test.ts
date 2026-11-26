@@ -299,7 +299,8 @@ describe(`${NAME} adult pin`, () => {
       expect(collected.skeleton).not.toBeNull();
       expect(Object.keys(collected.skeleton!).sort()).toEqual([...BONE_NAMES].sort());
       for (const [bone, expected] of Object.entries(ABSOLUTE_JOINTS)) {
-        expect(collected.skeleton![bone]!.at, bone).toEqual(expected);
+        const actual = collected.skeleton![bone]!.at;
+        for (let c = 0; c < 3; c += 1) expect(actual[c], `${bone}[${c}]`).toBeCloseTo(expected[c]!, 6);
       }
       expect([...collected.animations.keys()]).toEqual(['idle']);
 
@@ -343,7 +344,7 @@ describe(`${NAME} adult pin`, () => {
         const actual = worldPosition(glb, bone);
         expect(actual, `built joint ${bone}`).not.toBeNull();
         for (let c = 0; c < 3; c += 1)
-          expect(actual![c], `built joint ${bone}[${c}]`).toBeCloseTo(expected[c]!, 5);
+          expect(actual![c], `built joint ${bone}[${c}]`).toBeCloseTo(expected[c]!, 6);
       }
     },
   );
