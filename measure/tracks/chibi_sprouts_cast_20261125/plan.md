@@ -1648,7 +1648,8 @@ limit` gets exit 0 for a 350 px head.
 
     - The built-GLB cases of the same file need Tom's GLB, so they run at T13.
 
-- [x] T13 Green: Tom. Commit `1e1d3ab7a13445f9c58f129521c03a400310ea4c`. File: `assets/sprout-tom-kim.ts` (new). The commit also changes `assets/parts/humanoid-kim-child.ts` (the base edits that the render forced) and `tests/fixtures/preset-pin.json` (one new key).
+- [x] T13 Green: Tom. Commits `1e1d3ab7a13445f9c58f129521c03a400310ea4c` (the first build) and
+      `58c66c25e8020c5bd948cc3a67c6a975d9cd74d0` (the look round 2). File: `assets/sprout-tom-kim.ts` (new). The commit also changes `assets/parts/humanoid-kim-child.ts` (the base edits that the render forced) and `tests/fixtures/preset-pin.json` (one new key).
   - Build the identity of the spec on the child base: brown tousled hair with a side tuft, freckles,
     an open smile, a blue-and-orange striped tee, green shorts, white socks, and grey sneakers. The
     freckles are paint on the child face. Declare `variants` with a `hair` slot, one preset `tom`,
@@ -1795,6 +1796,118 @@ import` runs the real script on the real tree and expects the output
       for the absent case. The case needs a scratch tree without the child base, or another absent
       base stem. The full cast run of 2026-11-26 exits 1 with that one case failing and 117 of 118
       cases passing over 10 files.
+
+  - Look round 2 evidence (2026-11-27, worktree `/home/daniebo/Desktop/forge-worktrees/sprouts-cast`,
+    branch `chibi-sprouts-cast`, phase base `aed0bcc0c3562de1def0242a29d35dd3dca31b68`, role base
+    `acb3afbbd924626a708a1d6cef64b9a3ba63d12a`, implementation commit
+    `58c66c25e8020c5bd948cc3a67c6a975d9cd74d0`, Green route
+    `minimax-cn-coding-plan/MiniMax-M3.1-Flash`, family minimax):
+    - The look judge of round 1 scored identity 7.0 and proportion 8.0. It named three faults: the
+      hair was a smooth dome, the mouth was a closed dark red line, and the face lacked defined
+      eyebrows and a rosy cheek blush. Round 2 changes `assets/sprout-tom-kim.ts` only. The child
+      base, the scripts, the tests, the adults, and the preset pin stay as they were.
+    - The eleven rows of `TABLES.child` from `out/chibi-sprouts/cast/sprout-tom-kim-measure.json`:
+      `heightInHeads 2.896611`, `armToTorso 1.231832`, `legShare 0.335215`, `headToShoulders
+2.175515`, `wrist -0.124088`, `fingertips 0.430649`, `eyeLine 0.645125`, `eyeHeight 0.138702`,
+      `spacingHead 0.308917`, `eyeWidthFace 0.233503`, `spacingFace 0.492386`. Every row sits inside
+      the child table, every row limit equals the table, both palms are ok, and the `guards` array is
+      empty.
+    - The three fixes of the judge:
+      - The hair is spiky and swept up. Ten pointed locks leave the crown: four sweep up to the
+        character's left, one cowlick points up to the character's right, one side lock breaks the
+        round dome at the top left, one back lock breaks the round mass in the side view, two fringe
+        locks sweep over the brow, and two side locks fall in front of the ears. The blend radius is
+        0.006 m, so the locks keep their points.
+      - The mouth is an open toothy smile. The mouth cavity and the band of teeth are two painted
+        profiles on the face layer, and no mouth is a separate body. The mouth is 0.104 m wide and
+        0.034 m deep, and it sits at 0.729 m, below the nose.
+      - The brows are 0.050 m long and 0.019 m thick, and each cheek carries a rosy blush of
+        `#e8786a` over smaller freckles. The blush keeps a relative luminance of 0.56, so it stays
+        out of the eye window of the proportion script.
+    - The three look rounds, read from the flat front render against `docs/sprout-mockups/tom.jpg`:
+      1. the first build of round 2 gave a spiky crown but a flat dome on the character's right, a
+         narrow mouth, and a blotchy blush; so the locks leaned to the character's left, the mouth
+         grew wider and deeper, and the blush grew and softened.
+      2. the second build of round 2 kept a round dome on the character's right and a smooth mass in
+         the side view; so a side lock and a back lock were added, and the freckles shrank.
+      3. the final render reads as Tom: spiky swept-up brown hair, an open toothy smile, thick brows,
+         a rosy cheek blush, freckles, a blue-and-orange striped tee, green shorts, white socks, and
+         grey sneakers.
+    - The GLB stats: `sprout-tom-kim: 41,529 triangles, 0.366 x 1.09 x 0.294 m`, 17 bones, one `idle`
+      clip of 2.4 s, 15 bodies (`head-skin`, `torso-skin`, `arms-skin`, `legs-skin`, `feet-skin`,
+      `hands`, `face`, `hair`, `tee`, `collar`, `shorts`, `socks`, `sneakers`, `sneaker-sole`,
+      `laces`).
+    - The five artifact hashes, taken after the lit render:
+
+      | Artifact                | SHA-256                                                            |
+      | ----------------------- | ------------------------------------------------------------------ |
+      | `sprout-tom-kim.glb`    | `3958d9e788f194825a068ebbe69470760f34a82a452d9e95b3476495c79ac000` |
+      | `flat/front-level.png`  | `838166a61aabc54e823d143eb59110c07e4fad70529b7ae4225aaf5901aad6c1` |
+      | `flat/side-level.png`   | `424ecb2d3e8e77b1e12065d1149b295acb4a8644cd05c22ec1dabc282048252c` |
+      | `views/front-level.png` | `26b3ca271b7df8751d14240e2524605b4dfc0c3db7c7fc3795ddb5db84dc085e` |
+      | `views/side-level.png`  | `3369b7d050f1bea520fcf657dfdf8a445b83327cd6276ec957f78810a53d8e35` |
+
+      The raw `stats.json` SHA-256 (traceability only, never an equality check) is
+      `4a977e63ab08afe0013113b96d1ccafc5e3160e95c364fc43e0c93f797521251`. The stable stats projection
+      (every `milliseconds` key removed at any depth, `texture` keeps `size` only, canonical JSON with
+      sorted keys) hashes to
+      `9776ad8174f88f91b7292db2afcb80871ff2afcbda7c3f0f743858b2dcd46e83`. The projection holds the name
+      `sprout-tom-kim`, 41,529 triangles, the bounds min `[-0.183, -0.002, -0.151]` and max
+      `[0.184, 1.088, 0.143]`, the size `[0.366, 1.09, 0.294]`, `texture` null, 17 bones, the
+      animations `[{ name: idle, duration: 2.4 }]`, and the fifteen bodies:
+
+      | body         | gridPoints | evaluatedPoints | rawTriangles | triangles |
+      | ------------ | ---------- | --------------- | ------------ | --------- |
+      | head-skin    | 4127673    | 908014          | 186060       | 5660      |
+      | torso-skin   | 98769      | 82877           | 17256        | 1518      |
+      | arms-skin    | 164025     | 86514           | 17776        | 1396      |
+      | legs-skin    | 91225      | 74377           | 17608        | 1160      |
+      | feet-skin    | 50225      | 36751           | 8000         | 1418      |
+      | hands        | 1395225    | 194957          | 42544        | 14762     |
+      | face         | 3066745    | 544902          | 107044       | 4597      |
+      | hair         | 3727633    | 948720          | 209416       | 3292      |
+      | tee          | 215865     | 129132          | 30012        | 2300      |
+      | collar       | 18081      | 15571           | 2864         | 946       |
+      | shorts       | 114513     | 67012           | 12892        | 1268      |
+      | socks        | 50225      | 37656           | 8144         | 1050      |
+      | sneakers     | 69825      | 51520           | 11432        | 1520      |
+      | sneaker-sole | 54145      | 42772           | 11292        | 252       |
+      | laces        | 21097      | 11675           | 1984         | 390       |
+
+    - The measure record is `out/chibi-sprouts/cast/sprout-tom-kim-measure.json`, SHA-256
+      `8a27e45b0cba2e9cd7bc6d6ce400c6453682125b5068269db6f383abb9427795`. Its five artifact hashes
+      match the files on disk. The base is `humanoid-kim-child`, SHA-256
+      `415e0a9b920b656880363e1a49693ec7e627c8242c5e449d3873e97c96d3a905`. The child base file did not
+      change.
+    - The panel is `out/chibi-sprouts/cast/sprout-tom-kim-panel.png`, 1416 x 900, SHA-256
+      `734670c7f6856b97f3c5fd43795227000b612782f9712f88917a7d1aad2c5fa0`. Its caption holds
+      `11/11 rows pass; palms ok` and `cropped: front no, side no, drawing no`.
+    - The pin key check: the preset pin changes no key and no value, because the variants and the
+      preset of T13 did not change. The file `tests/fixtures/preset-pin.json` holds the key
+      `sprout-tom-kim` with the `tom` preset (`skin fair`, `hair brown`, `eyes brown`, `cloth blue`),
+      and the stale `wizard-argon-trial` key stays.
+    - The commands and their exit codes:
+
+      ```bash
+      HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c './forge build sprout-tom-kim --fast'
+      # exit 0
+      HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c './forge render sprout-tom-kim --fast --views front-level,side-level --ortho --flat --bg none --size 1024'
+      # exit 0
+      HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c './forge render sprout-tom-kim --fast --views front-level,side-level --ortho --bg none --size 1024'
+      # exit 0
+      HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c 'node_modules/.bin/tsx scripts/proportion-check.mjs --asset sprout-tom-kim --base humanoid-kim-child --table child --record out/chibi-sprouts/cast/sprout-tom-kim-measure.json'
+      # exit 0: 11 of 11 rows pass, both palms ok, no guard
+      HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c './forge check sprout-tom-kim'
+      # exit 0: result ok, no held item passes through the head, the ground check is ok
+      HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c 'node scripts/sprout-cast-panel.mjs --asset sprout-tom-kim'
+      # exit 0: the panel is 1416 x 900 and no cell is cropped
+      HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-child-base.test.ts tests/sprout-tom-kim.test.ts tests/sprout-lily-kim.test.ts tests/cast-isolation.test.ts'
+      # exit 0: 11 of 11 cases pass over 4 files
+      node_modules/.bin/prettier --check assets/sprout-tom-kim.ts
+      # exit 0: all matched files use Prettier code style
+      node node_modules/typescript/bin/tsc --noEmit
+      # exit 2: 51 diagnostics in the baseline files; none sits in the changed file
+      ```
 
 - [x] T14 Green: Lily. Commits `5c224278f9b4e0a3c3b2a922c758d07264f72b09` (the Lily bangs guard) and
       `9bca4351cfa2617c6e434c1adf8ecc63b42d689a` (the asset and the pin key). Files:
