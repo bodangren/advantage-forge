@@ -1061,6 +1061,39 @@ limit` gets exit 0 for a 350 px head.
     - The gates: `tests/sprout-dad-kim.test.ts` exits 0, `./forge check sprout-dad-kim` ends
       `result ok`, `prettier --check` exits 0, and `tsc --noEmit` holds the 51 baseline diagnostics
       with none in the changed file.
+    - Final-build stable stats projection, taken at the Phase 2 gate on 2026-11-26 from
+      `out/sprout-dad-kim/stats.json` after the final lit render (every `milliseconds` key removed at
+      any depth, `texture` keeps `size` only; canonical JSON hash with sorted keys
+      `19eba13496778ff03d57cb92c4ccf0592f0888175fec7e351de123fe25756494`): `name`
+      `sprout-dad-kim`; `triangles` 51623; `bounds` min `[-0.21, -0.007, -0.166]`, max
+      `[0.21, 1.54, 0.149]`, size `[0.421, 1.547, 0.315]`; `texture` null; `bones` 17;
+      `animations` `[{ name: idle, duration: 2.4 }]`; `bodies` in this order:
+
+      | body       | gridPoints | evaluatedPoints | rawTriangles | triangles |
+      | ---------- | ---------- | --------------- | ------------ | --------- |
+      | head-skin  | 4657545    | 934555          | 191328       | 6219      |
+      | torso-skin | 207993     | 139246          | 27388        | 2264      |
+      | arms-skin  | 233625     | 120066          | 25800        | 1390      |
+      | legs-skin  | 138425     | 117438          | 26908        | 1236      |
+      | feet-skin  | 66625      | 40530           | 8312         | 1402      |
+      | hands      | 2005185    | 273197          | 66168        | 19966     |
+      | face       | 3460425    | 590838          | 114608       | 3776      |
+      | jaw        | 58425      | 45222           | 9672         | 532       |
+      | hair       | 573561     | 246086          | 39936        | 388       |
+      | plaid      | 353241     | 232637          | 75556        | 6570      |
+      | collar     | 47481      | 32746           | 5588         | 1212      |
+      | tee        | 270921     | 112794          | 19744        | 1602      |
+      | jeans      | 337953     | 193080          | 39344        | 3406      |
+      | boots      | 79625      | 58339           | 12672        | 1556      |
+      | boot-sole  | 32193      | 28477           | 7720         | 104       |
+
+      The raw `stats.json` SHA-256 is
+      `4c79e54e3ab5b1dcae03b573a9fa36a599146953db77c92ac4cab4647b3f4d99` for traceability only,
+      never an equality check. These are the final-build values taken at the gate, and the pin
+      measured the same GLB `896d889b3e2db721a647b371b97f714e0e6a2151787ad9c4bd5b21b19d1fea61`.
+      This is the projection of gate-check clause 7. No earlier pin-time projection exists for Dad:
+      the round 1 build (GLB `6de052e7346d61aad7dc5280443e48f20b0539ff158b02edb2b75c3559e40753`) was
+      overwritten in `out/` and its `stats.json` projection was never recorded.
 
 - [x] T7 Green: Grandma. File: `assets/sprout-grandma-kim.ts` (new). Commits `6ce871edee5ac74a28e2b8486d0213ac03fd1610`, `44c4b68843cdc8e9b9955e7b69a3f10b9a49f7a7`, and `b73f7104e3461cc9dfa57a5f1e5ef67c615f525a`.
   - Look remediation round 3 (2026-11-26): the look judge gave identity 7.2 and proportion 8.1 in
@@ -1117,6 +1150,40 @@ limit` gets exit 0 for a 350 px head.
     - The gates: `tests/sprout-grandma-kim.test.ts` and `tests/cast-isolation.test.ts` exit 0 with
       six tests, `./forge check sprout-grandma-kim` ends `result ok`, `prettier --check` exits 0, and
       `tsc --noEmit` holds the 51 baseline diagnostics with none in the changed file.
+    - Final-build stable stats projection, taken at the Phase 2 gate on 2026-11-26 from
+      `out/sprout-grandma-kim/stats.json` after the final lit render (every `milliseconds` key
+      removed at any depth, `texture` keeps `size` only; canonical JSON hash with sorted keys
+      `0edfe64317b2b1ae4e940677ddab17c2b0a514e3d082e05d0ee752ee63634b67`): `name`
+      `sprout-grandma-kim`; `triangles` 50430; `bounds` min `[-0.214, -0.005, -0.182]`, max
+      `[0.214, 1.583, 0.163]`, size `[0.428, 1.588, 0.345]`; `texture` null; `bones` 17;
+      `animations` `[{ name: idle, duration: 2.4 }]`; `bodies` in this order:
+
+      | body       | gridPoints | evaluatedPoints | rawTriangles | triangles |
+      | ---------- | ---------- | --------------- | ------------ | --------- |
+      | head-skin  | 4657545    | 934555          | 191328       | 6219      |
+      | torso-skin | 207993     | 139246          | 27388        | 2264      |
+      | arms-skin  | 233625     | 120066          | 25800        | 1390      |
+      | legs-skin  | 138425     | 117438          | 26908        | 1236      |
+      | feet-skin  | 66625      | 40530           | 8312         | 1402      |
+      | hands      | 2005185    | 273197          | 66168        | 19966     |
+      | face       | 3460425    | 590838          | 113925       | 5061      |
+      | cheeks     | 66825      | 39498           | 8168         | 1566      |
+      | hair       | 376025     | 189232          | 38910        | 796       |
+      | cardigan   | 624777     | 430769          | 75354        | 5706      |
+      | dress      | 300105     | 182967          | 32324        | 2044      |
+      | skirt      | 460265     | 311832          | 53104        | 690       |
+      | flats      | 66625      | 46536           | 10808        | 1742      |
+      | studs      | 32657      | 5315            | 400          | 348       |
+
+      The raw `stats.json` SHA-256 is
+      `e8cab83758955f98de39e44c8024f506a9a81ec1cb4ede807bb270f7241814ce` for traceability only,
+      never an equality check. These are the final-build values taken at the gate, and the pin
+      measured the same GLB `95d1de0b85c4cdb3ce45b2447f05a6d7dc59054d2febb4ace40813452fc1524b`.
+      This is the projection of gate-check clause 7. No earlier pin-time projection exists for
+      Grandma: the round 1 build (GLB
+      `5488860c3544913ca1148e04f660792c4fbd5ac399d0fc79f9b0a2b4753f02c2`) and the round 2 build
+      (GLB `231ca1ad5b929a8584f186bb2efa721548d7811a2ceae4d8006d22583430c217`) were overwritten in
+      `out/` and their `stats.json` projections were never recorded.
   - Look remediation round 2 (2026-11-26): the look judge gave identity 7.0 and proportion 8.0 in round 1.
   - Build the identity of the spec: white hair in a high bun, round cheeks, smile lines, pearl studs,
     a green cardigan over a pale green dress, a mid-calf skirt, and brown flats. The bun may rise
@@ -1275,6 +1342,39 @@ limit` gets exit 0 for a 350 px head.
     - The gates: `tests/sprout-grandpa-kim.test.ts` exits 0, `./forge check sprout-grandpa-kim`
       ends `result ok`, `prettier --check` exits 0, and `tsc --noEmit` holds the 51 baseline
       diagnostics with none in the new file.
+    - Final-build stable stats projection, taken at the Phase 2 gate on 2026-11-26 from
+      `out/sprout-grandpa-kim/stats.json` after the final lit render (every `milliseconds` key
+      removed at any depth, `texture` keeps `size` only; canonical JSON hash with sorted keys
+      `c80900021f99fb872a2944f39ffba836287be65912c1716d48d06720e22f79bc`): `name`
+      `sprout-grandpa-kim`; `triangles` 50427; `bounds` min `[-0.212, -0.007, -0.135]`, max
+      `[0.212, 1.5, 0.149]`, size `[0.424, 1.507, 0.284]`; `texture` null; `bones` 17;
+      `animations` `[{ name: idle, duration: 2.4 }]`; `bodies` in this order:
+
+      | body           | gridPoints | evaluatedPoints | rawTriangles | triangles |
+      | -------------- | ---------- | --------------- | ------------ | --------- |
+      | head-skin      | 4657545    | 934555          | 191328       | 6219      |
+      | torso-skin     | 207993     | 139246          | 27388        | 2264      |
+      | arms-skin      | 233625     | 120066          | 25800        | 1390      |
+      | legs-skin      | 138425     | 117438          | 26908        | 1236      |
+      | feet-skin      | 66625      | 40530           | 8312         | 1402      |
+      | hands          | 2005185    | 273197          | 66168        | 19966     |
+      | face           | 3460425    | 590838          | 119466       | 4126      |
+      | hair           | 226233     | 99885           | 19948        | 2278      |
+      | sweater        | 384993     | 236808          | 51288        | 4556      |
+      | shirt          | 226233     | 93222           | 16184        | 1342      |
+      | collar         | 34153      | 23141           | 4172         | 1030      |
+      | trousers       | 448305     | 209854          | 41864        | 2846      |
+      | trouser-crease | 38745      | 25793           | 4048         | 72        |
+      | shoes          | 79625      | 57643           | 12264        | 1596      |
+      | shoe-sole      | 32193      | 28477           | 7720         | 104       |
+
+      The raw `stats.json` SHA-256 is
+      `63c3f3ecdbff905db2a02b2b589aa62aa151422a5d1dc77bfcbda3e4610bce7c` for traceability only,
+      never an equality check. These are the final-build values taken at the gate, and the pin
+      measured the same GLB `9994ff971eb5af19b17ac4f464e29e71b3dbe0eee4699024a0b05b75ae6d7a50`.
+      This is the projection of gate-check clause 7. No earlier pin-time projection exists for
+      Grandpa: the Green look builds before the judged build were overwritten in `out/` and left no
+      recorded GLB or `stats.json` projection.
 
 - [x] T9 Measure: The three adult look judges.
   Records: `measure/runs/chibi_sprouts_cast_20261125/judge-sprout-dad-kim.json`,
@@ -1314,7 +1414,9 @@ limit` gets exit 0 for a 350 px head.
     - Grandpa round 1 (asset `78be77a2af409704e5d132018d4d4c30e6e85169`) scored 7.8 and 8.5 and
       passed.
     - Grandma round 2 escalated to the PM under AC8 rule 6, because a second score was below 7.5.
-      The PM default was one more Green round. Round 3 is that round.
+      The PM default was one more Green round. Round 3 is that round. The escalation file is
+      `measure/runs/chibi_sprouts_cast_20261125/escalation-sprout-grandma-kim.json`. It holds the
+      three rounds, both failed comments, the PM decision, and the outcome.
     - Two judge misreads are recorded. The judge asked for glasses, but the drawing has none. The
       judge named sticks in the hands, but that shape is the hand slab of the base.
     - Each record holds every field of spec "The judge record". The former null fields now hold
