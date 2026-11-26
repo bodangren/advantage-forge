@@ -90,7 +90,7 @@ amendment round 2 answer every finding before Red. After round 2, Red starts wit
 
 ## Phase 1: The measuring tools
 
-- [ ] T0 Measure: Prepare the worktree outputs and the baselines.
+- [x] T0 Measure: Prepare the worktree outputs and the baselines.
   - Build and render Mom in the worktree `out/`, in this order (spec "The output tree"):
     `./forge build sprout-mom-kim --fast`, then the flat level render, then the lit level render.
   - Write `tests/fixtures/cast-baseline.json` from the track base commit `b58aad2`: one SHA-256 per
@@ -105,6 +105,61 @@ amendment round 2 answer every finding before Red. After round 2, Red starts wit
     and the baseline key list.
   - Note: this task writes no asset, no test, and no script. A fresh worktree runs it again. The
     outputs are not committed.
+  - Evidence (2026-11-26, worktree `/home/daniebo/Desktop/forge-worktrees/sprouts-cast`, branch
+    `chibi-sprouts-cast`, from `master` at `5356e787`; node v24.19.0; each command through the heavy
+    runner, exit 0):
+
+    ```bash
+    ./forge build sprout-mom-kim --fast
+    ./forge render sprout-mom-kim --fast --views front-level,side-level --ortho --flat --bg none --size 1024
+    ./forge render sprout-mom-kim --fast --views front-level,side-level --ortho --bg none --size 1024
+    ```
+
+    Build line: `sprout-mom-kim: 48,511 triangles, 0.432 x 1.52 x 0.328 m`. All six paths exist:
+    `out/sprout-mom-kim/sprout-mom-kim.glb`, `out/sprout-mom-kim/stats.json`,
+    `out/sprout-mom-kim/flat/front-level.png`, `out/sprout-mom-kim/flat/side-level.png`,
+    `out/sprout-mom-kim/views/front-level.png`, `out/sprout-mom-kim/views/side-level.png`.
+
+    Five artifact SHA-256 sums, taken after the lit render:
+
+    | Artifact                | SHA-256                                                            |
+    | ----------------------- | ------------------------------------------------------------------ |
+    | `sprout-mom-kim.glb`    | `6f972378e357035cf94bbbe80af82f7173bde38a0223a61dcc4160e763b4311a` |
+    | `flat/front-level.png`  | `0c6201ae1b9f2502cda207561676e58e6744c2a8f50df07e782aba534f07f43b` |
+    | `flat/side-level.png`   | `93bea38cdf28b3cd71898cca958918b99637c7cc9c22c1568a31f2f206a3abbf` |
+    | `views/front-level.png` | `2abd3f55642c851818552e5025284c42dd7e5b78441c7683b8de02680de5b851` |
+    | `views/side-level.png`  | `48fc3c2f3bb7443f8024cccadc438a8a9043fca1c9995eb55a144319cec93212` |
+
+    Raw `stats.json` SHA-256 (traceability only, never an equality check):
+    `de17e20a53fd47dc2a93cdae7324d2e0eaa6c012a2ce1dea4b3b1199f5255bb7`.
+
+    Stable stats projection (every `milliseconds` key removed at any depth, `texture` keeps `size`
+    only; `texture` is `null` here; canonical JSON hash with sorted keys
+    `c93209cc3d9095c8376c96308ad5bb92e1dedacf0a7a1644bc77fa5c6aa95a6e`): `name`
+    `sprout-mom-kim`; `triangles` 48511; `bounds` min `[-0.216, -0.005, -0.181]`, max
+    `[0.216, 1.515, 0.147]`, size `[0.432, 1.52, 0.328]`; `texture` null; `bones` 17;
+    `animations` `[{ name: idle, duration: 2.4 }]`; `bodies` in this order:
+
+    | body       | gridPoints | evaluatedPoints | rawTriangles | triangles |
+    | ---------- | ---------- | --------------- | ------------ | --------- |
+    | head-skin  | 4657545    | 934555          | 191328       | 6219      |
+    | torso-skin | 207993     | 139246          | 27388        | 2264      |
+    | arms-skin  | 233625     | 120066          | 25800        | 1390      |
+    | legs-skin  | 138425     | 117438          | 26908        | 1236      |
+    | feet-skin  | 66625      | 40530           | 8312         | 1402      |
+    | hands      | 2005185    | 273197          | 66168        | 19966     |
+    | hair       | 793881     | 265127          | 55752        | 4766      |
+    | sweater    | 384993     | 223906          | 46936        | 5886      |
+    | jeans      | 337953     | 185623          | 37644        | 3292      |
+    | flats      | 66625      | 46536           | 10808        | 1742      |
+    | studs      | 32657      | 5315            | 400          | 348       |
+
+    `tests/fixtures/cast-baseline.json` keys: `note`, `base` (`b58aad29c8cd5c36cf3b1bf14e73707bb45d6a69`),
+    `sources` (18 paths: `assets/parts/sprout-gestures.ts` and the 17 `assets/sprout-*.ts` files,
+    each with its base-commit blob SHA-256), `contracts` (`ADULT`, `AGE5`, `HERO`, serialized with
+    each function as `fn:<source>`, because `clips.reach` is a closure), `momPreset` (the
+    `assets["sprout-mom-kim"]` entry of `tests/fixtures/preset-pin.json`). Prettier check passes,
+    and every `sources` hash equals the worktree file at `b58aad2`.
 
 - [ ] T1 Red: Pin the measuring options, the tables, the fixtures, the panel script, and the
       isolation baseline.
