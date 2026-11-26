@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: phase-acceptance
+status: complete
+track: chibi_sprouts_cast_20261125
+phase: Phase 4: The panels and the handoff
+commits: none
+tests_run: 11 cast files exit 0 (119 passed); configured PROJECT_TESTS exit 1 (3516 passed, 25 failed, 30 skipped); ten failed files with real scratch inputs exit 0 (90 passed, 3 skipped); render-options with HEAVY_RUN_PATH exit 0 (5 passed); scratch panel and sheet commands exit 0; generate and PROJECT_CHECKS exit 0; PROJECT_LINT and doctor exit 1 (one missing worktree link)
+files_changed: measure/runs/chibi_sprouts_cast_20261125/phase-acceptance-p4-c854405.json and .log (untracked)
+plan_updates: none; T18 remains open for orchestrator; T19 remains human-gated
+known_failures: Worktree-only missing inputs cause configured aggregate and doctor/lint failures. Ten failed test files pass with inputs in scratch; main checkout must rerun project gates after merge.
+handoff: PASS at c854405053ea134e90ecc20aeae235b2db4d7d5a with explicit worktree environment exception. Role gate exit 1 only for open T18. Mark T18, record light-lane acceptance, retain T19 PM gate. The independent sheet look notes thin fingers and Grandpa waist boundary. No external use is approved.
+END_MEASURE_AGENT_RESULT
