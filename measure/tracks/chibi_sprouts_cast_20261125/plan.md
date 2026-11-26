@@ -1062,7 +1062,7 @@ limit` gets exit 0 for a 350 px head.
       ends `result ok`, `prettier --check` exits 0, and `tsc --noEmit` holds the 51 baseline
       diagnostics with none in the new file.
 
-- [~] T8 Green: Grandpa. File: `assets/sprout-grandpa-kim.ts` (new).
+- [x] T8 Green: Grandpa. File: `assets/sprout-grandpa-kim.ts` (new). Commit `78be77a2af409704e5d132018d4d4c30e6e85169`.
   - Build the identity of the spec: a bald crown with white side hair, round dark-brown glasses, a
     white moustache, an open smile, a green V-neck sweater over a pale green collared shirt, brown
     trousers, and brown shoes. The glasses and the moustache are paint. Declare `variants`, one preset
