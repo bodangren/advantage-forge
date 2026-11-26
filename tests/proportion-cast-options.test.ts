@@ -329,11 +329,14 @@ function expectFigurePasses(mod: any, figure: any): any {
 }
 
 describe('cast proportion options and fixtures (Red pin)', () => {
-  it('child base is checked as a file before any import', () => {
-    const result = runMom(['--base', 'humanoid-kim-child']);
+  it('missing base is checked as a file before any import', () => {
+    const stem = 'humanoid-kim-missing-fixture';
+    const result = runMom(['--base', stem]);
     expect(result.status, result.output).toBe(1);
-    expect(result.output).toContain('base humanoid-kim-child: not built');
+    expect(result.output).toContain(`base ${stem}: not built`);
+    expect(result.output).toContain(`missing: assets/parts/${stem}.ts`);
     expect(result.output).not.toMatch(/Cannot find module|ERR_MODULE_NOT_FOUND|Cannot find package/);
+    expect(result.output).not.toMatch(/palm |eye components:/);
   });
 
   it('invalid base stems fail with unknown base before measurement', () => {
