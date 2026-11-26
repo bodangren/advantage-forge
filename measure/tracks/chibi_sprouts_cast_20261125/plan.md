@@ -2328,7 +2328,7 @@ blue`), and the stale `wizard-argon-trial` key stays.
       at the top of the drawing cell measures 247 of 255 and stays inside the judged bytes.
     - Note path: `measure/runs/chibi_sprouts_cast_20261125/handoff.md`.
 
-- [ ] T18 Measure: The Phase 4 gate, the project gate, and the closeout record.
+- [x] T18 Measure: The Phase 4 gate, the project gate, and the closeout record.
   - Done-when:
     - `tests/sprout-cast-panel.test.ts` passes,
     - the five real panels and the sheet exist, and the record holds their sizes, their projected
@@ -2342,6 +2342,54 @@ blue`), and the stale `wizard-argon-trial` key stays.
       path".
   - Record: the reporter lines, the sheet look record, the verified judge inputs, and the doctor
     line.
+
+  - Record (2026-11-27, worktree `/home/daniebo/Desktop/forge-worktrees/sprouts-cast`, branch
+    `chibi-sprouts-cast`, phase base `3fccaf44fd7b947e3008a655e1270b561813f593`, gate HEAD
+    `c854405053ea134e90ecc20aeae235b2db4d7d5a`, role route `openai/gpt-6.2-sol#high`):
+    - Phase acceptance is `pass` at `c8544050` with the worktree environment exception. The
+      role-start and audited HEAD equal the gate HEAD, and the phase base is an ancestor. The
+      records are `measure/runs/chibi_sprouts_cast_20261125/phase-acceptance-p4-c854405.json` and
+      its `.log`. The record holds no blocking finding and three nonblocking findings, F1 to F3.
+      The exact Phase 4 diff changes five Measure files and no asset, test, script, framework
+      filter, or registry row.
+    - Closeout path of spec "The closeout path". The lane is `light` in `metadata.json`. The Phase 4
+      gate is the track acceptance record, and no separate final-acceptance role runs. The
+      orchestrator reads the lane field, records the final-acceptance exception, and runs the
+      closeout role after T19.
+    - Independent sheet look. A reader that did not write the panel script read
+      `out/chibi-sprouts/cast/cast-sheet.png`. The sheet holds five whole figures on one baseline.
+      Dad has black swept hair, a plaid jacket and jeans. Grandma has a white bun, a green cardigan
+      and a skirt. Grandpa has glasses, white side hair and a moustache. Tom has spiked brown hair
+      and a striped shirt. Lily has a brown bob and a red skirt. The children read about 70 % of the
+      adult crown height, and the bun sits inside the headroom. Two look points are visible. All five
+      figures show thin, stick-like fingers. Grandpa has an uneven sweater-to-trouser boundary.
+      Neither point blocks the sheet layout or a panel. Daniel's look stays the last gate.
+    - The project gates, as the acceptance reported them:
+      - The eleven-file cast suite exits 0 with 119 passing cases.
+      - `PROJECT_TESTS` with the TD-40 exclusion exits 1: 240 files passed, 10 failed, 4 skipped
+        (254 total); 3516 tests passed, 25 failed, 30 skipped (3571 total). No cast test failed. The
+        ten failures have one cause, a git-ignored input that the worktree does not hold. The four
+        `mom-kim-sheet` files miss `out/storytime-review/muse-cast/teacher-kim-sheet.png`.
+        `preset-colour.test.ts` misses the ball tint mask and `wizard-argon-trial.ts`. Five Storytime
+        files miss reference images and renders. All ten files rerun in scratch with the real inputs
+        and exit 0 with 90 passed and 3 skipped.
+      - `PROJECT_LINT` with structural checks only and the full `./measure/doctor.sh` exit 1, each
+        only for the archived redesign link
+        `out/storytime-review/muse-cast/teacher-kim-sheet.png`. The file exists in the main checkout
+        at 1498240 bytes.
+      - `PROJECT_CHECKS` exits 0 with four files current. `./measure/generate.sh` exits 0 and leaves
+        no tracked diff.
+    - The main-checkout gate run is recorded after the merge. The worktree cannot supply the
+      git-ignored outputs that the project tests and the archived link need. The exit codes above
+      therefore do not close the project gate. The merge of this branch into `advantage-forge`
+      `master` re-runs `./measure/generate.sh`, `./measure/doctor.sh`, and the configured project
+      gates through the heavy runner. The PM receives their exit codes and counts.
+    - T19 stays `[b]` with the PM as its owner. It is human-gated, so it does not count as an
+      incomplete task of the phase. The PM's approval opens the closeout.
+    - The judge inputs of spec "The gate check of the judge inputs" match at `c8544050`. All five
+      records hold eleven rows in range and both palms ok. The five panel hashes equal their
+      `panel_sha256` values. The sheet hash is
+      `ed4ea5aa9515fe1a469d6904eb97365de798d378d4ae9e379c82935070b9b725` at 1544 × 900.
 
 - [b] T19 Measure: Record the PM's answer. deferred:pm trigger: event the PM answers. Human gate.
   - This task is blocked until the PM answers. No role starts it. The PM owns the answer.
