@@ -11,69 +11,93 @@
  *   5. read the flat and lit renders and measure.
  *
  * Exports (used by tests/sprout-mom-kim.test.ts):
- *   checkRows(rows)                 -> string[] of `FAIL <name>: <value> not in <lo>..<hi>`
+ *   checkRows(rows, table)        -> string[] of `FAIL <name>: <value> not in <lo>..<hi>`
  *   palmCheck(side, mesh, landmarks) -> the seven-check palm result of spec "The palm check API"
- *   measurePixels()                 -> the five synthetic figures of spec AC2 rule 7
+ *   measurePixels()               -> the five synthetic figures of spec AC2 rule 7
+ *   measureFigure(figure, table)  -> the measurement seam of spec "The landmark checks and fixtures"
+ *   TABLES                        -> the two named tables of spec "The pass tables"
  */
 import { createHash } from 'node:crypto';
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, lstatSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import sharp from 'sharp';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
-/** The pass table. The order is the order of spec "The pass table". */
-const PASS_TABLE = [
-  { name: 'heightInHeads', lo: 3.54, hi: 3.74 },
-  { name: 'armToTorso', lo: 1.25, hi: 1.41 },
-  { name: 'legShare', lo: 0.36, hi: 0.42 },
-  { name: 'headToShoulders', lo: 1.11, hi: 1.27 },
-  { name: 'wrist', lo: -0.16, hi: 0.04 },
-  { name: 'fingertips', lo: 0.41, hi: 0.61 },
-  { name: 'eyeLine', lo: 0.59, hi: 0.65 },
-  { name: 'eyeHeight', lo: 0.09, hi: 0.13 },
-  { name: 'spacingHead', lo: 0.35, hi: 0.41 },
-  { name: 'eyeWidthFace', lo: 0.22, hi: 0.24 },
-  { name: 'spacingFace', lo: 0.44, hi: 0.5 },
-];
+/**
+ * The pass tables of spec "The pass tables". The order is the order of the spec tables. The
+ * selected table is authoritative: it decides every range and the row order. A row's own limits
+ * never decide a pass.
+ */
+export const TABLES = {
+  kim: [
+    { name: 'heightInHeads', lo: 3.54, hi: 3.74 },
+    { name: 'armToTorso', lo: 1.25, hi: 1.41 },
+    { name: 'legShare', lo: 0.36, hi: 0.42 },
+    { name: 'headToShoulders', lo: 1.11, hi: 1.27 },
+    { name: 'wrist', lo: -0.16, hi: 0.04 },
+    { name: 'fingertips', lo: 0.41, hi: 0.61 },
+    { name: 'eyeLine', lo: 0.59, hi: 0.65 },
+    { name: 'eyeHeight', lo: 0.09, hi: 0.13 },
+    { name: 'spacingHead', lo: 0.35, hi: 0.41 },
+    { name: 'eyeWidthFace', lo: 0.22, hi: 0.24 },
+    { name: 'spacingFace', lo: 0.44, hi: 0.5 },
+  ],
+  child: [
+    { name: 'heightInHeads', lo: 2.79, hi: 3.03 },
+    { name: 'armToTorso', lo: 1.08, hi: 1.51 },
+    { name: 'legShare', lo: 0.3, hi: 0.39 },
+    { name: 'headToShoulders', lo: 1.83, hi: 2.35 },
+    { name: 'wrist', lo: -0.3, hi: 0.16 },
+    { name: 'fingertips', lo: 0.25, hi: 0.71 },
+    { name: 'eyeLine', lo: 0.61, hi: 0.68 },
+    { name: 'eyeHeight', lo: 0.12, hi: 0.16 },
+    { name: 'spacingHead', lo: 0.28, hi: 0.36 },
+    { name: 'eyeWidthFace', lo: 0.22, hi: 0.24 },
+    { name: 'spacingFace', lo: 0.45, hi: 0.51 },
+  ],
+};
+
+/** The known table names, in the order of spec "The tables" rule 4. */
+export const TABLE_NAMES = Object.keys(TABLES);
+
+/** The pupil colour of the base face paint. A face mark must stay clear of it. */
+const PUPIL_RGB = hexToRgb('#14100e');
 
 const fmt = (v) => (Number.isFinite(v) ? Number(v.toFixed(6)).toString() : String(v));
 
-const EXPECTED_ROWS = PASS_TABLE.map((r) => r.name);
-
 /**
- * Validate the shape of an eleven-row table, then report each failing value. A table-shape error
- * uses one exact name from the validation contract; a value error uses `FAIL <row>: <reason>`.
+ * Validate the shape of an eleven-row table, then report the first failing row. A table-shape
+ * error uses one exact name from the validation contract; a value error uses `FAIL <row>: <reason>`.
+ *
+ * The selected table decides every range. A row's own limits never decide a pass. A row whose
+ * limits differ from the table pair fails with the disagreement line, so a row that carries its
+ * own loose limits cannot pass. The first failing row is reported; the record holds the pass
+ * flag of every row.
  */
-export function checkRows(rows) {
+export function checkRows(rows, table = 'kim') {
+  const spec = TABLES[table] ?? TABLES.kim;
+  const expected = spec.map((r) => r.name);
   const names = Array.isArray(rows) ? rows.map((r) => r?.name) : [];
   if (!Array.isArray(rows) || rows.length === 0)
     return [`checkRows: expected 11 rows, found ${Array.isArray(rows) ? rows.length : 0}`];
-  for (const expected of EXPECTED_ROWS)
-    if (!names.includes(expected)) return [`checkRows: missing row ${expected}`];
-  for (const expected of EXPECTED_ROWS)
-    if (names.filter((n) => n === expected).length > 1) return [`checkRows: duplicate row ${expected}`];
-  for (const name of names) if (!EXPECTED_ROWS.includes(name)) return [`checkRows: unknown row ${name}`];
+  for (const name of expected) if (!names.includes(name)) return [`checkRows: missing row ${name}`];
+  for (const name of expected)
+    if (names.filter((n) => n === name).length > 1) return [`checkRows: duplicate row ${name}`];
+  for (const name of names) if (!expected.includes(name)) return [`checkRows: unknown row ${name}`];
   if (rows.length !== 11) return [`checkRows: expected 11 rows, found ${rows.length}`];
-  const failures = [];
   for (const r of rows) {
-    if (typeof r.value !== 'number' || Number.isNaN(r.value)) {
-      failures.push(`FAIL ${r.name}: not a number`);
-      continue;
-    }
-    if (!Number.isFinite(r.value)) {
-      failures.push(`FAIL ${r.name}: not finite`);
-      continue;
-    }
-    if (r.lo >= 0 && r.value < 0) {
-      failures.push(`FAIL ${r.name}: negative`);
-      continue;
-    }
-    if (!(r.value >= r.lo && r.value <= r.hi))
-      failures.push(`FAIL ${r.name}: ${fmt(r.value)} not in ${fmt(r.lo)}..${fmt(r.hi)}`);
+    const pair = spec.find((s) => s.name === r.name);
+    if (typeof r.value !== 'number' || Number.isNaN(r.value)) return [`FAIL ${r.name}: not a number`];
+    if (!Number.isFinite(r.value)) return [`FAIL ${r.name}: not finite`];
+    if (pair.lo >= 0 && r.value < 0) return [`FAIL ${r.name}: negative`];
+    if (!(r.value >= pair.lo && r.value <= pair.hi))
+      return [`FAIL ${r.name}: ${fmt(r.value)} not in ${fmt(pair.lo)}..${fmt(pair.hi)}`];
+    if (r.lo !== pair.lo || r.hi !== pair.hi)
+      return [`FAIL ${r.name}: row limits ${fmt(r.lo)}..${fmt(r.hi)} disagree with table ${table}`];
   }
-  return failures;
+  return [];
 }
 
 // --------------------------------------------------------------------------- palm check
@@ -283,6 +307,24 @@ const px = (img, x, y) => {
 
 const REL_LUM = (r, g, b) => 0.2126 * (r / 255) + 0.7152 * (g / 255) + 0.0722 * (b / 255);
 const dist255 = (a, b) => Math.max(Math.abs(a[0] - b[0]), Math.abs(a[1] - b[1]), Math.abs(a[2] - b[2]));
+const distEuclid = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]);
+
+/** A one-pixel 8-connected dilation of a boolean grid. */
+function dilate(mask, w, h) {
+  const out = new Uint8Array(w * h);
+  for (let y = 0; y < h; y++)
+    for (let x = 0; x < w; x++) {
+      if (!mask[y * w + x]) continue;
+      for (let dy = -1; dy <= 1; dy++)
+        for (let dx = -1; dx <= 1; dx++) {
+          const nx = x + dx,
+            ny = y + dy;
+          if (nx < 0 || ny < 0 || nx >= w || ny >= h) continue;
+          out[ny * w + nx] = 1;
+        }
+    }
+  return out;
+}
 
 /** 8-connected components of a boolean grid; returns arrays of [col,row]. */
 function components(mask, w, h) {
@@ -338,15 +380,15 @@ function widestSpan(mask, w, h, y0, y1) {
 
 /**
  * Measure one figure. Every value comes from the figure's mask pixels or its landmark pixels.
- * `figure` fields: front, side, chinRow, skinRgb, eyeRgb, ppm, landmarks
- * (shoulder:[u,v], hip:[u,v], kneeV, wristV, tipV, ankleU), handDepth (meters), size.
- */
-/**
- * Measure one figure. Every value comes from the figure's mask pixels or its landmark pixels.
- * `figure` fields: front, side, chinRow, skinRgb, ppm, tipV, projectedTop, projectedSole,
+ * `figure` fields: front, side, chinRow, skinRgb, eyeRgb, ppm, tipV, projectedTop, projectedSole,
  * landmarks (shoulder, hip, kneeV, wristV, ankleU, tipU, tipV), handDepth, legWindowL/R.
+ *
+ * The head rows use the rounded projected crown, never the mask top, so a bun or a hat does not
+ * move the measured head (spec "The crown, the rounding, and the mask guards"). `table` selects
+ * the pass table; the selected table is authoritative.
  */
-function measureFigure(figure) {
+export function measureFigure(figure, table = 'kim') {
+  const spec = TABLES[table] ?? TABLES.kim;
   const { front, side, skinRgb, ppm } = figure;
   const W = front.width,
     H = front.height;
@@ -367,14 +409,48 @@ function measureFigure(figure) {
     if (!ok) guards.push(`GUARD ${name}: ${detail}`);
   };
 
+  // The rounded projection of the base crown and the base sole. The renderer projects fractional
+  // pixels, so the rounding rule is part of the contract.
+  const projectedCrownRow = Math.round(figure.projectedTop);
+  const projectedSoleRow = Math.round(figure.projectedSole);
+
+  // The declared face marks of spec "The asset metadata and the eye mask". A mark colour must
+  // differ by more than 24 in Chebyshev distance from every eye colour and from the pupil, or a
+  // frame colour could delete the iris from the eye mask.
+  const marks = [];
+  for (const [name, colour] of Object.entries(figure.castMeta?.faceMarks ?? {})) {
+    const rgb = hexToRgb(colour);
+    marks.push({ name, rgb });
+    const eyeColours = [figure.eyeRgb, ...(figure.eyeColors ?? [])].filter(Boolean);
+    for (const eye of eyeColours)
+      if (dist255(rgb, eye) <= 24)
+        return {
+          rows: [],
+          guards,
+          handEdge: { pass: false },
+          sideSign: { pass: false },
+          detail: {},
+          failures: [`faceMarks ${name}: too close to the eye paint`],
+        };
+    if (dist255(rgb, PUPIL_RGB) <= 24)
+      return {
+        rows: [],
+        guards,
+        handEdge: { pass: false },
+        sideSign: { pass: false },
+        detail: {},
+        failures: [`faceMarks ${name}: too close to the eye paint`],
+      };
+  }
+
   // Side sign, from the side flat mask: the frontmost column in the head band sits left of centre.
   const sideMask = new Uint8Array(side.width * side.height);
   for (let y = 0; y < side.height; y++)
     for (let x = 0; x < side.width; x++) sideMask[y * side.width + x] = px(side, x, y)[3] >= 128 ? 1 : 0;
   const chinRow = figure.chinRow;
-  const headHeight = chinRow - crownRow;
+  const headHeight = chinRow - projectedCrownRow;
   let frontmostCol = side.width;
-  for (let y = crownRow; y <= crownRow + 0.7 * headHeight && y < side.height; y++)
+  for (let y = projectedCrownRow; y <= projectedCrownRow + 0.7 * headHeight && y < side.height; y++)
     for (let x = 0; x < side.width; x++)
       if (sideMask[y * side.width + x] && x < frontmostCol) frontmostCol = x;
   const limitCol = side.width / 2 - 0.02 * ppm;
@@ -446,19 +522,33 @@ function measureFigure(figure) {
 
   guard(
     'chin: not on the head',
-    chinRow <= soleRow && chinRow >= crownRow && chinRow >= crownRow + 0.8 * headHeight,
-    `chin ${fmt(chinRow)} crown ${crownRow} head ${fmt(headHeight)}`,
+    chinRow <= soleRow && chinRow >= projectedCrownRow && chinRow >= projectedCrownRow + 0.8 * headHeight,
+    `chin ${fmt(chinRow)} crown ${projectedCrownRow} head ${fmt(headHeight)}`,
   );
+  guard('sole on mask', Math.abs(soleRow - projectedSoleRow) <= 2, `${soleRow} vs ${projectedSoleRow}`);
+  // The mask-top guard is one-sided: the mask top may sit above the projected crown by any
+  // amount, because a bun or a hat rises above the skull. It may not sit more than 2 px below.
+  guard('top on mask', crownRow <= projectedCrownRow + 2, `${crownRow} vs ${projectedCrownRow}`);
+  // The side mask crown is not a head measurement. Its top may not sit below the projected crown
+  // by more than 2 px either.
+  let sideTop = side.height;
+  let sideSole = 0;
+  for (let y = 0; y < side.height; y++)
+    for (let x = 0; x < side.width; x++)
+      if (sideMask[y * side.width + x]) {
+        if (y < sideTop) sideTop = y;
+        if (y > sideSole) sideSole = y;
+      }
+  guard('side top on mask', sideTop <= projectedCrownRow + 2, `${sideTop} vs ${projectedCrownRow}`);
   guard(
-    'sole on mask',
-    Math.abs(soleRow - figure.projectedSole) <= 2,
-    `${soleRow} vs ${fmt(figure.projectedSole)}`,
+    'side sole on mask',
+    Math.abs(sideSole - projectedSoleRow) <= 2,
+    `${sideSole} vs ${projectedSoleRow}`,
   );
-  guard(
-    'top on mask',
-    Math.abs(crownRow - figure.projectedTop) <= 2,
-    `${crownRow} vs ${fmt(figure.projectedTop)}`,
-  );
+  // The two flat views use the same ortho frame, so their crown-to-sole heights agree. The height
+  // is measured from the projected crown in both views, so a bun above the crown in one view does
+  // not read as a height fault.
+  guard('flat view heights', Math.abs(soleRow - sideSole) <= 2, `front ${soleRow} vs side ${sideSole}`);
   // A landmark on a silhouette vertex can round to an antialiased half-covered pixel. Accept the
   // pixel itself or one of its eight neighbours (the other guards allow two pixels).
   const onMask = (u, v) => {
@@ -486,9 +576,9 @@ function measureFigure(figure) {
     offPoint ? `${offPoint[0]} at ${fmt(offPoint[1][0])},${fmt(offPoint[1][1])}` : 'none',
   );
 
-  const headWidth = widestSpan(mask, W, H, crownRow, crownRow + 0.7 * headHeight);
-  const r0 = Math.max(0, Math.floor(crownRow + 0.55 * headHeight));
-  const r1 = Math.min(H - 1, Math.ceil(crownRow + 0.8 * headHeight));
+  const headWidth = widestSpan(mask, W, H, projectedCrownRow, projectedCrownRow + 0.7 * headHeight);
+  const r0 = Math.max(0, Math.floor(projectedCrownRow + 0.55 * headHeight));
+  const r1 = Math.min(H - 1, Math.ceil(projectedCrownRow + 0.8 * headHeight));
   const c0 = Math.max(0, Math.floor(W / 2 - 0.5 * headWidth));
   const c1 = Math.min(W - 1, Math.ceil(W / 2 + 0.5 * headWidth));
   const eyeMask = new Uint8Array(W * H);
@@ -497,20 +587,33 @@ function measureFigure(figure) {
     for (let x = c0; x <= c1; x++) {
       windowArea++;
       const p = px(front, x, y);
-      if (p[3] >= 250 && dist255(p, skinRgb) > 60 && REL_LUM(p[0], p[1], p[2]) < 0.45) eyeMask[y * W + x] = 1;
+      if (p[3] < 250 || dist255(p, skinRgb) <= 60 || REL_LUM(p[0], p[1], p[2]) >= 0.45) continue;
+      // A declared face mark leaves the eye mask, so a glasses frame cannot join the two eyes.
+      // The distance is the Euclidean one: the Chebyshev separation rule of spec "The asset
+      // metadata and the eye mask" keeps the mark more than 24 away from the eye paint in
+      // Chebyshev distance, and the Euclidean distance is never smaller than the Chebyshev one.
+      if (marks.some((m) => distEuclid(p, m.rgb) <= 24)) continue;
+      eyeMask[y * W + x] = 1;
     }
-  const eyeComps = components(eyeMask, W, H)
+  // The component search runs on a one-pixel dilated mask, so a one-pixel gap in the paint does
+  // not split one eye. The measured width, height, and area come from the undilated pixels, so a
+  // declared mark never changes a measured row.
+  const eyeComps = components(dilate(eyeMask, W, H), W, H)
     .map((cells) => {
       let x0 = W,
         x1 = 0,
         y0 = H,
-        y1 = 0;
+        y1 = 0,
+        area = 0;
       for (const [x, y] of cells) {
+        if (!eyeMask[y * W + x]) continue;
+        area++;
         if (x < x0) x0 = x;
         if (x > x1) x1 = x;
         if (y < y0) y0 = y;
         if (y > y1) y1 = y;
       }
+      if (area === 0) return null;
       return {
         x0,
         x1,
@@ -518,15 +621,16 @@ function measureFigure(figure) {
         y1,
         w: x1 - x0 + 1,
         h: y1 - y0 + 1,
-        area: cells.length,
+        area,
         cx: (x0 + x1) / 2,
         cy: (y0 + y1) / 2,
       };
     })
+    .filter((e) => e !== null)
     .filter(
       (e) =>
         e.w >= 0.4 * e.h &&
-        e.w <= 0.4 * headWidth &&
+        e.w <= 0.6 * headWidth &&
         e.area >= 0.02 * windowArea &&
         Math.abs(e.cx - W / 2) <= 0.35 * headWidth,
     );
@@ -573,31 +677,76 @@ function measureFigure(figure) {
   const faceWidth = widestSpan(faceWmask, W, H, chinRow - 0.75 * (chinRow - pupilRow), chinRow);
   if (faceWidth === 0) return { ...baseResult, failures: ['face: empty width band'] };
 
+  // The Lily hair guards of spec "The Lily hair and chin check". They run only for her asset.
+  if (figure.assetName === 'sprout-lily-kim' && figure.hairRgb) {
+    const hair = figure.hairRgb;
+    const isHair = (p) => p[3] >= 250 && dist255(p, hair) <= 40;
+    // 1. no hair crosses the chin inside the face column span
+    let faceLeft = W;
+    let faceRight = -1;
+    for (const [x] of faceComp) {
+      if (x < faceLeft) faceLeft = x;
+      if (x > faceRight) faceRight = x;
+    }
+    faceLeft += 1;
+    faceRight -= 1;
+    const chinBandTop = chinRow - 0.15 * headHeight;
+    let chinHit = -1;
+    for (let y = Math.max(0, Math.ceil(chinBandTop)); y <= Math.floor(chinRow) && chinHit < 0; y++)
+      for (let x = Math.max(0, faceLeft); x <= Math.min(W - 1, faceRight); x++)
+        if (isHair(px(front, x, y))) {
+          chinHit = y;
+          break;
+        }
+    guard('lily chin', chinHit < 0, `hair crosses the chin at row ${chinHit}`);
+    // 2. the frontmost side pixel at the chin rows is skin, not hair
+    let sideHit = false;
+    for (let y = Math.ceil(chinRow - 2); y <= Math.floor(chinRow); y++) {
+      let front = side.width;
+      for (let x = 0; x < side.width; x++)
+        if (sideMask[y * side.width + x]) {
+          front = x;
+          break;
+        }
+      if (front < side.width && isHair(px(side, front, y))) sideHit = true;
+    }
+    guard('lily side chin', !sideHit, 'hair at the front');
+    // 3. no hair hangs into the eye window above the eyes
+    const eyeTop = Math.min(eyeComps[0].y0, eyeComps[1].y0);
+    let bangHit = false;
+    for (let y = r0; y < eyeTop && !bangHit; y++)
+      for (let x = c0; x <= c1; x++)
+        if (isHair(px(front, x, y))) {
+          bangHit = true;
+          break;
+        }
+    guard('lily bangs', !bangHit, 'hair in the eye window');
+  }
+
   const rows = [];
-  const put = (name, value) =>
-    rows.push({
-      name,
-      value,
-      lo: PASS_TABLE.find((r) => r.name === name).lo,
-      hi: PASS_TABLE.find((r) => r.name === name).hi,
-    });
-  put('heightInHeads', (soleRow - crownRow) / (chinRow - crownRow));
+  const put = (name, value) => {
+    const pair = spec.find((r) => r.name === name);
+    rows.push({ name, value, lo: pair.lo, hi: pair.hi });
+  };
+  put('heightInHeads', (projectedSoleRow - projectedCrownRow) / (chinRow - projectedCrownRow));
   put(
     'armToTorso',
     Math.hypot(L.shoulder[0] - L.tipU, L.shoulder[1] - tipV) / Math.abs(L.hip[1] - L.shoulder[1]),
   );
-  put('legShare', (soleRow - L.hip[1]) / (soleRow - crownRow));
+  put('legShare', (projectedSoleRow - L.hip[1]) / (projectedSoleRow - projectedCrownRow));
   put('headToShoulders', headWidth / (2 * Math.abs(L.shoulder[0] - W / 2)));
   put('wrist', (L.wristV - L.hip[1]) / (L.kneeV - L.hip[1]));
   put('fingertips', (tipV - L.hip[1]) / (L.kneeV - L.hip[1]));
-  put('eyeLine', (pupilRow - crownRow) / (chinRow - crownRow));
-  put('eyeHeight', eyeHeightPx / (chinRow - crownRow));
+  put('eyeLine', (pupilRow - projectedCrownRow) / (chinRow - projectedCrownRow));
+  put('eyeHeight', eyeHeightPx / (chinRow - projectedCrownRow));
   put('spacingHead', pupilSpacing / headWidth);
   put('eyeWidthFace', eyeWidth / faceWidth);
   put('spacingFace', pupilSpacing / faceWidth);
   const detail = {
     crownRow,
     soleRow,
+    projectedCrownRow,
+    projectedSoleRow,
     chinRow,
     headHeight,
     headWidth,
@@ -607,7 +756,7 @@ function measureFigure(figure) {
     pupilRow,
     pupilSpacing,
   };
-  return { rows, failures: checkRows(rows), guards, handEdge, sideSign, detail };
+  return { rows, failures: checkRows(rows, table), guards, handEdge, sideSign, detail };
 }
 
 // --------------------------------------------------------------------------- synthetic figures
@@ -886,12 +1035,22 @@ function readModel(glb) {
 
 // --------------------------------------------------------------------------- main
 
+const DEFAULT_BASE = 'humanoid-kim';
+const DEFAULT_TABLE = 'kim';
+const DEFAULT_RECORD = 'out/chibi-sprouts/redesign/measure.json';
+
 function parseArgs(argv) {
   let asset = null;
+  let base = DEFAULT_BASE;
+  let table = DEFAULT_TABLE;
+  let record = DEFAULT_RECORD;
   for (let i = 0; i < argv.length; i++) {
     if (argv[i] === '--asset') asset = argv[++i] ?? '';
+    else if (argv[i] === '--base') base = argv[++i] ?? '';
+    else if (argv[i] === '--table') table = argv[++i] ?? '';
+    else if (argv[i] === '--record') record = argv[++i] ?? '';
   }
-  return { asset };
+  return { asset, base, table, record };
 }
 
 // The asset-name rule of src/pipeline.ts checkAssetName, copied here so a bad name is refused
@@ -906,12 +1065,61 @@ function checkAssetName(name) {
     throw new Error(`Invalid asset name '${name}': an asset name has no dot-dot segment.`);
 }
 
+/**
+ * A base stem names one module of assets/parts. An empty stem, an absolute path, a path
+ * separator, or a dot-dot segment is refused before any import (spec "The landmark checks and
+ * fixtures").
+ */
+function checkBaseStem(stem) {
+  if (stem === null || stem.trim() === '') return false;
+  if (path.isAbsolute(stem)) return false;
+  if (stem.includes('/') || stem.includes('\\')) return false;
+  if (stem.split(/[\\/]/).some((part) => part === '..' || part === '.')) return false;
+  return true;
+}
+
+/**
+ * The destination checks of spec "The destinations". The check uses `lstat`, never `stat`, so it
+ * never follows a link. It runs before the first `mkdir` or write, so a rejected destination
+ * leaves every existing file byte-identical.
+ *
+ * Returns the one-line error, or null when the destination may be written.
+ */
+export function destinationError(root, dest, treeRel) {
+  const tree = path.resolve(root, treeRel);
+  const abs = path.resolve(dest);
+  if (abs !== tree && !abs.startsWith(tree + path.sep)) return `destination outside ${treeRel}: ${dest}`;
+  let current = abs;
+  for (;;) {
+    const st = lstatSync(current, { throwIfNoEntry: false });
+    if (st) {
+      if (st.isSymbolicLink()) return `destination is a link: ${path.relative(root, current)}`;
+      if (current === abs && st.isDirectory())
+        return `destination is a directory: ${path.relative(root, current)}`;
+      if (current !== abs && !st.isDirectory())
+        return `destination parent is a file: ${path.relative(root, current)}`;
+    }
+    const parent = path.dirname(current);
+    if (current === root || parent === current) break;
+    current = parent;
+  }
+  return null;
+}
+
 async function main() {
-  const { asset } = parseArgs(process.argv.slice(2));
+  const { asset, base: baseStem, table, record: recordArg } = parseArgs(process.argv.slice(2));
   try {
     checkAssetName(asset);
   } catch (e) {
     console.error(e.message);
+    process.exit(1);
+  }
+  if (!checkBaseStem(baseStem)) {
+    console.error(`unknown base ${baseStem}`);
+    process.exit(1);
+  }
+  if (!TABLE_NAMES.includes(table)) {
+    console.error(`unknown table ${table}: known ${TABLE_NAMES.join(', ')}`);
     process.exit(1);
   }
 
@@ -928,22 +1136,45 @@ async function main() {
       process.exit(1);
     }
   }
+  const basePath = path.join(ROOT, 'assets', 'parts', `${baseStem}.ts`);
+  if (!existsSync(basePath)) {
+    console.error(`base ${baseStem}: not built`);
+    console.error(`missing: assets/parts/${baseStem}.ts`);
+    process.exit(1);
+  }
+
+  // The record destination is checked before the first write, so a refused destination leaves
+  // the output tree byte-identical.
+  const recordPath = path.resolve(ROOT, recordArg);
+  const recordError = destinationError(ROOT, recordPath, 'out/');
+  if (recordError) {
+    console.error(recordError);
+    process.exit(1);
+  }
+
   // 3. asset variants
   const mod = await import(pathToFileURL(assetPath).href);
   const variants = mod.default?.variants ?? {};
   const skinColor = hexToRgb(variants.skin?.fair ?? Object.values(variants.skin ?? {})[0] ?? '#f2c7a4');
   const eyeColor = hexToRgb(variants.eyes?.brown ?? Object.values(variants.eyes ?? {})[0] ?? '#6e4020');
+  const eyeColors = Object.values(variants.eyes ?? {}).map((c) => hexToRgb(c));
+  const castMeta = mod.castMeta ?? null;
+  // The Lily hair check reads the declared hair colour. An asset without one is refused.
+  let hairRgb = null;
+  if (asset === 'sprout-lily-kim') {
+    const hair = variants.hair ? Object.values(variants.hair)[0] : null;
+    if (!hair) {
+      console.error('hair colour: not declared');
+      process.exit(1);
+    }
+    hairRgb = hexToRgb(hair);
+  }
 
   // 4. base landmarks
-  const basePath = path.join(ROOT, 'assets', 'parts', 'humanoid-kim.ts');
-  if (!existsSync(basePath)) {
-    console.error(`asset ${asset}: not built`);
-    console.error('missing: assets/parts/humanoid-kim.ts');
-    process.exit(1);
-  }
   const base = await import(pathToFileURL(basePath).href);
-  const chinY = base.KIM_CHIN_Y;
-  const handsLandmarks = base.KIM_HANDS;
+  const chinY = base.BASE_CHIN_Y ?? base.KIM_CHIN_Y;
+  const crownY = base.BASE_CROWN_Y ?? base.KIM?.crown;
+  const handsLandmarks = base.BASE_HANDS ?? base.KIM_HANDS;
 
   const flatFront = path.join(ROOT, 'out', asset, 'flat', 'front-level.png');
   const flatSide = path.join(ROOT, 'out', asset, 'flat', 'side-level.png');
@@ -1023,9 +1254,15 @@ async function main() {
     side: fs_,
     skinRgb: skinColor,
     eyeRgb: eyeColor,
+    eyeColors,
+    assetName: asset,
+    hairRgb,
+    castMeta,
     ppm,
     chinRow: projFront([0, chinY, 0])[1],
-    projectedTop: projFront([0, bounds.max[1], 0])[1],
+    // The projected crown is the base landmark, not the top of the silhouette: a bun or a hat
+    // rises above the skull and must not move the measured head.
+    projectedTop: projFront([0, crownY, 0])[1],
     projectedSole: projFront([0, bounds.min[1], 0])[1],
     tipV: tipProj[1],
     handDepth,
@@ -1033,7 +1270,7 @@ async function main() {
     legWindowR,
     landmarks: { shoulder, hip, kneeV, wristV, ankleU, tipU: tipProj[0] },
   };
-  const m = measureFigure(figure);
+  const m = measureFigure(figure, table);
 
   // palms from the real hands body and KIM_HANDS
   const palms = {};
@@ -1098,26 +1335,34 @@ async function main() {
   const sha = (f) => createHash('sha256').update(readFileSync(f)).digest('hex');
   const record = {
     asset,
+    base: baseStem,
+    baseSha256: sha(basePath),
     order,
     rows,
     imageSize,
     ppm,
     ppmSource: 'max(stats.bounds.size) * 1.10',
+    glb: path.relative(ROOT, glbPath),
+    glbSha256: sha(glbPath),
     flatFront: path.relative(ROOT, flatFront),
     flatSide: path.relative(ROOT, flatSide),
     litFront: path.relative(ROOT, litFront),
     litSide: path.relative(ROOT, litSide),
     flatFrontSha256: sha(flatFront),
     flatSideSha256: sha(flatSide),
+    litFrontSha256: sha(litFront),
+    litSideSha256: sha(litSide),
     detail: m.detail,
     guards: m.guards,
     handEdge: m.handEdge,
     sideSign: m.sideSign,
     palms,
   };
-  const outDir = path.join(ROOT, 'out', 'chibi-sprouts', 'redesign');
-  mkdirSync(outDir, { recursive: true });
-  writeFileSync(path.join(outDir, 'measure.json'), JSON.stringify(record, null, 2) + '\n');
+  // The declared face marks are copied into the record, so the record shows the colour the eye
+  // mask used.
+  if (castMeta?.faceMarks) record.faceMarks = castMeta.faceMarks;
+  mkdirSync(path.dirname(recordPath), { recursive: true });
+  writeFileSync(recordPath, JSON.stringify(record, null, 2) + '\n');
 
   for (const r of m.rows)
     console.log(
