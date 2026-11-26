@@ -954,7 +954,10 @@ limit` gets exit 0 for a 350 px head.
     - No adult case remains failing. The result block is
       `measure/runs/chibi_sprouts_cast_20261125/red-2d5808a7.log`.
 
-- [x] T6 Green: Dad. File: `assets/sprout-dad-kim.ts` (new). Commit `bae2072671011b3115fa54d29ea81e62eddaeec6`.
+- [x] T6 Green: Dad. File: `assets/sprout-dad-kim.ts` (new). Commits
+      `bae2072671011b3115fa54d29ea81e62eddaeec6` and
+      `3cd8582a1cd6a5d0c5a154e84d87f2d7fb29de98`.
+  - Look remediation round 2 (2026-11-26): the look judge gave identity 7.0 and proportion 8.2 in round 1.
   - Build the identity of the spec: black swept-back hair, square jaw, thick brows, open smile, a
     red-and-black plaid shirt over a white tee, dark blue jeans, and brown boots. Import `buildKim`
     and `KIM`. Add the face layer that recreates the two eyes, the jaw and brow body, and the mouth
@@ -1010,7 +1013,61 @@ limit` gets exit 0 for a 350 px head.
       `result ok`, `prettier --check` exits 0, and `tsc --noEmit` holds the 51 baseline diagnostics
       with none in the new file.
 
-- [x] T7 Green: Grandma. File: `assets/sprout-grandma-kim.ts` (new). Commit `6ce871edee5ac74a28e2b8486d0213ac03fd1610`.
+  - Look remediation round 2 evidence (2026-11-26, worktree
+    `/home/daniebo/Desktop/forge-worktrees/sprouts-cast`, branch `chibi-sprouts-cast`, phase base
+    `b48c3df3235d69337aecc90da7db6cd178455eed`, role base
+    `eefaeba94aa38f4efe944b488ac8924e43ea8532`, implementation commit
+    `3cd8582a1cd6a5d0c5a154e84d87f2d7fb29de98`, Green route
+    `minimax-cn-coding-plan/MiniMax-M3.1-Flash`, family minimax):
+    - The round 1 judge scored identity 7.0 and proportion 8.2. The comment named three faults. The
+      hair read as a black beanie, the plaid shirt read as buttoned closed, and the hands read as
+      holding small sticks. The hair and the shirt are fixed. The hands are the base hand of
+      `buildKim`, a slab of 16 mm thickness and 135 mm length. The render carries no held item, so
+      the round 1 reading is not a geometry fault and the base stays unchanged.
+    - The three largest differences of each look round: 1) the hair was a smooth black dome with a
+      hairline on the brow, the shirt front was closed, and the jaw read as a separate plate under
+      the chin; 2) the hairline moved up to the forehead, the shirt opened over a white tee, and the
+      jaw merged into the chin; 3) the hair carried a fringe blob that read as a spot on the
+      forehead, the white panel was too wide, and bare shoulder showed above the sleeve, so the
+      fringe was removed, the panel narrowed, and the shoulder grew back over the arm.
+    - The hair fix: the hairline cut sits at `1.147 m` on the forehead instead of `1.075 m`, the quiff
+      lifts and sweeps back over the skull, and fine combed ridges run over the surface. The ridges
+      come before the cut, so the hairline stays a clean edge.
+    - The shirt fix: the open front is a V cut from `1.03 m` to the hem, so the white tee shows
+      from the neck down to the hem. The plaid carries thin vertical stripes and thin horizontal
+      bands, and two chest pockets sit on the shirt fronts.
+    - The eleven rows of `TABLES.kim` from `out/chibi-sprouts/cast/sprout-dad-kim-measure.json`:
+      `heightInHeads 3.660059`, `armToTorso 1.328305`, `legShare 0.392696`, `headToShoulders
+1.150488`, `wrist -0.061303`, `fingertips 0.509578`, `eyeLine 0.620109`, `eyeHeight 0.113114`,
+      `spacingHead 0.391414`, `eyeWidthFace 0.226471`, `spacingFace 0.455882`. Every row sits
+      inside the table, every row limit equals the table, both palms are ok, and no guard fired.
+    - The GLB stats: `sprout-dad-kim: 51,623 triangles, 0.421 x 1.547 x 0.315 m`, 17 bones, one
+      `idle` clip of 2.4 s, 15 bodies (`head-skin`, `torso-skin`, `arms-skin`, `legs-skin`,
+      `feet-skin`, `hands`, `face`, `jaw`, `hair`, `plaid`, `collar`, `tee`, `jeans`, `boots`,
+      `boot-sole`). The GLB SHA-256 is
+      `896d889b3e2db721a647b371b97f714e0e6a2151787ad9c4bd5b21b19d1fea61`. The four level renders
+      are `7c50a8adfe311f2744f8635749ff32e97b7407d5e42ad6134f837836b4536450` (flat front),
+      `f8f483e3688fd45295a2c493851ca5013ea3cf9c907dba476db70a3ba8a9af8b` (flat side),
+      `9d6c98d9b373debfdca8245041e49158c7413a2c417e7743ee2c12d34a5f5270` (lit front), and
+      `3817f50ea82ee88a19b8e324706b08f927b379ac6f8462e86d0c6e5b72639153` (lit side). The build
+      prints no warning line.
+    - The preset pin: `scripts/make-preset-pin.mjs` writes the same value for the key
+      `sprout-dad-kim` as the committed pin, because the remediation changes no variant colour. A
+      parsed comparison of the fresh pin with the committed pin covers 397 assets, and no value
+      changes. The pin file stays byte-identical, so the commit holds no pin change. The stale
+      `wizard-argon-trial` key stays, because its asset file is gone and the pin must keep every
+      baseline key.
+    - The panel: `out/chibi-sprouts/cast/sprout-dad-kim-panel.png`, 1416 x 900, SHA-256
+      `26513ebbcafa31e1646444e4c68d983b2f52b9473a4fd2c02378ec989b12993e`. The caption reads
+      `11/11 rows pass; palms ok` and `cropped: front no, side no, drawing no`.
+    - The gates: `tests/sprout-dad-kim.test.ts` exits 0, `./forge check sprout-dad-kim` ends
+      `result ok`, `prettier --check` exits 0, and `tsc --noEmit` holds the 51 baseline diagnostics
+      with none in the changed file.
+
+- [x] T7 Green: Grandma. File: `assets/sprout-grandma-kim.ts` (new). Commits
+      `6ce871edee5ac74a28e2b8486d0213ac03fd1610` and
+      `44c4b68843cdc8e9b9955e7b69a3f10b9a49f7a7`.
+  - Look remediation round 2 (2026-11-26): the look judge gave identity 7.0 and proportion 8.0 in round 1.
   - Build the identity of the spec: white hair in a high bun, round cheeks, smile lines, pearl studs,
     a green cardigan over a pale green dress, a mid-calf skirt, and brown flats. The bun may rise
     above the skull. The measured crown is the base crown. Add the face layer that recreates the two
@@ -1061,6 +1118,63 @@ limit` gets exit 0 for a 350 px head.
     - The gates: `tests/sprout-grandma-kim.test.ts` exits 0, `./forge check sprout-grandma-kim`
       ends `result ok`, `prettier --check` exits 0, and `tsc --noEmit` holds the 51 baseline
       diagnostics with none in the new file.
+
+  - Look remediation round 2 evidence (2026-11-26, worktree
+    `/home/daniebo/Desktop/forge-worktrees/sprouts-cast`, branch `chibi-sprouts-cast`, phase base
+    `b48c3df3235d69337aecc90da7db6cd178455eed`, role base
+    `eefaeba94aa38f4efe944b488ac8924e43ea8532`, implementation commit
+    `44c4b68843cdc8e9b9955e7b69a3f10b9a49f7a7`, Green route
+    `minimax-cn-coding-plan/MiniMax-M3.1-Flash`, family minimax):
+    - The round 1 judge scored identity 7.0 and proportion 8.0. The comment named three faults. The
+      hair read as a smooth white cap with a bun, the face had no elderly marks, and the cardigan
+      read as a puffy jacket with a pale centre panel over a short skirt. All three are fixed.
+    - The three largest differences of each look round: 1) the bun was a cone blended into the cap,
+      the cheek bodies bulged forward as two muzzle lumps, and the smile lines crossed the nose; 2)
+      the bun became a wide mass with a wrap, the cheeks flattened, and the smile lines moved to the
+      corner of the mouth; 3) the hairline showed skin spikes where the grooves met the face, the
+      hair cap hugged the face layer, and the hair read as a smooth bonnet, so the cap grew clear
+      of the face, the cap grooves were replaced by painted strands, and the bun kept its grooves.
+    - The hair fix: the cap sits clear of the face layer, the hairline is a parted arch that is high
+      at the parting and low at the temples, the bun is a wide mass with a wrap ring and fine
+      grooves, loose wisps frame the face and the ears, and eight painted strands fan out from the
+      parting.
+    - The face fix: the cheek bodies are flatter and wider, they carry the rosy cheek paint, and the
+      two smile lines run from the side of the nose to the corner of the mouth.
+    - The clothes fix: the cardigan closes at the front with a neck opening, a row of five buttons
+      and knit ribs at the hem and the cuffs, the dress is a light green that matches the cardigan,
+      and the skirt falls to the mid-calf with vertical folds and a hem that dips in the middle.
+    - The eleven rows of `TABLES.kim` from
+      `out/chibi-sprouts/cast/sprout-grandma-kim-measure.json`: `heightInHeads 3.648823`,
+      `armToTorso 1.328305`, `legShare 0.391624`, `headToShoulders 1.16905`, `wrist -0.061303`,
+      `fingertips 0.509578`, `eyeLine 0.620548`, `eyeHeight 0.111699`, `spacingHead 0.382653`,
+      `eyeWidthFace 0.22561`, `spacingFace 0.457317`. Every row sits inside the table, every row
+      limit equals the table, both palms are ok, and no guard fired.
+    - The bun and the head: the mask top `detail.crownRow` 46 sits above the rounded projected crown
+      `detail.projectedCrownRow` 95, and the head height is `chinRow - projectedCrownRow` = 241.72
+      px. The white bun pixels sit above the projected crown in the flat front view and in the flat
+      side view, so the bun stays in the side silhouette and the panel keeps it inside the 56 px
+      headroom (`cropped: no`).
+    - The GLB stats: `sprout-grandma-kim: 48,246 triangles, 0.412 x 1.588 x 0.334 m`, 17 bones, one
+      `idle` clip of 2.4 s, 13 bodies (`head-skin`, `torso-skin`, `arms-skin`, `legs-skin`,
+      `feet-skin`, `hands`, `face`, `cheeks`, `hair`, `cardigan`, `dress`, `flats`, `studs`). The GLB
+      SHA-256 is `231ca1ad5b929a8584f186bb2efa721548d7811a2ceae4d8006d22583430c217`. The four level
+      renders are `5acbcba54b8a91e17ccc2d379adce0fefc60fa90c47866661c89261ae7432005` (flat front),
+      `94b4dd9fb09a37485d5d4529c522c30ddd5fa677102cf761d8598a6ea9e19dad` (flat side),
+      `d86c880c1ca1c8387dc078cc0fbc7ba3377b9324a3b3901d4dee718d3dc6633a` (lit front), and
+      `6a617dff37894dee4fe603092acfff89b4c03157424a67c9badfe82287fb8014` (lit side). The build
+      prints no warning line.
+    - The preset pin: `scripts/make-preset-pin.mjs` writes the same value for the key
+      `sprout-grandma-kim` as the committed pin, because the remediation changes no variant colour.
+      A parsed comparison of the fresh pin with the committed pin covers 397 assets, and no value
+      changes. The pin file stays byte-identical, so the commit holds no pin change. The stale
+      `wizard-argon-trial` key stays, because its asset file is gone and the pin must keep every
+      baseline key.
+    - The panel: `out/chibi-sprouts/cast/sprout-grandma-kim-panel.png`, 1416 x 900, SHA-256
+      `e52fda296867902c6422a6d157c15411d973ead22d335dc2dce918e3a4470c3b`. The caption reads
+      `11/11 rows pass; palms ok` and `cropped: front no, side no, drawing no`.
+    - The gates: `tests/sprout-grandma-kim.test.ts` exits 0, `./forge check sprout-grandma-kim`
+      ends `result ok`, `prettier --check` exits 0, and `tsc --noEmit` holds the 51 baseline
+      diagnostics with none in the changed file.
 
 - [x] T8 Green: Grandpa. File: `assets/sprout-grandpa-kim.ts` (new). Commit `78be77a2af409704e5d132018d4d4c30e6e85169`.
   - Build the identity of the spec: a bald crown with white side hair, round dark-brown glasses, a
