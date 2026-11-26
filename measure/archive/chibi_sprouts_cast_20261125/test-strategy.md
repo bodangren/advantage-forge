@@ -281,9 +281,10 @@ T18 runs the panel test, the real panel and sheet record, the final judge input 
 `PROJECT_TESTS` with the TD-40 exclusion, `PROJECT_LINT`, `PROJECT_CHECKS`, `./measure/generate.sh`,
 and `./measure/doctor.sh`.
 
-T19 is `[b]` with `deferred:pm` and an event trigger in the plan. The PM owns it. It records the
+T19 was `[b]` with `deferred:pm` and an event trigger in the plan. The PM owned it. It records the
 handoff date, the PM's word, and the next task. An approval opens the closeout; a change list returns
-the named character to Green and to a fresh judge. No role starts T19.
+the named character to Green and to a fresh judge. No role started T19. The PM answered on
+2026-11-27 and T19 is `[x]`; the plan holds the record.
 
 ## 9. Anti-pattern coverage and falsification
 

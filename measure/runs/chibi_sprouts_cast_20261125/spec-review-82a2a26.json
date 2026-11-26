@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "role": "spec-review",
+  "track": "chibi_sprouts_cast_20261125",
+  "phase": "track",
+  "baseline_sha": "82a2a26b256c7cf2d3cf78e70b77445dd270f848",
+  "audited_head_sha": "82a2a26b256c7cf2d3cf78e70b77445dd270f848",
+  "status": "fail",
+  "summary": "Seven earlier findings are closed. Six need a further change. New contradictions also prevent a reproducible Phase 1 gate and a reliable final record.",
+  "blocking_findings": [
+    "F4 [Blocker] spec.md The record, The landmark checks and fixtures; plan.md T1, T5, T7: Keep the five-item `measurePixels()` API and put the new fixtures behind the `measureFigure` seam. Use `detail.crownRow` as the mask top in T5 and T7, or explicitly add `detail.maskTop`. Rationale: `tests/sprout-mom-kim.test.ts:305` asserts the exact five names. The amended spec defines `detail.crownRow` as the mask top, but the Grandma pin requires a different field. The projected landmark and tolerance rules themselves are closed.",
+    "F5 [Blocker] spec.md The panel layout, The command line and the input contract; plan.md T17: Define the horizontal drawing crop, the handling of a figure wider than its cell, and the exact sheet path. Add a sheet-only command or make `--all` preserve valid existing panels. Pin this behavior in the existing panel test. Rationale: a full 1600 px Grandma drawing scales to about 813 px, wider than the 440 px cell. The CLI writes a sheet only with all five panels, but T17 forbids panel rewrites. The plan cannot create its required sheet without invalidating verdicts.",
+    "F7 [Blocker] spec.md The landmarks and the tolerances, The Lily hair and chin check; plan.md T1, T12–T14: Correct the exact skeleton count to 17. Define the inspection seam for fixed joints and hands, and check those values on the built assets. Define which asset field supplies the hair color and its default. Rationale: `assets/parts/humanoid-kim.ts:73` defines five central bones and six pairs, not 15. The listed names and exact count cannot both pass. The Lily guard requires an undeclared metadata field.",
+    "F8 [Blocker] spec.md The face layer and the paint; plan.md T6–T8: Define how the asset obtains the private head surface and preserves or recreates its eye paint. Define a typed local asset metadata export for `faceMarks` and its color separation from the iris. Rationale: `kimHead` paints the eyes on the same surface as the mouth and brows. A skin-colored shell over its front obscures the eyes too. `src/asset.ts:99` has no `faceMarks` field in `AssetDefinition`. The new shell and the declaration leave essential design choices open.",
+    "F9 [Blocker] spec.md The judge record; plan.md T9–T10, T15–T18: Check the GLB, measurement, render, panel, and source revision against the judge inputs at the gates. Include the shared child base in the revision check. Set the limit to at most two judge rounds, only on failure or changed inputs. Rationale: the new record has three hashes but T10, T16, and T17 only compare the panel hash. A child base change after Tom can leave a stale verdict for Tom. A literal two-round rule also adds a second judgment to an unchanged passing asset.",
+    "F10 [Blocker] plan.md T19; spec.md Gates: Put the blocked marker at the start of the task and record `deferred:pm` on the same line. Use the supported human-gate form for the installed checker. Remove the optional Review A clause from plan lines 38–39 and strategy line 54. Rationale: `- [ ] T19 [b]` remains an open task to the installed checker and has no deferred owner field. The amended spec forbids Review A. The passing adversarial gate and light-lane metadata are correct.",
+    "F14 [Blocker] spec.md Build and render sequence, AC1; plan.md T0–T4; test-strategy.md sections 3.5 and 5: Compare stable stats fields and omit elapsed times from the equality check. Record a raw hash for traceability only. Take the final artifact hashes after the lit render and use those inputs thereafter. Rationale: `src/asset.ts:507` and `src/sdf/mesher.ts:310` include elapsed milliseconds in stats. `src/cli/forge.ts:326–340` rebuilds and writes the GLB and stats on each render. The new six-identical-hash requirement cannot reliably pass on independent builds.",
+    "F15 [Blocker] plan.md T0–T4, T11–T12; test-strategy.md sections 4 and 5: Move the child-base Red cases to T11. Keep the isolation test as an already-passing regression case and state which new cases must fail at T1. Rationale: T1 requires each file to fail, but the strategy says the isolation file passes. T4 leaves the child module tests failing until T12, even though Phase 1 must leave a passing tool suite. No extra review is needed.",
+    "F16 [Blocker] test-strategy.md sections 1 and 2: Capture the phase base once per phase. Bind each role result to its current audited HEAD and retain the phase base for the diff. Rationale: the amendment instructs Red, Green, and audits to run against the same captured SHA. A verdict on the pre-Green commit cannot certify the implemented scripts or assets. The phase base and audited HEAD have different purposes."
+  ],
+  "nonblocking_findings": [
+    "F17 [Nit] spec.md Context, decision (j): Cite the Mom shape route as `opencode/nemotron-3.5-super-vl-free` and keep the new fixed route as the PM decision. Rationale: the corrected shape record identifies the free route, while `judge-p9-bf4158a.json` identifies the new route. Both records name the nvidia family.",
+    "F18 [Major] spec.md Standing rules and AC9; plan.md Role brief template: State that the approved look judge is the sole exception to the no-hosted-call rule and that only its named input files may leave the worktree. Permit routine replacement of generated files inside the isolated output tree. Rationale: the spec says no hosted API and that panels stay local, but the judge receives the panel. The Forge render path also removes its generated view folders before writing them. These are internal steps, not external publication or deletion of source files."
+  ],
+  "evidence": [
+    "HEAD confirmed at start and end: 82a2a26b256c7cf2d3cf78e70b77445dd270f848. The amendment changes the spec, plan, strategy, and metadata; no implementation review ran.",
+    "F1 closed: spec decision (r), Build and render sequence, lines 409–431; plan T6–T8 and T13–T14 remove forge all and place the lit pass last. New timing and rebuild contradiction is F14.",
+    "F2 closed: spec The output tree, lines 433–453; plan T0, T17–T18; strategy 3.4. Mom and missing cast inputs get a preparation step in the isolated worktree. The separate deterministic hash issue is F14.",
+    "F3 closed: spec The tables and The record, lines 118–159; plan T1 cases 3–9. The selected table is authoritative, invalid table values fail, and numeric rows and lit have defined shapes.",
+    "F4 partly closed: spec lines 99–116 and 180–201 define the projected crown, guard tolerance, and fixtures. Legacy measurePixels exact return names and the mask-top record field remain unresolved.",
+    "F5 partly closed: spec lines 469–518 and plan T1 define height, headroom, date, caption, body scale, and relative sheet scale. Horizontal drawing crop and sheet-only behavior remain unresolved.",
+    "F6 closed: spec lines 161–178 and plan T1 cases 14 and panel case 8 require lstat on parents and destination, named errors, and unchanged files. No additional review is requested.",
+    "F7 partly closed: spec lines 228–285 and plan T12–T14 add absolute tolerances, inventory, and Lily guards. The count conflicts with the named bones and the inspection and hair-color seams need definition.",
+    "F8 partly closed: spec lines 300–324 adds an asset face layer, face marks, and a glasses fixture. The private geometry and eye-paint preservation remain undefined.",
+    "F9 partly closed: spec decisions (j)–(l) and lines 520–539, plan T9 and T15 bind inputs and separate the three families. Final gate checks and retry wording remain incomplete.",
+    "F10 partly closed: plan T4 requires pass and closure; metadata lane is light; spec lines 559–564 defines closeout. T19 marker and the optional Review A exception remain inconsistent.",
+    "F11 closed: spec lines 455–467, plan T2 explicitly reuse maskSpan, panel, textSvg conventions without importing the existing main.",
+    "F12 closed: spec Purpose and Context cite judge.json and redesign T10/T12 for shape, and Phase 9 for cut-out and sprite. A separate route-label correction is F17.",
+    "F13 closed: spec lines 389–404 and plan T0/T1/T4 pin the tracked old source hashes, ADULT/AGE5/HERO, and Mom preset. Spec expressly runs isolation at both later phase gates. Each per-character pin uses the named table.",
+    "Checked current sources: scripts/proportion-check.mjs, scripts/mom-kim-sheet.mjs, assets/parts/humanoid-kim.ts, src/asset.ts, src/sdf/mesher.ts, src/cli/forge.ts, tests/sprout-mom-kim.test.ts, tests/sprout-mom-kim.validation.test.ts, scripts/make-preset-pin.mjs.",
+    "Checked the queue, redesign verdicts, project product definition, tech stack, and workflow. The Grandma drawing has a visible bun above the specified crown. The track makes no customer-facing claim.",
+    "Static review only. No render, test, paid call, upload, or production output write ran. The proposed fixes use the existing light gates."
+  ],
+  "commands": [
+    "git rev-parse HEAD (pass at start and end)",
+    "git diff --stat b58aad2..HEAD (pass)",
+    "Static reads and source searches (pass)"
+  ],
+  "changed_files": [
+    "measure/runs/chibi_sprouts_cast_20261125/spec-review-82a2a26.json",
+    "measure/runs/chibi_sprouts_cast_20261125/spec-review-82a2a26.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "escalate_human",
+  "confidence": "high",
+  "paraphrase": {
+    "proposes": "The track builds Dad, Grandma, and Grandpa on the Kim adult base, then builds Tom and Lily on a separate child base. It extends the measurement script with named bases, tables, and records. Each new asset gets a proportion test and an independent look judgment. It sends internal panels and a cast sheet to the PM and leaves external use to the owner.",
+    "current_system": "The earlier Sprouts bases and assets remain in git. Mom has an approved shape on a separate adult base with a private painted head. The proportion script measures the masks, GLB joints, and hands against one adult table. The Forge render command builds the asset and writes a GLB and stats before rendering. The outputs are not in git."
+  }
+}

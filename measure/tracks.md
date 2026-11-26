@@ -70,9 +70,6 @@ This registry gives each historical, current, and planned work item one Measure 
 - [~] **Track: Chibi Sprouts, release 1 art**
   *Link: [./tracks/asset_chibi_sprouts_r1_20261022/](./tracks/asset_chibi_sprouts_r1_20261022/)*
 
-- [~] **Track: Chibi Sprouts cast on the Kim base: Dad, Grandma, Grandpa, Tom and Lily**
-  *Link: [./tracks/chibi_sprouts_cast_20261125/](./tracks/chibi_sprouts_cast_20261125/)*
-
 ## Games
 
 - [~] **Track: Remove the legacy games from the monorepo**
@@ -251,6 +248,10 @@ Execution order. The overview, the decisions, and the dependencies are in [riven
   *Link: [./tracks/riven_fx_geometry_20261009/](./tracks/riven_fx_geometry_20261009/)*
 
 ## Archived Tracks
+
+- [x] Chibi Sprouts cast on the Kim base: Dad, Grandma, Grandpa, Tom and Lily, completed 2026-11-27; five Kim-base assets with one proportion pin and one look judge per character, the cast sheet, and PM acceptance of the cast on 2026-11-27. Phases 1 to 4 each hold a phase acceptance record and no final acceptance role ran (light lane). The PM granted a main-checkout test exception: 18 of 119 cast tests need git-ignored out/ inputs that exist only in the worktree forge-worktrees/sprouts-cast, where all 119 pass. Open items: TD-57 to TD-62, TD-66 to TD-68.
+  *Link: [./archive/chibi_sprouts_cast_20261125/](./archive/chibi_sprouts_cast_20261125/)*
+  *Finish the Chibi Sprouts release 1 cast on the approved Kim base: Dad, Grandma and Grandpa as adult variants, and Tom and Lily on a new child base, with one proportion pin and one independent look judge per character, and no customer-facing claim*
 
 - [x] Chibi Sprouts redesign: new adult base on Teacher Kim, with Mom as the first trial, completed 2026-11-26; one SDF adult base on Kim's measured proportions, the Mom asset, a numeric proportion check, a song cut-out and a 128 px idle sprite, delivered after PM approval at T12. The two final acceptance records (7478b2af, cae3bdb1) read fail; the PM waived findings F1, F2 and F4 on 2026-11-26 and F3 was fixed in 8e002724, so no final acceptance record reads pass. Open items: TD-51, TD-52, TD-54, TD-55, TD-56. The cast track chibi_sprouts_cast_20261125 builds on this base.
   *Link: [./archive/chibi_sprouts_redesign_20261123/](./archive/chibi_sprouts_redesign_20261123/)*

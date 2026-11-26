@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "track": "chibi_sprouts_cast_20261125",
+  "archived_at": "2026-11-27",
+  "track_base_sha": "8e002724b93695bcac0cb0989d8ef5b038a70cd8",
+  "pre_closeout_head_sha": "97fd53ce9e9a8d147729c8c810b59899a697fd1f",
+  "audited_head_sha": "c854405053ea134e90ecc20aeae235b2db4d7d5a",
+  "audited_head_is_pre_closeout_head": false,
+  "audited_head_is_ancestor_of_pre_closeout_head": true,
+  "audited_head_provenance_note": "The audited head is the Phase 4 acceptance head. git diff --name-only c8544050 97fd53ce lists only measure/generated/status.md, the Phase 4 acceptance record and log, and the track plan. No path under assets, scripts, src, or tests changed after the audited head.",
+  "route": "claude-agent/sonnet#high, approved record route; closeout is mechanical and writes no audit",
+  "lane": "light",
+  "final_acceptance": {
+    "ran": false,
+    "exception": "Lane light. Per the spec section 'The closeout path', the Phase 4 gate is the track acceptance record and no separate final acceptance role runs. The checker prints the light lane note instead of requiring a final-acceptance record.",
+    "gate_record": "measure/runs/chibi_sprouts_cast_20261125/phase-acceptance-p4-c854405.json",
+    "phase_acceptance_records": [
+      "measure/runs/chibi_sprouts_cast_20261125/phase-acceptance-p1-54e7b15.json",
+      "measure/runs/chibi_sprouts_cast_20261125/phase-acceptance-p2-556694d.json",
+      "measure/runs/chibi_sprouts_cast_20261125/phase-acceptance-p3-969c4fe.json",
+      "measure/runs/chibi_sprouts_cast_20261125/phase-acceptance-p4-c854405.json"
+    ],
+    "superseded_failing_records": [
+      "measure/runs/chibi_sprouts_cast_20261125/phase-acceptance-p1-ede60f0.json",
+      "measure/runs/chibi_sprouts_cast_20261125/phase-acceptance-p2-36b9ed3.json"
+    ]
+  },
+  "pm_acceptance": {
+    "date": "2026-11-27",
+    "task": "T19",
+    "word": "accepted: the five cast panels and the cast sheet; the character work is closed and no character returns to Green"
+  },
+  "pm_test_exception": {
+    "date": "2026-11-27",
+    "granted_by": "PM",
+    "scope": "main checkout only",
+    "failures": "18 of 119 cast tests fail in the main checkout, plus one TestTimeoutError in tests/proportion-cast-options.test.ts (the destination-refusal case hashes a 24 GB out/ tree).",
+    "cause": "The git-ignored out/ inputs (Mom flat/front-level.png, the five cast GLBs and stats files) exist only in the worktree /home/daniebo/Desktop/forge-worktrees/sprouts-cast.",
+    "worktree_result": "All 119 cast tests pass in the worktree.",
+    "closeout_rerun": "The project test gate was not rerun in closeout. The exception names its known result, and a rerun would hash the 24 GB out/ tree. No test, gate or acceptance criterion changed."
+  },
+  "task_markers": "The archived plan holds 20 [x] task markers (T0 to T19), 0 [~], 0 [ ], and 0 [b]. T19 was [b] with deferred:pm until the PM answered on 2026-11-27. No other plan task marker was edited in closeout; the plan Status line was updated from 'new' to 'done'.",
+  "stale_text_fixed": [
+    "measure/archive/chibi_sprouts_cast_20261125/test-strategy.md section 8: the T19 line said it is [b]; it now says T19 was [b] and is [x] after the PM answer of 2026-11-27.",
+    "measure/archive/chibi_sprouts_cast_20261125/plan.md: the Status line said 'new ... No character work has started'; it now says done and archived 2026-11-27."
+  ],
+  "fixed_path_hits_before_move": [
+    "measure/tracks.md:73-74 (active registry entry removed, archive entry added with the metadata description)",
+    "measure/tech-debt.md:40-48 (TD-57 to TD-62 and TD-66 to TD-68 links repointed to the archive)",
+    "measure/generated/status.md:25 (regenerated after the move)",
+    "measure/archive/chibi_sprouts_cast_20261125/plan.md, test-strategy.md and metadata.json (self references inside the moved track; historical text kept)",
+    "measure/runs/chibi_sprouts_cast_20261125/*.json (audit records name the old path as evidence text; kept unchanged)",
+    "measure/archive/chibi_sprouts_redesign_20261123/automation-supervisor-closeout-manifest.json (a record of the earlier closeout; kept unchanged)",
+    "tests/, scripts/, src/, docs/, .claude/, measure/tools/, measure/tests/: no hit"
+  ],
+  "a9_fix": "Not needed: no test, script or support file references the active track path. The project test gate was not rerun (see pm_test_exception).",
+  "antipatterns": [
+    "A5: the plan holds no pinned test count or PASS=N claim for the project gate. The plan records that the main-checkout gate did not close and that the PM granted the exception. The stale 'No character work has started' Status line was corrected.",
+    "A6: the new archive entry in measure/tracks.md states the PM test exception, the light lane, and that no final acceptance role ran. It makes no adversarial or full-pass claim.",
+    "A9: no tests/*.sh file hardcodes the track path."
+  ],
+  "tech_debt": "No row added or moved. TD-57 to TD-62 and TD-66 to TD-68 stay open; their links point to the archive.",
+  "lessons_learned": "No new lesson is warranted by closeout.",
+  "artifact_cleanup": "No run artifact was deleted. Everything under measure/runs/chibi_sprouts_cast_20261125/ is retained and committed with the archive. The worktree /home/daniebo/Desktop/forge-worktrees/sprouts-cast and its branch chibi-sprouts-cast stay, because its git-ignored out/ folder holds the only copy of the panels, the sheet and the builds. No production out/ path was touched.",
+  "retained_evidence": [
+    "measure/runs/chibi_sprouts_cast_20261125/ (all files)",
+    "measure/archive/chibi_sprouts_cast_20261125/"
+  ],
+  "facts_changed": []
+}

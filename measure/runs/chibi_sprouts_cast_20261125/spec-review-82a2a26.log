@@ -1,0 +1,13 @@
+MEASURE_AGENT_RESULT
+role: spec-review
+status: complete
+track: chibi_sprouts_cast_20261125
+phase: track setup
+commits: none
+tests_run: git rev-parse HEAD (pass); static document and source review (complete); no tests or renders run
+files_changed: measure/runs/chibi_sprouts_cast_20261125/spec-review-82a2a26.json and .log
+plan_updates: none
+known_failures: F4, F5, F7, F8, F9, F10, F14, F15, F16 block the gate; F17 and F18 are nonblocking
+handoff: Round 2 failed. Send the remaining findings and fixes to the PM for a decision under the two-round limit. Retain the light gates. No further spec review without an escalation.
+END_MEASURE_AGENT_RESULT
+RESULT: FAIL

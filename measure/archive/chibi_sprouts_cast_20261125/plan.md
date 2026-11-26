@@ -1,6 +1,6 @@
 # Chibi Sprouts cast on the Kim base: plan
 
-Status: new (created 2026-11-25). No character work has started. Amendment round 1 answers the spec
+Status: done (created 2026-11-25, archived 2026-11-27). All four phases are accepted and the PM accepted the cast on 2026-11-27. Amendment round 1 answers the spec
 review of 2026-11-25. Amendment round 2 answers the second spec review of 2026-11-25
 (`spec-review-82a2a26.json`: F4, F5, F7, F8, F9, F10, F14, F15, F16, F17, F18). After round 2, Red
 starts with no third review. The plan records execution state. `spec.md` holds the contract, the
@@ -650,7 +650,7 @@ panels and the sheet`. The second case expects the refusal to name `sprout-tom-k
       - The PM may instead amend the spec, so that the sheet limit accepts a head of 339.5 px and
         refuses a head of 350 px. Green does not choose that limit without the amendment.
 
-- [x] T3 Measure: One adversarial round on the two scripts.
+- [x] T3 Measure: One adversarial round on the two scripts. Commit `67da9cfd837bb2d49994fc92c3aecc579704befe`.
   - It reads the T2 commit and attacks the table selection, the row-limit rule, the base name, the
     record and panel destinations, the crown rounding and mask tolerance, the face-mark exclusion,
     the Lily guards, the panel scale and headroom, the horizontal crop and the head-fit rule, the
@@ -817,7 +817,7 @@ limit` gets exit 0 for a 350 px head.
     the rows TD-57 to TD-65 of `measure/tech-debt.md`, and their fix is out of scope for this phase.
   - T3 is `[x]`. T4 is `[x]` after the Phase 1 gate of 2026-11-26.
 
-- [x] T4 Measure: The Phase 1 gate.
+- [x] T4 Measure: The Phase 1 gate. Commit `673f59da3056b778c36dc4039eea91a6cbae1bc2`.
   - Done-when:
     - the tool tests exit 0,
     - the Mom pin exits 0 with every row in range, the stable stats projection unchanged, and the
@@ -1376,7 +1376,7 @@ limit` gets exit 0 for a 350 px head.
       Grandpa: the Green look builds before the judged build were overwritten in `out/` and left no
       recorded GLB or `stats.json` projection.
 
-- [x] T9 Measure: The three adult look judges.
+- [x] T9 Measure: The three adult look judges. Commit `34a6e90d7993c4203ce95866dc755882eb021ff5`.
       Records: `measure/runs/chibi_sprouts_cast_20261125/judge-sprout-dad-kim.json`,
       `judge-sprout-grandma-kim.json`, and `judge-sprout-grandpa-kim.json`.
   - One brief per character. Each brief holds the panel path, the drawing path, the eleven rows as
@@ -1428,7 +1428,7 @@ limit` gets exit 0 for a 350 px head.
       `git rev-parse HEAD -- <path>` to `git log -1 --format=%H -- <path>`. `git rev-parse HEAD --
 <path>` names HEAD, not the last commit that changed the path.
 
-- [x] T10 Measure: The Phase 2 gate.
+- [x] T10 Measure: The Phase 2 gate. Commit `46197286af95aa04325482f6d44df09a959205ad`.
   - Done-when: the three pins exit 0, the three judges pass, every judge input of spec "The gate
     check of the judge inputs" is verified at the gate HEAD, `./forge check` ends `result ok` for
     each asset, the preset pin holds three new keys and no changed value, `./measure/generate.sh`
@@ -2178,7 +2178,7 @@ blue`), and the stale `wizard-argon-trial` key stays.
       # exit 2: 51 diagnostics in the baseline files; none sits in the changed file
       ```
 
-- [x] T15 Measure: The two child look judges.
+- [x] T15 Measure: The two child look judges. Commit `b37133ffb1512fac49dc103bdd9e136e8323fd78`.
   - The brief, the binding, the input check, and the record are T9's, one per child. The base commit
     and base hash are the shared child base, so a base change voids both child verdicts.
   - Done-when: `judge-<name>.json` exists for Tom and Lily, every judge input of spec "The gate
@@ -2217,7 +2217,7 @@ blue`), and the stale `wizard-argon-trial` key stays.
     - T16 checks every input again at the gate HEAD. A base change after this record voids both
       child verdicts.
 
-- [x] T16 Measure: The Phase 3 gate.
+- [x] T16 Measure: The Phase 3 gate. Commit `159ab3957e7197a3678f84e4fe859e99bb9029e7`.
   - Done-when: the two pins exit 0, the two judges pass, every judge input of spec "The gate check of
     the judge inputs" is verified at the gate HEAD, including the shared child base commit and hash,
     `./forge check` ends `result ok` for each asset, the preset pin holds two new keys and no changed
@@ -2276,7 +2276,7 @@ blue`), and the stale `wizard-argon-trial` key stays.
 
 ## Phase 4: The panels and the handoff
 
-- [x] T17 Measure: The cast sheet, the panel check, and the handoff.
+- [x] T17 Measure: The cast sheet, the panel check, and the handoff. Commit `c854405053ea134e90ecc20aeae235b2db4d7d5a`.
   - The five panels already exist from T6 to T8 and T13 to T14. This task does not rewrite a panel,
     because a new date would change its bytes and void its judge record.
   - Run `scripts/sprout-cast-panel.mjs --sheet` to write `out/chibi-sprouts/cast/cast-sheet.png`
@@ -2328,7 +2328,7 @@ blue`), and the stale `wizard-argon-trial` key stays.
       at the top of the drawing cell measures 247 of 255 and stays inside the judged bytes.
     - Note path: `measure/runs/chibi_sprouts_cast_20261125/handoff.md`.
 
-- [x] T18 Measure: The Phase 4 gate, the project gate, and the closeout record.
+- [x] T18 Measure: The Phase 4 gate, the project gate, and the closeout record. Commit `1cf5f328c3bc6057f06a5b7d64191bd270ba1ec1`.
   - Done-when:
     - `tests/sprout-cast-panel.test.ts` passes,
     - the five real panels and the sheet exist, and the record holds their sizes, their projected
@@ -2392,7 +2392,7 @@ blue`), and the stale `wizard-argon-trial` key stays.
       `panel_sha256` values. The sheet hash is
       `ed4ea5aa9515fe1a469d6904eb97365de798d378d4ae9e379c82935070b9b725` at 1544 × 900.
 
-- [x] T19 Measure: Record the PM's answer. Human gate. Owner PM.
+- [x] T19 Measure: Record the PM's answer. Human gate. Owner PM. Commit `97fd53ce9e9a8d147729c8c810b59899a697fd1f`.
   - The task records the handoff date, the PM's word, and the next step. An approval closes the
     character work and opens the closeout. A change list returns the named character to its Green
     task and to a fresh judge.
