@@ -954,7 +954,7 @@ limit` gets exit 0 for a 350 px head.
     - No adult case remains failing. The result block is
       `measure/runs/chibi_sprouts_cast_20261125/red-2d5808a7.log`.
 
-- [~] T6 Green: Dad. File: `assets/sprout-dad-kim.ts` (new).
+- [x] T6 Green: Dad. File: `assets/sprout-dad-kim.ts` (new). Commit `bae2072671011b3115fa54d29ea81e62eddaeec6`.
   - Build the identity of the spec: black swept-back hair, square jaw, thick brows, open smile, a
     red-and-black plaid shirt over a white tee, dark blue jeans, and brown boots. Import `buildKim`
     and `KIM`. Add the face layer that recreates the two eyes, the jaw and brow body, and the mouth
