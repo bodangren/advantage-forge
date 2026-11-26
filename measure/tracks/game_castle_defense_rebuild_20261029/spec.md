@@ -155,6 +155,7 @@ Facts found in this tree on 2026-10-29:
   2026-10-29. Default: keep them live.
 - Daniel picks the look from the A-28 mockups (`out/a28-mockups/`, PNG files outside git).
   Phase 2 waits for the pick.
+  2026-11-27 (PM): the look pick is a PM decision, recorded in plan.md Status: mockup c2.
 
 ## Open questions (the defaults apply)
 
