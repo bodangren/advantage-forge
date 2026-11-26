@@ -1,0 +1,54 @@
+Adversarial verification, Phase 1: the measuring tools. Track chibi_sprouts_cast_20261125. Round 3 of the probes.
+Audited HEAD 9af8f652f99ea0e0e872806e1cf0f65660d1e774. Phase base 5356e78730daefd5225f9733f190dc6bb631b90d.
+Fixes under audit: a3040c95 (Green, green-a3040c95.log) and 766c2655 (Red fixture repair, PM Option A).
+Earlier rounds: adversarial-9adcc72e.json, adversarial-70ebbfb.json.
+Route claude-agent/sonnet#xhigh (family anthropic).
+Result file: measure/runs/chibi_sprouts_cast_20261125/adversarial-9af8f65.json
+
+Verdict: PASS. No Blocker. Three Minor findings for measure/tech-debt.md.
+
+Closed on real input
+  F3  The sheet caption holds all five cells: 'cropped: dad no, grandma no, grandpa no, tom no, lily no'.
+      With five 'yes' states the last ink column is 652 of 1544. The head limit is 264 px:
+      adult 75 px passes and 76 px is refused; child 107 px passes and 108 px is refused.
+      The 350 px head is refused on '--sheet'.
+  F7  The head-fit reads the widest run. The 472 px head is refused. On the five real drawings the widest
+      run equals the head union (within 21 source px) and the axis sits within 5 source px of the head centre.
+      An off-axis arm gives 'cropped: yes'.
+  F18 A symlink planted at the old temp name or at guessed '.tmp-' names changes nothing. The temp folder
+      is a fresh mkdtemp folder, the write uses the flag 'wx', and no temp folder stays behind.
+  F19 A record without chinRow, with a null chinRow, or with a chinRow outside the crown-sole range is
+      refused by name, and '--all' writes nothing.
+  F6  Empty values for --asset, --date and --root are refused with one line and an unchanged tree.
+
+No regression
+  F1  Five real drawings, and cream, grey and noisy paper at JPEG quality 70, write the expected head width.
+  F2  The Lily side-chin guard fires at alpha 255 down to 128 and for a non-skin pixel.
+  F8 to F11  Validate-first, atomic replace, named parent errors and hard-link refusal hold.
+  Mom: proportion-check.mjs has an empty diff since 70ebbfbe. Her eleven rows and five artifact hashes are unchanged.
+  Tests: 102 of 102 cases pass over five files. Prettier passes.
+
+Minor findings (not Blockers: no real input fails and no gate gives a false pass)
+  F21 A record without projectedCrownRow is named 'no chin row'.
+  F22 The crop state ignores the headroom rows, and a scanned frame line or vignette reads 'cropped: yes'.
+  F23 The panel does not compare the record's render hashes with the files it reads.
+
+Not re-raised
+  F4 (PM decision 5c93345f), F5 and F12 (PM decisions 9fee6e88). F13 to F17 and F20 stay carried.
+
+T3 is report-only. This round adds no test and commits nothing.
+The worktree shows modified measure/generated files and red-9adcc72e.log, and an untracked red-70ebbfb.log,
+that this round did not touch.
+
+MEASURE_AGENT_RESULT
+role: adversarial-testing
+status: complete
+track: chibi_sprouts_cast_20261125
+phase: Phase 1
+commits: none
+tests_run: vitest 5 files (proportion-cast-options, sprout-cast-panel, cast-isolation, sprout-mom-kim, sprout-mom-kim.validation) via heavy-run exit 0, 102 of 102; panel script on the five real drawings via heavy-run exit 0 (five panels and the sheet); prettier --check exit 0; probes S1 to S4 and re-runs of R1, R3, R5, R6 and I under /tmp/opencode/adv - verdict PASS
+files_changed: measure/runs/chibi_sprouts_cast_20261125/adversarial-9af8f65.json, measure/runs/chibi_sprouts_cast_20261125/adversarial-9af8f65.log
+plan_updates: none (the orchestrator records the verdict, the findings and the dispositions in plan T3)
+known_failures: none blocking; F21, F22 and F23 Minor (see the result JSON); F13 to F17 and F20 carried
+handoff: Verdict PASS with no Blocker: F3, F7, F18, F19 and the F6 empty values are closed on real input, F1, F2 and F8 to F11 do not regress, the five real drawings write five panels and the sheet, and Mom's rows and hashes did not move. Route F21, F22 and F23 (Minor, one fix each) and the carried Nits F13 to F17 and F20 to measure/tech-debt.md. F4, F5 and F12 are PM decisions and were not re-raised. T4 may run its gate on this audited HEAD or a later HEAD that changes no script. A script change after this result invalidates it and needs a new round.
+END_MEASURE_AGENT_RESULT

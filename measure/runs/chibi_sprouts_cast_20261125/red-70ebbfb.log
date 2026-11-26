@@ -1,0 +1,15 @@
+MEASURE_AGENT_RESULT
+role: mid-red
+status: complete
+track: chibi_sprouts_cast_20261125
+phase: Phase 1: The measuring tools
+baseline_sha: 5356e78730daefd5225f9733f190dc6bb631b90d
+role_base_sha: 70ebbfbe05ea910e3893154f2e66caabf22073ec
+audited_head_sha: 154ebc4749c90239898d67275a86ed98efdc2a13
+commits: 154ebc47
+tests_run: tests/sprout-cast-panel.test.ts exit 1 with the new F3, F7, F18, and F19 cases failing; tests/proportion-cast-options.test.ts exit 0; tests/cast-isolation.test.ts exit 0; tests/sprout-mom-kim.test.ts exit 0; tests/sprout-mom-kim.validation.test.ts exit 0; Prettier check exit 0
+files_changed: tests/sprout-cast-panel.test.ts; measure/tracks/chibi_sprouts_cast_20261125/plan.md
+plan_updates: T3 records the round 2 failing case names, commands, and exit codes; concurrent generated-file and older-log edits stay unstaged
+known_failures: intended Red for F3 caption and sheet limit, F7 widest-run and crop state, F18 temp symlink, and F19 missing chin row
+handoff: Green fixes the sheet caption, the 264 px sheet head-fit limit, widest-run measurement, off-axis crop detection, temporary-file symlink handling, and missing chinRow validation.
+END_MEASURE_AGENT_RESULT

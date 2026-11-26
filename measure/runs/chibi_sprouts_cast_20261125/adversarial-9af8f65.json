@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "role": "adversarial-testing",
+  "track": "chibi_sprouts_cast_20261125",
+  "phase": "Phase 1",
+  "baseline_sha": "5356e78730daefd5225f9733f190dc6bb631b90d",
+  "audited_head_sha": "9af8f652f99ea0e0e872806e1cf0f65660d1e774",
+  "route": "claude-agent/sonnet#xhigh",
+  "status": "pass",
+  "summary": "PASS. No Blocker. F3 (the sheet: caption inside the bytes, the 264 px limit, the 350 px head refused), F7 (widest run, crop state), F18 (temp folder plus exclusive write), F19 (no chin row) and the F6 empty values are closed on real input, and F1, F2 and F8 to F11 do not regress. The five real drawings write five panels and the sheet; Mom's eleven rows and her five artifact hashes did not move; the 102 recorded passing cases reproduce. Three Minor findings remain for measure/tech-debt.md (F21 a misnamed record error, F22 a crop-state blind spot, F23 the record's render hashes are not compared). F4, F5 and F12 are PM decisions and are not re-raised.",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    "F21 [Minor] adversarial-testing: scripts/sprout-cast-panel.mjs:433 names a record with no projectedCrownRow 'record <name>: no chin row'. The check at lines 431-434 runs before the crown check at line 459, so a record without projectedCrownRow or soleRow gets the chin message (probe: Lily record with projectedCrownRow deleted). The run still exits 1 with one line and writes nothing. Fix: test crown and sole first and fail with 'record <name>: no projected crown', then test the chin row.",
+    "F22 [Minor] adversarial-testing: the crop state is wrong in two directions for inputs that the cast does not have today. Line 364 measures the mask extent over the rows crown to sole only, so a shape in the headroom band is not counted: a hat brim 217 src px wide above the crown is cut to the 125 px window while the caption reads 'cropped: no' (probe S7). In the other direction, a scanned frame line (3 px on the page edge) or a corner vignette stays in the drawing mask (the 0.1 percent component filter keeps it), so the drawing cell reads 'cropped: yes' for a figure that is not cut (probes V1 and V2). Real renders and the five real drawings are not affected (all read 'no'). Fix: measure the extent over the rows of the cell (cellTop to sole) and, for a drawing, over the largest connected component only.",
+    "F23 [Minor] adversarial-testing: the panel script never compares the record's render hashes with the files it reads. A record whose litFrontSha256, litSideSha256 and glbSha256 match no file still writes a panel with exit 0 (probe V3), so a stale render and a fresh record build one panel with no error; the judge-input check of the spec catches it later at the gate. The hashes are safe to compare: the real Mom record's litFrontSha256 equals the hash of the real lit front render. Fix: after readRecord, hash the two lit renders it reads and exit 1 with 'render <view>: hash differs from record <name>' on a mismatch, and give the Red fixtures the real hashes."
+  ],
+  "evidence": [
+    "Claim check holds: the five test files pass 102 of 102 cases (log /tmp/opencode/adv/vitest-claim-3.log: Test Files 5 passed, Tests 102 passed, exit 0) after Red's fixture repair 766c2655; green-a3040c95.log recorded 96 of 102 before it. prettier --check exits 0 on both scripts and both test files.",
+    "Mom did not move: scripts/proportion-check.mjs is byte-identical to 70ebbfbe (empty diff); a copy-root run with the HEAD script gives the eleven rows of the plan (3.653929, 1.328305, 0.391841, 1.233173, -0.061303, 0.509578, 0.621882, 0.113069, 0.365741, 0.229412, 0.464706) with both palms ok; the five Mom artifact hashes equal plan T0 (6f972378, 0c6201ae, 93bea38c, 2abd3f55, 48fc3c2f).",
+    "Real input holds: HEAVY_MIN_AVAIL_MB=1500 ... heavy-run.sh -c 'node scripts/sprout-cast-panel.mjs --all --date 2026-11-28 --root /tmp/opencode/adv/rootR' exits 0 and writes five panels and cast-sheet.png from the five real drawings and Mom's real lit renders. The sheet PNG, read as an image, shows the third caption line 'cropped: dad no, grandma no, grandpa no, tom no, lily no' complete. In the Grandma panel the bun sits in the headroom and the drawing head is centred.",
+    "F3 closed: a sheet in which all five cells are cropped gives a caption whose last ink column is 652 of 1544 (probe S1); the head limit is the cell's own 264 px: an adult head of 75 source px (262.5 px) passes and 76 px (266 px) is refused, a child head of 107 px passes and 108 px is refused (probe S2); the 350 px head of round 2 exits 1 with 'figure wider than its cell: sprout-dad-kim' on '--sheet' (probe-r1 R1). Real heads are 137 to 250 px on the drawings and 178 px for Mom's real lit render at the sheet scale.",
+    "F7 closed: the elliptical head 472 px wide is refused (probe-r1 R2); on the five real drawings the widest run now equals the head union of the head rows (Dad 283 against 284, Grandma 421 against 436, Grandpa 416 against 425, Tom 509 against 509, Lily 514 against 536 source px) and the axis lies within 5 source px of the head centre; the off-axis arm gives 'cropped: yes' (probe-r1 R3).",
+    "F18 closed: symlinks planted at '<panel>.png.tmp-<pid>', '.tmp-AAAAAA', '.tmp-000000' and '.tmp-<pid>' leave the outside file intact and the panel a real file (probe S3); the script's own temp folder is gone after a success and after a failing encode, and the old panel stays byte-identical (probe S4). The code opens a fresh mkdtemp folder and writes with the flag 'wx' (scripts/sprout-cast-panel.mjs:622-626).",
+    "F19 closed: a record with no chinRow, a null chinRow, a chinRow at or above the crown and a chinRow at or below the sole each exit 1 with 'record <name>: no chin row' and write nothing; '--all' with one such record writes no panel (probe S6). F6 closed: '--asset \"\"', '--date \"\"' and '--root \"\"' each exit 1 with 'option <arg> needs a value' and an unchanged tree (probe S5).",
+    "No regression: F1 (five real drawings, plus cream, grey and noisy paper at JPEG quality 70 give the expected 234 px head, probe-s3.mjs), F2 (alpha 255 down to 128 and a non-skin pixel give the guard, probe-i.mjs), F8 ('--all' with a missing record or drawing or a bad chin writes nothing; two '--all' runs over existing outputs exit 0), F9 (zero, two, twelve rows and wrong order each give 'rows incomplete'), F10 and F11 (named line, hard link refused) all hold; unknown, equals-form, repeated and missing-value options still fail with one line and an unchanged tree.",
+    "Not re-raised, per the brief: F5 and F12 (PM decisions) and F4 (PM decision 5c93345f). Carried unchanged and already logged: F13 to F17 and F20 (the F13 probe still accepts '--date tomorrow').",
+    "Round 3 of the probes: the earlier rounds audited 9adcc72e and 70ebbfbe. T3 allows no new test: nothing was added or committed. Probe files are /tmp/opencode/adv/probe-s1.mjs to probe-s4.mjs and the re-runs of probe-r1, probe-r3, probe-r5, probe-r6, probe-i. The worktree shows modified measure/generated files and red-9adcc72e.log and an untracked red-70ebbfb.log that this round did not touch."
+  ],
+  "commands": [
+    "git rev-parse HEAD (9af8f652f99ea0e0e872806e1cf0f65660d1e774)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/proportion-cast-options.test.ts tests/sprout-cast-panel.test.ts tests/cast-isolation.test.ts tests/sprout-mom-kim.test.ts tests/sprout-mom-kim.validation.test.ts' (exit 0, 102 of 102)",
+    "HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/sprout-cast-panel.mjs --all --date 2026-11-28 --root /tmp/opencode/adv/rootR' (exit 0, five panels and the sheet)",
+    "node_modules/.bin/prettier --check scripts/proportion-check.mjs scripts/sprout-cast-panel.mjs tests/sprout-cast-panel.test.ts tests/proportion-cast-options.test.ts (exit 0)",
+    "node /tmp/opencode/adv/probe-s1.mjs, probe-s2.mjs, probe-s3.mjs, probe-s4.mjs, probe-r1.mjs, probe-r3.mjs, probe-r5.mjs, probe-r6.mjs, probe-i.mjs (scratch roots under /tmp/opencode/adv/roots2 and roots3)"
+  ],
+  "changed_files": [
+    "measure/runs/chibi_sprouts_cast_20261125/adversarial-9af8f65.json",
+    "measure/runs/chibi_sprouts_cast_20261125/adversarial-9af8f65.log"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "none",
+  "confidence": "high",
+  "ratings": [
+    {
+      "axis": "correctness",
+      "score": 4,
+      "evidence": "Real run: node scripts/sprout-cast-panel.mjs --all writes five panels and the sheet with the full caption; the Minor gaps are the crop-state blind spots at scripts/sprout-cast-panel.mjs:364."
+    },
+    {
+      "axis": "test_meaning",
+      "score": 4,
+      "evidence": "The F3 caption case reads the last ink column (tests/sprout-cast-panel.test.ts, lastInkColumn at most 1519) and the F7 median-trap case fails on the median; the F23 hash comparison has no case."
+    },
+    {
+      "axis": "scope_discipline",
+      "score": 5,
+      "evidence": "git diff --stat 70ebbfbe..HEAD lists the panel script, the panel test, plan.md, spec.md, test-strategy.md and logs; proportion-check.mjs has an empty diff."
+    },
+    {
+      "axis": "evidence_quality",
+      "score": 5,
+      "evidence": "Every closure claim reproduces: 102 of 102 cases, five real drawings exit 0, Mom rows and hashes unchanged (green-a3040c95.log sections 3 and 4)."
+    }
+  ]
+}
