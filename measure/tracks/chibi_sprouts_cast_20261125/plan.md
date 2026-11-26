@@ -891,7 +891,7 @@ limit` gets exit 0 for a 350 px head.
 
 - [x] T5 Red: Pin Dad, Grandma, and Grandpa. Commits `2d5808a79b9dfbdeceafe2cafc566bab5275abb6` and `d519ae1fcb4ee305813f0fe04ba5c8bc54b2c957`.
   Files: `tests/sprout-dad-kim.test.ts`, `tests/sprout-grandma-kim.test.ts`,
-  `tests/sprout-grandpa-kim.test.ts` (all new).
+      `tests/sprout-grandpa-kim.test.ts` (all new).
   - Each file runs `--asset <name> --table kim --record out/chibi-sprouts/cast/<name>-measure.json`
     on the build and renders that the Green task wrote. It requires exit 0, `Object.keys(record.rows)`
     equal to the eleven table names plus `lit`, each value inside `TABLES.kim`, each row limit equal
@@ -1378,7 +1378,7 @@ limit` gets exit 0 for a 350 px head.
 
 - [x] T9 Measure: The three adult look judges.
   Records: `measure/runs/chibi_sprouts_cast_20261125/judge-sprout-dad-kim.json`,
-  `judge-sprout-grandma-kim.json`, and `judge-sprout-grandpa-kim.json`.
+      `judge-sprout-grandma-kim.json`, and `judge-sprout-grandpa-kim.json`.
   - One brief per character. Each brief holds the panel path, the drawing path, the eleven rows as
     text, and the two scores. The route, the family rule, and the record shape are spec decisions
     (j), (k), and (l) and spec "The judge record".
@@ -1428,12 +1428,102 @@ limit` gets exit 0 for a 350 px head.
       `git rev-parse HEAD -- <path>` to `git log -1 --format=%H -- <path>`. `git rev-parse HEAD --
       <path>` names HEAD, not the last commit that changed the path.
 
-- [ ] T10 Measure: The Phase 2 gate.
+- [x] T10 Measure: The Phase 2 gate.
   - Done-when: the three pins exit 0, the three judges pass, every judge input of spec "The gate
     check of the judge inputs" is verified at the gate HEAD, `./forge check` ends `result ok` for
     each asset, the preset pin holds three new keys and no changed value, `./measure/generate.sh`
     exits 0, and `./measure/doctor.sh --structural-only` exits 0.
   - Record: the commands, the three verdicts, each verified input, the hash pairs, and the pin diff.
+
+  - Record (2026-11-26, worktree `/home/daniebo/Desktop/forge-worktrees/sprouts-cast`, branch
+    `chibi-sprouts-cast`, phase base `b48c3df3235d69337aecc90da7db6cd178455eed`):
+    - Phase acceptance is `pass` at `556694dee53873783ac0033d37462e0cc17ebacd`. The record is
+      `measure/runs/chibi_sprouts_cast_20261125/phase-acceptance-p2-556694d.json`, with its log.
+      It holds no blocking finding. The earlier run at `36b9ed3b764d9a98fce06c234fbeeef2538ee966`,
+      record `phase-acceptance-p2-36b9ed3.json`, was `fail` on acceptance F1 and F2. Commit
+      `556694de` answered both: it records the final-build stable stats projections and the
+      committed escalation file. The second run withdrew F1 and F2.
+    - The three judges pass. Dad scores 7.7 and 8.2 at round 2. Grandma scores 7.8 and 8.2 at
+      round 3, after the PM escalation. Grandpa scores 7.8 and 8.5 at round 1. The pass line is 7.5.
+      The judge records are `judge-sprout-dad-kim.json`, `judge-sprout-grandma-kim.json`, and
+      `judge-sprout-grandpa-kim.json`.
+    - The judge route is `nvidia/nvidia/nemotron-3.5-super-vl-120b-a12b`, family nvidia. The Red
+      family is hungerg. The Green family is minimax. The acceptance role runs
+      `openai/gpt-6.2-sol#high`.
+    - Judge input pairs at `556694de` match:
+      - Dad asset `3cd8582a1cd6a5d0c5a154e84d87f2d7fb29de98`; GLB
+        `896d889b3e2db721a647b371b97f714e0e6a2151787ad9c4bd5b21b19d1fea61`; record
+        `f36096cc1cf8a3180fbeffa1362222a234451fae1e5e2543b09d7a87bc7b420d`; flat front
+        `7c50a8adfe311f2744f8635749ff32e97b7407d5e42ad6134f837836b4536450`; flat side
+        `f8f483e3688fd45295a2c493851ca5013ea3cf9c907dba476db70a3ba8a9af8b`; lit front
+        `9d6c98d9b373debfdca8245041e49158c7413a2c417e7743ee2c12d34a5f5270`; lit side
+        `3817f50ea82ee88a19b8e324706b08f927b379ac6f8462e86d0c6e5b72639153`; panel
+        `26513ebbcafa31e1646444e4c68d983b2f52b9473a4fd2c02378ec989b12993e`.
+      - Grandma asset `b73f7104e3461cc9dfa57a5f1e5ef67c615f525a`; GLB
+        `95d1de0b85c4cdb3ce45b2447f05a6d7dc59054d2febb4ace40813452fc1524b`; record
+        `338a29d6cbdb00aba66c0b0d6f0f68f394b90185a7edfd28066d4fe2f3620436`; flat front
+        `756c3d2cdf361ed26087b3753cb620ddf8f8f98bb1d2db38f46c942b40cca0cd`; flat side
+        `3822d42f099459f5af0bf5d446b6078cf63e4ca18d2825fe8f8d07104f4aa949`; lit front
+        `f876dcfa91925802bbd5ef8213b389ba753dc5d390b218b768d3306a1f12860f`; lit side
+        `8c32a37fdbdf4ed7c7c69b688218d71ad38efafcd73721bd3765bd44310ffc37`; panel
+        `4e10acda9759702e11c8e0896729bb33ca2e01e62a95c6917d7540f839e45c30`.
+      - Grandpa asset `78be77a2af409704e5d132018d4d4c30e6e85169`; GLB
+        `9994ff971eb5af19b17ac4f464e29e71b3dbe0eee4699024a0b05b75ae6d7a50`; record
+        `8155f52ffed1770ea9e4d97f260e309d9e48c3e21c478e3a88ae95371b0875a3`; flat front
+        `dc3b26cc11b3619a64e2369aa0f302f232eff2145bcea7d9fe7214b5940618ea`; flat side
+        `d7a625b0dca94f0b080b36f011adcaf03d6575131b03e114f1b23c097a496d68`; lit front
+        `aae6b8e84d751f1cf3392640ff63d441d6ee62741fe3e71a78452a964d497667`; lit side
+        `be42816da498c59d8b9de6d82ef25d50d27c9da8c20480e0cf41bff0683114fa`; panel
+        `09c9dc6dc2f61fee5b9421e00472e2d62be34a78ca824fe8dd037fd7f4ad84d8`.
+      - The three base commits are `41458a54a0282af2e062a1ed8a213f71856d7a40`. The three base
+        hashes are `769a80a9b3f5c30ec2fb6a10691b022aafa4b840180f99b054fd39b41b45e268`.
+    - Stable stats projection pairs plan/current match. Dad
+      `19eba13496778ff03d57cb92c4ccf0592f0888175fec7e351de123fe25756494`; Grandma
+      `0edfe64317b2b1ae4e940677ddab17c2b0a514e3d082e05d0ee752ee63634b67`; Grandpa
+      `c80900021f99fb872a2944f39ffba836287be65912c1716d48d06720e22f79bc`. Every body row matches
+      in order: Dad 15, Grandma 14, Grandpa 15. The raw hashes match for traceability only: Dad
+      `4c79e54e3ab5b1dcae03b573a9fa36a599146953db77c92ac4cab4647b3f4d99`; Grandma
+      `e8cab83758955f98de39e44c8024f506a9a81ec1cb4ede807bb270f7241814ce`; Grandpa
+      `63c3f3ecdbff905db2a02b2b589aa62aa151422a5d1dc77bfcbda3e4610bce7c`.
+    - Mom's eleven rows match T2:
+      `heightInHeads 3.653929`, `armToTorso 1.328305`, `legShare 0.391841`,
+      `headToShoulders 1.233173`, `wrist -0.061303`, `fingertips 0.509578`, `eyeLine 0.621882`,
+      `eyeHeight 0.113069`, `spacingHead 0.365741`, `eyeWidthFace 0.229412`,
+      `spacingFace 0.464706`. Both palms are ok. Her stable stats projection is
+      `c93209cc3d9095c8376c96308ad5bb92e1dedacf0a7a1644bc77fa5c6aa95a6e`, and her five artifact
+      hashes equal T0.
+    - The preset pin diff adds exactly `sprout-dad-kim`, `sprout-grandma-kim`, and
+      `sprout-grandpa-kim`. No baseline value changed or was removed. `tests/cast-isolation.test.ts`
+      passes.
+    - Commands and exit codes:
+
+      ```bash
+      HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-dad-kim.test.ts tests/sprout-grandma-kim.test.ts tests/sprout-grandpa-kim.test.ts tests/proportion-cast-options.test.ts tests/sprout-cast-panel.test.ts tests/cast-isolation.test.ts tests/sprout-mom-kim.test.ts tests/sprout-mom-kim.validation.test.ts'
+      # exit 0: 111 cases pass over 8 files
+      HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c 'node_modules/.bin/tsx scripts/proportion-check.mjs --asset <name> --table kim --record out/chibi-sprouts/cast/<name>-measure.json'
+      # exit 0 for each of the three adults: eleven rows pass, both palms ok
+      HEAVY_MIN_AVAIL_MB=1500 bash ... heavy-run.sh -c './forge check <name>'
+      # exit 0 for each asset: result ok, rest ok, idle ok, ground ok
+      ./measure/generate.sh --check
+      # exit 0
+      ./measure/doctor.sh --structural-only
+      # exit 1: the two declared environment limits of TD-43; neither is a Phase 2 change
+      ```
+
+    - The repaired commit list of Phase 2:
+      - Red: `2d5808a79b9dfbdeceafe2cafc566bab5275abb6` (the three adult pins) and
+        `d519ae1fcb4ee305813f0fe04ba5c8bc54b2c957` (the six-digit joint tolerance).
+      - Green: `bae2072671011b3115fa54d29ea81e62eddaeec6` (Dad),
+        `6ce871edee5ac74a28e2b8486d0213ac03fd1610` (Grandma),
+        `78be77a2af409704e5d132018d4d4c30e6e85169` (Grandpa),
+        `3cd8582a1cd6a5d0c5a154e84d87f2d7fb29de98` (Dad round 2),
+        `44c4b68843cdc8e9b9955e7b69a3f10b9a49f7a7` (Grandma round 2), and
+        `b73f7104e3461cc9dfa57a5f1e5ef67c615f525a` (Grandma round 3).
+      - Measure: `096f82db`, `d920e57e`, `05be5aa0`, `eefaeba9`, `cd3bd7ae`, `a4d5e897`,
+        `c1f44ad4`, `e8b733e0`, `0953f845`, `f5bb9710`, `fa7a1255`, `34a6e90d`, `36b9ed3b`,
+        and `556694de`.
+    - Dispositions: acceptance F1 and F2 are withdrawn at `556694de`. Acceptance F3 is a Nit, the
+      two declared worktree links of TD-43. No blocker remains. Phase 3 may start.
 
 ## Phase 3: The children
 
