@@ -1593,8 +1593,7 @@ limit` gets exit 0 for a 350 px head.
     - Full command output and the result block:
       `measure/runs/chibi_sprouts_cast_20261125/red-aed0bcc.log`.
 
-- [x] T12 Green: The child base. File: `assets/parts/humanoid-kim-child.ts` (new). Commit
-      `09966d9ef4763344ea7db77b1077a641f5e22bc4`.
+- [x] T12 Green: The child base. Commit `09966d9ef4763344ea7db77b1077a641f5e22bc4`. File: `assets/parts/humanoid-kim-child.ts` (new).
   - Build the base of spec "The child base": the derived targets at 1.050 m, the 17 adult bone names,
     one `idle` clip, the hands body with the palms toward the legs, the three landmark exports, and
     `BASE_JOINTS` for all 17 bones. Import only `src/index.js`.
@@ -1649,10 +1648,7 @@ limit` gets exit 0 for a 350 px head.
 
     - The built-GLB cases of the same file need Tom's GLB, so they run at T13.
 
-- [x] T13 Green: Tom. File: `assets/sprout-tom-kim.ts` (new). Commit
-      `1e1d3ab7a13445f9c58f129521c03a400310ea4c`. The commit also changes
-      `assets/parts/humanoid-kim-child.ts` (the base edits that the render forced) and
-      `tests/fixtures/preset-pin.json` (one new key).
+- [x] T13 Green: Tom. Commit `1e1d3ab7a13445f9c58f129521c03a400310ea4c`. File: `assets/sprout-tom-kim.ts` (new). The commit also changes `assets/parts/humanoid-kim-child.ts` (the base edits that the render forced) and `tests/fixtures/preset-pin.json` (one new key).
   - Build the identity of the spec on the child base: brown tousled hair with a side tuft, freckles,
     an open smile, a blue-and-orange striped tee, green shorts, white socks, and grey sneakers. The
     freckles are paint on the child face. Declare `variants` with a `hair` slot, one preset `tom`,
