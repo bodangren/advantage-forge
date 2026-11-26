@@ -70,9 +70,6 @@ This registry gives each historical, current, and planned work item one Measure 
 - [~] **Track: Chibi Sprouts, release 1 art**
   *Link: [./tracks/asset_chibi_sprouts_r1_20261022/](./tracks/asset_chibi_sprouts_r1_20261022/)*
 
-- [~] **Track: Chibi Sprouts: new adult base on Teacher Kim, with Mom as the first trial**
-  *Link: [./tracks/chibi_sprouts_redesign_20261123/](./tracks/chibi_sprouts_redesign_20261123/)*
-
 - [ ] **Track: Chibi Sprouts cast on the Kim base: Dad, Grandma, Grandpa, Tom and Lily**
   *Link: [./tracks/chibi_sprouts_cast_20261125/](./tracks/chibi_sprouts_cast_20261125/)*
 
@@ -254,6 +251,10 @@ Execution order. The overview, the decisions, and the dependencies are in [riven
   *Link: [./tracks/riven_fx_geometry_20261009/](./tracks/riven_fx_geometry_20261009/)*
 
 ## Archived Tracks
+
+- [x] Chibi Sprouts redesign: new adult base on Teacher Kim, with Mom as the first trial, completed 2026-11-26; one SDF adult base on Kim's measured proportions, the Mom asset, a numeric proportion check, a song cut-out and a 128 px idle sprite, delivered after PM approval at T12. The two final acceptance records (7478b2af, cae3bdb1) read fail; the PM waived findings F1, F2 and F4 on 2026-11-26 and F3 was fixed in 8e002724, so no final acceptance record reads pass. Open items: TD-51, TD-52, TD-54, TD-55, TD-56. The cast track chibi_sprouts_cast_20261125 builds on this base.
+  *Link: [./archive/chibi_sprouts_redesign_20261123/](./archive/chibi_sprouts_redesign_20261123/)*
+  *Chibi Sprouts redesign: one new SDF adult base on Teacher Kim's measured proportions, with Mom as the first trial, a numeric proportion check over a level orthographic render, an independent look judge, and a PM stop before the song cut-out and the 128 px sprite*
 
 - [x] Old-browser built-ins: every game and the host run on iOS 15.0+ and WebView 80+, completed 2026-11-23; 35 structuredClone calls, 8 array .at( calls, and 1 findLastIndex call replaced by local helpers, the committed scanner widened to src/, and a browser check with four built-ins deleted. Final acceptance PASS at 6dc919b5 with audited_head_sha equal to the pre-closeout HEAD; Phase 1 and Phase 2 accepted at 80ff5717, Phase 3 at 9e406e8c, and Phase 4 at 6dc919b5. The three-file gate (23 tests), the project gate (3397 passed, 10 skipped), and the browser check pass. Scope caveat: every game core and the host run without the four built-ins on iOS 15.0+ and WebView 80+; three 3D views use Element.replaceChildren (Chrome 86): WebView 80 to 85 would fail there; recorded as TD-50. TD-45 is fixed in Forge only and moved to the tech-debt archive; TD-47 and TD-49 stay open. T9 closeout stays deferred with SHA fc8e728e. No owner-acceptance or monorepo-sync claim is made.
   *Link: [./archive/old_browser_builtins_20261122/](./archive/old_browser_builtins_20261122/)*

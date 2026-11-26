@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "track": "chibi_sprouts_redesign_20261123",
+  "archived_at": "2026-11-26",
+  "track_base_sha": "17ee504a86f5f8562f4a5fd593d2c3c96edca38a",
+  "pre_closeout_head_sha": "82a2a26b256c7cf2d3cf78e70b77445dd270f848",
+  "audited_head_sha": "cae3bdb17f7d62569eab53b043b5815e09f26442",
+  "audited_head_is_pre_closeout_head": false,
+  "audited_head_is_ancestor_of_pre_closeout_head": true,
+  "audited_head_provenance_note": "The last final acceptance bound to cae3bdb1. The commits after it (8e002724 record fix for T12, b58aad29 and 82a2a26b for the cast track) change only measure/ paths. git diff --name-only 7478b2a HEAD -- assets src scripts tests prints nothing, so no product path changed after the first final acceptance.",
+  "route": "claude-agent/sonnet#high, approved record route; closeout is mechanical and writes no audit",
+  "final_acceptance": {
+    "files": [
+      "measure/runs/chibi_sprouts_redesign_20261123/final-acceptance-7478b2a.json",
+      "measure/runs/chibi_sprouts_redesign_20261123/final-acceptance-cae3bdb.json"
+    ],
+    "status": "fail, waived by the PM",
+    "note": "Neither record reads pass. The closeout checker (measure_interphase_checks.py closeout) therefore reports one failure: final acceptance does not pass. The PM waiver below is the authority for closeout. No pass record was written or edited."
+  },
+  "pm_waiver": {
+    "date": "2026-11-26",
+    "decided_by": "PM",
+    "waived_findings": [
+      "F1 [Blocker] phase acceptance did not cover commit 000781f8 (measure/tech-debt.md)",
+      "F2 [Blocker] PROJECT_LINT and doctor exit 1 while the plan was active",
+      "F4 [Blocker] the full PROJECT_TESTS command exits 1 in a scratch tree (eight environment failures; all pass in the main checkout)"
+    ],
+    "closed_finding": "F3 (T12 has no SHA on its task line) was closed in commit 8e002724.",
+    "reason": "The asset reproduced byte for byte in two clean rebuilds and all nine phase role-gates pass.",
+    "cites": [
+      "measure/runs/chibi_sprouts_redesign_20261123/final-acceptance-7478b2a.json",
+      "measure/runs/chibi_sprouts_redesign_20261123/final-acceptance-cae3bdb.json"
+    ],
+    "nonblocking_findings_not_acted_on": "F5 to F8 of final-acceptance-cae3bdb.json stay as recorded; F5 (two blue hem wedges and the final look) remains for Daniel."
+  },
+  "task_markers": "The archived plan holds 23 [x] markers, 0 [~], 0 [ ], and 0 [b]. No plan task marker was edited in closeout.",
+  "fixed_path_hits_before_move": [
+    "measure/tracks.md:73-74 (active registry entry removed, archive entry added)",
+    "measure/tech-debt.md:44-48 (TD-51, TD-52, TD-54, TD-55, TD-56 links repointed to the archive)",
+    "measure/generated/status.md:26 (regenerated after the move)",
+    "measure/tracks/chibi_sprouts_cast_20261125/spec.md:45 (prose reference to the old spec path; owned by another track and a concurrent build session, not edited here; the orchestrator must route a fix)",
+    "measure/archive/chibi_sprouts_redesign_20261123/plan.md and test-strategy.md (self references inside the moved track)",
+    "tests/, scripts/ and support files: no hit"
+  ],
+  "a9_fix": "Not needed: no test or script references the active track path.",
+  "antipatterns": [
+    "A5: the final acceptance record cae3bdb1 found no literal PASS=N or all-checks-pass claim; its T10 and T14 corrections were applied before closeout.",
+    "A6: the new archive entry in measure/tracks.md makes no adversarial or full-pass claim and states that no final acceptance record reads pass.",
+    "A9: no tests/*.sh file exists that hardcodes the track path."
+  ],
+  "tech_debt": "No row added or moved. TD-51, TD-52, TD-54, TD-55 and TD-56 stay open; their links point to the archive.",
+  "lessons_learned": "No new lesson is warranted by closeout.",
+  "artifact_cleanup": "No run artifact was deleted. Everything under measure/runs/chibi_sprouts_redesign_20261123/ is retained and committed. The worktree /home/daniebo/Desktop/forge-worktrees/sprouts-redesign and its branch stay, because its git-ignored out/ folder holds the only copy of the deliverables. No production out/ path was touched.",
+  "retained_evidence": [
+    "measure/runs/chibi_sprouts_redesign_20261123/ (all files)",
+    "measure/archive/chibi_sprouts_redesign_20261123/"
+  ]
+}

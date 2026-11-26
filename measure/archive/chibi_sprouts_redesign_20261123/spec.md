@@ -636,7 +636,7 @@ It does not replace the SDF base, and the pass table of this track stays the SDF
 
 - [The approved redesign page](../../../docs/chibi-sprouts/redesign-2026-11-23.md)
 - [The scrapped base users](../../../docs/chibi-sprouts/scrapped-base-users-2026-11-23.md)
-- [The scrapped track plan](../asset_chibi_sprouts_r1_20261022/plan.md)
+- [The scrapped track plan](../../tracks/asset_chibi_sprouts_r1_20261022/plan.md)
 - [The Kim sheet](../../../out/storytime-review/muse-cast/teacher-kim-sheet.png)
 - [Mom's drawing](../../../docs/sprout-mockups/mom.jpg)
 - [The humanoid kind and its adult set](../../../assets/parts/humanoid-kind.ts)

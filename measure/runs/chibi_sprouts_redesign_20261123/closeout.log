@@ -1,0 +1,6 @@
+closeout chibi_sprouts_redesign_20261123 on 2026-11-26
+PM waiver: findings F1, F2 and F4 of final-acceptance-cae3bdb.json are waived. F3 was closed in 8e002724.
+Reason: the asset reproduced byte for byte in two clean rebuilds, and all nine phase role-gates pass.
+Cites: final-acceptance-7478b2a.json and final-acceptance-cae3bdb.json. Both read fail; no pass record exists.
+Archive: measure/tracks/chibi_sprouts_redesign_20261123 moved to measure/archive/chibi_sprouts_redesign_20261123.
+Worktree and branch kept: out/ in the worktree holds the only copy of the deliverables.

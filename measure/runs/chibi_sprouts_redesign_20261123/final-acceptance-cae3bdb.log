@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: final-acceptance
+status: blocked
+track: chibi_sprouts_redesign_20261123
+phase: track review
+commits: none
+tests_run: phase role-gates 9/9 exit 0; proportion, forge check, cutout-check and byte probe exit 0; generated check exit 0; lint and doctor exit 1; full scratch tests exit 1, 8 environment failures; render-options exit 0, Storytime main checkout exit 0
+files_changed: measure/runs/chibi_sprouts_redesign_20261123/final-acceptance-cae3bdb.json, measure/runs/chibi_sprouts_redesign_20261123/final-acceptance-cae3bdb.log
+plan_updates: none
+known_failures: latest phase evidence does not cover measure/tech-debt.md; lint and doctor exit 1; T12 lacks SHA; configured test gate exits 1 in scratch, all environment failures pass separately
+handoff: The deliverables match the accepted bytes. Route the procedural blockers to remediation. Refresh the phase result after all record changes; resolve the doctor and configured test gate contract; cite 817e838d on T12. No asset rebuild is needed. Daniel retains the final look gate.
+END_MEASURE_AGENT_RESULT

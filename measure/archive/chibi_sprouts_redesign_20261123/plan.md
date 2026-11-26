@@ -904,7 +904,7 @@ scripts/proportion-check.mjs` exits 0.
 
 ## Phase 8: PM stop
 
-- [x] T11 Measure (no file): Hand the sheet to the PM. No file changes, and no command runs.
+- [x] T11 Measure (no file; record T12 817e838d): Hand the sheet to the PM. No file changes, and no command runs.
   - The handoff names: the sheet path, its SHA-256, the eleven measured rows, the judge record, the
     two AC3 palm results, the `mom-panel.png` path, the LATO.2 result note, and the fact that no
     cut-out and no sprite exist.
