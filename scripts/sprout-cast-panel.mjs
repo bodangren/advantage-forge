@@ -18,7 +18,16 @@
  * The script refuses a linked, outside, or directory destination before any write, so a rejected
  * destination leaves the tree byte-identical.
  */
-import { existsSync, lstatSync, mkdirSync, readFileSync, renameSync, rmSync } from 'node:fs';
+import {
+  existsSync,
+  lstatSync,
+  mkdirSync,
+  mkdtempSync,
+  readFileSync,
+  renameSync,
+  rmSync,
+  writeFileSync,
+} from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import sharp from 'sharp';
@@ -118,17 +127,48 @@ async function rawPng(file) {
 }
 
 /**
- * The mask of a source image: the alpha-128 rule of the measurement, and for a drawing the white
- * paper is not part of the figure.
+ * The paper colour of a source image: the per-channel median of the border pixels. A scanned
+ * drawing holds its paper around the edge.
+ */
+function paperColour(img) {
+  const { width, height, channels, data } = img;
+  const ring = Math.max(1, Math.floor(Math.min(width, height) * 0.02));
+  const samples = [];
+  for (let y = 0; y < height; y += 1)
+    for (let x = 0; x < width; x += 1) {
+      if (x >= ring && x < width - ring && y >= ring && y < height - ring) continue;
+      const i = (y * width + x) * channels;
+      samples.push([data[i], data[i + 1], data[i + 2]]);
+    }
+  if (!samples.length) return [255, 255, 255];
+  const median = (channel) => {
+    const values = samples.map((sample) => sample[channel]).sort((a, b) => a - b);
+    return values[Math.floor(values.length / 2)];
+  };
+  return [median(0), median(1), median(2)];
+}
+
+/**
+ * The mask of a source image: the alpha-128 rule of the measurement, and for a drawing the paper
+ * is not part of the figure. A pixel is paper when it stays within 24 (Chebyshev) of the paper
+ * colour, so the blend pixels around the figure stay out of the mask.
  */
 function maskOf(img, ink) {
   const { width, height, channels, data } = img;
   const mask = new Uint8Array(width * height);
+  const paper = ink ? paperColour(img) : null;
   for (let y = 0; y < height; y++)
     for (let x = 0; x < width; x++) {
       const i = (y * width + x) * channels;
       if (data[i + 3] < 128) continue;
-      if (ink && data[i] > 245 && data[i + 1] > 245 && data[i + 2] > 245) continue;
+      if (paper) {
+        const distance = Math.max(
+          Math.abs(data[i] - paper[0]),
+          Math.abs(data[i + 1] - paper[1]),
+          Math.abs(data[i + 2] - paper[2]),
+        );
+        if (distance <= 24) continue;
+      }
       mask[y * width + x] = 1;
     }
   if (!ink) return mask;
@@ -210,17 +250,15 @@ function bandExtent(mask, width, height, top, bottom) {
 }
 
 /**
- * The head of a figure over a row band: the width the head holds in most of the rows of the band
- * and the centre of that run. The median keeps a one-row bleed from the neck or from the paper of
- * a scanned drawing from widening the head, and it keeps a stray pixel from moving the head axis.
+ * The head of a figure over a row band: the widest run of the mask between the crown row and the
+ * chin row, with the box of that run. The widest run is the head of spec "The horizontal crop"
+ * rule 2, and the stray ink of a scanned page leaves the mask before the run is measured.
  */
 function headExtent(mask, width, height, top, bottom) {
-  const widths = [];
-  const centres = [];
+  let best = 0,
+    left = 0,
+    right = -1;
   for (let y = Math.max(0, top); y <= Math.min(height - 1, bottom); y++) {
-    let best = 0,
-      left = 0,
-      right = -1;
     let start = -1;
     for (let x = 0; x <= width; x++) {
       const on = x < width && mask[y * width + x] === 1;
@@ -234,19 +272,8 @@ function headExtent(mask, width, height, top, bottom) {
         start = -1;
       }
     }
-    if (best === 0) continue;
-    widths.push(best);
-    centres.push((left + right) / 2);
   }
-  if (!widths.length) return { left: 0, right: -1, width: 0 };
-  const median = (values) => {
-    const sorted = [...values].sort((a, b) => a - b);
-    const mid = Math.floor(sorted.length / 2);
-    return sorted.length % 2 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
-  };
-  const headWidth = median(widths);
-  const centre = median(centres);
-  return { left: centre - headWidth / 2, right: centre + headWidth / 2, width: headWidth };
+  return { left, right, width: best };
 }
 
 /**
@@ -361,13 +388,19 @@ function buildCell(src, mask, opts) {
   // The figure top must stay inside the headroom band.
   const cellTop = crown + Math.round((-crownIndex * band) / (BASELINE - top));
   const figureTop = maskTop(mask, width, height);
+  // A cell is cropped when a mask pixel falls outside the window. The window is centred on the
+  // head axis, so an arm or a cloth that reaches to one side is cut even when the mask is
+  // narrower than the window.
+  const windowLeft = Math.round(left);
+  const windowRight = windowLeft + winW - 1;
+  const cropped = extent.minX < windowLeft || extent.maxX > windowRight;
   return {
     input: out,
     width: outW,
     height: outH,
     left: Math.max(0, Math.floor((cellWidth - outW) / 2)),
     top: PAD,
-    cropped: winW < extent.maxX - extent.minX + 1,
+    cropped,
     headWidth,
     figureTop,
     cellTop,
@@ -391,6 +424,14 @@ function readRecord(root, name) {
   const names = Object.keys(rows).filter((key) => key !== 'lit');
   if (names.length !== ROW_NAMES.length || ROW_NAMES.some((row, i) => names[i] !== row))
     fail(`record ${name}: rows incomplete`);
+  // The head band runs from the projected crown to the chin, so the record must hold the chin row.
+  const detail = record.detail ?? {};
+  const crown = detail.projectedCrownRow;
+  const sole = detail.soleRow;
+  const chin = detail.chinRow;
+  if (!Number.isFinite(chin) || !Number.isFinite(crown) || !Number.isFinite(sole))
+    fail(`record ${name}: no chin row`);
+  if (chin <= crown || chin >= sole) fail(`record ${name}: no chin row`);
   return record;
 }
 
@@ -416,7 +457,7 @@ async function panelCells(root, name, record) {
   const sole = detail.soleRow;
   if (!Number.isFinite(crown) || !Number.isFinite(sole) || sole - crown <= 0)
     fail(`record ${name}: no projected crown`);
-  const chin = Number.isFinite(detail.chinRow) ? detail.chinRow : crown;
+  const chin = detail.chinRow;
   const cells = [];
   for (const view of ['front-level', 'side-level']) {
     const src = await rawPng(renderPath(root, name, view));
@@ -503,6 +544,7 @@ async function writePanel(root, panel, date) {
 async function sheetCells(root) {
   const cells = [];
   const states = [];
+  const shortStates = [];
   for (const name of NAMES) {
     const record = readRecord(root, name);
     const detail = record.detail ?? {};
@@ -516,19 +558,25 @@ async function sheetCells(root) {
     const cell = buildCell(src, mask, {
       crown,
       sole,
-      chin: Number.isFinite(detail.chinRow) ? detail.chinRow : crown,
+      chin: detail.chinRow,
       cellWidth: SHEET_CELL_W,
       top: BASELINE - contentH,
     });
-    // The head-fit rule of spec "The horizontal crop" holds for every sheet cell. The sheet reads
-    // the same lit front renders as the panel, so it uses the same head limit as the panel. A head
-    // that the panel refuses never reaches the sheet.
-    if (cell.headWidth > CELL_W - 16) fail(`figure wider than its cell: ${name}`);
+    // The head-fit rule of spec "The horizontal crop" holds for every sheet cell. The sheet cell
+    // is 280 px wide, so its head limit is that cell width less 16 px.
+    if (cell.headWidth > SHEET_CELL_W - 16) fail(`figure wider than its cell: ${name}`);
     if (cell.figureTop < cell.cellTop) fail(`figure top above the cell: ${name}`);
     states.push(`${name} cropped: ${cell.cropped ? 'yes' : 'no'}`);
+    // The caption line names every cell, so it uses the short names and stays inside the sheet.
+    shortStates.push(`${shortName(name)} ${cell.cropped ? 'yes' : 'no'}`);
     cells.push({ name, cell });
   }
-  return { cells, states };
+  return { cells, states, shortStates };
+}
+
+/** The short name of a cast member, for the caption lines that must stay inside the sheet. */
+function shortName(name) {
+  return name.replace('sprout-', '').replace('-kim', '');
 }
 
 async function writeSheet(root, sheet, date) {
@@ -552,7 +600,8 @@ async function writeSheet(root, sheet, date) {
   const caption = textSvg(SHEET_W, CAPTION_H, [
     { x: 24, y: 30, size: 22, text: `Chibi Sprouts cast  |  ${date}` },
     { x: 24, y: 58, size: 20, text: [...NAMES, 'sprout-mom-kim'].join(', ') },
-    { x: 24, y: 84, size: 20, text: `cropped: ${sheet.states.join(', ')}` },
+    // The crop state line names every cell, so it uses the short names and stays inside the sheet.
+    { x: 24, y: 84, size: 20, text: `cropped: ${sheet.shortStates.join(', ')}` },
   ]);
   layers.push({ input: caption, left: 0, top: SHEET_H - CAPTION_H });
   mkdirSync(castDir, { recursive: true });
@@ -564,15 +613,23 @@ async function writeSheet(root, sheet, date) {
 /**
  * Write a PNG by a temporary file and a rename, so a failed run never leaves a half-written panel
  * or sheet behind a name that a judge record already holds.
+ *
+ * The temporary file lives in a fresh folder inside the checked cast folder, and it is opened with
+ * the exclusive flag, so a planted symlink or a planted file at any guessed name is never
+ * followed and never overwritten.
  */
 async function writePng(root, file, image) {
-  const temp = `${file}.tmp-${process.pid}`;
+  const folder = mkdtempSync(path.join(path.dirname(file), '.tmp-'));
+  const temp = path.join(folder, path.basename(file));
   try {
-    await image.png().toFile(temp);
+    const buffer = await image.png().toBuffer();
+    writeFileSync(temp, buffer, { flag: 'wx' });
     renameSync(temp, file);
   } catch (e) {
     rmSync(temp, { force: true });
     throw e;
+  } finally {
+    rmSync(folder, { recursive: true, force: true });
   }
 }
 
@@ -600,7 +657,8 @@ function parseArgs(argv) {
     if (seen.has(key)) throw new Error(`repeated option ${arg}`);
     seen.add(key);
     const value = argv[i + 1];
-    if (value === undefined || value.startsWith('--')) throw new Error(`option ${arg} needs a value`);
+    if (value === undefined || value === '' || value.startsWith('--'))
+      throw new Error(`option ${arg} needs a value`);
     if (key === 'asset') {
       options.asset = value;
       modes.push('asset');
