@@ -1,5 +1,5 @@
 import { defineAsset, noise, profile, sdf } from '../src/index.js';
-import type { AssetContext } from '../src/index.js';
+import type { AssetContext, Vec3 } from '../src/index.js';
 import { buildChild, CHILD } from './parts/humanoid-kim-child.js';
 
 /**
@@ -26,7 +26,7 @@ const C = {
   brow: '#4a2e1c',
   mouth: '#6d2622',
   teeth: '#f7f1e6',
-  blush: '#e29580',
+  blush: '#e8786a',
   freckle: '#b5713f',
   tee: '#3f6fb5',
   teeDark: '#2a4a80',
@@ -36,6 +36,49 @@ const C = {
   sneaker: '#8d8d93',
   sole: '#efeee8',
 };
+
+/**
+ * The open smile of the drawing: a wide mouth cavity with a band of teeth along its top edge. The
+ * shapes are in the profile plane, so the first number is the offset from the middle of the face
+ * and the second is the offset from the top edge of the mouth.
+ */
+const MOUTH_TOP = 0.729;
+
+/** The mouth cavity of the open smile. */
+const MOUTH_SHAPE: [number, number][] = [
+  [-0.052, 0.004],
+  [-0.038, -0.001],
+  [-0.02, -0.004],
+  [0, -0.005],
+  [0.02, -0.004],
+  [0.038, -0.001],
+  [0.052, 0.004],
+  [0.047, -0.01],
+  [0.033, -0.02],
+  [0.016, -0.027],
+  [0, -0.03],
+  [-0.016, -0.027],
+  [-0.033, -0.02],
+  [-0.047, -0.01],
+];
+
+/** The band of teeth along the top edge of the mouth. */
+const TEETH_SHAPE: [number, number][] = [
+  [-0.047, 0.003],
+  [-0.034, -0.0015],
+  [-0.018, -0.004],
+  [0, -0.005],
+  [0.018, -0.004],
+  [0.034, -0.0015],
+  [0.047, 0.003],
+  [0.047, -0.007],
+  [0.034, -0.0115],
+  [0.018, -0.014],
+  [0, -0.015],
+  [-0.018, -0.014],
+  [-0.034, -0.0115],
+  [-0.047, -0.007],
+];
 
 /** The child head volume. The face layer rebuilds it, so it sits outside the base head. */
 function childHeadVolume() {
@@ -65,28 +108,28 @@ function tomFace(k: AssetContext) {
     sdf.ellipsoid([CHILD.eyeRX, CHILD.eyeRY, 0.09]).at(sx * CHILD.eyeX, CHILD.eyeY, 0.102);
   const pupil = (sx: number) => sdf.ellipsoid([0.011, 0.011, 0.09]).at(sx * CHILD.eyeX, CHILD.eyeY, 0.106);
   const glint = (sx: number) => sdf.sphere(0.005).at(sx * (CHILD.eyeX + 0.009), CHILD.eyeY + 0.008, 0.092);
-  // Thick brows, a little higher than the base brow.
+  // Thick brows, arched above the brow row of the drawing.
   const brow = (sx: number) =>
     sdf
-      .box([0.044, 0.014, 0.1], 0.005)
-      .rotate(0, 0, sx * 7)
-      .at(sx * CHILD.eyeX, CHILD.eyeY + 0.056, 0.095);
-  // An open smile: a dark crescent with a white band of teeth under the upper lip.
-  const smile = sdf.extrude(profile.arc(0.06, 0.016, 228, 312), 0.3).at(0, CHILD.mouthY, CHILD.mouthZ);
-  const teeth = sdf.extrude(profile.arc(0.052, 0.005, 240, 300), 0.3).at(0, CHILD.mouthY, CHILD.mouthZ);
+      .box([0.05, 0.019, 0.1], 0.006)
+      .rotate(0, 0, sx * 9)
+      .at(sx * CHILD.eyeX, CHILD.eyeY + 0.057, 0.095);
+  // The open smile: a filled mouth cavity with a band of teeth along its top edge.
+  const mouth = sdf.extrude(profile.polygon(MOUTH_SHAPE), 0.3).at(0, MOUTH_TOP, CHILD.mouthZ);
+  const teeth = sdf.extrude(profile.polygon(TEETH_SHAPE), 0.3).at(0, MOUTH_TOP, CHILD.mouthZ);
   // Rosy cheeks. They sit below the measured face band, so the band keeps the full face width.
-  const blush = (sx: number) => sdf.ellipsoid([0.016, 0.009, 0.04]).at(sx * 0.055, 0.762, 0.078);
+  const blush = (sx: number) => sdf.ellipsoid([0.026, 0.014, 0.04]).at(sx * 0.055, 0.751, 0.07);
   // The freckles of the drawing: small dots on the cheeks and on the bridge of the nose.
   const freckle = (x: number, y: number, r: number) => sdf.extrude(profile.circle(r), 0.3).at(x, y, 0.078);
   const freckles = sdf.union(
-    freckle(-0.046, 0.742, 0.004),
-    freckle(-0.03, 0.752, 0.0035),
-    freckle(-0.015, 0.745, 0.0035),
-    freckle(-0.055, 0.755, 0.0035),
-    freckle(0.015, 0.745, 0.0035),
-    freckle(0.03, 0.752, 0.0035),
-    freckle(0.046, 0.742, 0.004),
-    freckle(0.055, 0.755, 0.0035),
+    freckle(-0.046, 0.742, 0.0026),
+    freckle(-0.03, 0.752, 0.0022),
+    freckle(-0.015, 0.745, 0.0022),
+    freckle(-0.055, 0.755, 0.0022),
+    freckle(0.015, 0.745, 0.0022),
+    freckle(0.03, 0.752, 0.0022),
+    freckle(0.046, 0.742, 0.0026),
+    freckle(0.055, 0.755, 0.0022),
   );
 
   const painted = front
@@ -95,10 +138,10 @@ function tomFace(k: AssetContext) {
     .paintWhere(sdf.union(pupil(-1), pupil(1)), '#14100e')
     .paintWhere(sdf.union(glint(-1), glint(1)), '#ffffff')
     .paintWhere(sdf.union(brow(-1), brow(1)), C.brow)
-    .paintWhere(smile, C.mouth)
+    .paintWhere(mouth, C.mouth)
     .paintWhere(teeth, C.teeth)
-    .paintWhere(sdf.union(blush(-1), blush(1)), C.blush, 0.004)
-    .paintWhere(freckles, C.freckle, 0.002);
+    .paintWhere(sdf.union(blush(-1), blush(1)), C.blush, 0.006)
+    .paintWhere(freckles, C.freckle, 0.0015);
 
   k.body('face', painted, {
     color: C.skin,
@@ -110,26 +153,62 @@ function tomFace(k: AssetContext) {
 
 /**
  * Brown tousled hair. The mass is a rounded shell over the cranium, so it carries the measured
- * head width of the drawing. The hairline is cut high on the forehead, one lock leaves the crown
- * at the character's right, and one lock sweeps over the brow.
+ * head width of the drawing. Seven pointed locks leave the crown: four sweep up and to the
+ * character's left, one cowlick points up to the character's right, and two fringe locks sweep
+ * over the brow. The locks keep their points, so the top of the head reads as spiky swept-up hair
+ * and not as a smooth dome.
  */
 function tomHair(k: AssetContext) {
-  const cap = sdf.ellipsoid([0.1835, 0.175, 0.148]).at(0, 0.885, -0.004);
-  // The side tuft: a lock that leaves the crown at the character's right.
-  const tuft = sdf.cone([-0.07, 0.955, 0.045], [-0.172, 1.005, 0.0], 0.05, 0.015).bone('head');
-  // A second lock under the tuft, so the tuft is a mass and not one spike.
-  const tuft2 = sdf.cone([-0.06, 0.93, 0.06], [-0.158, 0.965, 0.03], 0.042, 0.013).bone('head');
-  // A crown spike, so the top of the head is not a smooth dome.
-  const spike = sdf.cone([-0.015, 0.99, 0.05], [-0.05, 1.058, 0.01], 0.038, 0.012).bone('head');
-  // The fringe: a lock that sweeps over the brow.
-  const fringe = sdf.cone([0.035, 1.005, 0.055], [0.062, 0.922, 0.122], 0.036, 0.014).bone('head');
+  /** One lock: a cone from `a` to `b`, flattened across the face, and tagged to the head. */
+  const lock = (a: Vec3, b: Vec3, ra: number, rb: number) => {
+    const mid: Vec3 = [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2, (a[2] + b[2]) / 2];
+    return sdf
+      .cone(
+        [a[0] - mid[0], a[1] - mid[1], a[2] - mid[2]],
+        [b[0] - mid[0], b[1] - mid[1], b[2] - mid[2]],
+        ra,
+        rb,
+      )
+      .scale([1, 0.85, 0.62])
+      .at(mid[0], mid[1], mid[2])
+      .bone('head');
+  };
+  const cap = sdf.ellipsoid([0.1835, 0.17, 0.147]).at(0, 0.886, -0.004);
+  // The swept-up locks of the drawing. They fan from the crown to the character's left, and the
+  // outer lock is the tallest point of the head.
+  const lock1 = lock([0.03, 0.985, 0.03], [0.115, 1.09, -0.01], 0.05, 0.006);
+  const lock2 = lock([0.0, 0.99, 0.04], [0.06, 1.075, 0.0], 0.046, 0.006);
+  const lock3 = lock([0.06, 0.965, 0.05], [0.155, 1.045, -0.02], 0.038, 0.006);
+  const lock4 = lock([0.085, 0.935, 0.045], [0.175, 0.99, -0.035], 0.03, 0.005);
+  // The cowlick: the small separated spike at the top of the head, on the character's right.
+  const cowlick = lock([-0.03, 1.0, -0.005], [-0.075, 1.075, -0.025], 0.022, 0.005);
+  // The back lock: the point that breaks the round mass of the head in the side view.
+  const backLock = lock([0.02, 0.99, -0.06], [0.05, 1.06, -0.135], 0.038, 0.006);
+  // The side lock on the character's right: the point that breaks the round dome in the front view.
+  const rightLock = lock([-0.06, 0.995, 0.0], [-0.125, 1.06, -0.015], 0.03, 0.006);
+  // The fringe: two locks that sweep over the brow to the character's left.
+  const fringe1 = lock([0.0, 0.985, 0.06], [0.062, 0.912, 0.101], 0.04, 0.008);
+  const fringe2 = lock([0.055, 0.97, 0.055], [0.105, 0.918, 0.068], 0.03, 0.007);
   // The two side locks fall in front of the ears.
-  const sideLock = (sx: number) =>
-    sdf.cone([sx * 0.125, 0.935, 0.05], [sx * 0.152, 0.822, 0.07], 0.032, 0.009).bone('head');
+  const sideLock = (sx: number) => lock([sx * 0.12, 0.945, 0.045], [sx * 0.15, 0.83, 0.065], 0.03, 0.007);
   const mass = sdf
-    .smoothUnion(0.018, cap, tuft, tuft2, spike, fringe, sideLock(-1), sideLock(1))
+    .smoothUnion(
+      0.006,
+      cap,
+      lock1,
+      lock2,
+      lock3,
+      lock4,
+      cowlick,
+      backLock,
+      rightLock,
+      fringe1,
+      fringe2,
+      sideLock(-1),
+      sideLock(1),
+    )
     .displace(
-      0.003,
+      0.0022,
       (x, y, z) =>
         noise.fbm(x * 10, y * 10, z * 10, 2) * 0.55 + Math.sin(Math.atan2(x, z + 0.04) * 13) * 0.45,
     );
@@ -137,8 +216,8 @@ function tomHair(k: AssetContext) {
   const faceOpen = sdf.sphere(0.31).at(0, 0.6, 0.22);
   k.body('hair', mass.subtract(childHeadVolume()).subtract(faceOpen), {
     color: C.hair,
-    detail: 0.0028,
-    maxError: 0.0006,
+    detail: 0.0026,
+    maxError: 0.0008,
     textureDensity: 1,
   });
 }
