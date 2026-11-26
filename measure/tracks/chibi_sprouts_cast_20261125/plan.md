@@ -815,10 +815,9 @@ limit` gets exit 0 for a 350 px head.
       Red sheet fixture to it.
   - The nine late findings F13 to F17, F20, F21, F22, and F23 are not closed in Phase 1. They are
     the rows TD-57 to TD-65 of `measure/tech-debt.md`, and their fix is out of scope for this phase.
-  - T3 is `[x]`. T4 stays open, because the Phase 1 gate needs its own gate run, generate run, and
-    doctor run.
+  - T3 is `[x]`. T4 is `[x]` after the Phase 1 gate of 2026-11-26.
 
-- [ ] T4 Measure: The Phase 1 gate.
+- [x] T4 Measure: The Phase 1 gate.
   - Done-when:
     - the tool tests exit 0,
     - the Mom pin exits 0 with every row in range, the stable stats projection unchanged, and the
@@ -832,6 +831,61 @@ limit` gets exit 0 for a 350 px head.
   - Record: the commands, the row and hash record, the verdict, and the dispositions.
   - Note: a `fail` verdict, or one open blocking finding, stops the gate. Phase 2 does not start.
     `tests/sprout-child-base.test.ts` does not exist yet; it arrives at T11.
+
+  - Record (2026-11-26, worktree `/home/daniebo/Desktop/forge-worktrees/sprouts-cast`, branch
+    `chibi-sprouts-cast`, phase base `5356e78730daefd5225f9733f190dc6bb631b90d`):
+    - Phase acceptance is `pass` at `54e7b15f05bbdb1187cc95c2f89b73e9a5826f07` with no blocking
+      finding. The records are `phase-acceptance-p1-54e7b15.json` and
+      `phase-acceptance-p1-54e7b15.log`. The earlier run at `ede60f08` was `fail` on acceptance F2,
+      three TypeScript errors in `tests/proportion-cast-options.test.ts`. Red closed acceptance F2
+      in `42f40ba7`.
+    - The adversarial verdict is `pass` at `54e7b15f`, record `adversarial-54e7b15.json`. Earlier
+      rounds: `adversarial-ede60f0.json` (`pass`, audit `ede60f08`) and `adversarial-9af8f65.json`
+      (`pass`, audit `9af8f652`). Rounds 1 and 2 were `fail`. Every blocking finding of both is
+      closed.
+    - Red commits: `ad43039a073d5cf61f5c3ebac787856e9970d7a4`,
+      `ba0b353b9d965e4e94b078da4949311f87ef504f`, `622a0fa5af8a19a0646b18cc8d7ae75ce7b1901d`,
+      `154ebc4749c90239898d67275a86ed98efdc2a13`, `766c2655333202264ebb3e8d3529d50a993f8627`,
+      `9af8f652f99ea0e0e872806e1cf0f65660d1e774`, and `42f40ba798f90794ca29cd4610fa5aafe8468b5d`
+      (the type annotation only).
+    - Green commits: `41458a54a0282af2e062a1ed8a213f71856d7a40`,
+      `3aabca1cb6ae0e35eced8048ad30414db55ba8fd`, `8b2509512584dd1896fc04908bead332017f024e`,
+      `77fad41f80da3aa6d77be879bb1461116766275c`, and `a3040c95e11610f9f0c70f73ceedd82b1dfbeefc`.
+    - Commands and exit codes:
+
+      ```bash
+      HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/proportion-cast-options.test.ts tests/sprout-cast-panel.test.ts tests/cast-isolation.test.ts tests/sprout-mom-kim.test.ts tests/sprout-mom-kim.validation.test.ts'
+      # exit 0: 102 of 102 cases pass
+      HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/typescript/bin/tsc --noEmit'
+      # exit 2: 51 baseline diagnostics; none in a changed file
+      node_modules/.bin/prettier --check scripts/proportion-check.mjs scripts/sprout-cast-panel.mjs assets/parts/humanoid-kim.ts tests/proportion-cast-options.test.ts tests/sprout-cast-panel.test.ts tests/cast-isolation.test.ts tests/fixtures/cast-baseline.json
+      # exit 0
+      HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node scripts/sprout-cast-panel.mjs --all --date 2026-11-26 --root /tmp/opencode/sprouts-cast-acceptance-z5529yfd'
+      # exit 0: five panels of 1416 x 900 and the 1544 x 900 sheet
+      ./measure/generate.sh --check
+      # exit 0
+      ./measure/doctor.sh --structural-only
+      # exit 1: the two declared environment limits of TD-43; both links predate the phase
+      ```
+
+    - Mom's eleven rows match T2: `heightInHeads 3.653929`, `armToTorso 1.328305`,
+      `legShare 0.391841`, `headToShoulders 1.233173`, `wrist -0.061303`, `fingertips 0.509578`,
+      `eyeLine 0.621882`, `eyeHeight 0.113069`, `spacingHead 0.365741`,
+      `eyeWidthFace 0.229412`, `spacingFace 0.464706`. Both palms are ok. Every row is in range.
+    - Mom's five artifact hashes match T0: GLB
+      `6f972378e357035cf94bbbe80af82f7173bde38a0223a61dcc4160e763b4311a`, flat front
+      `0c6201ae1b9f2502cda207561676e58e6744c2a8f50df07e782aba534f07f43b`, flat side
+      `93bea38cdf28b3cd71898cca958918b99637c7cc9c22c1568a31f2f206a3abbf`, lit front
+      `2abd3f55642c851818552e5025284c42dd7e5b78441c7683b8de02680de5b851`, lit side
+      `48fc3c2f3bb7443f8024cccadc438a8a9043fca1c9995eb55a144319cec93212`. The stable stats
+      projection is `c93209cc3d9095c8376c96308ad5bb92e1dedacf0a7a1644bc77fa5c6aa95a6e`. The raw
+      stats hash is `de17e20a53fd47dc2a93cdae7324d2e0eaa6c012a2ce1dea4b3b1199f5255bb7`, for
+      traceability only.
+    - Dispositions: adversarial F1, F2, and F3 are closed. Adversarial F4, F5, and F12 are closed by
+      the PM decisions `5c93345f` and `9fee6e88`. F6 to F11 and F18, F19 are closed in the Green
+      commits. Acceptance F2 is closed in `42f40ba7`. The late findings F13 to F17 and F20 to F23 are
+      TD-57 to TD-65, and their fix is out of scope for this phase. The doctor links are TD-43
+      environment limits.
 
 ## Phase 2: The adult variants
 
