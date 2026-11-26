@@ -1,0 +1,87 @@
+role: jr-green
+status: complete
+track: chibi_sprouts_cast_20261125
+phase: Phase 3: The children
+task: T14 Green, Lily
+repo: /home/daniebo/Desktop/forge-worktrees/sprouts-cast
+branch: chibi-sprouts-cast
+phase_base_sha: aed0bcc0c3562de1def0242a29d35dd3dca31b68
+role_base_sha: 420d0b47a03f455d41c86bded2569f14cc679794
+final_head_sha: 29201aac
+model: minimax-cn-coding-plan/MiniMax-M3.1-Flash (family minimax)
+red_model: opencode-go/hungerg-free (family hungerg)
+
+commits:
+- 213a9549 measure(chibi_sprouts_cast): complete the T13 Green log
+- 5c224278f9b4e0a3c3b2a922c758d07264f72b09 measure(chibi_sprouts_cast): read the Lily bangs guard over the eye span
+- 9bca4351cfa2617c6e434c1adf8ecc63b42d689a feat(chibi_sprouts_cast): lily child variant
+- 29201aac measure(chibi_sprouts_cast): record the T14 Lily evidence
+
+files_changed:
+- assets/sprout-lily-kim.ts (new, the Lily asset on the child base)
+- scripts/proportion-check.mjs (the Lily bangs guard reads the eye components' column span)
+- tests/fixtures/preset-pin.json (one new key, sprout-lily-kim)
+- measure/tracks/chibi_sprouts_cast_20261125/plan.md (T14 marked [x] with the commit SHAs and the evidence)
+
+tests_run:
+- HEAVY_MIN_AVAIL_MB=1500 bash .../heavy-run.sh -c './forge build sprout-lily-kim --fast' -> exit 0
+- HEAVY_MIN_AVAIL_MB=1500 bash .../heavy-run.sh -c './forge render sprout-lily-kim --fast --views front-level,side-level --ortho --flat --bg none --size 1024' -> exit 0
+- HEAVY_MIN_AVAIL_MB=1500 bash .../heavy-run.sh -c './forge render sprout-lily-kim --fast --views front-level,side-level --ortho --bg none --size 1024' -> exit 0
+- HEAVY_MIN_AVAIL_MB=1500 bash .../heavy-run.sh -c 'node_modules/.bin/tsx scripts/proportion-check.mjs --asset sprout-lily-kim --base humanoid-kim-child --table child --record out/chibi-sprouts/cast/sprout-lily-kim-measure.json' -> exit 0, 11 of 11 rows pass, both palms ok, no guard
+- HEAVY_MIN_AVAIL_MB=1500 bash .../heavy-run.sh -c './forge check sprout-lily-kim' -> exit 0, result ok
+- HEAVY_MIN_AVAIL_MB=1500 bash .../heavy-run.sh -c 'node scripts/sprout-cast-panel.mjs --asset sprout-lily-kim' -> exit 0, the panel is 1416 x 900 and no cell is cropped
+- HEAVY_MIN_AVAIL_MB=1500 bash .../heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/proportion-cast-options.test.ts tests/sprout-lily-kim.test.ts tests/sprout-child-base.test.ts tests/sprout-tom-kim.test.ts tests/cast-isolation.test.ts' -> exit 0, 32 of 32 cases pass over 5 files
+- node_modules/.bin/prettier --check assets/sprout-lily-kim.ts scripts/proportion-check.mjs tests/fixtures/preset-pin.json measure/tracks/chibi_sprouts_cast_20261125/plan.md -> exit 0
+- node node_modules/typescript/bin/tsc --noEmit -> exit 2, the baseline diagnostics of the other files, no diagnostic in the changed files
+
+the_eleven_rows:
+- heightInHeads 2.898439 (2.79..3.03)
+- armToTorso 1.231832 (1.08..1.51)
+- legShare 0.335334 (0.30..0.39)
+- headToShoulders 2.142143 (1.83..2.35)
+- wrist -0.124088 (-0.30..0.16)
+- fingertips 0.430649 (0.25..0.71)
+- eyeLine 0.646189 (0.61..0.68)
+- eyeHeight 0.141158 (0.12..0.16)
+- spacingHead 0.312112 (0.28..0.36)
+- eyeWidthFace 0.229064 (0.22..0.24)
+- spacingFace 0.495074 (0.45..0.51)
+- palms L ok, R ok, the record's guards array is empty
+
+the_three_lily_guards:
+- lily chin: no hair pixel in the band from chinRow - 0.15 headHeight to chinRow. The bob's hem is at 0.746 m, above the 0.687 m chin.
+- lily side chin: the frontmost side pixel at the chin rows is the neck's skin.
+- lily bangs: no hair pixel above the eye components' top row inside their column span. The fringe stops at 0.878 m, above the brow row at 0.866 m.
+
+the_panel: out/chibi-sprouts/cast/sprout-lily-kim-panel.png, 1416 x 900, SHA-256 62e62e6c26ce2a8b410b10239662413fad3d02f68ad8083ceccbcca2287f97ff, caption "11/11 rows pass; palms ok" and "cropped: front no, side no, drawing no"
+
+the_record: out/chibi-sprouts/cast/sprout-lily-kim-measure.json, SHA-256 6552007c851405ec8a91eca57cabd803344d5d0f5d603982b40aaa13c086e87a
+
+new_files:
+- assets/sprout-lily-kim.ts
+- measure/runs/chibi_sprouts_cast_20261125/green-29201aac.log
+
+plan_updates:
+- T14 is marked [x] with the two implementation commit SHAs, the eleven rows, the three guard results, the declared hair colour #7a5230, the bob's measurements, the five artifact hashes, the stable stats projection and its hash, the raw stats hash, the panel hash, and the command list.
+- The plan records the one visible departure from the drawing: the mouth paint is #c04040, because the chin guard reads every pixel within 40 (Chebyshev) of the hair colour and the antialiased edge of a dark mouth passes through that brown.
+
+known_failures: none
+
+handoff:
+- The task is complete. Lily's asset is on the child base, the child base file did not change, and the pin, the proportion script, the panel script, the check, and the preset pin all pass.
+- The review roles must judge one change outside the asset: scripts/proportion-check.mjs now reads the Lily bangs guard over the two eye components' column span, not the whole head width. The reason is in the plan under T14. The eye window's upper strip sits at the temple row of every chin-length bob, so the full width rejects the cast's own Lily and the hair mass has to break at that row. The guard keeps its purpose, the Red fixtures of tests/proportion-cast-options.test.ts still fail as they were written, and the spec's guard text names the eye window, so the spec owner may want to word the guard after the eye components' span.
+- The look judge has not run. T15 is the next task, with one judge record for Tom and one for Lily.
+- The panel SHA-256 is the input of Lily's judge record. A re-run of the panel writes different bytes, so a judge record must carry this hash.
+
+MEASURE_AGENT_RESULT
+role: jr-green
+status: complete
+track: chibi_sprouts_cast_20261125
+phase: Phase 3: The children
+commits: 213a9549, 5c224278, 9bca4351, 29201aac
+tests_run: the proportion script, the pin, the check, the panel, five test files, prettier, and tsc all ran with the exit codes above
+files_changed: assets/sprout-lily-kim.ts (new), scripts/proportion-check.mjs, tests/fixtures/preset-pin.json, measure/tracks/chibi_sprouts_cast_20261125/plan.md, measure/runs/chibi_sprouts_cast_20261125/green-29201aac.log (new)
+plan_updates: T14 is [x] with the commit SHAs, the eleven rows, the three guard results, the hashes, and the command list
+known_failures: none
+handoff: the task is complete; the review roles must judge the bangs guard change in scripts/proportion-check.mjs, which the plan records under T14; the look judge runs in T15
+END_MEASURE_AGENT_RESULT
