@@ -2276,7 +2276,7 @@ blue`), and the stale `wizard-argon-trial` key stays.
 
 ## Phase 4: The panels and the handoff
 
-- [ ] T17 Measure: The cast sheet, the panel check, and the handoff.
+- [x] T17 Measure: The cast sheet, the panel check, and the handoff.
   - The five panels already exist from T6 to T8 and T13 to T14. This task does not rewrite a panel,
     because a new date would change its bytes and void its judge record.
   - Run `scripts/sprout-cast-panel.mjs --sheet` to write `out/chibi-sprouts/cast/cast-sheet.png`
@@ -2295,6 +2295,38 @@ blue`), and the stale `wizard-argon-trial` key stays.
     - the note names Daniel's look as the last gate.
   - Record: the paths, the SHA-256 sums, the panel sizes, the baselines, the crop states, and the
     note path.
+  - Evidence (2026-11-27, at `91e4cf40`, the merge of master `d287b6cb` into `3fccaf44`):
+    - Command: `HEAVY_MIN_AVAIL_MB=1500 bash …/heavy-run.sh -c 'node scripts/sprout-cast-panel.mjs
+      --sheet'` exits 0. Output: five `sheet cell: <name> cropped: no` lines and
+      `sheet: out/chibi-sprouts/cast/cast-sheet.png 1544x900`. The command wrote no panel.
+    - Panels, with the hash before and after the command (equal to each other and to the judge
+      `panel_sha256`), size 1416 × 900:
+      - `out/chibi-sprouts/cast/sprout-dad-kim-panel.png`
+        `26513ebbcafa31e1646444e4c68d983b2f52b9473a4fd2c02378ec989b12993e`
+      - `out/chibi-sprouts/cast/sprout-grandma-kim-panel.png`
+        `4e10acda9759702e11c8e0896729bb33ca2e01e62a95c6917d7540f839e45c30`
+      - `out/chibi-sprouts/cast/sprout-grandpa-kim-panel.png`
+        `09c9dc6dc2f61fee5b9421e00472e2d62be34a78ca824fe8dd037fd7f4ad84d8`
+      - `out/chibi-sprouts/cast/sprout-tom-kim-panel.png`
+        `734670c7f6856b97f3c5fd43795227000b612782f9712f88917a7d1aad2c5fa0`
+      - `out/chibi-sprouts/cast/sprout-lily-kim-panel.png`
+        `00455629846d6bc70ef506e73098d4d4a62bfd7ebd45e3963e63dbbc2e1c9307`
+    - Baselines: every panel sole sits on row 780 and every projected crown sits on row 80. Every
+      panel caption reads `11/11 rows pass; palms ok`.
+    - Crop states: every panel cell reads `cropped: front no, side no, drawing no`.
+    - Sheet: `out/chibi-sprouts/cast/cast-sheet.png`,
+      `ed4ea5aa9515fe1a469d6904eb97365de798d378d4ae9e379c82935070b9b725`, 1544 × 900,
+      466.667 px per metre, one baseline at row 780, crop `dad no, grandma no, grandpa no, tom no,
+      lily no`. The projected body height is 703 px for Dad, 702 px for Grandma, 703 px for
+      Grandpa, 491 px for Tom, and 494 px for Lily. The caption names the five and `sprout-mom-kim`.
+    - A reader looked at the sheet and at the five panels. The sheet holds five whole figures on one
+      baseline: Dad in a red plaid jacket and blue trousers, Grandma with a white bun and a green
+      cardigan, Grandpa bald with glasses in a green sweater, Tom with spiked brown hair in a striped
+      shirt, and Lily in a blue top and red skirt. The two children read about two thirds of the
+      adult height. Each panel shows the lit front, the lit side, and the drawing, and the drawing
+      and the model agree in silhouette and color. No blocking defect was seen. The faint ghost line
+      at the top of the drawing cell measures 247 of 255 and stays inside the judged bytes.
+    - Note path: `measure/runs/chibi_sprouts_cast_20261125/handoff.md`.
 
 - [ ] T18 Measure: The Phase 4 gate, the project gate, and the closeout record.
   - Done-when:
