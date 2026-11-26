@@ -18,7 +18,7 @@
  * The script refuses a linked, outside, or directory destination before any write, so a rejected
  * destination leaves the tree byte-identical.
  */
-import { existsSync, lstatSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, lstatSync, mkdirSync, readFileSync, renameSync, rmSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import sharp from 'sharp';
@@ -34,8 +34,35 @@ export const DRAWING_ROWS = {
   'sprout-lily-kim': [83, 1522],
 };
 
+/**
+ * The chin row of each drawing, from the page `docs/chibi-sprouts/redesign-2026-11-23.md`. The head
+ * band of a drawing runs from its crown row to this row, so the head width never reads the body.
+ */
+export const DRAWING_CHINS = {
+  'sprout-dad-kim': 435,
+  'sprout-grandma-kim': 572,
+  'sprout-grandpa-kim': 495,
+  'sprout-tom-kim': 583,
+  'sprout-lily-kim': 574,
+};
+
 /** The five cast members of the sheet. */
 export const NAMES = Object.keys(DRAWING_ROWS);
+
+/** The eleven measured rows of the cast tables, in table order. */
+export const ROW_NAMES = [
+  'heightInHeads',
+  'armToTorso',
+  'legShare',
+  'headToShoulders',
+  'wrist',
+  'fingertips',
+  'eyeLine',
+  'eyeHeight',
+  'spacingHead',
+  'eyeWidthFace',
+  'spacingFace',
+];
 
 const PAD = 24;
 const HEADROOM = 56;
@@ -104,6 +131,47 @@ function maskOf(img, ink) {
       if (ink && data[i] > 245 && data[i + 1] > 245 && data[i + 2] > 245) continue;
       mask[y * width + x] = 1;
     }
+  if (!ink) return mask;
+  // The paper of a scanned drawing holds isolated noise pixels. A component below one tenth of a
+  // percent of the largest one is noise, so it leaves the mask.
+  const labels = new Int32Array(width * height);
+  const areas = [];
+  const stack = [];
+  for (let y = 0; y < height; y++)
+    for (let x = 0; x < width; x++) {
+      const id = y * width + x;
+      if (!mask[id] || labels[id]) continue;
+      const label = areas.length + 1;
+      stack.length = 0;
+      stack.push(id);
+      labels[id] = label;
+      let area = 0;
+      while (stack.length) {
+        const cur = stack.pop();
+        area++;
+        const cy = (cur / width) | 0,
+          cx = cur - cy * width;
+        for (let dy = -1; dy <= 1; dy++)
+          for (let dx = -1; dx <= 1; dx++) {
+            if (!dx && !dy) continue;
+            const nx = cx + dx,
+              ny = cy + dy;
+            if (nx < 0 || ny < 0 || nx >= width || ny >= height) continue;
+            const nid = ny * width + nx;
+            if (mask[nid] && !labels[nid]) {
+              labels[nid] = label;
+              stack.push(nid);
+            }
+          }
+      }
+      areas.push(area);
+    }
+  const largest = areas.reduce((max, area) => Math.max(max, area), 0);
+  const limit = largest * 0.001;
+  for (let i = 0; i < mask.length; i++) {
+    if (!mask[i]) continue;
+    if (areas[labels[i] - 1] < limit) mask[i] = 0;
+  }
   return mask;
 }
 
@@ -142,20 +210,43 @@ function bandExtent(mask, width, height, top, bottom) {
 }
 
 /**
- * The head band of a source image: the rows from the crown to the chin. The chin is the row where
- * the silhouette jumps from the head to the body, so the head width never reads the body width.
+ * The head of a figure over a row band: the width the head holds in most of the rows of the band
+ * and the centre of that run. The median keeps a one-row bleed from the neck or from the paper of
+ * a scanned drawing from widening the head, and it keeps a stray pixel from moving the head axis.
  */
-function headBand(mask, width, height, crown, sole) {
-  let headWidth = 0;
-  let chin = crown;
-  for (let y = Math.max(0, crown); y <= Math.min(height - 1, sole); y++) {
-    const run = widestRun(mask, width, y);
-    if (run === 0) break;
-    if (headWidth > 0 && run > 1.5 * headWidth) break;
-    if (run > headWidth) headWidth = run;
-    chin = y;
+function headExtent(mask, width, height, top, bottom) {
+  const widths = [];
+  const centres = [];
+  for (let y = Math.max(0, top); y <= Math.min(height - 1, bottom); y++) {
+    let best = 0,
+      left = 0,
+      right = -1;
+    let start = -1;
+    for (let x = 0; x <= width; x++) {
+      const on = x < width && mask[y * width + x] === 1;
+      if (on && start < 0) start = x;
+      if (!on && start >= 0) {
+        if (x - start > best) {
+          best = x - start;
+          left = start;
+          right = x - 1;
+        }
+        start = -1;
+      }
+    }
+    if (best === 0) continue;
+    widths.push(best);
+    centres.push((left + right) / 2);
   }
-  return { chin, width: headWidth };
+  if (!widths.length) return { left: 0, right: -1, width: 0 };
+  const median = (values) => {
+    const sorted = [...values].sort((a, b) => a - b);
+    const mid = Math.floor(sorted.length / 2);
+    return sorted.length % 2 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
+  };
+  const headWidth = median(widths);
+  const centre = median(centres);
+  return { left: centre - headWidth / 2, right: centre + headWidth / 2, width: headWidth };
 }
 
 /**
@@ -168,11 +259,19 @@ function destinationError(root, dest, treeRel) {
   if (abs !== tree && !abs.startsWith(tree + path.sep)) return `destination outside ${treeRel}: ${dest}`;
   let current = abs;
   for (;;) {
-    const st = lstatSync(current, { throwIfNoEntry: false });
+    let st = null;
+    try {
+      st = lstatSync(current, { throwIfNoEntry: false });
+    } catch {
+      // A parent that is a regular file makes the path unreadable. The walk names that parent.
+      return `destination parent is a file: ${path.relative(root, path.dirname(current))}`;
+    }
     if (st) {
       if (st.isSymbolicLink()) return `destination is a link: ${path.relative(root, current)}`;
       if (current === abs && st.isDirectory())
         return `destination is a directory: ${path.relative(root, current)}`;
+      // A hard link has more than one name, so writing it would change another file.
+      if (current === abs && st.nlink > 1) return `destination is a link: ${path.relative(root, current)}`;
       if (current !== abs && !st.isDirectory())
         return `destination parent is a file: ${path.relative(root, current)}`;
     }
@@ -190,7 +289,12 @@ function destinationError(root, dest, treeRel) {
 function folderError(root, folder) {
   let current = path.resolve(folder);
   for (;;) {
-    const st = lstatSync(current, { throwIfNoEntry: false });
+    let st = null;
+    try {
+      st = lstatSync(current, { throwIfNoEntry: false });
+    } catch {
+      return `destination parent is a file: ${path.relative(root, path.dirname(current))}`;
+    }
     if (st?.isSymbolicLink()) return `destination is a link: ${path.relative(root, current)}`;
     if (st && !st.isDirectory()) return `destination parent is a file: ${path.relative(root, current)}`;
     const parent = path.dirname(current);
@@ -214,22 +318,26 @@ function localDate() {
  *
  * The cell output region is the panel rows `PAD` to `BASELINE`, so the 56 px headroom band above
  * the body band holds a bun. The source crown row lands on the panel row `top` and the source sole
- * row lands on the baseline. The horizontal window is `round(cellWidth / scale)` source pixels
- * wide, centred on the source mask over the crown-to-sole band and clamped inside the source
- * image. The figure is never squeezed: the horizontal and the vertical scale are the same.
+ * row lands on the baseline.
+ *
+ * The horizontal window is `round(cellWidth / scale)` source pixels wide and it is centred on the
+ * head axis, so the face of the character sits in the middle of its cell. The figure is never
+ * squeezed: the horizontal and the vertical scale are the same. A window that reaches past the
+ * source image leaves the free pixels empty.
  */
 function buildCell(src, mask, opts) {
-  const { crown, sole, cellWidth, top, chin, ink } = opts;
+  const { crown, sole, cellWidth, top, chin } = opts;
   const { width, height, channels, data } = src;
   const band = sole - crown;
   const outH = BASELINE - PAD + 1;
   const crownIndex = top - PAD; // the output row of the source crown
   const scale = (BASELINE - top) / band; // output pixels per source pixel
   const windowPx = Math.max(1, Math.round(cellWidth / scale));
-  const extent = bandExtent(mask, width, height, crown, sole);
-  const centre = (extent.minX + extent.maxX) / 2;
   const winW = Math.min(windowPx, width);
-  const left = Math.max(0, Math.min(Math.round(centre - winW / 2), width - winW));
+  const extent = bandExtent(mask, width, height, crown, sole);
+  const head = headExtent(mask, width, height, crown, chin - 1);
+  const axis = head.width > 0 ? (head.left + head.right) / 2 : (extent.minX + extent.maxX) / 2;
+  const left = axis - winW / 2;
   const outW = Math.max(1, Math.round(winW * scale));
   const out = Buffer.alloc(outW * outH * 4);
   for (let oy = 0; oy < outH; oy++) {
@@ -238,7 +346,8 @@ function buildCell(src, mask, opts) {
       Math.min(height - 1, crown + Math.floor(((oy - crownIndex) * band) / (BASELINE - top))),
     );
     for (let ox = 0; ox < outW; ox++) {
-      const sx = Math.max(0, Math.min(width - 1, left + Math.round(ox / scale)));
+      const sx = Math.round(left + ox / scale);
+      if (sx < 0 || sx >= width) continue;
       const si = (sy * width + sx) * channels;
       const di = (oy * outW + ox) * 4;
       out[di] = data[si];
@@ -248,8 +357,7 @@ function buildCell(src, mask, opts) {
     }
   }
   // The head band must fit the cell. The head never crops, because the face is the judged subject.
-  const head = bandExtent(mask, width, height, crown, chin);
-  const headWidth = head.maxX < head.minX ? 0 : (head.maxX - head.minX + 1) * scale;
+  const headWidth = head.width * scale;
   // The figure top must stay inside the headroom band.
   const cellTop = crown + Math.round((-crownIndex * band) / (BASELINE - top));
   const figureTop = maskTop(mask, width, height);
@@ -263,29 +371,10 @@ function buildCell(src, mask, opts) {
     headWidth,
     figureTop,
     cellTop,
-    ink,
   };
 }
 
 // --------------------------------------------------------------------------- main
-
-function parseArgs(argv) {
-  let asset = null;
-  let date = null;
-  let root = ROOT;
-  const modes = [];
-  for (let i = 0; i < argv.length; i++) {
-    const arg = argv[i];
-    if (arg === '--asset') {
-      asset = argv[++i] ?? '';
-      modes.push('asset');
-    } else if (arg === '--all') modes.push('all');
-    else if (arg === '--sheet') modes.push('sheet');
-    else if (arg === '--date') date = argv[++i] ?? '';
-    else if (arg === '--root') root = path.resolve(argv[++i] ?? ROOT);
-  }
-  return { asset, date, root, modes };
-}
 
 function fail(line) {
   console.error(line);
@@ -296,7 +385,13 @@ function fail(line) {
 function readRecord(root, name) {
   const file = path.join(root, 'out', 'chibi-sprouts', 'cast', `${name}-measure.json`);
   if (!existsSync(file)) fail(`record ${name}: not built`);
-  return JSON.parse(readFileSync(file, 'utf8'));
+  const record = JSON.parse(readFileSync(file, 'utf8'));
+  // The record holds the eleven table rows in table order plus the lit pair.
+  const rows = record.rows ?? {};
+  const names = Object.keys(rows).filter((key) => key !== 'lit');
+  if (names.length !== ROW_NAMES.length || ROW_NAMES.some((row, i) => names[i] !== row))
+    fail(`record ${name}: rows incomplete`);
+  return record;
 }
 
 /** The lit render of one view of one asset. */
@@ -326,20 +421,18 @@ async function panelCells(root, name, record) {
   for (const view of ['front-level', 'side-level']) {
     const src = await rawPng(renderPath(root, name, view));
     const mask = maskOf(src, false);
-    cells.push(buildCell(src, mask, { crown, sole, chin, cellWidth: CELL_W, top: BAND_TOP, ink: false }));
+    cells.push(buildCell(src, mask, { crown, sole, chin, cellWidth: CELL_W, top: BAND_TOP }));
   }
   const [dcrown, dsole] = DRAWING_ROWS[name];
   const drawingSrc = await rawPng(drawingPath(root, name));
   const drawingMask = maskOf(drawingSrc, true);
-  const head = headBand(drawingMask, drawingSrc.width, drawingSrc.height, dcrown, dsole);
   cells.push(
     buildCell(drawingSrc, drawingMask, {
       crown: dcrown,
       sole: dsole,
-      chin: head.chin,
+      chin: DRAWING_CHINS[name],
       cellWidth: CELL_W,
       top: BAND_TOP,
-      ink: true,
     }),
   );
   for (const cell of cells) {
@@ -352,8 +445,7 @@ async function panelCells(root, name, record) {
 /** The caption of one panel: the asset name, the date, the row result, and the crop state. */
 function panelCaption(panel, date) {
   const rows = panel.record.rows ?? {};
-  const names = Object.keys(rows).filter((name) => name !== 'lit');
-  const passed = names.filter((name) => rows[name].pass).length;
+  const passed = ROW_NAMES.filter((name) => rows[name]?.pass).length;
   const palmsOk = (panel.record.palms?.L?.ok ?? false) && (panel.record.palms?.R?.ok ?? false);
   const cropped = panel.cells.map((cell) => (cell.cropped ? 'yes' : 'no'));
   return textSvg(PANEL_W, CAPTION_H, [
@@ -362,7 +454,7 @@ function panelCaption(panel, date) {
       x: 24,
       y: 58,
       size: 20,
-      text: `${passed}/${names.length} rows pass; palms ${palmsOk ? 'ok' : 'fail'}`,
+      text: `${passed}/${ROW_NAMES.length} rows pass; palms ${palmsOk ? 'ok' : 'fail'}`,
     },
     {
       x: 24,
@@ -395,21 +487,23 @@ async function writePanel(root, panel, date) {
   }
   layers.push({ input: panelCaption(panel, date), left: 0, top: PANEL_H - CAPTION_H });
   mkdirSync(castDir, { recursive: true });
-  await canvas(PANEL_W, PANEL_H).composite(layers).png().toFile(file);
+  await writePng(root, file, canvas(PANEL_W, PANEL_H).composite(layers));
+  const cropped = panel.cells.map((cell) => (cell.cropped ? 'yes' : 'no'));
   console.log(`panel: ${path.relative(root, file)} ${PANEL_W}x${PANEL_H}`);
+  console.log(`panel cell: ${panel.name} cropped: ${cropped.join(', ')}`);
 }
 
 /**
- * The cast sheet. It holds the five lit front renders at one 466.667 px per metre scale, so the
- * three adults are 700 px and the two children are 490 px. It reads the five records and the five
- * lit front renders, and it writes no panel.
+ * The cells of the cast sheet. It holds the five lit front renders at one 466.667 px per metre
+ * scale, so the three adults are 700 px and the two children are 490 px. It reads the five records
+ * and the five lit front renders, and it writes no panel. The head-fit rule and the figure-top
+ * rule of spec "The horizontal crop" hold for every sheet cell, and every cell records its crop
+ * state.
  */
-async function writeSheet(root, date) {
-  const castDir = path.join(root, 'out', 'chibi-sprouts', 'cast');
-  const file = path.join(castDir, 'cast-sheet.png');
-  const layers = [];
-  for (let i = 0; i < NAMES.length; i++) {
-    const name = NAMES[i];
+async function sheetCells(root) {
+  const cells = [];
+  const states = [];
+  for (const name of NAMES) {
     const record = readRecord(root, name);
     const detail = record.detail ?? {};
     const crown = detail.projectedCrownRow;
@@ -425,8 +519,24 @@ async function writeSheet(root, date) {
       chin: Number.isFinite(detail.chinRow) ? detail.chinRow : crown,
       cellWidth: SHEET_CELL_W,
       top: BASELINE - contentH,
-      ink: false,
     });
+    // The head-fit rule of spec "The horizontal crop" holds for every sheet cell. The sheet reads
+    // the same lit front renders as the panel, so it uses the same head limit as the panel. A head
+    // that the panel refuses never reaches the sheet.
+    if (cell.headWidth > CELL_W - 16) fail(`figure wider than its cell: ${name}`);
+    if (cell.figureTop < cell.cellTop) fail(`figure top above the cell: ${name}`);
+    states.push(`${name} cropped: ${cell.cropped ? 'yes' : 'no'}`);
+    cells.push({ name, cell });
+  }
+  return { cells, states };
+}
+
+async function writeSheet(root, sheet, date) {
+  const castDir = path.join(root, 'out', 'chibi-sprouts', 'cast');
+  const file = path.join(castDir, 'cast-sheet.png');
+  const layers = [];
+  for (let i = 0; i < sheet.cells.length; i++) {
+    const { cell } = sheet.cells[i];
     const x = PAD + i * (SHEET_CELL_W + PAD);
     layers.push({ input: await cellBuffer(SHEET_CELL_W, CELL_H), left: x, top: PAD });
     layers.push({
@@ -442,21 +552,74 @@ async function writeSheet(root, date) {
   const caption = textSvg(SHEET_W, CAPTION_H, [
     { x: 24, y: 30, size: 22, text: `Chibi Sprouts cast  |  ${date}` },
     { x: 24, y: 58, size: 20, text: [...NAMES, 'sprout-mom-kim'].join(', ') },
-    {
-      x: 24,
-      y: 84,
-      size: 20,
-      text: `${SHEET_SCALE} px per metre; one baseline at row ${BASELINE}`,
-    },
+    { x: 24, y: 84, size: 20, text: `cropped: ${sheet.states.join(', ')}` },
   ]);
   layers.push({ input: caption, left: 0, top: SHEET_H - CAPTION_H });
   mkdirSync(castDir, { recursive: true });
-  await canvas(SHEET_W, SHEET_H).composite(layers).png().toFile(file);
+  await writePng(root, file, canvas(SHEET_W, SHEET_H).composite(layers));
+  for (const state of sheet.states) console.log(`sheet cell: ${state}`);
   console.log(`sheet: ${path.relative(root, file)} ${SHEET_W}x${SHEET_H}`);
 }
 
+/**
+ * Write a PNG by a temporary file and a rename, so a failed run never leaves a half-written panel
+ * or sheet behind a name that a judge record already holds.
+ */
+async function writePng(root, file, image) {
+  const temp = `${file}.tmp-${process.pid}`;
+  try {
+    await image.png().toFile(temp);
+    renameSync(temp, file);
+  } catch (e) {
+    rmSync(temp, { force: true });
+    throw e;
+  }
+}
+
+/**
+ * Parse the command line. Only the five known options are accepted, each with its own value.
+ * An unknown argument, a repeated option, or a missing value is refused with one named line
+ * before any read or write.
+ */
+function parseArgs(argv) {
+  const options = { asset: null, date: null, root: ROOT };
+  const modes = [];
+  const seen = new Set();
+  for (let i = 0; i < argv.length; i++) {
+    const arg = argv[i];
+    if (arg === '--all') {
+      modes.push('all');
+      continue;
+    }
+    if (arg === '--sheet') {
+      modes.push('sheet');
+      continue;
+    }
+    if (arg !== '--asset' && arg !== '--date' && arg !== '--root') throw new Error(`unknown option ${arg}`);
+    const key = arg.slice(2);
+    if (seen.has(key)) throw new Error(`repeated option ${arg}`);
+    seen.add(key);
+    const value = argv[i + 1];
+    if (value === undefined || value.startsWith('--')) throw new Error(`option ${arg} needs a value`);
+    if (key === 'asset') {
+      options.asset = value;
+      modes.push('asset');
+    } else if (key === 'date') options.date = value;
+    else options.root = path.resolve(value);
+    i++;
+  }
+  return { ...options, modes };
+}
+
 async function main() {
-  const { asset, date, root, modes } = parseArgs(process.argv.slice(2));
+  let options;
+  try {
+    options = parseArgs(process.argv.slice(2));
+  } catch (e) {
+    console.error(e.message);
+    process.exit(1);
+  }
+  const { asset, date, root, modes } = options;
   if (modes.length > 1) fail('choose one of --asset, --all, or --sheet');
   const mode = modes[0] ?? 'all';
   if (mode === 'asset' && !NAMES.includes(asset)) fail(`unknown asset ${asset}`);
@@ -478,12 +641,17 @@ async function main() {
 
   const runDate = date || localDate();
   const cast = mode === 'sheet' ? [] : mode === 'asset' ? [asset] : NAMES;
+  // Every input of every target is read before the first write, so a missing record never leaves
+  // a half-written set of panels behind.
+  const inputs = [];
   for (const name of cast) {
     const record = readRecord(root, name);
     const cells = await panelCells(root, name, record);
-    await writePanel(root, { name, record, cells }, runDate);
+    inputs.push({ name, record, cells });
   }
-  if (mode !== 'asset') await writeSheet(root, runDate);
+  const sheet = mode === 'asset' ? null : await sheetCells(root);
+  for (const panel of inputs) await writePanel(root, panel, runDate);
+  if (sheet) await writeSheet(root, sheet, runDate);
 }
 
 if (import.meta.url === pathToFileURL(process.argv[1] ?? '').href) {

@@ -343,6 +343,45 @@ function components(mask, w, h) {
   return out;
 }
 
+/**
+ * The eye components of an eye mask. A blob that joins the two eyes is one eye component, so an
+ * undeclared face mark fails the run with the named error instead of vanishing from the count.
+ */
+function eyeComponents(mask, headWidth, windowArea, W, H) {
+  return components(mask, W, H)
+    .map((cells) => {
+      let x0 = W,
+        x1 = 0,
+        y0 = H,
+        y1 = 0;
+      for (const [x, y] of cells) {
+        if (x < x0) x0 = x;
+        if (x > x1) x1 = x;
+        if (y < y0) y0 = y;
+        if (y > y1) y1 = y;
+      }
+      return {
+        cells,
+        x0,
+        x1,
+        y0,
+        y1,
+        w: x1 - x0 + 1,
+        h: y1 - y0 + 1,
+        area: cells.length,
+        cx: (x0 + x1) / 2,
+        cy: (y0 + y1) / 2,
+      };
+    })
+    .filter(
+      (e) =>
+        e.w >= 0.4 * e.h &&
+        e.w <= 0.6 * headWidth &&
+        e.area >= 0.02 * windowArea &&
+        Math.abs(e.cx - W / 2) <= 0.35 * headWidth,
+    );
+}
+
 /** The widest horizontal run count of a mask over a row range (used for head and face width). */
 function widestSpan(mask, w, h, y0, y1) {
   let best = 0;
@@ -564,49 +603,56 @@ export function measureFigure(figure, table = 'kim') {
   const c0 = Math.max(0, Math.floor(W / 2 - 0.5 * headWidth));
   const c1 = Math.min(W - 1, Math.ceil(W / 2 + 0.5 * headWidth));
   const eyeMask = new Uint8Array(W * H);
+  const plainMask = new Uint8Array(W * H);
   let windowArea = 0;
   for (let y = r0; y <= r1; y++)
     for (let x = c0; x <= c1; x++) {
       windowArea++;
       const p = px(front, x, y);
       if (p[3] < 250 || dist255(p, skinRgb) <= 60 || REL_LUM(p[0], p[1], p[2]) >= 0.45) continue;
-      // A declared face mark leaves the eye mask, so a glasses frame cannot join the two eyes.
-      if (marks.some((m) => dist255(p, m.rgb) <= 24)) continue;
-      eyeMask[y * W + x] = 1;
+      plainMask[y * W + x] = 1;
     }
-  const eyeComps = components(eyeMask, W, H)
-    .map((cells) => {
-      let x0 = W,
-        x1 = 0,
-        y0 = H,
-        y1 = 0;
-      for (const [x, y] of cells) {
-        if (x < x0) x0 = x;
-        if (x > x1) x1 = x;
-        if (y < y0) y0 = y;
-        if (y > y1) y1 = y;
+  // The declared face mark leaves the eye mask, so a glasses frame cannot join the two eyes.
+  //
+  // The mark's own region is the pixels of the declared colour and the one-pixel blend edge a
+  // painted line leaves around them. The eye blobs of the mask without that region are protected,
+  // so a painted iris that sits close to the mark colour in the palette still reads as an eye.
+  const markRegion = new Uint8Array(W * H);
+  if (marks.length) {
+    const exact = new Uint8Array(W * H);
+    for (let y = r0; y <= r1; y++)
+      for (let x = c0; x <= c1; x++) {
+        const p = px(front, x, y);
+        if (p[3] < 250) continue;
+        if (!marks.some((m) => dist255(p, m.rgb) === 0)) continue;
+        exact[y * W + x] = 1;
       }
-      return {
-        x0,
-        x1,
-        y0,
-        y1,
-        w: x1 - x0 + 1,
-        h: y1 - y0 + 1,
-        area: cells.length,
-        cx: (x0 + x1) / 2,
-        cy: (y0 + y1) / 2,
-      };
-    })
-    .filter(
-      (e) =>
-        e.w >= 0.4 * e.h &&
-        // A blob that joins the two eyes is one eye component, so an undeclared face mark fails
-        // the run with the named error instead of vanishing from the count.
-        e.w <= 0.6 * headWidth &&
-        e.area >= 0.02 * windowArea &&
-        Math.abs(e.cx - W / 2) <= 0.35 * headWidth,
-    );
+    for (const cells of components(exact, W, H))
+      for (const [x, y] of cells)
+        for (let dy = -1; dy <= 1; dy++)
+          for (let dx = -1; dx <= 1; dx++) {
+            const nx = x + dx,
+              ny = y + dy;
+            if (nx < 0 || ny < 0 || nx >= W || ny >= H) continue;
+            markRegion[ny * W + nx] = 1;
+          }
+  }
+  const protectedPixels = new Uint8Array(W * H);
+  if (marks.length) {
+    const clean = new Uint8Array(W * H);
+    for (let i = 0; i < W * H; i++) if (plainMask[i] && !markRegion[i]) clean[i] = 1;
+    for (const comp of eyeComponents(clean, headWidth, windowArea, W, H))
+      for (const [x, y] of comp.cells) protectedPixels[y * W + x] = 1;
+  }
+  for (let i = 0; i < W * H; i++) {
+    if (!plainMask[i]) continue;
+    const x = i % W,
+      y = (i / W) | 0;
+    const p = px(front, x, y);
+    if (marks.some((m) => dist255(p, m.rgb) <= 24) && !protectedPixels[i]) continue;
+    eyeMask[i] = 1;
+  }
+  const eyeComps = eyeComponents(eyeMask, headWidth, windowArea, W, H);
   const baseResult = { rows: [], guards, handEdge, sideSign, detail: {} };
   if (eyeComps.length !== 2)
     return { ...baseResult, failures: [`eye components: found ${eyeComps.length}, expected 2`] };
@@ -672,7 +718,11 @@ export function measureFigure(figure, table = 'kim') {
           break;
         }
     guard('lily chin', chinHit < 0, `hair crosses the chin at row ${chinHit}`);
-    // 2. the frontmost side pixel at the chin rows is skin, not hair
+    // 2. the frontmost side pixel at the chin rows is a skin pixel
+    // The frontmost pixel is the first pixel of the alpha-128 side mask, and its colour is read
+    // whatever its alpha is. An antialiased edge pixel counts, and a pixel that is not skin counts
+    // as hair at the front.
+    const isSkin = (p) => dist255(p, skinRgb) <= 24;
     let sideHit = false;
     for (let y = Math.ceil(chinRow - 2); y <= Math.floor(chinRow); y++) {
       let front = side.width;
@@ -681,7 +731,7 @@ export function measureFigure(figure, table = 'kim') {
           front = x;
           break;
         }
-      if (front < side.width && isHair(px(side, front, y))) sideHit = true;
+      if (front < side.width && !isSkin(px(side, front, y))) sideHit = true;
     }
     guard('lily side chin', !sideHit, 'hair at the front');
     // 3. no hair hangs into the eye window above the eyes
@@ -1012,18 +1062,27 @@ const DEFAULT_BASE = 'humanoid-kim';
 const DEFAULT_TABLE = 'kim';
 const DEFAULT_RECORD = 'out/chibi-sprouts/redesign/measure.json';
 
+/**
+ * Parse the command line. Only the four known options are accepted, each with its own value.
+ * An unknown argument, a repeated option, or a missing value is refused with one named line
+ * before any read or write.
+ */
 function parseArgs(argv) {
-  let asset = null;
-  let base = DEFAULT_BASE;
-  let table = DEFAULT_TABLE;
-  let record = DEFAULT_RECORD;
+  const options = { asset: null, base: DEFAULT_BASE, table: DEFAULT_TABLE, record: DEFAULT_RECORD };
+  const seen = new Set();
   for (let i = 0; i < argv.length; i++) {
-    if (argv[i] === '--asset') asset = argv[++i] ?? '';
-    else if (argv[i] === '--base') base = argv[++i] ?? '';
-    else if (argv[i] === '--table') table = argv[++i] ?? '';
-    else if (argv[i] === '--record') record = argv[++i] ?? '';
+    const arg = argv[i];
+    if (arg !== '--asset' && arg !== '--base' && arg !== '--table' && arg !== '--record')
+      throw new Error(`unknown option ${arg}`);
+    const key = arg.slice(2);
+    if (seen.has(key)) throw new Error(`repeated option ${arg}`);
+    seen.add(key);
+    const value = argv[i + 1];
+    if (value === undefined || value.startsWith('--')) throw new Error(`option ${arg} needs a value`);
+    options[key] = value;
+    i++;
   }
-  return { asset, base, table, record };
+  return options;
 }
 
 // The asset-name rule of src/pipeline.ts checkAssetName, copied here so a bad name is refused
@@ -1064,11 +1123,19 @@ export function destinationError(root, dest, treeRel) {
   if (abs !== tree && !abs.startsWith(tree + path.sep)) return `destination outside ${treeRel}: ${dest}`;
   let current = abs;
   for (;;) {
-    const st = lstatSync(current, { throwIfNoEntry: false });
+    let st = null;
+    try {
+      st = lstatSync(current, { throwIfNoEntry: false });
+    } catch {
+      // A parent that is a regular file makes the path unreadable. The walk names that parent.
+      return `destination parent is a file: ${path.relative(root, path.dirname(current))}`;
+    }
     if (st) {
       if (st.isSymbolicLink()) return `destination is a link: ${path.relative(root, current)}`;
       if (current === abs && st.isDirectory())
         return `destination is a directory: ${path.relative(root, current)}`;
+      // A hard link has more than one name, so writing it would change another file.
+      if (current === abs && st.nlink > 1) return `destination is a link: ${path.relative(root, current)}`;
       if (current !== abs && !st.isDirectory())
         return `destination parent is a file: ${path.relative(root, current)}`;
     }
@@ -1080,7 +1147,14 @@ export function destinationError(root, dest, treeRel) {
 }
 
 async function main() {
-  const { asset, base: baseStem, table, record: recordArg } = parseArgs(process.argv.slice(2));
+  let options;
+  try {
+    options = parseArgs(process.argv.slice(2));
+  } catch (e) {
+    console.error(e.message);
+    process.exit(1);
+  }
+  const { asset, base: baseStem, table, record: recordArg } = options;
   try {
     checkAssetName(asset);
   } catch (e) {
