@@ -890,7 +890,7 @@ limit` gets exit 0 for a 350 px head.
 ## Phase 2: The adult variants
 
 - [x] T5 Red: Pin Dad, Grandma, and Grandpa. Commits `2d5808a79b9dfbdeceafe2cafc566bab5275abb6` and `d519ae1fcb4ee305813f0fe04ba5c8bc54b2c957`.
-  Files: `tests/sprout-dad-kim.test.ts`, `tests/sprout-grandma-kim.test.ts`,
+      Files: `tests/sprout-dad-kim.test.ts`, `tests/sprout-grandma-kim.test.ts`,
       `tests/sprout-grandpa-kim.test.ts` (all new).
   - Each file runs `--asset <name> --table kim --record out/chibi-sprouts/cast/<name>-measure.json`
     on the build and renders that the Green task wrote. It requires exit 0, `Object.keys(record.rows)`
@@ -1377,7 +1377,7 @@ limit` gets exit 0 for a 350 px head.
       recorded GLB or `stats.json` projection.
 
 - [x] T9 Measure: The three adult look judges.
-  Records: `measure/runs/chibi_sprouts_cast_20261125/judge-sprout-dad-kim.json`,
+      Records: `measure/runs/chibi_sprouts_cast_20261125/judge-sprout-dad-kim.json`,
       `judge-sprout-grandma-kim.json`, and `judge-sprout-grandpa-kim.json`.
   - One brief per character. Each brief holds the panel path, the drawing path, the eleven rows as
     text, and the two scores. The route, the family rule, and the record shape are spec decisions
@@ -1426,7 +1426,7 @@ limit` gets exit 0 for a 350 px head.
       hashes equal the files on disk and the measure records. No score changed.
     - Spec fix: commit `0953f845` changed gate-check clauses 1 and 2 from
       `git rev-parse HEAD -- <path>` to `git log -1 --format=%H -- <path>`. `git rev-parse HEAD --
-      <path>` names HEAD, not the last commit that changed the path.
+<path>` names HEAD, not the last commit that changed the path.
 
 - [x] T10 Measure: The Phase 2 gate.
   - Done-when: the three pins exit 0, the three judges pass, every judge input of spec "The gate
@@ -1528,8 +1528,8 @@ limit` gets exit 0 for a 350 px head.
 ## Phase 3: The children
 
 - [~] T11 Red: Pin the child base, Tom, and Lily. Commit `5d436c4545c86cad1d08bf9928aae89b8cbb68bb`.
-      Files: `tests/sprout-child-base.test.ts`, `tests/sprout-tom-kim.test.ts`,
-      `tests/sprout-lily-kim.test.ts` (all new).
+  Files: `tests/sprout-child-base.test.ts`, `tests/sprout-tom-kim.test.ts`,
+  `tests/sprout-lily-kim.test.ts` (all new).
   - `tests/sprout-child-base.test.ts` asserts the fixed landmarks of spec "The landmarks and the
     tolerances" through `BASE_CROWN_Y`, `BASE_CHIN_Y`, `BASE_JOINTS`, and `BASE_HANDS`. Its fixed
     value cases fail on the absent module. Its built-GLB cases — the 17 joints, the built joints
@@ -1593,7 +1593,8 @@ limit` gets exit 0 for a 350 px head.
     - Full command output and the result block:
       `measure/runs/chibi_sprouts_cast_20261125/red-aed0bcc.log`.
 
-- [ ] T12 Green: The child base. File: `assets/parts/humanoid-kim-child.ts` (new).
+- [x] T12 Green: The child base. File: `assets/parts/humanoid-kim-child.ts` (new). Commit
+      `09966d9ef4763344ea7db77b1077a641f5e22bc4`.
   - Build the base of spec "The child base": the derived targets at 1.050 m, the 17 adult bone names,
     one `idle` clip, the hands body with the palms toward the legs, the three landmark exports, and
     `BASE_JOINTS` for all 17 bones. Import only `src/index.js`.
@@ -1605,6 +1606,48 @@ limit` gets exit 0 for a 350 px head.
     - `prettier --check` exits 0.
   - Record: the derived targets, the measured absolute values, the 17 skeleton bone names and their
     `BASE_JOINTS` values, the clip name, and the four export values.
+
+  - Evidence (2026-11-26, worktree `/home/daniebo/Desktop/forge-worktrees/sprouts-cast`, branch
+    `chibi-sprouts-cast`, phase base `aed0bcc0c3562de1def0242a29d35dd3dca31b68`, role base
+    `8e12dee1d28cabad5a67cd0891a496fcf0b763c1`, implementation commit
+    `09966d9ef4763344ea7db77b1077a641f5e22bc4`, Green route
+    `minimax-cn-coding-plan/MiniMax-M3.1-Flash`, family minimax):
+    - The file is `assets/parts/humanoid-kim-child.ts`, 290 lines, one new file. It imports
+      `motion`, `profile`, `sdf`, and the `AssetContext` type from `../../src/index.js` only. It
+      imports no asset module, and the string `humanoid-kim.js` appears nowhere in it.
+    - The derived targets of spec "The child base", built into the module: height 1.050 m, chin
+      0.687 m, head height 0.363 m, head width 0.367 m, face width 0.238 m, eye line 0.815 m, eye
+      width 0.053 m, eye height 0.051 m, eye spacing 0.115 m, shoulder 0.623 m at x 0.085 m, hip
+      0.351 m, knee 0.214 m, wrist 0.368 m, fingertip 0.292 m at x 0.139 m, ankle 0.035 m.
+    - The four export values: `BASE_CROWN_Y` 1.05, `BASE_CHIN_Y` 0.687, `BASE_HANDS.L`
+      `{ palmCentre [0.132, 0.3452, 0.0325], thumbTip [0.148, 0.352, 0.0705], fingerTip
+[0.139, 0.292, 0.032] }` and the mirrored `BASE_HANDS.R`. The palm centre sits on the inner
+      palm face and its y and z match the hand mesh centroid, so the declared palm normal is -X on
+      the left and +X on the right.
+    - The 17 skeleton bone names and their `BASE_JOINTS` rest-pose values in world meters:
+      `hips [0, 0.351, 0]`, `spine [0, 0.44, 0]`, `chest [0, 0.53, 0]`, `neck [0, 0.63, 0]`,
+      `head [0, 0.777, 0]`, `upperarm.L [0.085, 0.623, 0]`, `forearm.L [0.105, 0.49, 0.006]`,
+      `hand.L [0.13, 0.368, 0.015]`, `upperarm.R [-0.085, 0.623, 0]`,
+      `forearm.R [-0.105, 0.49, 0.006]`, `hand.R [-0.13, 0.368, 0.015]`,
+      `leg.L [0.042, 0.351, 0]`, `shin.L [0.046, 0.214, 0]`, `foot.L [0.048, 0.035, 0.02]`,
+      `leg.R [-0.042, 0.351, 0]`, `shin.R [-0.046, 0.214, 0]`,
+      `foot.R [-0.048, 0.035, 0.02]`. The five pinned joint heights are the shoulder 0.623 m, the
+      hip 0.351 m, the knee 0.214 m, the wrist 0.368 m, and the ankle 0.035 m.
+    - The clip name is `idle`, 2.4 s, looped, with the chest and head sway of the adult base.
+    - The base builds six bodies: `head-skin`, `torso-skin`, `arms-skin`, `legs-skin`, `feet-skin`,
+      and `hands`. The hands are one body with the palms toward the legs.
+    - The commands and their exit codes:
+
+      ```bash
+      HEAVY_MIN_AVAIL_MB=1500 bash /home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/vitest/vitest.mjs run --maxWorkers=1 tests/sprout-child-base.test.ts -t "pins|imports only"'
+      # exit 0: 3 of 3 fixed-value cases pass; the 3 built-GLB cases stay skipped until T13
+      node_modules/.bin/prettier --check assets/parts/humanoid-kim-child.ts
+      # exit 0: all matched files use Prettier code style
+      node node_modules/typescript/bin/tsc --noEmit
+      # exit 2: 51 diagnostics in the baseline files; none sits in the new file
+      ```
+
+    - The built-GLB cases of the same file need Tom's GLB, so they run at T13.
 
 - [ ] T13 Green: Tom. File: `assets/sprout-tom-kim.ts` (new).
   - Build the identity of the spec on the child base: brown tousled hair with a side tuft, freckles,
