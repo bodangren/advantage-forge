@@ -1,0 +1,12 @@
+MEASURE_AGENT_RESULT
+role: phase-acceptance
+status: complete
+track: chibi_sprouts_cast_20261125
+phase: Phase 3: The children
+commits: none
+tests_run: 11 cast files, 119 pass; Tom and Lily live proportions and forge check pass; Mom proportions match; prettier pass; tsc baseline exit 2; generate exit 0; doctor exit 1 for two accepted links
+files_changed: measure/runs/chibi_sprouts_cast_20261125/phase-acceptance-p3-969c4fe.json and .log (untracked)
+plan_updates: none; T16 stays open for orchestrator
+known_failures: Doctor two baseline links; tsc 51 baseline diagnostics; preset-colour and Mom sheet known baseline failures not rerun
+handoff: Phase 3 passes at 969c4fe8. All judge inputs match, no blockers. Mechanical role gate fails only because T16 is open.
+END_MEASURE_AGENT_RESULT
