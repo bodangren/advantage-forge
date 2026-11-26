@@ -1,15 +1,15 @@
 MEASURE_AGENT_RESULT
 role: mid-red
-status: partial
+status: complete
 track: chibi_sprouts_cast_20261125
 phase: Phase 1: The measuring tools
 baseline_sha: 5356e78730daefd5225f9733f190dc6bb631b90d
 role_base_sha: 62258e9ee684e887724a6b5ad72e85bc8c94dbed
-audited_head_sha: 62258e9ee684e887724a6b5ad72e85bc8c94dbed
-commits: none; fixture repair commit pending
+audited_head_sha: 766c2655333202264ebb3e8d3529d50a993f8627
+commits: 766c2655
 tests_run: tests/sprout-cast-panel.test.ts exit 0; tests/proportion-cast-options.test.ts exit 0; tests/cast-isolation.test.ts exit 0; tests/sprout-mom-kim.test.ts exit 0; tests/sprout-mom-kim.validation.test.ts exit 0; Prettier check exit 0
 files_changed: tests/sprout-cast-panel.test.ts; measure/tracks/chibi_sprouts_cast_20261125/plan.md; measure/runs/chibi_sprouts_cast_20261125/red-62258e9.log
 plan_updates: T3 records PM Option A, the 75 source px fixture head, the separate refusal fixtures, and all exit codes
 known_failures: none
-handoff: Commit only the test, plan, and this log. Preserve the concurrent generated-file and older-log edits. No Green finding remains.
+handoff: The happy-path sheet fixture now fits the 264 px limit. The 350 px and 236 px refusal fixtures stay separate. No Green finding remains.
 END_MEASURE_AGENT_RESULT
