@@ -121,6 +121,38 @@ Status: in progress. The plan records execution state. The storyboard document r
   - Notes: the Drive writes used the `~/.config/gws` login, because `~/.config/gws-daniel` has no
     Drive scope. Two 404s in the tour page are old: `out/well-stones/well-stones.glb` and
     `out/well-stone/well-stone.glb` do not exist in `out/`.
+- [x] Task: The tour badge says "Chibi Quest", not "Chibi Quest preview"; record the tour again and replace the Drive copies (PM 2026-11-27).
+  - Badge: `src/showcase/main.ts:433` now sets `bug.textContent = 'Chibi Quest'`; commit `59c7355e`
+    on `master`. The old line read `Chibi Quest <span>preview</span>`.
+  - `teaser-live` fast-forwarded to `59c7355e` (`c42254b3` merged the branch into `master` first).
+    The first recording showed no heroes: `teaser-live/out/` held only 29 prop folders, so 85
+    asset requests failed with 404. The worktree now holds 1224 links to the main checkout `out/`
+    folders that it did not have. Two 404s remain, the old `well-stones` pair.
+  - Command: `node --import tsx scripts/showcase.ts record` in `teaser-live` through heavy-run,
+    12:33 to 12:45.
+  - ffprobe `out/showcase/chibi-quest-tour.mp4`: 1920 x 1080, 30 fps, H.264 and AAC 44.1 kHz
+    stereo, 216.5 s, 231,476,857 B, 8.55 Mbps. sha256
+    `f931e618a22852899b277164d8a8b35522bef0b10fc593125c62fe640042c00a`; md5
+    `28dfe9aa497f2119d0c6b33b102fed90`.
+  - 480p copy (`scale=854:480:flags=lanczos -c:v libx264 -preset medium -crf 23 -pix_fmt yuv420p
+    -c:a aac -b:a 192k -movflags +faststart`): 854 x 480, 30 fps, 216.5 s, 29,946,071 B. sha256
+    `a2a1de668b6376fc3ca772aad542be2374f4e73a0082869f6125a4d06fa27cc8`; md5
+    `a45cb6a735a381116d0faff9623cb13a`.
+  - Frames: five 3 x 3 sheets at 5 s steps and the still at 215 s. Every frame shows the corner
+    badge "Chibi Quest". No frame shows "preview", "coming" or "soon". The end card reads "Play it
+    now in Primary Advantage!".
+  - `grep -ni "soon|coming|preview|เร็ว"` over the `.srt`, `voiceover.md` and `youtube.md` found
+    nothing. The `.srt` holds 49 captions; caption 49 reads "Chibi Quest is now live in Primary
+    Advantage. See you there, heroes!".
+  - Drive in place, folder "PA Videos" (`1WrHdjGlH1EIPNf90KyhBayIa9RzITEPW`): same ids, names,
+    parents and permissions (the four permission rows are identical before and after).
+    - `chibi-quest-tour.mp4` `1dobl5XeErZlVoH03XXKoen-BeI8hJJPS`, 231,476,857 B, md5
+      `28dfe9aa497f2119d0c6b33b102fed90`.
+    - `chibi-quest-tour-480p.mp4` `1BXvaJJSSeDLyDXLptVI1S_w83M6p67cZ`, 29,946,071 B, md5
+      `a45cb6a735a381116d0faff9623cb13a`.
+  - The sizes and hashes in the card above are superseded by this recording.
+  - The Facebook video of 2 Oct 2026 keeps its burned-in "Chibi Quest preview" watermark. It is
+    not changed.
 - [x] Task: Owner review of the audio and the Thai text (voice-over, counters, end card, and the
   publishing copy). (Added 2026-10-02: the open item of the recording task, as a task.)
   2026-11-27: the live wording is in the media and in Drive. Only the Thai check waits.
