@@ -87,9 +87,9 @@ Status: in progress. The plan records execution state. The storyboard document r
       `8b4851199642bf68392ec25378b7e96778a142358587a58daa108d69ce124422` (68,254,673 B).
     - `chibi-quest-battle-9x16.silent.mp4`
       `b8e9dc4bfa58e4913c71146642c2a7b7b52df899f48cdf7c3bc586d93ac6a915` (49,365,741 B).
-- [~] Task: Owner review of the audio and the Thai text (voice-over, counters, end card, and the
+- [x] Task: Owner review of the audio and the Thai text (voice-over, counters, end card, and the
   publishing copy). (Added 2026-10-02: the open item of the recording task, as a task.)
   2026-11-27: the live wording is in the media and in Drive. Only the Thai check waits.
-- [b] Thai check of the new wording. Owner: Daniel. deferred:thai Task Zks3LWVIbk1mQmFTX0NNNQ.
-- [ ] Task: Publish the teaser after the owner passes the audio and Thai check. The copy waits in
+- [x] Thai check of the new wording. Evidence: Daniel "Approve", Google Task `NDZSZVd4YlFpOS00WnZQUw` under `Zks3LWVIbk1mQmFTX0NNNQ` (2026-11-27).
+- [b] deferred:advantage-pr (YouTube upload, PM 2026-11-27) Task: Publish the teaser after the owner passes the audio and Thai check. The copy waits in
   `docs/guild-battle-teaser.md` ("Publishing").
