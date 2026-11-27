@@ -21,11 +21,6 @@ The order of this list is the priority order (Daniel, 2026-11-27). These rows ca
   *Link: [./tracks/chibi_sprouts_cast_art_20261127/](./tracks/chibi_sprouts_cast_art_20261127/)*
   *QUEUE item 1: the cut-outs and the 128 px idle sprites of the five cast characters.*
 
-- [~] **Track: Primary Advantage covers, levels 5 to 9: the 11 wide pictures**
-  *Link: [./tracks/workbooks_covers_l5_9_20261127/](./tracks/workbooks_covers_l5_9_20261127/)*
-  *PM card of 2026-11-27: Workbooks asks for 11 wide cover pictures from Quest 5 to Adventure 9.3
-  through Muse; hard stop 0.40 USD.*
-
 - [~] **Track: Rebuild Magic Defense as a missile defense game**
   *Link: [./tracks/game_magic_defense_rebuild_20261029/](./tracks/game_magic_defense_rebuild_20261029/)*
   *QUEUE item 3 (A-28): mockup c2 picked by the PM on 2026-11-27; one rebuild track at a time, first.*
@@ -329,6 +324,9 @@ These tracks are not worked now. Their folders stay in `measure/tracks/`. Each l
   *Status: shelved, not done (PM 2026-11-27); reopen by moving it back.*
 
 ## Archived Tracks
+
+- [x] Primary Advantage covers, levels 5 to 9: the 11 wide pictures, completed 2026-11-28; the 11 pictures of Quest 5 to Adventure 9.3 came from Muse at 1920 x 1280 px, 36 calls at 0.35 USD of the 0.40 USD stop, all 11 pictures pass the 7 checks of the request, and the results, the spend log, and the check table sit in `~/Desktop/handoff/levels-5-9-cover-art-results-2026-11-27/results/`.
+  *Link: [./archive/workbooks_covers_l5_9_20261127/](./archive/workbooks_covers_l5_9_20261127/)*
 
 - [x] Sound library: CC0 sound effects and music for the asset catalog and the games, completed 2026-11-27; the library holds the CC0 takes, the sound list, the tool, the review page, the review rounds, and the credits file, and `./measure/generate.sh` and `./measure/doctor.sh` pass at the closeout.
   *Link: [./archive/audio_sfx_library_20261013/](./archive/audio_sfx_library_20261013/)*
