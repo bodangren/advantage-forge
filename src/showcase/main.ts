@@ -430,7 +430,7 @@ function buildOverlay(): void {
   }
   const bug = document.createElement('div');
   bug.className = 'bug';
-  bug.innerHTML = 'Chibi Quest <span>preview</span>';
+  bug.textContent = 'Chibi Quest';
   overlay.append(bug);
 }
 
