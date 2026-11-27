@@ -4,7 +4,7 @@ Status: in_progress. This plan owns execution status. Source documents retain de
 
 ## Phase 1: Baseline
 
-- [x] Task: Record the launcher failure from the migration audit.
+- [x] Task: Record the launcher failure from the migration audit. Evidence: `6b70d6f5` (recorded when marked done).
 - [ ] Task: Inspect package-manager configuration and installed dependency state.
 
 ## Phase 2: Checks

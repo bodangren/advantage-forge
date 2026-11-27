@@ -4,7 +4,7 @@ Status: in progress (started 2026-10-05). This plan owns execution status.
 
 ## Phase 1: Spot check
 
-- [x] Task: Compare the four flagged monsters with their mockups (2026-10-05).
+- [x] Task: Compare the four flagged monsters with their mockups (2026-10-05). Evidence: `e46f0685` (recorded when marked done).
 
 | Asset | Old rating | New rating | Main differences |
 | --- | ---: | ---: | --- |
@@ -16,7 +16,7 @@ Status: in progress (started 2026-10-05). This plan owns execution status.
 ## Phase 2: Records
 
 - [x] Task: Record the new ratings in `docs/character-reviews.json`.
-- [x] Task: Record the rating rule in the spec and the debt registry (TD-22).
+- [x] Task: Record the rating rule in the spec and the debt registry (TD-22). Evidence: `e46f0685` (recorded when marked done).
 
 ## Phase 3: Rework
 

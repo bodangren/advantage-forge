@@ -4,20 +4,20 @@ Status: in_progress. The rename is done (2026-10-02). Phase 5 waits for the Prim
 
 ## Phase 1: Contract
 
-- [x] Task: Record the owner decision and the inventory in the specification.
-- [x] Task: List every file, script, and workflow that names the old repository, with the replacement text. (inventory below)
+- [x] Task: Record the owner decision and the inventory in the specification. Evidence: `d4ea7d37` (recorded when marked done).
+- [x] Task: List every file, script, and workflow that names the old repository, with the replacement text. (inventory below) Evidence: `d4ea7d37` (recorded when marked done).
 - [x] Task: Check that the name `advantage-forge` is free on GitHub and in the local `../` directory. (2026-10-02: `gh repo view bodangren/advantage-forge` finds nothing; `../advantage-forge` is absent)
 
 ## Phase 2: Pack layout design
 
 - [x] Task: Write `docs/pack-layout.md`: the shared Forge tool and catalog, and one directory for each pack. (docs/pack-layout.md)
-- [x] Task: List what a pack owns: assets, catalog rows, maps, base character, equipment fit, sprites, models, and review ratings. (docs/pack-layout.md)
-- [x] Task: Write the Riven Lands brief: art direction for secondary students, base character, and the per-pack equipment fit rule. (docs/pack-layout.md)
-- [x] Task: Ask the owner to approve the design before any path moves. (2026-10-02: stage 1 approved; Riven Lands deferred until the Primary cutover is complete; stage 2 not decided)
+- [x] Task: List what a pack owns: assets, catalog rows, maps, base character, equipment fit, sprites, models, and review ratings. (docs/pack-layout.md) Evidence: `d4ea7d37` (recorded when marked done; it added `docs/pack-layout.md`).
+- [x] Task: Write the Riven Lands brief: art direction for secondary students, base character, and the per-pack equipment fit rule. (docs/pack-layout.md) Evidence: `d4ea7d37` (recorded when marked done; it added `docs/pack-layout.md`).
+- [x] Task: Ask the owner to approve the design before any path moves. (2026-10-02: stage 1 approved; Riven Lands deferred until the Primary cutover is complete; stage 2 not decided) Evidence: `e1aec899` (recorded when marked done).
 
 ## Phase 3: Rename
 
-- [x] Task: Stop all agents. Commit or park every uncommitted edit with explicit paths. (No agent of this session ran. Other sessions kept three Vite servers and a bench script in the directory; a compatibility link keeps their absolute paths working.)
+- [x] Task: Stop all agents. Commit or park every uncommitted edit with explicit paths. (No agent of this session ran. Other sessions kept three Vite servers and a bench script in the directory; a compatibility link keeps their absolute paths working.) Evidence: `e1aec899` (recorded when marked done).
 - [x] Task: Rename the GitHub repository and update the `origin` remote. (bodangren/advantage-forge; Pages now at https://bodangren.github.io/advantage-forge/)
 - [x] Task: Rename the local directory. Update `package.json`, scripts, tests, docs, and `.github/workflows/measure.yml`. (`../advantage-forge`; symlink `../fantasy-asset-forge` left for other sessions; remove it when they finish)
 - [x] Task: Move the Claude Code project memory to the directory of the new path. (Copied to `~/.claude/projects/-home-daniebo-Desktop-advantage-forge/memory`; the old copy remains until the old session ends)

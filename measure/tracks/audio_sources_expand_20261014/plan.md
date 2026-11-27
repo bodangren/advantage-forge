@@ -5,7 +5,7 @@ Status: in progress. The plan records execution state. `docs/sound-library.md` r
 ## Phase 1: Tool
 
 - [x] Task: Merge all catalog files of `audio/sources/`; record site, license, and URL for each entry. `search --site` filters one site.
-- [x] Task: Permit CC0, public domain, CC-BY 3.0/4.0, OGA-BY 3.0/4.0, and the ElvGames license in `take`; record the license in the manifest. Public domain has fewer conditions than CC0, so it is permitted too.
+- [x] Task: Permit CC0, public domain, CC-BY 3.0/4.0, OGA-BY 3.0/4.0, and the ElvGames license in `take`; record the license in the manifest. Public domain has fewer conditions than CC0, so it is permitted too. Evidence: `42197a4a` (recorded when marked done; it added `audio/CREDITS.md`).
 - [x] Task: Add the ElvGames packs as a local source (WAV files only): `elvgames` writes `audio/sources/elvgames.json` (8 packs, 268 sounds); `fetch` unzips one pack from `$ASSET_PACKS`.
 - [x] Task: Add `credits` (writes `audio/CREDITS.md`).
 

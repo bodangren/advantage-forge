@@ -156,6 +156,7 @@ Status: complete. The plan records execution state. The storyboard document reta
 - [x] Task: Owner review of the audio and the Thai text (voice-over, counters, end card, and the
   publishing copy). (Added 2026-10-02: the open item of the recording task, as a task.)
   2026-11-27: the live wording is in the media and in Drive. Only the Thai check waits.
+  Evidence: Thai check recorded below (PM 2026-11-27).
 - [x] Thai check of the new wording. Evidence: Daniel "Approve", Google Task `NDZSZVd4YlFpOS00WnZQUw` under `Zks3LWVIbk1mQmFTX0NNNQ` (2026-11-27).
 - [x] Task: Publish the teaser after the owner passes the audio and Thai check. The copy waits in
   `docs/guild-battle-teaser.md` ("Publishing"). Evidence: YouTube https://youtu.be/IvmqOZJS3iQ (16:9) and https://youtu.be/DuOicts5Sr4 (9:16 Short), both public (PM 2026-11-27).

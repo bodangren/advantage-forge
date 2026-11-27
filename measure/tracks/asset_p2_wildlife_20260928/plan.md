@@ -20,13 +20,13 @@ Status: in progress (started 2026-10-05). This plan owns execution status. Sourc
 
 ## Phase 1: Contract and scope
 
-- [x] Task: Select a bounded batch from the scope map (ten batches by kind, below).
-- [x] Task: Record scale, palette, rig, clips, and game uses before generation (the design note at the top of each source).
+- [x] Task: Select a bounded batch from the scope map (ten batches by kind, below). Evidence: `0576147f` (recorded when marked done).
+- [x] Task: Record scale, palette, rig, clips, and game uses before generation (the design note at the top of each source). Evidence: `0576147f` (recorded when marked done).
 
 ## Phase 2: Acceptance checks
 
-- [x] Task: Define silhouette, material, sprite, and clearance checks for the batch.
-- [x] Task: Confirm shared dimensions against the kit reference before launching trials (sizes below).
+- [x] Task: Define silhouette, material, sprite, and clearance checks for the batch. Evidence: `0576147f` (recorded when marked done).
+- [x] Task: Confirm shared dimensions against the kit reference before launching trials (sizes below). Evidence: `0576147f` (recorded when marked done).
 
 ## Phase 3: Production
 

@@ -4,12 +4,12 @@ Status: in progress (2026-10-09, owner goal: complete the P2 NPCs with Sonnet su
 
 ## Phase 1: Contract and scope
 
-- [x] Task: Select a bounded batch from the scope map (batches below; settlement first, then wilderness, court and faction, and the fantasy peoples last).
-- [x] Task: Record scale, palette, rig, clips, and game uses before generation (bench/sonnet/p2-npc-data.mjs, one row per NPC).
+- [x] Task: Select a bounded batch from the scope map (batches below; settlement first, then wilderness, court and faction, and the fantasy peoples last). Evidence: `73707036` (recorded when marked done).
+- [x] Task: Record scale, palette, rig, clips, and game uses before generation (bench/sonnet/p2-npc-data.mjs, one row per NPC). Evidence: `73707036` (recorded when marked done).
 
 ## Phase 2: Acceptance checks
 
-- [x] Task: Define silhouette, material, sprite, and clearance checks for the batch (Acceptance checks below).
+- [x] Task: Define silhouette, material, sprite, and clearance checks for the batch (Acceptance checks below). Evidence: `73707036` (recorded when marked done).
 - [ ] Task: Confirm shared dimensions against the kit reference before launching trials.
 
 ## Phase 3: Production
