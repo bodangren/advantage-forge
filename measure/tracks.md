@@ -22,10 +22,6 @@ The order of this list is the priority order (Daniel, 2026-11-27). These rows ca
   *Link: [./tracks/chibi_sprouts_cast_art_20261127/](./tracks/chibi_sprouts_cast_art_20261127/)*
   *QUEUE item 1: the cut-outs and the 128 px idle sprites of the five cast characters.*
 
-- [~] **Track: Chibi Quest battle teaser videos (16:9 and 9:16)**
-  *Link: [./tracks/showcase_battle_teaser_20260930/](./tracks/showcase_battle_teaser_20260930/)*
-  *QUEUE item 2: finish and render the 45 second teaser.*
-
 - [~] **Track: Rebuild Magic Defense as a missile defense game**
   *Link: [./tracks/game_magic_defense_rebuild_20261029/](./tracks/game_magic_defense_rebuild_20261029/)*
   *QUEUE item 3 (A-28): mockup c2 picked by the PM on 2026-11-27; one rebuild track at a time, first.*
@@ -275,6 +271,10 @@ Execution order. The overview, the decisions, and the dependencies are in [riven
   *Link: [./tracks/riven_fx_geometry_20261009/](./tracks/riven_fx_geometry_20261009/)*
 
 ## Archived Tracks
+
+- [x] Chibi Quest battle teaser videos (16:9 and 9:16), completed 2026-11-27; the 45 second teaser was recorded again with the "Chibi Quest" corner badge and the end card "Play it now in Primary Advantage", the owner passed the audio and the Thai check, and both videos are public on YouTube: https://youtu.be/IvmqOZJS3iQ (16:9) and https://youtu.be/DuOicts5Sr4 (9:16 Short). No final acceptance role ran (light lane).
+  *Link: [./archive/showcase_battle_teaser_20260930/](./archive/showcase_battle_teaser_20260930/)*
+  *Chibi Quest battle teaser videos (16:9 and 9:16)*
 
 - [x] Chibi Sprouts cast on the Kim base: Dad, Grandma, Grandpa, Tom and Lily, completed 2026-11-27; five Kim-base assets with one proportion pin and one look judge per character, the cast sheet, and PM acceptance of the cast on 2026-11-27. Phases 1 to 4 each hold a phase acceptance record and no final acceptance role ran (light lane). The PM granted a main-checkout test exception: 18 of 119 cast tests need git-ignored out/ inputs that exist only in the worktree forge-worktrees/sprouts-cast, where all 119 pass. Open items: TD-57 to TD-62, TD-66 to TD-68.
   *Link: [./archive/chibi_sprouts_cast_20261125/](./archive/chibi_sprouts_cast_20261125/)*

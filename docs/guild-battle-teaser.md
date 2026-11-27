@@ -3,7 +3,7 @@
 **Version:** 1.4
 **Date:** 2026-11-27
 **Status:** Approved for production (owner decisions of 2026-09-30)
-**Track:** [showcase_battle_teaser_20260930](../measure/tracks/showcase_battle_teaser_20260930/)
+**Track:** [showcase_battle_teaser_20260930](../measure/archive/showcase_battle_teaser_20260930/)
 
 A 45-second teaser: the enemy horde, the heroes, the charge, and the crash. There are two
 versions with one shared choreography: 16:9 (1920 x 1080) for Facebook and YouTube, and 9:16

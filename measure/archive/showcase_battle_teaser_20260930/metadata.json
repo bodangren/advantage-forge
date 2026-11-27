@@ -1,13 +1,13 @@
 {
   "track_id": "showcase_battle_teaser_20260930",
   "type": "feature",
-  "status": "in_progress",
+  "status": "done",
   "created_at": "2026-09-29T23:25:27Z",
-  "updated_at": "2026-09-30T00:19:11Z",
+  "updated_at": "2026-11-27T00:00:00Z",
   "description": "Chibi Quest battle teaser videos (16:9 and 9:16)",
   "estimated_tasks": 5,
-  "actual_tasks": null,
-  "deviation_notes": "Owner decisions of 2026-09-30 recorded in the spec.",
+  "actual_tasks": 12,
+  "deviation_notes": "Owner decisions of 2026-09-30 recorded in the spec. Archived 2026-11-27 by the PM board check: every task is complete and both videos are public on YouTube. No final acceptance role ran (light lane).",
   "workstream": "assets",
   "retrospective": false,
   "evidence": [

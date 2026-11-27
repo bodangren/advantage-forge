@@ -4,16 +4,16 @@ Status: in progress. The plan records execution state. Linked documents retain d
 
 ## Phase 1: Design and contract
 
-- [x] Task: Record maze, movement, collision, goblin, and learning decisions in the existing design document.
+- [x] Task: Record maze, movement, collision, goblin, and learning decisions in the existing design document. Evidence: `f6455904` (2026-10-02).
 
 ## Phase 2: Tests
 
 - [x] Task: Fix the malformed-maze and collision-recovery failures. Both were stale test data (commit 4f812a3); all 70 Labyrinth tests pass (2026-10-02).
-- [x] Task: Add replay, rules, maze, helper, and bot tests.
+- [x] Task: Add replay, rules, maze, helper, and bot tests. Evidence: `f6455904` (2026-10-02).
 
 ## Phase 3: Implementation
 
-- [x] Task: Implement the local deterministic rules core and QC bot.
+- [x] Task: Implement the local deterministic rules core and QC bot. Evidence: `f6455904` (2026-10-02).
 - [x] Task: Implement the 3D and Phaser views. Cartridge (`manifest.ts`, `strings.en.ts`, `briefing.ts`, `index.ts`), 3D view (`view/`), Phaser view (`view2d/`), three baked maze backgrounds, and the host registry entry (2026-10-02). The whole maze stays in view and a late-turn grace helps steering after owner feedback (design section 7).
 
 ## Phase 4: Port and verification

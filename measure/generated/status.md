@@ -1,8 +1,8 @@
 # Measure status
 
-Tracks: 78.
-Tracks by status: new: 27; in_progress: 50; completed: 1.
-Tracks by workstream: assets: 34; games: 41; foundation: 3.
+Tracks: 77.
+Tracks by status: new: 27; in_progress: 49; completed: 1.
+Tracks by workstream: assets: 33; games: 41; foundation: 3.
 
 | Track | Status | Workstream | Plan tasks | Estimate | Actual |
 | --- | --- | --- | ---: | ---: | ---: |
@@ -83,7 +83,6 @@ Tracks by workstream: assets: 34; games: 41; foundation: 3.
 | [riven_scenes_20261009](../tracks/riven_scenes_20261009/) | new | assets | 0/8 | 8 | — |
 | [riven_vehicles_20261009](../tracks/riven_vehicles_20261009/) | new | assets | 0/9 | 9 | — |
 | [riven_wildlife_20261009](../tracks/riven_wildlife_20261009/) | new | assets | 0/9 | 9 | — |
-| [showcase_battle_teaser_20260930](../tracks/showcase_battle_teaser_20260930/) | in_progress | assets | 11/11 | 5 | — |
 
 ## Project health
 

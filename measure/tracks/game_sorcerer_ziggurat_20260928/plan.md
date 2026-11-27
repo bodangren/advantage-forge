@@ -4,17 +4,17 @@ Status: in progress. The plan records execution state. Linked documents retain d
 
 ## Phase 1: Design and contract
 
-- [x] Task: Define rules, controls, story input, outcomes, evidence, and asset needs.
-- [x] Task: Record family behavior and any game-specific differences.
+- [x] Task: Define rules, controls, story input, outcomes, evidence, and asset needs. Evidence: `d1c33827` (2026-10-03).
+- [x] Task: Record family behavior and any game-specific differences. Evidence: `d1c33827` (2026-10-03).
 
 ## Phase 2: Tests
 
-- [x] Task: Test rules boundaries, deterministic replay, evidence, and helper behavior.
+- [x] Task: Test rules boundaries, deterministic replay, evidence, and helper behavior. Evidence: `d1c33827` (2026-10-03).
 
 ## Phase 3: Implementation
 
-- [x] Task: Implement the core and content.
-- [x] Task: Implement the 3D view and then the Phaser view using the shared core.
+- [x] Task: Implement the core and content. Evidence: `d1c33827` (2026-10-03).
+- [x] Task: Implement the 3D view and then the Phaser view using the shared core. Evidence: `d1c33827` (2026-10-03).
 
 ## Phase 4: Port and verification
 

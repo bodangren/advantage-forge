@@ -1,6 +1,6 @@
 # Chibi Quest battle teaser videos
 
-Status: in progress. The plan records execution state. The storyboard document retains design detail.
+Status: complete. The plan records execution state. The storyboard document retains design detail.
 
 ## Phase 1: Storyboards
 

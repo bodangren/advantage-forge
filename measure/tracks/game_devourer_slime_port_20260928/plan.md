@@ -4,7 +4,7 @@ Status: in progress. The plan records execution state. Linked documents retain d
 
 ## Phase 1: Contract and baseline
 
-- [x] Task: Record current local rules, evidence, strings, and 2D and 3D entrypoints. Audit 2026-10-03: rules core, three.js view, Phaser view, and registry entry exist and the tests pass (Devourer Slime: 40 tests). Strings are English only. The game loads models by path, not from a model pack.
+- [x] Task: Record current local rules, evidence, strings, and 2D and 3D entrypoints. Audit 2026-10-03: rules core, three.js view, Phaser view, and registry entry exist and the tests pass (Devourer Slime: 40 tests). Strings are English only. The game loads models by path, not from a model pack. Evidence: `597a4ddf` (2026-09-28).
 
 ## Phase 2: Tests
 
