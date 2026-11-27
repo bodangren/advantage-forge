@@ -157,5 +157,5 @@ Status: in progress. The plan records execution state. The storyboard document r
   publishing copy). (Added 2026-10-02: the open item of the recording task, as a task.)
   2026-11-27: the live wording is in the media and in Drive. Only the Thai check waits.
 - [x] Thai check of the new wording. Evidence: Daniel "Approve", Google Task `NDZSZVd4YlFpOS00WnZQUw` under `Zks3LWVIbk1mQmFTX0NNNQ` (2026-11-27).
-- [b] deferred:advantage-pr (YouTube upload, PM 2026-11-27) Task: Publish the teaser after the owner passes the audio and Thai check. The copy waits in
-  `docs/guild-battle-teaser.md` ("Publishing").
+- [x] Task: Publish the teaser after the owner passes the audio and Thai check. The copy waits in
+  `docs/guild-battle-teaser.md` ("Publishing"). Evidence: YouTube https://youtu.be/IvmqOZJS3iQ (16:9) and https://youtu.be/DuOicts5Sr4 (9:16 Short), both public (PM 2026-11-27).
