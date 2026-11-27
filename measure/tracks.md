@@ -325,6 +325,9 @@ These tracks are not worked now. Their folders stay in `measure/tracks/`. Each l
 
 ## Archived Tracks
 
+- [x] Vendor the three.js VFX builder and debug profiler skills, completed 2026-11-28; the two skills from github.com/majidmanzarpour/threejs-game-skills at commit 8cbda8bbfeb9b47b4c683bc32edb9bf04e3e16e2 sit under `.claude/skills/`, each with the MIT licence and a `VENDORED.md` source line, and the Forge device floor. The two generator skills stayed out because they call paid generation services. The safety scan found no network call, no key, no paid service, no install script, and no binary file.
+  *Link: [./archive/vendor_threejs_vfx_skills_20261128/](./archive/vendor_threejs_vfx_skills_20261128/)*
+
 - [x] Primary Advantage covers, levels 5 to 9: the 11 wide pictures, completed 2026-11-28; the 11 pictures of Quest 5 to Adventure 9.3 came from Muse at 1920 x 1280 px, 36 calls at 0.35 USD of the 0.40 USD stop, all 11 pictures pass the 7 checks of the request, and the results, the spend log, and the check table sit in `~/Desktop/handoff/levels-5-9-cover-art-results-2026-11-27/results/`.
   *Link: [./archive/workbooks_covers_l5_9_20261127/](./archive/workbooks_covers_l5_9_20261127/)*
 

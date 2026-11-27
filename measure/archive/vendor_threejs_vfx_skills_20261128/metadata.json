@@ -1,0 +1,20 @@
+{
+  "track_id": "vendor_threejs_vfx_skills_20261128",
+  "type": "chore",
+  "status": "done",
+  "created_at": "2026-11-28T00:00:00Z",
+  "updated_at": "2026-11-28T00:00:00Z",
+  "description": "Vendor the three.js VFX builder and debug profiler skills into Forge with the MIT licence and the source line",
+  "estimated_tasks": 1,
+  "actual_tasks": 1,
+  "deviation_notes": "Light card (PM 2026-11-28, Daniel Task cTVvUmg0U2haRzVxZVF3Vg). The card rides on the Magic Defense track and adds no track in progress. The archived status is done, the status the doctor requires for a folder under measure/archive; the PM note said completed. Only threejs-aaa-vfx-builder and threejs-debug-profiler were vendored. The two generator skills stayed out because they call paid generation services. The safety scan of the two folders found no network call, no remote fetch, no key or environment variable, no paid service, no shell or install script, no postinstall hook, and no minified or binary file. The card moves to the archive.",
+  "workstream": "foundation",
+  "retrospective": false,
+  "evidence": [
+    ".claude/skills/threejs-aaa-vfx-builder/",
+    ".claude/skills/threejs-debug-profiler/",
+    ".claude/skills/THIRD-PARTY-threejs-game-skills-LICENSE",
+    "measure/archive/vendor_threejs_vfx_skills_20261128/plan.md"
+  ],
+  "dependencies": []
+}

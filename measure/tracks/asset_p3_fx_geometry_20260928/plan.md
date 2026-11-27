@@ -2,6 +2,8 @@
 
 Status: shelved, not done (PM 2026-11-27); reopen by moving it back. The open tasks stay deferred:backlog. This plan owns execution status. Source documents retain design details.
 
+PM 2026-11-28 (Daniel, Task cTVvUmg0U2haRzVxZVF3Vg): when this card reopens, build the fireball with the .claude/skills/threejs-aaa-vfx-builder skill; keep the device floor.
+
 ## Phase 1: Contract and scope [checkpoint: bf0eccd]
 
 - [x] Task: Select a bounded batch from the scope map. (Fireball only, 2026-10-24) bf0eccd
