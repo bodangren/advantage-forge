@@ -1,13 +1,13 @@
 {
   "track_id": "asset_p3_fx_geometry_20260928",
   "type": "feature",
-  "status": "new",
+  "status": "in_progress",
   "created_at": "2026-09-28T23:11:36Z",
-  "updated_at": "2026-11-27T13:45:00Z",
+  "updated_at": "2026-11-27T14:15:00Z",
   "description": "Produce P3 fx-geometry",
   "estimated_tasks": 9,
   "actual_tasks": null,
-  "deviation_notes": "Imported from existing plans. Source presence does not establish acceptance. Shelved, not done (PM 2026-11-27): the fireball acceptance waits, and the three open tasks are [ ] again, so the status is new; reopen by moving the line back in tracks.md.",
+  "deviation_notes": "Imported from existing plans. Source presence does not establish acceptance. Shelved, not done (PM 2026-11-27): the fireball acceptance waits, and the three open tasks are [ ] again. The marker is [~] and the status is in_progress, the same state as every other shelved track with completed tasks, because the doctor rejects a new track with completed tasks; reopen by moving the line back in tracks.md.",
   "workstream": "assets",
   "retrospective": false,
   "evidence": [

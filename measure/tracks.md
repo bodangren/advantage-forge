@@ -191,7 +191,7 @@ These tracks are not worked now. Their folders stay in `measure/tracks/`. Each l
   *Link: [./tracks/measure_dependency_launcher_20260928/](./tracks/measure_dependency_launcher_20260928/)*
   *Status: shelved, not done (PM 2026-11-27); reopen by moving it back.*
 
-- [ ] **Track: Produce P3 fx-geometry**
+- [~] **Track: Produce P3 fx-geometry**
   *Link: [./tracks/asset_p3_fx_geometry_20260928/](./tracks/asset_p3_fx_geometry_20260928/)*
   *Status: shelved, not done (PM 2026-11-27); reopen by moving it back.*
   *The open tasks stay deferred:backlog.*
