@@ -50,7 +50,7 @@ The order of this list is the priority order (Daniel, 2026-11-27). These rows ca
   *Link: [./tracks/game_labyrinth_goblin_king_20260928/](./tracks/game_labyrinth_goblin_king_20260928/)*
   *QUEUE item 5: finish the dual renderer port.*
 
-- [ ] **Track: Avatar system: fit the remaining equipment and set the GP price of the shop items**
+- [~] **Track: Avatar system: fit the remaining equipment and set the GP price of the shop items**
   *Link: [./tracks/avatar_equipment_gp_20261127/](./tracks/avatar_equipment_gp_20261127/)*
   *QUEUE item 6: equipment fit and the GP-price shop items for Primary Advantage.*
 
@@ -93,6 +93,10 @@ The order of this list is the priority order (Daniel, 2026-11-27). These rows ca
 - [ ] **Track: Plan deferred Forge capabilities**
   *Link: [./tracks/asset_engine_backlog_20260928/](./tracks/asset_engine_backlog_20260928/)*
 
+- [~] **Track: Produce P3 fx-geometry**
+  *Link: [./tracks/asset_p3_fx_geometry_20260928/](./tracks/asset_p3_fx_geometry_20260928/)*
+  *Shelved 2026-11-27 (PM): not in the priority order; the open tasks are deferred:backlog.*
+
 - [x] **Track: Fill every empty shelf in the games and scene maps**
   *Link: [./tracks/asset_filled_shelves_20261028/](./tracks/asset_filled_shelves_20261028/)*
 
@@ -104,9 +108,6 @@ The order of this list is the priority order (Daniel, 2026-11-27). These rows ca
 
 - [~] **Track: Audit self-graded character ratings**
   *Link: [./tracks/asset_review_audit_20261005/](./tracks/asset_review_audit_20261005/)*
-
-- [~] **Track: Produce P3 fx-geometry**
-  *Link: [./tracks/asset_p3_fx_geometry_20260928/](./tracks/asset_p3_fx_geometry_20260928/)*
 
 - [ ] **Track: Harden production coordination**
   *Link: [./tracks/asset_production_controls_20260928/](./tracks/asset_production_controls_20260928/)*
