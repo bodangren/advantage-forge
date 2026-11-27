@@ -65,9 +65,31 @@ Status: in progress. The plan records execution state. The storyboard document r
     from `thumb.html`.
   - Reels cover: `out/battle/thumb-9x16.jpg` (1080 x 1920, 0.51 MB), made from the same still
     (no second 3D render): the orc warlord above a diagonal cut, the knight below it.
+- [x] Task: Remove future wording; re-render; replace in Drive (PM 2026-11-27).
+  - Source after the owner said the teaser claimed a launch that is already live. Commits on
+    master: `39a77fe0` (docs, plan, `main.ts`, `thumb.ts`, `timeline.ts`), `b1f240a5`
+    (`docs/showcase.md`, `scripts/showcase.ts`, `src/showcase/script.ts`), and `26e68494`
+    (regenerated status). Branch `teaser-live` has no commit that is not on master.
+  - PM check before the upload: voice at 38.5 s transcribed "เล่นได้แล้ว ใน ไพรมารี แอดแวนเทจนะคะ";
+    end card and both thumbnails read "เล่นได้แล้ว"; no "เร็ว ๆ นี้" and no "soon".
+  - Drive upload in place, md5 sums match the local files. Ids `1bPS-jxeSzgGchx8EywHyUBYXAJKpI7R2`,
+    `17o-yXfT0zavH6hkJkMFsNwv24pFVSP6r`, `1Zj_liKv1lu9vIbS8imJkP4wTviYpa58y`,
+    `15yVh-Ip3BjmT3V6jxI26McmMU5nLTZ5I`. REVIEW doc `1VeOyvw5rSKh1yT1cDEBNefa-G3ElDUXxVxHcl7EbT-0`.
+  - Local sources (sha256): `vo5.mp3` `fb25c4e53671734e67e320240478c0ec8b47d20667cda83ffc78b7ee7d785fcf`
+    (65,652 B); `soundtrack.wav` `dc936d60c6118a01b12782e71123208096da3a807d8e0a23d1680ba97d11849e`
+    (7,938,078 B).
+  - Rendered files in `teaser-live/out/battle/`, sha256 and size:
+    - `chibi-quest-battle-16x9.mp4` `0724bfb161841c99f0754e2ae85f782064ef7d1e273c38d2a6fffa2a71794416`
+      (69,381,973 B).
+    - `chibi-quest-battle-9x16.mp4` `3f88dcc6b4eeec3e49f7ac2c3e86290f391f75286c6cb3318035ca85305f833a`
+      (50,493,249 B).
+    - `chibi-quest-battle-16x9.silent.mp4`
+      `8b4851199642bf68392ec25378b7e96778a142358587a58daa108d69ce124422` (68,254,673 B).
+    - `chibi-quest-battle-9x16.silent.mp4`
+      `b8e9dc4bfa58e4913c71146642c2a7b7b52df899f48cdf7c3bc586d93ac6a915` (49,365,741 B).
 - [~] Task: Owner review of the audio and the Thai text (voice-over, counters, end card, and the
   publishing copy). (Added 2026-10-02: the open item of the recording task, as a task.)
-  2026-11-27: live wording change in progress (vo5, end card, thumbnail, description).
-  deferred:thai Task aEQ0ak45X0RkbzNlT3VXbg.
+  2026-11-27: the live wording is in the media and in Drive. Only the Thai check waits.
+- [b] Thai check of the new wording. Owner: Daniel. deferred:thai Task Zks3LWVIbk1mQmFTX0NNNQ.
 - [ ] Task: Publish the teaser after the owner passes the audio and Thai check. The copy waits in
   `docs/guild-battle-teaser.md` ("Publishing").
