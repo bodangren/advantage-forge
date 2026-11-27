@@ -30,6 +30,10 @@ The order of this list is the priority order (Daniel, 2026-11-27). These rows ca
   *Link: [./tracks/game_magic_defense_rebuild_20261029/](./tracks/game_magic_defense_rebuild_20261029/)*
   *QUEUE item 3 (A-28): mockup c2 picked by the PM on 2026-11-27; one rebuild track at a time, first.*
 
+- [ ] **Track: Trial: Blender in the asset loop**
+  *Link: [./tracks/asset_blender_trial_20261127/](./tracks/asset_blender_trial_20261127/)*
+  *PM task of 2026-11-27 (Daniel, Google Task Z2JLNEp4NEM4QnEwdzNXUQ): one light trial of Blender in the asset loop. It starts when a slot frees; the Chibi Sprouts cast art track closes first.*
+
 ## Foundation and history
 
 The two tracks of this section are under "## Shelved Tracks".

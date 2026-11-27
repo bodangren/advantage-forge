@@ -1,0 +1,17 @@
+{
+  "track_id": "asset_blender_trial_20261127",
+  "type": "chore",
+  "status": "new",
+  "created_at": "2026-11-27T13:55:00Z",
+  "updated_at": "2026-11-27T13:55:00Z",
+  "description": "Trial: Blender in the asset loop. One light trial of a Blender pass beside the current code-first pipeline",
+  "estimated_tasks": 6,
+  "actual_tasks": null,
+  "deviation_notes": "Created 2026-11-27 from Daniel's Google Task Z2JLNEp4NEM4QnEwdzNXUQ: the repository does not use Blender now, and the PM asks whether that choice still holds. The card is a light trial with 6 tasks. No review role and no gate run. It starts when a slot frees, after the Chibi Sprouts cast art track closes.",
+  "workstream": "assets",
+  "retrospective": false,
+  "evidence": [],
+  "dependencies": [
+    "chibi_sprouts_cast_art_20261127"
+  ]
+}

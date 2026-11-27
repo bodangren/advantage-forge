@@ -1,11 +1,12 @@
 # Measure status
 
-Tracks: 75.
-Tracks by status: new: 30; in_progress: 45; completed: 0.
-Tracks by workstream: assets: 31; games: 41; foundation: 3.
+Tracks: 76.
+Tracks by status: new: 31; in_progress: 45; completed: 0.
+Tracks by workstream: assets: 32; games: 41; foundation: 3.
 
 | Track | Status | Workstream | Plan tasks | Estimate | Actual |
 | --- | --- | --- | ---: | ---: | ---: |
+| [asset_blender_trial_20261127](../tracks/asset_blender_trial_20261127/) | new | assets | 0/6 | 6 | — |
 | [asset_chibi_sprouts_r1_20261022](../tracks/asset_chibi_sprouts_r1_20261022/) | in_progress | assets | 29/39 | 22 | 12 |
 | [asset_companion_backlog_20260928](../tracks/asset_companion_backlog_20260928/) | new | assets | 0/5 | 5 | — |
 | [asset_delivery_20260928](../tracks/asset_delivery_20260928/) | new | assets | 0/7 | 7 | — |
