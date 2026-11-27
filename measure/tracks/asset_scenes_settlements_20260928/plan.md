@@ -1,6 +1,6 @@
 # Plan and accept settlements scenes
 
-Status: in_progress. This plan owns execution status. Source documents retain design details.
+Status: shelved, not done (PM 2026-11-27); reopen by moving it back. This plan owns execution status. Source documents retain design details.
 
 ## Phase 1: Contract and inventory
 

@@ -1,6 +1,6 @@
 # Sound library sources: ElvGames packs, CC-BY sites, and credits
 
-Status: in progress. The plan records execution state. `docs/sound-library.md` retains design detail.
+Status: shelved, not done (PM 2026-11-27); reopen by moving it back. The plan records execution state. `docs/sound-library.md` retains design detail.
 
 ## Phase 1: Tool
 

@@ -1,6 +1,6 @@
 # Rebuild Paladin's Twin Soul as a chapel shooter
 
-Status: new (2026-10-29). The [specification](./spec.md) owns the scope and the acceptance gates.
+Status: shelved, not done (PM 2026-11-27); reopen by moving it back. The track started on 2026-10-29. The [specification](./spec.md) owns the scope and the acceptance gates.
 Look pick 2026-11-27, owner PM (a PM decision, not a Daniel gate): mockup c2,
 `out/a28-mockups/2-paladins-twin-soul-c2.png` (higher camera, raised above the hero's head and
 looking slightly down). Phase 2 is open. The earlier readiness note named 2026-11-07, with the look

@@ -1,6 +1,6 @@
 # Produce P3 fx-geometry
 
-Status: shelved (2026-11-27, PM: not in the priority order; the open tasks are deferred:backlog). This plan owns execution status. Source documents retain design details.
+Status: shelved, not done (PM 2026-11-27); reopen by moving it back. The open tasks stay deferred:backlog. This plan owns execution status. Source documents retain design details.
 
 ## Phase 1: Contract and scope [checkpoint: bf0eccd]
 
@@ -15,12 +15,12 @@ Status: shelved (2026-11-27, PM: not in the priority order; the open tasks are d
 ## Phase 3: Production
 
 - [x] Task: Build missing sources and review existing sources in the batch. (Fireball built by K3.1 Pro; primary visual review complete) 90fe632
-- [b] Task: Run forge all for each accepted source after visual correction. (Owner rejected the first fireball on 2026-10-25. Opus owns `assets/fireball.ts` and `out/fireball/`. Acceptance remains pending.) PM 2026-11-27: shelved, not in the priority order; deferred:backlog.
+- [ ] Task: Run forge all for each accepted source after visual correction. (Owner rejected the first fireball on 2026-10-25. Opus owns `assets/fireball.ts` and `out/fireball/`. Acceptance remains pending.) PM 2026-11-27: shelved; reopen when the fireball is wanted. The task stays deferred:backlog.
 
 ## Phase 4: Documentation and verification
 
-- [b] Task: Record review evidence and export paths for every accepted asset. PM 2026-11-27: shelved, not in the priority order; deferred:backlog.
-- [b] Task: Update this plan and the scope records. PM 2026-11-27: shelved, not in the priority order; deferred:backlog.
+- [ ] Task: Record review evidence and export paths for every accepted asset. PM 2026-11-27: shelved; reopen when the fireball is wanted. The task stays deferred:backlog.
+- [ ] Task: Update this plan and the scope records. PM 2026-11-27: shelved; reopen when the fireball is wanted. The task stays deferred:backlog.
 - [ ] Task: Run measure/generate.sh and measure/doctor.sh at the track closeout. This one task stays open while the track is shelved, so an in-progress track keeps an unchecked task.
 
 ## Fireball contract (owner-approved, 2026-10-24)

@@ -1,6 +1,6 @@
 # Port the dual renderer into the monorepo
 
-Status: in progress. The plan records execution state. Linked documents retain design detail.
+Status: shelved, not done (PM 2026-11-27); reopen by moving it back. The plan records execution state. Linked documents retain design detail.
 The monorepo track `apk3d_games_port_20261003` (branch `apk3d-games-port`, worktree
 `../reading-advantage-monorepo-3d`) records the implementation commits.
 

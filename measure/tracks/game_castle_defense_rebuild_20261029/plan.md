@@ -1,6 +1,6 @@
 # Rebuild Castle Defense as a tower defense game
 
-Status: new (2026-10-29). The [specification](./spec.md) owns the scope and the acceptance gates.
+Status: shelved, not done (PM 2026-11-27); reopen by moving it back. The track started on 2026-10-29. The [specification](./spec.md) owns the scope and the acceptance gates.
 Look pick 2026-11-27, owner PM (a PM decision, not a Daniel gate): mockup c2,
 `out/a28-mockups/4-castle-defense-c2.png` (high camera, the whole winding path visible). Phase 2 is
 open. The earlier readiness note named 2026-11-12, with the look pick due by 2026-10-31. This record

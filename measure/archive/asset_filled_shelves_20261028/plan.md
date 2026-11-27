@@ -1,6 +1,6 @@
 # Fill every empty shelf in the games and scene maps
 
-Status: new (2026-10-28). The [specification](./spec.md) owns the scope and the acceptance gates.
+Status: done (closed 2026-11-19; archived 2026-11-27). The [specification](./spec.md) owns the scope and the acceptance gates.
 
 ## Method and ownership
 
@@ -16,7 +16,7 @@ Status: new (2026-10-28). The [specification](./spec.md) owns the scope and the 
   props on the shelf.
 - Owned test path: `tests/games/filled-shelves.test.ts` (new file).
 - Owned output path: `out/filled-shelves/`.
-- Owned planning path: `measure/tracks/asset_filled_shelves_20261028/`.
+- Owned planning path: `measure/archive/asset_filled_shelves_20261028/`.
 - Do not change `assets/fireball.ts` or `out/fireball/`. Their owner review stays separate.
 - Do not change `measure/tracks.md` or `measure/generated/*`. Another session owns those paths.
   The registry entry and the generator run are closeout items in Phase 2.

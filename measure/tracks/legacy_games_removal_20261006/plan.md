@@ -1,6 +1,6 @@
 # Remove the legacy games from the monorepo
 
-Status: in progress. The plan records execution state. The specification retains design detail.
+Status: shelved, not done (PM 2026-11-27); reopen by moving it back. The plan records execution state. The specification retains design detail.
 
 ## Phase 1: Agreement
 

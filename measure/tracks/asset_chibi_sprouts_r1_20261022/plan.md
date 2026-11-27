@@ -1,6 +1,6 @@
 # Chibi Sprouts, release 1 art
 
-Status: in progress (started 2026-10-22). The plan records execution state. The
+Status: shelved, not done (PM 2026-11-27); reopen by moving it back. The track started on 2026-10-22. The plan records execution state. The
 [specification](./spec.md) records the brief, the decisions, and the format; its section "Changes
 after the start" wins where it differs from the rest. Art is due 2026-11-15.
 

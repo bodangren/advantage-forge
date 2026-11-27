@@ -1,13 +1,13 @@
 {
   "track_id": "audio_sfx_library_20261013",
   "type": "feature",
-  "status": "in_progress",
+  "status": "done",
   "created_at": "2026-10-13T13:30:00Z",
-  "updated_at": "2026-10-13T14:14:28Z",
+  "updated_at": "2026-11-27T13:15:00Z",
   "description": "Sound library: a wanted-sound list from the asset catalog and the games, filled with CC0 takes by Haiku search agents",
   "estimated_tasks": 12,
   "actual_tasks": null,
-  "deviation_notes": "Created 2026-10-13 on the owner's request: a list of wanted sound effects from the asset list, then Haiku subagents search for and acquire CC0 sounds (OpenGameArt RPG Sound Pack and the CC0 RPG sound and music search).",
+  "deviation_notes": "Created 2026-10-13 on the owner's request: a list of wanted sound effects from the sound list, then Haiku subagents search for and acquire CC0 sounds (OpenGameArt RPG Sound Pack and the CC0 RPG sound and music search). Closed 2026-11-27: the generator and the doctor pass, and the track moves to the archive.",
   "workstream": "assets",
   "retrospective": false,
   "evidence": [

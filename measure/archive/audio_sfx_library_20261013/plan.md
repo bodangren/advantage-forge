@@ -1,6 +1,6 @@
 # Sound library: CC0 sound effects and music for the asset catalog and the games
 
-Status: in progress. The plan records execution state. `docs/sound-library.md` retains design detail.
+Status: done (2026-11-27). The plan records execution state. `docs/sound-library.md` retains design detail.
 
 ## Phase 1: List and tools
 
@@ -28,4 +28,4 @@ Status: in progress. The plan records execution state. `docs/sound-library.md` r
 - [x] Task: Record the size of `audio/` and the owner's decision on music in git. Size 2026-10-14: 33 MB (music 21 MB, effects 11 MB, source catalog 1.2 MB). Owner decision 2026-10-14: commit all, music included.
 - [x] Task: Owner note on `battle/war-drum` ("looping?" = the clip loops well): new row `battle/war-drum-loop` (loop, P1) with the full source loop; new take option `--seamless` keeps a source loop unfolded (manifest column `loop`).
 - [x] Task: Record the follow-up track for game integration (event mapping, format, preload budget): `audio_game_integration_20261014` (new). Evidence: `665e79f8` (recorded when marked done).
-- [ ] Task: Run `./measure/generate.sh` and `./measure/doctor.sh`; close the track.
+- [x] Task: Run `./measure/generate.sh` and `./measure/doctor.sh`; close the track. Result 2026-11-27: the generator and the doctor pass, and the track closes into the archive.

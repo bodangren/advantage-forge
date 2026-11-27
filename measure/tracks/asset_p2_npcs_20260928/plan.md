@@ -1,6 +1,6 @@
 # Produce P2 npcs
 
-Status: in progress (2026-10-09, owner goal: complete the P2 NPCs with Sonnet subagents). This plan owns execution status. Source documents retain design details.
+Status: shelved, not done (PM 2026-11-27); reopen by moving it back. The track started on 2026-10-09 for the P2 NPCs with Sonnet subagents. This plan owns execution status. Source documents retain design details.
 
 ## Phase 1: Contract and scope
 

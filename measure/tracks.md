@@ -9,74 +9,30 @@ This registry gives each historical, current, and planned work item one Measure 
 - [Asset production](#asset-production)
 - [Games](#games)
 - [Riven Lands pack](#riven-lands-pack)
+- [Shelved Tracks](#shelved-tracks)
 
 ## Priority order
 
-The order of this list is the priority order (Daniel, 2026-11-27). These rows carry the open items of the retired `QUEUE.md` ([archive](./archive/QUEUE-2026-11-27.md)), in item order. The sections below keep their earlier order.
+Shelved 2026-11-27 by the PM board rule (at most 2 tracks In progress). The shelved tracks are under "## Shelved Tracks" and reopen by moving the line back in tracks.md order.
 
-- [~] **Track: Chibi Sprouts, release 1 art**
-  *Link: [./tracks/asset_chibi_sprouts_r1_20261022/](./tracks/asset_chibi_sprouts_r1_20261022/)*
-  *QUEUE item 1: finish the remaining characters of release 1.*
+The order of this list is the priority order (Daniel, 2026-11-27). These rows carry the open work now. The rows that moved out keep their QUEUE item on their own line. The item list comes from the retired `QUEUE.md` ([archive](./archive/QUEUE-2026-11-27.md)). The sections below keep their earlier order.
 
 - [~] **Track: Chibi Sprouts cast art: the five cut-outs and the 128 px idle sprites**
   *Link: [./tracks/chibi_sprouts_cast_art_20261127/](./tracks/chibi_sprouts_cast_art_20261127/)*
   *QUEUE item 1: the cut-outs and the 128 px idle sprites of the five cast characters.*
 
+- [~] **Track: Primary Advantage covers, levels 5 to 9: the 11 wide pictures**
+  *Link: [./tracks/workbooks_covers_l5_9_20261127/](./tracks/workbooks_covers_l5_9_20261127/)*
+  *PM card of 2026-11-27: Workbooks asks for 11 wide cover pictures from Quest 5 to Adventure 9.3
+  through Muse; hard stop 0.40 USD.*
+
 - [~] **Track: Rebuild Magic Defense as a missile defense game**
   *Link: [./tracks/game_magic_defense_rebuild_20261029/](./tracks/game_magic_defense_rebuild_20261029/)*
   *QUEUE item 3 (A-28): mockup c2 picked by the PM on 2026-11-27; one rebuild track at a time, first.*
 
-- [~] **Track: Rebuild Paladin's Twin Soul as a chapel shooter**
-  *Link: [./tracks/game_paladins_twin_soul_rebuild_20261029/](./tracks/game_paladins_twin_soul_rebuild_20261029/)*
-  *QUEUE item 3 (A-28): mockup c2 picked by the PM on 2026-11-27; second.*
-
-- [~] **Track: Rebuild Archer's Revenge as an aim and shoot game**
-  *Link: [./tracks/game_archers_revenge_rebuild_20261029/](./tracks/game_archers_revenge_rebuild_20261029/)*
-  *QUEUE item 3 (A-28): mockup c1 picked by the PM on 2026-11-27; third.*
-
-- [~] **Track: Rebuild Castle Defense as a tower defense game**
-  *Link: [./tracks/game_castle_defense_rebuild_20261029/](./tracks/game_castle_defense_rebuild_20261029/)*
-  *QUEUE item 3 (A-28): mockup c2 picked by the PM on 2026-11-27; fourth.*
-
-- [~] **Track: Rewrite Rune Match as a dual renderer game**
-  *Link: [./tracks/game_rune_match_20260928/](./tracks/game_rune_match_20260928/)*
-  *QUEUE item 4: finish the dual renderer port for the Advantage Play Kit.*
-
-- [~] **Track: Rewrite Labyrinth Goblin King as a dual renderer game**
-  *Link: [./tracks/game_labyrinth_goblin_king_20260928/](./tracks/game_labyrinth_goblin_king_20260928/)*
-  *QUEUE item 5: finish the dual renderer port.*
-
-- [~] **Track: Avatar system: fit the remaining equipment and set the GP price of the shop items**
-  *Link: [./tracks/avatar_equipment_gp_20261127/](./tracks/avatar_equipment_gp_20261127/)*
-  *QUEUE item 6: equipment fit and the GP-price shop items for Primary Advantage.*
-
-- [ ] **Track: Riven Lands base character, fit contract, and porting recipe**
-  *Link: [./tracks/riven_base_character_20261009/](./tracks/riven_base_character_20261009/)*
-  *QUEUE item 7: the Riven Lands base character.*
-
-- [ ] **Track: Riven Lands equipment: 27 catalog rows outside the game set**
-  *Link: [./tracks/riven_equipment_20261009/](./tracks/riven_equipment_20261009/)*
-  *QUEUE item 7: the first Riven Lands equipment family.*
-
-- [~] **Track: Port Devourer Slime to the monorepo**
-  *Link: [./tracks/game_devourer_slime_port_20260928/](./tracks/game_devourer_slime_port_20260928/)*
-  *QUEUE item 8: one of the remaining P0 game ports.*
-
-- [~] **Track: Port Dragon Flight to the monorepo**
-  *Link: [./tracks/game_dragon_flight_port_20260928/](./tracks/game_dragon_flight_port_20260928/)*
-  *QUEUE item 8: one of the remaining P0 game ports.*
-
-- [~] **Track: Port Potion Rush to the monorepo**
-  *Link: [./tracks/game_potion_rush_port_20260928/](./tracks/game_potion_rush_port_20260928/)*
-  *QUEUE item 8: one of the remaining P0 game ports.*
-
 ## Foundation and history
 
-- [~] **Track: Rename the repository to advantage-forge and plan the pack layout**
-  *Link: [./tracks/repo_rename_advantage_forge_20261002/](./tracks/repo_rename_advantage_forge_20261002/)*
-
-- [~] **Track: Resolve dependency launcher reconciliation**
-  *Link: [./tracks/measure_dependency_launcher_20260928/](./tracks/measure_dependency_launcher_20260928/)*
+The two tracks of this section are under "## Shelved Tracks".
 
 ## Asset production
 
@@ -89,47 +45,13 @@ The order of this list is the priority order (Daniel, 2026-11-27). These rows ca
 - [ ] **Track: Plan deferred Forge capabilities**
   *Link: [./tracks/asset_engine_backlog_20260928/](./tracks/asset_engine_backlog_20260928/)*
 
-- [~] **Track: Produce P3 fx-geometry**
-  *Link: [./tracks/asset_p3_fx_geometry_20260928/](./tracks/asset_p3_fx_geometry_20260928/)*
-  *Shelved 2026-11-27 (PM): not in the priority order; the open tasks are deferred:backlog.*
-
-- [x] **Track: Fill every empty shelf in the games and scene maps**
-  *Link: [./tracks/asset_filled_shelves_20261028/](./tracks/asset_filled_shelves_20261028/)*
-
-- [~] **Track: Produce P2 npcs**
-  *Link: [./tracks/asset_p2_npcs_20260928/](./tracks/asset_p2_npcs_20260928/)*
-
-- [~] **Track: Produce P2 wildlife**
-  *Link: [./tracks/asset_p2_wildlife_20260928/](./tracks/asset_p2_wildlife_20260928/)*
-
-- [~] **Track: Audit self-graded character ratings**
-  *Link: [./tracks/asset_review_audit_20261005/](./tracks/asset_review_audit_20261005/)*
-
 - [ ] **Track: Harden production coordination**
   *Link: [./tracks/asset_production_controls_20260928/](./tracks/asset_production_controls_20260928/)*
-
-- [~] **Track: Restore asset quality gates**
-  *Link: [./tracks/asset_quality_20260928/](./tracks/asset_quality_20260928/)*
 
 - [ ] **Track: Plan and accept adventure scenes**
   *Link: [./tracks/asset_scenes_adventure_20260928/](./tracks/asset_scenes_adventure_20260928/)*
 
-- [~] **Track: Plan and accept settlements scenes**
-  *Link: [./tracks/asset_scenes_settlements_20260928/](./tracks/asset_scenes_settlements_20260928/)*
-
-- [~] **Track: Plan and accept wilderness scenes**
-  *Link: [./tracks/asset_scenes_wilderness_20260928/](./tracks/asset_scenes_wilderness_20260928/)*
-
-- [~] **Track: Sound library: CC0 sound effects and music for the asset catalog and the games**
-  *Link: [./tracks/audio_sfx_library_20261013/](./tracks/audio_sfx_library_20261013/)*
-
-- [~] **Track: Sound library sources: ElvGames packs, CC-BY sites, and credits**
-  *Link: [./tracks/audio_sources_expand_20261014/](./tracks/audio_sources_expand_20261014/)*
-
 ## Games
-
-- [~] **Track: Remove the legacy games from the monorepo**
-  *Link: [./tracks/legacy_games_removal_20261006/](./tracks/legacy_games_removal_20261006/)*
 
 - [ ] **Track: Make monorepo master CI green before the cutover**
   *Link: [./tracks/monorepo_master_ci_20261006/](./tracks/monorepo_master_ci_20261006/)*
@@ -137,86 +59,11 @@ The order of this list is the priority order (Daniel, 2026-11-27). These rows ca
 - [ ] **Track: Complete 2D look and lobby parity**
   *Link: [./tracks/game_2d_parity_20260928/](./tracks/game_2d_parity_20260928/)*
 
-- [~] **Track: Rewrite Abyssal Well as a dual renderer game**
-  *Link: [./tracks/game_abyssal_well_20260928/](./tracks/game_abyssal_well_20260928/)*
-
-- [~] **Track: Rewrite Alchemists Synthesis as a dual renderer game**
-  *Link: [./tracks/game_alchemists_synthesis_20260928/](./tracks/game_alchemists_synthesis_20260928/)*
-
-- [~] **Track: Rewrite Archers Revenge as a dual renderer game**
-  *Link: [./tracks/game_archers_revenge_20260928/](./tracks/game_archers_revenge_20260928/)*
-
-- [~] **Track: Rewrite Astral Mage as a dual renderer game**
-  *Link: [./tracks/game_astral_mage_20260928/](./tracks/game_astral_mage_20260928/)*
-
-- [~] **Track: Rewrite Castle Defense as a dual renderer game**
-  *Link: [./tracks/game_castle_defense_20260928/](./tracks/game_castle_defense_20260928/)*
-
-- [~] **Track: Rewrite Dragon Rider as a dual renderer game**
-  *Link: [./tracks/game_dragon_rider_20260928/](./tracks/game_dragon_rider_20260928/)*
-
-- [~] **Track: Port Dungeon Liberator to the monorepo**
-  *Link: [./tracks/game_dungeon_liberator_port_20260928/](./tracks/game_dungeon_liberator_port_20260928/)*
-
-- [~] **Track: Rewrite Enchanted Library as a dual renderer game**
-  *Link: [./tracks/game_enchanted_library_20260928/](./tracks/game_enchanted_library_20260928/)*
-
-- [~] **Track: Rewrite Griffin Riders Escape as a dual renderer game**
-  *Link: [./tracks/game_griffin_riders_escape_20260928/](./tracks/game_griffin_riders_escape_20260928/)*
-
-- [~] **Track: Rewrite Griffin Sky Joust as a dual renderer game**
-  *Link: [./tracks/game_griffin_sky_joust_20260928/](./tracks/game_griffin_sky_joust_20260928/)*
-
-- [~] **Track: Rewrite Gryphon Patrol as a dual renderer game**
-  *Link: [./tracks/game_gryphon_patrol_20260928/](./tracks/game_gryphon_patrol_20260928/)*
-
-- [~] **Track: Rewrite Haunted Library as a dual renderer game**
-  *Link: [./tracks/game_haunted_library_20260928/](./tracks/game_haunted_library_20260928/)*
-
-- [~] **Track: Port Hero vs. Zombie to the monorepo**
-  *Link: [./tracks/game_hero_vs_zombie_port_20260928/](./tracks/game_hero_vs_zombie_port_20260928/)*
-
-- [~] **Track: Rewrite Magic Defense as a dual renderer game**
-  *Link: [./tracks/game_magic_defense_20260928/](./tracks/game_magic_defense_20260928/)*
-
-- [~] **Track: Port Monster Encounters to the monorepo**
-  *Link: [./tracks/game_monster_encounters_port_20260928/](./tracks/game_monster_encounters_port_20260928/)*
-
-- [~] **Track: Rewrite Paladins Twin Soul as a dual renderer game**
-  *Link: [./tracks/game_paladins_twin_soul_20260928/](./tracks/game_paladins_twin_soul_20260928/)*
-
 - [ ] **Track: Map variants and randomized maps**
   *Link: [./tracks/map_variants_randomized_20261003/](./tracks/map_variants_randomized_20261003/)*
 
-- [~] **Track: Port the dual renderer into the monorepo**
-  *Link: [./tracks/game_platform_port_20260928/](./tracks/game_platform_port_20260928/)*
-
-- [~] **Track: Rewrite Realm Carver as a dual renderer game**
-  *Link: [./tracks/game_realm_carver_20260928/](./tracks/game_realm_carver_20260928/)*
-
-- [~] **Track: Rewrite RPG Battle as a dual renderer game**
-  *Link: [./tracks/game_rpg_battle_20260928/](./tracks/game_rpg_battle_20260928/)*
-
-- [~] **Track: Rewrite Rune Forge Chamber as a dual renderer game**
-  *Link: [./tracks/game_rune_forge_chamber_20260928/](./tracks/game_rune_forge_chamber_20260928/)*
-
-- [~] **Track: Rewrite Shadow Gate Dungeon as a dual renderer game**
-  *Link: [./tracks/game_shadow_gate_dungeon_20260928/](./tracks/game_shadow_gate_dungeon_20260928/)*
-
-- [~] **Track: Rewrite Sorcerer Ziggurat as a dual renderer game**
-  *Link: [./tracks/game_sorcerer_ziggurat_20260928/](./tracks/game_sorcerer_ziggurat_20260928/)*
-
-- [~] **Track: Rewrite Spellweavers Run as a dual renderer game**
-  *Link: [./tracks/game_spellweavers_run_20260928/](./tracks/game_spellweavers_run_20260928/)*
-
-- [~] **Track: Rewrite Storm Castle Tower as a dual renderer game**
-  *Link: [./tracks/game_storm_castle_tower_20260928/](./tracks/game_storm_castle_tower_20260928/)*
-
 - [ ] **Track: Review Thai story content**
   *Link: [./tracks/game_thai_localization_20260928/](./tracks/game_thai_localization_20260928/)*
-
-- [~] **Track: Rewrite Village Guardian as a dual renderer game**
-  *Link: [./tracks/game_village_guardian_20260928/](./tracks/game_village_guardian_20260928/)*
 
 - [ ] **Track: Typing Duel: a typing game for saved words and sentences (keyboard and touch)**
   *Link: [./tracks/game_typing_duel_20261009/](./tracks/game_typing_duel_20261009/)*
@@ -227,6 +74,10 @@ Execution order. The overview, the decisions, and the dependencies are in [riven
 
 - [ ] **Track: Riven Lands pack layout stage 1: packs/riven-lands and the --pack option**
   *Link: [./tracks/riven_pack_layout_20261009/](./tracks/riven_pack_layout_20261009/)*
+
+- [ ] **Track: Riven Lands base character, fit contract, and porting recipe**
+  *Link: [./tracks/riven_base_character_20261009/](./tracks/riven_base_character_20261009/)*
+  *QUEUE item 7: the Riven Lands base character.*
 
 - [ ] **Track: Riven Lands game set: 89 game rows, 142 avatar pieces, and the sunken vault, before any other production**
   *Link: [./tracks/riven_game_set_20261009/](./tracks/riven_game_set_20261009/)*
@@ -245,6 +96,10 @@ Execution order. The overview, the decisions, and the dependencies are in [riven
 
 - [ ] **Track: Riven Lands NPCs: 110 catalog rows outside the game set**
   *Link: [./tracks/riven_npcs_20261009/](./tracks/riven_npcs_20261009/)*
+
+- [ ] **Track: Riven Lands equipment: 27 catalog rows outside the game set**
+  *Link: [./tracks/riven_equipment_20261009/](./tracks/riven_equipment_20261009/)*
+  *QUEUE item 7: the first Riven Lands equipment family.*
 
 - [ ] **Track: Riven Lands props: 101 catalog rows outside the game set**
   *Link: [./tracks/riven_props_20261009/](./tracks/riven_props_20261009/)*
@@ -270,7 +125,212 @@ Execution order. The overview, the decisions, and the dependencies are in [riven
 - [ ] **Track: Riven Lands effects geometry: 33 catalog rows outside the game set**
   *Link: [./tracks/riven_fx_geometry_20261009/](./tracks/riven_fx_geometry_20261009/)*
 
+## Shelved Tracks
+
+These tracks are not worked now. Their folders stay in `measure/tracks/`. Each line reopens its track by moving it back to the priority order in tracks.md order.
+
+- [~] **Track: Chibi Sprouts, release 1 art**
+  *Link: [./tracks/asset_chibi_sprouts_r1_20261022/](./tracks/asset_chibi_sprouts_r1_20261022/)*
+  *Status: shelved, not done (PM 2026-11-27); reopen by moving it back.*
+  *QUEUE item 1: finish the remaining characters of release 1.*
+
+- [~] **Track: Rebuild Paladin's Twin Soul as a chapel shooter**
+  *Link: [./tracks/game_paladins_twin_soul_rebuild_20261029/](./tracks/game_paladins_twin_soul_rebuild_20261029/)*
+  *Status: shelved, not done (PM 2026-11-27); reopen by moving it back.*
+  *QUEUE item 3 (A-28): mockup c2 picked by the PM on 2026-11-27; second.*
+
+- [~] **Track: Rebuild Archer's Revenge as an aim and shoot game**
+  *Link: [./tracks/game_archers_revenge_rebuild_20261029/](./tracks/game_archers_revenge_rebuild_20261029/)*
+  *Status: shelved, not done (PM 2026-11-27); reopen by moving it back.*
+  *QUEUE item 3 (A-28): mockup c1 picked by the PM on 2026-11-27; third.*
+
+- [~] **Track: Rebuild Castle Defense as a tower defense game**
+  *Link: [./tracks/game_castle_defense_rebuild_20261029/](./tracks/game_castle_defense_rebuild_20261029/)*
+  *Status: shelved, not done (PM 2026-11-27); reopen by moving it back.*
+  *QUEUE item 3 (A-28): mockup c2 picked by the PM on 2026-11-27; fourth.*
+
+- [~] **Track: Rewrite Rune Match as a dual renderer game**
+  *Link: [./tracks/game_rune_match_20260928/](./tracks/game_rune_match_20260928/)*
+  *Status: shelved, not done (PM 2026-11-27); reopen by moving it back.*
+  *QUEUE item 4: finish the dual renderer port for the Advantage Play Kit.*
+
+- [~] **Track: Rewrite Labyrinth Goblin King as a dual renderer game**
+  *Link: [./tracks/game_labyrinth_goblin_king_20260928/](./tracks/game_labyrinth_goblin_king_20260928/)*
+  *Status: shelved, not done (PM 2026-11-27); reopen by moving it back.*
+  *QUEUE item 5: finish the dual renderer port.*
+
+- [~] **Track: Avatar system: fit the remaining equipment and set the GP price of the shop items**
+  *Link: [./tracks/avatar_equipment_gp_20261127/](./tracks/avatar_equipment_gp_20261127/)*
+  *Status: shelved, not done (PM 2026-11-27); reopen by moving it back.*
+  *QUEUE item 6: equipment fit and the GP-price shop items for Primary Advantage.*
+
+- [~] **Track: Port Devourer Slime to the monorepo**
+  *Link: [./tracks/game_devourer_slime_port_20260928/](./tracks/game_devourer_slime_port_20260928/)*
+  *Status: shelved, not done (PM 2026-11-27); reopen by moving it back.*
+  *QUEUE item 8: one of the remaining P0 game ports.*
+
+- [~] **Track: Port Dragon Flight to the monorepo**
+  *Link: [./tracks/game_dragon_flight_port_20260928/](./tracks/game_dragon_flight_port_20260928/)*
+  *Status: shelved, not done (PM 2026-11-27); reopen by moving it back.*
+  *QUEUE item 8: one of the remaining P0 game ports.*
+
+- [~] **Track: Port Potion Rush to the monorepo**
+  *Link: [./tracks/game_potion_rush_port_20260928/](./tracks/game_potion_rush_port_20260928/)*
+  *Status: shelved, not done (PM 2026-11-27); reopen by moving it back.*
+  *QUEUE item 8: one of the remaining P0 game ports.*
+
+- [~] **Track: Rename the repository to advantage-forge and plan the pack layout**
+  *Link: [./tracks/repo_rename_advantage_forge_20261002/](./tracks/repo_rename_advantage_forge_20261002/)*
+  *Status: shelved, not done (PM 2026-11-27); reopen by moving it back.*
+
+- [~] **Track: Resolve dependency launcher reconciliation**
+  *Link: [./tracks/measure_dependency_launcher_20260928/](./tracks/measure_dependency_launcher_20260928/)*
+  *Status: shelved, not done (PM 2026-11-27); reopen by moving it back.*
+
+- [ ] **Track: Produce P3 fx-geometry**
+  *Link: [./tracks/asset_p3_fx_geometry_20260928/](./tracks/asset_p3_fx_geometry_20260928/)*
+  *Status: shelved, not done (PM 2026-11-27); reopen by moving it back.*
+  *The open tasks stay deferred:backlog.*
+
+- [~] **Track: Produce P2 npcs**
+  *Link: [./tracks/asset_p2_npcs_20260928/](./tracks/asset_p2_npcs_20260928/)*
+  *Status: shelved, not done (PM 2026-11-27); reopen by moving it back.*
+
+- [~] **Track: Produce P2 wildlife**
+  *Link: [./tracks/asset_p2_wildlife_20260928/](./tracks/asset_p2_wildlife_20260928/)*
+  *Status: shelved, not done (PM 2026-11-27); reopen by moving it back.*
+
+- [~] **Track: Audit self-graded character ratings**
+  *Link: [./tracks/asset_review_audit_20261005/](./tracks/asset_review_audit_20261005/)*
+  *Status: shelved, not done (PM 2026-11-27); reopen by moving it back.*
+
+- [~] **Track: Restore asset quality gates**
+  *Link: [./tracks/asset_quality_20260928/](./tracks/asset_quality_20260928/)*
+  *Status: shelved, not done (PM 2026-11-27); reopen by moving it back.*
+
+- [ ] **Track: Plan and accept settlements scenes**
+  *Link: [./tracks/asset_scenes_settlements_20260928/](./tracks/asset_scenes_settlements_20260928/)*
+  *Status: shelved, not done (PM 2026-11-27); reopen by moving it back.*
+
+- [ ] **Track: Plan and accept wilderness scenes**
+  *Link: [./tracks/asset_scenes_wilderness_20260928/](./tracks/asset_scenes_wilderness_20260928/)*
+  *Status: shelved, not done (PM 2026-11-27); reopen by moving it back.*
+
+- [~] **Track: Sound library sources: ElvGames packs, CC-BY sites, and credits**
+  *Link: [./tracks/audio_sources_expand_20261014/](./tracks/audio_sources_expand_20261014/)*
+  *Status: shelved, not done (PM 2026-11-27); reopen by moving it back.*
+
+- [~] **Track: Remove the legacy games from the monorepo**
+  *Link: [./tracks/legacy_games_removal_20261006/](./tracks/legacy_games_removal_20261006/)*
+  *Status: shelved, not done (PM 2026-11-27); reopen by moving it back.*
+
+- [~] **Track: Rewrite Abyssal Well as a dual renderer game**
+  *Link: [./tracks/game_abyssal_well_20260928/](./tracks/game_abyssal_well_20260928/)*
+  *Status: shelved, not done (PM 2026-11-27); reopen by moving it back.*
+
+- [~] **Track: Rewrite Alchemists Synthesis as a dual renderer game**
+  *Link: [./tracks/game_alchemists_synthesis_20260928/](./tracks/game_alchemists_synthesis_20260928/)*
+  *Status: shelved, not done (PM 2026-11-27); reopen by moving it back.*
+
+- [~] **Track: Rewrite Archers Revenge as a dual renderer game**
+  *Link: [./tracks/game_archers_revenge_20260928/](./tracks/game_archers_revenge_20260928/)*
+  *Status: shelved, not done (PM 2026-11-27); reopen by moving it back.*
+
+- [~] **Track: Rewrite Astral Mage as a dual renderer game**
+  *Link: [./tracks/game_astral_mage_20260928/](./tracks/game_astral_mage_20260928/)*
+  *Status: shelved, not done (PM 2026-11-27); reopen by moving it back.*
+
+- [~] **Track: Rewrite Castle Defense as a dual renderer game**
+  *Link: [./tracks/game_castle_defense_20260928/](./tracks/game_castle_defense_20260928/)*
+  *Status: shelved, not done (PM 2026-11-27); reopen by moving it back.*
+
+- [~] **Track: Rewrite Dragon Rider as a dual renderer game**
+  *Link: [./tracks/game_dragon_rider_20260928/](./tracks/game_dragon_rider_20260928/)*
+  *Status: shelved, not done (PM 2026-11-27); reopen by moving it back.*
+
+- [~] **Track: Port Dungeon Liberator to the monorepo**
+  *Link: [./tracks/game_dungeon_liberator_port_20260928/](./tracks/game_dungeon_liberator_port_20260928/)*
+  *Status: shelved, not done (PM 2026-11-27); reopen by moving it back.*
+
+- [~] **Track: Rewrite Enchanted Library as a dual renderer game**
+  *Link: [./tracks/game_enchanted_library_20260928/](./tracks/game_enchanted_library_20260928/)*
+  *Status: shelved, not done (PM 2026-11-27); reopen by moving it back.*
+
+- [~] **Track: Rewrite Griffin Riders Escape as a dual renderer game**
+  *Link: [./tracks/game_griffin_riders_escape_20260928/](./tracks/game_griffin_riders_escape_20260928/)*
+  *Status: shelved, not done (PM 2026-11-27); reopen by moving it back.*
+
+- [~] **Track: Rewrite Griffin Sky Joust as a dual renderer game**
+  *Link: [./tracks/game_griffin_sky_joust_20260928/](./tracks/game_griffin_sky_joust_20260928/)*
+  *Status: shelved, not done (PM 2026-11-27); reopen by moving it back.*
+
+- [~] **Track: Rewrite Gryphon Patrol as a dual renderer game**
+  *Link: [./tracks/game_gryphon_patrol_20260928/](./tracks/game_gryphon_patrol_20260928/)*
+  *Status: shelved, not done (PM 2026-11-27); reopen by moving it back.*
+
+- [~] **Track: Rewrite Haunted Library as a dual renderer game**
+  *Link: [./tracks/game_haunted_library_20260928/](./tracks/game_haunted_library_20260928/)*
+  *Status: shelved, not done (PM 2026-11-27); reopen by moving it back.*
+
+- [~] **Track: Port Hero vs. Zombie to the monorepo**
+  *Link: [./tracks/game_hero_vs_zombie_port_20260928/](./tracks/game_hero_vs_zombie_port_20260928/)*
+  *Status: shelved, not done (PM 2026-11-27); reopen by moving it back.*
+
+- [~] **Track: Rewrite Magic Defense as a dual renderer game**
+  *Link: [./tracks/game_magic_defense_20260928/](./tracks/game_magic_defense_20260928/)*
+  *Status: shelved, not done (PM 2026-11-27); reopen by moving it back.*
+
+- [~] **Track: Port Monster Encounters to the monorepo**
+  *Link: [./tracks/game_monster_encounters_port_20260928/](./tracks/game_monster_encounters_port_20260928/)*
+  *Status: shelved, not done (PM 2026-11-27); reopen by moving it back.*
+
+- [~] **Track: Rewrite Paladins Twin Soul as a dual renderer game**
+  *Link: [./tracks/game_paladins_twin_soul_20260928/](./tracks/game_paladins_twin_soul_20260928/)*
+  *Status: shelved, not done (PM 2026-11-27); reopen by moving it back.*
+
+- [~] **Track: Port the dual renderer into the monorepo**
+  *Link: [./tracks/game_platform_port_20260928/](./tracks/game_platform_port_20260928/)*
+  *Status: shelved, not done (PM 2026-11-27); reopen by moving it back.*
+
+- [~] **Track: Rewrite Realm Carver as a dual renderer game**
+  *Link: [./tracks/game_realm_carver_20260928/](./tracks/game_realm_carver_20260928/)*
+  *Status: shelved, not done (PM 2026-11-27); reopen by moving it back.*
+
+- [~] **Track: Rewrite RPG Battle as a dual renderer game**
+  *Link: [./tracks/game_rpg_battle_20260928/](./tracks/game_rpg_battle_20260928/)*
+  *Status: shelved, not done (PM 2026-11-27); reopen by moving it back.*
+
+- [~] **Track: Rewrite Rune Forge Chamber as a dual renderer game**
+  *Link: [./tracks/game_rune_forge_chamber_20260928/](./tracks/game_rune_forge_chamber_20260928/)*
+  *Status: shelved, not done (PM 2026-11-27); reopen by moving it back.*
+
+- [~] **Track: Rewrite Shadow Gate Dungeon as a dual renderer game**
+  *Link: [./tracks/game_shadow_gate_dungeon_20260928/](./tracks/game_shadow_gate_dungeon_20260928/)*
+  *Status: shelved, not done (PM 2026-11-27); reopen by moving it back.*
+
+- [~] **Track: Rewrite Sorcerer Ziggurat as a dual renderer game**
+  *Link: [./tracks/game_sorcerer_ziggurat_20260928/](./tracks/game_sorcerer_ziggurat_20260928/)*
+  *Status: shelved, not done (PM 2026-11-27); reopen by moving it back.*
+
+- [~] **Track: Rewrite Spellweavers Run as a dual renderer game**
+  *Link: [./tracks/game_spellweavers_run_20260928/](./tracks/game_spellweavers_run_20260928/)*
+  *Status: shelved, not done (PM 2026-11-27); reopen by moving it back.*
+
+- [~] **Track: Rewrite Storm Castle Tower as a dual renderer game**
+  *Link: [./tracks/game_storm_castle_tower_20260928/](./tracks/game_storm_castle_tower_20260928/)*
+  *Status: shelved, not done (PM 2026-11-27); reopen by moving it back.*
+
+- [~] **Track: Rewrite Village Guardian as a dual renderer game**
+  *Link: [./tracks/game_village_guardian_20260928/](./tracks/game_village_guardian_20260928/)*
+  *Status: shelved, not done (PM 2026-11-27); reopen by moving it back.*
+
 ## Archived Tracks
+
+- [x] Sound library: CC0 sound effects and music for the asset catalog and the games, completed 2026-11-27; the library holds the CC0 takes, the sound list, the tool, the review page, the review rounds, and the credits file, and `./measure/generate.sh` and `./measure/doctor.sh` pass at the closeout.
+  *Link: [./archive/audio_sfx_library_20261013/](./archive/audio_sfx_library_20261013/)*
+
+- [x] Fill every empty shelf in the games and scene maps, completed 2026-11-19; the empty shelf asset fills the five games and the seven scene maps, the floating items in the inn, school, and archive maps are fixed, the Phase 2 evidence is recorded, and the Green gate passed 240 tests. Archived 2026-11-27 by the PM board cleanup.
+  *Link: [./archive/asset_filled_shelves_20261028/](./archive/asset_filled_shelves_20261028/)*
 
 - [x] Chibi Quest battle teaser videos (16:9 and 9:16), completed 2026-11-27; the 45 second teaser was recorded again with the "Chibi Quest" corner badge and the end card "Play it now in Primary Advantage", the owner passed the audio and the Thai check, and both videos are public on YouTube: https://youtu.be/IvmqOZJS3iQ (16:9) and https://youtu.be/DuOicts5Sr4 (9:16 Short). No final acceptance role ran (light lane).
   *Link: [./archive/showcase_battle_teaser_20260930/](./archive/showcase_battle_teaser_20260930/)*

@@ -1,6 +1,6 @@
 # Audit self-graded character ratings
 
-Status: in progress (started 2026-10-05). This plan owns execution status.
+Status: shelved, not done (PM 2026-11-27); reopen by moving it back. The track started on 2026-10-05. This plan owns execution status.
 
 ## Phase 1: Spot check
 

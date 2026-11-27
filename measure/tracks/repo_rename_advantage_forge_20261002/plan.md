@@ -1,6 +1,6 @@
 # Rename the repository to advantage-forge
 
-Status: in_progress. The rename is done (2026-10-02). Phase 5 waits for the Primary Advantage cutover. This plan owns execution status.
+Status: shelved, not done (PM 2026-11-27); reopen by moving it back. The rename is done (2026-10-02). Phase 5 waits for the Primary Advantage cutover. This plan owns execution status.
 
 ## Phase 1: Contract
 

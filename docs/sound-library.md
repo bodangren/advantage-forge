@@ -1,7 +1,7 @@
 # Sound library
 
 The sound library holds recorded sounds for the Chibi Quest assets and the games. The tracks are
-`measure/tracks/audio_sfx_library_20261013/` (the list, the tool, the CC0 takes) and
+`measure/archive/audio_sfx_library_20261013/` (the list, the tool, the CC0 takes) and
 `measure/tracks/audio_sources_expand_20261014/` (more sites, more licenses, the credits).
 
 ## Licenses

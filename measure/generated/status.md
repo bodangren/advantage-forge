@@ -1,8 +1,8 @@
 # Measure status
 
-Tracks: 77.
-Tracks by status: new: 27; in_progress: 49; completed: 1.
-Tracks by workstream: assets: 33; games: 41; foundation: 3.
+Tracks: 75.
+Tracks by status: new: 30; in_progress: 45; completed: 0.
+Tracks by workstream: assets: 31; games: 41; foundation: 3.
 
 | Track | Status | Workstream | Plan tasks | Estimate | Actual |
 | --- | --- | --- | ---: | ---: | ---: |
@@ -10,17 +10,15 @@ Tracks by workstream: assets: 33; games: 41; foundation: 3.
 | [asset_companion_backlog_20260928](../tracks/asset_companion_backlog_20260928/) | new | assets | 0/5 | 5 | — |
 | [asset_delivery_20260928](../tracks/asset_delivery_20260928/) | new | assets | 0/7 | 7 | — |
 | [asset_engine_backlog_20260928](../tracks/asset_engine_backlog_20260928/) | new | assets | 0/5 | 5 | — |
-| [asset_filled_shelves_20261028](../tracks/asset_filled_shelves_20261028/) | completed | assets | 19/19 | 12 | — |
 | [asset_p2_npcs_20260928](../tracks/asset_p2_npcs_20260928/) | in_progress | assets | 3/9 | 9 | — |
 | [asset_p2_wildlife_20260928](../tracks/asset_p2_wildlife_20260928/) | in_progress | assets | 4/9 | 9 | — |
-| [asset_p3_fx_geometry_20260928](../tracks/asset_p3_fx_geometry_20260928/) | in_progress | assets | 5/6 | 9 | — |
+| [asset_p3_fx_geometry_20260928](../tracks/asset_p3_fx_geometry_20260928/) | new | assets | 5/9 | 9 | — |
 | [asset_production_controls_20260928](../tracks/asset_production_controls_20260928/) | new | assets | 0/5 | 5 | — |
 | [asset_quality_20260928](../tracks/asset_quality_20260928/) | in_progress | assets | 4/10 | 10 | — |
 | [asset_review_audit_20261005](../tracks/asset_review_audit_20261005/) | in_progress | assets | 4/15 | 10 | — |
 | [asset_scenes_adventure_20260928](../tracks/asset_scenes_adventure_20260928/) | new | assets | 0/9 | 9 | — |
-| [asset_scenes_settlements_20260928](../tracks/asset_scenes_settlements_20260928/) | in_progress | assets | 0/9 | 9 | — |
-| [asset_scenes_wilderness_20260928](../tracks/asset_scenes_wilderness_20260928/) | in_progress | assets | 0/9 | 9 | — |
-| [audio_sfx_library_20261013](../tracks/audio_sfx_library_20261013/) | in_progress | assets | 18/19 | 12 | — |
+| [asset_scenes_settlements_20260928](../tracks/asset_scenes_settlements_20260928/) | new | assets | 0/9 | 9 | — |
+| [asset_scenes_wilderness_20260928](../tracks/asset_scenes_wilderness_20260928/) | new | assets | 0/9 | 9 | — |
 | [audio_sources_expand_20261014](../tracks/audio_sources_expand_20261014/) | in_progress | assets | 8/11 | 10 | — |
 | [avatar_equipment_gp_20261127](../tracks/avatar_equipment_gp_20261127/) | in_progress | games | 1/4 | 3 | — |
 | [chibi_sprouts_cast_art_20261127](../tracks/chibi_sprouts_cast_art_20261127/) | in_progress | assets | 0/9 | 10 | — |

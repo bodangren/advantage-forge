@@ -17,4 +17,4 @@ The mockups are style ideas, not traces. Each brief in the track folder is the d
 maker matches the idea and the colors of the mockup, not every detail.
 
 The 3 props are not catalog rows of the Chibi Quest pack. They come from the towel follow-up of
-`measure/tracks/asset_filled_shelves_20261028/`.
+`measure/archive/asset_filled_shelves_20261028/`.

@@ -1,6 +1,6 @@
 # Port Hero vs. Zombie to the monorepo
 
-Status: in progress. The plan records execution state. Linked documents retain design detail.
+Status: shelved, not done (PM 2026-11-27); reopen by moving it back. The plan records execution state. Linked documents retain design detail.
 
 ## Phase 1: Contract and baseline
 

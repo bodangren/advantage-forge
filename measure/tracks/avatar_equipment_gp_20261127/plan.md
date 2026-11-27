@@ -1,5 +1,7 @@
 # Implementation plan: avatar equipment fit and GP prices
 
+Status: shelved, not done (PM 2026-11-27); reopen by moving it back.
+
 Track: `avatar_equipment_gp_20261127`. Lane: light. One phase.
 The brief is open item 6 of the retired `QUEUE.md` of 2026-11-27.
 
