@@ -87,6 +87,40 @@ Status: in progress. The plan records execution state. The storyboard document r
       `8b4851199642bf68392ec25378b7e96778a142358587a58daa108d69ce124422` (68,254,673 B).
     - `chibi-quest-battle-9x16.silent.mp4`
       `b8e9dc4bfa58e4913c71146642c2a7b7b52df899f48cdf7c3bc586d93ac6a915` (49,365,741 B).
+- [x] Task: Re-record the older Chibi Quest tour with the live wording; replace Drive copies (PM 2026-11-27).
+  - The live text came in commit `b1f240a5` (`src/showcase/script.ts` lines 118, 796, 802 and 815,
+    `scripts/showcase.ts:125`, and the note in `docs/showcase.md`). Branch `teaser-live` moved from
+    `8e5e893d` to `5a237ebb` (fast-forward), so it carries that commit.
+  - Command in `teaser-live`: `node --import tsx scripts/showcase.ts record` through heavy-run, 07:22
+    to 07:42. The tour has music and sound effects only and no voice, so no TTS call was needed.
+  - ffprobe `out/showcase/chibi-quest-tour.mp4`: 1920 x 1080, 30 fps, H.264 and AAC 44.1 kHz
+    stereo, 216.5 s, 231,561,962 B, 8.56 Mbps. sha256
+    `6ad637d67af7e7a0349ce7c42e607c9b9bb49cd0012b6ffa29db3710bc7b4a07`; md5
+    `b22057e352db8561dd3e0aa1d9173cf7`.
+  - Frames: 43 stills at 5 s steps (five 3 x 3 sheets) and stills at 12, 193, 200 and 212 s. No
+    frame shows "coming", "soon" or "เร็ว". The end card at 212 s reads "Play it now in Primary
+    Advantage!". `out/showcase/youtube.md` reads "3:18 Play it now" and "now live in Primary
+    Advantage"; `voiceover.md` and the `.srt` agree.
+  - 480p recipe (the parameters of the old copy): `ffmpeg -vf scale=854:480:flags=lanczos -c:v
+    libx264 -preset medium -crf 23 -pix_fmt yuv420p -c:a aac -b:a 192k -movflags +faststart`.
+    ffprobe: 854 x 480, 30 fps, 216.5 s, 29,987,938 B. sha256
+    `9fa36c4512ac0a3cc3dd3fb05d83860110047d60f8bfef4a03c7a8e143aa56ef`; md5
+    `1906fca1065f17b1415d5d59f8f83ab1`.
+  - Drive in place, folder "PA Videos" (`1WrHdjGlH1EIPNf90KyhBayIa9RzITEPW`): same ids, names,
+    parents and permissions (the permission list is identical before and after).
+    - `chibi-quest-tour.mp4` `1dobl5XeErZlVoH03XXKoen-BeI8hJJPS`, 231,561,962 B, md5
+      `b22057e352db8561dd3e0aa1d9173cf7`.
+    - `chibi-quest-tour-480p.mp4` `1BXvaJJSSeDLyDXLptVI1S_w83M6p67cZ`, 29,987,938 B, md5
+      `1906fca1065f17b1415d5d59f8f83ab1`.
+  - The two battle copies in "PA Videos" were replaced in place from `teaser-live/out/battle/`. The
+    review copies were downloaded first and their md5 matched that folder.
+    - `chibi-quest-battle-16x9.mp4` `1D0CxweEjW_C-RVnnaH7qXhhcOarxFcga`, 69,381,973 B, md5
+      `5b3aad37e2dfc07d448c2f73ef78755e`.
+    - `chibi-quest-battle-9x16.mp4` `1smOa2rTGL4Ij26tZmsS_Q5SyYtKGMC7c`, 50,493,249 B, md5
+      `a1f39f112c75df44c6608542c212f164`.
+  - Notes: the Drive writes used the `~/.config/gws` login, because `~/.config/gws-daniel` has no
+    Drive scope. Two 404s in the tour page are old: `out/well-stones/well-stones.glb` and
+    `out/well-stone/well-stone.glb` do not exist in `out/`.
 - [~] Task: Owner review of the audio and the Thai text (voice-over, counters, end card, and the
   publishing copy). (Added 2026-10-02: the open item of the recording task, as a task.)
   2026-11-27: the live wording is in the media and in Drive. Only the Thai check waits.
