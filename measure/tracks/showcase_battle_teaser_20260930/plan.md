@@ -121,9 +121,9 @@ Status: in progress. The plan records execution state. The storyboard document r
   - Notes: the Drive writes used the `~/.config/gws` login, because `~/.config/gws-daniel` has no
     Drive scope. Two 404s in the tour page are old: `out/well-stones/well-stones.glb` and
     `out/well-stone/well-stone.glb` do not exist in `out/`.
-- [~] Task: Owner review of the audio and the Thai text (voice-over, counters, end card, and the
+- [x] Task: Owner review of the audio and the Thai text (voice-over, counters, end card, and the
   publishing copy). (Added 2026-10-02: the open item of the recording task, as a task.)
   2026-11-27: the live wording is in the media and in Drive. Only the Thai check waits.
-- [b] Thai check of the new wording. Owner: Daniel. deferred:thai Task Zks3LWVIbk1mQmFTX0NNNQ.
-- [ ] Task: Publish the teaser after the owner passes the audio and Thai check. The copy waits in
+- [x] Thai check of the new wording. Evidence: Daniel "Approve", Google Task `NDZSZVd4YlFpOS00WnZQUw` under `Zks3LWVIbk1mQmFTX0NNNQ` (2026-11-27).
+- [b] deferred:advantage-pr (YouTube upload, PM 2026-11-27) Task: Publish the teaser after the owner passes the audio and Thai check. The copy waits in
   `docs/guild-battle-teaser.md` ("Publishing").
